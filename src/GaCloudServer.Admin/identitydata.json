@@ -1,0 +1,25 @@
+﻿{
+  "IdentityData": {
+    "Roles": [
+      {
+        "Name": "Administrator"
+      }
+    ],
+    "Users": [
+      {
+        "Username": "admin",
+        "Password": "SrvGcL!!6985",
+        "Email": "ced@gestioneambiente.net",
+        "Roles": [
+          "Administrator"
+        ],
+        "Claims": [
+          {
+            "Type": "name",
+            "Value": "admin"
+          }
+        ]
+      }
+    ]
+  }
+}
