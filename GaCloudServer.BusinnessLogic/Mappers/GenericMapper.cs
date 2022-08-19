@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using GaCloudServer.BusinessLogic.Mappers.Autorizzazioni;
+using GaCloudServer.BusinessLogic.Mappers.Cdr;
+using GaCloudServer.BusinessLogic.Mappers.Contratti;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,9 @@ namespace GaCloudServer.BusinnessLogic.Mappers
 
         internal static List<Profile> profiles = new List<Profile>()
         {
-            new AutorizzazioniMapperProfile()
+            new AutorizzazioniMapperProfile(),
+            new ContrattiMapperProfile(),
+            new CdrMapperProfile(),
         };
 
         static GenericMapper() {

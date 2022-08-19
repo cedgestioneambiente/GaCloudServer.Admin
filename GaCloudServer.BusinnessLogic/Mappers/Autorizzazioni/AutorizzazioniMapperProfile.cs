@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
 using GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
@@ -16,8 +15,6 @@ namespace GaCloudServer.BusinessLogic.Mappers.Autorizzazioni
 
             CreateMap<PagedList<AutorizzazioneTipo>, AutorizzazioniTipiDto>(MemberList.Destination)
                 .ReverseMap();
-
-           
 
         }
     }

@@ -27,7 +27,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.unitOfWork = unitOfWork;
         }
 
-        #region AutorizzazioniTipo
+        #region Autorizzazioni Tipi
         public async Task<AutorizzazioniTipiDto> GetGaAutorizzazioniTipiAsync(int page = 1, int pageSize = 0)
         {
             var entities = await autorizzazioniTipiRepo.GetAllAsync(page,pageSize);
