@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using GaCloudServer.Resources.Api.Mappers.Autorizzazioni;
+using GaCloudServer.Resources.Api.Mappers.Contratti;
+using GaCloudServer.Resources.Api.Mappers.Cdr;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,9 @@ namespace GaCloudServer.Resources.Api.Mappers
 
         internal static List<Profile> profiles = new List<Profile>()
         {
-            new AutorizzazioniMapperProfile()
+            new AutorizzazioniMapperProfile(),
+            new ContrattiMapperProfile(),
+            new CdrMapperProfile(),
         };
 
         static GenericMapper() {
