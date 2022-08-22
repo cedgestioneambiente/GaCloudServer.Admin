@@ -143,7 +143,7 @@ namespace GaCloudServer.Resources.Api
 
             app.UseAuthorization();
 
-            app.UseApiResponseAndExceptionWrapper();
+            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions { IsApiOnly=false});
 
             app.UseEndpoints(endpoints =>
             {
