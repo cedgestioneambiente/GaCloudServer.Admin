@@ -1,35 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
 
 namespace GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni
 {
-    #region Autorizzazioni Tipo
-    public class AutorizzazioneTipoDto
+    #region AutorizzazioniTipo
+    public class AutorizzazioniTipoDto : GenericListDto
     {
-        public long Id { get; set; }
-        public string Descrizione { get; set; }
-        public bool Disabled { get; set; }
+    }
 
-        public AutorizzazioneTipoDto() {
+    public class AutorizzazioniTipiDto : GenericPagedListDto<AutorizzazioniTipoDto>
+    {
+    }
+
+    #endregion
+
+    #region AutorizzazioniDocumento
+    public class AutorizzazioniDocumentoDto : GenericDto
+    {
+        public string Numero { get; set; }
+        public string RagioneSociale { get; set; }
+        public string Indirizzo { get; set; }
+        public long AutorizzazioniTipoId { get; set; }
+        public DateTime DataRilascio { get; set; }
+        public DateTime DataScadenza { get; set; }
+        public int Preavviso { get; set; }
+        public bool Archiviata { get; set; }
+
+        public AutorizzazioniDocumentoDto()
+        {
+            Numero = String.Empty;
+            RagioneSociale = String.Empty;
+            Indirizzo = String.Empty;
+        }
+    }
+
+    public class AutorizzazioniDocumentiDto : GenericPagedListDto<AutorizzazioniDocumentoDto>
+    {
+    }
+
+    #endregion
+
+    #region AutorizzazioniAllegati
+    public class AutorizzazioniAllegatoDto : GenericFileDto
+    {
+        public long AutorizzazioniDocumentoId { get; set; }
+        public string Descrizione { get; set; }
+
+        public AutorizzazioniAllegatoDto()
+        {
             Descrizione = string.Empty;
         }
     }
 
-    public class AutorizzazioniTipiDto
-    {
-        public AutorizzazioniTipiDto()
-        {
-            Data = new List<AutorizzazioneTipoDto>();
-        }
-
-        public List<AutorizzazioneTipoDto> Data { get; set; }
-
-        public int TotalCount { get; set; }
-
-        public int PageSize { get; set; }
-    }
-
+    public class AutorizzazioniAllegatiDto : GenericPagedListDto<AutorizzazioniAllegatoDto> { }
     #endregion
 
 }

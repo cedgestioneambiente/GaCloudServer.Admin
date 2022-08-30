@@ -44,6 +44,7 @@ namespace GaCloudServer.Admin
                 IdentityUserDto, IdentityRoleDto, IdentityUsersDto, IdentityRolesDto, IdentityUserRolesDto,
                 IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
                 IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>(ConfigureUIOptions);
+            services.RegisterCustomDbContext<ResourcesDbContext>(Configuration);
 
             // Monitor changes in Admin UI views
             services.AddAdminUIRazorRuntimeCompilation(HostingEnvironment);

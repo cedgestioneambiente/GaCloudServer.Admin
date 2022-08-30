@@ -13,6 +13,19 @@
 		<ProjectReference Include="..\GaCloudServer.Admin.EntityFramework.Shared\GaCloudServer.Admin.EntityFramework.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Migrations\Resources\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Scripts\Autorizzazioni\CREATE_ViewGaAutorizzazioniDocumenti.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
 
 

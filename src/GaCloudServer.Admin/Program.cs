@@ -80,7 +80,7 @@ namespace GaCloudServer.Admin
             return await DbMigrationHelpers
                 .ApplyDbMigrationsWithDataSeedAsync<IdentityServerConfigurationDbContext, AdminIdentityDbContext,
                     IdentityServerPersistedGrantDbContext, AdminLogDbContext, AdminAuditLogDbContext,
-                    IdentityServerDataProtectionDbContext, UserIdentity, UserIdentityRole>(host,
+                    IdentityServerDataProtectionDbContext, ResourcesDbContext, UserIdentity, UserIdentityRole>(host,
                     applyDbMigrationWithDataSeedFromProgramArguments, seedConfiguration, databaseMigrationsConfiguration);
         }
 

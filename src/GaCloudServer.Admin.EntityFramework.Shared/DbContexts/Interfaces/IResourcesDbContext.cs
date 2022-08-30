@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using Microsoft.EntityFrameworkCore;
@@ -9,11 +10,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
     {
         #region GaAutorizzazioni Tables
         //DbSet<Autorizzazione> GaAutorizzazioni { get; set; }
-        DbSet<AutorizzazioneTipo> GaAutorizzazioniTipi { get; set; }
-        //DbSet<AutorizzazioneAllegato> GaAutorizzazioniAllegati { get; set; }
+        DbSet<AutorizzazioniTipo> GaAutorizzazioniTipi { get; set; }
+        DbSet<AutorizzazioniDocumento> GaAutorizzazioniDocumenti { get; set; }
+        DbSet<AutorizzazioniAllegato> GaAutorizzazioniAllegati { get; set; }
 
         //#region Views
-        //DbSet<ViewAutorizzazione> ViewGaAutorizzazioni { get; set; }
+        DbSet<ViewGaAutorizzazioniDocumenti> ViewGaAutorizzazioniDocumenti { get; set; }
         //#endregion
         #endregion
 

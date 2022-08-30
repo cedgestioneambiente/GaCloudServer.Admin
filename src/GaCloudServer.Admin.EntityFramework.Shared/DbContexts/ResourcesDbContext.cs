@@ -1,5 +1,6 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
     public class ResourcesDbContext : DbContext,IResourcesDbContext
     {
         #region GaAutorizzazioni Tables
-        public DbSet<AutorizzazioneTipo> GaAutorizzazioniTipi { get; set; }
+        public DbSet<AutorizzazioniTipo> GaAutorizzazioniTipi { get; set; }
+        public DbSet<AutorizzazioniDocumento> GaAutorizzazioniDocumenti { get; set; }
+        public DbSet<AutorizzazioniAllegato> GaAutorizzazioniAllegati { get; set; }
+
+        //Views
+        public DbSet<ViewGaAutorizzazioniDocumenti> ViewGaAutorizzazioniDocumenti { get; set; }
         #endregion
 
         #region GaContratti Tables
@@ -80,6 +86,21 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            #region Views
+
+            #region Autorizzazioni
+
+            builder.Entity<ViewGaAutorizzazioniDocumenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaAutorizzazioniDocumenti))
+                    .HasKey(x => x.Id);
+            });
+
+            #endregion
+
+            #endregion
+
             base.OnModelCreating(builder);
 
         }

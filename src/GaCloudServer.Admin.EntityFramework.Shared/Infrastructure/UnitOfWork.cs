@@ -1,6 +1,9 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.AuditLogging.Events;
+using Skoruba.AuditLogging.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -19,8 +19,11 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             where TResourcesDbContext:DbContext,IResourcesDbContext
         {
             services.AddTransient<IGaAutorizzazioniService, GaAutorizzazioniService>();
-            services.AddTransient<IGaContrattiService, GaContrattiService>();
-            services.AddTransient<IGaCdrService, GaCdrService>();
+            //services.AddTransient<IGaContrattiService, GaContrattiService>();
+            //services.AddTransient<IGaCdrService, GaCdrService>();
+
+            services.AddTransient<IFileService, FileService>();
+
             services.AddTransient<IUnitOfWork, UnitOfWork<TResourcesDbContext>>();
 
             return services;

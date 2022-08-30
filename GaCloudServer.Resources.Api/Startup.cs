@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Extensions;
 using AutoWrapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GaCloudServer.Resources.Api
 {
@@ -39,6 +40,13 @@ namespace GaCloudServer.Resources.Api
         {
             var resourcesApiConfiguration = Configuration.GetSection(nameof(ResourcesApiConfiguration)).Get<ResourcesApiConfiguration>();
             services.AddSingleton(resourcesApiConfiguration);
+
+            //Disable Automatic Model State Validation
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
 
             // Add DbContexts
             RegisterDbContexts(services);
@@ -139,11 +147,12 @@ namespace GaCloudServer.Resources.Api
             app.UseCors(x => x
             .AllowAnyHeader()
             .AllowAnyOrigin()
+            .AllowAnyMethod()
             .SetIsOriginAllowed(origin => true));
 
             app.UseAuthorization();
 
-            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions { IsApiOnly=false});
+            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions { IsApiOnly=false,UseApiProblemDetailsException=true});
 
             app.UseEndpoints(endpoints =>
             {

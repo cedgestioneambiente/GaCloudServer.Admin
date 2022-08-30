@@ -1,4 +1,4 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti
 {
-    public class ContrattoUtenteOnPermesso : IGenericEntity
+    public class ContrattoUtenteOnPermesso : GenericEntity
     {
         public long Id { get; set; }
         public string UtenteId { get; set; }

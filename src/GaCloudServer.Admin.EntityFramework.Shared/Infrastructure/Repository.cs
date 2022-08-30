@@ -1,7 +1,10 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
 using GaCloudServer.Admin.EntityFramework.Shared.Extensions;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using Skoruba.AuditLogging.Services;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
@@ -13,21 +16,24 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 {
     public class Repository<TDbContext, TEntity> : IRepository<TEntity>
         where TDbContext : DbContext, IResourcesDbContext
-        where TEntity : class, IGenericEntity
+        where TEntity :  GenericEntity
     {
         protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _entities;
+        protected readonly IAuditEventLogger auditEventLogger;
 
-        public Repository(TDbContext context)
+        public Repository(TDbContext context,IAuditEventLogger auditEventLogger)
         {
             _context = context;
             _entities = context.Set<TEntity>();
+            this.auditEventLogger = auditEventLogger;
 
         }
 
         #region CRUD
         public virtual void Add(TEntity entity)
         {
+            auditEventLogger.LogEventAsync(new AddEventModel(string.Format("ADD - {0}", _entities.EntityType)) { });
             _entities.Add(entity);
         }
 
@@ -38,6 +44,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         public virtual void Update(TEntity entity)
         {
+            auditEventLogger.LogEventAsync(new UpdateEventModel(string.Format("UPDATE - {0}", _entities.EntityType)) { });
             _entities.Update(entity);
         }
 
@@ -48,6 +55,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         public virtual void Remove(TEntity entity)
         {
+            auditEventLogger.LogEventAsync(new DeleteEventModel(string.Format("REMOVE - {0}", _entities.EntityType)) { });
             _entities.Remove(entity);
         }
 
@@ -59,6 +67,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         //Async
         public virtual async Task AddAsync(TEntity entity)
         {
+            await auditEventLogger.LogEventAsync(new AddEventModel(string.Format("ADD - {0}", _entities.EntityType)) { });
             await _entities.AddAsync(entity);
         }
         public virtual async Task<bool> CanInsertAsync(TEntity entity, bool isCloned = false)
@@ -76,9 +85,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         #endregion
 
-        #region List
+        #region GET
         public virtual TEntity GetById(long id)
         {
+
             return _entities.Find(id);
         }
 
@@ -100,6 +110,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         //Async
         public virtual async Task<TEntity> GetByIdAsync(long id)
         {
+            await auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET BY ID - {0}",_entities.EntityType)) { });
             return await _entities.FindAsync(id);
         }
 
@@ -133,6 +144,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             pagedList.PageSize = pageSize;
             pagedList.TotalCount = _entities.Count();
 
+            await auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET ALL - {0}", _entities.EntityType)) { });
             return pagedList;
         }
 
@@ -166,12 +178,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             pagedList.PageSize = pageSize;
             pagedList.TotalCount = entities.Count();
 
+            await auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET WITH FILTER - {0}", _entities.EntityType)) { });
+
             return pagedList;
 
         }
 
         public virtual async Task<TEntity> GetSingleWithFilter(Expression<Func<TEntity, bool>> predicate)
         {
+            await auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET SINGLE - {0}", _entities.EntityType)) { });
             return await _entities.Where(predicate).FirstOrDefaultAsync();
         }
         #endregion

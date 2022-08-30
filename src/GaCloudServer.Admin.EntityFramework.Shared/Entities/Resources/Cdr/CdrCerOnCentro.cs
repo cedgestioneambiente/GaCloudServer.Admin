@@ -1,4 +1,4 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrCerOnCentro: IGenericEntity
+    public class CdrCerOnCentro: GenericEntity
     {
         public long Id { get; set; }
         public long CdrCentroId { get; set; }

@@ -9,11 +9,25 @@ namespace GaCloudServer.BusinessLogic.Mappers.Autorizzazioni
     {
         public AutorizzazioniMapperProfile()
         {
-            //GaAutorizzazioniTipi Map
-            CreateMap<AutorizzazioneTipo, AutorizzazioneTipoDto>(MemberList.Destination)
+            //AutorizzazioniTipi
+            CreateMap<AutorizzazioniTipo, AutorizzazioniTipoDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PagedList<AutorizzazioneTipo>, AutorizzazioniTipiDto>(MemberList.Destination)
+            CreateMap<PagedList<AutorizzazioniTipo>, AutorizzazioniTipiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //AutorizzazioniDocumenti
+            CreateMap<AutorizzazioniDocumento, AutorizzazioniDocumentoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<AutorizzazioniDocumento>, AutorizzazioniDocumentiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //AutorizzazioniDocumenti
+            CreateMap<AutorizzazioniAllegato, AutorizzazioniAllegatoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<AutorizzazioniAllegato>, AutorizzazioniAllegatiDto>(MemberList.Destination)
                 .ReverseMap();
 
         }

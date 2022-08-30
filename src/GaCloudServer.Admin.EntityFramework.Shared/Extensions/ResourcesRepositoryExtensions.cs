@@ -1,5 +1,6 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
         {
             //Autorizzazioni
             #region Autorizzazioni
-            services.AddTransient<IGenericRepository<AutorizzazioneTipo>, GenericRepository<TResourcesDbContext, AutorizzazioneTipo>>();
+            services.AddTransient<IGenericRepository<AutorizzazioniTipo>, GenericRepository<TResourcesDbContext, AutorizzazioniTipo>>();
+            services.AddTransient<IGenericRepository<AutorizzazioniDocumento>, GenericRepository<TResourcesDbContext, AutorizzazioniDocumento>>();
+            services.AddTransient<IGenericRepository<AutorizzazioniAllegato>, GenericRepository<TResourcesDbContext, AutorizzazioniAllegato>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaAutorizzazioniDocumenti>, GenericRepository<TResourcesDbContext, ViewGaAutorizzazioniDocumenti>>();
+
             #endregion
 
             return services; 

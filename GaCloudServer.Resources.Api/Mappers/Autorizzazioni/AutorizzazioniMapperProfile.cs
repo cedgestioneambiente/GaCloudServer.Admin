@@ -8,11 +8,25 @@ namespace GaCloudServer.Resources.Api.Mappers.Autorizzazioni
     {
         public AutorizzazioniMapperProfile()
         {
-            //GaAutorizzazioniTipi Map
-            CreateMap<AutorizzazioneTipoDto, AutorizzazioneTipoApiDto>(MemberList.Destination)
+            //AutorizzazioniTipi
+            CreateMap<AutorizzazioniTipoDto, AutorizzazioniTipoApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<AutorizzazioniTipiDto, AutorizzazioniTipiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //AutorizzazioniDocumenti
+            CreateMap<AutorizzazioniDocumentoDto, AutorizzazioniDocumentoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<AutorizzazioniDocumentiDto, AutorizzazioniDocumentiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //AutorizzazioniDocumenti
+            CreateMap<AutorizzazioniAllegatoDto, AutorizzazioniAllegatoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<AutorizzazioniAllegatiDto, AutorizzazioniAllegatiApiDto>(MemberList.Destination)
                 .ReverseMap();
 
 
