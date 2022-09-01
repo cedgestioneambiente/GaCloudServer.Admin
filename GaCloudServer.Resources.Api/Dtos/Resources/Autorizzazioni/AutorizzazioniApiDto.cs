@@ -4,18 +4,18 @@ using System.ComponentModel.DataAnnotations;
 namespace GaCloudServer.Resources.Api.Dtos.Autorizzazioni
 {
     #region AutorizzazioniTipo
-    public class AutorizzazioniTipoApiDto:GenericListDto
+    public class AutorizzazioniTipoApiDto:GenericListApiDto
     {
     }
 
-    public class AutorizzazioniTipiApiDto:GenericPagedListDto<AutorizzazioniTipoApiDto>
+    public class AutorizzazioniTipiApiDto:GenericPagedListApiDto<AutorizzazioniTipoApiDto>
     {
     }
 
     #endregion
 
     #region AutorizzazioniDocumento
-    public class AutorizzazioniDocumentoApiDto:GenericDto
+    public class AutorizzazioniDocumentoApiDto:GenericApiDto
     {
         [Required(ErrorMessage ="Il campo Numero è obbligatorio")]
         public string Numero { get; set; }
@@ -36,14 +36,14 @@ namespace GaCloudServer.Resources.Api.Dtos.Autorizzazioni
         }
     }
 
-    public class AutorizzazioniDocumentiApiDto:GenericPagedListDto<AutorizzazioniDocumentoApiDto>
+    public class AutorizzazioniDocumentiApiDto:GenericPagedListApiDto<AutorizzazioniDocumentoApiDto>
     {
     }
 
     #endregion
 
     #region AutorizzazioniAllegati
-    public class AutorizzazioniAllegatoApiDto : GenericFileDto
+    public class AutorizzazioniAllegatoApiDto : GenericFileApiDto
     { 
         public long AutorizzazioniDocumentoId { get; set; }
         public string Descrizione { get; set; }
@@ -54,7 +54,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Autorizzazioni
         }
     }
 
-    public class AutorizzazioniAllegatiApiDto : GenericPagedListDto<AutorizzazioniAllegatoApiDto> { }
+    public class AutorizzazioniAllegatiApiDto : GenericPagedListApiDto<AutorizzazioniAllegatoApiDto> { }
     #endregion
 
 }

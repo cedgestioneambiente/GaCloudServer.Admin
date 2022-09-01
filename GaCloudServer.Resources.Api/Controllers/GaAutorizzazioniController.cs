@@ -1,16 +1,13 @@
-﻿using AutoWrapper.Extensions;
-using AutoWrapper.Wrappers;
+﻿using AutoWrapper.Wrappers;
 using GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Autorizzazioni;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
-using GaCloudServer.Resources.Api.Models;
 using GaCloudServer.Resources.Api.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -19,7 +16,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
     public class GaAutorizzazioniController : Controller
     {
         private readonly IGaAutorizzazioniService _gaAutorizzazioniService;
@@ -418,10 +415,61 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+                string fileFolder = "Autorizzazioni";
                 var dto = apiDto.ToDto<AutorizzazioniAllegatoDto, AutorizzazioniAllegatoApiDto>();
                 var response = await _gaAutorizzazioniService.UpdateGaAutorizzazioniAllegatoAsync(dto);
+                bool failureDelete = false;
+                if (apiDto.deleteFile)
+                {
+                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
+                    if (!deleteResponse)
+                    {
+                        failureDelete = true;
 
-                return new ApiResponse(response);
+                    }
+                    else
+                    {
+                        dto.Id = response;
+                        dto.FileFolder = null;
+                        dto.FileName = null;
+                        dto.FileSize = null;
+                        dto.FileType = null;
+                        dto.FileId = null;
+                        var updateFileResponse = await _gaAutorizzazioniService.UpdateGaAutorizzazioniAllegatoAsync(dto);
+                    }
+                }
+
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaAutorizzazioniService.UpdateGaAutorizzazioniAllegatoAsync(dto);
+
+                    if (!failureDelete)
+                    {
+                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
+                    }
+
+                }
+
+                if (!failureDelete)
+                {
+                    return new ApiResponse("Updated", response, code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
+                }
+
             }
             catch (Exception ex)
             {
@@ -448,6 +496,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        #region Functions
+
+        [HttpGet("ChangeStatusGaAutorizzazioniAllegatoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaAutorizzazioniAllegatoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaAutorizzazioniService.ChangeStatusGaAutorizzazioniAllegatoAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
 
         #endregion
     }

@@ -2,13 +2,13 @@
 
 namespace GaCloudServer.Resources.Api.Dtos.Base
 {
-    public class GenericDto
+    public class GenericApiDto
     {
         public long Id { get; set; }
         public bool Disabled { get; set; }
     }
 
-    public class GenericFileDto:GenericDto
+    public class GenericFileApiDto:GenericApiDto
     {
         public string FileId { get; set; }
         public string? FileFolder { get; set; }
@@ -21,7 +21,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Base
         public bool uploadFile { get; set; }
         public bool deleteFile { get; set; }
 
-        public GenericFileDto()
+        public GenericFileApiDto()
         {
             FileId = string.Empty;
             FileFolder = string.Empty;
@@ -31,23 +31,23 @@ namespace GaCloudServer.Resources.Api.Dtos.Base
         }
     }
 
-    public class GenericListDto : GenericDto
+    public class GenericListApiDto : GenericApiDto
     {
         [Required(ErrorMessage = "Il campo Descrizione è obbligatorio.")]
         public string Descrizione { get; set; }
-        public GenericListDto()
+        public GenericListApiDto()
         {
             Descrizione = string.Empty;
         }
     }
 
-    public class GenericPagedListDto<T>
+    public class GenericPagedListApiDto<T>
     {
         public List<T> Data { get; set; }
         public int TotalCount { get; set; }
         public int PageSize { get; set; }
 
-        public GenericPagedListDto()
+        public GenericPagedListApiDto()
         {
             Data= new List<T>();
         }

@@ -9,10 +9,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
     public class CdrCerOnCentro: GenericEntity
     {
-        public long Id { get; set; }
         public long CdrCentroId { get; set; }
         public long CdrCerId { get; set; }
-        public bool Disabled { get; set; }
 
         public CdrCentro CdrCentro { get; set; }
         public CdrCer CdrCer { get; set; }

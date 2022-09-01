@@ -9,8 +9,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
     public interface IGaCdrService
     {
-        #region CdrCentro
-        Task<CdrCentriDto> GetGaCdrCentriAsync(int page = 1, int pageSize = 10, bool all = true);
+        #region GaCdrCentri
+        Task<CdrCentriDto> GetGaCdrCentriAsync(int page = 1, int pageSize = 0);
         Task<CdrCentroDto> GetGaCdrCentroByIdAsync(long id);
 
         Task<long> AddGaCdrCentroAsync(CdrCentroDto dto);
@@ -19,49 +19,13 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteGaCdrCentroAsync(long id);
 
         #region Functions
-        Task<bool> CheckIsUniqueGaCdrCentroAsync(long id, string centro);
+        Task<bool> ValidateGaCdrCentroAsync(long id, string centro);
+        Task<bool> ChangeStatusGaCdrCentroAsync(long id);
         #endregion
 
         #endregion
 
-        #region CdrCer
-        Task<CdrCersDto> GetGaCdrCersAsync(int page = 1, int pageSize = 10);
-        Task<CdrCerDto> GetGaCdrCerByIdAsync(long id);
-
-        Task<long> AddGaCdrCerAsync(CdrCerDto dto);
-        Task<long> UpdateGaCdrCerAsync(CdrCerDto dto);
-
-        Task<bool> DeleteGaCdrCerAsync(long id);
-
-        #region Functions
-        Task<bool> CheckIsUniqueGaCdrCerAsync(long id, string cer);
-        #endregion
-
-        #endregion
-
-        #region CdrCerDettaglio
-        Task<CdrCersDettagliDto> GetGaCdrCersDettagliAsync(long cerId, int page = 1, int pageSize = 10);
-        Task<CdrCerDettaglioDto> GetGaCdrCerDettaglioByIdAsync(long id);
-
-        Task<long> AddGaCdrCerDettaglioAsync(CdrCerDettaglioDto dto);
-        Task<long> UpdateGaCdrCerDettaglioAsync(CdrCerDettaglioDto dto);
-
-        Task<bool> DeleteGaCdrCerDettaglioAsync(long id);
-        #endregion
-
-        #region CdrCerOnCentro
-
-        #region Functions
-        Task<bool> UpdateGaCdrCerOnCentroAsync(long cerId, long centroId);
-        #endregion
-
-        #region Views
-        //Task<PagedList<ViewGaCdrCerOnCentro>> GetViewGaCdrCersOnCentroAsync(long id);
-        #endregion
-
-        #endregion
-
-        #region CdrComune
+        #region GaCdrComuni
         Task<CdrComuniDto> GetGaCdrComuniAsync(int page = 1, int pageSize = 0);
         Task<CdrComuneDto> GetGaCdrComuneByIdAsync(long id);
 
@@ -71,24 +35,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteGaCdrComuneAsync(long id);
 
         #region Functions
-        Task<bool> CheckIsUniqueGaCdrComuneAsync(long id, string comune);
-        #endregion
-
-        #region Views
-        //Task<PagedList<ViewGaCdrComune>> GetViewGaCdrComuniAsync(int page = 1, int pageSize = 0);
-
-        #endregion
-
-        #endregion
-
-        #region CdrComuneOnCentro
-
-        #region Functions
-        Task<bool> UpdateGaCdrComuneOnCentroAsync(long comuneId, long centroId);
-        #endregion
-
-        #region Views
-        //Task<PagedList<ViewGaCdrComuneOnCentro>> GetViewGaCdrComuniOnCentroAsync(long id);
+        Task<bool> ValidateGaCdrComuneAsync(long id, string centro);
+        Task<bool> ChangeStatusGaCdrComuneAsync(long id);
         #endregion
 
         #endregion

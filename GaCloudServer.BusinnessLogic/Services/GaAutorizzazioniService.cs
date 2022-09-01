@@ -256,6 +256,29 @@ namespace GaCloudServer.BusinnessLogic.Services
             return true;
         }
 
+        #region Functions
+
+        public async Task<bool> ChangeStatusGaAutorizzazioniAllegatoAsync(long id)
+        {
+            var entity = await autorizzazioniAllegatiRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                autorizzazioniAllegatiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                autorizzazioniAllegatiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
         #endregion
 
         #region Common

@@ -1,0 +1,7 @@
+
+1. Aggiunta Entities
+ - GaCloudServer\src\GaCloudServer.Admin.EntityFramework.Shared\Entities\
+ - \Resources
+ - Creazione Cartella Specifica con nome applicativo(Es. App Autorizzazioni - Cartella Autorizzazioni | App Mezzi - Cartella Mezzi)
+ - Creazione classe Entity con schema AppNameTableName Singolare (Es App Mezzi, Tab Veicoli = MezziVeicolo.cs)
+ - Creazione Entity estendendo classi EntityBase (GenericEntity, GenericListEntity, GenericFileEntity ecc.) non è necessario esplicitare le proprietà già presenti nelle classe base estesa.

@@ -49,32 +49,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #endregion
 
         #region GaCdr Tables
-        //public DbSet<CdrAccount> GaCdrAccounts { get; set; }
-        //public DbSet<CdrAccountRuolo> GaCdrAccountsRuoli { get; set; }
-        //public DbSet<CdrAppVersione> GaCdrAppsVersioni { get; set; }
         public DbSet<CdrCentro> GaCdrCentri { get; set; }
         public DbSet<CdrCer> GaCdrCers { get; set; }
         public DbSet<CdrCerDettaglio> GaCdrCersDettagli { get; set; }
         public DbSet<CdrCerOnCentro> GaCdrCersOnCentri { get; set; }
         public DbSet<CdrComune> GaCdrComuni { get; set; }
         public DbSet<CdrComuneOnCentro> GaCdrComuniOnCentri { get; set; }
-        //public DbSet<CdrComunicazione> GaCdrComunicazioni { get; set; }
-        //public DbSet<CdrComunicazioneLetta> GaCdrComunicazioniLette { get; set; }
-        //public DbSet<CdrConferimento> GaCdrConferimenti { get; set; }
-        //public DbSet<CdrRichiestaSvuotamento> GaCdrRichiesteSvuotamenti { get; set; }
-        //public DbSet<CdrRichiestaViaggio> GaCdrRichiesteViaggi { get; set; }
-        //public DbSet<CdrSessione> GaCdrSessioni { get; set; }
-        //public DbSet<CdrStatoRichiesta> GaCdrStatiRichieste { get; set; }
-        //public DbSet<CdrUtente> GaCdrUtenti { get; set; }
+
 
         #region Views
-        //public DbSet<ViewGaCdrAccount> ViewGaCdrAccounts { get; set; }
-        //public DbSet<ViewGaCdrComuneOnCentro> ViewGaCdrComuniOnCentri { get; set; }
-        //public DbSet<ViewGaCdrCerOnCentro> ViewGaCdrCersOnCentri { get; set; }
-        //public DbSet<ViewGaCdrUtente> ViewGaCdrUtenti { get; set; }
-        //public DbSet<ViewGaCdrComune> ViewGaCdrComuni { get; set; }
-        //public DbSet<ViewGaCdrConferimenti> ViewGaCdrConferimenti { get; set; }
-        //public DbSet<ViewGaCdrRichiestaViaggio> ViewGaCdrRichiesteViaggi { get; set; }
+
         #endregion
 
         #endregion

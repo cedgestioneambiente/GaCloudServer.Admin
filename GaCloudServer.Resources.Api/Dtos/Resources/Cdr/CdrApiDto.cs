@@ -1,34 +1,34 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
+﻿using GaCloudServer.Resources.Api.Dtos.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GaCloudServer.BusinnessLogic.DTOs.Cdr
+namespace GaCloudServer.Resources.Api.ApiApiDtos.Cdr
 {
     #region CdrCentri
 
-    public class CdrCentroDto:GenericDto
+    public class CdrCentroApiDto : GenericApiDto
     {
         public string? Centro { get; set; }
         public string? Mail { get; set; }
         public string? UserMail { get; set; }
     }
 
-    public class CdrCentriDto:GenericPagedListDto<CdrCentroDto>
+    public class CdrCentriApiDto : GenericPagedListApiDto<CdrCentroApiDto>
     {
-        
+
     }
 
     #endregion
 
     #region CdrComuni
 
-    public class CdrComuneDto : GenericDto
+    public class CdrComuneApiDto : GenericApiDto
     {
         public string? Comune { get; set; }
     }
 
-    public class CdrComuniDto : GenericPagedListDto<CdrComuneDto>
+    public class CdrComuniApiDto : GenericPagedListApiDto<CdrComuneApiDto>
     {
 
     }
@@ -37,7 +37,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Cdr
 
     #region CdrCers
 
-    public class CdrCerDto : GenericDto
+    public class CdrCerApiDto : GenericApiDto
     {
         public string? Cer { get; set; }
         public string? Descrizione { get; set; }
@@ -47,7 +47,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Cdr
         public bool Qta { get; set; }
     }
 
-    public class CdrCersDto : GenericPagedListDto<CdrCerDto>
+    public class CdrCersApiDto : GenericPagedListApiDto<CdrCerApiDto>
     {
 
     }
@@ -56,14 +56,14 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Cdr
 
     #region CdrCersDettagli
 
-    public class CdrCerDettaglioDto : GenericDto
+    public class CdrCerDettaglioApiDto : GenericApiDto
     {
         public long CdrCerId { get; set; }
         public string? Descrizione { get; set; }
         public int PesoDefault { get; set; }
     }
 
-    public class CdrCersDettagliDto : GenericPagedListDto<CdrCerDettaglioDto>
+    public class CdrCersDettagliApiDto : GenericPagedListApiDto<CdrCerDettaglioApiDto>
     {
 
     }
@@ -72,13 +72,13 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Cdr
 
     #region CdrCersOnCentri
 
-    public class CdrCerOnCentroDto : GenericDto
+    public class CdrCerOnCentroApiDto : GenericApiDto
     {
         public long CdrCentroId { get; set; }
         public long CdrCerId { get; set; }
     }
 
-    public class CdrCersOnCentriDto : GenericPagedListDto<CdrCerOnCentroDto>
+    public class CdrCersOnCentriApiDto : GenericPagedListApiDto<CdrCerOnCentroApiDto>
     {
 
     }
@@ -87,13 +87,13 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Cdr
 
     #region CdrComuniOnCentri
 
-    public class CdrComuneOnCentroDto : GenericDto
+    public class CdrComuneOnCentroApiDto : GenericApiDto
     {
         public long CdrCentroId { get; set; }
         public long CdrComuneId { get; set; }
     }
 
-    public class CdrComuniOnCentriDto : GenericPagedListDto<CdrComuneOnCentroDto>
+    public class CdrComuniOnCentriApiDto : GenericPagedListApiDto<CdrComuneOnCentroApiDto>
     {
 
     }

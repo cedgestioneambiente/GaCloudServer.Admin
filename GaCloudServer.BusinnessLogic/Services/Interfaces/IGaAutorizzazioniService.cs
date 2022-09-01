@@ -55,6 +55,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<long> UpdateGaAutorizzazioniAllegatoAsync(AutorizzazioniAllegatoDto dto);
 
         Task<bool> DeleteGaAutorizzazioniAllegatoAsync(long id);
+
+        #region Functions
+        Task<bool> ChangeStatusGaAutorizzazioniAllegatoAsync(long id);
+        #endregion
         #endregion
 
 

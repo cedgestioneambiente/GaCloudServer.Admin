@@ -54,6 +54,10 @@
 		<Folder Include="Helpers\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
 </Project>
 
 

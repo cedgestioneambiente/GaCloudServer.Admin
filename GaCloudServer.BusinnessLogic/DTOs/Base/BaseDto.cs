@@ -11,20 +11,16 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Base
 
     public class GenericFileDto:GenericDto
     {
-        public string FileId { get; set; }
-        public string FileFolder { get; set; }
-        public string FileName { get; set; }
-        public string FileType { get; set; }
-        public string FileSize { get; set; }
+        public string? FileId { get; set; }
+        public string? FileFolder { get; set; }
+        public string? FileName { get; set; }
+        public string? FileType { get; set; }
+        public string? FileSize { get; set; }
 
 
         public GenericFileDto()
         {
-            FileId = string.Empty;
-            FileFolder = string.Empty;
-            FileName =  string.Empty;
-            FileType =  string.Empty;
-            FileSize = string.Empty;
+
         }
     }
 
