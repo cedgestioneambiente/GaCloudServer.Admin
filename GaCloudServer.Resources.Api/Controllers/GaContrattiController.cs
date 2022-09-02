@@ -1,5 +1,5 @@
 ﻿using AutoWrapper.Wrappers;
-using GaCloudServer.BusinnessLogic.DTOs.Contratti;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Contratti;

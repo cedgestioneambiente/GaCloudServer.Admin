@@ -1,5 +1,5 @@
 ﻿using AutoWrapper.Wrappers;
-using GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Autorizzazioni;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Autorizzazioni;
@@ -20,20 +20,17 @@ namespace GaCloudServer.Resources.Api.Controllers
     public class GaAutorizzazioniController : Controller
     {
         private readonly IGaAutorizzazioniService _gaAutorizzazioniService;
-        private readonly IApiErrorResources _errorResources;
         private readonly IFileService _fileService;
         private readonly ILogger<GaAutorizzazioniController> _logger;
 
         public GaAutorizzazioniController(
             IGaAutorizzazioniService gaAutorizzazioniService
-            ,IApiErrorResources errorResources
             ,IFileService fileService
             ,ILogger<GaAutorizzazioniController> logger)
         {
 
             _gaAutorizzazioniService = gaAutorizzazioniService;
             _fileService = fileService;
-            _errorResources= errorResources;
             _logger = logger;
         }
 

@@ -1,6 +1,5 @@
 ﻿using AutoWrapper.Wrappers;
-using GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni;
-using GaCloudServer.BusinnessLogic.DTOs.Cdr;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Autorizzazioni;

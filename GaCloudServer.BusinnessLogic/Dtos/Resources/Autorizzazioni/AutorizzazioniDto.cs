@@ -1,6 +1,6 @@
 ﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
 
-namespace GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni
+namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Autorizzazioni
 {
     #region AutorizzazioniTipo
     public class AutorizzazioniTipoDto : GenericListDto

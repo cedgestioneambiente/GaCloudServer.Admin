@@ -1,5 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
-using GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Autorizzazioni;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;

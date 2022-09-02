@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GaCloudServer.BusinnessLogic.DTOs.Cdr;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using GaCloudServer.Resources.Api.Dtos.Cdr;
 
 namespace GaCloudServer.Resources.Api.Mappers.Cdr
@@ -15,7 +15,14 @@ namespace GaCloudServer.Resources.Api.Mappers.Cdr
             CreateMap<CdrCentriDto, CdrCentriApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            
+            //GaCdrComuni Map
+            CreateMap<CdrComuneDto, CdrComuneApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<CdrComuniDto, CdrComuniApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+
 
         }
     }
