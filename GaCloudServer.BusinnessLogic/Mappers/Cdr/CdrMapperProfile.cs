@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
-using GaCloudServer.BusinnessLogic.DTOs.Cdr;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinessLogic.Mappers.Cdr

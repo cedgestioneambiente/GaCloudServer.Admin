@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Autorizzazioni;
 using GaCloudServer.Resources.Api.Dtos.Autorizzazioni;
 
 namespace GaCloudServer.Resources.Api.Mappers.Autorizzazioni

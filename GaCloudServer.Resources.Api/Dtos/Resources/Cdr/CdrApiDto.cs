@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GaCloudServer.Resources.Api.ApiApiDtos.Cdr
+namespace GaCloudServer.Resources.Api.Dtos.Cdr
 {
     #region CdrCentri
 

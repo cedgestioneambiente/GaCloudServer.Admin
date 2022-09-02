@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GaCloudServer.BusinnessLogic.DTOs.Contratti
+namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
 {
     #region Contratti Permessi
     public class ContrattoPermessoDto

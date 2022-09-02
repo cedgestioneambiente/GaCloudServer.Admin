@@ -1,19 +1,10 @@
-﻿using AutoWrapper.Extensions;
-using AutoWrapper.Filters;
-using AutoWrapper.Wrappers;
-using GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni;
+﻿using AutoWrapper.Filters;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
-using GaCloudServer.Resources.Api.Dtos.Autorizzazioni;
 using GaCloudServer.Resources.Api.ExceptionHandling;
-using GaCloudServer.Resources.Api.Mappers;
-using GaCloudServer.Resources.Api.Models;
-using GaCloudServer.Resources.Api.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeTypes.Core;
-using System.Diagnostics;
-using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -24,16 +15,13 @@ namespace GaCloudServer.Resources.Api.Controllers
     [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
     public class CloudStorageController : Controller
     {
-        private readonly IApiErrorResources _errorResources;
         private readonly IFileService _fileService;
 
         public CloudStorageController(
-            IApiErrorResources errorResources
-            ,IFileService fileService)
+            IFileService fileService)
         {
 
             _fileService = fileService;
-            _errorResources= errorResources;
         }
 
         [HttpGet("DownloadByIdAsync/{fileId}")]

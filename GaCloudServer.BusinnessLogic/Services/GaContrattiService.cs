@@ -1,6 +1,6 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
-using GaCloudServer.BusinnessLogic.DTOs.Contratti;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;

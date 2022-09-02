@@ -1,4 +1,4 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Cdr;
+﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using System;
 using System.Collections.Generic;
 using System.Linq;

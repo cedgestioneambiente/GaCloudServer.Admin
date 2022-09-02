@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class ViewGaAutorizzazioniDocumenti : Migration
+    public partial class ViewGaAutorizzazioni : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaAutorizzazioniMigration, ScriptConsts.CREATE_ViewGaAutorizzazioniDocumenti));
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaAutorizzazioniMigration,ScriptConsts.CREATE_ViewGaAutorizzazioniDocumenti));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

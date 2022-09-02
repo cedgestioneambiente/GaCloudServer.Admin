@@ -1,41 +1,35 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
-using GaCloudServer.BusinnessLogic.DTOs.Autorizzazioni;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Autorizzazioni;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
-using Skoruba.AuditLogging.Services;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
     public class GaAutorizzazioniService:IGaAutorizzazioniService
     {
-        protected readonly IGenericRepository<AutorizzazioniTipo> autorizzazioniTipiRepo;
-        protected readonly IGenericRepository<AutorizzazioniDocumento> autorizzazioniDocumentiRepo;
-        protected readonly IGenericRepository<AutorizzazioniAllegato> autorizzazioniAllegatiRepo;
+        protected readonly IGenericRepository<AutorizzazioniTipo> gaAutorizzazioniTipiRepo;
+        protected readonly IGenericRepository<AutorizzazioniDocumento> gaAutorizzazioniDocumentiRepo;
+        protected readonly IGenericRepository<AutorizzazioniAllegato> gaAutorizzazioniAllegatiRepo;
 
         protected readonly IGenericRepository<ViewGaAutorizzazioniDocumenti> viewGaAutorizzazioniDocumentiRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
         public GaAutorizzazioniService(
-            IGenericRepository<AutorizzazioniTipo> autorizzazioniTipiRepo,
-            IGenericRepository<AutorizzazioniDocumento> autorizzazioniDocumentiRepo,
-            IGenericRepository<AutorizzazioniAllegato> autorizzazioniAllegatiRepo,
+            IGenericRepository<AutorizzazioniTipo> gaAutorizzazioniTipiRepo,
+            IGenericRepository<AutorizzazioniDocumento> gaAutorizzazioniDocumentiRepo,
+            IGenericRepository<AutorizzazioniAllegato> gaAutorizzazioniAllegatiRepo,
 
             IGenericRepository<ViewGaAutorizzazioniDocumenti> viewGaAutorizzazioniDocumentiRepo,
 
             IUnitOfWork unitOfWork)
         {
-            this.autorizzazioniTipiRepo = autorizzazioniTipiRepo;
-            this.autorizzazioniDocumentiRepo = autorizzazioniDocumentiRepo;
-            this.autorizzazioniAllegatiRepo = autorizzazioniAllegatiRepo;
+            this.gaAutorizzazioniTipiRepo = gaAutorizzazioniTipiRepo;
+            this.gaAutorizzazioniDocumentiRepo = gaAutorizzazioniDocumentiRepo;
+            this.gaAutorizzazioniAllegatiRepo = gaAutorizzazioniAllegatiRepo;
             this.viewGaAutorizzazioniDocumentiRepo = viewGaAutorizzazioniDocumentiRepo;
 
             this.unitOfWork = unitOfWork;
@@ -45,14 +39,14 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region AutorizzazioniTipi
         public async Task<AutorizzazioniTipiDto> GetGaAutorizzazioniTipiAsync(int page = 1, int pageSize = 0)
         {
-            var entities = await autorizzazioniTipiRepo.GetAllAsync(page,pageSize);
+            var entities = await gaAutorizzazioniTipiRepo.GetAllAsync(page,pageSize);
             var dtos= entities.ToDto<AutorizzazioniTipiDto, PagedList<AutorizzazioniTipo>>();
             return dtos;
         }
 
         public async Task<AutorizzazioniTipoDto> GetGaAutorizzazioniTipoByIdAsync(long id)
         {
-            var entity = await autorizzazioniTipiRepo.GetByIdAsync(id);
+            var entity = await gaAutorizzazioniTipiRepo.GetByIdAsync(id);
             var dto = entity.ToDto<AutorizzazioniTipoDto, AutorizzazioniTipo>();
             return dto;
         }
@@ -60,7 +54,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> AddGaAutorizzazioniTipoAsync(AutorizzazioniTipoDto dto)
         {
             var entity = dto.ToEntity<AutorizzazioniTipo, AutorizzazioniTipoDto>();
-            await autorizzazioniTipiRepo.AddAsync(entity);
+            await gaAutorizzazioniTipiRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
         }
@@ -68,7 +62,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> UpdateGaAutorizzazioniTipoAsync(AutorizzazioniTipoDto dto)
         {
             var entity = dto.ToEntity<AutorizzazioniTipo, AutorizzazioniTipoDto>();
-            autorizzazioniTipiRepo.Update(entity);
+            gaAutorizzazioniTipiRepo.Update(entity);
             await SaveChanges();
 
             return entity.Id;
@@ -77,8 +71,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<bool> DeleteGaAutorizzazioniTipoAsync(long id)
         {
-            var entity = await autorizzazioniTipiRepo.GetByIdAsync(id);
-            autorizzazioniTipiRepo.Remove(entity);
+            var entity = await gaAutorizzazioniTipiRepo.GetByIdAsync(id);
+            gaAutorizzazioniTipiRepo.Remove(entity);
             await SaveChanges();
 
             return true;
@@ -87,7 +81,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Functions
         public async Task<bool> ValidateGaAutorizzazioniTipoAsync(long id, string descrizione)
         {
-            var entity = await autorizzazioniTipiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+            var entity = await gaAutorizzazioniTipiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -101,18 +95,18 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<bool> ChangeStatusGaAutorizzazioniTipoAsync(long id)
         {
-            var entity = await autorizzazioniTipiRepo.GetByIdAsync(id);
+            var entity = await gaAutorizzazioniTipiRepo.GetByIdAsync(id);
             if (entity.Disabled)
             {
                 entity.Disabled = false;
-                autorizzazioniTipiRepo.Update(entity);
+                gaAutorizzazioniTipiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
             else
             {
                 entity.Disabled = true;
-                autorizzazioniTipiRepo.Update(entity);
+                gaAutorizzazioniTipiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
@@ -125,14 +119,14 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region AutorizzazioniDocumenti
         public async Task<AutorizzazioniDocumentiDto> GetGaAutorizzazioniDocumentiAsync(int page = 1, int pageSize = 0)
         {
-            var entities = await autorizzazioniDocumentiRepo.GetAllAsync(page, pageSize);
+            var entities = await gaAutorizzazioniDocumentiRepo.GetAllAsync(page, pageSize);
             var dtos = entities.ToDto<AutorizzazioniDocumentiDto, PagedList<AutorizzazioniDocumento>>();
             return dtos;
         }
 
         public async Task<AutorizzazioniDocumentoDto> GetGaAutorizzazioniDocumentoByIdAsync(long id)
         {
-            var entity = await autorizzazioniDocumentiRepo.GetByIdAsync(id);
+            var entity = await gaAutorizzazioniDocumentiRepo.GetByIdAsync(id);
             var dto = entity.ToDto<AutorizzazioniDocumentoDto, AutorizzazioniDocumento>();
             return dto;
         }
@@ -140,7 +134,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> AddGaAutorizzazioniDocumentoAsync(AutorizzazioniDocumentoDto dto)
         {
             var entity = dto.ToEntity<AutorizzazioniDocumento, AutorizzazioniDocumentoDto>();
-            await autorizzazioniDocumentiRepo.AddAsync(entity);
+            await gaAutorizzazioniDocumentiRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
         }
@@ -148,7 +142,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> UpdateGaAutorizzazioniDocumentoAsync(AutorizzazioniDocumentoDto dto)
         {
             var entity = dto.ToEntity<AutorizzazioniDocumento, AutorizzazioniDocumentoDto>();
-            autorizzazioniDocumentiRepo.Update(entity);
+            gaAutorizzazioniDocumentiRepo.Update(entity);
             await SaveChanges();
 
             return entity.Id;
@@ -157,8 +151,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<bool> DeleteGaAutorizzazioniDocumentoAsync(long id)
         {
-            var entity = await autorizzazioniDocumentiRepo.GetByIdAsync(id);
-            autorizzazioniDocumentiRepo.Remove(entity);
+            var entity = await gaAutorizzazioniDocumentiRepo.GetByIdAsync(id);
+            gaAutorizzazioniDocumentiRepo.Remove(entity);
             await SaveChanges();
 
             return true;
@@ -167,7 +161,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Functions
         public async Task<bool> ValidateGaAutorizzazioniDocumentoAsync(long id, string numero)
         {
-            var entity = await autorizzazioniDocumentiRepo.GetWithFilterAsync(x => x.Numero == numero && x.Id != id);
+            var entity = await gaAutorizzazioniDocumentiRepo.GetWithFilterAsync(x => x.Numero == numero && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -181,18 +175,18 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<bool> ChangeStatusGaAutorizzazioniDocumentoAsync(long id)
         {
-            var entity = await autorizzazioniDocumentiRepo.GetByIdAsync(id);
+            var entity = await gaAutorizzazioniDocumentiRepo.GetByIdAsync(id);
             if (entity.Disabled)
             {
                 entity.Disabled = false;
-                autorizzazioniDocumentiRepo.Update(entity);
+                gaAutorizzazioniDocumentiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
             else
             {
                 entity.Disabled = true;
-                autorizzazioniDocumentiRepo.Update(entity);
+                gaAutorizzazioniDocumentiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
@@ -214,14 +208,14 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region AutorizzazioniAllegati
         public async Task<AutorizzazioniAllegatiDto> GetGaAutorizzazioniAllegatiByDocumentoIdAsync(long autorizzazioniDocumentoId)
         {
-            var entities = await autorizzazioniAllegatiRepo.GetWithFilterAsync(x=>x.AutorizzazioniDocumentoId==autorizzazioniDocumentoId);
+            var entities = await gaAutorizzazioniAllegatiRepo.GetWithFilterAsync(x=>x.AutorizzazioniDocumentoId==autorizzazioniDocumentoId);
             var dtos = entities.ToDto<AutorizzazioniAllegatiDto, PagedList<AutorizzazioniAllegato>>();
             return dtos;
         }
 
         public async Task<AutorizzazioniAllegatoDto> GetGaAutorizzazioniAllegatoByIdAsync(long id)
         {
-            var entity = await autorizzazioniAllegatiRepo.GetByIdAsync(id);
+            var entity = await gaAutorizzazioniAllegatiRepo.GetByIdAsync(id);
             var dto = entity.ToDto<AutorizzazioniAllegatoDto, AutorizzazioniAllegato>();
             return dto;
         }
@@ -229,7 +223,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> AddGaAutorizzazioniAllegatoAsync(AutorizzazioniAllegatoDto dto)
         {
             var entity = dto.ToEntity<AutorizzazioniAllegato, AutorizzazioniAllegatoDto>();
-            await autorizzazioniAllegatiRepo.AddAsync(entity);
+            await gaAutorizzazioniAllegatiRepo.AddAsync(entity);
             await SaveChanges();
             DetachEntity(entity);
 
@@ -239,7 +233,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> UpdateGaAutorizzazioniAllegatoAsync(AutorizzazioniAllegatoDto dto)
         {
             var entity = dto.ToEntity<AutorizzazioniAllegato, AutorizzazioniAllegatoDto>();
-            autorizzazioniAllegatiRepo.Update(entity);
+            gaAutorizzazioniAllegatiRepo.Update(entity);
             await SaveChanges();
             DetachEntity(entity);
 
@@ -249,8 +243,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<bool> DeleteGaAutorizzazioniAllegatoAsync(long id)
         {
-            var entity = await autorizzazioniAllegatiRepo.GetByIdAsync(id);
-            autorizzazioniAllegatiRepo.Remove(entity);
+            var entity = await gaAutorizzazioniAllegatiRepo.GetByIdAsync(id);
+            gaAutorizzazioniAllegatiRepo.Remove(entity);
             await SaveChanges();
 
             return true;
@@ -260,18 +254,18 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<bool> ChangeStatusGaAutorizzazioniAllegatoAsync(long id)
         {
-            var entity = await autorizzazioniAllegatiRepo.GetByIdAsync(id);
+            var entity = await gaAutorizzazioniAllegatiRepo.GetByIdAsync(id);
             if (entity.Disabled)
             {
                 entity.Disabled = false;
-                autorizzazioniAllegatiRepo.Update(entity);
+                gaAutorizzazioniAllegatiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
             else
             {
                 entity.Disabled = true;
-                autorizzazioniAllegatiRepo.Update(entity);
+                gaAutorizzazioniAllegatiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }

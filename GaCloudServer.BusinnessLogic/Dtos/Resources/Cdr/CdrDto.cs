@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GaCloudServer.BusinnessLogic.DTOs.Cdr
+namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr
 {
     #region CdrCentri
 

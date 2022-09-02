@@ -122,6 +122,45 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToTable("GaAutorizzazioniTipi");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views.ViewGaAutorizzazioniDocumenti", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<bool>("Archiviata")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AutorizzazioniTipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DataRilascio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataScadenza")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Indirizzo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Numero")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RagioneSociale")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Stato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaAutorizzazioniDocumenti");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCentro", b =>
                 {
                     b.Property<long>("Id")
@@ -280,87 +319,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToTable("GaCdrComuniOnCentri");
                 });
 
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattoPermesso", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaContrattiPermessi");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattoServizio", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaContrattiServizi");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattoTipologia", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaContrattiTipologie");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattoUtenteOnPermesso", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("ContrattoPermessoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UtenteId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContrattoPermessoId");
-
-                    b.ToTable("GaContrattiUtentiOnPermessi");
-                });
-
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniAllegato", b =>
                 {
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniDocumento", "AutorizzazioniDocumento")
@@ -430,17 +388,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Navigation("CdrCentro");
 
                     b.Navigation("CdrComune");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattoUtenteOnPermesso", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattoPermesso", "ContrattoPermesso")
-                        .WithMany()
-                        .HasForeignKey("ContrattoPermessoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ContrattoPermesso");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCentro", b =>

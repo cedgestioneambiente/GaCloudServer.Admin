@@ -23,31 +23,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaAutorizzazioniDocumenti> ViewGaAutorizzazioniDocumenti { get; set; }
         #endregion
 
-        #region GaContratti Tables
-        //public DbSet<Contratto> GaContratti { get; set; }
-        //public DbSet<ContrattoFornitore> GaContrattiFornitori { get; set; }
-        //public DbSet<ContrattoModalita> GaContrattiModalitas { get; set; }
-        public DbSet<ContrattoPermesso> GaContrattiPermessi { get; set; }
-        public DbSet<ContrattoServizio> GaContrattiServizi { get; set; }
-        public DbSet<ContrattoTipologia> GaContrattiTipologie { get; set; }
-        public DbSet<ContrattoUtenteOnPermesso> GaContrattiUtentiOnPermessi { get; set; }
-
-        //#region Views
-        //public DbSet<ViewGaContrattoUtente> ViewGaContrattiUtenti { get; set; }
-        //public DbSet<ViewGaContrattoUtenteOnPermesso> ViewGaContrattiUtentiOnPermessi { get; set; }
-        //public DbSet<ViewGaContratto> ViewGaContratti { get; set; }
-        //public DbSet<ViewGaContrattoList> ViewGaContrattiList { get; set; }
-        //public DbSet<ViewGaContrattoNumeratore> ViewGaContrattiNumeratori { get; set; }
-        //#endregion
-
-        //#region Sp
-        //public DbSet<SpGaContrattoNumeratore> SpGaContrattiNumeratori { get; set; }
-        //public DbSet<SpGaContrattoPermesso> SpGaContrattiPermessi { get; set; }
-        //public DbSet<SpGaContrattoPermessoMode> SpGaContrattiPermessiMode { get; set; }
-        //#endregion
-
-        #endregion
-
         #region GaCdr Tables
         public DbSet<CdrCentro> GaCdrCentri { get; set; }
         public DbSet<CdrCer> GaCdrCers { get; set; }
@@ -55,7 +30,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<CdrCerOnCentro> GaCdrCersOnCentri { get; set; }
         public DbSet<CdrComune> GaCdrComuni { get; set; }
         public DbSet<CdrComuneOnCentro> GaCdrComuniOnCentri { get; set; }
-
 
         #region Views
 

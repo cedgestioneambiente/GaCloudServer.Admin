@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GaCloudServer.BusinnessLogic.DTOs.Contratti;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
 using GaCloudServer.Resources.Api.Dtos.Contratti;
 
 namespace GaCloudServer.Resources.Api.Mappers.Contratti

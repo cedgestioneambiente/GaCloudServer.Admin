@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
 using GaCloudServer.Resources.Api.Mappers.Autorizzazioni;
-using GaCloudServer.Resources.Api.Mappers.Contratti;
 using GaCloudServer.Resources.Api.Mappers.Cdr;
+using GaCloudServer.Resources.Api.Mappers.Contratti;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GaCloudServer.Resources.Api.Mappers
 {
