@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti
 {
-    public class ContrattoTipologia : GenericEntity
+    public class ContrattiUtenteOnPermesso : GenericEntity
     {
-        public long Id { get; set; }
-        public string Descrizione { get; set; }
-        public bool Disabled { get; set; }
+        public string UtenteId { get; set; }
+        public long ContrattiPermessoId { get; set; }
+
+        public ContrattiPermesso ContrattiPermesso { get; set; }
     }
 }

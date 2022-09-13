@@ -30,6 +30,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaAutorizzazioniTipiRepo = gaAutorizzazioniTipiRepo;
             this.gaAutorizzazioniDocumentiRepo = gaAutorizzazioniDocumentiRepo;
             this.gaAutorizzazioniAllegatiRepo = gaAutorizzazioniAllegatiRepo;
+
             this.viewGaAutorizzazioniDocumentiRepo = viewGaAutorizzazioniDocumentiRepo;
 
             this.unitOfWork = unitOfWork;

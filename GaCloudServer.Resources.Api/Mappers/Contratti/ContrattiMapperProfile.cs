@@ -9,28 +9,28 @@ namespace GaCloudServer.Resources.Api.Mappers.Contratti
         public ContrattiMapperProfile()
         {
             //GaContrattiPermessi Map
-            CreateMap<ContrattoPermessoDto, ContrattoPermessoApiDto>(MemberList.Destination)
+            CreateMap<ContrattiPermessoDto, ContrattiPermessoApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<ContrattiPermessiDto, ContrattiPermessiApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //GaContrattiServizi Map
-            CreateMap<ContrattoServizioDto, ContrattoServizioApiDto>(MemberList.Destination)
+            CreateMap<ContrattiServizioDto, ContrattiServizioApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<ContrattiServiziDto, ContrattiServiziApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //GaContrattiTipologie Map
-            CreateMap<ContrattoTipologiaDto, ContrattoTipologiaApiDto>(MemberList.Destination)
+            CreateMap<ContrattiTipologiaDto, ContrattiTipologiaApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<ContrattiTipologieDto, ContrattiTipologieApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //GaContrattiUtentiOnPermessi Map
-            CreateMap<ContrattoUtenteOnPermessoDto, ContrattoUtenteOnPermessoApiDto>(MemberList.Destination)
+            CreateMap<ContrattiUtenteOnPermessoDto, ContrattiUtenteOnPermessoApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<ContrattiUtentiOnPermessiDto, ContrattiUtentiOnPermessiApiDto>(MemberList.Destination)

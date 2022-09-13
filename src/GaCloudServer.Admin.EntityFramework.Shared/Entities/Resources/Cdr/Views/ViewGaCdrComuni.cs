@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti
+namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views
 {
-    public class ContrattoPermesso : GenericEntity
+    public class ViewGaCdrComuni : GenericEntity
     {
-        public long Id { get; set; }
         public string Descrizione { get; set; }
-        public bool Disabled { get; set; }
     }
 }
