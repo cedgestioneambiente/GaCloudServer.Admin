@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using GaCloudServer.BusinnessLogic.Mappers;
@@ -12,6 +13,14 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         protected readonly IGenericRepository<CdrCentro> gaCdrCentriRepo;
         protected readonly IGenericRepository<CdrComune> gaCdrComuniRepo;
+        protected readonly IGenericRepository<CdrCer> gaCdrCersRepo;
+        protected readonly IGenericRepository<CdrCerDettaglio> gaCdrCersDettagliRepo;
+        protected readonly IGenericRepository<CdrCerOnCentro> gaCdrCersOnCentriRepo;
+        protected readonly IGenericRepository<CdrComuneOnCentro> gaCdrComuniOnCentriRepo;
+
+        protected readonly IGenericRepository<ViewGaCdrCersOnCentri> viewGaCdrCersOnCentriRepo;
+        protected readonly IGenericRepository<ViewGaCdrComuniOnCentri> viewGaCdrComuniOnCentriRepo;
+        protected readonly IGenericRepository<ViewGaCdrComuni> viewGaCdrComuniRepo;
 
 
         protected readonly IUnitOfWork unitOfWork;
@@ -19,12 +28,27 @@ namespace GaCloudServer.BusinnessLogic.Services
         public GaCdrService(
             IGenericRepository<CdrCentro> gaCdrCentriRepo,
             IGenericRepository<CdrComune> gaCdrComuniRepo,
+            IGenericRepository<CdrCer> gaCdrCersRepo,
+            IGenericRepository<CdrCerDettaglio> gaCdrCersDettagliRepo,
+            IGenericRepository<CdrCerOnCentro> gaCdrCersOnCentriRepo,
+            IGenericRepository<CdrComuneOnCentro> gaCdrComuniOnCentriRepo,
+
+            IGenericRepository<ViewGaCdrCersOnCentri> viewGaCdrCersOnCentriRepo,
+            IGenericRepository<ViewGaCdrComuniOnCentri> viewGaCdrComuniOnCentriRepo,
+            IGenericRepository<ViewGaCdrComuni> viewGaCdrComuniRepo,
 
             IUnitOfWork unitOfWork)
         {
             this.gaCdrCentriRepo = gaCdrCentriRepo;
             this.gaCdrComuniRepo = gaCdrComuniRepo;
+            this.gaCdrCersRepo = gaCdrCersRepo;
+            this.gaCdrCersDettagliRepo = gaCdrCersDettagliRepo;
+            this.gaCdrCersOnCentriRepo = gaCdrCersOnCentriRepo;
+            this.gaCdrComuniOnCentriRepo = gaCdrComuniOnCentriRepo;
 
+            this.viewGaCdrCersOnCentriRepo = viewGaCdrCersOnCentriRepo;
+            this.viewGaCdrComuniOnCentriRepo = viewGaCdrComuniOnCentriRepo;
+            this.viewGaCdrComuniRepo = viewGaCdrComuniRepo;
 
             this.unitOfWork = unitOfWork;
         }
@@ -109,7 +133,6 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-
         #region CdrComuni
         public async Task<CdrComuniDto> GetGaCdrComuniAsync(int page = 1, int pageSize = 0)
         {
@@ -188,7 +211,265 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #region Views
+        //public async Task<PagedList<ViewGaCdrComuni>> GetViewGaCdrComuniAsync(bool all = true)
+        //{
+        //    var entities = all ? await viewGaCdrComuniRepo.GetAllAsync(1, 0) : await viewGaCdrComuniRepo.GetWithFilterAsync(x => x.Disabled == false);
+        //    return entities;
+        //}
+
         #endregion
+
+        #endregion
+
+        #region CdrCers
+        public async Task<CdrCersDto> GetGaCdrCersAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCdrCersRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CdrCersDto, PagedList<CdrCer>>();
+            return dtos;
+        }
+
+        public async Task<CdrCerDto> GetGaCdrCerByIdAsync(long id)
+        {
+            var entity = await gaCdrCersRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CdrCerDto, CdrCer>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCdrCerAsync(CdrCerDto dto)
+        {
+            var entity = dto.ToEntity<CdrCer, CdrCerDto>();
+            await gaCdrCersRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCdrCerAsync(CdrCerDto dto)
+        {
+            var entity = dto.ToEntity<CdrCer, CdrCerDto>();
+            gaCdrCersRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCdrCerAsync(long id)
+        {
+            var entity = await gaCdrCersRepo.GetByIdAsync(id);
+            gaCdrCersRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaCdrCerAsync(long id, string cer)
+        {
+            var entity = await gaCdrCersRepo.GetWithFilterAsync(x => x.Cer == cer && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaCdrCerAsync(long id)
+        {
+            var entity = await gaCdrCersRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCdrCersRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCdrCersRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region CdrCersDettagli
+        public async Task<CdrCersDettagliDto> GetGaCdrCersDettagliAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCdrCersDettagliRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CdrCersDettagliDto, PagedList<CdrCerDettaglio>>();
+            return dtos;
+        }
+
+        public async Task<CdrCerDettaglioDto> GetGaCdrCerDettaglioByIdAsync(long id)
+        {
+            var entity = await gaCdrCersDettagliRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CdrCerDettaglioDto, CdrCerDettaglio>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCdrCerDettaglioAsync(CdrCerDettaglioDto dto)
+        {
+            var entity = dto.ToEntity<CdrCerDettaglio, CdrCerDettaglioDto>();
+            await gaCdrCersDettagliRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCdrCerDettaglioAsync(CdrCerDettaglioDto dto)
+        {
+            var entity = dto.ToEntity<CdrCerDettaglio, CdrCerDettaglioDto>();
+            gaCdrCersDettagliRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCdrCerDettaglioAsync(long id)
+        {
+            var entity = await gaCdrCersDettagliRepo.GetByIdAsync(id);
+            gaCdrCersDettagliRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaCdrCerDettaglioAsync(long id, string descrizione)
+        {
+            var entity = await gaCdrCersDettagliRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaCdrCerDettaglioAsync(long id)
+        {
+            var entity = await gaCdrCersDettagliRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCdrCersDettagliRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCdrCersDettagliRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region CdrCersOnCentri
+
+        public async Task<CdrCersDto> GetGaCdrCersOnCentriAsync(long id)
+        {
+            throw new NotImplementedException();
+        //        var entities = await gaCdrCersOnCentriRepo.GetWithFilterAsync(x => x.CdrCentroId == id, 1, 0);
+
+        //        var cers = await gaCdrCersRepo.GetAllAsync(1, 0);
+        //        var dtos = cers.ToDto<CdrCersDto, PagedList<CdrCer>>();
+        //        var data = from x in dtos.Data
+        //                   where entities.Data.Any(s => s.CdrCerId == x.Id)
+        //                   select x;
+
+        //        var response = new CdrCersDto();
+        //        response.TotalCount = data.Count();
+        //        response.PageSize = 0;
+        //        response.Data = data.ToList();
+
+        }
+
+        public async Task<bool> UpdateGaCdrCerOnCentroAsync(long cerId, long centroId)
+        {
+            var exists = await gaCdrCersOnCentriRepo.CheckIfExist(x => x.CdrCerId == cerId && x.CdrCentroId == centroId);
+            if (exists)
+            {
+                var entity = await gaCdrCersOnCentriRepo.GetSingleWithFilter(x => x.CdrCerId == cerId && x.CdrCentroId == centroId);
+                gaCdrCersOnCentriRepo.Remove(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                var entity = new CdrCerOnCentro();
+                entity.CdrCentroId = centroId;
+                entity.CdrCerId = cerId;
+                gaCdrCersOnCentriRepo.Add(entity);
+                await SaveChanges();
+                return true;
+            }
+        }
+
+        #region Views
+        public async Task<PagedList<ViewGaCdrCersOnCentri>> GetViewGaCdrCersOnCentriAsync(long id)
+        {
+            var entities = await viewGaCdrCersOnCentriRepo.GetWithFilterAsync(x => x.CentroId == id, 1, 0);
+            return entities;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region CdrComuniOnCentri
+
+        public async Task<bool> UpdateGaCdrComuneOnCentroAsync(long comuneId,long centroId)
+        {
+            var exists=await gaCdrComuniOnCentriRepo.CheckIfExist(x => x.CdrComuneId == comuneId && x.CdrCentroId == centroId);
+            if (exists)
+            {
+                var entity = await gaCdrComuniOnCentriRepo.GetSingleWithFilter(x => x.CdrComuneId == comuneId && x.CdrCentroId == centroId);
+                gaCdrComuniOnCentriRepo.Remove(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                var entity = new CdrComuneOnCentro();
+                entity.CdrCentroId = centroId;
+                entity.CdrComuneId = comuneId;
+                gaCdrComuniOnCentriRepo.Add(entity);
+                await SaveChanges();
+                return true;
+            }
+        }
+
+
+        #region Views
+        public async Task<PagedList<ViewGaCdrComuniOnCentri>> GetViewGaCdrComuniOnCentriAsync(long id)
+        {
+            var entities = await viewGaCdrComuniOnCentriRepo.GetWithFilterAsync(x => x.CentroId == id, 1, 0);
+            return entities;
+        }
+
+        #endregion
+
+        #endregion
+
+
         #region Common
         private async Task<long> SaveChanges()
         {
@@ -199,6 +480,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             unitOfWork.DetachEntity(entity);
         }
+
         #endregion
 
     }

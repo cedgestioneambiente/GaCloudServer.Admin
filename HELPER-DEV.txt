@@ -1,7 +1,134 @@
-
 1. Aggiunta Entities
- - GaCloudServer\src\GaCloudServer.Admin.EntityFramework.Shared\Entities\
+ - GaCloudServer.Admin.EntityFramework.Shared\Entities\
  - \Resources
  - Creazione Cartella Specifica con nome applicativo(Es. App Autorizzazioni - Cartella Autorizzazioni | App Mezzi - Cartella Mezzi)
  - Creazione classe Entity con schema AppNameTableName Singolare (Es App Mezzi, Tab Veicoli = MezziVeicolo.cs)
  - Creazione Entity estendendo classi EntityBase (GenericEntity, GenericListEntity, GenericFileEntity ecc.) non è necessario esplicitare le proprietà già presenti nelle classe base estesa.
+
+ 1.2 -Creazione sottocartella Views 
+     -Creazione Classe NomeVistaDb
+     -Estendere classi EntityBase
+
+ 2. Registrazione Repo
+GaCloudServer.Admin.EntityFramework.Shared\Extensions\ResourcesRepositoryExtensions.cs
+
+ services.AddTransient<IGenericRepository<EntityName>,GenericRepository<TResourcesDbContext, EntityName>>();
+ services.AddTransient<IGenericRepository<ViewGaNomeVistaDb>, GenericRepository<TResourcesDbContext, ViewGaNomeVistaDb>>();
+
+ 3. Migrazione
+GaCloudServer.Admin.EntityFramework.Shared\DbContexts\Interfaces\IResourcesDbContext.cs
+DbSet<EntityName> GaEntititiesNames { get; set; }
+
+DbSet<ViewGaEntityName> ViewGaEntitiesNames { get; set; }
+
+4.
+GaCloudServer.Admin.EntityFramework.Shared\DbContexts\ResourcesDbContext.cs
+= IResourcesDbContext.cs con public davanti
+
+sotto:
+ protected override void OnModelCreating(ModelBuilder builder)
+        {
+            #region Views
+
+            #region Entity
+
+            builder.Entity<ViewGaNomeVistaDb>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaNomeVistaDb))
+                    .HasKey(x => x.Id);     //se ha chiave esterna(possibilmente farla con chiave)
+            
+
+               entity
+                    .ToView(nameof(ViewGaNomeVistaDb))
+                    .HasnoKey()             //se non ha chiave
+    
+            });
+
+            #endregion
+
+            #endregion
+
+            base.OnModelCreating(builder);
+
+        }
+
+5. Eseguire la migrazione
+aprire nle terminale la cartella migrationhelpers
+add nomemigrazione      //es. GaAutorizzazioni, se sono viste ViewGaAutorizzazioni
+
+nelle proprietà della migrazione mettere sempre "copia sempre" e sostiture Cascade con Restrict
+se devo fare la migrazione di una view
+GaCloudServer.Admin.EntityFramework.SqlServer.Constants
+e aggiungo il necessario
+poi:
+add nuova migrazione (che sarà vuota)
+me la apro 
+
+ public partial class ViewGaAutorizzazioni : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaAutorizzazioniMigration,ScriptConsts.CREATE_ViewGaAutorizzazioniDocumenti));
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaAutorizzazioniMigration, ScriptConsts.DROP_ViewGaAutorizzazioniDocumenti));
+        }
+    }
+}
+
+applico la migrazione
+
+6. Ci spostiamo sulla Businness logic
+Dto della Businness
+1. Aggiunta Entities
+ - GaCloudServerBusinneLogic\DTOs\
+ - \Resources
+ - Creazione Cartella Specifica con nome applicativo(Es. App Autorizzazioni - Cartella Autorizzazioni | App Mezzi - Cartella Mezzi)
+ - Creazione classe Entity con schema AppNameTableName Singolare (Es App Mezzi, Tab Veicoli = MezziVeicolo.cs)
+ - Estendere i DtoBase (GenericListDto, GenericDto ecc)
+
+ 7. mappers tra dto e l'entity
+ Sottocartella con nome applicativo
+ NomeapplicaticoMapperProfile
+
+             CreateMap<AutorizzazioniTipo, AutorizzazioniTipoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<AutorizzazioniTipo>, AutorizzazioniTipiDto>(MemberList.Destination)
+                .ReverseMap();
+
+                Aggiungere il profile al generic mappers alla lista dei profili
+8. Service
+Interfaces IGaNomeapplicativopluraleService
+
+        #region GaAutorizzazioniTipi
+        Task<AutorizzazioniTipiDto> GetGaAutorizzazioniTipiAsync(int page = 1, int pageSize = 0);
+        Task<AutorizzazioniTipoDto> GetGaAutorizzazioniTipoByIdAsync(long id);
+
+        Task<long> AddGaAutorizzazioniTipoAsync(AutorizzazioniTipoDto dto);
+        Task<long> UpdateGaAutorizzazioniTipoAsync(AutorizzazioniTipoDto dto);
+
+        Task<bool> DeleteGaAutorizzazioniTipoAsync(long id);
+
+
+GaNomeapplicativopluraleService
+vedi autorizzaizoni
+
+9. ResourceApi
+ApiDto uguali a quelli della businnes con Api davanti
+
+10.Mappers tra Dto e ApiDto
+
+uguali agli altri
+
+11. Controllers
+
+Se non serve il fileservice non scriverlo, idem errorsesource
+
+per i file prendere come modello autorizzazioni
+
+12. Attivare il servizio
+GaCloudServer.BusinnessLogic.Extensions

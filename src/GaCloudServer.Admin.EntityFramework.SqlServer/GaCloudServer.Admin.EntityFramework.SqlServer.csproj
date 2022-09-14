@@ -18,10 +18,94 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Migrations\Resources\20220901132313_GaAutorizzazioni.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220901132424_ViewGaAutorizzazioni.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220901133747_GaCdr.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220907123036_ViewGaCDR.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220907134454_ViewGaCdr.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220907135307_ViewGaCdr.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220907140751_ViewGaCdr_V2.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220907141137_ViewGaCdr_v3.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220909090505_GaContratti.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Update="Scripts\Autorizzazioni\CREATE_ViewGaAutorizzazioniDocumenti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\DROP_ViewGaCdrComuni.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\CREATE_ViewGaCdrComuni.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrCersOnCentri.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrCersOnCentri.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrCersList.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrCersList.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrComuniList.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrComuniList.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\CREATE_ViewGaCdrComuniOnCentri.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\CREATE_ViewGaCdrCersOnCentri.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\DROP_ViewGaCdrComuniOnCentri.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\DROP_ViewGaCdrCersOnCentri.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Contratti\CREATE_ViewGaContrattiUtenti.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Contratti\DROP_ViewGaContrattiUtenti.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Contratti\DROP_ViewGaContrattiUtentiOnPermessi.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Contratti\CREATE_ViewGaContrattiUtentiOnPermessi.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Contratti\DROP_PrivateViewGaContrattiPermessiList.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Contratti\CREATE_PrivateViewGaContrattiPermessiList.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Mezzi\CREATE_ViewGaMezzi.sql">

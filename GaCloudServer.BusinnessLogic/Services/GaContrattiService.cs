@@ -1,38 +1,44 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
     public class GaContrattiService : IGaContrattiService
     {
-        protected readonly IGenericRepository<ContrattoPermesso> contrattiPermessiRepo;
-        protected readonly IGenericRepository<ContrattoServizio> contrattiServiziRepo;
-        protected readonly IGenericRepository<ContrattoTipologia> contrattiTipologieRepo;
-        protected readonly IGenericRepository<ContrattoUtenteOnPermesso> contrattiUtentiOnPermessiRepo;
+        protected readonly IGenericRepository<ContrattiPermesso> gaContrattiPermessiRepo;
+        protected readonly IGenericRepository<ContrattiServizio> gaContrattiServiziRepo;
+        protected readonly IGenericRepository<ContrattiTipologia> gaContrattiTipologieRepo;
+        protected readonly IGenericRepository<ContrattiUtenteOnPermesso> gaContrattiUtentiOnPermessiRepo;
+
+        protected readonly IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo;
+        protected readonly IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
         public GaContrattiService(
-            IGenericRepository<ContrattoPermesso> contrattiPermessiRepo,
-            IGenericRepository<ContrattoServizio> contrattiServiziRepo,
-            IGenericRepository<ContrattoTipologia> contrattiTipologieRepo,
-            IGenericRepository<ContrattoUtenteOnPermesso> contrattiUtentiOnPermessiRepo,
+            IGenericRepository<ContrattiPermesso> gaContrattiPermessiRepo,
+            IGenericRepository<ContrattiServizio> gaContrattiServiziRepo,
+            IGenericRepository<ContrattiTipologia> gaContrattiTipologieRepo,
+            IGenericRepository<ContrattiUtenteOnPermesso> gaContrattiUtentiOnPermessiRepo,
+
+            IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo,
+            IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo,
+
 
             IUnitOfWork unitOfWork)
         {
-            this.contrattiPermessiRepo = contrattiPermessiRepo;
-            this.contrattiServiziRepo = contrattiServiziRepo;
-            this.contrattiTipologieRepo = contrattiTipologieRepo;
-            this.contrattiUtentiOnPermessiRepo = contrattiUtentiOnPermessiRepo;
+            this.gaContrattiPermessiRepo = gaContrattiPermessiRepo;
+            this.gaContrattiServiziRepo = gaContrattiServiziRepo;
+            this.gaContrattiTipologieRepo = gaContrattiTipologieRepo;
+            this.gaContrattiUtentiOnPermessiRepo = gaContrattiUtentiOnPermessiRepo;
+
+            this.viewGaContrattiUtentiRepo = viewGaContrattiUtentiRepo;
+            this.viewGaContrattiUtentiOnPermessiRepo = viewGaContrattiUtentiOnPermessiRepo;
 
             this.unitOfWork = unitOfWork;
         }
@@ -40,35 +46,78 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Contratti Permessi
         public async Task<ContrattiPermessiDto> GetGaContrattiPermessiAsync(int page = 1, int pageSize = 0)
         {
-            var entities = await contrattiPermessiRepo.GetAllAsync(page,pageSize);
-            var dtos= entities.ToDto<ContrattiPermessiDto, PagedList<ContrattoPermesso>>();
+            var entities = await gaContrattiPermessiRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ContrattiPermessiDto, PagedList<ContrattiPermesso>>();
             return dtos;
         }
 
-        public Task<ContrattoPermessoDto> GetGaContrattoPermessoByIdAsync(long id)
+        public async Task<ContrattiPermessoDto> GetGaContrattiPermessoByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiPermessiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ContrattiPermessoDto, ContrattiPermesso>();
+            return dto;
         }
 
-        public Task<long> AddGaContrattoPermessoAsync(ContrattoPermessoDto dto)
+        public async Task<long> AddGaContrattiPermessoAsync(ContrattiPermessoDto dto)
         {
-            throw new NotImplementedException();
+            var entity = dto.ToEntity<ContrattiPermesso, ContrattiPermessoDto>();
+            await gaContrattiPermessiRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
         }
 
-        public Task<long> UpdateGaContrattoPermessoAsync(ContrattoPermessoDto dto)
+        public async Task<long> UpdateGaContrattiPermessoAsync(ContrattiPermessoDto dto)
         {
-            throw new NotImplementedException();
+            var entity = dto.ToEntity<ContrattiPermesso, ContrattiPermessoDto>();
+            gaContrattiPermessiRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
         }
 
-        public Task<bool> DeleteGaContrattoPermessoAsync(long id)
+        public async Task<bool> DeleteGaContrattiPermessoAsync(long id)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiPermessiRepo.GetByIdAsync(id);
+            gaContrattiPermessiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
         }
 
         #region Functions
-        public Task<bool> CheckIsUniqueGaContrattoPermessoAsync(long id, string descrizione)
+        public async Task<bool> ValidateGaContrattiPermessoAsync(long id, string descrizione)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiPermessiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaContrattiPermessoAsync(long id)
+        {
+            var entity = await gaContrattiPermessiRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaContrattiPermessiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaContrattiPermessiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
         }
         #endregion
 
@@ -77,35 +126,78 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Contratti Servizi
         public async Task<ContrattiServiziDto> GetGaContrattiServiziAsync(int page = 1, int pageSize = 0)
         {
-            var entities = await contrattiServiziRepo.GetAllAsync(page, pageSize);
-            var dtos = entities.ToDto<ContrattiServiziDto, PagedList<ContrattoServizio>>();
+            var entities = await gaContrattiServiziRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ContrattiServiziDto, PagedList<ContrattiServizio>>();
             return dtos;
         }
 
-        public Task<ContrattoServizioDto> GetGaContrattoServizioByIdAsync(long id)
+        public async Task<ContrattiServizioDto> GetGaContrattiServizioByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiServiziRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ContrattiServizioDto, ContrattiServizio>();
+            return dto;
         }
 
-        public Task<long> AddGaContrattoServizioAsync(ContrattoServizioDto dto)
+        public async Task<long> AddGaContrattiServizioAsync(ContrattiServizioDto dto)
         {
-            throw new NotImplementedException();
+            var entity = dto.ToEntity<ContrattiServizio, ContrattiServizioDto>();
+            await gaContrattiServiziRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
         }
 
-        public Task<long> UpdateGaContrattoServizioAsync(ContrattoServizioDto dto)
+        public async Task<long> UpdateGaContrattiServizioAsync(ContrattiServizioDto dto)
         {
-            throw new NotImplementedException();
+            var entity = dto.ToEntity<ContrattiServizio, ContrattiServizioDto>();
+            gaContrattiServiziRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
         }
 
-        public Task<bool> DeleteGaContrattoServizioAsync(long id)
+        public async Task<bool> DeleteGaContrattiServizioAsync(long id)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiServiziRepo.GetByIdAsync(id);
+            gaContrattiServiziRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
         }
 
         #region Functions
-        public Task<bool> CheckIsUniqueGaContrattoServizioAsync(long id, string descrizione)
+        public async Task<bool> ValidateGaContrattiServizioAsync(long id, string descrizione)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiServiziRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaContrattiServizioAsync(long id)
+        {
+            var entity = await gaContrattiServiziRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaContrattiServiziRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaContrattiServiziRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
         }
         #endregion
 
@@ -114,62 +206,140 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Contratti Tipologie
         public async Task<ContrattiTipologieDto> GetGaContrattiTipologieAsync(int page = 1, int pageSize = 0)
         {
-            var entities = await contrattiTipologieRepo.GetAllAsync(page, pageSize);
-            var dtos = entities.ToDto<ContrattiTipologieDto, PagedList<ContrattoTipologia>>();
+            var entities = await gaContrattiTipologieRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ContrattiTipologieDto, PagedList<ContrattiTipologia>>();
             return dtos;
         }
 
-        public Task<ContrattoTipologiaDto> GetGaContrattoTipologiaByIdAsync(long id)
+        public async Task<ContrattiTipologiaDto> GetGaContrattiTipologiaByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiTipologieRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ContrattiTipologiaDto, ContrattiTipologia>();
+            return dto;
         }
 
-        public Task<long> AddGaContrattoTipologiaAsync(ContrattoTipologiaDto dto)
+        public async Task<long> AddGaContrattiTipologiaAsync(ContrattiTipologiaDto dto)
         {
-            throw new NotImplementedException();
+            var entity = dto.ToEntity<ContrattiTipologia, ContrattiTipologiaDto>();
+            await gaContrattiTipologieRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
         }
 
-        public Task<long> UpdateGaContrattoTipologiaAsync(ContrattoTipologiaDto dto)
+        public async Task<long> UpdateGaContrattiTipologiaAsync(ContrattiTipologiaDto dto)
         {
-            throw new NotImplementedException();
+            var entity = dto.ToEntity<ContrattiTipologia, ContrattiTipologiaDto>();
+            gaContrattiTipologieRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
         }
 
-        public Task<bool> DeleteGaContrattoTipologiaAsync(long id)
+        public async Task<bool> DeleteGaContrattiTipologiaAsync(long id)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiTipologieRepo.GetByIdAsync(id);
+            gaContrattiTipologieRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
         }
 
         #region Functions
-        public Task<bool> CheckIsUniqueGaContrattoTipologiaAsync(long id, string descrizione)
+        public async Task<bool> ValidateGaContrattiTipologiaAsync(long id, string descrizione)
         {
-            throw new NotImplementedException();
+            var entity = await gaContrattiTipologieRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaContrattiTipologiaAsync(long id)
+        {
+            var entity = await gaContrattiTipologieRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaContrattiTipologieRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaContrattiTipologieRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
         }
         #endregion
 
         #endregion
 
         #region Contratti UtentiOnPermessi
-        
+
         #region Functions
-        public Task<bool> UpdateGaContrattiUtenteOnPermessoAsync(string utenteId, long permessoId)
+        public async Task<bool> UpdateGaContrattiUtenteOnPermessoAsync(string utenteId, long permessoId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var checkExist = await gaContrattiUtentiOnPermessiRepo.CheckIfExist(x => x.UtenteId == utenteId && x.ContrattiPermessoId == permessoId);
+                if (checkExist)
+                {
+                    var entity = await gaContrattiUtentiOnPermessiRepo.GetSingleWithFilter(x => x.UtenteId == utenteId && x.ContrattiPermessoId == permessoId);
+                    gaContrattiUtentiOnPermessiRepo.Remove(entity);
+                    await SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    var entity = new ContrattiUtenteOnPermesso();
+                    entity.UtenteId = utenteId;
+                    entity.ContrattiPermessoId = permessoId;
+                    gaContrattiUtentiOnPermessiRepo.Add(entity);
+                    await SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
         }
         #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(string id)
+        {
+            {
+                var entities = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == id, 1, 0, "UtenteId");
+
+                return entities;
+            }
+        }
+    #endregion
 
         #endregion
 
         #region Common
-        private async Task<long> SaveChanges()
-        {
-            return await unitOfWork.SaveChangesAsync();
-        }
+    private async Task<long> SaveChanges()
+    {
+        return await unitOfWork.SaveChangesAsync();
+    }
 
-        private void DetachEntity<T>(T entity)
-        {
-            unitOfWork.DetachEntity(entity);
-        }
-        #endregion
+    private void DetachEntity<T>(T entity)
+    {
+        unitOfWork.DetachEntity(entity);
+    }
 
     }
+    #endregion
 }

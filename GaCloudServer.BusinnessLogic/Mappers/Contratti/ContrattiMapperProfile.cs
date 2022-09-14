@@ -10,31 +10,31 @@ namespace GaCloudServer.BusinessLogic.Mappers.Contratti
         public ContrattiMapperProfile()
         {
             //GaContrattiPermessi Map
-            CreateMap<ContrattoPermesso, ContrattoPermessoDto>(MemberList.Destination)
+            CreateMap<ContrattiPermesso, ContrattiPermessoDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PagedList<ContrattoPermesso>, ContrattiPermessiDto>(MemberList.Destination)
+            CreateMap<PagedList<ContrattiPermesso>, ContrattiPermessiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //GaContrattiServizi Map
-            CreateMap<ContrattoServizio, ContrattoServizioDto>(MemberList.Destination)
+            CreateMap<ContrattiServizio, ContrattiServizioDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PagedList<ContrattoServizio>, ContrattiServiziDto>(MemberList.Destination)
+            CreateMap<PagedList<ContrattiServizio>, ContrattiServiziDto>(MemberList.Destination)
                 .ReverseMap();
 
             //GaContrattiTipologie Map
-            CreateMap<ContrattoTipologia, ContrattoTipologiaDto>(MemberList.Destination)
+            CreateMap<ContrattiTipologia, ContrattiTipologiaDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PagedList<ContrattoTipologia>, ContrattiTipologieDto>(MemberList.Destination)
+            CreateMap<PagedList<ContrattiTipologia>, ContrattiTipologieDto>(MemberList.Destination)
                 .ReverseMap();
 
             //GaContrattiUtentiOnPermessi Map
-            CreateMap<ContrattoUtenteOnPermesso, ContrattoUtenteOnPermessoDto>(MemberList.Destination)
+            CreateMap<ContrattiUtenteOnPermesso, ContrattiUtenteOnPermessoDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PagedList<ContrattoUtenteOnPermesso>, ContrattiUtentiOnPermessiDto>(MemberList.Destination)
+            CreateMap<PagedList<ContrattiUtenteOnPermesso>, ContrattiUtentiOnPermessiDto>(MemberList.Destination)
                 .ReverseMap();
         }
     }

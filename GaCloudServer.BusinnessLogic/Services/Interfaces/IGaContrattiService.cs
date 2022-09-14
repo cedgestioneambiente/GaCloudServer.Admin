@@ -1,9 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
@@ -11,45 +8,49 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
     {
         #region GaContrattiPermessi
         Task<ContrattiPermessiDto> GetGaContrattiPermessiAsync(int page = 1, int pageSize = 0);
-        Task<ContrattoPermessoDto> GetGaContrattoPermessoByIdAsync(long id);
+        Task<ContrattiPermessoDto> GetGaContrattiPermessoByIdAsync(long id);
 
-        Task<long> AddGaContrattoPermessoAsync(ContrattoPermessoDto dto);
-        Task<long> UpdateGaContrattoPermessoAsync(ContrattoPermessoDto dto);
+        Task<long> AddGaContrattiPermessoAsync(ContrattiPermessoDto dto);
+        Task<long> UpdateGaContrattiPermessoAsync(ContrattiPermessoDto dto);
 
-        Task<bool> DeleteGaContrattoPermessoAsync(long id);
+        Task<bool> DeleteGaContrattiPermessoAsync(long id);
 
         #region Functions
-        Task<bool> CheckIsUniqueGaContrattoPermessoAsync(long id, string descrizione);
+        Task<bool> ValidateGaContrattiPermessoAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaContrattiPermessoAsync(long id);
         #endregion
 
         #endregion
 
         #region GaContrattiServizi
         Task<ContrattiServiziDto> GetGaContrattiServiziAsync(int page = 1, int pageSize = 0);
-        Task<ContrattoServizioDto> GetGaContrattoServizioByIdAsync(long id);
+        Task<ContrattiServizioDto> GetGaContrattiServizioByIdAsync(long id);
 
-        Task<long> AddGaContrattoServizioAsync(ContrattoServizioDto dto);
-        Task<long> UpdateGaContrattoServizioAsync(ContrattoServizioDto dto);
+        Task<long> AddGaContrattiServizioAsync(ContrattiServizioDto dto);
+        Task<long> UpdateGaContrattiServizioAsync(ContrattiServizioDto dto);
 
-        Task<bool> DeleteGaContrattoServizioAsync(long id);
+        Task<bool> DeleteGaContrattiServizioAsync(long id);
 
         #region Functions
-        Task<bool> CheckIsUniqueGaContrattoServizioAsync(long id, string descrizione);
+        Task<bool> ValidateGaContrattiServizioAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaContrattiServizioAsync(long id);
         #endregion
 
         #endregion
 
         #region GaContrattiTipologie
         Task<ContrattiTipologieDto> GetGaContrattiTipologieAsync(int page = 1, int pageSize = 0);
-        Task<ContrattoTipologiaDto> GetGaContrattoTipologiaByIdAsync(long id);
+        Task<ContrattiTipologiaDto> GetGaContrattiTipologiaByIdAsync(long id);
 
-        Task<long> AddGaContrattoTipologiaAsync(ContrattoTipologiaDto dto);
-        Task<long> UpdateGaContrattoTipologiaAsync(ContrattoTipologiaDto dto);
+        Task<long> AddGaContrattiTipologiaAsync(ContrattiTipologiaDto dto);
+        Task<long> UpdateGaContrattiTipologiaAsync(ContrattiTipologiaDto dto);
 
-        Task<bool> DeleteGaContrattoTipologiaAsync(long id);
+        Task<bool> DeleteGaContrattiTipologiaAsync(long id);
 
         #region Functions
-        Task<bool> CheckIsUniqueGaContrattoTipologiaAsync(long id, string descrizione);
+        Task<bool> ValidateGaContrattiTipologiaAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaContrattiTipologiaAsync(long id);
+
         #endregion
 
         #endregion
@@ -58,6 +59,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         Task<bool> UpdateGaContrattiUtenteOnPermessoAsync(string utenteId, long permessoId);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(string id);
         #endregion
 
         #endregion
