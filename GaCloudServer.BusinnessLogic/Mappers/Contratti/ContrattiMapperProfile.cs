@@ -5,7 +5,7 @@ using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinessLogic.Mappers.Contratti
 {
-    public class ContrattiMapperProfile : Profile
+    internal class ContrattiMapperProfile : Profile
     {
         public ContrattiMapperProfile()
         {

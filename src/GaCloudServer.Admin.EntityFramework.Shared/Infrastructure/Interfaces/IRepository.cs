@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces
 {
-    public interface IRepository<TEntity>
-        where TEntity : class
+    public interface IRepository<TEntity> :IDisposable
+        where TEntity : class 
     {
         #region CRUD
         void Add(TEntity entity);

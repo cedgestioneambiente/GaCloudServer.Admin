@@ -1,7 +1,10 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
@@ -25,6 +28,31 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<CdrCerOnCentro> GaCdrCersOnCentri { get; set; }
         DbSet<CdrComune> GaCdrComuni { get; set; }
         DbSet<CdrComuneOnCentro> GaCdrComuniOnCentri { get; set; }
+
+        #endregion
+
+        #region GaComunicati Tables
+        DbSet<ComunicatiDocumento> GaComunicatiDocumenti { get; set; }
+        #endregion
+
+        #region GaMezzi Tables
+        DbSet<MezziVeicolo> GaMezziVeicoli { get; set; }
+        DbSet<MezziAlimentazione> GaMezziAlimentazioni { get; set; }
+        DbSet<MezziCantiere> GaMezziCantieri { get; set; }
+        DbSet<MezziClasse> GaMezziClassi { get; set; }
+        DbSet<MezziDocumento> GaMezziDocumenti { get; set; }
+        DbSet<MezziPatente> GaMezziPatenti { get; set; }
+        DbSet<MezziPeriodoScadenza> GaMezziPeriodiScadenze { get; set; }
+        DbSet<MezziProprietario> GaMezziProprietari { get; set; }
+        DbSet<MezziScadenza> GaMezziScadenze { get; set; }
+        DbSet<MezziScadenzaTipo> GaMezziScadenzeTipi { get; set; }
+        DbSet<MezziTipo> GaMezziTipi { get; set; }
+
+        #region Views
+        DbSet<ViewGaMezziVeicoli> ViewGaMezziVeicoli { get; set; }
+        DbSet<ViewGaMezziScadenze> ViewGaMezziScadenze { get; set; }
+        DbSet<ViewGaMezziDocumenti> ViewGaMezziDocumenti { get; set; }
+        #endregion
 
         #endregion
     }

@@ -15,6 +15,8 @@ namespace GaCloudServer.BusinnessLogic.Extensions
         {
             services.AddTransient<IGaAutorizzazioniService, GaAutorizzazioniService>();
             services.AddTransient<IGaCdrService,GaCdrService>();
+            services.AddTransient<IGaComunicatiService, GaComunicatiService>();
+            services.AddTransient<IGaMezziService, GaMezziService>();
 
             services.AddTransient<IFileService, FileService>();
 

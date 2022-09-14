@@ -5,7 +5,7 @@ using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinessLogic.Mappers.Cdr
 {
-    public class CdrMapperProfile : Profile
+    internal class CdrMapperProfile : Profile
     {
         public CdrMapperProfile()
         {

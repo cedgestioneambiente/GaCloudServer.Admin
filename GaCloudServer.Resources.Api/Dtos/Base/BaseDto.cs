@@ -10,11 +10,11 @@ namespace GaCloudServer.Resources.Api.Dtos.Base
 
     public class GenericFileApiDto:GenericApiDto
     {
-        public string FileId { get; set; }
+        public string? FileId { get; set; }
         public string? FileFolder { get; set; }
-        public string FileName { get; set; }
-        public string FileType { get; set; }
-        public string FileSize { get; set; }
+        public string? FileName { get; set; }
+        public string? FileType { get; set; }
+        public string? FileSize { get; set; }
 #pragma warning disable CS8632 // L'annotazione per i tipi riferimento nullable deve essere usata solo nel codice in un contesto di annotations '#nullable'.
         public IFormFile? File { get; set; }
 #pragma warning restore CS8632 // L'annotazione per i tipi riferimento nullable deve essere usata solo nel codice in un contesto di annotations '#nullable'.

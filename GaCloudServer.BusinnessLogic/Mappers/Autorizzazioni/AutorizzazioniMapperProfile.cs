@@ -5,7 +5,7 @@ using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinessLogic.Mappers.Autorizzazioni
 {
-    public class AutorizzazioniMapperProfile : Profile
+    internal class AutorizzazioniMapperProfile : Profile
     {
         public AutorizzazioniMapperProfile()
         {

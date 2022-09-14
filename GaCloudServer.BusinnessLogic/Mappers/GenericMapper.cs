@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using GaCloudServer.BusinessLogic.Mappers.Autorizzazioni;
 using GaCloudServer.BusinessLogic.Mappers.Cdr;
+using GaCloudServer.BusinessLogic.Mappers.Comunicati;
 using GaCloudServer.BusinessLogic.Mappers.Contratti;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using GaCloudServer.BusinnessLogic.Mappers.Mezzi;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -20,6 +16,8 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new AutorizzazioniMapperProfile(),
             new ContrattiMapperProfile(),
             new CdrMapperProfile(),
+            new ComunicatiMapperProfile(),
+            new MezziMapperProfile()
         };
 
         static GenericMapper() {

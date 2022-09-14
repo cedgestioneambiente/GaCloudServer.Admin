@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 {
-    public class Repository<TDbContext, TEntity> : IRepository<TEntity>
+    public class Repository<TDbContext, TEntity> : IRepository<TEntity>,IDisposable
         where TDbContext : DbContext, IResourcesDbContext
         where TEntity :  GenericEntity
     {
@@ -208,6 +208,25 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         public async Task<bool> CheckIfExist(Expression<Func<TEntity, bool>> predicate)
         {
             return await _entities.AsNoTracking().AnyAsync(predicate);
+        }
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
 
