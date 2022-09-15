@@ -57,6 +57,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaContrattiUtenti> ViewGaContrattiUtenti { get; set; }
         public DbSet<ViewGaContrattiUtentiOnPermessi> ViewGaContrattiUtentiOnPermessi { get; set; }
         #endregion
+        #endregion
 
         #region GaComunicati Tables
         public DbSet<ComunicatiDocumento> GaComunicatiDocumenti { get; set; }
@@ -83,7 +84,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #endregion
 
-        #endregion
+        
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
         {
