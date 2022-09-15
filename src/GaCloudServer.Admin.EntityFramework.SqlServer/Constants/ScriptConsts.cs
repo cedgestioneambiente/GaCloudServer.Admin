@@ -21,6 +21,7 @@
         public const string DROP_PrivateViewGaCdrComuniList = "DROP_PrivateViewGaCdrComuniList.sql";
         public const string CREATE_ViewGaCdrComuni = "CREATE_ViewGaCdrComuni.sql";
         public const string DROP_ViewGaCdrComuni = "DROP_ViewGaCdrComuni.sql";
+        public const string ALTER_ViewGaCdrComuniOnCentri = "ALTER_ViewGaCdrComuniOnCentri.sql";
 
         //Contratti
         public const string GaContrattiMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Contratti\";

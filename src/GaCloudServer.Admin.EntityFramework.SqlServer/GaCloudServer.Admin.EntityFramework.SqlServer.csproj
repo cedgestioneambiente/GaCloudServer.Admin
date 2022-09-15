@@ -63,6 +63,9 @@
 	  <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Cdr\ALTER_ViewGaCdrComuniOnCentri.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Cdr\DROP_ViewGaCdrComuni.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
