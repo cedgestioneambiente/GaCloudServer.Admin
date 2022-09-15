@@ -665,7 +665,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region CdrComuniOnCentri
-        [HttpPost("UpdateGaCdrComuneOnCentroAsync")]
+        [HttpGet("UpdateGaCdrComuneOnCentroAsync/{comuneId}/{centroId}")]
         public async Task<ActionResult<ApiResponse>> UpdateGaCdrComuneOnCentroAsync(long comuneId, long centroId)
         {
             try

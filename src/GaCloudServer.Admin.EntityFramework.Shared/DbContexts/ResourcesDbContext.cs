@@ -142,7 +142,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaCdrComuniOnCentri))
-                    .HasKey(x => x.Id);
+                    .HasNoKey()
+                    .Property(x=>x.Id);
             });
 
             builder.Entity<ViewGaCdrComuni>(entity =>
