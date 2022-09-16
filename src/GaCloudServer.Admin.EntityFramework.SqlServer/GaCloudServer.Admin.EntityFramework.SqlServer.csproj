@@ -45,6 +45,15 @@
 	  <Compile Update="Migrations\Resources\20220909090505_GaContratti.cs">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Compile>
+	  <Compile Update="Migrations\Resources\20220912075506_GaComunicati.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220914064648_GaMezzi.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220914064701_ViewGaMezzi.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
