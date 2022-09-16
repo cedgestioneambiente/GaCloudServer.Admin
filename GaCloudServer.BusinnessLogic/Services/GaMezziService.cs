@@ -19,7 +19,12 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<MezziScadenzaTipo> gaMezziScadenzeTipiRepo;
         protected readonly IGenericRepository<MezziTipo> gaMezziTipiRepo;
         protected readonly IGenericRepository<MezziVeicolo> gaMezziVeicoliRepo;
+        protected readonly IGenericRepository<MezziScadenza> gaMezziScadenzeRepo;
+        protected readonly IGenericRepository<MezziDocumento> gaMezziDocumentiRepo;
 
+
+        protected readonly IGenericRepository<ViewGaMezziVeicoli> viewGaMezziVeicoliRepo;
+        protected readonly IGenericRepository<ViewGaMezziScadenze> viewGaMezziScadenzeRepo;
         protected readonly IGenericRepository<ViewGaMezziDocumenti> viewGaMezziDocumentiRepo;
 
         protected readonly IUnitOfWork unitOfWork;
@@ -34,7 +39,11 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<MezziScadenzaTipo> gaMezziScadenzeTipiRepo,
             IGenericRepository<MezziTipo> gaMezziTipiRepo,
             IGenericRepository<MezziVeicolo> gaMezziVeicoliRepo,
+            IGenericRepository<MezziScadenza> gaMezziScadenzeRepo,
+            IGenericRepository<MezziDocumento> gaMezziDocumentiRepo,
 
+            IGenericRepository<ViewGaMezziVeicoli> viewGaMezziVeicoliRepo,
+            IGenericRepository<ViewGaMezziScadenze> viewGaMezziScadenzeRepo,
             IGenericRepository<ViewGaMezziDocumenti> viewGaMezziDocumentiRepo,
 
             IUnitOfWork unitOfWork)
@@ -48,10 +57,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaMezziScadenzeTipiRepo = gaMezziScadenzeTipiRepo;
             this.gaMezziTipiRepo = gaMezziTipiRepo;
             this.gaMezziVeicoliRepo = gaMezziVeicoliRepo;
+            this.gaMezziScadenzeRepo = gaMezziScadenzeRepo;
+            this.gaMezziDocumentiRepo = gaMezziDocumentiRepo;
 
-
-
+            this.viewGaMezziVeicoliRepo = viewGaMezziVeicoliRepo;
             this.viewGaMezziDocumentiRepo = viewGaMezziDocumentiRepo;
+            this.viewGaMezziScadenzeRepo = viewGaMezziScadenzeRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -692,6 +703,254 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+        #endregion
+
+        #endregion
+
+        #region MezziVeicoli
+
+        public async Task<MezziVeicoliDto> GetGaMezziVeicoliAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaMezziVeicoliRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<MezziVeicoliDto, PagedList<MezziVeicolo>>();
+            return dtos;
+        }
+
+        public async Task<MezziVeicoloDto> GetGaMezziVeicoloByIdAsync(long id)
+        {
+            var entity = await gaMezziVeicoliRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<MezziVeicoloDto, MezziVeicolo>();
+            return dto;
+        }
+
+        public async Task<long> AddGaMezziVeicoloAsync(MezziVeicoloDto dto)
+        {
+            var entity = dto.ToEntity<MezziVeicolo, MezziVeicoloDto>();
+            await gaMezziVeicoliRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaMezziVeicoloAsync(MezziVeicoloDto dto)
+        {
+            var entity = dto.ToEntity<MezziVeicolo, MezziVeicoloDto>();
+            gaMezziVeicoliRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaMezziVeicoloAsync(long id)
+        {
+            var entity = await gaMezziVeicoliRepo.GetByIdAsync(id);
+            gaMezziVeicoliRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaMezziVeicoloAsync(long id, string targa)
+        {
+            var entity = await gaMezziVeicoliRepo.GetWithFilterAsync(x => x.Targa == targa && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaMezziVeicoloAsync(long id)
+        {
+            var entity = await gaMezziVeicoliRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaMezziVeicoliRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaMezziVeicoliRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaMezziVeicoli>> GetViewGaMezziVeicoliAsync(bool all = true)
+        {
+            var entities = all ? await viewGaMezziVeicoliRepo.GetAllAsync(1, 0) : await viewGaMezziVeicoliRepo.GetWithFilterAsync(x => x.Disabled == false);
+            return entities;
+        }
+        #endregion
+
+        #endregion
+
+        #region MezziScadenze
+        public async Task<MezziScadenzeDto> GetGaMezziScadenzeByVeicoloIdAsync(long mezziVeicoloId)
+        {
+            var entities = await gaMezziScadenzeRepo.GetWithFilterAsync(x => x.MezziVeicoloId == mezziVeicoloId);
+            var dtos = entities.ToDto<MezziScadenzeDto, PagedList<MezziScadenza>>();
+            return dtos;
+        }
+
+        public async Task<MezziScadenzaDto> GetGaMezziScadenzaByIdAsync(long id)
+        {
+            var entity = await gaMezziScadenzeRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<MezziScadenzaDto, MezziScadenza>();
+            return dto;
+        }
+
+        public async Task<long> AddGaMezziScadenzaAsync(MezziScadenzaDto dto)
+        {
+            var entity = dto.ToEntity<MezziScadenza, MezziScadenzaDto>();
+            await gaMezziScadenzeRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaMezziScadenzaAsync(MezziScadenzaDto dto)
+        {
+            var entity = dto.ToEntity<MezziScadenza, MezziScadenzaDto>();
+            gaMezziScadenzeRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaMezziScadenzaAsync(long id)
+        {
+            var entity = await gaMezziScadenzeRepo.GetByIdAsync(id);
+            gaMezziScadenzeRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ChangeStatusGaMezziScadenzaAsync(long id)
+        {
+            var entity = await gaMezziScadenzeRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaMezziScadenzeRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaMezziScadenzeRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaMezziScadenze>> GetViewGaMezziScadenzeAsync(bool all=false)
+        {
+            var entities = all? await viewGaMezziScadenzeRepo.GetAllAsync():await viewGaMezziScadenzeRepo.GetWithFilterAsync(x=>x.Dismesso==false);
+            return entities;
+        }
+        public async Task<PagedList<ViewGaMezziScadenze>> GetViewGaMezziScadenzeByVeicoloIdAsync(long mezziVeicoloId)
+        {
+            var entities =await viewGaMezziScadenzeRepo.GetWithFilterAsync(x => x.MezziVeicoloId == mezziVeicoloId);
+            return entities;
+        }
+        #endregion
+
+        #endregion
+
+        #region MezziDocumenti
+        public async Task<MezziDocumentiDto> GetGaMezziDocumentiByVeicoloIdAsync(long mezziVeicoloId)
+        {
+            var entities = await gaMezziDocumentiRepo.GetWithFilterAsync(x => x.MezziVeicoloId == mezziVeicoloId);
+            var dtos = entities.ToDto<MezziDocumentiDto, PagedList<MezziDocumento>>();
+            return dtos;
+        }
+
+        public async Task<MezziDocumentoDto> GetGaMezziDocumentoByIdAsync(long id)
+        {
+            var entity = await gaMezziDocumentiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<MezziDocumentoDto, MezziDocumento>();
+            return dto;
+        }
+
+        public async Task<long> AddGaMezziDocumentoAsync(MezziDocumentoDto dto)
+        {
+            var entity = dto.ToEntity<MezziDocumento, MezziDocumentoDto>();
+            await gaMezziDocumentiRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaMezziDocumentoAsync(MezziDocumentoDto dto)
+        {
+            var entity = dto.ToEntity<MezziDocumento, MezziDocumentoDto>();
+            gaMezziDocumentiRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaMezziDocumentoAsync(long id)
+        {
+            var entity = await gaMezziDocumentiRepo.GetByIdAsync(id);
+            gaMezziDocumentiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ChangeStatusGaMezziDocumentoAsync(long id)
+        {
+            var entity = await gaMezziDocumentiRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaMezziDocumentiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaMezziDocumentiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaMezziDocumenti>> GetViewGaMezziDocumentiByVeicoloIdAsync(long mezziVeicoloId)
+        {
+            var entities = await viewGaMezziDocumentiRepo.GetWithFilterAsync(x => x.MezziVeicoloId == mezziVeicoloId);
+            return entities;
         }
         #endregion
 

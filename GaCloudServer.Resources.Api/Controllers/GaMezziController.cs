@@ -1129,5 +1129,586 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #endregion
+
+        #region MezziVeicoli
+        [HttpGet("GetGaMezziVeicoliAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaMezziVeicoliAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaMezziService.GetGaMezziVeicoliAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<MezziVeicoliApiDto, MezziVeicoliDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaMezziVeicoloByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaMezziVeicoloByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaMezziService.GetGaMezziVeicoloByIdAsync(id);
+                var apiDto = dto.ToApiDto<MezziVeicoloApiDto, MezziVeicoloDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaMezziVeicoloAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaMezziVeicoloAsync([FromBody] MezziVeicoloApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<MezziVeicoloDto, MezziVeicoloApiDto>();
+                var response = await _gaMezziService.AddGaMezziVeicoloAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaMezziVeicoloAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaMezziVeicoloAsync([FromBody] MezziVeicoloApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<MezziVeicoloDto, MezziVeicoloApiDto>();
+                var response = await _gaMezziService.UpdateGaMezziVeicoloAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaMezziVeicoloAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaMezziVeicoloAsync(long id)
+        {
+            try
+            {
+                var response = await _gaMezziService.DeleteGaMezziVeicoloAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaMezziVeicoloAsync/{id}/{targa}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaMezziVeicoloAsync(long id, string targa)
+        {
+            try
+            {
+                var response = await _gaMezziService.ValidateGaMezziVeicoloAsync(id, targa);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGaMezziVeicoloAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaMezziVeicoloAsync(long id)
+        {
+            try
+            {
+                var response = await _gaMezziService.ChangeStatusGaMezziVeicoloAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaMezziVeicoliAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaMezziVeicoliAsync(bool all = true)
+        {
+            try
+            {
+                var view = await _gaMezziService.GetViewGaMezziVeicoliAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #endregion
+
+        #endregion
+
+        #region MezziScadenze
+        [HttpGet("GetGaMezziScadenzeByVeicoloIdAsync/{mezziVeicoloId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaMezziScadenzeByVeicoloIdAsync(long mezziVeicoloId)
+        {
+            try
+            {
+                var dtos = await _gaMezziService.GetGaMezziScadenzeByVeicoloIdAsync(mezziVeicoloId);
+                var apiDtos = dtos.ToApiDto<MezziScadenzeApiDto, MezziScadenzeDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaMezziScadenzaByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaMezziScadenzaByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaMezziService.GetGaMezziScadenzaByIdAsync(id);
+                var apiDto = dto.ToApiDto<MezziScadenzaApiDto, MezziScadenzaDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaMezziScadenzaAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaMezziScadenzaAsync([FromForm] MezziScadenzaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "Mezzi";
+                var dto = apiDto.ToDto<MezziScadenzaDto, MezziScadenzaApiDto>();
+                var response = await _gaMezziService.AddGaMezziScadenzaAsync(dto);
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaMezziService.UpdateGaMezziScadenzaAsync(dto);
+                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaMezziScadenzaAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaMezziScadenzaAsync([FromForm] MezziScadenzaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "Mezzi";
+                var dto = apiDto.ToDto<MezziScadenzaDto, MezziScadenzaApiDto>();
+                var response = await _gaMezziService.UpdateGaMezziScadenzaAsync(dto);
+                bool failureDelete = false;
+                if (apiDto.deleteFile)
+                {
+                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
+                    if (!deleteResponse)
+                    {
+                        failureDelete = true;
+
+                    }
+                    else
+                    {
+                        dto.Id = response;
+                        dto.FileFolder = null;
+                        dto.FileName = null;
+                        dto.FileSize = null;
+                        dto.FileType = null;
+                        dto.FileId = null;
+                        var updateFileResponse = await _gaMezziService.UpdateGaMezziScadenzaAsync(dto);
+                    }
+                }
+
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaMezziService.UpdateGaMezziScadenzaAsync(dto);
+
+                    if (!failureDelete)
+                    {
+                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
+                    }
+
+                }
+
+                if (!failureDelete)
+                {
+                    return new ApiResponse("Updated", response, code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaMezziScadenzaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaMezziScadenzaAsync(long id)
+        {
+            try
+            {
+                var response = await _gaMezziService.DeleteGaMezziScadenzaAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+
+        [HttpGet("ChangeStatusGaMezziScadenzaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaMezziScadenzaAsync(long id)
+        {
+            try
+            {
+                var response = await _gaMezziService.ChangeStatusGaMezziScadenzaAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaMezziScadenzeAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaMezziScadenzeAsync(bool all=false)
+        {
+            try
+            {
+                var view = await _gaMezziService.GetViewGaMezziScadenzeAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaMezziScadenzeByVeicoloIdAsync/{mezziVeicoloId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaMezziScadenzeByVeicoloIdAsync(long mezziVeicoloId)
+        {
+            try
+            {
+                var view = await _gaMezziService.GetViewGaMezziScadenzeByVeicoloIdAsync(mezziVeicoloId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region MezziDocumenti
+        [HttpGet("GetGaMezziDocumentiByVeicoloIdAsync/{mezziVeicoloId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaMezziDocumentiByVeicoloIdAsync(long mezziVeicoloId)
+        {
+            try
+            {
+                var dtos = await _gaMezziService.GetGaMezziDocumentiByVeicoloIdAsync(mezziVeicoloId);
+                var apiDtos = dtos.ToApiDto<MezziDocumentiApiDto, MezziDocumentiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaMezziDocumentoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaMezziDocumentoByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaMezziService.GetGaMezziDocumentoByIdAsync(id);
+                var apiDto = dto.ToApiDto<MezziDocumentoApiDto, MezziDocumentoDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaMezziDocumentoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaMezziDocumentoAsync([FromForm] MezziDocumentoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "Mezzi";
+                var dto = apiDto.ToDto<MezziDocumentoDto, MezziDocumentoApiDto>();
+                var response = await _gaMezziService.AddGaMezziDocumentoAsync(dto);
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaMezziService.UpdateGaMezziDocumentoAsync(dto);
+                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaMezziDocumentoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaMezziDocumentoAsync([FromForm] MezziDocumentoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "Mezzi";
+                var dto = apiDto.ToDto<MezziDocumentoDto, MezziDocumentoApiDto>();
+                var response = await _gaMezziService.UpdateGaMezziDocumentoAsync(dto);
+                bool failureDelete = false;
+                if (apiDto.deleteFile)
+                {
+                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
+                    if (!deleteResponse)
+                    {
+                        failureDelete = true;
+
+                    }
+                    else
+                    {
+                        dto.Id = response;
+                        dto.FileFolder = null;
+                        dto.FileName = null;
+                        dto.FileSize = null;
+                        dto.FileType = null;
+                        dto.FileId = null;
+                        var updateFileResponse = await _gaMezziService.UpdateGaMezziDocumentoAsync(dto);
+                    }
+                }
+
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaMezziService.UpdateGaMezziDocumentoAsync(dto);
+
+                    if (!failureDelete)
+                    {
+                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
+                    }
+
+                }
+
+                if (!failureDelete)
+                {
+                    return new ApiResponse("Updated", response, code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaMezziDocumentoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaMezziDocumentoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaMezziService.DeleteGaMezziDocumentoAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+
+        [HttpGet("ChangeStatusGaMezziDocumentoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaMezziDocumentoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaMezziService.ChangeStatusGaMezziDocumentoAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaMezziDocumentiByVeicoloIdAsync/{mezziVeicoloId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaMezziDocumentiByVeicoloIdAsync(long mezziVeicoloId)
+        {
+            try
+            {
+                var view = await _gaMezziService.GetViewGaMezziDocumentiByVeicoloIdAsync(mezziVeicoloId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
     }
 }
