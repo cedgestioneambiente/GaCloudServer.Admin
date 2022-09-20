@@ -14,6 +14,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<DriveItem> UploadImage(MemoryStream stream, string _mainFolder, string _targetFolder, string fileName);
         Task<bool> Remove(string fileId);
         Task<string> CreateSharedLink(string fileId);
+        Task<List<ItemDto>> GetRootFolderByName(string folderName);
+        Task<List<ItemDto>> GetFolderContentById(string folderId, List<ItemDto> path);
 
     }
 }

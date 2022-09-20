@@ -1,4 +1,6 @@
 ﻿using GaCloudServer.BusinnessLogic.Constants;
+using GaCloudServer.BusinnessLogic.Extensions;
+using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Models;
 using GaCloudServer.BusinnessLogic.Providers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -306,7 +308,90 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             return uploadedFile;
         }
+        public async Task<List<ItemDto>> GetRootFolderByName(string folder)
+        {
+            var sp = Authenticate();
+            var driveRoot = await sp.Drive.Request().GetAsync();
+            var driveFolder = await sp.Drive.Root.Children.Request().GetAsync();
+            var sourceFolder = (from x in driveFolder
+                                where x.Name == folder
+                                select x).FirstOrDefault();
+            var children = await sp.Drives[driveRoot.Id].Items[sourceFolder.Id].Children
+                .Request()
+                .GetAsync();
 
+            var result = new List<ItemDto>();
+            foreach (var itm in children)
+            {
+                var item = new ItemDto();
+                item.name = itm.Name.Substring(itm.Name.IndexOf("_") + 1);
+                item.id = itm.Id;
+                item.webUrl = itm.WebUrl;
+                item.createdAt = itm.CreatedDateTime.GetValueOrDefault().ToString("dd/MM/yyyy");
+                item.size = FileHelper.FileSizeFormatter(itm.Size.GetValueOrDefault());
+
+                if (itm.Folder != null && itm.Name != "Thumbs.db")
+                {
+                    item.type = "folder";
+                    item.contents = itm.Folder?.ChildCount > 1 ? string.Format("{0} elementi", itm.Folder?.ChildCount) : string.Format("{0} elemento", itm.Folder?.ChildCount);
+                    result.Add(item);
+                }
+                else if (itm.File != null && itm.Name != "Thumbs.db")
+                {
+                    item.type = Path.GetExtension(itm.Name).GetFileType();
+                    result.Add(item);
+                }
+
+
+            }
+
+            return result;
+
+
+        }
+        public async Task<List<ItemDto>> GetFolderContentById(string folderId,List<ItemDto> path)
+        {
+            var sp = Authenticate();
+            var driveRoot = await sp.Drive.Request().GetAsync();
+            var driveFolder = await sp.Drive.Root.Children.Request().GetAsync();
+            var children = await sp.Drives[driveRoot.Id].Items[folderId].Children
+                .Request()
+                .GetAsync();
+
+            var header = await sp.Drives[driveRoot.Id].Items[folderId].Request().GetAsync();
+            var parentFolder = await sp.Drives[driveRoot.Id].Items[header.ParentReference.Id].Request().GetAsync();
+
+
+            var result = path;
+            foreach (var itm in children)
+            {
+                var item = new ItemDto();
+                item.name = itm.Name.Substring(itm.Name.IndexOf("_") + 1);
+                item.id = itm.Id;
+                item.webUrl = itm.WebUrl;
+                item.createdAt = itm.CreatedDateTime.GetValueOrDefault().ToString("dd/MM/yyyy");
+                item.size = FileHelper.FileSizeFormatter(itm.Size.GetValueOrDefault());
+
+                if (itm.Folder != null && itm.Name != "Thumbs.db")
+                {
+                    item.type = "folder";
+                    item.folderId = folderId;
+                    item.contents = itm.Folder?.ChildCount>1? string.Format("{0} elementi", itm.Folder?.ChildCount): string.Format("{0} elemento", itm.Folder?.ChildCount);
+                    result.Add(item);
+                }
+                else if (itm.File != null && itm.Name != "Thumbs.db")
+                {
+                    item.type = Path.GetExtension(itm.Name).GetFileType();
+                    item.folderId = folderId;
+                    result.Add(item);
+                }
+
+
+            }
+
+            return result;
+
+        }
         private GraphServiceClient Authenticate()
         {
             var clientId = GraphConsts.clientId;

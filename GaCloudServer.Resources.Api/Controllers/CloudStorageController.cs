@@ -1,10 +1,13 @@
 ﻿using AutoWrapper.Filters;
+using AutoWrapper.Wrappers;
+using GaCloudServer.BusinnessLogic.Models;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeTypes.Core;
+using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -37,6 +40,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             return File(downloadFileModel.stream, mimeType, downloadFileModel.fileName);
 
         }
+
+        [HttpGet("GetRootFolderByName/{folderName}")]
+        public async Task<ApiResponse> GetRootFolderByName(string folderName)
+        {
+            var response = await _fileService.GetRootFolderByName(folderName);
+            return new ApiResponse("GetRootFolderByName", response, code.Status200OK);
+        }
+
+        [HttpPut("GetFolderContentById/{folderId}")]
+        public async Task<ApiResponse> GetFolderContentById(string folderId, List<ItemDto> path)
+        {
+            var response = await _fileService.GetFolderContentById(folderId,path);
+            return new ApiResponse("GetFolderContentById", response, code.Status200OK);
+        }
+
+
 
 
     }
