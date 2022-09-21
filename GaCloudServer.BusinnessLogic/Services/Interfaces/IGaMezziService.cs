@@ -139,7 +139,61 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region GaMezziVeicoli
+        Task<MezziVeicoliDto> GetGaMezziVeicoliAsync(int page = 1, int pageSize = 0);
+        Task<MezziVeicoloDto> GetGaMezziVeicoloByIdAsync(long id);
 
+        Task<long> AddGaMezziVeicoloAsync(MezziVeicoloDto dto);
+        Task<long> UpdateGaMezziVeicoloAsync(MezziVeicoloDto dto);
 
+        Task<bool> DeleteGaMezziVeicoloAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaMezziVeicoloAsync(long id, string targa);
+        Task<bool> ChangeStatusGaMezziVeicoloAsync(long id);
+        #endregion
+        #region Views
+        Task<PagedList<ViewGaMezziVeicoli>> GetViewGaMezziVeicoliAsync(bool all = true);
+        #endregion
+        #endregion
+
+        #region GaMezziScadenze
+        Task<MezziScadenzeDto> GetGaMezziScadenzeByVeicoloIdAsync(long mezziVeicoloId);
+        Task<MezziScadenzaDto> GetGaMezziScadenzaByIdAsync(long id);
+
+        Task<long> AddGaMezziScadenzaAsync(MezziScadenzaDto dto);
+        Task<long> UpdateGaMezziScadenzaAsync(MezziScadenzaDto dto);
+
+        Task<bool> DeleteGaMezziScadenzaAsync(long id);
+
+        #region Functions
+        Task<bool> ChangeStatusGaMezziScadenzaAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaMezziScadenze>> GetViewGaMezziScadenzeAsync(bool all=false);
+        Task<PagedList<ViewGaMezziScadenze>> GetViewGaMezziScadenzeByVeicoloIdAsync(long mezziVeicoloId);
+        #endregion
+
+        #endregion
+
+        #region GaMezziDocumenti
+        Task<MezziDocumentiDto> GetGaMezziDocumentiByVeicoloIdAsync(long mezziVeicoloId);
+        Task<MezziDocumentoDto> GetGaMezziDocumentoByIdAsync(long id);
+
+        Task<long> AddGaMezziDocumentoAsync(MezziDocumentoDto dto);
+        Task<long> UpdateGaMezziDocumentoAsync(MezziDocumentoDto dto);
+
+        Task<bool> DeleteGaMezziDocumentoAsync(long id);
+
+        #region Functions
+        Task<bool> ChangeStatusGaMezziDocumentoAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaMezziDocumenti>> GetViewGaMezziDocumentiByVeicoloIdAsync(long mezziVeicoloId);
+        #endregion
+
+        #endregion
     }
 }

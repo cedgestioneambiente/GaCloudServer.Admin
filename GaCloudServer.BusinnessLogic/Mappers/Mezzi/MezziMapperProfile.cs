@@ -14,7 +14,6 @@ namespace GaCloudServer.BusinnessLogic.Mappers.Mezzi
             CreateMap<PagedList<MezziAlimentazione>, MezziAlimentazioniDto>(MemberList.Destination)
                 .ReverseMap();
 
-
             CreateMap<MezziCantiere, MezziCantiereDto>(MemberList.Destination)
                 .ReverseMap();
             CreateMap<PagedList<MezziCantiere>, MezziCantieriDto>(MemberList.Destination)
@@ -47,7 +46,22 @@ namespace GaCloudServer.BusinnessLogic.Mappers.Mezzi
 
             CreateMap<MezziTipo, MezziTipoDto>(MemberList.Destination)
                 .ReverseMap();
-            CreateMap<PagedList<MezziTipo>, MezziTipoDto>(MemberList.Destination)
+            CreateMap<PagedList<MezziTipo>, MezziTipiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<MezziVeicolo, MezziVeicoloDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<PagedList<MezziVeicolo>, MezziVeicoliDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<MezziScadenza, MezziScadenzaDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<PagedList<MezziScadenza>, MezziScadenzeDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<MezziDocumento, MezziDocumentoDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<PagedList<MezziDocumento>, MezziDocumentiDto>(MemberList.Destination)
                 .ReverseMap();
         }
     }

@@ -14,5 +14,21 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             string fileName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             return fileName + extension;
         }
+
+        public static string FileSizeFormatter(long bytes)
+        {
+            // Load all suffixes in an array  
+            string[] suffixes =
+            { "Bytes", "KB", "MB", "GB", "TB", "PB" };
+            int counter = 0;
+            decimal number = (decimal)bytes;
+            while (Math.Round(number / 1024) >= 1)
+            {
+                number = number / 1024;
+                counter++;
+            }
+            return string.Format("{0:n1}{1}", number, suffixes[counter]);
+
+        }
     }
 }

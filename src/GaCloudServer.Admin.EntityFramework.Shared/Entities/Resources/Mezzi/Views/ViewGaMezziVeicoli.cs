@@ -6,13 +6,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Vi
     public class ViewGaMezziVeicoli:GenericEntity
     {
         public string Targa { get; set; }
-        public string TipoMezzo { get; set; }
-        public string ProprietaMezzo { get; set; }
-        public string CantiereMezzo { get; set; }
+        public string Tipo { get; set; }
+        public string Proprietario { get; set; }
+        public string Cantiere { get; set; }
         public string AlboGestori { get; set; }
-        public string AlimentazioneMezzo { get; set; }
-        public string PatenteMezzo { get; set; }
-        public string EuroMezzo { get; set; }
+        public string Alimentazione { get; set; }
+        public string Patente { get; set; }
+        public string Euro { get; set; }
         public string NumeroTelaio { get; set; }
         public int PortataKg { get; set; }
         public int MassaKg { get; set; }

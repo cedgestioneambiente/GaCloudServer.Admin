@@ -38,15 +38,31 @@ namespace GaCloudServer.Resources.Api.Mappers.Mezzi
             CreateMap<MezziProprietariDto, MezziProprietariApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<MezziScadenzaTipoDto,MezziScadenzaApiDto>(MemberList.Destination)
+            CreateMap<MezziScadenzaTipoDto,MezziScadenzaTipoApiDto>(MemberList.Destination)
                 .ReverseMap();
             CreateMap< MezziScadenzeTipiDto, MezziScadenzeTipiApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<MezziTipoDto,MezziTipoApiDto>(MemberList.Destination)
                 .ReverseMap();
-            CreateMap<MezziTipoDto, MezziScadenzeTipiApiDto>(MemberList.Destination)
+            CreateMap<MezziTipiDto, MezziTipiApiDto>(MemberList.Destination)
                 .ReverseMap();
+
+            CreateMap<MezziVeicoloDto, MezziVeicoloApiDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<MezziVeicoliDto, MezziVeicoliApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<MezziScadenzaDto, MezziScadenzaApiDto>(MemberList.Destination)
+            .ReverseMap();
+            CreateMap<MezziScadenzeDto, MezziScadenzeApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<MezziDocumentoDto, MezziDocumentoApiDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<MezziDocumentiDto, MezziDocumentiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
         }
     }
 }

@@ -5,7 +5,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Vi
 {
     public class ViewGaMezziScadenze:GenericEntity
     {
-        public long MezzoVeicoloId { get; set; }
+        public long MezziVeicoloId { get; set; }
         public string Targa { get; set; }
         public string Cantiere { get; set; }
         public string TipoScadenza { get; set; }

@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Resources.Api.Dtos.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace GaCloudServer.Resources.Api.Dtos.Resources.Mezzi
 {
@@ -68,30 +69,37 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Mezzi
 
     public class MezziVeicoloApiDto : GenericApiDto
     {
-        public string Targa { get; }
-        public string TargaPrecedente { get; }
-        public string Carro { get; }
-        public string Attrezzatura { get; }
-        public int AnnoImmatricolazione { get; }
-        public string AlboGestori { get; }
-        public DateTime? ScadenzaContratto { get; }
-        public string Note { get; }
-        public string NumeroTelaio { get; }
-        public int PortataKg { get; }
-        public int MassaKg { get; }
-        public bool Dismesso { get; }
-        public DateTime? DismessoData { get; }
-        public bool Ce { get; }
-        public bool ManualeUsoManutenzione { get; }
-        public bool CatalogoRicambi { get; }
-        public long MezzoTipoId { get; }
-        public long MezzoProprietarioId { get; }
-        public long MezzoCantiereId { get; }
-        public long MezzoClasseId { get; }
-        public long MezzoAlimentazioneId { get; }
-        public long MezzoPatenteId { get; }
-        public long MezzoPeriodoScadenzaId { get; }
-        public bool Garanzia { get; }
+        [Required(ErrorMessage = "Il campo Targa è obbligatorio.")]
+        public string Targa { get; set; }
+        public string? TargaPrecedente { get; set; }
+        public string? Carro { get; set; }
+        public string? Attrezzatura { get; set; }
+        [Required(ErrorMessage = "Il campo Anno Immatricolazione è obbligatorio.")]
+        public int AnnoImmatricolazione { get; set; }
+        public string? AlboGestori { get; set; }
+        public DateTime? ScadenzaContratto { get; set; }
+        public string? Note { get; set; }
+        public string? NumeroTelaio { get; set; }
+        public int? PortataKg { get; set; }
+        public int? MassaKg { get; set; }
+        public bool Dismesso { get; set; }
+        public DateTime? DismessoData { get; set; }
+        public bool Ce { get; set; }
+        public bool ManualeUsoManutenzione { get; set; }
+        public bool CatalogoRicambi { get; set; }
+        public long MezziTipoId { get; set; }
+        public long MezziProprietarioId { get; set; }
+        public long MezziCantiereId { get; set; }
+        public long MezziClasseId { get; set; }
+        public long MezziAlimentazioneId { get; set; }
+        public long MezziPatenteId { get; set; }
+        public long MezziPeriodoScadenzaId { get; set; }
+        public bool Garanzia { get; set; }
+
+        public MezziVeicoloApiDto()
+        { 
+            
+        }
 
     }
 
@@ -100,11 +108,11 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Mezzi
 
     public class MezziScadenzaApiDto : GenericFileApiDto
     {
-        public long MezzoVeicoloId { get; }
-        public long MezzoScadenzaTipoId { get; }
-        public DateTimeOffset DataScadenza { get; }
-        public DateTime? DataUltimaScadenza { get; }
-        public string Note { get; }
+        public long MezziVeicoloId { get; set; }
+        public long MezziScadenzaTipoId { get; set; }
+        public DateTime DataScadenza { get; set; }
+        public DateTime? DataUltimaScadenza { get; set; }
+        public string? Note { get; set; }
     }
 
     public class MezziScadenzeApiDto : GenericPagedListApiDto<MezziScadenzaApiDto>
@@ -112,8 +120,8 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Mezzi
 
     public class MezziDocumentoApiDto : GenericFileApiDto
     {
-        public string Descrizione { get; }
-        public long MezzoVeicoloId { get; }
+        public string Descrizione { get; set; }
+        public long MezziVeicoloId { get; set; }
     }
 
     public class MezziDocumentiApiDto : GenericPagedListApiDto<MezziDocumentoApiDto>
