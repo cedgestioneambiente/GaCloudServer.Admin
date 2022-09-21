@@ -66,5 +66,17 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #endregion
+
+        #region GaContrattiUtentiOnPermessi
+
+        #region Functions
+
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaContrattiUtenti>> GetViewGaContrattiUtentiAsync(int page = 1, int pageSize = 0);
+        #endregion
+
+        #endregion
     }
 }

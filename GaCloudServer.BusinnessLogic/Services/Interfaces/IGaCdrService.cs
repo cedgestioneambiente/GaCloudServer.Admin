@@ -99,5 +99,20 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region GaCdrConferimenti
+        Task<CdrConferimentiDto> GetGaCdrConferimentiAsync(int page = 1, int pageSize = 0);
+        Task<CdrConferimentoDto> GetGaCdrConferimentoByIdAsync(long id);
+
+        Task<long> AddGaCdrConferimentoAsync(CdrConferimentoDto dto);
+        Task<long> UpdateGaCdrConferimentoAsync(CdrConferimentoDto dto);
+
+        Task<bool> DeleteGaCdrConferimentoAsync(long id);
+
+        #region Functions
+        Task<int> ValidateGaCdrConferimentoAsync(CdrConferimentoDto dto);
+        #endregion
+
+        #endregion
+
     }
 }

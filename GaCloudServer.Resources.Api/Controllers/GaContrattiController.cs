@@ -443,7 +443,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
-        #region GaContrattiUtentiOnServizi
+        #region GaContrattiUtentiOnPermessi
 
         #region Functions
         [HttpGet("UpdateGaContrattiUtenteOnPermessoAsync/{utenteId}/{permessoId}")]
@@ -459,6 +459,20 @@ namespace GaCloudServer.Resources.Api.Controllers
         public async Task<ApiResponse> GetViewGaContrattiUtentiOnPermessiAsync(string id)
         {
             var response = await _gaContrattiService.GetViewGaContrattiUtentiOnPermessiAsync(id);
+            return new ApiResponse(response);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region GaContrattiUtenti
+
+        #region Views 
+        [HttpGet("GetViewGaContrattiUtentiAsync/{page}/{pageSize}")]
+        public async Task<ApiResponse> GetViewGaContrattiUtentiAsync(int page = 1, int pageSize = 0)
+        {
+            var response = await _gaContrattiService.GetViewGaContrattiUtentiAsync(page, pageSize);
             return new ApiResponse(response);
         }
 

@@ -50,6 +50,12 @@ namespace GaCloudServer.Resources.Api.Mappers.Cdr
             CreateMap<CdrComuniOnCentriDto, CdrComuniOnCentriApiDto>(MemberList.Destination)
                 .ReverseMap();
 
+            //GaCdrConferimenti Map
+            CreateMap<CdrConferimentoDto, CdrConferimentoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<CdrConferimentiDto, CdrConferimentiApiDto>(MemberList.Destination)
+                .ReverseMap();
         }
     }
 }

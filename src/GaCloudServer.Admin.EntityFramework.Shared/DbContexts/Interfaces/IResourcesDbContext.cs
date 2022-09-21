@@ -8,6 +8,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using Microsoft.EntityFrameworkCore;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -30,11 +31,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<CdrCerOnCentro> GaCdrCersOnCentri { get; set; }
         DbSet<CdrComune> GaCdrComuni { get; set; }
         DbSet<CdrComuneOnCentro> GaCdrComuniOnCentri { get; set; }
+        DbSet<CdrConferimento> GaCdrConferimenti { get; set; }
+        DbSet<CdrRichiestaViaggio> GaCdrRichiesteViaggi { get; set; }
+        DbSet<CdrStatoRichiesta> GaCdrStatiRichieste { get; set; }
+        DbSet<CdrUtente> GaCdrUtenti { get; set; }
 
         //#region Views
         DbSet<ViewGaCdrCersOnCentri> ViewGaCdrCersOnCentri { get; set; }
         DbSet<ViewGaCdrComuniOnCentri> ViewGaCdrComuniOnCentri { get; set; }
         DbSet<ViewGaCdrComuni> ViewGaCdrComuni { get; set; }
+        DbSet<ViewGaCdrConferimenti> ViewGaCdrConferimenti { get; set; }
+        DbSet<ViewGaCdrRichiesteViaggi> ViewGaCdrRichiesteViaggi { get; set; }
+        DbSet<ViewGaCdrUtenti> ViewGaCdrUtenti { get; set; }
         //#endregion
         #endregion
 
@@ -49,7 +57,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaContrattiUtentiOnPermessi> ViewGaContrattiUtentiOnPermessi { get; set; }
         //#endregion
         #endregion
-
 
         #region GaComunicati Tables
         DbSet<ComunicatiDocumento> GaComunicatiDocumenti { get; set; }
@@ -75,5 +82,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #endregion
 
         #endregion
+
+        #region GaAutorizzazioni Tables
+        DbSet<AziendeLista> GaAziendeListe { get; set; }
+        #endregion
+
     }
 }

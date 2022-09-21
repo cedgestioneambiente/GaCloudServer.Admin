@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -37,11 +38,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<CdrCerOnCentro> GaCdrCersOnCentri { get; set; }
         public DbSet<CdrComune> GaCdrComuni { get; set; }
         public DbSet<CdrComuneOnCentro> GaCdrComuniOnCentri { get; set; }
+        public DbSet<CdrConferimento> GaCdrConferimenti { get; set; }
+        public DbSet<CdrRichiestaViaggio> GaCdrRichiesteViaggi { get; set; }
+        public DbSet<CdrStatoRichiesta> GaCdrStatiRichieste { get; set; }
+        public DbSet<CdrUtente> GaCdrUtenti { get; set; }
 
         #region Views
         public DbSet<ViewGaCdrCersOnCentri> ViewGaCdrCersOnCentri { get; set; }
         public DbSet<ViewGaCdrComuniOnCentri> ViewGaCdrComuniOnCentri { get; set; }
         public DbSet<ViewGaCdrComuni> ViewGaCdrComuni { get; set; }
+        public DbSet<ViewGaCdrConferimenti> ViewGaCdrConferimenti { get; set; }
+        public DbSet<ViewGaCdrRichiesteViaggi> ViewGaCdrRichiesteViaggi { get; set; }
+        public DbSet<ViewGaCdrUtenti> ViewGaCdrUtenti { get; set; }
         #endregion
 
         #endregion
@@ -84,7 +92,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #endregion
 
-        
+        #region GaAziende Tables
+        public DbSet<AziendeLista> GaAziendeListe { get; set; }
+        #endregion
+
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
         {
@@ -136,7 +147,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaCdrCersOnCentri))
-                    .HasKey(x => x.Id);
+                    .HasNoKey()
+                    .Property(x => x.Id);
             });
 
             builder.Entity<ViewGaCdrComuniOnCentri>(entity =>
@@ -154,7 +166,29 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                     .HasKey(x => x.Id);
             });
 
+            builder.Entity<ViewGaCdrConferimenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCdrConferimenti))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
 
+            builder.Entity<ViewGaCdrRichiesteViaggi>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCdrRichiesteViaggi))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCdrUtenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCdrUtenti))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
 
             #endregion
 

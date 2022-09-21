@@ -12,6 +12,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 {
@@ -38,11 +39,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<CdrCer>, GenericRepository<TResourcesDbContext, CdrCer>>();
             services.AddTransient<IGenericRepository<CdrCerDettaglio>, GenericRepository<TResourcesDbContext, CdrCerDettaglio>>();
             services.AddTransient<IGenericRepository<CdrCerOnCentro>,GenericRepository<TResourcesDbContext, CdrCerOnCentro>>();
+            services.AddTransient<IGenericRepository<CdrConferimento>, GenericRepository<TResourcesDbContext, CdrConferimento>>();
+            services.AddTransient<IGenericRepository<CdrRichiestaViaggio>, GenericRepository<TResourcesDbContext, CdrRichiestaViaggio>>();
+            services.AddTransient<IGenericRepository<CdrStatoRichiesta>, GenericRepository<TResourcesDbContext, CdrStatoRichiesta>>();
+            services.AddTransient<IGenericRepository<CdrUtente>, GenericRepository<TResourcesDbContext, CdrUtente>>();
 
             //Views
             services.AddTransient<IGenericRepository<ViewGaCdrCersOnCentri>, GenericRepository<TResourcesDbContext, ViewGaCdrCersOnCentri>>();
             services.AddTransient<IGenericRepository<ViewGaCdrComuniOnCentri>, GenericRepository<TResourcesDbContext, ViewGaCdrComuniOnCentri>>();
             services.AddTransient<IGenericRepository<ViewGaCdrComuni>, GenericRepository<TResourcesDbContext, ViewGaCdrComuni>>();
+            services.AddTransient<IGenericRepository<ViewGaCdrConferimenti>, GenericRepository<TResourcesDbContext, ViewGaCdrConferimenti>>();
+            services.AddTransient<IGenericRepository<ViewGaCdrRichiesteViaggi>, GenericRepository<TResourcesDbContext, ViewGaCdrRichiesteViaggi>>();
+            services.AddTransient<IGenericRepository<ViewGaCdrUtenti>, GenericRepository<TResourcesDbContext, ViewGaCdrUtenti>>();
             #endregion
 
             //Comunicati
@@ -68,6 +76,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaMezziVeicoli>, GenericRepository<TResourcesDbContext, ViewGaMezziVeicoli>>();
             services.AddTransient<IGenericRepository<ViewGaMezziDocumenti>, GenericRepository<TResourcesDbContext, ViewGaMezziDocumenti>>();
             services.AddTransient<IGenericRepository<ViewGaMezziScadenze>, GenericRepository<TResourcesDbContext, ViewGaMezziScadenze>>();
+            #endregion
+
             //Contratti
             #region Contratti
             services.AddTransient<IGenericRepository<ContrattiPermesso>, GenericRepository<TResourcesDbContext, ContrattiPermesso>>();
@@ -75,10 +85,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ContrattiTipologia>, GenericRepository<TResourcesDbContext, ContrattiTipologia>>();
             services.AddTransient<IGenericRepository<ContrattiUtenteOnPermesso>, GenericRepository<TResourcesDbContext, ContrattiUtenteOnPermesso>>();
 
-            #endregion
+            
             //Views
             services.AddTransient<IGenericRepository<ViewGaContrattiUtenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtenti>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiUtentiOnPermessi>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtentiOnPermessi>>();
+            #endregion
+
+            //Aziende
+            #region Aziende
+            services.AddTransient<IGenericRepository<AziendeLista>, GenericRepository<TResourcesDbContext, AziendeLista>>();
             #endregion
 
             return services; 

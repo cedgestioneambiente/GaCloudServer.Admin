@@ -1,4 +1,5 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
+﻿using AuthServer.SSO.Resources.BusinnessLogic.Extensions;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
@@ -17,10 +18,17 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<CdrCerDettaglio> gaCdrCersDettagliRepo;
         protected readonly IGenericRepository<CdrCerOnCentro> gaCdrCersOnCentriRepo;
         protected readonly IGenericRepository<CdrComuneOnCentro> gaCdrComuniOnCentriRepo;
+        protected readonly IGenericRepository<CdrConferimento> gaCdrConferimentiRepo;
+        protected readonly IGenericRepository<CdrRichiestaViaggio> gaCdrRichiesteViaggiRepo;
+        protected readonly IGenericRepository<CdrStatoRichiesta> gaCdrStatiRichiesteRepo;
+        protected readonly IGenericRepository<CdrUtente> gaCdrUtentiRepo;
 
         protected readonly IGenericRepository<ViewGaCdrCersOnCentri> viewGaCdrCersOnCentriRepo;
         protected readonly IGenericRepository<ViewGaCdrComuniOnCentri> viewGaCdrComuniOnCentriRepo;
         protected readonly IGenericRepository<ViewGaCdrComuni> viewGaCdrComuniRepo;
+        protected readonly IGenericRepository<ViewGaCdrConferimenti> viewGaCdrConferimentiRepo;
+        protected readonly IGenericRepository<ViewGaCdrRichiesteViaggi> viewGaCdrRichiesteViaggiRepo;
+        protected readonly IGenericRepository<ViewGaCdrUtenti> viewGaCdrUtentiRepo;
 
 
         protected readonly IUnitOfWork unitOfWork;
@@ -32,10 +40,17 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<CdrCerDettaglio> gaCdrCersDettagliRepo,
             IGenericRepository<CdrCerOnCentro> gaCdrCersOnCentriRepo,
             IGenericRepository<CdrComuneOnCentro> gaCdrComuniOnCentriRepo,
+            IGenericRepository<CdrConferimento> gaCdrConferimentiRepo,
+            IGenericRepository<CdrRichiestaViaggio> gaCdrRichiesteViaggiRepo,
+            IGenericRepository<CdrStatoRichiesta> gaCdrStatiRichiesteRepo,
+            IGenericRepository<CdrUtente> gaCdrUtentiRepo,
 
             IGenericRepository<ViewGaCdrCersOnCentri> viewGaCdrCersOnCentriRepo,
             IGenericRepository<ViewGaCdrComuniOnCentri> viewGaCdrComuniOnCentriRepo,
             IGenericRepository<ViewGaCdrComuni> viewGaCdrComuniRepo,
+            IGenericRepository<ViewGaCdrConferimenti> viewGaCdrConferimentiRepo,
+            IGenericRepository<ViewGaCdrRichiesteViaggi> viewGaCdrRichiesteViaggiRepo,
+            IGenericRepository<ViewGaCdrUtenti> viewGaCdrUtentiRepo,
 
             IUnitOfWork unitOfWork)
         {
@@ -45,10 +60,17 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaCdrCersDettagliRepo = gaCdrCersDettagliRepo;
             this.gaCdrCersOnCentriRepo = gaCdrCersOnCentriRepo;
             this.gaCdrComuniOnCentriRepo = gaCdrComuniOnCentriRepo;
+            this.gaCdrConferimentiRepo = gaCdrConferimentiRepo;
+            this.gaCdrRichiesteViaggiRepo = gaCdrRichiesteViaggiRepo;
+            this.gaCdrStatiRichiesteRepo = gaCdrStatiRichiesteRepo;
+            this.gaCdrUtentiRepo = gaCdrUtentiRepo;
 
             this.viewGaCdrCersOnCentriRepo = viewGaCdrCersOnCentriRepo;
             this.viewGaCdrComuniOnCentriRepo = viewGaCdrComuniOnCentriRepo;
             this.viewGaCdrComuniRepo = viewGaCdrComuniRepo;
+            this.viewGaCdrConferimentiRepo = viewGaCdrConferimentiRepo;
+            this.viewGaCdrRichiesteViaggiRepo = viewGaCdrRichiesteViaggiRepo;
+            this.viewGaCdrUtentiRepo = viewGaCdrUtentiRepo;
 
             this.unitOfWork = unitOfWork;
         }
@@ -465,6 +487,176 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entities;
         }
 
+        #endregion
+
+        #endregion
+
+        #region CdrConferimenti
+        public async Task<CdrConferimentiDto> GetGaCdrConferimentiAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCdrConferimentiRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CdrConferimentiDto, PagedList<CdrConferimento>>();
+            return dtos;
+        }
+
+        public async Task<CdrConferimentoDto> GetGaCdrConferimentoByIdAsync(long id)
+        {
+            var entity = await gaCdrConferimentiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CdrConferimentoDto, CdrConferimento>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCdrConferimentoAsync(CdrConferimentoDto dto)
+        {
+            var entity = dto.ToEntity<CdrConferimento, CdrConferimentoDto>();
+            await gaCdrConferimentiRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCdrConferimentoAsync(CdrConferimentoDto dto)
+        {
+            var entity = dto.ToEntity<CdrConferimento, CdrConferimentoDto>();
+            gaCdrConferimentiRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCdrConferimentoAsync(long id)
+        {
+            var entity = await gaCdrConferimentiRepo.GetByIdAsync(id);
+            gaCdrConferimentiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<int> ValidateGaCdrConferimentoAsync(CdrConferimentoDto dto)
+        {
+            //Legenda:
+            //1: Limite Inerti 170107(id 8)-Alert
+            //2: Limite Inerti 170107(id 8)-Raggiunto
+            //3: Limite Inerti 170107(id 8)-Superato
+            if (dto.CdrCerId == 8)
+            {
+                var limite170107 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && x.CdrCentroId == dto.CdrCentroId && x.CdrCerId == 8 && x.Data.Year == dto.Data.Year);
+
+                if (limite170107.Data.Count == 3)
+                {
+                    return 1;
+                }
+
+                if (limite170107.Data.Count == 4)
+                {
+                    return 2;
+                }
+
+                if (limite170107.Data.Count > 4)
+                {
+                    return 3;
+                }
+            }
+
+            if (dto.CdrCerId == 31)
+            {
+                //4: Limite Deiezioni Canine 200301 - Alert
+                var dateStart = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+                var dateEnd = DateTime.Now.EndOfWeek(DayOfWeek.Sunday);
+
+                var limite200301 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && x.CdrCerId == 31 && (x.Data >= dateStart && x.Data <= dateEnd));
+                if (limite200301.Data.Count > 0)
+                {
+                    return 4;
+                }
+            }
+
+            if (dto.CdrCerId == 7)
+            {
+                //5: Limite Pneumatici 160103 - Alert(id:7)
+                //6: Limite Pneumatici 160103 - Raggiunto(id:7)
+                //7: Limite Pneumatici 160103 - Superato(id:7)
+                var limite160103 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && x.CdrCerId == 7 && x.Data.Year == dto.Data.Year);
+
+                if (limite160103.Data.Count > 0)
+                {
+                    var qta = 0;
+                    foreach (var itm in limite160103.Data)
+                    {
+                        qta += itm.Quantita;
+                    }
+                    qta = qta + dto.Quantita;
+
+                    if (qta == 4)//????
+                    {
+                        return 5;
+                    }
+
+                    if (qta == 5)
+                    {
+                        return 6;
+                    }
+
+                    if (qta > 5)
+                    {
+                        return 7;
+                    }
+                }
+            }
+
+            if (dto.Targa != "" && dto.Noleggio != true)//???
+            {
+                //8: Limite Accessi - Alert
+                //9: Limite Accessi - Raggiunto
+                //10: Limite Accessi - Superato
+                var limiteAccessi = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.Data.Year == dto.Data.Year && x.CdrCentroId == dto.CdrCentroId && (x.Targa != "" && x.Targa == dto.Targa) && x.Noleggio == false);
+                var accessi = (from x in limiteAccessi.Data
+                               select x.Data.ToString("dd/MM/yyyy")).Distinct();
+
+
+                if (accessi.Count() == 5)
+                {
+                    return 8;
+                }
+
+                if (accessi.Count() == 6)
+                {
+                    return 9;
+                }
+
+                if (accessi.Count() > 6)
+                {
+                    return 10;
+                }
+
+                var limiteAccessiUtente = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.Data.Year == dto.Data.Year && x.CdrCentroId == dto.CdrCentroId && (x.Targa != "" && x.CdrUtenteId == dto.CdrUtenteId) && x.Noleggio == false);
+                var accessiUtente = (from x in limiteAccessiUtente.Data
+                                     select x.Data.ToString("dd/MM/yyyy")).Distinct();
+
+
+                if (accessiUtente.Count() == 5)
+                {
+                    return 11;
+                }
+
+                if (accessiUtente.Count() == 6)
+                {
+                    return 12;
+                }
+
+                if (accessiUtente.Count() > 6)
+                {
+                    return 13;
+                }
+
+            }
+
+            return 0;
+
+
+        }
         #endregion
 
         #endregion

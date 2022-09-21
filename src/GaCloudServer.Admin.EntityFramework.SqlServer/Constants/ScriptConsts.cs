@@ -22,6 +22,8 @@
         public const string CREATE_ViewGaCdrComuni = "CREATE_ViewGaCdrComuni.sql";
         public const string DROP_ViewGaCdrComuni = "DROP_ViewGaCdrComuni.sql";
         public const string ALTER_ViewGaCdrComuniOnCentri = "ALTER_ViewGaCdrComuniOnCentri.sql";
+        public const string CREATE_ViewGaCdr = "CREATE_ViewGaCdr.sql";
+        public const string DROP_ViewGaCdr = "DROP_ViewGaCdr.sql";
 
         //Contratti
         public const string GaContrattiMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Contratti\";
@@ -32,6 +34,7 @@
         public const string CREATE_ViewGaContrattiUtenti = "CREATE_ViewGaContrattiUtenti.sql";
         public const string DROP_ViewGaContrattiUtenti = "DROP_ViewGaContrattiUtenti";
 
+        //Mezzi
         public const string GaMezziMigration= @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Mezzi\";
         public const string CREATE_ViewGaMezzi = "CREATE_ViewGaMezzi.sql";
         public const string DROP_ViewGaMezzi = "DROP_ViewGaMezzi.sql";

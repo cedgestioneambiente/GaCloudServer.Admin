@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GaCloudServer.Resources.Api.Mappers.Autorizzazioni;
+using GaCloudServer.Resources.Api.Mappers.Aziende;
 using GaCloudServer.Resources.Api.Mappers.Cdr;
 using GaCloudServer.Resources.Api.Mappers.Comunicati;
 using GaCloudServer.Resources.Api.Mappers.Contratti;
@@ -18,7 +19,8 @@ namespace GaCloudServer.Resources.Api.Mappers
             new ContrattiMapperProfile(),
             new CdrMapperProfile(),
             new ComunicatiMapperProfile(),
-            new MezziMapperProfile()
+            new MezziMapperProfile(),
+            new AziendeMapperProfile()
         };
 
         static GenericMapper() {

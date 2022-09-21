@@ -621,7 +621,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         //}
 
-        [HttpPost("UpdateGaCdrCerOnCentroAsync")]
+        [HttpPost("UpdateGaCdrCerOnCentroAsync/{cerId}/{centroId}")]
         public async Task<ActionResult<ApiResponse>> UpdateGaCdrCerOnCentroAsync(long cerId, long centroId)
         {
             try
@@ -703,6 +703,128 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        #endregion
+
+        #endregion
+
+        #region CdrConferimenti
+        [HttpGet("GetGaCdrConferimentiAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCdrConferimentiAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaCdrService.GetGaCdrConferimentiAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<CdrConferimentiApiDto, CdrConferimentiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCdrConferimentoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCdrConferimentoByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCdrService.GetGaCdrConferimentoByIdAsync(id);
+                var apiDto = dto.ToApiDto<CdrConferimentoApiDto, CdrConferimentoDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaCdrConferimentoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaCdrConferimentoAsync([FromBody] CdrConferimentoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CdrConferimentoDto, CdrConferimentoApiDto>();
+                var response = await _gaCdrService.AddGaCdrConferimentoAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaCdrConferimentoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCdrConferimentoAsync([FromBody] CdrConferimentoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CdrConferimentoDto, CdrConferimentoApiDto>();
+                var response = await _gaCdrService.UpdateGaCdrConferimentoAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaCdrConferimentoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaCdrConferimentoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaCdrService.DeleteGaCdrConferimentoAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaCdrConferimentoAsync")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaCdrConferimentoAsync(CdrConferimentoApiDto apiDto)
+        {
+            try
+            {
+                var dto = apiDto.ToDto<CdrConferimentoDto, CdrConferimentoApiDto>();
+                var response = await _gaCdrService.ValidateGaCdrConferimentoAsync(dto);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #endregion

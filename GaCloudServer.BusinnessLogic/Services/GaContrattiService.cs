@@ -325,12 +325,26 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return entities;
             }
         }
-    #endregion
+        #endregion
+
+        #endregion
+
+        #region Contratti Utenti
+
+        #region Views
+        public async Task<PagedList<ViewGaContrattiUtenti>> GetViewGaContrattiUtentiAsync(int page = 1, int pageSize = 0)
+        {
+            {
+                var entities = await viewGaContrattiUtentiRepo.GetAllAsync(page, pageSize);
+                return entities;
+            }
+        }
+        #endregion
 
         #endregion
 
         #region Common
-    private async Task<long> SaveChanges()
+        private async Task<long> SaveChanges()
     {
         return await unitOfWork.SaveChangesAsync();
     }

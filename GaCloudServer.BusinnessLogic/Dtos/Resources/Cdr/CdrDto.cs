@@ -1,7 +1,5 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using GaCloudServer.BusinnessLogic.DTOs.Base;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr
 {
@@ -94,6 +92,92 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr
     }
 
     public class CdrComuniOnCentriDto : GenericPagedListDto<CdrComuneOnCentroDto>
+    {
+
+    }
+
+    #endregion
+
+    #region CdrConferimenti
+
+    public class CdrConferimentoDto : GenericDto
+    {
+        public string UserId { get; set; }
+        public DateTime Data { get; set; }
+        public string CfPiva { get; set; }
+        public bool Anagrafica { get; set; }
+        public bool Ditta { get; set; }
+        public long CdrCentroId { get; set; }
+        public string CdrComuneId { get; set; }
+        public long CdrCerId { get; set; }
+        public long CdrCerDettaglioId { get; set; }
+        public double Peso { get; set; }
+        public int Quantita { get; set; }
+        public string Targa { get; set; }
+        public string Note { get; set; }
+        public string CdrUtenteId { get; set; }
+        public string NumCon { get; set; }
+        public string Partita { get; set; }
+        public bool Noleggio { get; set; }
+    }
+
+    public class CdrConferimentiDto : GenericPagedListDto<CdrConferimentoDto>
+    {
+
+    }
+
+    #endregion
+
+    #region CdrRichiesteViaggi
+
+    public class CdrRichiestaViaggioDto : GenericDto
+    {
+        public DateTime Data { get; set; }
+        public string UserId { get; set; }
+        public long CdrCentroId { get; set; }
+        public long CdrCerId { get; set; }
+        public long CdrStatoRichiestaId { get; set; }
+        public DateTime? DataChiusura { get; set; }
+        public double PesoPresunto { get; set; }
+        public double PesoDestino { get; set; }
+        public string Note { get; set; }
+        public bool Inviata { get; set; }
+    }
+
+    public class CdrRichiesteViaggiDto : GenericPagedListDto<CdrRichiestaViaggioDto>
+    {
+
+    }
+
+    #endregion
+
+    #region CdrStatiRichieste
+
+    public class CdrStatoRichiestaDto : GenericListEntity
+    {
+    }
+
+    public class CdrStatiRichiesteDto : GenericPagedListDto<CdrStatoRichiestaDto>
+    {
+
+    }
+
+    #endregion
+
+    #region CdrUtenti
+
+    public class CdrUtenteDto : GenericDto
+    {
+        public string RagioneSociale { get; set; }
+        public string CfPiva { get; set; }
+        public long CdrComuneId { get; set; }
+        public string Indirizzo { get; set; }
+        public bool Ditta { get; set; }
+        public bool InserimentoUtente { get; set; }
+        public bool Approvato { get; set; }
+    }
+
+    public class CdrUtentiDto : GenericPagedListDto<CdrUtenteDto>
     {
 
     }

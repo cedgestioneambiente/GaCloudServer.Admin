@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220915092802_GaAziende")]
+    partial class GaAziende
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,189 +340,13 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToTable("GaCdrComuniOnCentri");
                 });
 
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrConferimento", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("Anagrafica")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("CdrCentroId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CdrCerDettaglioId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CdrCerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CdrComuneId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CdrUtenteId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CfPiva")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Ditta")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Noleggio")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NumCon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Partita")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Peso")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Quantita")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Targa")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CdrCentroId");
-
-                    b.HasIndex("CdrCerDettaglioId");
-
-                    b.HasIndex("CdrCerId");
-
-                    b.ToTable("GaCdrConferimenti");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrRichiestaViaggio", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("CdrCentroId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CdrCerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CdrStatoRichiestaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataChiusura")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Inviata")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PesoDestino")
-                        .HasColumnType("float");
-
-                    b.Property<double>("PesoPresunto")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CdrCerId");
-
-                    b.HasIndex("CdrStatoRichiestaId");
-
-                    b.ToTable("GaCdrRichiesteViaggi");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrStatoRichiesta", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaCdrStatiRichieste");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrUtente", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("Approvato")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("CdrComuneId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CfPiva")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Ditta")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Indirizzo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("InserimentoUtente")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RagioneSociale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CdrComuneId");
-
-                    b.ToTable("GaCdrUtenti");
-                });
-
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views.ViewGaCdrCersOnCentri", b =>
                 {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
                     b.Property<bool>("Abilitato")
                         .HasColumnType("bit");
 
@@ -536,8 +362,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.HasKey("Id");
 
                     b.ToView("ViewGaCdrCersOnCentri");
                 });
@@ -581,150 +406,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("bigint");
 
                     b.ToView("ViewGaCdrComuniOnCentri");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views.ViewGaCdrConferimenti", b =>
-                {
-                    b.Property<string>("CdrUtenteId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Centro")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CerDettaglio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CfPiva")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Comune")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NumCon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Partita")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Peso")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Quantita")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RagioneSociale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Targa")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UtenteRegistrazione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imm")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView("ViewGaCdrConferimenti");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views.ViewGaCdrRichiesteViaggi", b =>
-                {
-                    b.Property<string>("Centro")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CentroId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Cer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataChiusura")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Imm")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Inviata")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Numero")
-                        .HasColumnType("bigint");
-
-                    b.Property<double>("PesoDestino")
-                        .HasColumnType("float");
-
-                    b.Property<double>("PesoPresunto")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Richiedente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StatoRichiesta")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("StatoRichiestaId")
-                        .HasColumnType("bigint");
-
-                    b.ToView("ViewGaCdrRichiesteViaggi");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views.ViewGaCdrUtenti", b =>
-                {
-                    b.Property<string>("Approvato")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CfPiva")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Comune")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Ditta")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Indirizzo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InserimentoUtente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RagioneSociale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView("ViewGaCdrUtenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati.ComunicatiDocumento", b =>
@@ -1460,63 +1141,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .IsRequired();
 
                     b.Navigation("CdrCentro");
-
-                    b.Navigation("CdrComune");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrConferimento", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCentro", "CdrCentro")
-                        .WithMany()
-                        .HasForeignKey("CdrCentroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCerDettaglio", "CdrCerDettaglio")
-                        .WithMany()
-                        .HasForeignKey("CdrCerDettaglioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCer", "CdrCer")
-                        .WithMany()
-                        .HasForeignKey("CdrCerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CdrCentro");
-
-                    b.Navigation("CdrCer");
-
-                    b.Navigation("CdrCerDettaglio");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrRichiestaViaggio", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCer", "CdrCer")
-                        .WithMany()
-                        .HasForeignKey("CdrCerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrStatoRichiesta", "CdrStatoRichiesta")
-                        .WithMany()
-                        .HasForeignKey("CdrStatoRichiestaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CdrCer");
-
-                    b.Navigation("CdrStatoRichiesta");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrUtente", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrComune", "CdrComune")
-                        .WithMany()
-                        .HasForeignKey("CdrComuneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("CdrComune");
                 });

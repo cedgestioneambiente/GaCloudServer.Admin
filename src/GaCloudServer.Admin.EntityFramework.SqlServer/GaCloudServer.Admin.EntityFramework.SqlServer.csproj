@@ -14,10 +14,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Migrations\Resources\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Compile Update="Migrations\Resources\20220901132313_GaAutorizzazioni.cs">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Compile>
@@ -54,6 +50,15 @@
 	  <Compile Update="Migrations\Resources\20220914064701_ViewGaMezzi.cs">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Compile>
+	  <Compile Update="Migrations\Resources\20220914142821_ViewGaCdr_V4.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220915092802_GaAziende.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
+	  <Compile Update="Migrations\Resources\20220919151606_GaCdr.cs">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -64,6 +69,12 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Cdr\ALTER_ViewGaCdrComuniOnCentri.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\DROP_ViewGaCdr.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\CREATE_ViewGaCdr.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Cdr\DROP_ViewGaCdrComuni.sql">

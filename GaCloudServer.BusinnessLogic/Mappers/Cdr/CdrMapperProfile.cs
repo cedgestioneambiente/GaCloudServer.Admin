@@ -50,6 +50,34 @@ namespace GaCloudServer.BusinessLogic.Mappers.Cdr
 
             CreateMap<PagedList<CdrComuneOnCentro>, CdrComuniOnCentriDto>(MemberList.Destination)
                 .ReverseMap();
+
+            //GaCdrConferimenti Map
+            CreateMap<CdrConferimento, CdrConferimentoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<CdrConferimento>, CdrConferimentiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //GaCdrRichiesteViaggi Map
+            CreateMap<CdrRichiestaViaggio, CdrRichiestaViaggioDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<CdrRichiestaViaggio>, CdrRichiesteViaggiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //GaCdrStatiRichieste Map
+            CreateMap<CdrStatoRichiesta, CdrStatoRichiestaDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<CdrStatoRichiesta>, CdrStatiRichiesteDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //GaCdrUtenti Map
+            CreateMap<CdrUtente, CdrUtenteDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<CdrUtente>, CdrUtentiDto>(MemberList.Destination)
+                .ReverseMap();
         }
     }
 }
