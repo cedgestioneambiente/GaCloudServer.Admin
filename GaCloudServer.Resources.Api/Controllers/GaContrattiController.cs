@@ -456,7 +456,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #region Views 
         [HttpGet("GetViewGaContrattiUtentiOnPermessiAsync/{id}")]
-        public async Task<ApiResponse> GetViewGaContrattiUtentiOnPermessiAsync(string id)
+        public async Task<ApiResponse> GetViewGaContrattiUtentiOnPermessiAsync(long id)
         {
             var response = await _gaContrattiService.GetViewGaContrattiUtentiOnPermessiAsync(id);
             return new ApiResponse(response);

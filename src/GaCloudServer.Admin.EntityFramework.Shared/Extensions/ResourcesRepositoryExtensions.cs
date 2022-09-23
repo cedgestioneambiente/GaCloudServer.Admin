@@ -84,11 +84,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ContrattiServizio>, GenericRepository<TResourcesDbContext, ContrattiServizio>>();
             services.AddTransient<IGenericRepository<ContrattiTipologia>, GenericRepository<TResourcesDbContext, ContrattiTipologia>>();
             services.AddTransient<IGenericRepository<ContrattiUtenteOnPermesso>, GenericRepository<TResourcesDbContext, ContrattiUtenteOnPermesso>>();
+            services.AddTransient<IGenericRepository<ContrattiModalita>, GenericRepository<TResourcesDbContext, ContrattiModalita>>();
+            services.AddTransient<IGenericRepository<ContrattiFornitore>, GenericRepository<TResourcesDbContext, ContrattiFornitore>>();
+            services.AddTransient<IGenericRepository<ContrattiDocumento>, GenericRepository<TResourcesDbContext, ContrattiDocumento>>();
 
-            
             //Views
             services.AddTransient<IGenericRepository<ViewGaContrattiUtenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtenti>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiUtentiOnPermessi>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtentiOnPermessi>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiDocumenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumenti>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiDocumentiList>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumentiList>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiNumeratori>, GenericRepository<TResourcesDbContext, ViewGaContrattiNumeratori>>();
+
+            //Sp
+            services.AddTransient<IGenericRepository<SpGaContrattiNumeratore>, GenericRepository<TResourcesDbContext, SpGaContrattiNumeratore>>();
+            services.AddTransient<IGenericRepository<SpGaContrattiPermesso>, GenericRepository<TResourcesDbContext, SpGaContrattiPermesso>>();
+            services.AddTransient<IGenericRepository<SpGaContrattiPermessoMode>, GenericRepository<TResourcesDbContext, SpGaContrattiPermessoMode>>();
+
             #endregion
 
             //Aziende

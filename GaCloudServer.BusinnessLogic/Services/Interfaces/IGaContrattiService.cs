@@ -62,16 +62,12 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Views
-        Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(string id);
+        Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(long id);
         #endregion
 
         #endregion
 
-        #region GaContrattiUtentiOnPermessi
-
-        #region Functions
-
-        #endregion
+        #region GaContrattiUtenti
 
         #region Views
         Task<PagedList<ViewGaContrattiUtenti>> GetViewGaContrattiUtentiAsync(int page = 1, int pageSize = 0);

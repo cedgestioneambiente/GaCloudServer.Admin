@@ -621,7 +621,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         //}
 
-        [HttpPost("UpdateGaCdrCerOnCentroAsync/{cerId}/{centroId}")]
+        [HttpGet("UpdateGaCdrCerOnCentroAsync/{cerId}/{centroId}")]
         public async Task<ActionResult<ApiResponse>> UpdateGaCdrCerOnCentroAsync(long cerId, long centroId)
         {
             try
@@ -644,7 +644,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Views
-        [HttpGet("GetViewGaCersOnCentriAsync/{id}")]
+        [HttpGet("GetViewGaCdrCersOnCentriAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetViewGaCdrCersOnCentriAsync(long id)
         {
             try
@@ -687,7 +687,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Views
-        [HttpGet("GetViewGaComuniOnCentriAsync/{id}")]
+        [HttpGet("GetViewGaCdrComuniOnCentriAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetViewGaCdrComuniOnCentriAsync(long id)
         {
             try

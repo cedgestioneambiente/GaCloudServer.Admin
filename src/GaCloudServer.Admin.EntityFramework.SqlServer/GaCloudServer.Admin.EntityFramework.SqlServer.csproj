@@ -113,6 +113,12 @@
 	  <None Update="Scripts\Cdr\DROP_ViewGaCdrCersOnCentri.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Contratti\DROP_ViewGaContratti.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Contratti\CREATE_ViewGaContratti.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Contratti\CREATE_ViewGaContrattiUtenti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

@@ -317,10 +317,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(string id)
+        public async Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(long id)
         {
             {
-                var entities = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == id, 1, 0, "UtenteId");
+                var entities = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.Id == id, 1, 0, "UtenteId");
 
                 return entities;
             }

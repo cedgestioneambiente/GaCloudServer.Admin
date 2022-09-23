@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views
 {
-    public class ViewGaContrattiUtenti : GenericEntity
-
+    public class ViewGaContrattiNumeratori : GenericEntity
     {
-        public string UtenteId { get; set; }
-        public string UserName { get; set; }
+        public int start { get; set; }
     }
 }
