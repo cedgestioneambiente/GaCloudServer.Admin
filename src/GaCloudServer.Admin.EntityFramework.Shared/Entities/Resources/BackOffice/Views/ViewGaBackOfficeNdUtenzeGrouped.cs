@@ -1,0 +1,19 @@
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+
+namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views
+{
+    public class ViewGaBackOfficeNdUtenzeGrouped : GenericEntity
+    {
+        public string CodAzi { get; set; }
+        public string CodFis { get; set; }
+        public string NumCon { get; set; }
+        public string CodCom { get; set; }
+        public string RagCli { get; set; }
+        public string Comune { get; set; }
+        public string DesVia { get; set; }
+        public string Civico { get; set; }
+        public string CodZona { get; set; }
+        public string Descri { get; set; }
+
+    }
+}

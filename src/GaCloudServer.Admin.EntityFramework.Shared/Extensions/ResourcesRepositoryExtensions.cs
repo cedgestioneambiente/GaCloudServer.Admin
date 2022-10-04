@@ -13,6 +13,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 {
@@ -105,6 +107,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Aziende
             #region Aziende
             services.AddTransient<IGenericRepository<AziendeLista>, GenericRepository<TResourcesDbContext, AziendeLista>>();
+            #endregion
+
+            //BackOffice
+            #region BackOffice
+            services.AddTransient<IGenericRepository<BackOfficeTicket>, GenericRepository<TResourcesDbContext, BackOfficeTicket>>();
+
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeComuni>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeComuni>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeGrouped>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenze>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenzeGrouped>>();
             #endregion
 
             return services; 

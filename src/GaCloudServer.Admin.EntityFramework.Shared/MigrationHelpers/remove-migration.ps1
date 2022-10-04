@@ -1,4 +1,4 @@
-﻿param([string] $migration = 'DbInit', [string] $migrationProviderName = 'SqlServer', [string] $targetContext = 'All')
+﻿param([string] $migration = 'Default', [string] $migrationProviderName = 'SqlServer', [string] $targetContext = 'All')
 $projectName = "GaCloudServer";
 $currentPath = Get-Location
 Set-Location "../../$projectName.Admin"
@@ -42,7 +42,15 @@ foreach ($provider in $dpProviders.Keys) {
                     $migrationPath = $targetContexts[$context];
 
                     Write-Host "Migrating context " $context
-                    dotnet ef migrations remove -c $context -p $projectPath
+                    if($migration -eq 'Default')
+                    {
+                        dotnet ef migrations remove -c $context -p $projectPath
+                    }
+                    else
+                    {
+                        dotnet ef migrations remove $migration -c $context -p $projectPath
+                    }
+
                 }
             } 
         }
