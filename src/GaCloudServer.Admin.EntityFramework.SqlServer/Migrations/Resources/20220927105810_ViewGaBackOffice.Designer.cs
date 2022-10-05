@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927105810_ViewGaBackOffice")]
+    partial class ViewGaBackOffice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +60,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("AutorizzazioniDocumentoId");
 
-                    b.ToTable("GaAutorizzazioniAllegati", (string)null);
+                    b.ToTable("GaAutorizzazioniAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniDocumento", b =>
@@ -100,7 +102,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("AutorizzazioniTipoId");
 
-                    b.ToTable("GaAutorizzazioniDocumenti", (string)null);
+                    b.ToTable("GaAutorizzazioniDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniTipo", b =>
@@ -119,7 +121,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaAutorizzazioniTipi", (string)null);
+                    b.ToTable("GaAutorizzazioniTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views.ViewGaAutorizzazioniDocumenti", b =>
@@ -177,7 +179,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaAziendeListe", (string)null);
+                    b.ToTable("GaAziendeListe");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.BackOfficeParametroOnCategoria", b =>
@@ -724,7 +726,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCdrCentri", (string)null);
+                    b.ToTable("GaCdrCentri");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCer", b =>
@@ -747,18 +749,18 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Imm")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Pericoloso")
+                    b.Property<bool>("Pericoloso")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("Peso")
+                    b.Property<bool>("Peso")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("Qta")
+                    b.Property<bool>("Qta")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCdrCers", (string)null);
+                    b.ToTable("GaCdrCers");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCerDettaglio", b =>
@@ -785,7 +787,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrCerId");
 
-                    b.ToTable("GaCdrCersDettagli", (string)null);
+                    b.ToTable("GaCdrCersDettagli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCerOnCentro", b =>
@@ -812,7 +814,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrCerId");
 
-                    b.ToTable("GaCdrCersOnCentri", (string)null);
+                    b.ToTable("GaCdrCersOnCentri");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrComune", b =>
@@ -831,7 +833,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCdrComuni", (string)null);
+                    b.ToTable("GaCdrComuni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrComuneOnCentro", b =>
@@ -857,7 +859,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrComuneId");
 
-                    b.ToTable("GaCdrComuniOnCentri", (string)null);
+                    b.ToTable("GaCdrComuniOnCentri");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrConferimento", b =>
@@ -930,7 +932,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrCerId");
 
-                    b.ToTable("GaCdrConferimenti", (string)null);
+                    b.ToTable("GaCdrConferimenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrRichiestaViaggio", b =>
@@ -980,7 +982,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrStatoRichiestaId");
 
-                    b.ToTable("GaCdrRichiesteViaggi", (string)null);
+                    b.ToTable("GaCdrRichiesteViaggi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrStatoRichiesta", b =>
@@ -999,7 +1001,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCdrStatiRichieste", (string)null);
+                    b.ToTable("GaCdrStatiRichieste");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrUtente", b =>
@@ -1038,7 +1040,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrComuneId");
 
-                    b.ToTable("GaCdrUtenti", (string)null);
+                    b.ToTable("GaCdrUtenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views.ViewGaCdrCersOnCentri", b =>
@@ -1286,171 +1288,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaComunicatiDocumenti", (string)null);
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiDocumento", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("AffariGenerali")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Archiviato")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CodiceCig")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Commerciale")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Comunicazione")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Contabilita")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("ContrattiFornitoreId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ContrattiModalitaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ContrattiServizioId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ContrattiTipologiaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DataScadenza")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Direzione")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Faldone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileFolder")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileSize")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Informatica")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Personale")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Preventivo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PreventivoNumero")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("QualitaSicurezza")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SogliaAvviso")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tecnico")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContrattiFornitoreId");
-
-                    b.HasIndex("ContrattiModalitaId");
-
-                    b.HasIndex("ContrattiServizioId");
-
-                    b.HasIndex("ContrattiTipologiaId");
-
-                    b.ToTable("GaContrattiDocumenti", (string)null);
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiFornitore", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("CodiceFiscale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PartitaIva")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RagioneSociale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RecapitoFatture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SedeLegale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaContrattiFornitori", (string)null);
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiModalita", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaContrattiModalitas", (string)null);
+                    b.ToTable("GaComunicatiDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiPermesso", b =>
@@ -1469,7 +1307,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContrattiPermessi", (string)null);
+                    b.ToTable("GaContrattiPermessi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiServizio", b =>
@@ -1488,7 +1326,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContrattiServizi", (string)null);
+                    b.ToTable("GaContrattiServizi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiTipologia", b =>
@@ -1507,7 +1345,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContrattiTipologie", (string)null);
+                    b.ToTable("GaContrattiTipologie");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiUtenteOnPermesso", b =>
@@ -1531,247 +1369,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ContrattiPermessoId");
 
-                    b.ToTable("GaContrattiUtentiOnPermessi", (string)null);
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.SpGaContrattiNumeratore", b =>
-                {
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("start")
-                        .HasColumnType("int");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.SpGaContrattiPermesso", b =>
-                {
-                    b.Property<bool>("Archiviato")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("ContrattoFornitoreId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DataScadenza")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Faldone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Modalita")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Servizio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Stato")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tipologia")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.SpGaContrattiPermessoMode", b =>
-                {
-                    b.Property<bool>("Archiviato")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CodiceCig")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ContrattoFornitoreId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DataScadenza")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Faldone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Modalita")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RagioneSociale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Stato")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tipologia")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("TipologiaId")
-                        .HasColumnType("bigint");
-
-                    b.ToView(null);
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views.ViewGaContrattiDocumenti", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("Archiviato")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("ContrattoFornitoreId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DataScadenza")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Faldone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Modalita")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Servizio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Stato")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tipologia")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToView("ViewGaContrattiDocumenti");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views.ViewGaContrattiDocumentiList", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("Archiviato")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CodiceCig")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ContrattoFornitoreId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DataScadenza")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Faldone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Modalita")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RagioneSociale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Stato")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tipologia")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("TipologiaId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToView("ViewGaContrattiDocumentiList");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views.ViewGaContrattiNumeratori", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("start")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToView("ViewGaContrattiNumeratori");
+                    b.ToTable("GaContrattiUtentiOnPermessi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views.ViewGaContrattiUtenti", b =>
@@ -1833,7 +1431,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziAlimentazioni", (string)null);
+                    b.ToTable("GaMezziAlimentazioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziCantiere", b =>
@@ -1852,7 +1450,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziCantieri", (string)null);
+                    b.ToTable("GaMezziCantieri");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziClasse", b =>
@@ -1871,7 +1469,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziClassi", (string)null);
+                    b.ToTable("GaMezziClassi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziDocumento", b =>
@@ -1910,7 +1508,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("MezziVeicoloId");
 
-                    b.ToTable("GaMezziDocumenti", (string)null);
+                    b.ToTable("GaMezziDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziPatente", b =>
@@ -1929,7 +1527,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziPatenti", (string)null);
+                    b.ToTable("GaMezziPatenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziPeriodoScadenza", b =>
@@ -1948,7 +1546,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziPeriodiScadenze", (string)null);
+                    b.ToTable("GaMezziPeriodiScadenze");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziProprietario", b =>
@@ -1967,7 +1565,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziProprietari", (string)null);
+                    b.ToTable("GaMezziProprietari");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziScadenza", b =>
@@ -2017,7 +1615,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("MezziVeicoloId");
 
-                    b.ToTable("GaMezziScadenze", (string)null);
+                    b.ToTable("GaMezziScadenze");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziScadenzaTipo", b =>
@@ -2036,7 +1634,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziScadenzeTipi", (string)null);
+                    b.ToTable("GaMezziScadenzeTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziTipo", b =>
@@ -2055,7 +1653,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziTipi", (string)null);
+                    b.ToTable("GaMezziTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziVeicolo", b =>
@@ -2157,7 +1755,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("MezziTipoId");
 
-                    b.ToTable("GaMezziVeicoli", (string)null);
+                    b.ToTable("GaMezziVeicoli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views.ViewGaMezziDocumenti", b =>
@@ -2467,41 +2065,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .IsRequired();
 
                     b.Navigation("CdrComune");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiDocumento", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiFornitore", "ContrattiFornitore")
-                        .WithMany()
-                        .HasForeignKey("ContrattiFornitoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiModalita", "ContrattiModalita")
-                        .WithMany()
-                        .HasForeignKey("ContrattiModalitaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiServizio", "ContrattiServizio")
-                        .WithMany()
-                        .HasForeignKey("ContrattiServizioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiTipologia", "ContrattiTipologia")
-                        .WithMany()
-                        .HasForeignKey("ContrattiTipologiaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ContrattiFornitore");
-
-                    b.Navigation("ContrattiModalita");
-
-                    b.Navigation("ContrattiServizio");
-
-                    b.Navigation("ContrattiTipologia");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiUtenteOnPermesso", b =>

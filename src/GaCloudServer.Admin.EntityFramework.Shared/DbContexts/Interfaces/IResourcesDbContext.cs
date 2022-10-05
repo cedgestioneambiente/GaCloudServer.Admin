@@ -9,6 +9,9 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using Microsoft.EntityFrameworkCore;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -97,6 +100,27 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #region GaAutorizzazioni Tables
         DbSet<AziendeLista> GaAziendeListe { get; set; }
+        #endregion
+
+        #region GaBackOffice
+        DbSet<BackOfficeParametroOnCategoria> GaBackOfficeParametriOnCategorie { get; set; }
+        DbSet<BackOfficeStatoTicket> GaBackOfficeStatiTickets { get; set; }
+        DbSet<BackOfficeTipoTicket> GaBackOfficeTipiTickets { get; set; }
+        DbSet<BackOfficeTicket> GaBackOfficeTickets { get; set; }
+
+        #region Views
+        DbSet<ViewGaBackOfficeNdUtenze> ViewGaBackOfficeNdUtenze { get; set; }
+        DbSet<ViewGaBackOfficeNdUtenzeGrouped> ViewGaBackOfficeNdUtenzeGrouped { get; set; }
+        DbSet<ViewGaBackOfficeUtenzeGrouped> ViewGaBackOfficeUtenzeGrouped { get; set; }
+        DbSet<ViewGaBackOfficeComuni> ViewGaBackOfficeComuni { get; set; }
+        DbSet<ViewGaBackOfficeCategorie> ViewGaBackOfficeCategorie { get; set; }
+        #endregion
+
+        #region Sp
+        DbSet<SpGaBackOfficeUtenzeContenitori> SpGaBackOfficeUtenzeContenitori { get; set; }
+        DbSet<SpGaBackOfficeLettureMezzi> SpGaBackOfficeLettureMezzi { get; set; }
+        DbSet<SpGaBackOfficeLettureEmz> SpGaBackOfficeLettureEmz { get; set; }
+        #endregion
         #endregion
 
     }

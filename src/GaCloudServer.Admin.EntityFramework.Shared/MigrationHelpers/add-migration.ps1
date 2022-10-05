@@ -7,19 +7,19 @@ $settings = Get-Content appsettings.json -raw
 
 #Initialze db context and define the target directory
 $targetContexts = @{ 
-    ResourcesDbContext= "Migrations\Resources"
+    ResourcesDbContext= "Migrations/Resources"
 }
 
 #Initialize the db providers and it's respective projects
 $dpProviders = @{
-    SqlServer  = "..\..\src\$projectName.Admin.EntityFramework.SqlServer\$projectName.Admin.EntityFramework.SqlServer.csproj";
-    PostgreSQL = "..\..\src\$projectName.Admin.EntityFramework.PostgreSQL\$projectName.Admin.EntityFramework.PostgreSQL.csproj";
-    MySql      = "..\..\src\$projectName.Admin.EntityFramework.MySql\$projectName.Admin.EntityFramework.MySql.csproj";
+    SqlServer  = "../../src/$projectName.Admin.EntityFramework.SqlServer/$projectName.Admin.EntityFramework.SqlServer.csproj";
+    PostgreSQL = "../../src/$projectName.Admin.EntityFramework.PostgreSQL/$projectName.Admin.EntityFramework.PostgreSQL.csproj";
+    MySql      = "../../src/$projectName.Admin.EntityFramework.MySql/$projectName.Admin.EntityFramework.MySql.csproj";
 }
 
 #Fix issue when the tools is not installed and the nuget package does not work see https://github.com/MicrosoftDocs/azure-docs/issues/40048
 Write-Host "Updating donet ef tools"
-$env:Path += "	% USERPROFILE % \.dotnet\tools";
+$env:Path += "	% USERPROFILE % /.dotnet/tools";
 dotnet tool update --global dotnet-ef
 
 Write-Host "Start migrate projects"

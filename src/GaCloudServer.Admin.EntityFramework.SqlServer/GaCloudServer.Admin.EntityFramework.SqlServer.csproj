@@ -1,152 +1,176 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<Description>Entity Framework layer for the administration of the Duende IdentityServer and Asp.Net Core Identity with SqlServer support</Description>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\GaCloudServer.Admin.EntityFramework.Shared\GaCloudServer.Admin.EntityFramework.Shared.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Migrations\Resources\20220901132313_GaAutorizzazioni.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220901132424_ViewGaAutorizzazioni.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220901133747_GaCdr.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220907123036_ViewGaCDR.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220907134454_ViewGaCdr.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220907135307_ViewGaCdr.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220907140751_ViewGaCdr_V2.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220907141137_ViewGaCdr_v3.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220909090505_GaContratti.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220912075506_GaComunicati.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220914064648_GaMezzi.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220914064701_ViewGaMezzi.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220914142821_ViewGaCdr_V4.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220915092802_GaAziende.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	  <Compile Update="Migrations\Resources\20220919151606_GaCdr_V2.cs">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="Scripts\Autorizzazioni\CREATE_ViewGaAutorizzazioniDocumenti.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\ALTER_ViewGaCdrComuniOnCentri.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\DROP_ViewGaCdr.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\CREATE_ViewGaCdr.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\DROP_ViewGaCdrComuni.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\CREATE_ViewGaCdrComuni.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrCersOnCentri.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrCersOnCentri.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrCersList.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrCersList.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrComuniList.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrComuniList.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\CREATE_ViewGaCdrComuniOnCentri.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\CREATE_ViewGaCdrCersOnCentri.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\DROP_ViewGaCdrComuniOnCentri.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Cdr\DROP_ViewGaCdrCersOnCentri.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Contratti\DROP_ViewGaContratti.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Contratti\CREATE_ViewGaContratti.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Mezzi\CREATE_ViewGaMezzi.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Mezzi\DROP_ViewGaMezzi.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-
+  <PropertyGroup>
+    <SSDTUnitTestPath Condition="'$(SSDTUnitTestPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB</SSDTUnitTestPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SSDTPath Condition="'$(SSDTPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB\DAC</SSDTPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Description>Entity Framework layer for the administration of the Duende IdentityServer and Asp.Net Core Identity with SqlServer support</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GaCloudServer.Admin.EntityFramework.Shared\GaCloudServer.Admin.EntityFramework.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Migrations\Resources\20220901132313_GaAutorizzazioni.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220901132424_ViewGaAutorizzazioni.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220901133747_GaCdr.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220907123036_ViewGaCDR.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220907134454_ViewGaCdr.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220907135307_ViewGaCdr.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220907140751_ViewGaCdr_V2.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220907141137_ViewGaCdr_v3.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220909090505_GaContratti.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220912075506_GaComunicati.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220914064648_GaMezzi.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220914064701_ViewGaMezzi.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220914142821_ViewGaCdr_V4.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220915092802_GaAziende.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20220919151606_GaCdr.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Scripts\Autorizzazioni\CREATE_ViewGaAutorizzazioniDocumenti.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\ALTER_ViewGaCdrComuniOnCentri.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\DROP_ViewGaCdr.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\CREATE_ViewGaCdr.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\DROP_ViewGaCdrComuni.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\CREATE_ViewGaCdrComuni.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrCersOnCentri.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrCersOnCentri.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrCersList.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrCersList.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrComuniList.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrComuniList.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\CREATE_ViewGaCdrComuniOnCentri.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\CREATE_ViewGaCdrCersOnCentri.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\DROP_ViewGaCdrComuniOnCentri.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Cdr\DROP_ViewGaCdrCersOnCentri.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Contratti\DROP_ViewGaContratti.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Contratti\CREATE_ViewGaContratti.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Contratti\CREATE_ViewGaContrattiUtenti.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Contratti\DROP_ViewGaContrattiUtenti.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Contratti\DROP_ViewGaContrattiUtentiOnPermessi.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Contratti\CREATE_ViewGaContrattiUtentiOnPermessi.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Contratti\DROP_PrivateViewGaContrattiPermessiList.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Contratti\CREATE_PrivateViewGaContrattiPermessiList.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Mezzi\CREATE_ViewGaMezzi.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Mezzi\DROP_ViewGaMezzi.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Condition="$(VisualStudioVersion) == '17.0'">
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTPath)\Microsoft.Data.Tools.Schema.Sql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql.UnitTesting, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup>
+    <SsdtUnitTestVersion>3.1</SsdtUnitTestVersion>
+  </PropertyGroup>
 </Project>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

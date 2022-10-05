@@ -15,6 +15,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -106,6 +109,29 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region GaAziende Tables
         public DbSet<AziendeLista> GaAziendeListe { get; set; }
+        #endregion
+
+        #region GaBackOffice
+
+        public DbSet<BackOfficeParametroOnCategoria> GaBackOfficeParametriOnCategorie { get; set; }
+        public DbSet<BackOfficeStatoTicket> GaBackOfficeStatiTickets { get; set; }
+        public DbSet<BackOfficeTipoTicket> GaBackOfficeTipiTickets { get; set; }
+        public DbSet<BackOfficeTicket> GaBackOfficeTickets { get; set; }
+
+        #region Views
+        public DbSet<ViewGaBackOfficeNdUtenze> ViewGaBackOfficeNdUtenze { get; set; }
+        public DbSet<ViewGaBackOfficeNdUtenzeGrouped> ViewGaBackOfficeNdUtenzeGrouped { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzeGrouped> ViewGaBackOfficeUtenzeGrouped { get; set; }
+        public DbSet<ViewGaBackOfficeComuni> ViewGaBackOfficeComuni { get; set; }
+        public DbSet<ViewGaBackOfficeCategorie> ViewGaBackOfficeCategorie { get; set; }
+        #endregion
+
+        #region Sp
+        public DbSet<SpGaBackOfficeUtenzeContenitori> SpGaBackOfficeUtenzeContenitori { get; set; }
+        public DbSet<SpGaBackOfficeLettureMezzi> SpGaBackOfficeLettureMezzi { get; set; }
+        public DbSet<SpGaBackOfficeLettureEmz> SpGaBackOfficeLettureEmz { get; set; }
+        #endregion
+
         #endregion
 
 
@@ -264,6 +290,69 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             });
             #endregion
 
+            #region BackOffice
+            builder.Entity<ViewGaBackOfficeNdUtenze>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeNdUtenze))
+                .HasNoKey()
+                .Property(x => x.CodAzi);
+            });
+
+            builder.Entity<ViewGaBackOfficeNdUtenzeGrouped>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeNdUtenzeGrouped))
+                .HasNoKey()
+                .Property(x => x.CodAzi);
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzeGrouped>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzeGrouped))
+                .HasNoKey()
+                .Property(x => x.CodAzi);
+            });
+
+            builder.Entity<ViewGaBackOfficeComuni>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeComuni))
+                .HasNoKey()
+                .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaBackOfficeCategorie>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeCategorie))
+                .HasNoKey()
+                .Property(x => x.Tipo);
+            });
+
+
+            builder.Entity<SpGaBackOfficeUtenzeContenitori>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
+
+            builder.Entity<SpGaBackOfficeLettureMezzi>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
+
+            builder.Entity<SpGaBackOfficeLettureEmz>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
+            #endregion
 
 
 

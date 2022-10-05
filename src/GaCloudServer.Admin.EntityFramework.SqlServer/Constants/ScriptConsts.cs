@@ -27,12 +27,28 @@
 
         //Contratti
         public const string GaContrattiMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Contratti\";
-        public const string CREATE_ViewGaContratti = "CREATE_ViewGaContratti.sql";
-        public const string DROP_ViewGaContratti = "DROP_ViewGaContratti.sql";
+        public const string CREATE_PrivateViewGaContrattiPermessiList = "CREATE_PrivateViewGaContrattiPermessiList.sql";
+        public const string DROP_PrivateViewGaContrattiPermessiList = "DROP_PrivateViewGaContrattiPermessiList.sql";
+        public const string CREATE_ViewGaContrattiUtentiOnPermessi = "CREATE_ViewGaContrattiUtentiOnPermessi.sql";
+        public const string DROP_ViewGaContrattiUtentiOnPermessi = "DROP_ViewGaContrattiUtentiOnPermessi";
+        public const string CREATE_ViewGaContrattiUtenti = "CREATE_ViewGaContrattiUtenti.sql";
+        public const string DROP_ViewGaContrattiUtenti = "DROP_ViewGaContrattiUtenti";
 
         //Mezzi
         public const string GaMezziMigration= @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Mezzi\";
         public const string CREATE_ViewGaMezzi = "CREATE_ViewGaMezzi.sql";
         public const string DROP_ViewGaMezzi = "DROP_ViewGaMezzi.sql";
+
+        //BackOffice
+        public const string GaBackOffice = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\BackOffice\";
+        public const string CREATE_SpGaBackOffice = "CREATE_SpGaBackOffice.sql";
+        public const string DROP_SpGaBackOffice = "DROP_SpGaBackOffice.sql";
+        public const string CREATE_ViewGaBackOffice = "CREATE_ViewGaBackOffice.sql";
+        public const string DROP_ViewGaBackOffice = "DROP_ViewGaBackOffice.sql";
+
+        //LinkedServer
+        public const string LinkedServer= @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\LinkedServer\";
+        public const string CREATE_LinkedServer2082756 = "CREATE_LinkedServer2082756.sql";
+        public const string DROP_LinkedServer2082756 = "DROP_LinkedServer2082756";
     }
 }
