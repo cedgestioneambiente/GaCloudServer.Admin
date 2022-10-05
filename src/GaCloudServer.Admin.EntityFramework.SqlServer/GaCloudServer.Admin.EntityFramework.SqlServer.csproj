@@ -56,7 +56,7 @@
 	  <Compile Update="Migrations\Resources\20220915092802_GaAziende.cs">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Compile>
-	  <Compile Update="Migrations\Resources\20220919151606_GaCdr.cs">
+	  <Compile Update="Migrations\Resources\20220919151606_GaCdr_V2.cs">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Compile>
 	</ItemGroup>
@@ -117,24 +117,6 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Contratti\CREATE_ViewGaContratti.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Contratti\CREATE_ViewGaContrattiUtenti.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Contratti\DROP_ViewGaContrattiUtenti.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Contratti\DROP_ViewGaContrattiUtentiOnPermessi.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Contratti\CREATE_ViewGaContrattiUtentiOnPermessi.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Contratti\DROP_PrivateViewGaContrattiPermessiList.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Contratti\CREATE_PrivateViewGaContrattiPermessiList.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Mezzi\CREATE_ViewGaMezzi.sql">

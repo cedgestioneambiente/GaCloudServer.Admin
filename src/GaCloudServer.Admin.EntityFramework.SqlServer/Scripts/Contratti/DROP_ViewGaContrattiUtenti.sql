@@ -1,1 +1,0 @@
-﻿DROP VIEW [dbo].[ViewGaContrattiUtenti]

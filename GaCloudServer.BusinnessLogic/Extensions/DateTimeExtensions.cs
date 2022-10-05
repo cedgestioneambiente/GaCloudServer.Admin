@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AuthServer.SSO.Resources.BusinnessLogic.Extensions
+namespace GaCloudServer.BusinnessLogic.Extensions
 {
     public static class DateTimeExtensions
     {

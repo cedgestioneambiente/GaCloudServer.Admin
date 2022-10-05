@@ -33,9 +33,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     Cer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Descrizione = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Imm = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Pericoloso = table.Column<bool>(type: "bit", nullable: false),
-                    Peso = table.Column<bool>(type: "bit", nullable: false),
-                    Qta = table.Column<bool>(type: "bit", nullable: false),
+                    Pericoloso = table.Column<bool>(type: "bit", nullable: true),
+                    Peso = table.Column<bool>(type: "bit", nullable: true),
+                    Qta = table.Column<bool>(type: "bit", nullable: true),
                     Disabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -141,8 +141,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
             migrationBuilder.CreateIndex(
                 name: "IX_GaCdrCersOnCentri_CdrCentroId",
                 table: "GaCdrCersOnCentri",
-                column: "CdrCentroId",
-                unique: true);
+                column: "CdrCentroId");
+
 
             migrationBuilder.CreateIndex(
                 name: "IX_GaCdrCersOnCentri_CdrCerId",

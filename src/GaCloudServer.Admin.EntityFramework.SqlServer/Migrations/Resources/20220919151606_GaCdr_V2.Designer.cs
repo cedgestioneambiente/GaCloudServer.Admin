@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20220919151606_GaCdr_ViewGaCdr_V4")]
-    partial class GaCdr_ViewGaCdr_V4
+    [Migration("20220919151606_GaCdr_V2")]
+    partial class GaCdr_V2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

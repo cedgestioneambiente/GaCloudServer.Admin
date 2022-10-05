@@ -1,4 +1,5 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
@@ -62,7 +63,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Views
-        Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(long id);
+        Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(string utenteId);
         #endregion
 
         #endregion
@@ -73,6 +74,68 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaContrattiUtenti>> GetViewGaContrattiUtentiAsync(int page = 1, int pageSize = 0);
         #endregion
 
+        #endregion
+
+        #region GaContrattiModalitas
+        Task<ContrattiModalitasDto> GetGaContrattiModalitasAsync(int page = 1, int pageSize = 0);
+        Task<ContrattiModalitaDto> GetGaContrattiModalitaByIdAsync(long id);
+
+        Task<long> AddGaContrattiModalitaAsync(ContrattiModalitaDto dto);
+        Task<long> UpdateGaContrattiModalitaAsync(ContrattiModalitaDto dto);
+
+        Task<bool> DeleteGaContrattiModalitaAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaContrattiModalitaAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaContrattiModalitaAsync(long id);
+
+        #endregion
+
+        #endregion
+
+        #region GaContrattiFornitori
+        Task<ContrattiFornitoriDto> GetGaContrattiFornitoriAsync(int page = 1, int pageSize = 0);
+        Task<ContrattiFornitoreDto> GetGaContrattiFornitoreByIdAsync(long id);
+
+        Task<long> AddGaContrattiFornitoreAsync(ContrattiFornitoreDto dto);
+        Task<long> UpdateGaContrattiFornitoreAsync(ContrattiFornitoreDto dto);
+
+        Task<bool> DeleteGaContrattiFornitoreAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaContrattiFornitoreAsync(long id, string partitaIva);
+        Task<bool> ChangeStatusGaContrattiFornitoreAsync(long id);
+
+        #endregion
+
+        #endregion
+
+        #region GaContrattiDocumenti
+        Task<ContrattiDocumentiDto> GetGaContrattiDocumentiByIdAsync(long fornitoreId);
+        Task<ContrattiDocumentoDto> GetGaContrattiDocumentoByIdAsync(long id);
+
+        Task<long> AddGaContrattiDocumentoAsync(ContrattiDocumentoDto dto);
+        Task<long> UpdateGaContrattiDocumentoAsync(ContrattiDocumentoDto dto);
+
+        Task<bool> DeleteGaContrattiDocumentoAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaContrattiDocumentoAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaContrattiDocumentoAsync(long id);
+
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaContrattiNumeratori>> GetViewGaContrattiNumeratoriAsync();
+        Task<PagedList<ViewGaContrattiDocumenti>> GetViewGaContrattiDocumentiByIdAsync(ContrattiDocumentiRequestDto dto);
+        Task<PagedList<ViewGaContrattiDocumentiList>> GetViewGaContrattiDocumentiListByModeAsync(ContrattiDocumentiListRequestDto dto);
+        #endregion
+
+        #region Sp
+        //Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync();
+        //Task<PagedList<SpGaContrattiPermesso>> GetSpGaContrattiPermessoAsync(ContrattiDocumentiRequestDto dto);
+        //Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto);
+        #endregion
         #endregion
     }
 }

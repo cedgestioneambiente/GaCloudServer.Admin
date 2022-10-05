@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class GaCdr_ViewGaCdr_V4 : Migration
+    public partial class GaCdr_V2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
