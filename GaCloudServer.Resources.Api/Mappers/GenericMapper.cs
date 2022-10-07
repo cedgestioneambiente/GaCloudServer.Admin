@@ -5,6 +5,7 @@ using GaCloudServer.Resources.Api.Mappers.Cdr;
 using GaCloudServer.Resources.Api.Mappers.Comunicati;
 using GaCloudServer.Resources.Api.Mappers.Contratti;
 using GaCloudServer.Resources.Api.Mappers.Mezzi;
+using GaCloudServer.Resources.Api.Mappers.PrenotazioneAuto;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.Resources.Api.Mappers
@@ -20,7 +21,8 @@ namespace GaCloudServer.Resources.Api.Mappers
             new CdrMapperProfile(),
             new ComunicatiMapperProfile(),
             new MezziMapperProfile(),
-            new AziendeMapperProfile()
+            new AziendeMapperProfile(),
+            new PrenotazioneAutoMapperProfile()
         };
 
         static GenericMapper() {

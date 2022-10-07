@@ -12,6 +12,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -109,6 +111,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<SpGaBackOfficeLettureMezzi> SpGaBackOfficeLettureMezzi { get; set; }
         DbSet<SpGaBackOfficeLettureEmz> SpGaBackOfficeLettureEmz { get; set; }
         #endregion
+        #endregion
+
+        #region GaPrenotazioneAuto
+        DbSet<PrenotazioneAutoRegistrazione> GaPrenotazioneAutoRegistrazioni { get; set; }
+        DbSet<PrenotazioneAutoVeicolo> GaPrenotazioneAutoVeicoli { get; set; }
+        DbSet<PrenotazioneAutoSede> GaPrenotazioneAutoSedi { get; set; }
+
+        #region Views
+        DbSet<ViewGaPrenotazioneAutoVeicoli> ViewGaPrenotazioneAutoVeicoli { get; set; }
+        DbSet<ViewGaPrenotazioneAutoRegistrazioni> ViewGaPrenotazioneAutoRegistrazioni { get; set; }
+        #endregion
+
         #endregion
 
     }

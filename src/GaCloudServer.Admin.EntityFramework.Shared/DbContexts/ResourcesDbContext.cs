@@ -18,6 +18,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -118,6 +120,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<SpGaBackOfficeUtenzeContenitori> SpGaBackOfficeUtenzeContenitori { get; set; }
         public DbSet<SpGaBackOfficeLettureMezzi> SpGaBackOfficeLettureMezzi { get; set; }
         public DbSet<SpGaBackOfficeLettureEmz> SpGaBackOfficeLettureEmz { get; set; }
+        #endregion
+
+        #endregion
+
+        #region GaPrenotazioneAuto
+        public DbSet<PrenotazioneAutoRegistrazione> GaPrenotazioneAutoRegistrazioni { get; set; }
+        public DbSet<PrenotazioneAutoVeicolo> GaPrenotazioneAutoVeicoli { get; set; }
+        public DbSet<PrenotazioneAutoSede> GaPrenotazioneAutoSedi { get; set; }
+
+        #region Views
+        public DbSet<ViewGaPrenotazioneAutoVeicoli> ViewGaPrenotazioneAutoVeicoli { get; set; }
+        public DbSet<ViewGaPrenotazioneAutoRegistrazioni> ViewGaPrenotazioneAutoRegistrazioni { get; set; }
         #endregion
 
         #endregion
@@ -299,8 +313,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             });
             #endregion
 
+            #region PrenotazioneAuto
+            builder.Entity<ViewGaPrenotazioneAutoRegistrazioni>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPrenotazioneAutoRegistrazioni))
+                .HasKey(x => x.Id);
+            });
 
+            builder.Entity<ViewGaPrenotazioneAutoVeicoli>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPrenotazioneAutoVeicoli))
+                .HasKey(x => x.Id);
+            });
 
+            #endregion
 
             base.OnModelCreating(builder);
 

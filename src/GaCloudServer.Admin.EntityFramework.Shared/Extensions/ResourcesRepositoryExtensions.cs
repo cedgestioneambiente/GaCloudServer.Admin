@@ -1,20 +1,22 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 {
@@ -118,6 +120,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenze>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenzeGrouped>>();
             #endregion
+
+            //PrenotazioneAuto
+            #region PrenotazioneAuto
+            services.AddTransient<IGenericRepository<PrenotazioneAutoRegistrazione>, GenericRepository<TResourcesDbContext, PrenotazioneAutoRegistrazione>>();
+            services.AddTransient<IGenericRepository<PrenotazioneAutoSede>, GenericRepository<TResourcesDbContext, PrenotazioneAutoSede>>();
+            services.AddTransient<IGenericRepository<PrenotazioneAutoVeicolo>, GenericRepository<TResourcesDbContext, PrenotazioneAutoVeicolo>>();
+
+            services.AddTransient<IGenericRepository<ViewGaPrenotazioneAutoVeicoli>, GenericRepository<TResourcesDbContext, ViewGaPrenotazioneAutoVeicoli>>();
+            services.AddTransient<IGenericRepository<ViewGaPrenotazioneAutoRegistrazioni>, GenericRepository<TResourcesDbContext, ViewGaPrenotazioneAutoRegistrazioni>>();
+            #endregion
+
 
             return services; 
         }

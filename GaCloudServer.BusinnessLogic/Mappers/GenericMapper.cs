@@ -5,6 +5,7 @@ using GaCloudServer.BusinessLogic.Mappers.Cdr;
 using GaCloudServer.BusinessLogic.Mappers.Comunicati;
 using GaCloudServer.BusinessLogic.Mappers.Contratti;
 using GaCloudServer.BusinnessLogic.Mappers.Mezzi;
+using GaCloudServer.BusinnessLogic.Mappers.PrenotazioneAuto;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -19,7 +20,8 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new CdrMapperProfile(),
             new ComunicatiMapperProfile(),
             new MezziMapperProfile(),
-            new AziendeMapperProfile()
+            new AziendeMapperProfile(),
+            new PrenotazioneAutoMapperProfile()
         };
 
         static GenericMapper() {

@@ -20,6 +20,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IGaMezziService, GaMezziService>();
             services.AddTransient<IGaAziendeService, GaAziendeService>();
             services.AddTransient<IGaBackOfficeService,GaBackOfficeService>();
+            services.AddTransient<IGaPrenotazioneAutoService,GaPrenotazioneAutoService>();
 
             services.AddTransient<IFileService, FileService>();
 
