@@ -8,9 +8,9 @@ FROM            GaCdrConferimenti INNER JOIN
                          GaCdrCersDettagli ON GaCdrConferimenti.CdrCerDettaglioId = GaCdrCersDettagli.Id INNER JOIN
                          PrivateViewAuthServerUserList ON GaCdrConferimenti.UserId = PrivateViewAuthServerUserList.Id INNER JOIN
                          GaCdrCentri ON GaCdrConferimenti.CdrCentroId = GaCdrCentri.Id LEFT OUTER JOIN
-                         ViewGaBackOfficeComuni ON GaCdrConferimenti.CdrComuneId COLLATE Latin1_General_CI_AS = ViewGaBackOfficeComuni.Id LEFT OUTER JOIN
-                         ViewGaBackOfficeUtenzeGrouped ON GaCdrConferimenti.NumCon COLLATE Latin1_General_CI_AS = ViewGaBackOfficeUtenzeGrouped.NumCon AND 
-                         GaCdrConferimenti.Partita COLLATE Latin1_General_CI_AS = ViewGaBackOfficeUtenzeGrouped.Partita
+                         dbo.ViewGaBackOfficeComuni ON  CAST(dbo.GaCdrConferimenti.CdrComuneId AS VARCHAR) COLLATE DATABASE_DEFAULT = CAST(dbo.ViewGaBackOfficeComuni.Id AS VARCHAR) LEFT OUTER JOIN
+                         dbo.ViewGaBackOfficeUtenzeGrouped ON CAST(dbo.GaCdrConferimenti.NumCon AS VARCHAR) COLLATE DATABASE_DEFAULT= CAST(dbo.ViewGaBackOfficeUtenzeGrouped.NumCon AS VARCHAR)  AND 
+                         CAST(dbo.GaCdrConferimenti.Partita AS VARCHAR) COLLATE DATABASE_DEFAULT= CAST(dbo.ViewGaBackOfficeUtenzeGrouped.Partita AS VARCHAR) 
 GO
 
 CREATE VIEW [dbo].[ViewGaCdrRichiesteViaggi]
@@ -31,4 +31,49 @@ CREATE VIEW [dbo].[ViewGaCdrUtenti]
                                          CASE WHEN InserimentoUtente = 'True' THEN 'SI' ELSE 'NO' END AS InserimentoUtente, CASE WHEN Approvato = 'True' THEN 'SI' ELSE 'NO' END AS Approvato, dbo.GaCdrUtenti.Disabled
                 FROM            dbo.GaCdrComuni INNER JOIN
                                          dbo.GaCdrUtenti ON dbo.GaCdrComuni.Id = dbo.GaCdrUtenti.CdrComuneId
+GO
+
+CREATE VIEW [dbo].[PrivateViewGaCdrCersList]
+                AS
+                SELECT        dbo.GaCdrCentri.Id AS CdrId, dbo.GaCdrCentri.Centro, dbo.GaCdrCers.Id, dbo.GaCdrCers.Descrizione
+                FROM            dbo.GaCdrCentri CROSS JOIN
+                                         dbo.GaCdrCers
+GO
+
+CREATE VIEW [dbo].[PrivateViewGaCdrCersOnCentri]
+AS
+SELECT        dbo.GaCdrCentri.Id, dbo.GaCdrCentri.Centro, dbo.GaCdrCers.Cer, dbo.GaCdrCersDettagli.Descrizione
+FROM            dbo.GaCdrCersOnCentri INNER JOIN
+                         dbo.GaCdrCers ON dbo.GaCdrCersOnCentri.CdrCerId = dbo.GaCdrCers.Id INNER JOIN
+                         dbo.GaCdrCersDettagli ON dbo.GaCdrCers.Id = dbo.GaCdrCersDettagli.CdrCerId INNER JOIN
+                         dbo.GaCdrCentri ON dbo.GaCdrCersOnCentri.CdrCentroId = dbo.GaCdrCentri.Id
+GO
+
+CREATE VIEW [dbo].[PrivateViewGaCdrComuniList]
+                AS
+                SELECT        dbo.GaCdrCentri.Id AS CentroId, dbo.GaCdrCentri.Centro, dbo.GaCdrComuni.Id AS ComuneId, dbo.GaCdrComuni.Comune
+                FROM            dbo.GaCdrCentri CROSS JOIN
+                                         dbo.GaCdrComuni
+GO
+
+CREATE VIEW [dbo].[ViewGaCdrCersOnCentri]
+                AS
+                SELECT        dbo.PrivateViewGaCdrCersList.CdrId AS Id, dbo.PrivateViewGaCdrCersList.CdrId AS CentroId, dbo.PrivateViewGaCdrCersList.Id AS CerId, dbo.PrivateViewGaCdrCersList.Descrizione AS Cer, 
+                                         CAST(CASE WHEN gacdrCersOnCentri.Id IS NULL THEN 'false' ELSE 'true' END AS bit) AS Abilitato, CAST('false' AS bit) AS Disabled
+                FROM            dbo.PrivateViewGaCdrCersList LEFT OUTER JOIN
+                                         dbo.GaCdrCersOnCentri ON dbo.PrivateViewGaCdrCersList.CdrId = dbo.GaCdrCersOnCentri.CdrCentroId AND dbo.PrivateViewGaCdrCersList.Id = dbo.GaCdrCersOnCentri.CdrCerId
+GO
+
+CREATE VIEW [dbo].[ViewGaCdrComuni]
+                AS
+                SELECT        Id, Comune AS Descrizione, Disabled
+                FROM            dbo.GaCdrComuni
+GO
+
+CREATE VIEW [dbo].[ViewGaCdrComuniOnCentri]
+                AS
+                SELECT        dbo.PrivateViewGaCdrComuniList.CentroId AS Id, dbo.PrivateViewGaCdrComuniList.CentroId, dbo.PrivateViewGaCdrComuniList.ComuneId, dbo.PrivateViewGaCdrComuniList.Comune, 
+                                         CAST(CASE WHEN gacdrcomuniOnCentri.Id IS NULL THEN 'false' ELSE 'true' END AS bit) AS Abilitato, CAST('false' AS bit) AS Disabled
+                FROM            dbo.PrivateViewGaCdrComuniList LEFT OUTER JOIN
+                                         dbo.GaCdrComuniOnCentri ON dbo.PrivateViewGaCdrComuniList.ComuneId = dbo.GaCdrComuniOnCentri.CdrComuneId AND dbo.PrivateViewGaCdrComuniList.CentroId = dbo.GaCdrComuniOnCentri.CdrCentroId
 GO

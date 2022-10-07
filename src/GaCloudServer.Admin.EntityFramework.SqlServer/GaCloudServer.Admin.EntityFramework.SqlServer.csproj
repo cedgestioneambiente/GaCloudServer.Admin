@@ -33,25 +33,10 @@
     <Compile Update="Migrations\Resources\20220901132424_ViewGaAutorizzazioni.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Update="Migrations\Resources\20220901133747_GaCdr.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Update="Migrations\Resources\20220907123036_ViewGaCDR.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Migrations\Resources\20220907134454_ViewGaCdr.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Migrations\Resources\20220907135307_ViewGaCdr.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Migrations\Resources\20220907140751_ViewGaCdr_V2.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Migrations\Resources\20220907141137_ViewGaCdr_v3.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Migrations\Resources\20220909090505_GaContratti.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Migrations\Resources\20220912075506_GaComunicati.cs">
@@ -61,9 +46,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Migrations\Resources\20220914064701_ViewGaMezzi.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Migrations\Resources\20220914142821_ViewGaCdr_V4.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Migrations\Resources\20220915092802_GaAziende.cs">
@@ -80,49 +62,10 @@
     <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\Cdr\ALTER_ViewGaCdrComuniOnCentri.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Scripts\Cdr\DROP_ViewGaCdr.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Cdr\CREATE_ViewGaCdr.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\DROP_ViewGaCdrComuni.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\CREATE_ViewGaCdrComuni.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrCersOnCentri.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrCersOnCentri.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrCersList.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrCersList.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\DROP_PrivateViewGaCdrComuniList.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\CREATE_PrivateViewGaCdrComuniList.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\CREATE_ViewGaCdrComuniOnCentri.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\CREATE_ViewGaCdrCersOnCentri.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\DROP_ViewGaCdrComuniOnCentri.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\Cdr\DROP_ViewGaCdrCersOnCentri.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Contratti\DROP_ViewGaContratti.sql">
@@ -147,6 +90,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Contratti\CREATE_PrivateViewGaContrattiPermessiList.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Global\CREATE_ViewGaGlobal.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Global\DROP_ViewGaGlobal.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Mezzi\CREATE_ViewGaMezzi.sql">
