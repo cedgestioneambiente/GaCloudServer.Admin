@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class ViewGaCdr : Migration
+    public partial class ViewGlobal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCdrMigration, ScriptConsts.CREATE_PrivateViewGaCdrCersList));
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaGlobalMigration, ScriptConsts.CREATE_ViewGaGlobal));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCdrMigration, ScriptConsts.DROP_PrivateViewGaCdrCersList));
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaGlobalMigration, ScriptConsts.DROP_ViewGaGlobal));
         }
     }
 }

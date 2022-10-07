@@ -40,9 +40,9 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr
         public string? Cer { get; set; }
         public string? Descrizione { get; set; }
         public string? Imm { get; set; }
-        public bool Pericoloso { get; set; }
-        public bool Peso { get; set; }
-        public bool Qta { get; set; }
+        public bool? Pericoloso { get; set; }
+        public bool? Peso { get; set; }
+        public bool? Qta { get; set; }
     }
 
     public class CdrCersDto : GenericPagedListDto<CdrCerDto>

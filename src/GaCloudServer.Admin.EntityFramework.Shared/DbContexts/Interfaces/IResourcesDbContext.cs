@@ -56,10 +56,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ContrattiServizio> GaContrattiServizi { get; set; }
         DbSet<ContrattiTipologia> GaContrattiTipologie { get; set; }
         DbSet<ContrattiUtenteOnPermesso> GaContrattiUtentiOnPermessi { get; set; }
+        DbSet<ContrattiModalita> GaContrattiModalitas { get; set; }
+        DbSet<ContrattiFornitore> GaContrattiFornitori { get; set; }
+        DbSet<ContrattiDocumento> GaContrattiDocumenti { get; set; }
 
         //#region Views
         DbSet<ViewGaContrattiUtenti> ViewGaContrattiUtenti { get; set; }
         DbSet<ViewGaContrattiUtentiOnPermessi> ViewGaContrattiUtentiOnPermessi { get; set; }
+        DbSet<ViewGaContrattiDocumenti> ViewGaContrattiDocumenti { get; set; }
+        DbSet<ViewGaContrattiDocumentiList> ViewGaContrattiDocumentiList { get; set; }
+        DbSet<ViewGaContrattiNumeratori> ViewGaContrattiNumeratori { get; set; }
+
+        //Sp
+        DbSet<SpGaContrattiNumeratore> SpGaContrattiNumeratori { get; set; }
+        DbSet<SpGaContrattiPermesso> SpGaContrattiPermessi { get; set; }
+        DbSet<SpGaContrattiPermessoMode> SpGaContrattiPermessiModes { get; set; }
+        
         //#endregion
         #endregion
 

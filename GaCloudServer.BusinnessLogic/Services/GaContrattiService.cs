@@ -5,6 +5,12 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+using GaCloudServer.BusinnessLogic.Extensions;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -14,9 +20,19 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ContrattiServizio> gaContrattiServiziRepo;
         protected readonly IGenericRepository<ContrattiTipologia> gaContrattiTipologieRepo;
         protected readonly IGenericRepository<ContrattiUtenteOnPermesso> gaContrattiUtentiOnPermessiRepo;
+        protected readonly IGenericRepository<ContrattiModalita> gaContrattiModalitasRepo;
+        protected readonly IGenericRepository<ContrattiFornitore> gaContrattiFornitoriRepo;
+        protected readonly IGenericRepository<ContrattiDocumento> gaContrattiDocumentiRepo;
 
         protected readonly IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo;
         protected readonly IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo;
+        protected readonly IGenericRepository<ViewGaContrattiDocumenti> viewGaContrattiDocumentiRepo;
+        protected readonly IGenericRepository<ViewGaContrattiDocumentiList> viewGaContrattiDocumentiListRepo;
+        protected readonly IGenericRepository<ViewGaContrattiNumeratori> viewGaContrattiNumeratoriRepo;
+
+        //protected readonly IProcedureManager<SpGaContrattiNumeratore> spGaContrattiNumeratoreRepo;
+        //protected readonly IProcedureManager<SpGaContrattiPermesso> spGaContrattiPermessoRepo;
+        //protected readonly IProcedureManager<SpGaContrattiPermessoMode> spGaContrattiPermessoModeRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -25,9 +41,19 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ContrattiServizio> gaContrattiServiziRepo,
             IGenericRepository<ContrattiTipologia> gaContrattiTipologieRepo,
             IGenericRepository<ContrattiUtenteOnPermesso> gaContrattiUtentiOnPermessiRepo,
+            IGenericRepository<ContrattiModalita> gaContrattiModalitasRepo,
+            IGenericRepository<ContrattiFornitore> gaContrattiFornitoriRepo,
+            IGenericRepository<ContrattiDocumento> gaContrattiDocumentiRepo,
 
             IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo,
             IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo,
+            IGenericRepository<ViewGaContrattiDocumenti>  viewGaContrattiDocumentiRepo,
+            IGenericRepository<ViewGaContrattiDocumentiList> viewGaContrattiDocumentiListRepo,
+            IGenericRepository<ViewGaContrattiNumeratori> viewGaContrattiNumeratoriRepo,
+
+            //IProcedureManager<SpGaContrattiNumeratore> spGaContrattiNumeratoreRepo,
+            //IProcedureManager<SpGaContrattiPermesso> spGaContrattiPermessoRepo,
+            //IProcedureManager<SpGaContrattiPermessoMode> spGaContrattiPermessoModeRepo,
 
 
             IUnitOfWork unitOfWork)
@@ -36,9 +62,19 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaContrattiServiziRepo = gaContrattiServiziRepo;
             this.gaContrattiTipologieRepo = gaContrattiTipologieRepo;
             this.gaContrattiUtentiOnPermessiRepo = gaContrattiUtentiOnPermessiRepo;
+            this.gaContrattiModalitasRepo = gaContrattiModalitasRepo;
+            this.gaContrattiFornitoriRepo = gaContrattiFornitoriRepo;
+            this.gaContrattiDocumentiRepo = gaContrattiDocumentiRepo;
 
             this.viewGaContrattiUtentiRepo = viewGaContrattiUtentiRepo;
             this.viewGaContrattiUtentiOnPermessiRepo = viewGaContrattiUtentiOnPermessiRepo;
+            this.viewGaContrattiDocumentiRepo = viewGaContrattiDocumentiRepo;
+            this.viewGaContrattiDocumentiListRepo = viewGaContrattiDocumentiListRepo;
+            this.viewGaContrattiNumeratoriRepo = viewGaContrattiNumeratoriRepo;
+
+            //this.spGaContrattiNumeratoreRepo = spGaContrattiNumeratoreRepo;
+            //this.spGaContrattiPermessoRepo = spGaContrattiPermessoRepo;
+            //this.spGaContrattiPermessoModeRepo = spGaContrattiPermessoModeRepo;
 
             this.unitOfWork = unitOfWork;
         }
@@ -317,10 +353,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(long id)
+        public async Task<PagedList<ViewGaContrattiUtentiOnPermessi>> GetViewGaContrattiUtentiOnPermessiAsync(string utenteId)
         {
             {
-                var entities = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.Id == id, 1, 0, "UtenteId");
+                var entities = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == utenteId, 1, 0, "utenteId");
 
                 return entities;
             }
@@ -339,6 +375,416 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return entities;
             }
         }
+        #endregion
+
+        #endregion
+
+        #region Contratti Modalitas
+        public async Task<ContrattiModalitasDto> GetGaContrattiModalitasAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaContrattiModalitasRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ContrattiModalitasDto, PagedList<ContrattiModalita>>();
+            return dtos;
+        }
+
+        public async Task<ContrattiModalitaDto> GetGaContrattiModalitaByIdAsync(long id)
+        {
+            var entity = await gaContrattiModalitasRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ContrattiModalitaDto, ContrattiModalita>();
+            return dto;
+        }
+
+        public async Task<long> AddGaContrattiModalitaAsync(ContrattiModalitaDto dto)
+        {
+            var entity = dto.ToEntity<ContrattiModalita, ContrattiModalitaDto>();
+            await gaContrattiModalitasRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaContrattiModalitaAsync(ContrattiModalitaDto dto)
+        {
+            var entity = dto.ToEntity<ContrattiModalita, ContrattiModalitaDto>();
+            gaContrattiModalitasRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaContrattiModalitaAsync(long id)
+        {
+            var entity = await gaContrattiModalitasRepo.GetByIdAsync(id);
+            gaContrattiModalitasRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaContrattiModalitaAsync(long id, string descrizione)
+        {
+            var entity = await gaContrattiModalitasRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaContrattiModalitaAsync(long id)
+        {
+            var entity = await gaContrattiModalitasRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaContrattiModalitasRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaContrattiModalitasRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Contratti Fornitori
+        public async Task<ContrattiFornitoriDto> GetGaContrattiFornitoriAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaContrattiFornitoriRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ContrattiFornitoriDto, PagedList<ContrattiFornitore>>();
+            return dtos;
+        }
+
+        public async Task<ContrattiFornitoreDto> GetGaContrattiFornitoreByIdAsync(long id)
+        {
+            var entity = await gaContrattiFornitoriRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ContrattiFornitoreDto, ContrattiFornitore>();
+            return dto;
+        }
+
+        public async Task<long> AddGaContrattiFornitoreAsync(ContrattiFornitoreDto dto)
+        {
+            var entity = dto.ToEntity<ContrattiFornitore, ContrattiFornitoreDto>();
+            await gaContrattiFornitoriRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaContrattiFornitoreAsync(ContrattiFornitoreDto dto)
+        {
+            var entity = dto.ToEntity<ContrattiFornitore, ContrattiFornitoreDto>();
+            gaContrattiFornitoriRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaContrattiFornitoreAsync(long id)
+        {
+            var entity = await gaContrattiFornitoriRepo.GetByIdAsync(id);
+            gaContrattiFornitoriRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaContrattiFornitoreAsync(long id, string partitaIva)
+        {
+            var entity = await gaContrattiFornitoriRepo.GetWithFilterAsync(x => x.PartitaIva == partitaIva && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaContrattiFornitoreAsync(long id)
+        {
+            var entity = await gaContrattiFornitoriRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaContrattiFornitoriRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaContrattiFornitoriRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Contratti Documenti
+        public async Task<ContrattiDocumentiDto> GetGaContrattiDocumentiByIdAsync(long fornitoreId)
+        {
+            var entities = await gaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiFornitoreId == fornitoreId, 1, 0);
+            var dtos = entities.ToDto<ContrattiDocumentiDto, PagedList<ContrattiDocumento>>();
+            return dtos;
+        }
+
+        public async Task<ContrattiDocumentoDto> GetGaContrattiDocumentoByIdAsync(long id)
+        {
+            var entity = await gaContrattiDocumentiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ContrattiDocumentoDto, ContrattiDocumento>();
+            return dto;
+        }
+
+        public async Task<long> AddGaContrattiDocumentoAsync(ContrattiDocumentoDto dto)
+        {
+            var entity = dto.ToEntity<ContrattiDocumento, ContrattiDocumentoDto>();
+            await gaContrattiDocumentiRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaContrattiDocumentoAsync(ContrattiDocumentoDto dto)
+        {
+            var entity = dto.ToEntity<ContrattiDocumento, ContrattiDocumentoDto>();
+            gaContrattiDocumentiRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaContrattiDocumentoAsync(long id)
+        {
+            var entity = await gaContrattiDocumentiRepo.GetByIdAsync(id);
+            gaContrattiDocumentiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaContrattiDocumentoAsync(long id, string descrizione)
+        {
+            var entity = await gaContrattiDocumentiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaContrattiDocumentoAsync(long id)
+        {
+            var entity = await gaContrattiDocumentiRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaContrattiDocumentiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaContrattiDocumentiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaContrattiDocumenti>> GetViewGaContrattiDocumentiByIdAsync(ContrattiDocumentiRequestDto dto)
+        {
+            try
+            {
+            PagedList<ViewGaContrattiDocumenti> entities = new PagedList<ViewGaContrattiDocumenti>();
+            entities = await viewGaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiFornitoreId == dto.fornitoreId && x.Archiviato == dto.archiviato, 1, 0);
+            if (dto.userRoles.Contains("Administrator") || dto.userRoles.Contains("GaContrattiAdmin"))
+            {
+                return entities;
+            }
+            else
+            {
+                PagedList<ViewGaContrattiDocumenti> entitiesPermitted = new PagedList<ViewGaContrattiDocumenti>();
+
+                var permessi = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == dto.userId && x.Abilitato == true);
+                List<string> permessiList = new List<string>();
+                foreach (var p in permessi.Data) { permessiList.Add(p.Permesso); }
+
+                var contratti = await gaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiFornitoreId == dto.fornitoreId);
+                foreach (var itm in contratti.Data)
+                {
+                    List<string> permessiContratto = new List<string>();
+                    if (itm.Direzione) permessiContratto.Add("DIREZIONE");
+                    if (itm.Contabilita) permessiContratto.Add("CONTABILITA");
+                    if (itm.Personale) permessiContratto.Add("PERSONALE");
+                    if (itm.Informatica) permessiContratto.Add("INFORMATICA");
+                    if (itm.Tecnico) permessiContratto.Add("TECNICO");
+                    if (itm.QualitaSicurezza) permessiContratto.Add("QUALITASICUREZZA");
+                    if (itm.Commerciale) permessiContratto.Add("COMMERCIALE");
+                    if (itm.AffariGenerali) permessiContratto.Add("AFFARIGENERALI");
+                    if (itm.Comunicazione) permessiContratto.Add("COMUNICAZIONE");
+
+                    var check = permessiContratto.Intersect(permessiList, StringComparer.OrdinalIgnoreCase).Any();
+                    if (check)
+                    {
+                        entitiesPermitted.Data.Add(entities.Data.Where(x => x.Id == itm.Id).FirstOrDefault());
+                    }
+                }
+                    await SaveChanges();
+                    return entitiesPermitted;
+                }
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
+        public async Task<PagedList<ViewGaContrattiDocumentiList>> GetViewGaContrattiDocumentiListByModeAsync(ContrattiDocumentiListRequestDto dto)
+        {
+            //Mode
+            //1: Attivi
+            //2: Passivi
+            //3: Archivio
+            //4: Totale
+
+
+            {
+                PagedList<ViewGaContrattiDocumentiList> entities = new PagedList<ViewGaContrattiDocumentiList>();
+                PagedList<ContrattiDocumento> contratti = new PagedList<ContrattiDocumento>();
+
+
+                switch (dto.mode)
+                {
+                    case 1:
+                        entities = await viewGaContrattiDocumentiListRepo.GetWithFilterAsync(x => (x.TipologiaId == 1 || x.TipologiaId == 4) && x.Archiviato == false, 1, 0);
+                        contratti = await gaContrattiDocumentiRepo.GetWithFilterAsync(x => (x.ContrattiTipologiaId == 1 || x.ContrattiTipologiaId == 4) && x.Archiviato == false, 1, 0);
+                        break;
+                    case 2:
+                        entities = await viewGaContrattiDocumentiListRepo.GetWithFilterAsync(x => (x.TipologiaId == 2 || x.TipologiaId == 3) && x.Archiviato == false, 1, 0);
+                        contratti = await gaContrattiDocumentiRepo.GetWithFilterAsync(x => (x.ContrattiTipologiaId == 2 || x.ContrattiTipologiaId == 3) && x.Archiviato == false, 1, 0);
+                        break;
+                    case 3:
+                        entities = await viewGaContrattiDocumentiListRepo.GetWithFilterAsync(x => x.Archiviato == true, 1, 0);
+                        contratti = await gaContrattiDocumentiRepo.GetWithFilterAsync(x => x.Archiviato == true, 1, 0);
+                        break;
+                    case 4:
+                        entities = await viewGaContrattiDocumentiListRepo.GetAllAsync();
+                        contratti = await gaContrattiDocumentiRepo.GetAllAsync();
+                        break;
+                }
+
+                if (dto.userRoles.Contains("Administrator") || dto.userRoles.Contains("GaContrattiAdmin"))
+                {
+                    return entities;
+                }
+                else
+                {
+                    PagedList<ViewGaContrattiDocumentiList> entitiesPermitted = new PagedList<ViewGaContrattiDocumentiList>();
+
+                    var permessi = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == dto.userId && x.Abilitato == true);
+                    List<string> permessiList = new List<string>();
+                    foreach (var p in permessi.Data) { permessiList.Add(p.Permesso); }
+
+                    foreach (var itm in contratti.Data)
+                    {
+                        List<string> permessiContratto = new List<string>();
+                        if (itm.Direzione) permessiContratto.Add("DIREZIONE");
+                        if (itm.Contabilita) permessiContratto.Add("CONTABILITA");
+                        if (itm.Personale) permessiContratto.Add("PERSONALE");
+                        if (itm.Informatica) permessiContratto.Add("INFORMATICA");
+                        if (itm.Tecnico) permessiContratto.Add("TECNICO");
+                        if (itm.QualitaSicurezza) permessiContratto.Add("QUALITASICUREZZA");
+                        if (itm.Commerciale) permessiContratto.Add("COMMERCIALE");
+                        if (itm.AffariGenerali) permessiContratto.Add("AFFARIGENERALI");
+                        if (itm.Comunicazione) permessiContratto.Add("COMUNICAZIONE");
+
+                        var check = permessiContratto.Intersect(permessiList, StringComparer.OrdinalIgnoreCase).Any();
+                        if (check)
+                        {
+                            entitiesPermitted.Data.Add(entities.Data.Where(x => x.Id == itm.Id).FirstOrDefault());
+                        }
+                    }
+                    return entitiesPermitted;
+                }
+            }
+
+        }
+
+        public async Task<PagedList<ViewGaContrattiNumeratori>> GetViewGaContrattiNumeratoriAsync()
+        {
+                var entities = await viewGaContrattiNumeratoriRepo.GetAllAsync(1, 0);
+                await SaveChanges();
+
+                return entities;
+        }
+        #endregion
+
+        #region Sp
+        //public async Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync()
+        //{
+        //        var entities = await spGaContrattiNumeratoreRepo.ExecStoreProcedureAsync("SP_GetGaContrattiNumeratori");
+
+        //        return new PagedList<SpGaContrattiNumeratore>() { Data = entities.ToList(), TotalCount = entities.Count, PageSize = 0 };
+        //}
+
+        //public async Task<PagedList<SpGaContrattiPermesso>> GetSpGaContrattiPermessoAsync(ContrattiDocumentiRequestDto dto)
+        //{
+
+        //    {
+        //        var userId = new SqlParameter("@userId", dto.userId);
+        //        var userRoles = SqlDbTypeExtensions.StringCollectionToParameter(dto.userRoles, "@userRoles");
+        //        var fornitoreId = new SqlParameter("@fornitoreId", dto.fornitoreId);
+        //        var archiviato = new SqlParameter("@archiviato", dto.archiviato);
+
+        //        var entities = await spGaContrattiPermessoRepo.ExecStoreProcedureWithParamsAsync("SP_GetGaContrattiPermessi @userId,@userRoles,@fornitoreId,@archiviato", parameters: new[] { userId, userRoles, fornitoreId, archiviato });
+
+        //        return new PagedList<SpGaContrattiPermesso>() { Data = entities.ToList(), TotalCount = entities.Count, PageSize = 0 }; ;
+        //    }
+
+        //}
+
+        //public async Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto)
+        //{
+
+        //    {
+        //        var userId = new SqlParameter("@userId", dto.userId);
+        //        var userRoles = SqlDbTypeExtensions.StringCollectionToParameter(dto.userRoles, "@userRoles");
+        //        var mode = new SqlParameter("@mode", dto.mode);
+
+        //        var entities = await spGaContrattiPermessoModeRepo.ExecStoreProcedureWithParamsAsync("SP_GetGaContrattiPermessiMode @userId,@userRoles,@mode", parameters: new[] { userId, userRoles, mode });
+
+        //        return new PagedList<SpGaContrattiPermessoMode>() { Data = entities.ToList(), TotalCount = entities.Count, PageSize = 0 }; ;
+
+        //    }
+        //}
         #endregion
 
         #endregion

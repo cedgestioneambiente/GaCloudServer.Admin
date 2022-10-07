@@ -64,11 +64,23 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ContrattiServizio> GaContrattiServizi { get; set; }
         public DbSet<ContrattiTipologia> GaContrattiTipologie { get; set; }
         public DbSet<ContrattiUtenteOnPermesso> GaContrattiUtentiOnPermessi { get; set; }
+        public DbSet<ContrattiModalita> GaContrattiModalitas { get; set; }
+        public DbSet<ContrattiFornitore> GaContrattiFornitori { get; set; }
+        public DbSet<ContrattiDocumento> GaContrattiDocumenti { get; set; }
 
 
         #region Views
         public DbSet<ViewGaContrattiUtenti> ViewGaContrattiUtenti { get; set; }
         public DbSet<ViewGaContrattiUtentiOnPermessi> ViewGaContrattiUtentiOnPermessi { get; set; }
+        public DbSet<ViewGaContrattiDocumenti> ViewGaContrattiDocumenti { get; set; }
+        public DbSet<ViewGaContrattiDocumentiList> ViewGaContrattiDocumentiList { get; set; }
+        public DbSet<ViewGaContrattiNumeratori> ViewGaContrattiNumeratori { get; set; }
+
+        #region Sp
+        public DbSet<SpGaContrattiNumeratore> SpGaContrattiNumeratori { get; set; }
+        public DbSet<SpGaContrattiPermesso> SpGaContrattiPermessi { get; set; }
+        public DbSet<SpGaContrattiPermessoMode> SpGaContrattiPermessiModes { get; set; }
+        #endregion
         #endregion
         #endregion
 
@@ -237,16 +249,59 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaContrattiUtentiOnPermessi))
-                    .HasNoKey();             
+                    .HasNoKey()
+                    .Property(x => x.Id);
             });
 
             builder.Entity<ViewGaContrattiUtenti>(entity =>
             {
                 entity
                     .ToView(nameof(ViewGaContrattiUtenti))
-                    .HasNoKey();
+                    .HasNoKey()
+                    .Property(x => x.Id);
             });
 
+            builder.Entity<ViewGaContrattiDocumenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaContrattiDocumenti))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaContrattiDocumentiList>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaContrattiDocumentiList))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaContrattiNumeratori>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaContrattiNumeratori))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<SpGaContrattiNumeratore>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
+
+            builder.Entity<SpGaContrattiPermesso>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
+
+            builder.Entity<SpGaContrattiPermessoMode>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
             #endregion
 
             #region BackOffice
