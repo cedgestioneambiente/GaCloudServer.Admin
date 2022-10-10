@@ -61,7 +61,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
     #endregion
 
     #region Contratti Fornitori
-    public class ContrattiFornitoreApiDto : GenericListApiDto
+    public class ContrattiFornitoreApiDto : GenericApiDto
     {
         public string RagioneSociale { get; set; }
         public string CodiceFiscale { get; set; }

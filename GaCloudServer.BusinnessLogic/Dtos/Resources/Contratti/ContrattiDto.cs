@@ -60,7 +60,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
     #endregion
 
     #region Contratti Fornitori
-    public class ContrattiFornitoreDto : GenericListDto
+    public class ContrattiFornitoreDto : GenericDto
     {
         public string RagioneSociale { get; set; }
         public string CodiceFiscale { get; set; }

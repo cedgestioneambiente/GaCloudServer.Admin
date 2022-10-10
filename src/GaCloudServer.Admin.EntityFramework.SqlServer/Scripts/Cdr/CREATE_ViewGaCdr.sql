@@ -6,7 +6,7 @@ SELECT        GaCdrConferimenti.Id, GaCdrConferimenti.Data, GaCdrCentri.Centro, 
 FROM            GaCdrConferimenti INNER JOIN
                          GaCdrCers ON GaCdrConferimenti.CdrCerId = GaCdrCers.Id INNER JOIN
                          GaCdrCersDettagli ON GaCdrConferimenti.CdrCerDettaglioId = GaCdrCersDettagli.Id INNER JOIN
-                         PrivateViewAuthServerUserList ON GaCdrConferimenti.UserId = PrivateViewAuthServerUserList.Id INNER JOIN
+                         PrivateViewAuthServerUserList ON GaCdrConferimenti.UserId = PrivateViewAuthServerUserList.Id COLLATE DATABASE_DEFAULT INNER JOIN
                          GaCdrCentri ON GaCdrConferimenti.CdrCentroId = GaCdrCentri.Id LEFT OUTER JOIN
                          dbo.ViewGaBackOfficeComuni ON  CAST(dbo.GaCdrConferimenti.CdrComuneId AS VARCHAR) COLLATE DATABASE_DEFAULT = CAST(dbo.ViewGaBackOfficeComuni.Id AS VARCHAR) LEFT OUTER JOIN
                          dbo.ViewGaBackOfficeUtenzeGrouped ON CAST(dbo.GaCdrConferimenti.NumCon AS VARCHAR) COLLATE DATABASE_DEFAULT= CAST(dbo.ViewGaBackOfficeUtenzeGrouped.NumCon AS VARCHAR)  AND 
@@ -22,7 +22,7 @@ FROM            dbo.GaCdrRichiesteViaggi INNER JOIN
                          dbo.GaCdrStatiRichieste ON dbo.GaCdrRichiesteViaggi.CdrStatoRichiestaId = dbo.GaCdrStatiRichieste.Id INNER JOIN
                          dbo.GaCdrCers ON dbo.GaCdrRichiesteViaggi.CdrCerId = dbo.GaCdrCers.Id INNER JOIN
                          dbo.GaCdrCentri ON dbo.GaCdrRichiesteViaggi.CdrCentroId = dbo.GaCdrCentri.Id INNER JOIN
-                         dbo.PrivateViewAuthServerUserList ON dbo.GaCdrRichiesteViaggi.UserId = dbo.PrivateViewAuthServerUserList.Id
+                         dbo.PrivateViewAuthServerUserList ON dbo.GaCdrRichiesteViaggi.UserId = dbo.PrivateViewAuthServerUserList.Id COLLATE DATABASE_DEFAULT
 GO
 
 CREATE VIEW [dbo].[ViewGaCdrUtenti]
