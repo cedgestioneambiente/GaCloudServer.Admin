@@ -132,9 +132,9 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Sp
-        //Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync();
-        //Task<PagedList<SpGaContrattiPermesso>> GetSpGaContrattiPermessoAsync(ContrattiDocumentiRequestDto dto);
-        //Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto);
+        Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync();
+        Task<PagedList<SpGaContrattiPermesso>> GetSpGaContrattiPermessoAsync(ContrattiDocumentiRequestDto dto);
+        Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto);
         #endregion
         #endregion
     }

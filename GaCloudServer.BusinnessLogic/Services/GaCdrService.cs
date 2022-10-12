@@ -2,6 +2,7 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Mappers;
@@ -660,8 +661,254 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #region Views
+        public PagedList<ViewGaCdrConferimenti> GetViewGaCdrConferimentiQueryable(GridOperationsModel filterParams)
+        {
+                if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+                {
+                    var filterResult = viewGaCdrConferimentiRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewGaCdrConferimentiRepo.GetAllQueryableV2(filterParams);
+                    return filterResult;
+                }
+        }
+
+        public async Task<PagedList<ViewGaCdrConferimenti>> GetViewGaCdrConferimentiAsync(string numCon, string partita)
+        {
+            try
+            {
+                return await viewGaCdrConferimentiRepo.GetWithFilterAsync(x => x.NumCon == numCon && x.Partita == partita, 1, 0, "Data", "OrderByDescending");
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
         #endregion
 
+
+        #endregion
+
+        #region CdrRichiesteViaggi
+        public async Task<CdrRichiesteViaggiDto> GetGaCdrRichiesteViaggiAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCdrRichiesteViaggiRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CdrRichiesteViaggiDto, PagedList<CdrRichiestaViaggio>>();
+            return dtos;
+        }
+
+        public async Task<CdrRichiestaViaggioDto> GetGaCdrRichiestaViaggioByIdAsync(long id)
+        {
+            var entity = await gaCdrRichiesteViaggiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CdrRichiestaViaggioDto, CdrRichiestaViaggio>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCdrRichiestaViaggioAsync(CdrRichiestaViaggioDto dto)
+        {
+            var entity = dto.ToEntity<CdrRichiestaViaggio, CdrRichiestaViaggioDto>();
+            await gaCdrRichiesteViaggiRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCdrRichiestaViaggioAsync(CdrRichiestaViaggioDto dto)
+        {
+            var entity = dto.ToEntity<CdrRichiestaViaggio, CdrRichiestaViaggioDto>();
+            gaCdrRichiesteViaggiRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCdrRichiestaViaggioAsync(long id)
+        {
+            var entity = await gaCdrRichiesteViaggiRepo.GetByIdAsync(id);
+            gaCdrRichiesteViaggiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> SetGaCdrRichiestaViaggioSendedAsync(long id)
+        {
+            var entity = await gaCdrRichiesteViaggiRepo.GetByIdAsync(id);
+            if (entity.Inviata)
+            {
+                entity.Inviata = false;
+                gaCdrRichiesteViaggiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Inviata = true;
+                gaCdrRichiesteViaggiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+        }
+        #endregion
+
+        #region Views
+        public PagedList<ViewGaCdrRichiesteViaggi> GetViewGaCdrRichiesteViaggiQueryable(GridOperationsModel filterParams)
+        {
+                if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+                {
+                    var filterResult = viewGaCdrRichiesteViaggiRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewGaCdrRichiesteViaggiRepo.GetAllQueryableV2(filterParams);
+                    return filterResult;
+                }
+
+        }
+
+        public async Task<PagedList<ViewGaCdrRichiesteViaggi>> GetViewGaCdrRichiesteViaggi(long centroId, bool all)
+        {
+            try
+            {
+                if (all)
+                {
+                    return await viewGaCdrRichiesteViaggiRepo.GetWithFilterAsync(x => x.CentroId == centroId, 1, 0, "Data", "OrderByDescending");
+                }
+                else
+                {
+                    return await viewGaCdrRichiesteViaggiRepo.GetWithFilterAsync(x => x.CentroId == centroId && (x.StatoRichiestaId != -2 && x.StatoRichiestaId != 3), 1, 0, "Data", "OrderByDescending");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
+        public async Task<PagedList<ViewGaCdrRichiesteViaggi>> GetViewGaCdrRichiesteViaggi(long centroId, bool all, int currentPage)
+        {
+            try
+            {
+                if (all)
+                {
+                    return await viewGaCdrRichiesteViaggiRepo.GetWithFilterAsync(x => x.CentroId == centroId, currentPage, 100, "Data", "OrderByDescending");
+                }
+                else
+                {
+                    return await viewGaCdrRichiesteViaggiRepo.GetWithFilterAsync(x => x.CentroId == centroId && (x.StatoRichiestaId != -2 && x.StatoRichiestaId != 3), currentPage, 100, "Data", "OrderByDescending");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
+        public async Task<ViewGaCdrRichiesteViaggi> GetViewGaCdrRichiestaViaggio(long id)
+        {
+            try
+            {
+                return await viewGaCdrRichiesteViaggiRepo.GetByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        #endregion
+        #endregion
+
+        #region CdrStatiRichieste
+        public async Task<CdrStatiRichiesteDto> GetGaCdrStatiRichiesteAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCdrStatiRichiesteRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CdrStatiRichiesteDto, PagedList<CdrStatoRichiesta>>();
+            return dtos;
+        }
+
+        public async Task<CdrStatoRichiestaDto> GetGaCdrStatoRichiestaByIdAsync(long id)
+        {
+            var entity = await gaCdrStatiRichiesteRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CdrStatoRichiestaDto, CdrStatoRichiesta>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCdrStatoRichiestaAsync(CdrStatoRichiestaDto dto)
+        {
+            var entity = dto.ToEntity<CdrStatoRichiesta, CdrStatoRichiestaDto>();
+            await gaCdrStatiRichiesteRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCdrStatoRichiestaAsync(CdrStatoRichiestaDto dto)
+        {
+            var entity = dto.ToEntity<CdrStatoRichiesta, CdrStatoRichiestaDto>();
+            gaCdrStatiRichiesteRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCdrStatoRichiestaAsync(long id)
+        {
+            var entity = await gaCdrStatiRichiesteRepo.GetByIdAsync(id);
+            gaCdrStatiRichiesteRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaCdrStatoRichiestaAsync(long id, string descrizione)
+        {
+            var entity = await gaCdrStatiRichiesteRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaCdrStatoRichiestaAsync(long id)
+        {
+            var entity = await gaCdrStatiRichiesteRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCdrStatiRichiesteRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCdrStatiRichiesteRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
 
         #region Common
         private async Task<long> SaveChanges()

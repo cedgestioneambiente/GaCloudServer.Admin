@@ -1,4 +1,5 @@
-﻿using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -30,6 +31,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces
         TEntity GetByIdAsNoTraking(Expression<Func<TEntity, bool>> predicate);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> GetWithFilter(Expression<Func<TEntity, bool>> predicate);
+
+        PagedList<TEntity> GetAllQueryable(GridOperationsModel filterParams);
+        PagedList<TEntity> GetAllQueryableV2(GridOperationsModel filterParams);
+        PagedList<TEntity> GetAllQueryableV2WithQuickFilter(GridOperationsModel filterParams, string quickFilter);
+
+        PagedList<TEntity> GetAllQueryableV2NoSkip(GridOperationsModel filterParams);
+        PagedList<TEntity> GetAllQueryableV2WithQuickFilterNoSkip(GridOperationsModel filterParams, string quickFilter);
+        PagedList<TEntity> GetAllQueryableQuikFilter(string filter);
 
         //Async
         Task<TEntity> GetByIdAsync(long id);

@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
@@ -112,7 +113,78 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<int> ValidateGaCdrConferimentoAsync(CdrConferimentoDto dto);
         #endregion
 
+        #region Views
+        PagedList<ViewGaCdrConferimenti> GetViewGaCdrConferimentiQueryable(GridOperationsModel filterParams);
+        Task<PagedList<ViewGaCdrConferimenti>> GetViewGaCdrConferimentiAsync(string numCon, string partita);
+        #endregion
         #endregion
 
+        #region CdrRichiesteViaggi
+        Task<CdrRichiesteViaggiDto> GetGaCdrRichiesteViaggiAsync(int page = 1, int pageSize = 10);
+        Task<CdrRichiestaViaggioDto> GetGaCdrRichiestaViaggioByIdAsync(long id);
+
+        Task<long> AddGaCdrRichiestaViaggioAsync(CdrRichiestaViaggioDto dto);
+        Task<long> UpdateGaCdrRichiestaViaggioAsync(CdrRichiestaViaggioDto dto);
+
+        Task<bool> DeleteGaCdrRichiestaViaggioAsync(long id);
+
+        #region Functions
+        Task<bool> SetGaCdrRichiestaViaggioSendedAsync(long id);
+        #endregion
+
+        #region Views
+        PagedList<ViewGaCdrRichiesteViaggi> GetViewGaCdrRichiesteViaggiQueryable(GridOperationsModel filterParams);
+        Task<PagedList<ViewGaCdrRichiesteViaggi>> GetViewGaCdrRichiesteViaggi(long centroId, bool all);
+        Task<PagedList<ViewGaCdrRichiesteViaggi>> GetViewGaCdrRichiesteViaggi(long centroId, bool all, int currentPage);
+        Task<ViewGaCdrRichiesteViaggi> GetViewGaCdrRichiestaViaggio(long id);
+
+        #endregion
+
+        #endregion
+
+        #region GaCdrStatiRichieste
+        Task<CdrStatiRichiesteDto> GetGaCdrStatiRichiesteAsync(int page = 1, int pageSize = 0);
+        Task<CdrStatoRichiestaDto> GetGaCdrStatoRichiestaByIdAsync(long id);
+
+        Task<long> AddGaCdrStatoRichiestaAsync(CdrStatoRichiestaDto dto);
+        Task<long> UpdateGaCdrStatoRichiestaAsync(CdrStatoRichiestaDto dto);
+
+        Task<bool> DeleteGaCdrStatoRichiestaAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaCdrStatoRichiestaAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaCdrStatoRichiestaAsync(long id);
+        #endregion
+
+        #endregion
+
+        //#region CdrUtente
+        //Task<CdrUtentiDto> GetGaCdrUtentiAsync(int page = 1, int pageSize = 0);
+        //Task<CdrUtenteDto> GetGaCdrUtenteByIdAsync(long id);
+
+        //Task<long> AddGaCdrUtenteAsync(CdrUtenteDto dto);
+        //Task<long> UpdateGaCdrUtenteAsync(CdrUtenteDto dto);
+
+        //Task<bool> DeleteGaCdrUtenteAsync(long id);
+
+        //#region Functions
+        //Task<bool> CheckGaCdrAccessoUtente(string comune, long centroId);
+        //Task<bool> CheckIsUniqueGaCdrUtenteAsync(long id, long comuneId, string cfPiva);
+        //#endregion
+
+        //#region Views
+        //Task<PagedList<ViewGaCdrUtenti>> GetViewGaCdrUtentiAsync(int page = 1, int pageSize = 0);
+        //Task<PagedList<ViewGaCdrUtenti>> GetViewGaCdrUtentiAsync(string filter);
+
+        //PagedList<ViewGaCdrUtenti> GetViewGaCdrUtenti(GridOperationsModel filterParams);
+        //PagedList<ViewGaCdrUtenti> GetViewGaCdrUtentiQuickFilter(string filter);
+
+        //PagedList<ViewGaCdrUtenti> GetViewGaCdrUtentiQueryable(GridOperationsModel filterParams);
+
+        //#endregion
+
+
+
+        //#endregion
     }
 }

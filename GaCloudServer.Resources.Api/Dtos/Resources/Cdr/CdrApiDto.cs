@@ -130,4 +130,40 @@ namespace GaCloudServer.Resources.Api.Dtos.Cdr
 
     #endregion
 
+    #region CdrRichiesteViaggi
+
+    public class CdrRichiestaViaggioApiDto : GenericApiDto
+    {
+        public DateTime Data { get; set; }
+        public string UserId { get; set; }
+        public long CdrCentroId { get; set; }
+        public long CdrCerId { get; set; }
+        public long CdrStatoRichiestaId { get; set; }
+        public DateTime? DataChiusura { get; set; }
+        public double PesoPresunto { get; set; }
+        public double PesoDestino { get; set; }
+        public string Note { get; set; }
+        public bool Inviata { get; set; }
+    }
+
+    public class CdrRichiesteViaggiApiDto : GenericPagedListApiDto<CdrRichiestaViaggioApiDto>
+    {
+
+    }
+
+    #endregion
+
+    #region CdrStatiRichieste
+
+    public class CdrStatoRichiestaApiDto : GenericApiDto
+    {
+    }
+
+    public class CdrStatiRichiesteApiDto : GenericPagedListApiDto<CdrStatoRichiestaApiDto>
+    {
+
+    }
+
+    #endregion
+
 }
