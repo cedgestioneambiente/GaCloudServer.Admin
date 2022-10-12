@@ -30,9 +30,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaContrattiDocumentiList> viewGaContrattiDocumentiListRepo;
         protected readonly IGenericRepository<ViewGaContrattiNumeratori> viewGaContrattiNumeratoriRepo;
 
-        //protected readonly IProcedureManager<SpGaContrattiNumeratore> spGaContrattiNumeratoreRepo;
-        //protected readonly IProcedureManager<SpGaContrattiPermesso> spGaContrattiPermessoRepo;
-        //protected readonly IProcedureManager<SpGaContrattiPermessoMode> spGaContrattiPermessoModeRepo;
+        protected readonly IProcedureManager<SpGaContrattiNumeratore> spGaContrattiNumeratoreRepo;
+        protected readonly IProcedureManager<SpGaContrattiPermesso> spGaContrattiPermessoRepo;
+        protected readonly IProcedureManager<SpGaContrattiPermessoMode> spGaContrattiPermessoModeRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -47,13 +47,13 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo,
             IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo,
-            IGenericRepository<ViewGaContrattiDocumenti>  viewGaContrattiDocumentiRepo,
+            IGenericRepository<ViewGaContrattiDocumenti> viewGaContrattiDocumentiRepo,
             IGenericRepository<ViewGaContrattiDocumentiList> viewGaContrattiDocumentiListRepo,
             IGenericRepository<ViewGaContrattiNumeratori> viewGaContrattiNumeratoriRepo,
 
-            //IProcedureManager<SpGaContrattiNumeratore> spGaContrattiNumeratoreRepo,
-            //IProcedureManager<SpGaContrattiPermesso> spGaContrattiPermessoRepo,
-            //IProcedureManager<SpGaContrattiPermessoMode> spGaContrattiPermessoModeRepo,
+            IProcedureManager<SpGaContrattiNumeratore> spGaContrattiNumeratoreRepo,
+            IProcedureManager<SpGaContrattiPermesso> spGaContrattiPermessoRepo,
+            IProcedureManager<SpGaContrattiPermessoMode> spGaContrattiPermessoModeRepo,
 
 
             IUnitOfWork unitOfWork)
@@ -72,9 +72,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaContrattiDocumentiListRepo = viewGaContrattiDocumentiListRepo;
             this.viewGaContrattiNumeratoriRepo = viewGaContrattiNumeratoriRepo;
 
-            //this.spGaContrattiNumeratoreRepo = spGaContrattiNumeratoreRepo;
-            //this.spGaContrattiPermessoRepo = spGaContrattiPermessoRepo;
-            //this.spGaContrattiPermessoModeRepo = spGaContrattiPermessoModeRepo;
+            this.spGaContrattiNumeratoreRepo = spGaContrattiNumeratoreRepo;
+            this.spGaContrattiPermessoRepo = spGaContrattiPermessoRepo;
+            this.spGaContrattiPermessoModeRepo = spGaContrattiPermessoModeRepo;
 
             this.unitOfWork = unitOfWork;
         }
@@ -748,43 +748,60 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Sp
-        //public async Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync()
-        //{
-        //        var entities = await spGaContrattiNumeratoreRepo.ExecStoreProcedureAsync("SP_GetGaContrattiNumeratori");
+        public async Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync()
+        {
+            var entities = await spGaContrattiNumeratoreRepo.ExecStoreProcedureAsync("SP_GetGaContrattiNumeratori");
 
-        //        return new PagedList<SpGaContrattiNumeratore>() { Data = entities.ToList(), TotalCount = entities.Count, PageSize = 0 };
-        //}
+            var response = new PagedList<SpGaContrattiNumeratore>();
+            response.Data.AddRange(entities.ToList());
+            response.TotalCount = entities.Count();
+            response.PageSize = 0;
 
-        //public async Task<PagedList<SpGaContrattiPermesso>> GetSpGaContrattiPermessoAsync(ContrattiDocumentiRequestDto dto)
-        //{
+            return response;
+        }
 
-        //    {
-        //        var userId = new SqlParameter("@userId", dto.userId);
-        //        var userRoles = SqlDbTypeExtensions.StringCollectionToParameter(dto.userRoles, "@userRoles");
-        //        var fornitoreId = new SqlParameter("@fornitoreId", dto.fornitoreId);
-        //        var archiviato = new SqlParameter("@archiviato", dto.archiviato);
+        public async Task<PagedList<SpGaContrattiPermesso>> GetSpGaContrattiPermessoAsync(ContrattiDocumentiRequestDto dto)
+        {
 
-        //        var entities = await spGaContrattiPermessoRepo.ExecStoreProcedureWithParamsAsync("SP_GetGaContrattiPermessi @userId,@userRoles,@fornitoreId,@archiviato", parameters: new[] { userId, userRoles, fornitoreId, archiviato });
+            {
+                var userId = new SqlParameter("@userId", dto.userId);
+                var userRoles = SqlDbTypeExtensions.StringCollectionToParameter(dto.userRoles, "@userRoles");
+                var fornitoreId = new SqlParameter("@fornitoreId", dto.fornitoreId);
+                var archiviato = new SqlParameter("@archiviato", dto.archiviato);
 
-        //        return new PagedList<SpGaContrattiPermesso>() { Data = entities.ToList(), TotalCount = entities.Count, PageSize = 0 }; ;
-        //    }
+                var entities = await spGaContrattiPermessoRepo.ExecStoreProcedureWithParamsAsync("SP_GetGaContrattiPermessi @userId,@userRoles,@fornitoreId,@archiviato", parameters: new[] { userId, userRoles, fornitoreId, archiviato });
 
-        //}
+                var response = new PagedList<SpGaContrattiPermesso>();
+                response.Data.AddRange(entities.ToList());
+                response.TotalCount = entities.Count();
+                response.PageSize = 0;
 
-        //public async Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto)
-        //{
+                return response;
+            }
 
-        //    {
-        //        var userId = new SqlParameter("@userId", dto.userId);
-        //        var userRoles = SqlDbTypeExtensions.StringCollectionToParameter(dto.userRoles, "@userRoles");
-        //        var mode = new SqlParameter("@mode", dto.mode);
+        }
 
-        //        var entities = await spGaContrattiPermessoModeRepo.ExecStoreProcedureWithParamsAsync("SP_GetGaContrattiPermessiMode @userId,@userRoles,@mode", parameters: new[] { userId, userRoles, mode });
+        public async Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto)
+        {
 
-        //        return new PagedList<SpGaContrattiPermessoMode>() { Data = entities.ToList(), TotalCount = entities.Count, PageSize = 0 }; ;
+            {
+                var userId = new SqlParameter("@userId", dto.userId);
+                var userRoles = SqlDbTypeExtensions.StringCollectionToParameter(dto.userRoles, "@userRoles");
+                var mode = new SqlParameter("@mode", dto.mode);
 
-        //    }
-        //}
+                var entities = await spGaContrattiPermessoModeRepo.ExecStoreProcedureWithParamsAsync("SP_GetGaContrattiPermessiMode @userId,@userRoles,@mode", parameters: new[] { userId, userRoles, mode });
+
+                var response = new PagedList<SpGaContrattiPermessoMode>();
+                response.Data.AddRange(entities.ToList());
+                response.TotalCount = entities.Count();
+                response.PageSize = 0;
+
+                return response;
+
+                    
+
+            }
+        }
         #endregion
 
         #endregion

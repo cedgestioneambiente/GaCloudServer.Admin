@@ -1,4 +1,5 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
@@ -26,7 +27,6 @@ namespace GaCloudServer.Resources.Api.Controllers
         public GaCdrController(
             IGaCdrService gaCdrService
             ,IApiErrorResources errorResources
-            ,IFileService fileService
             ,ILogger<GaCdrController> logger)
         {
 
@@ -816,6 +816,325 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 var dto = apiDto.ToDto<CdrConferimentoDto, CdrConferimentoApiDto>();
                 var response = await _gaCdrService.ValidateGaCdrConferimentoAsync(dto);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Views
+        [HttpPost("GetViewGaCdrConferimentiQueryable")]
+        public ApiResponse GetViewGaCdrConferimentiQueryable(GridOperationsModel filter)
+        {
+            try
+            {
+                var entities = _gaCdrService.GetViewGaCdrConferimentiQueryable(filter);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpGet("GetViewGaCdrConferimentiAsync/{numCon}/{partita}")]
+        public async Task<ApiResponse> GetViewGaCdrConferimentiAsync(string numCon, string partita)
+        {
+            try
+            {
+                var entities = await _gaCdrService.GetViewGaCdrConferimentiAsync(numCon, partita);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region CdrRichiesteViaggi
+        [HttpGet("GetGaCdrRichiesteViaggiAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCdrRichiesteViaggiAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaCdrService.GetGaCdrRichiesteViaggiAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<CdrRichiesteViaggiApiDto, CdrRichiesteViaggiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCdrRichiestaViaggioByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCdrRichiestaViaggioByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCdrService.GetGaCdrRichiestaViaggioByIdAsync(id);
+                var apiDto = dto.ToApiDto<CdrRichiestaViaggioApiDto, CdrRichiestaViaggioDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaCdrRichiestaViaggioAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaCdrRichiestaViaggioAsync([FromBody] CdrRichiestaViaggioApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CdrRichiestaViaggioDto, CdrRichiestaViaggioApiDto>();
+                var response = await _gaCdrService.AddGaCdrRichiestaViaggioAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaCdrRichiestaViaggioAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCdrRichiestaViaggioAsync([FromBody] CdrRichiestaViaggioApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CdrRichiestaViaggioDto, CdrRichiestaViaggioApiDto>();
+                var response = await _gaCdrService.UpdateGaCdrRichiestaViaggioAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaCdrRichiestaViaggioAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaCdrRichiestaViaggioAsync(long id)
+        {
+            try
+            {
+                var response = await _gaCdrService.DeleteGaCdrRichiestaViaggioAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Views
+        [HttpPost("GetViewGaCdrRichiesteViaggiQueryable")]
+        public ApiResponse GetViewGaCdrRichiesteViaggiQueryable(GridOperationsModel filter)
+        {
+            try
+            {
+                var entities = _gaCdrService.GetViewGaCdrRichiesteViaggiQueryable(filter);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpGet("GetViewGaCdrRichiesteViaggi/{centroId}/{all}")]
+        public async Task<ApiResponse> GetViewGaCdrRichiesteViaggi(long centroId, bool all)
+        {
+            try
+            {
+                var entities = await _gaCdrService.GetViewGaCdrRichiesteViaggi(centroId, all);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpGet("GetViewGaCdrRichiesteViaggi/{centroId}/{all}/{currentPage}")]
+        public async Task<ApiResponse> GetViewGaCdrRichiesteViaggi(long centroId, bool all, int currentPage)
+        {
+            try
+            {
+                var entities = await _gaCdrService.GetViewGaCdrRichiesteViaggi(centroId, all, currentPage);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region CdrStatiRichieste
+        [HttpGet("GetGaCdrStatiRichiesteAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCdrStatiRichiesteAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaCdrService.GetGaCdrStatiRichiesteAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<CdrStatiRichiesteApiDto, CdrStatiRichiesteDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCdrStatoRichiestaByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCdrStatoRichiestaByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCdrService.GetGaCdrStatoRichiestaByIdAsync(id);
+                var apiDto = dto.ToApiDto<CdrStatoRichiestaApiDto, CdrStatoRichiestaDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaCdrStatoRichiestaAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaCdrStatoRichiestaAsync([FromBody] CdrStatoRichiestaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CdrStatoRichiestaDto, CdrStatoRichiestaApiDto>();
+                var response = await _gaCdrService.AddGaCdrStatoRichiestaAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaCdrStatoRichiestaAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCdrStatoRichiestaAsync([FromBody] CdrStatoRichiestaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CdrStatoRichiestaDto, CdrStatoRichiestaApiDto>();
+                var response = await _gaCdrService.UpdateGaCdrStatoRichiestaAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaCdrStatoRichiestaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaCdrStatoRichiestaAsync(long id)
+        {
+            try
+            {
+                var response = await _gaCdrService.DeleteGaCdrStatoRichiestaAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaCdrStatoRichiestaAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaCdrStatoRichiestaAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _gaCdrService.ValidateGaCdrStatoRichiestaAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGaCdrStatoRichiestaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaCdrStatoRichiestaAsync(long id)
+        {
+            try
+            {
+                var response = await _gaCdrService.ChangeStatusGaCdrStatoRichiestaAsync(id);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
