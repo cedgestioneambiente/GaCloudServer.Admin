@@ -9,5 +9,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotaz
         public string Colore { get; set; }
         public string Sede { get; set; }
         public bool Weekend { get; set; }
+        public string Descrizione { get; set; }
     }
 }

@@ -43,6 +43,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<long> UpdateGaPrenotazioneAutoRegistrazioneAsync(PrenotazioneAutoRegistrazioneDto dto);
         Task<bool> DeleteGaPrenotazioneAutoRegistrazioneAsync(long id);
         #region Functions
+        Task<int> ValidateGaPrenotazioneAutoRegistrazioneAsync(PrenotazioneAutoRegistrazioneDto dto);
         Task<bool> ChangeStatusGaPrenotazioneAutoRegistrazioneAsync(long id);
         #endregion
 

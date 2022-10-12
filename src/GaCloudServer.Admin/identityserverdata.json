@@ -68,7 +68,8 @@
                 "Required": true,
                 "UserClaims": [
                     "role",
-                    "name"
+                    "name",
+                    "given_name"
                 ]
             }
         ],

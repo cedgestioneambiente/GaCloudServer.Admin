@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Jan Škoruba. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0.
 
+using GaCloudServer.Shared.Dtos.Extended;
 using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Dtos.Identity;
 
 namespace GaCloudServer.Shared.Dtos.Identity
 {
-    public class IdentityUserDto : UserDto<string>
+    public class IdentityUserDto : ExtendedUserDto<string>
     {
-        
     }
 }
 

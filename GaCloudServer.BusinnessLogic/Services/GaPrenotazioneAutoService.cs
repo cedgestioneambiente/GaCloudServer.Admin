@@ -219,6 +219,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> AddGaPrenotazioneAutoRegistrazioneAsync(PrenotazioneAutoRegistrazioneDto dto)
         {
             var entity = dto.ToEntity<PrenotazioneAutoRegistrazione, PrenotazioneAutoRegistrazioneDto>();
+            if (String.IsNullOrEmpty(entity.RealeUtilizzatore)) { entity.RealeUtilizzatore = dto.UserName; }
             await gaPrenotazioneAutoRegistrazioniRepo.AddAsync(entity);
             await SaveChanges();
             DetachEntity(entity);
@@ -246,6 +247,39 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
+        public async Task<int> ValidateGaPrenotazioneAutoRegistrazioneAsync(PrenotazioneAutoRegistrazioneDto dto)
+        {
+            int result = 0;
+            var entities = await gaPrenotazioneAutoRegistrazioniRepo
+                .GetWithFilterAsync(x => x.PrenotazioneAutoVeicoloId == dto.PrenotazioneAutoVeicoloId && (dto.DataInizio<=x.DataFine && x.DataInizio<dto.DataFine) && x.Id != dto.Id);
+
+            var veicolo = await gaPrenotazioneAutoVeicoliRepo.GetByIdAsync(dto.PrenotazioneAutoVeicoloId);
+
+            if (entities.Data.Count > 0)
+            {
+                return -2;
+            }
+
+            if (dto.DataInizio > dto.DataFine)
+            {
+                return -3;
+            }
+
+            if (veicolo.Weekend)
+            {
+                if (dto.DataInizio.DayOfWeek != DayOfWeek.Sunday && dto.DataInizio.DayOfWeek != DayOfWeek.Saturday)
+                {
+                    return -4;
+                }
+
+                if (dto.DataFine.DayOfWeek != DayOfWeek.Sunday && dto.DataFine.DayOfWeek != DayOfWeek.Saturday)
+                {
+                    return -4;
+                }
+            }
+
+            return result;
+        }
         public async Task<bool> ChangeStatusGaPrenotazioneAutoRegistrazioneAsync(long id)
         {
             var entity = await gaPrenotazioneAutoRegistrazioniRepo.GetByIdAsync(id);

@@ -13,6 +13,7 @@ using GaCloudServer.STS.Identity.Configuration;
 using GaCloudServer.STS.Identity.Configuration.Constants;
 using GaCloudServer.STS.Identity.Configuration.Interfaces;
 using GaCloudServer.STS.Identity.Helpers;
+using GaCloudServer.STS.Identity.Services;
 
 namespace GaCloudServer.STS.Identity
 {
@@ -115,7 +116,9 @@ namespace GaCloudServer.STS.Identity
         public virtual void RegisterAuthentication(IServiceCollection services)
         {
             services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
-            services.AddIdentityServer<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, UserIdentity>(Configuration);
+            services
+                .AddIdentityServer<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, UserIdentity>(Configuration)
+                .AddProfileService<ProfileService<UserIdentity>>();
         }
 
         public virtual void RegisterAuthorization(IServiceCollection services)

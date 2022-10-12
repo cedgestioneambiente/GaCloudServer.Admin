@@ -35,7 +35,6 @@
 		<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
 		<PackageReference Include="Skoruba.Duende.IdentityServer.Admin.BusinessLogic" Version="1.1.0" />
 		<PackageReference Include="Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity" Version="1.1.0" />
-		<PackageReference Include="Skoruba.Duende.IdentityServer.Admin.UI" Version="1.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -47,6 +46,7 @@
 		<ProjectReference Include="..\GaCloudServer.Admin.EntityFramework.PostgreSQL\GaCloudServer.Admin.EntityFramework.PostgreSQL.csproj" />
 		<ProjectReference Include="..\GaCloudServer.Admin.EntityFramework.SqlServer\GaCloudServer.Admin.EntityFramework.SqlServer.csproj" />
 		<ProjectReference Include="..\GaCloudServer.Shared\GaCloudServer.Shared.csproj" />
+		<ProjectReference Include="..\Skoruba.Duende.IdentityServer.Admin.UI\Skoruba.Duende.IdentityServer.Admin.UI.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

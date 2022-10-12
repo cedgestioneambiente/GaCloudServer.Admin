@@ -20,6 +20,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     {
         private readonly IGaPrenotazioneAutoService _gaPrenotazioneAutoService;
         private readonly ILogger<GaPrenotazioneAutoController> _logger;
+        private readonly TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
 
         public GaPrenotazioneAutoController(
             IGaPrenotazioneAutoService gaPrenotazioneAutoService
@@ -351,6 +352,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+
+                apiDto.DataInizio = apiDto.DataInizio.Add(offset);
+                apiDto.DataFine = apiDto.DataFine.Add(offset);
                 var dto = apiDto.ToDto<PrenotazioneAutoRegistrazioneDto, PrenotazioneAutoRegistrazioneApiDto>();
                 var response = await _gaPrenotazioneAutoService.AddGaPrenotazioneAutoRegistrazioneAsync(dto);
 
@@ -378,6 +382,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+
+                apiDto.DataInizio = apiDto.DataInizio.Add(offset);
+                apiDto.DataFine = apiDto.DataFine.Add(offset);
                 var dto = apiDto.ToDto<PrenotazioneAutoRegistrazioneDto, PrenotazioneAutoRegistrazioneApiDto>();
                 var response = await _gaPrenotazioneAutoService.UpdateGaPrenotazioneAutoRegistrazioneAsync(dto);
 
@@ -409,6 +416,23 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
+        [HttpPost("ValidateGaPrenotazioneAutoRegistrazioneAsync")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPrenotazioneAutoRegistrazioneAsync([FromBody] PrenotazioneAutoRegistrazioneApiDto apiDto)
+        {
+            try
+            {
+                var dto = apiDto.ToDto<PrenotazioneAutoRegistrazioneDto, PrenotazioneAutoRegistrazioneApiDto>();
+                var response = await _gaPrenotazioneAutoService.ValidateGaPrenotazioneAutoRegistrazioneAsync(dto);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("ChangeStatusGaPrenotazioneAutoRegistrazioneAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> ChangeStatusGaPrenotazioneAutoRegistrazioneAsync(long id)
         {
