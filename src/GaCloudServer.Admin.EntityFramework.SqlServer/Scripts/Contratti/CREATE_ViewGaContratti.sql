@@ -35,12 +35,12 @@ GO
 
 CREATE VIEW [dbo].[ViewGaContrattiUtenti]
 AS
-SELECT    ROW_NUMBER() OVER(ORDER BY Username DESC) AS Id, AuthServerSSO.dbo.Users.Id AS UtenteId, AuthServerSSO.dbo.Users.UserName, CAST('False' AS bit) AS Disabled
-FROM         AuthServerSSO.dbo.Users INNER JOIN
-                         AuthServerSSO.dbo.UserRoles ON AuthServerSSO.dbo.Users.Id = AuthServerSSO.dbo.UserRoles.UserId INNER JOIN
-                         AuthServerSSO.dbo.Roles ON AuthServerSSO.dbo.UserRoles.RoleId = AuthServerSSO.dbo.Roles.Id
-WHERE     (AuthServerSSO.dbo.Roles.Name = N'GaContrattiRO') OR
-                         (AuthServerSSO.dbo.Roles.Name = N'GaContrattiRW')
+SELECT    ROW_NUMBER() OVER(ORDER BY Username DESC) AS Id,  IdentityServerAdmin.dbo.Users.Id AS UtenteId,  IdentityServerAdmin.dbo.Users.UserName, CAST('False' AS bit) AS Disabled
+FROM          IdentityServerAdmin.dbo.Users INNER JOIN
+                          IdentityServerAdmin.dbo.UserRoles ON  IdentityServerAdmin.dbo.Users.Id =  IdentityServerAdmin.dbo.UserRoles.UserId INNER JOIN
+                          IdentityServerAdmin.dbo.Roles ON  IdentityServerAdmin.dbo.UserRoles.RoleId =  IdentityServerAdmin.dbo.Roles.Id
+WHERE     ( IdentityServerAdmin.dbo.Roles.Name = N'GaContrattiRO') OR
+                         ( IdentityServerAdmin.dbo.Roles.Name = N'GaContrattiRW')
 GO
 
 CREATE VIEW [dbo].[PrivateViewGaContrattiPermessiList]
