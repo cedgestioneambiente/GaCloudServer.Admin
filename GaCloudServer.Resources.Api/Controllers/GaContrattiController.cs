@@ -972,7 +972,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetViewGaContrattiDocumentiByIdAsync")]
+        [HttpGet("GetViewGaContrattiDocumentiByIdAsync")]//GetViewGaContrattiDocumentiByFornitoreId/{contrattiFornitoreId}
         public async Task<ApiResponse> GetViewGaContrattiByIdAsync([FromBody] ContrattiDocumentiRequestApiDto apiDto)
         {
             try
@@ -1006,28 +1006,36 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Sp
-        //[HttpGet("GetSpGaContrattiNumeratoriAsync")]
-        //public async Task<ApiResponse> GetSpGaContrattiNumeratoreAsync()
-        //{
-        //    var entities = await _gaContrattiService.GetSpGaContrattiNumeratoreAsync();
-        //    return new ApiResponse(entities);
-        //}
+        [HttpPost("GetSpGaContrattiNumeratoriAsync")]
+        public async Task<ApiResponse> GetSpGaContrattiNumeratoreAsync()
+        {
+            var entities = await _gaContrattiService.GetSpGaContrattiNumeratoreAsync();
+            return new ApiResponse(entities);
+        }
 
-        //[HttpGet("GetSpGaContrattiPermessiAsync")]
-        //public async Task<ApiResponse> GetSpGaContrattiPermessiAsync([FromBody] ContrattiDocumentiRequestApiDto apiDto)
-        //{
-        //    var dto = apiDto.ToDto<ContrattiDocumentiRequestDto, ContrattiDocumentiRequestApiDto>();
-        //    var entities = await _gaContrattiService.GetSpGaContrattiPermessoAsync(dto);
-        //    return new ApiResponse(entities);
-        //}
+        [HttpPost("GetSpGaContrattiPermessiAsync")]
+        public async Task<ApiResponse> GetSpGaContrattiPermessiAsync([FromBody] ContrattiDocumentiRequestApiDto apiDto)
+        {
+            var dto = apiDto.ToDto<ContrattiDocumentiRequestDto, ContrattiDocumentiRequestApiDto>();
+            var entities = await _gaContrattiService.GetSpGaContrattiPermessoAsync(dto);
+            return new ApiResponse(entities);
+        }
 
-        //[HttpGet("GetSpGaContrattiPermessiModeAsync")]
-        //public async Task<ApiResponse> GetSpGaContrattiPermessiModeAsync([FromBody] ContrattiDocumentiListRequestApiDto apiDto)
-        //{
-        //    var dto = apiDto.ToDto<ContrattiDocumentiListRequestDto, ContrattiDocumentiListRequestApiDto>();
-        //    var entities = await _gaContrattiService.GetSpGaContrattiPermessoModeAsync(dto);
-        //    return new ApiResponse(entities);
-        //}
+        [HttpPost("GetSpGaContrattiPermessiModeAsync")]
+        public async Task<ApiResponse> GetSpGaContrattiPermessiModeAsync([FromBody] ContrattiDocumentiListRequestApiDto apiDto)
+        {
+            try
+            {
+                var dto = apiDto.ToDto<ContrattiDocumentiListRequestDto, ContrattiDocumentiListRequestApiDto>();
+                var entities = await _gaContrattiService.GetSpGaContrattiPermessoModeAsync(dto);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
         #endregion
 
         #endregion

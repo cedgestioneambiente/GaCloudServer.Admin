@@ -66,11 +66,11 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
         public string RagioneSociale { get; set; }
         public string CodiceFiscale { get; set; }
         public string PartitaIva { get; set; }
-        public string SedeLegale { get; set; }
-        public string RecapitoFatture { get; set; }
-        public string Telefono { get; set; }
-        public string Fax { get; set; }
-        public string Email { get; set; }
+        public string? SedeLegale { get; set; }
+        public string? RecapitoFatture { get; set; }
+        public string? Telefono { get; set; }
+        public string? Fax { get; set; }
+        public string? Email { get; set; }
     }
 
     public class ContrattiFornitoriApiDto : GenericPagedListApiDto<ContrattiFornitoreApiDto>

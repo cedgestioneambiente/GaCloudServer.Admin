@@ -5,7 +5,9 @@
         //Global
         public const string GaGlobalMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Global\";
         public const string CREATE_ViewGaGlobal = "CREATE_ViewGaGlobal.sql";
+        public const string CREATE_ObjectGaGlobal = "CREATE_ObjectGaGlobal.sql";
         public const string DROP_ViewGaGlobal = "DROP_ViewGaGlobal.sql";
+        public const string DROP_ObjectGaGlobal = "DROP_ObjectGaGlobal.sql";
 
         //Autorizzazioni
         public const string GaAutorizzazioniMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Autorizzazioni\";
