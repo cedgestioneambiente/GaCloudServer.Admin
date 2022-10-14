@@ -100,9 +100,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaContrattiNumeratori>, GenericRepository<TResourcesDbContext, ViewGaContrattiNumeratori>>();
 
             //Sp
-            //services.AddTransient<IGenericRepository<SpGaContrattiNumeratore>, GenericRepository<TResourcesDbContext, SpGaContrattiNumeratore>>();
-            //services.AddTransient<IGenericRepository<SpGaContrattiPermesso>, GenericRepository<TResourcesDbContext, SpGaContrattiPermesso>>();
-            //services.AddTransient<IGenericRepository<SpGaContrattiPermessoMode>, GenericRepository<TResourcesDbContext, SpGaContrattiPermessoMode>>();
+            services.AddTransient<IProcedureManager<SpGaContrattiNumeratore>, ProcedureManager<TResourcesDbContext, SpGaContrattiNumeratore>>();
+            services.AddTransient<IProcedureManager<SpGaContrattiPermesso>, ProcedureManager<TResourcesDbContext, SpGaContrattiPermesso>>();
+            services.AddTransient<IProcedureManager<SpGaContrattiPermessoMode>, ProcedureManager<TResourcesDbContext, SpGaContrattiPermessoMode>>();
 
             #endregion
 
