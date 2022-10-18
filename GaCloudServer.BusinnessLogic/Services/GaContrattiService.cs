@@ -2,15 +2,11 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
+using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
-using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
-using System;
-using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-using GaCloudServer.BusinnessLogic.Extensions;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {

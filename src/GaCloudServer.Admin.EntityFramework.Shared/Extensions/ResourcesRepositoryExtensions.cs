@@ -11,6 +11,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
@@ -129,6 +131,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             services.AddTransient<IGenericRepository<ViewGaPrenotazioneAutoVeicoli>, GenericRepository<TResourcesDbContext, ViewGaPrenotazioneAutoVeicoli>>();
             services.AddTransient<IGenericRepository<ViewGaPrenotazioneAutoRegistrazioni>, GenericRepository<TResourcesDbContext, ViewGaPrenotazioneAutoRegistrazioni>>();
+            #endregion
+
+            //Notifications
+            #region Notification
+            services.AddTransient<IGenericRepository<NotificationApp>, GenericRepository<TResourcesDbContext, NotificationApp>>();
+            services.AddTransient<IGenericRepository<NotificationRoleOnApp>, GenericRepository<TResourcesDbContext, NotificationRoleOnApp>>();
+            services.AddTransient<IGenericRepository<NotificationUserOnApp>, GenericRepository<TResourcesDbContext, NotificationUserOnApp>>();
+
+            services.AddTransient<IGenericRepository<ViewNotificationRolesOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationRolesOnApps>>();
+            services.AddTransient<IGenericRepository<ViewNotificationUsersOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationUsersOnApps>>();
             #endregion
 
 
