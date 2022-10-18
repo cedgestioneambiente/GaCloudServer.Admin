@@ -1,0 +1,2531 @@
+USE [GaCloud]
+
+--AUTORIZZAZIONI
+
+GO
+SET IDENTITY_INSERT [dbo].[GaAutorizzazioniTipi] ON 
+GO
+INSERT [dbo].[GaAutorizzazioniTipi] ([Id], [Descrizione], [Disabled]) VALUES (1, N'DESTINATARIO', 0)
+GO
+INSERT [dbo].[GaAutorizzazioniTipi] ([Id], [Descrizione], [Disabled]) VALUES (2, N'INTERMEDIARIO', 0)
+GO
+INSERT [dbo].[GaAutorizzazioniTipi] ([Id], [Descrizione], [Disabled]) VALUES (3, N'PRODUTTORE', 0)
+GO
+INSERT [dbo].[GaAutorizzazioniTipi] ([Id], [Descrizione], [Disabled]) VALUES (4, N'TRASPORTATORE', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaAutorizzazioniTipi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaAutorizzazioniDocumenti] ON 
+GO
+INSERT [dbo].[GaAutorizzazioniDocumenti] ([Id], [Numero], [RagioneSociale], [Indirizzo], [AutorizzazioniTipoId], [DataRilascio], [Preavviso], [Archiviata], [Disabled], [DataScadenza]) VALUES (479, N'25', N'RE.VETRO S.R.L.', N'VIA LORENZI, 25 - 16100 GENOVA (GE)', 1, CAST(N'2004-05-31T00:00:00.0000000' AS DateTime2), 30, 1, 0, CAST(N'2013-10-06T00:00:00.0000000' AS DateTime2))
+GO
+INSERT [dbo].[GaAutorizzazioniDocumenti] ([Id], [Numero], [RagioneSociale], [Indirizzo], [AutorizzazioniTipoId], [DataRilascio], [Preavviso], [Archiviata], [Disabled], [DataScadenza]) VALUES (480, N'TO 940', N'GESTIONE AMBIENTE S.P.A.', N'EX STRADA STATALE 35 DEI GIOVI, 42 - 15057 TORTONA (AL)', 4, CAST(N'2007-03-09T00:00:00.0000000' AS DateTime2), 30, 1, 0, CAST(N'2012-03-08T00:00:00.0000000' AS DateTime2))
+GO
+INSERT [dbo].[GaAutorizzazioniDocumenti] ([Id], [Numero], [RagioneSociale], [Indirizzo], [AutorizzazioniTipoId], [DataRilascio], [Preavviso], [Archiviata], [Disabled], [DataScadenza]) VALUES (481, N'52', N'MIRABELLI S.R.L.', N'VIA DELLE PIANE, 83 - 16019 RONCO SCRIVIA (GE)', 1, CAST(N'2005-05-06T00:00:00.0000000' AS DateTime2), 30, 1, 0, CAST(N'2012-06-04T00:00:00.0000000' AS DateTime2))
+GO
+INSERT [dbo].[GaAutorizzazioniDocumenti] ([Id], [Numero], [RagioneSociale], [Indirizzo], [AutorizzazioniTipoId], [DataRilascio], [Preavviso], [Archiviata], [Disabled], [DataScadenza]) VALUES (482, N'544', N'CONSORZIO INTERCOMUNALEDI RIO MARSIGLIA', N'C.R.D. LOCALITÀ RIO MARSIGLIA - 16030 TRIBOGNA (GE)', 3, CAST(N'2008-02-04T00:00:00.0000000' AS DateTime2), 30, 1, 0, CAST(N'2018-02-04T00:00:00.0000000' AS DateTime2))
+GO
+INSERT [dbo].[GaAutorizzazioniDocumenti] ([Id], [Numero], [RagioneSociale], [Indirizzo], [AutorizzazioniTipoId], [DataRilascio], [Preavviso], [Archiviata], [Disabled], [DataScadenza]) VALUES (483, N'2336', N'CONSORZIO INTERCOMUNALEDI RIO MARSIGLIA', N'C.R.D. LOCALITÀ COSTA - 16030 COGORNO (GE)', 3, CAST(N'2007-04-17T00:00:00.0000000' AS DateTime2), 30, 1, 0, CAST(N'2015-12-31T00:00:00.0000000' AS DateTime2))
+GO
+INSERT [dbo].[GaAutorizzazioniDocumenti] ([Id], [Numero], [RagioneSociale], [Indirizzo], [AutorizzazioniTipoId], [DataRilascio], [Preavviso], [Archiviata], [Disabled], [DataScadenza]) VALUES (484, N'DDAA2-218/104658', N'GRASSANO S.P.A.', N'VIA PER RETORTO, 31 - 15077 PREDOSA (AL)', 1, CAST(N'2007-07-18T00:00:00.0000000' AS DateTime2), 30, 1, 0, CAST(N'2010-12-31T00:00:00.0000000' AS DateTime2))
+GO
+SET IDENTITY_INSERT [dbo].[GaAutorizzazioniDocumenti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaAutorizzazioniAllegati] ON 
+GO
+INSERT [dbo].[GaAutorizzazioniAllegati] ([Id], [AutorizzazioniDocumentoId], [Descrizione], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (2017, 479, N'2017', N'application/pdf', N'5944029', 0, N'Autorizzazioni', N'01PEZZ2KOVEAWICX6ZERFYKEG66XYS77QU', N'2017.pdf')
+GO
+INSERT [dbo].[GaAutorizzazioniAllegati] ([Id], [AutorizzazioniDocumentoId], [Descrizione], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (2020, 480, N'2020', N'application/pdf', N'5462', 0, N'Autorizzazioni', N'01PEZZ2KLRDUXSMCE55VEYFU3DGMM6HYEL', N'2020.pdf')
+GO
+INSERT [dbo].[GaAutorizzazioniAllegati] ([Id], [AutorizzazioniDocumentoId], [Descrizione], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (2021, 481, N'2021', N'application/pdf', N'107640', 0, N'Autorizzazioni', N'01PEZZ2KK6GE6HDMZCQFHLWHCVOAS2ZR7G', N'2021.pdf')
+GO
+INSERT [dbo].[GaAutorizzazioniAllegati] ([Id], [AutorizzazioniDocumentoId], [Descrizione], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (2022, 482, N'2022', N'application/pdf', N'1643913', 0, N'Autorizzazioni', N'01PEZZ2KMZM73EU7YVDFFJCQTCF7HW3SLM', N'2022.pdf')
+GO
+SET IDENTITY_INSERT [dbo].[GaAutorizzazioniAllegati] OFF
+GO
+
+--PRENOTAZIONE AUTO
+
+GO
+SET IDENTITY_INSERT [dbo].[GaPrenotazioneAutoSedi] ON 
+GO
+INSERT [dbo].[GaPrenotazioneAutoSedi] ([Id], [Descrizione], [Disabled]) VALUES (1, N'NOVI LIGURE', 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoSedi] ([Id], [Descrizione], [Disabled]) VALUES (2, N'TORTONA', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaPrenotazioneAutoSedi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPrenotazioneAutoVeicoli] ON 
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (1, N'FN 913 AM', N'TOYOTA YARIS - NOV', N'#d23200', 1, 0, 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (2, N'FG 226 TC', N'RENAULT CLIO - NOV', N'#66bb6a', 1, 0, 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (3, N'FB 974 GB', N'RENAULT CLIO - NOV', N'#ff9800 ', 1, 1, 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (4, N'FV 101 CS', N'FIAT PANDA - NOV', N'#00bcd4 ', 1, 0, 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (5, N'FW 476 ER', N'FIAT PANDA - TOR', N'#8e00d4', 2, 0, 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (7, N'GA882AW', N'FIAT PANDA - NOV', N'#7ba4ff', 1, 0, 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (8, N'GB852ZY', N'FIAT FIORINO - TOR', N'#607d8b', 2, 0, 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (9, N'GF 265JA', N'FIAT PANDA - TOR', N'#dabc1d', 2, 0, 0)
+GO
+INSERT [dbo].[GaPrenotazioneAutoVeicoli] ([Id], [Targa], [Descrizione], [Colore], [PrenotazioneAutoSedeId], [Disabled], [Weekend]) VALUES (10, N'GE418EH', N'FIAT 500', N'#2400ff', 2, 0, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaPrenotazioneAutoVeicoli] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] ON 
+GO
+INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] ([Id], [Colore], [DataInizio], [DataFine], [InteraGiornata], [UserId], [UserName], [PrenotazioneAutoVeicoloId], [Disabled], [RealeUtilizzatore]) VALUES (1892, N'#2400ff', CAST(N'2022-10-04T08:00:00.0000000' AS DateTime2), CAST(N'2022-10-04T17:00:00.0000000' AS DateTime2), 0, N'44c72bf3-ca4d-4490-9809-b90a519c8db2', N'marco.peretti', 10, 0, N'Peretti Marco')
+GO
+INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] ([Id], [Colore], [DataInizio], [DataFine], [InteraGiornata], [UserId], [UserName], [PrenotazioneAutoVeicoloId], [Disabled], [RealeUtilizzatore]) VALUES (1893, N'#2400ff', CAST(N'2022-10-05T08:00:00.0000000' AS DateTime2), CAST(N'2022-10-05T17:00:00.0000000' AS DateTime2), 0, N'44c72bf3-ca4d-4490-9809-b90a519c8db2', N'marco.peretti', 10, 0, N'Peretti Marco')
+GO
+INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] ([Id], [Colore], [DataInizio], [DataFine], [InteraGiornata], [UserId], [UserName], [PrenotazioneAutoVeicoloId], [Disabled], [RealeUtilizzatore]) VALUES (1894, N'#2400ff', CAST(N'2022-10-06T08:00:00.0000000' AS DateTime2), CAST(N'2022-10-06T17:00:00.0000000' AS DateTime2), 0, N'44c72bf3-ca4d-4490-9809-b90a519c8db2', N'marco.peretti', 10, 0, N'Peretti Marco')
+GO
+INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] ([Id], [Colore], [DataInizio], [DataFine], [InteraGiornata], [UserId], [UserName], [PrenotazioneAutoVeicoloId], [Disabled], [RealeUtilizzatore]) VALUES (1895, N'#dabc1d', CAST(N'2022-10-04T06:00:00.0000000' AS DateTime2), CAST(N'2022-10-04T12:00:00.0000000' AS DateTime2), 0, N'fe79e7f2-e85c-423d-b729-f4b02998b233', N'michele.repetto', 9, 0, N'DUCA LUCIANO')
+GO
+INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] ([Id], [Colore], [DataInizio], [DataFine], [InteraGiornata], [UserId], [UserName], [PrenotazioneAutoVeicoloId], [Disabled], [RealeUtilizzatore]) VALUES (1896, N'#dabc1d', CAST(N'2022-10-10T14:00:00.0000000' AS DateTime2), CAST(N'2022-10-10T17:30:00.0000000' AS DateTime2), 0, N'72095f4e-2c6b-44fd-8035-137b7987314b', N'luca.sotgiu', 9, 0, N'SOTGIU LUCA')
+GO
+INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] ([Id], [Colore], [DataInizio], [DataFine], [InteraGiornata], [UserId], [UserName], [PrenotazioneAutoVeicoloId], [Disabled], [RealeUtilizzatore]) VALUES (1897, N'#2400ff', CAST(N'2022-10-11T08:00:00.0000000' AS DateTime2), CAST(N'2022-10-11T18:00:00.0000000' AS DateTime2), 0, N'71737592-764a-40c1-a6a9-bd34d3fd44fb', N'raffaella.canova', 10, 0, N'Raffaella Canova')
+GO
+INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] ([Id], [Colore], [DataInizio], [DataFine], [InteraGiornata], [UserId], [UserName], [PrenotazioneAutoVeicoloId], [Disabled], [RealeUtilizzatore]) VALUES (1898, N'#2400ff', CAST(N'2022-10-13T08:00:00.0000000' AS DateTime2), CAST(N'2022-10-13T18:00:00.0000000' AS DateTime2), 0, N'71737592-764a-40c1-a6a9-bd34d3fd44fb', N'raffaella.canova', 10, 0, N'Raffaella Canova')
+GO
+SET IDENTITY_INSERT [dbo].[GaPrenotazioneAutoRegistrazioni] OFF
+GO
+
+--CDR
+
+SET IDENTITY_INSERT [dbo].[GaCdrCentri] ON 
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (1, N'Arquata Scrivia', N'', N'cdrarquatascrivia', 1)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (2, N'Casella', N'cdrcasella', N'cdrcasella', 1)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (3, N'Cassano Spinola', N'', N'cdrcassanospinola', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (4, N'Castellazzo Bormida', N'cdrcastellazzobormida', N'cdrcastellazzobormida', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (5, N'Castelnuovo Scrivia', N'centridiraccolta', N'centridiraccolta', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (6, N'Francavilla Bisio', N'centridiraccolta', N'centridiraccolta', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (7, N'Novi Ligure', N'centridiraccolta', N'centridiraccolta', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (8, N'Predosa', N'centridiraccolta', N'centridiraccolta', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (9, N'Ronco Scrivia', N'centridiraccolta', N'centridiraccolta', 1)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (10, N'Sale', N'centridiraccolta', N'centridiraccolta', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (11, N'Voltaggio', N'centridiraccolta', N'centridiraccolta', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (12, N'Pontecurone', N'', N'', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (14, N'Tortona', N'centridiraccolta', N'centridiraccolta', 0)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (16, N'Montoggio', N'centridiraccolta', N'centridiraccolta', 1)
+GO
+INSERT [dbo].[GaCdrCentri] ([Id], [Centro], [Mail], [UserMail], [Disabled]) VALUES (17, N'Pozzolo Formigaro', NULL, N'centridiraccolta', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrCentri] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrCers] ON 
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (1, N'080318', N'080318 - TONER PER STAMPA ESAURITI', 0, 1, 0, N'toner', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (2, N'150101', N'150101 - IMBALLAGGI IN CARTONE', 0, 1, 0, N'cartone', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (3, N'150102', N'150102 - IMBALLAGGI IN PLASTICA', 0, 1, 0, N'imbplastica', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (4, N'150104', N'150104 - IMBALLAGGI METALLICI', 0, 1, 0, N'ferro', 1)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (5, N'150106', N'150106 - IMBALLAGGI MISTI', 0, 1, 0, N'imballaggi', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (6, N'150107', N'150107 - IMBALLAGGI IN VETRO', 0, 1, 0, N'vetro', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (7, N'160103', N'160103 - PNEUMATICI', 0, 1, 1, N'pneumatici', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (8, N'170107', N'170107 - MATERIALE INERTE', 0, 1, 0, N'inerte', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (9, N'200108', N'200108 - ORGANICO', 0, 1, 0, N'organico', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (10, N'200110', N'200110 - ABITI  PRODOTTI TESSILI', 0, 1, 0, N'abiti', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (11, N'200121', N'200121 - R5-SORGENTI LUMINOSE', 1, 1, 1, N'neon', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (12, N'200123', N'200123 - R1-APPARECCHIATURE REFRIGERANTI', 1, 1, 1, N'frighi', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (13, N'200125', N'200125 - OLI E GRASSI DA CUCINA', 0, 1, 0, N'oliocucina', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (14, N'200126', N'200126 - OLI E GRASSI MOTORE', 1, 1, 0, N'oliomotore', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (15, N'200127', N'200127 - VERNICI', 1, 1, 1, N'vernici', 1)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (16, N'200132', N'200132 - MEDICINALI SCADUTI', 0, 1, 0, N'farmaci', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (17, N'200133', N'200133 - BATTERIE E ACCUMULATORI', 1, 1, 1, N'batterie', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (18, N'200134', N'200134 - PILE ESAUSTE', 0, 1, 0, N'pile', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (19, N'200135', N'200135 - R3-TV E MONITOR', 1, 1, 1, N'tv', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (20, N'200136', N'200136 - R2-ALTRI GRANDI BIANCHI', 0, 1, 1, N'grandibianchi', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (21, N'200136', N'200136 - R4-INFORMATICA, PICCOLI ELETTRODOMESTICI', 0, 1, 1, N'piccolielettrodomestici', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (22, N'200138', N'200138 - LEGNO', 0, 1, 0, N'legno', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (23, N'200139', N'200139 - PLASTICA', 0, 1, 0, N'plastica', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (24, N'200140', N'200140 - MATERIALE FERROSO', 0, 1, 0, N'ferro', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (25, N'200201', N'200201 - POTATURE', 0, 1, 0, N'potature', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (26, N'200302', N'200302 - RIFIUTI DA MERCATO', 0, 1, 0, N'cassette', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (27, N'200307', N'200307 - INGOMBRANTI', 0, 1, 1, N'ingombranti', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (28, N'200101', N'200101 - CARTA', 0, 1, 0, N'carta', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (29, N'200201', N'200201 - VERDE', 0, 1, 0, N'verde', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (30, N'150110', N'150110 - VERNICI', 1, 1, 1, N'vernici', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (31, N'200301', N'200301 - DEIEZIONI CANINE', 0, 1, 0, N'cassette', 0)
+GO
+INSERT [dbo].[GaCdrCers] ([Id], [Cer], [Descrizione], [Pericoloso], [Peso], [Qta], [Imm], [Disabled]) VALUES (32, N'000000', N'000000 - COMPOST', 0, 0, 0, N'compost', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrCers] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrCersOnCentri] ON 
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (153, 7, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (154, 7, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (155, 7, 3, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (156, 7, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (157, 7, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (158, 7, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (159, 7, 9, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (160, 7, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (161, 7, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (162, 7, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (163, 7, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (164, 7, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (166, 7, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (167, 7, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (168, 7, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (169, 7, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (170, 7, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (171, 7, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (172, 7, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (173, 7, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (174, 7, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (175, 7, 26, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (176, 7, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (177, 7, 29, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (178, 7, 30, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (179, 8, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (180, 8, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (181, 8, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (182, 8, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (183, 8, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (184, 8, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (185, 8, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (186, 8, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (187, 8, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (188, 8, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (189, 8, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (190, 8, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (191, 8, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (192, 8, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (193, 8, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (194, 8, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (195, 8, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (196, 8, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (197, 8, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (199, 6, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (200, 6, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (201, 6, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (202, 6, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (203, 6, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (204, 6, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (205, 6, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (206, 6, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (207, 6, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (208, 6, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (209, 6, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (210, 6, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (211, 6, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (212, 6, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (213, 6, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (214, 6, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (215, 6, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (216, 6, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (218, 4, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (219, 4, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (221, 4, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (222, 4, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (223, 4, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (224, 4, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (225, 4, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (226, 4, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (227, 4, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (228, 4, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (229, 4, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (230, 4, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (231, 4, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (232, 4, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (233, 4, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (234, 4, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (235, 4, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (236, 4, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (238, 4, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (240, 10, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (241, 10, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (242, 10, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (243, 10, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (244, 10, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (245, 10, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (246, 10, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (247, 10, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (248, 10, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (249, 10, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (250, 10, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (251, 10, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (252, 10, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (253, 10, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (254, 10, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (256, 10, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (259, 3, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (260, 3, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (261, 3, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (262, 3, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (263, 3, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (264, 3, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (265, 3, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (266, 3, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (267, 3, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (268, 3, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (269, 3, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (270, 3, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (271, 3, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (272, 3, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (273, 3, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (274, 3, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (275, 3, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (276, 3, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (277, 3, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (278, 3, 29, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (279, 5, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (280, 5, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (281, 5, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (282, 5, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (283, 5, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (284, 5, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (285, 5, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (286, 5, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (287, 5, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (288, 5, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (290, 5, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (291, 5, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (292, 5, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (293, 5, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (294, 5, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (295, 5, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (296, 5, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (297, 5, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (298, 5, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (299, 5, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (305, 1, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (306, 1, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (307, 1, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (308, 1, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (309, 1, 26, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (310, 1, 29, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (311, 1, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (312, 1, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (313, 1, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (314, 1, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (315, 1, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (316, 1, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (317, 1, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (318, 1, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (319, 7, 28, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (321, 1, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (322, 1, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (323, 1, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (324, 1, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (325, 1, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (326, 1, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (327, 1, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (328, 2, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (329, 2, 7, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (330, 2, 28, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (331, 2, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (332, 2, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (333, 2, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (334, 2, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (335, 2, 15, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (336, 2, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (337, 2, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (338, 2, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (339, 2, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (340, 2, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (341, 2, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (342, 2, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (343, 2, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (344, 2, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (345, 2, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (346, 9, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (348, 9, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (349, 9, 7, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (350, 9, 28, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (351, 9, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (352, 9, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (353, 9, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (354, 9, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (355, 9, 15, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (356, 9, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (357, 9, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (358, 9, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (359, 9, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (360, 9, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (361, 9, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (362, 9, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (363, 9, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (364, 9, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (365, 9, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (366, 11, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (367, 11, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (368, 11, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (369, 11, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (370, 11, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (371, 11, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (372, 11, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (373, 11, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (374, 11, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (375, 11, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (377, 1, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (378, 14, 28, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (379, 14, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (380, 14, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (381, 14, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (382, 14, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (383, 14, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (384, 14, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (385, 14, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (386, 14, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (387, 14, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (388, 14, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (389, 14, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (390, 14, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (391, 14, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (392, 14, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (393, 14, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (394, 14, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (395, 14, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (396, 14, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (397, 14, 23, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (398, 14, 3, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (399, 14, 30, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (401, 10, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (407, 7, 7, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (408, 16, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (409, 16, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (410, 16, 30, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (411, 16, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (412, 16, 7, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (413, 16, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (414, 16, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (415, 16, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (416, 16, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (417, 16, 15, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (418, 16, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (419, 16, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (420, 16, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (421, 16, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (422, 16, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (423, 16, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (424, 16, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (425, 16, 23, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (426, 16, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (427, 16, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (428, 16, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (429, 16, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (430, 16, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (432, 11, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (433, 11, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (434, 14, 26, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (435, 14, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (437, 6, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (438, 6, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (439, 2, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (440, 2, 3, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (441, 2, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (442, 2, 23, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (443, 3, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (444, 4, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (445, 8, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (446, 9, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (447, 9, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (448, 11, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (449, 5, 30, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (451, 7, 31, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (452, 14, 31, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (454, 5, 31, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (455, 12, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (456, 12, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (457, 12, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (458, 12, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (459, 12, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (460, 12, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (461, 17, 1, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (462, 17, 2, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (463, 17, 5, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (464, 17, 6, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (465, 17, 7, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (466, 17, 8, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (467, 17, 10, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (468, 17, 11, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (469, 17, 12, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (470, 17, 19, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (471, 17, 20, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (472, 17, 21, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (473, 17, 22, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (474, 17, 13, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (475, 17, 14, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (476, 17, 16, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (477, 17, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (478, 17, 18, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (479, 17, 24, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (480, 17, 28, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (481, 17, 25, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (482, 17, 27, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (483, 17, 31, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (485, 11, 17, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (486, 7, 32, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (487, 14, 32, 0)
+GO
+INSERT [dbo].[GaCdrCersOnCentri] ([Id], [CdrCentroId], [CdrCerId], [Disabled]) VALUES (488, 11, 1, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrCersOnCentri] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrComuni] ON 
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (1, N'Arquata Scrivia', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (2, N'Basaluzzo', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (3, N'Capriata D''Orba', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (4, N'Castellazzo Bormida', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (5, N'Francavilla Bisio', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (6, N'Fresonara', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (7, N'Novi Ligure', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (8, N'Pasturana', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (9, N'Predosa', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (10, N'Serravalle Scrivia', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (11, N'Tassarolo', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (12, N'Casella', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (13, N'Valbrevenna', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (14, N'Cassano Spinola', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (15, N'Gavazzana', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (16, N'Sardigliano', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (17, N'Castelnuovo Scrivia', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (18, N'Ronco Scrivia', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (19, N'Alluvioni Piovera', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (20, N'Sale', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (21, N'Fraconalto', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (22, N'Voltaggio', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (23, N'Pontecurone', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (24, N'Savignone', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (26, N'Alzano Scrivia', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (27, N'Carbonara Scrivia', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (28, N'Carezzano', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (29, N'Carrosio', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (30, N'Castellar Guidobono', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (31, N'Gavi', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (32, N'Guazzora', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (33, N'Isola Sant''Antonio', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (34, N'Molino dei Torti', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (35, N'Parodi Ligure', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (36, N'Pozzolo Formigaro', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (37, N'Spineto Scrivia', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (38, N'Tortona', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (39, N'Viguzzolo', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (40, N'Villaromagnano', 0)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (41, N'Isola del Cantone', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (42, N'Vobbia', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (44, N'Torriglia', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (45, N'Montoggio', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (46, N'Bargagli', 1)
+GO
+INSERT [dbo].[GaCdrComuni] ([Id], [Comune], [Disabled]) VALUES (47, N'Crocefieschi', 1)
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrComuni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrComuniOnCentri] ON 
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (1, 1, 1, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (2, 1, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (3, 1, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (4, 1, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (5, 1, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (6, 1, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (7, 1, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (8, 1, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (9, 1, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (10, 1, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (11, 1, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (12, 2, 12, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (13, 2, 13, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (14, 3, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (16, 3, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (18, 4, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (19, 4, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (20, 4, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (21, 4, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (22, 4, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (23, 4, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (24, 4, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (25, 4, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (26, 4, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (27, 4, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (28, 5, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (30, 6, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (31, 6, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (32, 6, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (33, 6, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (34, 6, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (35, 6, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (36, 6, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (37, 6, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (38, 6, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (39, 6, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (41, 7, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (42, 7, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (43, 7, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (44, 7, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (45, 7, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (46, 7, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (47, 7, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (48, 7, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (49, 7, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (50, 7, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (52, 8, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (53, 8, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (54, 8, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (55, 8, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (56, 8, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (57, 8, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (58, 8, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (59, 8, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (60, 8, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (61, 8, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (62, 9, 18, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (63, 10, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (64, 10, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (65, 11, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (66, 11, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (67, 12, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (68, 2, 24, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (75, 14, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (76, 14, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (77, 14, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (78, 14, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (79, 14, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (80, 14, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (81, 14, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (82, 14, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (83, 14, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (84, 14, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (85, 14, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (86, 14, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (87, 14, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (88, 14, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (89, 14, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (90, 14, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (91, 14, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (92, 14, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (93, 14, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (94, 14, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (95, 14, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (96, 14, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (97, 14, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (99, 14, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (100, 14, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (101, 14, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (102, 14, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (103, 14, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (104, 14, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (105, 14, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (106, 14, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (107, 14, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (108, 14, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (109, 10, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (110, 9, 42, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (111, 9, 41, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (117, 1, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (120, 1, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (121, 16, 44, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (122, 16, 45, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (123, 3, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (124, 3, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (127, 3, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (128, 3, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (129, 3, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (130, 3, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (131, 3, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (132, 3, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (133, 3, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (134, 3, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (135, 3, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (136, 3, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (137, 3, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (138, 3, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (139, 3, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (140, 3, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (141, 3, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (142, 3, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (143, 3, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (144, 3, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (145, 3, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (146, 3, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (147, 3, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (148, 3, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (149, 3, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (150, 3, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (151, 3, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (152, 3, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (153, 3, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (154, 3, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (155, 3, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (157, 6, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (158, 6, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (159, 6, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (160, 6, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (161, 6, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (162, 6, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (163, 6, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (164, 6, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (165, 6, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (166, 6, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (167, 6, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (168, 6, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (169, 6, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (170, 6, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (171, 6, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (172, 6, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (173, 6, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (174, 6, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (175, 6, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (176, 6, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (177, 6, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (178, 6, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (179, 6, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (180, 8, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (181, 8, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (182, 8, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (183, 8, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (184, 8, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (185, 8, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (186, 8, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (187, 8, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (188, 8, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (189, 8, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (190, 8, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (191, 8, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (192, 8, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (193, 8, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (194, 8, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (195, 8, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (196, 8, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (197, 8, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (198, 8, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (199, 8, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (200, 8, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (201, 8, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (202, 5, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (203, 5, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (204, 5, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (205, 5, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (206, 5, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (207, 5, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (208, 5, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (209, 5, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (210, 5, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (211, 5, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (212, 5, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (213, 5, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (214, 5, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (215, 5, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (216, 5, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (217, 5, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (218, 5, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (219, 5, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (220, 5, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (221, 5, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (222, 5, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (223, 5, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (224, 5, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (225, 5, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (226, 5, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (227, 5, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (228, 5, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (229, 5, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (230, 5, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (231, 5, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (232, 5, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (233, 5, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (234, 5, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (235, 17, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (236, 17, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (237, 17, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (238, 17, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (239, 17, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (240, 17, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (241, 17, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (242, 17, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (243, 17, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (244, 17, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (245, 17, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (246, 17, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (247, 17, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (248, 17, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (249, 17, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (250, 17, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (251, 17, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (252, 17, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (253, 17, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (254, 17, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (255, 17, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (256, 17, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (257, 17, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (258, 17, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (259, 17, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (260, 17, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (261, 17, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (262, 17, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (263, 17, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (264, 17, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (265, 4, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (266, 4, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (267, 4, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (268, 4, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (269, 4, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (270, 4, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (271, 4, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (272, 4, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (273, 4, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (274, 4, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (275, 4, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (276, 4, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (277, 4, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (278, 4, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (279, 4, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (280, 4, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (281, 4, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (282, 4, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (283, 4, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (284, 4, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (285, 4, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (286, 4, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (287, 4, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (288, 4, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (289, 3, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (290, 6, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (291, 7, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (292, 7, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (293, 7, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (294, 7, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (295, 7, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (296, 7, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (297, 7, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (298, 7, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (299, 7, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (300, 7, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (301, 7, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (302, 7, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (303, 7, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (304, 7, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (305, 7, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (306, 7, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (307, 7, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (308, 7, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (309, 7, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (310, 7, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (311, 7, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (312, 7, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (313, 7, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (314, 7, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (315, 17, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (316, 17, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (317, 17, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (318, 17, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (319, 8, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (320, 10, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (321, 10, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (322, 10, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (323, 10, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (324, 10, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (325, 10, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (326, 10, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (327, 10, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (328, 10, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (329, 10, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (330, 10, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (331, 10, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (332, 10, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (333, 10, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (334, 10, 21, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (335, 10, 22, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (336, 10, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (337, 10, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (338, 10, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (339, 10, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (340, 10, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (341, 10, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (342, 10, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (343, 10, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (344, 10, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (345, 10, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (346, 10, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (347, 10, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (348, 10, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (349, 10, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (350, 10, 40, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (351, 14, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (352, 11, 2, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (353, 11, 3, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (354, 11, 4, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (355, 11, 5, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (356, 11, 6, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (357, 11, 7, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (358, 11, 8, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (359, 11, 9, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (360, 11, 10, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (361, 11, 11, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (362, 11, 14, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (363, 11, 15, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (364, 11, 16, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (365, 11, 17, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (366, 11, 19, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (367, 11, 20, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (368, 11, 23, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (370, 11, 26, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (371, 11, 27, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (372, 11, 28, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (373, 11, 29, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (374, 11, 30, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (375, 11, 31, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (376, 11, 32, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (377, 11, 33, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (378, 11, 34, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (379, 11, 35, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (380, 11, 36, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (381, 11, 37, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (382, 11, 38, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (383, 11, 39, 0)
+GO
+INSERT [dbo].[GaCdrComuniOnCentri] ([Id], [CdrCentroId], [CdrComuneId], [Disabled]) VALUES (384, 11, 40, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrComuniOnCentri] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrStatiRichieste] ON 
+GO
+INSERT [dbo].[GaCdrStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (-2, N'ANNULLATA', 0)
+GO
+INSERT [dbo].[GaCdrStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (0, N'IN ARRIVO', 0)
+GO
+INSERT [dbo].[GaCdrStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (1, N'IN ATTESA DI GESTIONE', 0)
+GO
+INSERT [dbo].[GaCdrStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (2, N'IN GESTIONE', 0)
+GO
+INSERT [dbo].[GaCdrStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (3, N'GESTITA', 0)
+GO
+INSERT [dbo].[GaCdrStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (4, N'SISTEMATA CON RAGNO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrStatiRichieste] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrCersDettagli] ON 
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (1, 1, N'CARTUCCE PER STAMPANTI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (2, 2, N'SCATOLONI DI CARTONE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (3, 3, N'CONTENITORI IN PLASTICA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (4, 4, N'LATTINE IN ALLUMINIO E BANDA STAGNATA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (5, 5, N'FILM E PELLICOLE DA IMBALLAGGIO IN PLASTICA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (6, 5, N'IMBALLAGGI IN METALLO ', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (7, 5, N'IMBALLAGGI IN PLASTICA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (8, 5, N'IMBALLAGGI IN POLISTIROLO', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (9, 6, N'VETRO', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (10, 7, N'PNEUMATICI SENZA CERCHIO', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (11, 8, N'DEMOLIZIONI DA MANUTENZIONE DOMESTICHE (FAI DA TE)', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (12, 9, N'SCARTI DI CUCINA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (13, 10, N'ABITI USATI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (14, 11, N'LAMPADE AL NEON', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (15, 12, N'APPARECCHI PER IL CONDIZIONAMENTO TIPO DA PARETE', 4, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (16, 12, N'CONDIZIONATORI TIPO PINGUINO', 10, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (17, 12, N'CONGELATORE GRANDE', 70, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (18, 12, N'CONGELATORE PICCOLO', 45, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (19, 12, N'FRIGORIFERO GRANDE', 75, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (20, 12, N'FRIGORIFERO MEDIO', 37, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (21, 12, N'FRIGORIFERO PICCOLO', 20, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (22, 12, N'SCALDABAGNO ELETTRICI', 10, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (23, 13, N'OLIO ALIMENTARE USATO ', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (24, 14, N'OLIO PER AUTOMOBILI E MACCHINARI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (25, 15, N'BARATTOLI VERNICE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (26, 16, N'FARMACI SCADUTI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (27, 17, N'BATTERIA AUTO MEDIA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (28, 17, N'BATTERIA AUTO GRANDE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (29, 18, N'PILE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (30, 19, N'MONITOR', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (31, 19, N'SCHERMO COMPUTER ', 3, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (32, 19, N'TELEVISORE GRANDE', 50, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (33, 19, N'TELEVISORE MEDIO', 20, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (34, 19, N'TELEVISORE PICCOLO', 5, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (35, 20, N'APPARECCHI ELETTRICI PER IL RISCALDAMENTO', 5, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (36, 20, N'APPARECCHI ELETTRICI PER LA COTTURA', 2, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (37, 20, N'ASCIUGATRICI', 70, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (38, 20, N'BOILER ELETTRICI', 5, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (39, 20, N'CUCINE ELETTRICHE A GAS', 70, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (40, 20, N'FORNI', 70, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (41, 20, N'FORNI A MICROONDE', 15, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (42, 20, N'LAVASTOVIGLIE ', 70, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (43, 20, N'LAVATRICE ', 70, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (44, 20, N'PIASTRE RISCALDANTI ELETTRICHE', 2, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (45, 20, N'RADIATORI ELETTRICI', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (46, 20, N'STUFE ELETTRICHE', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (47, 20, N'TERMOCONVETTORI', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (48, 21, N'ASCIUGACAPELLI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (49, 21, N'ASPIRAPOLVERE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (50, 21, N'COMPUTER E COMPONENTI (TRANNE MONITOR)', 5, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (51, 21, N'COMPUTER PORTATILI', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (52, 21, N'CONSOLLE DI VIDEOGIOCHI PORTATILI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (53, 21, N'COPIATRICI', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (54, 21, N'FAX', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (55, 21, N'FERRO DA STIRO', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (56, 21, N'FRIGGITRICE', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (57, 21, N'FRULLATORE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (58, 21, N'LETTORE VIDEOCASSETTE/DVD', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (59, 21, N'PERSONAL COMPUTER (ESCLUSI I MONITOR)', 5, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (60, 21, N'RADIO', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (61, 21, N'SCOPE ELETTRICHE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (62, 21, N'SEGRETERIE TELEFONICHE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (63, 21, N'STAMPANTE', 2, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (64, 21, N'STEREO', 3, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (65, 21, N'TASTIERA DEL COMPUTER', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (66, 21, N'TELEFONI CELLULARI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (67, 21, N'TELEFONO (ANCHE SENZA FILI)', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (68, 21, N'TELEX', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (69, 21, N'TOSTAPANE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (70, 21, N'VIDEOREGISTRATORE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (71, 21, N'PICCOLI ELETTRODOMESTICI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (72, 22, N'LEGNO ', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (73, 23, N'CONTENITORI IN PLASTICA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (74, 24, N'FERRO', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (75, 25, N'RAMAGLIE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (76, 26, N'CASSETTE DI PLASTICA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (77, 26, N'NYLON', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (78, 27, N'ARMADI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (79, 27, N'DIVANO 2 POSTI', 60, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (80, 27, N'DIVANO 3 POSTI', 80, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (81, 27, N'INGOMBRANTI', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (82, 27, N'LETTO', 100, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (83, 27, N'MATERASSI 1 PIAZZA', 12, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (84, 27, N'MATERASSI 1 PIAZZA E MEZZO', 18, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (85, 27, N'MATERASSI 2 PIAZZE', 25, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (86, 27, N'MOBILI ', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (87, 27, N'POLTRONE ', 18, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (88, 27, N'PORTE', 20, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (89, 27, N'SERRAMENTI ', 20, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (90, 27, N'TAVOLI', 10, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (91, 28, N'CARTA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (92, 29, N'ERBA', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (93, 30, N'BARATTOLI VERNICE', 0, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (94, 31, N'DEIEZIONI CANINE', 1, 0)
+GO
+INSERT [dbo].[GaCdrCersDettagli] ([Id], [CdrCerId], [Descrizione], [PesoDefault], [Disabled]) VALUES (95, 32, N'Compost', 40, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrCersDettagli] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrConferimenti] ON 
+GO
+INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (1, CAST(N'2016-10-19T10:34:55.0000000' AS DateTime2), N'SCLDGI79D06F965H', 1, 0, 7, N'7', 22, 72, 100, 1, N'', N'', N'19042', 0, N'cda60f19-8efb-461b-bf7a-20dc69863923', 0, NULL, NULL)
+GO
+INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (2, CAST(N'2016-10-19T13:58:13.0000000' AS DateTime2), N'FNTCRD83R20F965B', 1, 0, 7, N'C19', 19, 30, 10, 2, N'', N'', N'05851', 0, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 0, N'00208708', N'0000256541')
+GO
+INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (3, CAST(N'2016-10-19T13:59:07.0000000' AS DateTime2), N'FNTCRD83R20F965B', 1, 0, 7, N'C19', 20, 35, 20, 1, N'CAPPA PER CUCINA', N'', N'05851', 0, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 0, N'00208708', N'0000256541')
+GO
+INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (4, CAST(N'2016-10-19T13:59:35.0000000' AS DateTime2), N'FNTCRD83R20F965B', 1, 0, 7, N'C19', 20, 35, 10, 1, N'MICROONDE', N'', N'05851', 0, N'ec63c7bd-706f-4b0e-b96e-6f11b1d45f24', 0, N'00208708', N'0000256541')
+GO
+INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (101178, CAST(N'2022-10-14T10:04:50.4860000' AS DateTime2), N'PGGSVN72B52F965J', 1, 0, 7, N'C19', 27, 81, 50, 1, N'', N'', N'04460', 0, N'ec63c7bd-706f-4b0e-b96e-6f11b1d45f24', 0, N'00207137', N'0000252611')
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrConferimenti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrRichiesteViaggi] ON 
+GO
+INSERT [dbo].[GaCdrRichiesteViaggi] ([Id], [Data], [CdrCentroId], [CdrCerId], [CdrStatoRichiestaId], [DataChiusura], [PesoPresunto], [PesoDestino], [Inviata], [Disabled], [UserId], [Note]) VALUES (6406, CAST(N'2018-03-22T10:56:47.1833333' AS DateTime2), 4, 25, -2, NULL, 0, 0, 1, 0, N'cda60f19-8efb-461b-bf7a-20dc69863923', NULL)
+GO
+INSERT [dbo].[GaCdrRichiesteViaggi] ([Id], [Data], [CdrCentroId], [CdrCerId], [CdrStatoRichiestaId], [DataChiusura], [PesoPresunto], [PesoDestino], [Inviata], [Disabled], [UserId], [Note]) VALUES (6407, CAST(N'2018-03-22T17:49:08.9000000' AS DateTime2), 2, 16, 3, CAST(N'2018-03-20T00:00:00.0000000' AS DateTime2), 0, 92, 1, 0, N'cda60f19-8efb-461b-bf7a-20dc69863923', NULL)
+GO
+INSERT [dbo].[GaCdrRichiesteViaggi] ([Id], [Data], [CdrCentroId], [CdrCerId], [CdrStatoRichiestaId], [DataChiusura], [PesoPresunto], [PesoDestino], [Inviata], [Disabled], [UserId], [Note]) VALUES (6408, CAST(N'2018-03-23T10:59:00.8166667' AS DateTime2), 7, 10, 3, CAST(N'2018-03-23T00:00:00.0000000' AS DateTime2), 0, 20, 1, 0, N'cda60f19-8efb-461b-bf7a-20dc69863923', NULL)
+GO
+INSERT [dbo].[GaCdrRichiesteViaggi] ([Id], [Data], [CdrCentroId], [CdrCerId], [CdrStatoRichiestaId], [DataChiusura], [PesoPresunto], [PesoDestino], [Inviata], [Disabled], [UserId], [Note]) VALUES (6409, CAST(N'2018-03-24T10:37:25.2966667' AS DateTime2), 7, 8, 3, CAST(N'2018-03-24T00:00:00.0000000' AS DateTime2), 0, 7380, 1, 0, N'cda60f19-8efb-461b-bf7a-20dc69863923', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[GaCdrRichiesteViaggi] OFF
+
+--BACK OFFICE
+
+GO
+SET IDENTITY_INSERT [dbo].[GaBackOfficeStatiTickets] ON 
+GO
+INSERT [dbo].[GaBackOfficeStatiTickets] ([Id], [Descrizione], [Disabled]) VALUES (1, N'IN ATTESA DI GESTIONE', 0)
+GO
+INSERT [dbo].[GaBackOfficeStatiTickets] ([Id], [Descrizione], [Disabled]) VALUES (2, N'IN GESTIONE', 0)
+GO
+INSERT [dbo].[GaBackOfficeStatiTickets] ([Id], [Descrizione], [Disabled]) VALUES (3, N'COMPLETATO', 0)
+GO
+INSERT [dbo].[GaBackOfficeStatiTickets] ([Id], [Descrizione], [Disabled]) VALUES (4, N'ANNULLATO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaBackOfficeStatiTickets] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaBackOfficeTipiTickets] ON 
+GO
+INSERT [dbo].[GaBackOfficeTipiTickets] ([Id], [Descrizione], [Disabled]) VALUES (1, N'CONSEGNA', 0)
+GO
+INSERT [dbo].[GaBackOfficeTipiTickets] ([Id], [Descrizione], [Disabled]) VALUES (2, N'SOSTITUZIONE', 0)
+GO
+INSERT [dbo].[GaBackOfficeTipiTickets] ([Id], [Descrizione], [Disabled]) VALUES (3, N'ALTRO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaBackOfficeTipiTickets] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaBackOfficeTickets] ON 
+GO
+INSERT [dbo].[GaBackOfficeTickets] ([Id], [Data], [BackOfficeTipoTicketId], [NumCon], [Descrizione], [Note1], [Note2], [Note3], [Note4], [BackOfficeStatoTicketId], [UserId], [Disabled]) VALUES (1, CAST(N'0001-01-01T00:00:00.0000000' AS DateTime2), 2, NULL, N'ACUBE SRL                     ', N'annotazioni prova', N'2 rsu 1100', NULL, NULL, 1, N'68a5f3a2-c63b-4785-a04b-8ae6426131a7', 0)
+GO
+INSERT [dbo].[GaBackOfficeTickets] ([Id], [Data], [BackOfficeTipoTicketId], [NumCon], [Descrizione], [Note1], [Note2], [Note3], [Note4], [BackOfficeStatoTicketId], [UserId], [Disabled]) VALUES (2, CAST(N'0001-01-01T00:00:00.0000000' AS DateTime2), 1, N'00273599', N'ACUBE SRL                     ', N'note 1', N'1 rsu 1100', N'2 pla 120', NULL, 3, N'68a5f3a2-c63b-4785-a04b-8ae6426131a7', 0)
+GO
+INSERT [dbo].[GaBackOfficeTickets] ([Id], [Data], [BackOfficeTipoTicketId], [NumCon], [Descrizione], [Note1], [Note2], [Note3], [Note4], [BackOfficeStatoTicketId], [UserId], [Disabled]) VALUES (3, CAST(N'2022-02-24T09:27:31.7390000' AS DateTime2), 2, N'00273599', N'ACUBE SRL                     ', N'1 1100 rsu', NULL, NULL, NULL, 1, N'68a5f3a2-c63b-4785-a04b-8ae6426131a7', 0)
+GO
+INSERT [dbo].[GaBackOfficeTickets] ([Id], [Data], [BackOfficeTipoTicketId], [NumCon], [Descrizione], [Note1], [Note2], [Note3], [Note4], [BackOfficeStatoTicketId], [UserId], [Disabled]) VALUES (4, CAST(N'2022-02-24T09:48:15.2920000' AS DateTime2), 1, N'00273599', N'ACUBE SRL                     ', N'aaaa', NULL, NULL, NULL, 1, N'68a5f3a2-c63b-4785-a04b-8ae6426131a7', 0)
+GO
+INSERT [dbo].[GaBackOfficeTickets] ([Id], [Data], [BackOfficeTipoTicketId], [NumCon], [Descrizione], [Note1], [Note2], [Note3], [Note4], [BackOfficeStatoTicketId], [UserId], [Disabled]) VALUES (5, CAST(N'2022-02-24T10:12:03.7180000' AS DateTime2), 3, N'00273599', N'ACUBE SRL                     ', NULL, NULL, NULL, NULL, 1, N'68a5f3a2-c63b-4785-a04b-8ae6426131a7', 0)
+GO
+INSERT [dbo].[GaBackOfficeTickets] ([Id], [Data], [BackOfficeTipoTicketId], [NumCon], [Descrizione], [Note1], [Note2], [Note3], [Note4], [BackOfficeStatoTicketId], [UserId], [Disabled]) VALUES (6, CAST(N'2022-02-24T10:29:14.5730000' AS DateTime2), 3, N'00273599', N'ACUBE SRL                     ', N'sssss', NULL, NULL, NULL, 3, N'68a5f3a2-c63b-4785-a04b-8ae6426131a7', 0)
+GO
+INSERT [dbo].[GaBackOfficeTickets] ([Id], [Data], [BackOfficeTipoTicketId], [NumCon], [Descrizione], [Note1], [Note2], [Note3], [Note4], [BackOfficeStatoTicketId], [UserId], [Disabled]) VALUES (7, CAST(N'2022-02-24T14:18:02.2840000' AS DateTime2), 1, N'00245857', N'HOBBY MOTO S.R.L.             ', N'prova', N'prova', NULL, NULL, 4, N'624f0dc7-e14a-4077-87be-46504eb356e8', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaBackOfficeTickets] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaBackOfficeParametriOnCategorie] ON 
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (1, N'01', N'MUSEI, BIBLIOTECHE, SCUOLE, ASSOCIAZIONI, LUOGHI DI CULTO', 10, 4, 0.011, 6, 0.0164, 0.65, 0.25, 0, 0.1, 10.71, 0.46, 2.6, 8, 0.256122, 0.42306, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (2, N'02', N'CINEMATOGRAFI E TEATRI', 5, 2, 0.0055, 3, 0.0082, 0.5, 0.4, 0, 0.1, 0, 0, 0, 0, 0, 0, 0, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (3, N'03', N'AUTORIMESSE E MAGAZZINI SENZA ALCUNA VENDITA DIRETTA', 7.5, 3, 0.0082, 4.5, 0.0123, 0.5, 0.5, 0, 0, 10.71, 0.7, 4.9, 8, 0.389751, 0.797306, 85.68, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (4, N'04', N'CAMPEGGI, DISTRIBUTORI CARBURANTI, IMPIANTI SPORTIVI', 10, 4, 0.011, 6, 0.0164, 0.2, 0.8, 0, 0, 10.71, 0.88, 7, 10, 0.489972, 1.139009, 107.19, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (5, N'05', N'STABILIMENTI BALNEARI', 7.5, 3, 0.0082, 4.5, 0.0123, 0.1, 0.65, 0.1, 0.15, 10.71, 0.64, 5.22, 8, 0.356343, 0.849375, 85.68, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (6, N'06', N'ESPOSIZIONI, AUTOSALONI', 5, 2, 0.0055, 3, 0.0082, 0.5, 0.4, 0, 0.1, 10.71, 0.51, 4, 10, 0.283961, 0.650862, 107.19, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (7, N'07', N'ALBERGHI CON RISTORANTE', 17.5, 7, 0.0192, 10.5, 0.0288, 0.1, 0.25, 0.3, 0.35, 10.71, 1.3, 8, 25, 0.723822, 1.301724, 267.84, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (8, N'08', N'ALBERGHI SENZA RISTORANTE', 10, 4, 0.011, 6, 0.0164, 0.3, 0.6, 0.1, 0, 10.71, 1, 65, 12, 556786, 1057651, 12861, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (9, N'09', N'CASE DI CURA E RIPOSO', 20, 8, 0.0219, 12, 0.0329, 0.35, 0.3, 0.1, 0.25, 10.71, 1, 8.2, 40, 0.556786, 1.334267, 428.49, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (10, N'10', N'OSPEDALI', 22.5, 9, 0.0247, 13.5, 0.037, 0.35, 0.3, 0.1, 0.25, 0, 0, 0, 0, 0, 0, 0, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (11, N'11', N'UFFICI, AGENZIE, STUDI PROFESSIONALI', 15, 6, 0.0164, 9, 0.0247, 0.6, 0.35, 0, 0.05, 10.71, 1.35, 10, 8, 0.751662, 1.627155, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (12, N'12', N'BANCHE ED ISTITUTI DI CREDITO', 7.5, 3, 0.0082, 4.5, 0.0123, 0.6, 0.35, 0, 0.05, 10.71, 0.91, 7.17, 8, 0.506676, 1.16667, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (13, N'13', N'NEGOZI ABBIGLIAMENTO,CALZATURE,LIBRERIA, CARTOLERIA,FERRAMENTA, ALTRI BENI DUREVOLI', 15, 6, 0.0164, 9, 0.0247, 0.7, 0.3, 0, 0, 10.71, 1.1, 9, 8, 0.612465, 1.46444, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (14, N'14', N'EDICOLA, FARMACIA, TABACCAIO, PLURILICENZE,', 17.5, 7, 0.0192, 10.5, 0.0288, 0.7, 0.3, 0, 0, 10.71, 1.7, 14.5, 8, 0.946537, 2.359375, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (15, N'15', N'NEGOZI PARTICOLARI QUALI: FILATELIA, TENDE E TESSUTI, TAPPETI, CAPPELLI E OMBRELLI, ANTIQUAR.', 10, 4, 0.011, 6, 0.0164, 0.7, 0.3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (16, N'16', N'BANCHI DI MERCATO BENI DUREVOLI', 20, 8, 0.0219, 12, 0.0329, 0, 0, 0, 0, 10.71, 1.78, 14.58, 12, 0.99108, 2.372393, 128.61, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (17, N'17', N'ATTIVITÀ ARTIGIANALI TIPO BOTTEGHE: PARRUCCHIERE, BARBIERE, ESTETISTA', 17.5, 7, 0.0192, 10.5, 0.0288, 0.3, 0.7, 0, 0, 10.71, 1.15, 7, 8, 0.640304, 1.139009, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (18, N'18', N'ATTIVITÀ ARTIGIANALI TIPO BOTTEGHE: FALEGNAME, IDRAULICO, FABBRO, ELETTRICISTA', 12.5, 5, 0.0137, 7.5, 0.0205, 0.3, 0.7, 0, 0, 10.71, 0.85, 7.1, 10, 0.473268, 1.15528, 107.19, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (19, N'19', N'CARROZZERIA, AUTOFFICINA, ELETTRAUTO', 15, 6, 0.0164, 9, 0.0247, 0.3, 0.7, 0, 0, 10.71, 1.05, 8.95, 10, 0.584626, 1.456304, 107.19, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (20, N'20', N'ATTIVITÀ INDUSTRIALI CON CAPANNONI DI PRODUZIONE.ATTIVITÀ DI RECUPERO, TRATTAMENTO E SMALTIMENTO DEI RIFIUTI. ATTIVITÀ DI TRATTAMENTO E POTABILIZZAZIONE DELLE ACQUE.
+(LIMITATAMENTE ALLE SUPERFICI, ALLE AREE ED AI LOCALI NON ADIBITI AD ATTIVITÀ DI PRODUZIONE ED IMMAGAZZINAMENTO E AD ATTIVITÀ DI STOCCAGGIO, RECUPERO, TRATTAMENTO, SMALTIMENTO E POTABILIZZAZIONE)
+', 25, 10, 0.0274, 15, 0.0411, 0.4, 0.6, 0, 0, 10.71, 0.8, 6, 10, 0.445429, 0.976293, 107.1, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (21, N'21', N'ATTIVITÀ ARTIGIANALI DI PRODUZIONE BENI SPECIFICI', 20, 8, 0.0219, 12, 0.0329, 0.4, 0.6, 0, 0, 10.71, 0.8, 7, 10, 0.445429, 1.139009, 107.19, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (22, N'22', N'RISTORANTI, TRATTORIE, OSTERIA, PIZZERIE, PUB', 82.5, 33, 0.0904, 49.5, 0.1356, 0.1, 0.25, 0.3, 0.35, 10.71, 2.8, 25, 35, 1.559002, 4.067889, 374.94, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (23, N'23', N'MENSE, BIRRERIE, HAMBURGHERIE', 62.5, 25, 0.0685, 37.5, 0.1027, 0.1, 0.25, 0.3, 0.35, 0, 0, 0, 0, 0, 0, 0, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (24, N'24', N'BAR, CAFFÈ, PASTICCERIA', 65, 26, 0.0712, 39, 0.1068, 0.1, 0.25, 0.3, 0.35, 10.71, 2.5, 23, 35, 1.391966, 3.742457, 374.94, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (25, N'25', N'SUPERMERCATO, PANE E PASTA, MACELLERIA, SALUMI E FORMAGGI, GENERI ALIMENTARI', 37.5, 15, 0.0411, 22.5, 0.0616, 0.15, 0.5, 0.1, 0.25, 10.71, 2.1, 18, 12, 1.169252, 2.92888, 128.61, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (26, N'26', N'PLURILICENZE ALIMENTARI E/O MISTE', 32.5, 13, 0.0356, 19.5, 0.0534, 0.15, 0.5, 0.1, 0.25, 10.71, 2, 15, 22, 1.113573, 2.440733, 235.71, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (27, N'27', N'ORTOFRUTTA, PESCHERIE, FIORI E PIANTE, PIZZA AL TAGLIO', 87.5, 35, 0.0959, 52.5, 0.1438, 0.15, 0.5, 0.1, 0.25, 10.71, 5.4, 48, 30, 3.006647, 7.810346, 321.39, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (28, N'28', N'IPERMERCATI DI GENERI MISTI', 35, 14, 0.0384, 21, 0.0575, 0, 0, 0, 0, 10.71, 3, 22, 25, 1.670359, 3.579742, 267.84, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (29, N'29', N'BANCHI DI MERCATO GENERI ALIMENTARI', 95, 38, 0.1041, 57, 0.1562, 0, 0, 0, 0, 10.71, 6, 35, 40, 3.340719, 5.695044, 428.49, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (30, N'30', N'DISCOTECHE, NIGHT CLUB', 17.5, 7, 0.0192, 10.5, 0.0288, 0.1, 0.3, 0.5, 0.1, 10.71, 1.04, 9, 12, 0.579058, 1.46444, 128.52, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (31, N'C0', N'AREE SCOPERTE OPERATIVE', 5, 2, 0.0055, 3, 0.0082, 0.5, 0.4, 0, 0.1, 10.71, 0.51, 4, 10, 0.283961, 0.650862, 107.19, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (32, N'C1', N'LOCALI INSEGNAMENTO PUBBLICO E PRIVATO', 10, 4, 0.011, 6, 0.0164, 0.65, 0.25, 0, 0.1, 10.71, 0.46, 2.6, 8, 0.256122, 0.42306, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (33, N'C2', N'ENTI MORALI, PARTITI, ASS. CULTURALI E SPORTIVE', 10, 4, 0.011, 6, 0.0164, 0.65, 0.25, 0, 0.1, 10.71, 0.46, 2.6, 8, 0.256122, 0.42306, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (34, N'C3', N'LOCALI DI UFFICI E STUDI PROFESSIONALI', 15, 6, 0.0164, 9, 0.0247, 0.6, 0.35, 0, 0.05, 10.71, 1.35, 10, 8, 0.751662, 1.627155, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (35, N'C4', N'LOCALI DI PUBBLICO INTRATTENIMENTO', 5, 2, 0.0055, 3, 0.0082, 0.5, 0.4, 0, 0.1, 0, 0, 0, 0, 0, 0, 0, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (36, N'C5', N'LOCALI LABORATORI ARTIGIANI', 12.5, 5, 0.0137, 7.5, 0.0205, 0.3, 0.7, 0, 0, 10.71, 0.85, 7.1, 10, 0.473268, 1.15528, 107.19, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (37, N'C6', N'LOCALI EDIFICI INDUSTRIALI', 25, 10, 0.0274, 15, 0.0411, 0.4, 0.6, 0, 0, 10.71, 0.8, 6, 10, 0.445429, 0.976293, 107.1, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (38, N'C7', N'ESERCIZI COMMERCIALI ALIMENTARI', 65, 26, 0.0712, 39, 0.1068, 0.1, 0.25, 0.3, 0.35, 10.71, 2.5, 23, 35, 1.391966, 3.742457, 374.94, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (39, N'C8', N'ALTRI ESERCIZI COMMERCIALI', 15, 6, 0.0164, 9, 0.0247, 0.7, 0.3, 0, 0, 10.71, 1.1, 9, 8, 0.612465, 1.46444, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (40, N'C9', N'UFFICI PUBBLICI', 7.5, 3, 0.0082, 4.5, 0.0123, 0.6, 0.35, 0, 0.05, 10.71, 0.91, 7.17, 8, 0.506676, 1.16667, 85.77, 0)
+GO
+INSERT [dbo].[GaBackOfficeParametriOnCategorie] ([Id], [TipoId], [Descrizione], [KgMqAnnui], [KgMqSmaltimento], [KgMqSmaltimentoGg], [KgMqRecupero], [KgMqRecuperoGg], [PercentualeCarta], [PercentualePlastica], [PercentualeVetro], [PercentualeUmido], [Costo], [Kc], [Kd], [NumeroSvuotamenti], [TFissa], [TVarCalcolata], [TVarMisurata], [Disabled]) VALUES (41, N'D1', N'DEPOSITI CHIUSI', 7.5, 3, 0.0082, 4.5, 0.0123, 0.5, 0.5, 0, 0, 10.71, 0.7, 4.9, 8, 0.389751, 0.797306, 85.68, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaBackOfficeParametriOnCategorie] OFF
+GO
+
+--COMUNICATI
+GO
+SET IDENTITY_INSERT [dbo].[GaComunicatiDocumenti] ON 
+GO
+INSERT [dbo].[GaComunicatiDocumenti] ([Id], [DataDocumento], [Numero], [Titolo], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (5, CAST(N'2017-03-22T00:00:00.0000000' AS DateTime2), 1, N'COMUNICAZIONE DI SERVIZIO N.1/2017', N'application/pdf', N'18246', 0, N'ComunicatiDocumenti', N'01PEZZ2KIFURIGT6G6NFCK4LMAXATY6W3Q', N'28072021143526.pdf')
+GO
+INSERT [dbo].[GaComunicatiDocumenti] ([Id], [DataDocumento], [Numero], [Titolo], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (6, CAST(N'2017-04-12T00:00:00.0000000' AS DateTime2), 2, N'COMUNICAZIONE DI SERVIZIO N.2/2017', N'application/pdf', N'140884', 0, N'ComunicatiDocumenti', N'01PEZZ2KMYEFOPZF27TRFKFPLNRMAOWKZN', N'28072021143540.pdf')
+GO
+INSERT [dbo].[GaComunicatiDocumenti] ([Id], [DataDocumento], [Numero], [Titolo], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (7, CAST(N'2017-07-10T00:00:00.0000000' AS DateTime2), 3, N'COMUNICAZIONE DI SERVIZIO N.3/2017', N'application/pdf', N'135261', 0, N'ComunicatiDocumenti', N'01PEZZ2KM4DOOSSVLFYJE227YVPPQMIL3S', N'28072021143550.pdf')
+GO
+INSERT [dbo].[GaComunicatiDocumenti] ([Id], [DataDocumento], [Numero], [Titolo], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (8, CAST(N'2017-08-01T00:00:00.0000000' AS DateTime2), 4, N'COMUNICAZIONE DI SERVIZIO N.4/2017', N'application/pdf', N'103421', 0, N'ComunicatiDocumenti', N'01PEZZ2KK5DLHZHAIULRDKVJQYPI3B5DWX', N'28072021143604.pdf')
+GO
+SET IDENTITY_INSERT [dbo].[GaComunicatiDocumenti] OFF
+GO
+
+
+--MEZZI
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziScadenzeTipi] ON 
+GO
+INSERT [dbo].[GaMezziScadenzeTipi] ([Id], [Descrizione], [Disabled]) VALUES (1, N'LIBRETTO DI CIRCOLAZIONE / REVISIONI', 0)
+GO
+INSERT [dbo].[GaMezziScadenzeTipi] ([Id], [Descrizione], [Disabled]) VALUES (2, N'CRONOTACHIGRAFO', 0)
+GO
+INSERT [dbo].[GaMezziScadenzeTipi] ([Id], [Descrizione], [Disabled]) VALUES (3, N'BOMBOLE METANO', 0)
+GO
+INSERT [dbo].[GaMezziScadenzeTipi] ([Id], [Descrizione], [Disabled]) VALUES (4, N'BOLLO', 0)
+GO
+INSERT [dbo].[GaMezziScadenzeTipi] ([Id], [Descrizione], [Disabled]) VALUES (5, N'REVISIONE GRU', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziScadenzeTipi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziAlimentazioni] ON 
+GO
+INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (1, N'GASOLIO', 0)
+GO
+INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (2, N'BENZINA', 0)
+GO
+INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (3, N'METANO', 0)
+GO
+INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (4, N'GPL', 0)
+GO
+INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (5, N'ELETTRICO', 0)
+GO
+INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (6, N'IBRIDO', 0)
+GO
+INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (7, N'GNL', 0)
+GO
+INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (9, N'/', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziAlimentazioni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziCantieri] ON 
+GO
+INSERT [dbo].[GaMezziCantieri] ([Id], [Descrizione], [Disabled]) VALUES (1, N'NOVI LIGURE', 0)
+GO
+INSERT [dbo].[GaMezziCantieri] ([Id], [Descrizione], [Disabled]) VALUES (2, N'TORTONA', 0)
+GO
+INSERT [dbo].[GaMezziCantieri] ([Id], [Descrizione], [Disabled]) VALUES (4, N'ASMT', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziCantieri] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziClassi] ON 
+GO
+INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (1, N'0', 0)
+GO
+INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (2, N'1', 0)
+GO
+INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (3, N'2', 0)
+GO
+INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (4, N'3', 0)
+GO
+INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (5, N'4', 0)
+GO
+INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (6, N'5', 0)
+GO
+INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (7, N'6', 0)
+GO
+INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (8, N'ND', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziClassi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziPatenti] ON 
+GO
+INSERT [dbo].[GaMezziPatenti] ([Id], [Descrizione], [Disabled]) VALUES (1, N'B', 0)
+GO
+INSERT [dbo].[GaMezziPatenti] ([Id], [Descrizione], [Disabled]) VALUES (2, N'C', 0)
+GO
+INSERT [dbo].[GaMezziPatenti] ([Id], [Descrizione], [Disabled]) VALUES (3, N'E', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziPatenti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziPeriodiScadenze] ON 
+GO
+INSERT [dbo].[GaMezziPeriodiScadenze] ([Id], [Descrizione], [Disabled]) VALUES (1, N'ANNUALE', 0)
+GO
+INSERT [dbo].[GaMezziPeriodiScadenze] ([Id], [Descrizione], [Disabled]) VALUES (2, N'BIENNALE', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziPeriodiScadenze] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziProprietari] ON 
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (1, N'5 VALLI', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (2, N'ASMT', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (3, N'CARIGE', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (4, N'FARID INDUSTIRE', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (5, N'GESTIONE AMBIENTE', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (6, N'IVECO CAPITAL', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (7, N'LEASEPLAN', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (8, N'UBI LEASING', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (9, N'UNICREDIT LEASING', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (10, N'ALBA LEASING', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (11, N'SELMABIPIEMME', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (12, N'CREDIT AGRICOLE', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (13, N'IN NOLO', 0)
+GO
+INSERT [dbo].[GaMezziProprietari] ([Id], [Descrizione], [Disabled]) VALUES (14, N'VOLKSWAGEN', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziProprietari] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziTipi] ON 
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (1, N'AUTO', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (2, N'AUTOBOTTE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (3, N'AUTOCOMPATTATORE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (4, N'FIORINO', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (5, N'LATERALE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (6, N'LAVACASSONETTI', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (7, N'MINICOMPATTATORE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (8, N'PIANALE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (9, N'PORTER/VASCA', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (10, N'RAGNO/CASSONE FISSO', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (11, N'RIMORCHIO', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (12, N'SCARRABILE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (13, N'SCARRABILE RAGNO', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (14, N'SPAZZATRICE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (15, N'TERNA', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (16, N'VASCA', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (17, N'VOLTABENNE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (19, N'TRATTORE', 0)
+GO
+INSERT [dbo].[GaMezziTipi] ([Id], [Descrizione], [Disabled]) VALUES (20, N'SEMIRIMORCHIO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziTipi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziVeicoli] ON 
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (9, N'AC74987', NULL, N'ZORZI 20R', N'BTE', 2003, N'1 - 4 - 5', NULL, NULL, N'ZAX20R07019A08017', 16550, 20000, 0, NULL, 0, 1, 0, 11, 5, 1, 8, 1, 3, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (10, N'AD569LX', NULL, N'IVECO 150 E 18', N'MEC', 1995, N'1 - 4 - 5', NULL, NULL, N'ZCFFA1LD0002112877', 7250, 15000, 0, NULL, 0, 0, 0, 17, 5, 1, 2, 1, 2, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (11, N'AGE052', NULL, N'ELETTRICA', N'UCM 360UE', 2008, N'1', NULL, NULL, N'36OUE1071', 350, 2150, 1, CAST(N'2019-05-28T00:00:00.0000000' AS DateTime2), 0, 0, 0, 14, 5, 2, 8, 5, 1, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (12, N'BE517PW', NULL, N'IVECO 170E27', N'FARID MP 16', 1999, N'1 - 4', NULL, NULL, N'ZCFA1RLJ002247511', 7450, 18000, 1, CAST(N'2019-05-28T00:00:00.0000000' AS DateTime2), 0, 0, 1, 3, 5, 2, 3, 1, 2, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (13, N'BE907YF', NULL, N'MERCEDES 412 DT 40/35', N'FURGONE BRIANTEA-SPONDA ELEFANTCAR', 1999, N'1 - 4 - 5', NULL, NULL, N'WDB9044131P08538', 570, 3500, 1, CAST(N'2017-12-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 8, 5, 1, 3, 1, 1, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (14, N'BG796EC', NULL, N'PANDA', NULL, 2000, NULL, NULL, N'CANTIERE', N'ZFA141A0001662655', 0, 1150, 0, NULL, 0, 0, 0, 1, 5, 1, 3, 2, 1, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (15, N'BJ354RH', NULL, N'RENAULT', N'FARID MP 16', 2000, N'1 - 4', NULL, NULL, N'VF622AXA000100171', 7110, 18000, 1, CAST(N'2020-07-30T00:00:00.0000000' AS DateTime2), 0, 1, 1, 3, 5, 1, 3, 1, 2, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (16, N'BP095SR', NULL, N'PIAGGIO', N'CARROZZERIA MODERNA', 2001, N'1 - 4', NULL, NULL, N'ZAPS8500000506212', 380, 1550, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 9, 5, 1, 3, 2, 1, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (17, N'BP522SS', NULL, N'IVECO MAGIRUS 260', N'MAZZOCCHIA CURSOR', 2001, N'1 - 4 - 5', NULL, NULL, N'WJME2NN000C085069', 12450, 26000, 1, CAST(N'2021-05-28T00:00:00.0000000' AS DateTime2), 1, 1, 0, 3, 5, 1, 3, 1, 2, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (18, N'BT567YW', NULL, N'IVECO 150', N'B.O.B. CON GRU BOB', 2001, N'1 - 4 - 5', NULL, NULL, N'ZCFA1LJ0102355061', 5500, 15000, 1, CAST(N'2018-01-24T00:00:00.0000000' AS DateTime2), 0, 1, 0, 10, 5, 2, 4, 1, 2, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (19, N'BW489YJ', NULL, N'IVECO MAGIRUS 190', N'MAZZOCCHIA CURSOR', 2001, N'1 - 4', NULL, NULL, N'WJMA1VMM004245097', 5600, 18000, 1, CAST(N'2020-07-30T00:00:00.0000000' AS DateTime2), 0, 0, 0, 3, 5, 2, 4, 1, 2, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (20, N'BW766YJ', NULL, N'IVECO 180 TECTOR', N'MAZZOCCHIA', 2001, N'1 - 4', NULL, NULL, N'ZCFA1TM0102347877', 6950, 18000, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 3, 5, 2, 4, 1, 2, 1, 0, 0)
+GO
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (21, N'FJ987YH', N'BX833CW', N'IVECO 100', N'FARID MINIPAC MK2', 2002, N'1 - 4', NULL, NULL, N'ZCFA1AD1102383860', 3150, 10000, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 1, 1, 1, 3, 5, 1, 4, 1, 2, 1, 0, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziVeicoli] OFF
+GO 
+SET IDENTITY_INSERT [dbo].[GaMezziScadenze] ON 
+GO
+INSERT [dbo].[GaMezziScadenze] ([Id], [DataScadenza], [DataUltimaScadenza], [Note], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName], [MezziVeicoloId], [MezziScadenzaTipoId]) VALUES (6, CAST(N'2022-06-30T02:00:00.0000000' AS DateTime2), CAST(N'2021-06-24T02:00:00.0000000' AS DateTime2), NULL, N'application/pdf', N'404313', 0, N'MezziScadenze', N'01PEZZ2KPBBBAYJTUVZND2I3E4KYPRJKPV', N'29112021173654.pdf', 10, 1)
+GO
+INSERT [dbo].[GaMezziScadenze] ([Id], [DataScadenza], [DataUltimaScadenza], [Note], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName], [MezziVeicoloId], [MezziScadenzaTipoId]) VALUES (8, CAST(N'2018-01-31T00:00:00.0000000' AS DateTime2), NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 13, 1)
+GO
+INSERT [dbo].[GaMezziScadenze] ([Id], [DataScadenza], [DataUltimaScadenza], [Note], [FileType], [FileSize], [Disabled], [FileFolder], [FileId], [FileName], [MezziVeicoloId], [MezziScadenzaTipoId]) VALUES (9, CAST(N'2022-02-28T00:00:00.0000000' AS DateTime2), CAST(N'2020-02-20T00:00:00.0000000' AS DateTime2), NULL, N'application/pdf', N'1359675', 0, N'MezziScadenze', N'01PEZZ2KOBT2S7G4TXZFDZBRI26JOTUZ3A', N'9.pdf', 14, 1)
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziScadenze] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziDocumenti] ON 
+GO
+INSERT [dbo].[GaMezziDocumenti] ([Id], [Descrizione], [FileType], [FileSize], [MezziVeicoloId], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (3, N'LIBRETTO DI CIRCOLAZIONE / REVISIONI', N'application/pdf', N'412320', 9, 0, N'MezziDocumenti', N'01PEZZ2KM5J2FQ5WOB2RHJVZRQUSOCSOFJ', N'29112021173537.pdf')
+GO
+INSERT [dbo].[GaMezziDocumenti] ([Id], [Descrizione], [FileType], [FileSize], [MezziVeicoloId], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (4, N'CDP', N'application/pdf', N'745578', 9, 0, N'MezziDocumenti', N'01PEZZ2KOKCBWXTS7AP5DZVE2XGIYTQQM5', N'4.pdf')
+GO
+INSERT [dbo].[GaMezziDocumenti] ([Id], [Descrizione], [FileType], [FileSize], [MezziVeicoloId], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (1005, N'LIBRETTO DI CIRCOLAZIONE / REVISIONI', N'application/pdf', N'404313', 10, 0, N'MezziDocumenti', N'01PEZZ2KLCYCQVHAYODVHYHTTT6E547JAM', N'29112021173655.pdf')
+GO
+INSERT [dbo].[GaMezziDocumenti] ([Id], [Descrizione], [FileType], [FileSize], [MezziVeicoloId], [Disabled], [FileFolder], [FileId], [FileName]) VALUES (1006, N'CDP ', N'application/pdf', N'407900', 10, 0, N'MezziDocumenti', N'01PEZZ2KPBUIG3THPL7VFKY2DUX277GFUY', N'1006.pdf')
+GO
+SET IDENTITY_INSERT [dbo].[GaMezziDocumenti] OFF
+GO
+
+
+
+--CONTRATTI
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiPermessi] ON 
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (1, N'DIREZIONE', 0)
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (2, N'CONTABILITA', 0)
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (3, N'PERSONALE', 0)
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (4, N'INFORMATICA', 0)
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (5, N'TECNICO', 0)
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (6, N'QUALITASICUREZZA', 0)
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (7, N'COMMERCIALE', 0)
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (8, N'AFFARIGENERALI', 0)
+GO
+INSERT [dbo].[GaContrattiPermessi] ([Id], [Descrizione], [Disabled]) VALUES (9, N'COMUNICAZIONE', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiPermessi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiUtentiOnPermessi] ON 
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (16, N'4e15e6ab-84b3-4420-b968-bc3bf3214676', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (17, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 1, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (18, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 2, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (19, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 3, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (20, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 4, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (21, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (22, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 6, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (23, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 7, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (24, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 8, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (25, N'3a0a70c7-a998-4a10-9481-df02d0adb866', 9, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (26, N'1c05753c-c201-48e3-9b6f-d788c3f67316', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (27, N'1c05753c-c201-48e3-9b6f-d788c3f67316', 7, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (28, N'1c05753c-c201-48e3-9b6f-d788c3f67316', 8, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (29, N'd94c04cf-93f1-4226-b4bc-e7ac41e6fc55', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (30, N'd94c04cf-93f1-4226-b4bc-e7ac41e6fc55', 7, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (31, N'0f166a48-6167-41e6-8644-fa248319e662', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (32, N'139fe308-0526-4b6f-97fe-f6777e283678', 6, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (33, N'139fe308-0526-4b6f-97fe-f6777e283678', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (34, N'1bb887d1-34a8-4f5f-85f9-76f2154b3676', 2, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (35, N'1e4b9ef0-4bff-4e18-8d58-3959a1957445', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (36, N'2f0ea04e-4327-40bd-82da-40b74b7348ca', 2, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (37, N'3b8b5b1b-229f-4161-a03d-6a72334cfd8f', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (38, N'44c72bf3-ca4d-4490-9809-b90a519c8db2', 1, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (39, N'6a0c357f-cf06-4da8-aa7d-279abf628e18', 3, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (40, N'71737592-764a-40c1-a6a9-bd34d3fd44fb', 8, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (41, N'71737592-764a-40c1-a6a9-bd34d3fd44fb', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (42, N'71737592-764a-40c1-a6a9-bd34d3fd44fb', 1, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (43, N'7bb3caaf-ac32-4080-b3ad-49dc5077c98c', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (44, N'a2945270-289c-412a-b442-40797b0061a3', 1, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (45, N'a79578bf-d777-468b-a505-a1b9991019d5', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (47, N'b0a25597-251e-4191-8f64-bff95e9b9e4c', 2, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (48, N'b9933461-90ff-477e-88a5-5efac2a0358a', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (49, N'c6b0599f-b374-48d2-9db9-e482d4981766', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (50, N'c6b0599f-b374-48d2-9db9-e482d4981766', 7, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (51, N'cb376604-e8d2-43cc-ae7f-ec144959f11a', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (52, N'd2f06051-d9d5-43bd-b771-68c006351363', 3, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (54, N'd8218c40-94e7-4431-ade5-d196326b529e', 4, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (55, N'd8218c40-94e7-4431-ade5-d196326b529e', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (56, N'd8218c40-94e7-4431-ade5-d196326b529e', 6, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (57, N'd8218c40-94e7-4431-ade5-d196326b529e', 7, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (58, N'd8218c40-94e7-4431-ade5-d196326b529e', 8, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (59, N'd8218c40-94e7-4431-ade5-d196326b529e', 9, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (60, N'a79578bf-d777-468b-a505-a1b9991019d5', 4, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (61, N'a79578bf-d777-468b-a505-a1b9991019d5', 6, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (62, N'a79578bf-d777-468b-a505-a1b9991019d5', 7, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (63, N'a79578bf-d777-468b-a505-a1b9991019d5', 8, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (64, N'a79578bf-d777-468b-a505-a1b9991019d5', 9, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (65, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 1, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (66, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 2, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (67, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 3, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (68, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 4, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (69, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (70, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 6, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (71, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 7, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (72, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 8, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (73, N'e21555ce-5ead-40f4-ba09-a0df7ac773bd', 9, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (74, N'fd2bdce7-5964-4a9b-a4e8-26e00e5d146a', 1, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (75, N'dc5e5232-8ed0-4524-9fbd-442af648f29a', 9, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (76, N'fddfa3f7-8c59-4196-8104-7faf527ef94d', 1, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (77, N'fddfa3f7-8c59-4196-8104-7faf527ef94d', 2, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (78, N'fddfa3f7-8c59-4196-8104-7faf527ef94d', 3, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (79, N'fddfa3f7-8c59-4196-8104-7faf527ef94d', 4, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (80, N'fddfa3f7-8c59-4196-8104-7faf527ef94d', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (81, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 1, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (82, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 2, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (83, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 3, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (84, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 4, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (85, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 5, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (86, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 6, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (87, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 7, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (88, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 8, 0)
+GO
+INSERT [dbo].[GaContrattiUtentiOnPermessi] ([Id], [UtenteId], [ContrattiPermessoId], [Disabled]) VALUES (89, N'76e2e9b8-4370-42f8-922f-11ba45c6f487', 9, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiUtentiOnPermessi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiFornitori] ON 
+GO
+INSERT [dbo].[GaContrattiFornitori] ([Id], [RagioneSociale], [CodiceFiscale], [PartitaIva], [SedeLegale], [RecapitoFatture], [Telefono], [Fax], [Email], [Disabled]) VALUES (3, N'5 VALLI SERVIZI SRL', NULL, N'02104100066', NULL, NULL, NULL, NULL, NULL, 0)
+GO
+INSERT [dbo].[GaContrattiFornitori] ([Id], [RagioneSociale], [CodiceFiscale], [PartitaIva], [SedeLegale], [RecapitoFatture], [Telefono], [Fax], [Email], [Disabled]) VALUES (4, N'1H DI TONELLI GIUSEPPE', NULL, N'02233470067', NULL, NULL, NULL, NULL, NULL, 0)
+GO
+INSERT [dbo].[GaContrattiFornitori] ([Id], [RagioneSociale], [CodiceFiscale], [PartitaIva], [SedeLegale], [RecapitoFatture], [Telefono], [Fax], [Email], [Disabled]) VALUES (5, N'2I RETE GAS', NULL, N'06724610966', NULL, NULL, NULL, NULL, NULL, 0)
+GO
+INSERT [dbo].[GaContrattiFornitori] ([Id], [RagioneSociale], [CodiceFiscale], [PartitaIva], [SedeLegale], [RecapitoFatture], [Telefono], [Fax], [Email], [Disabled]) VALUES (6, N'3I ENGINEERING S.R.L.', NULL, N'02062410069', NULL, NULL, NULL, NULL, NULL, 0)
+GO
+INSERT [dbo].[GaContrattiFornitori] ([Id], [RagioneSociale], [CodiceFiscale], [PartitaIva], [SedeLegale], [RecapitoFatture], [Telefono], [Fax], [Email], [Disabled]) VALUES (7, N'ACOS AMBIENTE SRL', NULL, N'02114280064', NULL, NULL, NULL, NULL, NULL, 0)
+GO
+INSERT [dbo].[GaContrattiFornitori] ([Id], [RagioneSociale], [CodiceFiscale], [PartitaIva], [SedeLegale], [RecapitoFatture], [Telefono], [Fax], [Email], [Disabled]) VALUES (8, N'ACOS ENERGIA S.P.A', NULL, N'01967280064', NULL, NULL, NULL, NULL, NULL, 0)
+GO
+INSERT [dbo].[GaContrattiFornitori] ([Id], [RagioneSociale], [CodiceFiscale], [PartitaIva], [SedeLegale], [RecapitoFatture], [Telefono], [Fax], [Email], [Disabled]) VALUES (9, N'ACOS RETI GAS', NULL, N'02347450062', NULL, NULL, NULL, NULL, NULL, 0)
+GO
+INSERT [dbo].[GaContrattiFornitori] ([Id], [RagioneSociale], [CodiceFiscale], [PartitaIva], [SedeLegale], [RecapitoFatture], [Telefono], [Fax], [Email], [Disabled]) VALUES (10, N'ADIGEST SRL', NULL, N'03756170274', NULL, NULL, NULL, NULL, NULL, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiFornitori] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiModalitas] ON 
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (1, N'AUTORIZZAZIONI', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (2, N'COMUNI', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (3, N'FIDEJUSSIONI', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (4, N'NOLEGGI/LEASING', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (5, N'PRIVATI', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (6, N'REGOLAMENTI', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (7, N'SERVICE', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (8, N'SOCIETARI/FISCALI', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (9, N'TECNICI', 0)
+GO
+INSERT [dbo].[GaContrattiModalitas] ([Id], [Descrizione], [Disabled]) VALUES (10, N'UTENZE/AFFITTI', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiModalitas] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiServizi] ON 
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (1, N'/', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (2, N'ANALISI', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (3, N'CDR', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (4, N'CIMITERIALI', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (5, N'CONTRIBUTI VERDE', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (6, N'ETERNIT', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (7, N'FIERE E FESTE', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (8, N'FORNITURA CASSONETTI/COMPOSTIERE/BIG BAGS', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (9, N'INSTALLAZIONE/NOLO/TRASPORTO BENNE', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (10, N'INSTALLAZIONE/NOLO/TRASPORTO SCARRABILI', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (11, N'LAVAGGIO', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (12, N'MANUTENZIONE VERDE', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (13, N'PULIZIA', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (14, N'RACCOLTE EXTRA RIFIUTI', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (15, N'RIPRISTINI AMBIENTALI', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (16, N'SERVIZI AGGIUNTIVI', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (17, N'SPAZZAMENTO', 0)
+GO
+INSERT [dbo].[GaContrattiServizi] ([Id], [Descrizione], [Disabled]) VALUES (18, N'VIAGGI VERDE', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiServizi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiTipologie] ON 
+GO
+INSERT [dbo].[GaContrattiTipologie] ([Id], [Descrizione], [Disabled]) VALUES (1, N'ATTIVO', 0)
+GO
+INSERT [dbo].[GaContrattiTipologie] ([Id], [Descrizione], [Disabled]) VALUES (2, N'PASSIVO', 0)
+GO
+INSERT [dbo].[GaContrattiTipologie] ([Id], [Descrizione], [Disabled]) VALUES (3, N'ALTRO', 0)
+GO
+INSERT [dbo].[GaContrattiTipologie] ([Id], [Descrizione], [Disabled]) VALUES (4, N'ATTIVO/ALTRO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiTipologie] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiDocumenti] ON 
+GO
+INSERT [dbo].[GaContrattiDocumenti] ([Id], [ContrattiFornitoreId], [Numero], [Descrizione], [Faldone], [DataScadenza], [ContrattiModalitaId], [Direzione], [Contabilita], [Personale], [Informatica], [Tecnico], [QualitaSicurezza], [Commerciale], [AffariGenerali], [Archiviato], [ContrattiServizioId], [Preventivo], [PreventivoNumero], [ContrattiTipologiaId], [FileSize], [FileType], [SogliaAvviso], [Comunicazione], [Disabled], [FileFolder], [FileId], [FileName], [CodiceCig]) VALUES (5, 3, 2, N'CONTRATTO PER CONSULENZA LEGALE AMBIENTALE', N'SC', CAST(N'2017-03-31T00:00:00.0000000' AS DateTime2), 7, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, NULL, 1, N'772290', N'application/pdf', 0, 0, 0, N'Autorizzazioni', N'01PEZZ2KNZKQUMOXOWPZE32Q5NVUCNALT6', N'5.pdf', NULL)
+GO
+INSERT [dbo].[GaContrattiDocumenti] ([Id], [ContrattiFornitoreId], [Numero], [Descrizione], [Faldone], [DataScadenza], [ContrattiModalitaId], [Direzione], [Contabilita], [Personale], [Informatica], [Tecnico], [QualitaSicurezza], [Commerciale], [AffariGenerali], [Archiviato], [ContrattiServizioId], [Preventivo], [PreventivoNumero], [ContrattiTipologiaId], [FileSize], [FileType], [SogliaAvviso], [Comunicazione], [Disabled], [FileFolder], [FileId], [FileName], [CodiceCig]) VALUES (7, 3, 3, N'LOCAZIONE SENZA CONDUCENTE A 5 VALLI NOSTRO MEZZO TARGATO DJ587NX', N'SC', CAST(N'2017-12-31T00:00:00.0000000' AS DateTime2), 5, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, NULL, 4, N'2756830', N'application/pdf', 30, 0, 0, N'Autorizzazioni', N'01PEZZ2KOJBINNJALBUBGLCA7M7XWHKMC6', N'7.pdf', NULL)
+GO
+INSERT [dbo].[GaContrattiDocumenti] ([Id], [ContrattiFornitoreId], [Numero], [Descrizione], [Faldone], [DataScadenza], [ContrattiModalitaId], [Direzione], [Contabilita], [Personale], [Informatica], [Tecnico], [QualitaSicurezza], [Commerciale], [AffariGenerali], [Archiviato], [ContrattiServizioId], [Preventivo], [PreventivoNumero], [ContrattiTipologiaId], [FileSize], [FileType], [SogliaAvviso], [Comunicazione], [Disabled], [FileFolder], [FileId], [FileName], [CodiceCig]) VALUES (8, 3, 1, N'CONTRATTO PER CONTABILITÀ, BILANCI, ADEMPIMENTI FISCALI, GESTIONE DEL PERSONALE, CERTIFICAZIONE QUALITÀ,UTILIZZO UFFICI, RETE AZIENDALE E COMPUTERS', N'SC', CAST(N'2016-12-30T00:00:00.0000000' AS DateTime2), 7, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, NULL, 1, N'772290', N'application/pdf', 30, 0, 0, N'Autorizzazioni', N'01PEZZ2KONUATWE3JTG5F32FYNGU6CKVRM', N'8.pdf', NULL)
+GO
+INSERT [dbo].[GaContrattiDocumenti] ([Id], [ContrattiFornitoreId], [Numero], [Descrizione], [Faldone], [DataScadenza], [ContrattiModalitaId], [Direzione], [Contabilita], [Personale], [Informatica], [Tecnico], [QualitaSicurezza], [Commerciale], [AffariGenerali], [Archiviato], [ContrattiServizioId], [Preventivo], [PreventivoNumero], [ContrattiTipologiaId], [FileSize], [FileType], [SogliaAvviso], [Comunicazione], [Disabled], [FileFolder], [FileId], [FileName], [CodiceCig]) VALUES (9, 3, 4, N'ACCORDO TEMPORANEO PER SERVIZIO DI RACCOLTA E TRASPORTO RIFIUTI', N'SC', CAST(N'2013-02-28T00:00:00.0000000' AS DateTime2), 9, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, NULL, 2, N'471080', N'application/pdf', 15, 0, 0, N'Autorizzazioni', N'01PEZZ2KOECVV7CIKHJVH23KJG7NHOD2SV', N'9.pdf', NULL)
+GO
+INSERT [dbo].[GaContrattiDocumenti] ([Id], [ContrattiFornitoreId], [Numero], [Descrizione], [Faldone], [DataScadenza], [ContrattiModalitaId], [Direzione], [Contabilita], [Personale], [Informatica], [Tecnico], [QualitaSicurezza], [Commerciale], [AffariGenerali], [Archiviato], [ContrattiServizioId], [Preventivo], [PreventivoNumero], [ContrattiTipologiaId], [FileSize], [FileType], [SogliaAvviso], [Comunicazione], [Disabled], [FileFolder], [FileId], [FileName], [CodiceCig]) VALUES (10, 3, 99, N'SERVIZIO LAVAGGIO CASSONETTI', N'SC', CAST(N'2015-12-31T00:00:00.0000000' AS DateTime2), 5, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, NULL, 1, N'240203', N'application/pdf', 30, 0, 0, N'Autorizzazioni', N'01PEZZ2KJWGM4F73QFVFAIFKQDHNXL23P2', N'10.pdf', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[GaContrattiDocumenti] OFF
+GO
+
+//AZIENDE
+
+GO
+SET IDENTITY_INSERT [dbo].[GaAziendeListe] ON 
+GO
+INSERT [dbo].[GaAziendeListe] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'GESTIONE AMBIENTE')
+GO
+INSERT [dbo].[GaAziendeListe] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'ECONET')
+GO
+SET IDENTITY_INSERT [dbo].[GaAziendeListe] OFF
+GO
