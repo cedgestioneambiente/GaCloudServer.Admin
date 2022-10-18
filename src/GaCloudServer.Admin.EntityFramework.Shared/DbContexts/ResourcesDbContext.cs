@@ -76,12 +76,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaContrattiDocumentiList> ViewGaContrattiDocumentiList { get; set; }
         public DbSet<ViewGaContrattiNumeratori> ViewGaContrattiNumeratori { get; set; }
 
+        #endregion
+
         #region Sp
         public DbSet<SpGaContrattiNumeratore> SpGaContrattiNumeratori { get; set; }
         public DbSet<SpGaContrattiPermesso> SpGaContrattiPermessi { get; set; }
         public DbSet<SpGaContrattiPermessoMode> SpGaContrattiPermessiModes { get; set; }
         #endregion
-        #endregion
+
         #endregion
 
         #region GaComunicati Tables

@@ -23,6 +23,8 @@
         public const string GaContrattiMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Contratti\";
         public const string CREATE_ViewGaContratti = "CREATE_ViewGaContratti.sql";
         public const string DROP_ViewGaContratti = "DROP_ViewGaContratti";
+        public const string CREATE_SpGaContratti = "CREATE_SpGaContratti.sql";
+        public const string DROP_SpGaContratti = "DROP_SpGaContratti.sql";
 
         //Mezzi
         public const string GaMezziMigration= @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Mezzi\";
