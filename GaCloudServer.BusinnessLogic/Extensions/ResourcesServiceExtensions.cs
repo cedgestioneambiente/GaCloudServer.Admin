@@ -23,6 +23,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IGaPrenotazioneAutoService,GaPrenotazioneAutoService>();
 
             services.AddTransient<IFileService, FileService>();
+            services.AddTransient<INotificationService, NotificationService>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork<TResourcesDbContext>>();
 

@@ -14,6 +14,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.V
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -137,5 +139,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #endregion
 
+        #region Notification
+        DbSet<NotificationApp> NotificationApps { get; set; }
+        DbSet<NotificationRoleOnApp> NotificationRolesOnApps { get; set; }
+        DbSet<NotificationUserOnApp> NotificationUsersOnApps { get; set; }
+
+        #region Views
+        DbSet<ViewNotificationRolesOnApps> ViewNotificationRolesOnApps { get; set; }
+        DbSet<ViewNotificationUsersOnApps> ViewNotificationUsersOnApps { get; set; }
+        #endregion
+        #endregion
     }
 }

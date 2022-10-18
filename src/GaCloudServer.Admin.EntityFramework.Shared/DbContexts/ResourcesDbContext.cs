@@ -9,17 +9,14 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -148,6 +145,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaPrenotazioneAutoRegistrazioni> ViewGaPrenotazioneAutoRegistrazioni { get; set; }
         #endregion
 
+        #endregion
+
+        #region Notification
+        public DbSet<NotificationApp> NotificationApps { get; set; }
+        public DbSet<NotificationRoleOnApp> NotificationRolesOnApps { get; set; }
+        public DbSet<NotificationUserOnApp> NotificationUsersOnApps { get; set; }
+
+        #region Views
+        public DbSet<ViewNotificationRolesOnApps> ViewNotificationRolesOnApps { get; set; }
+        public DbSet<ViewNotificationUsersOnApps> ViewNotificationUsersOnApps { get; set; }
+        #endregion
         #endregion
 
 
@@ -385,6 +393,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasKey(x => x.Id);
             });
 
+            #endregion
+
+            #region Notification
+            builder.Entity<ViewNotificationRolesOnApps>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewNotificationRolesOnApps))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewNotificationUsersOnApps>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewNotificationUsersOnApps))
+                .HasNoKey();
+            });
             #endregion
 
             base.OnModelCreating(builder);

@@ -47,5 +47,10 @@
         public const string LinkedServer= @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\LinkedServer\";
         public const string CREATE_LinkedServer2082756 = "CREATE_LinkedServer2082756.sql";
         public const string DROP_LinkedServer2082756 = "DROP_LinkedServer2082756";
+
+        //Notification
+        public const string Notification = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Notification\";
+        public const string CREATE_ViewNotification = "CREATE_ViewNotification.sql";
+        public const string DROP_ViewNotification = "DROP_ViewNotification.sql";
     }
 }
