@@ -155,7 +155,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Cdr
 
     #region CdrStatiRichieste
 
-    public class CdrStatoRichiestaApiDto : GenericApiDto
+    public class CdrStatoRichiestaApiDto : GenericListApiDto
     {
     }
 

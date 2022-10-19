@@ -1,5 +1,4 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
-using GaCloudServer.BusinnessLogic.DTOs.Base;
+﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr
 {
@@ -153,7 +152,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr
 
     #region CdrStatiRichieste
 
-    public class CdrStatoRichiestaDto : GenericListEntity
+    public class CdrStatoRichiestaDto : GenericListDto
     {
     }
 

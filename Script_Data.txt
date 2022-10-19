@@ -1,4 +1,14 @@
+--USER
+USE [IdentityServerAdmin]
+GO
+INSERT [dbo].[Users] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [FirstName], [FullName], [LastName]) VALUES (N'cda60f19-8efb-461b-bf7a-20dc69863923', N'patrizia.cusmano', N'PATRIZIA.CUSMANO', N'aefewsfa@ll.it', N'AEFEWSFA@LL.IT', 1, NULL, N'4GVVAJS3IC5OKDNBXRVSUF36YRX224KY', N'e2e142a7-706c-4896-bfdc-a2a8f6498d0a', NULL, 0, 0, NULL, 1, 0, N'Patrizia', N'Patrizia Cusmano', N'Cusmano')
+GO
+INSERT [dbo].[Users] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [FirstName], [FullName], [LastName]) VALUES (N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', N'pellicano.massimo', N'PELLICANO.MASSIMO', N'd@l.it', N'D@L.IT', 1, NULL, N'OQB7TNSSPGDCPHQLJDHYGTDRZHW56FB6', N'710dabb9-5640-4a3f-be84-d38be349125c', N'3626266', 1, 0, NULL, 1, 0, N'massimo', N'massimo Pellicano', N'Pellicano')
+GO
+
 USE [GaCloud]
+
+
 
 --AUTORIZZAZIONI
 
