@@ -17,11 +17,18 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
     public class ResourcesDbContext : DbContext,IResourcesDbContext
     {
+        #region GaGlobal Tables
+        public DbSet<GlobalSede> GlobalSedi { get; set; }
+        public DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }
+        #endregion
+
         #region GaAutorizzazioni Tables
         public DbSet<AutorizzazioniTipo> GaAutorizzazioniTipi { get; set; }
         public DbSet<AutorizzazioniDocumento> GaAutorizzazioniDocumenti { get; set; }
@@ -156,6 +163,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewNotificationRolesOnApps> ViewNotificationRolesOnApps { get; set; }
         public DbSet<ViewNotificationUsersOnApps> ViewNotificationUsersOnApps { get; set; }
         #endregion
+        #endregion
+
+        #region GaPersonale Tables
+        public DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
+        public DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
+        public DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
         #endregion
 
 

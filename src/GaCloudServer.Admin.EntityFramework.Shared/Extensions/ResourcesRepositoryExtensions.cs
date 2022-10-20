@@ -9,10 +9,12 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
@@ -27,6 +29,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
         public static IServiceCollection AddResourcesRepository<TResourcesDbContext>(this IServiceCollection services)
             where TResourcesDbContext : DbContext,IResourcesDbContext
         {
+            //Global
+            #region Global
+            services.AddTransient<IGenericRepository<GlobalSede>, GenericRepository<TResourcesDbContext, GlobalSede>>();
+            services.AddTransient<IGenericRepository<GlobalCentroCosto>, GenericRepository<TResourcesDbContext, GlobalCentroCosto>>();
+            #endregion
+
             //Autorizzazioni
             #region Autorizzazioni
             services.AddTransient<IGenericRepository<AutorizzazioniTipo>, GenericRepository<TResourcesDbContext, AutorizzazioniTipo>>();
@@ -141,6 +149,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             services.AddTransient<IGenericRepository<ViewNotificationRolesOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationRolesOnApps>>();
             services.AddTransient<IGenericRepository<ViewNotificationUsersOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationUsersOnApps>>();
+            #endregion
+
+            //Personale
+            #region Personale
+            services.AddTransient<IGenericRepository<PersonaleDipendente>, GenericRepository<TResourcesDbContext, PersonaleDipendente>>();
+            services.AddTransient<IGenericRepository<PersonaleQualifica>, GenericRepository<TResourcesDbContext, PersonaleQualifica>>();
+            services.AddTransient<IGenericRepository<PersonaleAssunzione>, GenericRepository<TResourcesDbContext, PersonaleAssunzione>>();
             #endregion
 
 

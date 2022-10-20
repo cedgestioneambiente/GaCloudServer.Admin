@@ -8,7 +8,7 @@ namespace GaCloudServer.Resources.Api.Mappers.Aziende
     {
         public AziendeMapperProfile()
         {
-            //AutorizzazioniTipi
+            //AziendeListe
             CreateMap<AziendeListaDto, AziendeListaApiDto>(MemberList.Destination)
                 .ReverseMap();
 

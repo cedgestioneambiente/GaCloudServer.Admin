@@ -1866,9 +1866,9 @@ INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta],
 GO
 INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (3, CAST(N'2016-10-19T13:59:07.0000000' AS DateTime2), N'FNTCRD83R20F965B', 1, 0, 7, N'C19', 20, 35, 20, 1, N'CAPPA PER CUCINA', N'', N'05851', 0, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 0, N'00208708', N'0000256541')
 GO
-INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (4, CAST(N'2016-10-19T13:59:35.0000000' AS DateTime2), N'FNTCRD83R20F965B', 1, 0, 7, N'C19', 20, 35, 10, 1, N'MICROONDE', N'', N'05851', 0, N'ec63c7bd-706f-4b0e-b96e-6f11b1d45f24', 0, N'00208708', N'0000256541')
+INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (4, CAST(N'2016-10-19T13:59:35.0000000' AS DateTime2), N'FNTCRD83R20F965B', 1, 0, 7, N'C19', 20, 35, 10, 1, N'MICROONDE', N'', N'05851', 0, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 0, N'00208708', N'0000256541')
 GO
-INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (101178, CAST(N'2022-10-14T10:04:50.4860000' AS DateTime2), N'PGGSVN72B52F965J', 1, 0, 7, N'C19', 27, 81, 50, 1, N'', N'', N'04460', 0, N'ec63c7bd-706f-4b0e-b96e-6f11b1d45f24', 0, N'00207137', N'0000252611')
+INSERT [dbo].[GaCdrConferimenti] ([Id], [Data], [CfPiva], [Anagrafica], [Ditta], [CdrCentroId], [CdrComuneId], [CdrCerId], [CdrCerDettaglioId], [Peso], [Quantita], [Targa], [Note], [CdrUtenteId], [Disabled], [UserId], [Noleggio], [NumCon], [Partita]) VALUES (101178, CAST(N'2022-10-14T10:04:50.4860000' AS DateTime2), N'PGGSVN72B52F965J', 1, 0, 7, N'C19', 27, 81, 50, 1, N'', N'', N'04460', 0, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 0, N'00207137', N'0000252611')
 GO
 SET IDENTITY_INSERT [dbo].[GaCdrConferimenti] OFF
 GO
@@ -2528,7 +2528,7 @@ GO
 SET IDENTITY_INSERT [dbo].[GaContrattiDocumenti] OFF
 GO
 
-//AZIENDE
+--AZIENDE
 
 GO
 SET IDENTITY_INSERT [dbo].[GaAziendeListe] ON 
@@ -2538,4 +2538,61 @@ GO
 INSERT [dbo].[GaAziendeListe] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'ECONET')
 GO
 SET IDENTITY_INSERT [dbo].[GaAziendeListe] OFF
+GO
+
+--GLOBAL
+
+GO
+SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] ON 
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'ICT')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AMMINISTRAZIONE')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'PERSONALE')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (4, 0, N'ACQUISTI')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSedi] ON 
+GO
+INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'NOVI LIGURE')
+GO
+INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'TORTONA')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSedi] OFF
+GO
+
+--PERSONALE
+
+SET IDENTITY_INSERT [dbo].[GaPersonaleAssunzioni] ON 
+GO
+INSERT [dbo].[GaPersonaleAssunzioni] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'Determinato')
+GO
+INSERT [dbo].[GaPersonaleAssunzioni] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'Indeterminato')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleAssunzioni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleQualifiche] ON 
+GO
+INSERT [dbo].[GaPersonaleQualifiche] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'OPERATIVO')
+GO
+INSERT [dbo].[GaPersonaleQualifiche] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'AMMINISTRATIVO')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleQualifiche] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleDipendenti] ON 
+GO
+INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (3, N'cda60f19-8efb-461b-bf7a-20dc69863923', 1, 1, 2, 1, CAST(N'2030-01-01T00:00:00.0000000' AS DateTime2), NULL, 0)
+GO
+INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (9, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 2, 2, 3, 2, CAST(N'2030-01-01T00:00:00.0000000' AS DateTime2), NULL, 0)
+GO
+INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (10, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 1, 3, 2, 1, CAST(N'2040-01-01T00:00:00.0000000' AS DateTime2), NULL, 0)
+GO
+INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (11, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 2, 3, 3, 1, CAST(N'2050-01-01T00:00:00.0000000' AS DateTime2), NULL, 1)
+GO
+INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (19, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 1, 2, 2, 1, CAST(N'2020-01-01T00:00:00.0000000' AS DateTime2), NULL, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleDipendenti] OFF
 GO

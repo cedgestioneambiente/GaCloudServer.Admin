@@ -4,8 +4,10 @@ using GaCloudServer.Resources.Api.Mappers.Aziende;
 using GaCloudServer.Resources.Api.Mappers.Cdr;
 using GaCloudServer.Resources.Api.Mappers.Comunicati;
 using GaCloudServer.Resources.Api.Mappers.Contratti;
+using GaCloudServer.Resources.Api.Mappers.Global;
 using GaCloudServer.Resources.Api.Mappers.Mezzi;
 using GaCloudServer.Resources.Api.Mappers.Notification;
+using GaCloudServer.Resources.Api.Mappers.Personale;
 using GaCloudServer.Resources.Api.Mappers.PrenotazioneAuto;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
@@ -24,7 +26,9 @@ namespace GaCloudServer.Resources.Api.Mappers
             new MezziMapperProfile(),
             new AziendeMapperProfile(),
             new PrenotazioneAutoMapperProfile(),
-            new NotificationMapperProfile()
+            new NotificationMapperProfile(),
+            new GlobalMapperProfile(),
+            new PersonaleMapperProfile(),
         };
 
         static GenericMapper() {
