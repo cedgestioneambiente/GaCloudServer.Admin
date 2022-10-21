@@ -170,7 +170,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             if (view.Enabled)
             {
                 //DELETE
-                var entity = await notificationUsersOnAppsRepo.GetSingleWithFilter(x => x.NotificationAppId == view.Id && x.UserId == view.UserId);
+                var entity = await notificationUsersOnAppsRepo.GetSingleWithFilter(x => x.NotificationAppId == view.AppId && x.UserId == view.UserId);
                 notificationUsersOnAppsRepo.Remove(entity);
                 await SaveChanges();
 

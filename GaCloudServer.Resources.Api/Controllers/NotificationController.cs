@@ -271,7 +271,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetViewViewNotificationUsersOnAppsByUserIdAsync/{appId}")]
+        [HttpGet("GetViewViewNotificationUsersOnAppsByUserIdAsync/{userId}")]
         public async Task<ActionResult<ApiResponse>> GetViewViewNotificationUsersOnAppsByUserIdAsync(string userId)
         {
             try

@@ -183,27 +183,38 @@ namespace Skoruba.Duende.IdentityServer.Admin.UI.Areas.AdminUI.Controllers
                 claim.ClaimValue = user.FirstName;
                 claim.UserId = userId.ToString();
 
-                try
+                var claims = await _identityService.GetUserClaimsAsync(userId.ToString());
+                if (claims.Claims.Where(x => x.ClaimType == "given_name").Count() > 0)
                 {
-                    await _identityService.UpdateUserClaimsAsync(claim as TUserClaimsDto);
+
+                    var claimToFind = claims.Claims.Where(x => x.ClaimType == "given_name").FirstOrDefault();
+                    var claimToDelete=  await _identityService.GetUserClaimAsync(userId.ToString(), claimToFind.ClaimId);
+                    await _identityService.DeleteUserClaimAsync(claimToDelete);
+                    await _identityService.CreateUserClaimsAsync(claim as TUserClaimsDto);
                 }
-                catch (Exception ex)
+                else
                 {
                     await _identityService.CreateUserClaimsAsync(claim as TUserClaimsDto);
                 }
+               
 
                 claim.ClaimId = 0;
                 claim.ClaimType = "family_name";
                 claim.ClaimValue = user.LastName;
                 claim.UserId = userId.ToString();
-                try
+
+                if (claims.Claims.Where(x => x.ClaimType == "family_name").Count() > 0)
                 {
-                    await _identityService.UpdateUserClaimsAsync(claim as TUserClaimsDto);
+                    var claimToFind = claims.Claims.Where(x => x.ClaimType == "family_name").FirstOrDefault();
+                    var claimToDelete = await _identityService.GetUserClaimAsync(userId.ToString(), claimToFind.ClaimId);
+                    await _identityService.DeleteUserClaimAsync(claimToDelete);
+                    await _identityService.CreateUserClaimsAsync(claim as TUserClaimsDto);
                 }
-                catch (Exception ex)
+                else
                 {
                     await _identityService.CreateUserClaimsAsync(claim as TUserClaimsDto);
                 }
+                
             }
 
             SuccessNotification(string.Format(_localizer["SuccessCreateUser"], user.UserName), _localizer["SuccessTitle"]);

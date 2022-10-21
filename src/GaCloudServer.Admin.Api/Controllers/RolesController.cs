@@ -15,6 +15,7 @@ using GaCloudServer.Admin.Api.Helpers.Localization;
 using GaCloudServer.Admin.Api.Resources;
 using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Services.Interfaces;
+using GaCloudServer.Shared.Dtos.Extended;
 
 namespace GaCloudServer.Admin.Api.Controllers
 {
@@ -26,7 +27,7 @@ namespace GaCloudServer.Admin.Api.Controllers
     public class RolesController<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto> : ControllerBase
-        where TUserDto : UserDto<TKey>, new()
+        where TUserDto : ExtendedUserDto<TKey>, new()
         where TRoleDto : RoleDto<TKey>, new()
         where TUser : IdentityUser<TKey>
         where TRole : IdentityRole<TKey>

@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0.
 
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity
 {
@@ -10,6 +11,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string FullName { get; set; }
+		public string OfficePhoneNumber { get; set; }
+		public DateTime? DateOfBirth { get; set; }
 	}
 }
 
