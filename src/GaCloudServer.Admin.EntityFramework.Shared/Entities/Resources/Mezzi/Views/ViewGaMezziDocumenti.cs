@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views
 {
-    public class ViewGaMezziDocumenti:GenericEntity
+    public class ViewGaMezziDocumenti : GenericEntity
     {
         public long MezziVeicoloId { get; set; }
         public string Targa { get; set; }

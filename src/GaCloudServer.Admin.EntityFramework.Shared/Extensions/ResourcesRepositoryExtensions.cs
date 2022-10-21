@@ -19,6 +19,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -180,6 +182,23 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaCsrRegistrazioniPesi>, GenericRepository<TResourcesDbContext, ViewGaCsrRegistrazioniPesi>>();
             services.AddTransient<IGenericRepository<ViewGaCsrRipartizioniPercentuali>, GenericRepository<TResourcesDbContext, ViewGaCsrRipartizioniPercentuali>>();
             services.AddTransient<IGenericRepository<ViewGaCsrTrasportatori>, GenericRepository<TResourcesDbContext, ViewGaCsrTrasportatori>>();
+            #endregion
+
+            //Reclami
+            #region Reclami
+            services.AddTransient<IGenericRepository<ReclamiAzione>, GenericRepository<TResourcesDbContext, ReclamiAzione>>();
+            services.AddTransient<IGenericRepository<ReclamiDocumento>, GenericRepository<TResourcesDbContext, ReclamiDocumento>>();
+            services.AddTransient<IGenericRepository<ReclamiMittente>, GenericRepository<TResourcesDbContext, ReclamiMittente>>();
+            services.AddTransient<IGenericRepository<ReclamiStato>, GenericRepository<TResourcesDbContext, ReclamiStato>>();
+            services.AddTransient<IGenericRepository<ReclamiTempoRisposta>, GenericRepository<TResourcesDbContext, ReclamiTempoRisposta>>();
+            services.AddTransient<IGenericRepository<ReclamiTipoAzione>, GenericRepository<TResourcesDbContext, ReclamiTipoAzione>>();
+            services.AddTransient<IGenericRepository<ReclamiTipoOrigine>, GenericRepository<TResourcesDbContext, ReclamiTipoOrigine>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaReclamiAzioni>, GenericRepository<TResourcesDbContext, ViewGaReclamiAzioni>>();
+            services.AddTransient<IGenericRepository<ViewGaReclamiDocumenti>, GenericRepository<TResourcesDbContext, ViewGaReclamiDocumenti>>();
+            services.AddTransient<IGenericRepository<ViewGaReclamiRegistri>, GenericRepository<TResourcesDbContext, ViewGaReclamiRegistri>>();
+
             #endregion
 
             return services; 
