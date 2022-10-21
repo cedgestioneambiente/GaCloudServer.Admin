@@ -92,6 +92,12 @@
     <None Update="Scripts\Contratti\CREATE_PrivateViewGaContrattiPermessiList.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Scripts\Csr\CREATE_ViewGaCsr.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Csr\DROP_ViewGaCsr.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Scripts\Global\CREATE_ObjectGaGlobal.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

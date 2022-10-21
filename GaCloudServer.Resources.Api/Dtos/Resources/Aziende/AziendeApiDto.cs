@@ -1,5 +1,4 @@
 ﻿using GaCloudServer.Resources.Api.Dtos.Base;
-using System.ComponentModel.DataAnnotations;
 
 namespace GaCloudServer.Resources.Api.Dtos.Aziende
 {

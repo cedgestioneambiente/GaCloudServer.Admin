@@ -16,11 +16,20 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
     public interface IResourcesDbContext
     {
+        #region GaGlobal Tables
+        DbSet<GlobalSede> GlobalSedi { get; set; }
+        DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }
+        #endregion
+
         #region GaAutorizzazioni Tables
         DbSet<AutorizzazioniTipo> GaAutorizzazioniTipi { get; set; }
         DbSet<AutorizzazioniDocumento> GaAutorizzazioniDocumenti { get; set; }
@@ -102,7 +111,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #endregion
 
-        #region GaAutorizzazioni Tables
+        #region GaAziende Tables
         DbSet<AziendeLista> GaAziendeListe { get; set; }
         #endregion
 
@@ -148,6 +157,35 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewNotificationRolesOnApps> ViewNotificationRolesOnApps { get; set; }
         DbSet<ViewNotificationUsersOnApps> ViewNotificationUsersOnApps { get; set; }
         #endregion
+        #endregion
+
+        #region GaPersonale Tables
+        DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
+        DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
+        DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
+        #endregion
+
+        #region GaCsr Tables
+        DbSet<CsrCodiceCer> GaCsrCodiciCers { get; set; }
+        DbSet<CsrComune> GaCsrComuni { get; set; }
+        DbSet<CsrDestinatario> GaCsrDestinatari { get; set; }
+        DbSet<CsrProduttore> GaCsrProduttori { get; set; }
+        DbSet<CsrRegistrazione> GaCsrRegistrazioni { get; set; }
+        DbSet<CsrRegistrazionePeso> GaCsrRegistrazioniPesi { get; set; }
+        DbSet<CsrRipartizionePercentuale> GaCsrRipartizioniPercentuali { get; set; }
+        DbSet<CsrTrasportatore> GaCsrTrasportatori { get; set; }
+
+        #region Views
+        DbSet<ViewGaCsrCodiciCers> ViewGaCsrCodiciCers { get; set; }
+        DbSet<ViewGaCsrDestinatari> ViewGaCsrDestinatari { get; set; }
+        DbSet<ViewGaCsrExports> ViewGaCsrExports { get; set; }
+        DbSet<ViewGaCsrProduttori> ViewGaCsrProduttori { get; set; }
+        DbSet<ViewGaCsrRegistrazioni> ViewGaCsrRegistrazioni { get; set; }
+        DbSet<ViewGaCsrRegistrazioniPesi> ViewGaCsrRegistrazioniPesi { get; set; }
+        DbSet<ViewGaCsrRipartizioniPercentuali> ViewGaCsrRipartizioniPercentuali { get; set; }
+        DbSet<ViewGaCsrTrasportatori> ViewGaCsrTrasportatori { get; set; }
+        #endregion
+
         #endregion
     }
 }

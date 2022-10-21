@@ -1,5 +1,4 @@
-﻿
-using GaCloudServer.BusinnessLogic.DTOs.Base;
+﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Mezzi
