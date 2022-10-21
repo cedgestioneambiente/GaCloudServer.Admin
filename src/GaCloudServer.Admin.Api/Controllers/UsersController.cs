@@ -17,6 +17,9 @@ using GaCloudServer.Admin.Api.Helpers.Localization;
 using GaCloudServer.Admin.Api.Resources;
 using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Dtos.Identity;
 using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Services.Interfaces;
+using GaCloudServer.Shared.Dtos.Extended;
+using GaCloudServer.Shared.Dtos.Identity;
+using System.Linq;
 
 namespace GaCloudServer.Admin.Api.Controllers
 {
@@ -28,7 +31,7 @@ namespace GaCloudServer.Admin.Api.Controllers
     public class UsersController<TUserDto, TRoleDto, TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken,
             TUsersDto, TRolesDto, TUserRolesDto, TUserClaimsDto,
             TUserProviderDto, TUserProvidersDto, TUserChangePasswordDto, TRoleClaimsDto, TUserClaimDto, TRoleClaimDto> : ControllerBase
-        where TUserDto : UserDto<TKey>, new()
+        where TUserDto : ExtendedUserDto<TKey>, new()
         where TRoleDto : RoleDto<TKey>, new()
         where TUser : IdentityUser<TKey>
         where TRole : IdentityRole<TKey>
@@ -274,6 +277,79 @@ namespace GaCloudServer.Admin.Api.Controllers
 
             return Ok(usersDto);
         }
+
+        [HttpGet("GetUserProfileByUserId/{userId}")]
+        public async Task<IActionResult> GetUserProfileByUserId(string userId)
+        {
+            var user = await _identityService.GetUserAsync(userId);
+            var userProfile = new UserProfileApiDto();
+            userProfile.UserId = user.Id;
+            userProfile.UserName = user.UserName;
+            userProfile.FirstName = user.FirstName;
+            userProfile.LastName = user.LastName;
+            userProfile.Email = user.Email;
+            userProfile.DateOfBirth = user.DateOfBirth;
+            userProfile.PhoneNumber = user.PhoneNumber;
+            userProfile.OfficePhoneNumber = user.OfficePhoneNumber;
+
+            return Ok(userProfile);
+
+        }
+
+        [HttpPost("UpdateUserProfile")]
+        public async Task<ActionResult<TUserDto>> UpdateUserProfile([FromBody] UserProfileApiDto userProfile)
+        {
+            TUserDto user=await _identityService.GetUserAsync(userProfile.UserId.ToString());
+            user.FirstName = userProfile.FirstName;
+            user.LastName = userProfile.LastName;
+            user.DateOfBirth = userProfile.DateOfBirth;
+            user.OfficePhoneNumber = userProfile.OfficePhoneNumber;
+            user.PhoneNumber = userProfile.PhoneNumber;
+            await _identityService.UpdateUserAsync(user);
+
+            IdentityUserClaimsDto claim = new IdentityUserClaimsDto();
+            claim.ClaimId = 0;
+            claim.ClaimType = "given_name";
+            claim.ClaimValue = user.FirstName;
+            claim.UserId = user.Id.ToString();
+
+            var claims = await _identityService.GetUserClaimsAsync(user.Id.ToString());
+            if (claims.Claims.Where(x => x.ClaimType == "given_name").Count() > 0)
+            {
+
+                var claimToFind = claims.Claims.Where(x => x.ClaimType == "given_name").FirstOrDefault();
+                var claimToDelete = await _identityService.GetUserClaimAsync(user.Id.ToString(), claimToFind.ClaimId);
+                await _identityService.DeleteUserClaimAsync(claimToDelete);
+                await _identityService.CreateUserClaimsAsync(claim as TUserClaimsDto);
+            }
+            else
+            {
+                await _identityService.CreateUserClaimsAsync(claim as TUserClaimsDto);
+            }
+
+
+            claim.ClaimId = 0;
+            claim.ClaimType = "family_name";
+            claim.ClaimValue = user.LastName;
+            claim.UserId = user.Id.ToString();
+
+            if (claims.Claims.Where(x => x.ClaimType == "family_name").Count() > 0)
+            {
+                var claimToFind = claims.Claims.Where(x => x.ClaimType == "family_name").FirstOrDefault();
+                var claimToDelete = await _identityService.GetUserClaimAsync(user.Id.ToString(), claimToFind.ClaimId);
+                await _identityService.DeleteUserClaimAsync(claimToDelete);
+                await _identityService.CreateUserClaimsAsync(claim as TUserClaimsDto);
+            }
+            else
+            {
+                await _identityService.CreateUserClaimsAsync(claim as TUserClaimsDto);
+            }
+
+            return Ok(user);
+
+        }
+
+        
     }
 }
 

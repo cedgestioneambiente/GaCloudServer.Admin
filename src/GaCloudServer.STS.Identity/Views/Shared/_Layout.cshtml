@@ -53,6 +53,8 @@
         <!--Menu item -->
         @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
         {
+            <a class="menu-item my-2 my-md-0 mr-md-3 btn btn-primary" href="/ServerSideSessions">@Localizer["Sessions"]</a>
+
             <!--Menu item -->
             <vc:identity-server-admin-link></vc:identity-server-admin-link>
 

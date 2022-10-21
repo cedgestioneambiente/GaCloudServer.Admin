@@ -355,13 +355,20 @@ namespace GaCloudServer.STS.Identity.Helpers
             IConfiguration configuration)
             where TPersistedGrantDbContext : DbContext, IAdminPersistedGrantDbContext
             where TConfigurationDbContext : DbContext, IAdminConfigurationDbContext
+
             where TUserIdentity : class
         {
             var configurationSection = configuration.GetSection(nameof(IdentityServerOptions));
 
             var identityServerOptions = configurationSection.Get<IdentityServerOptions>();
 
-            var builder = services.AddIdentityServer(options => configurationSection.Bind(options))
+            var builder = services.AddIdentityServer(options =>
+                {
+                    configurationSection.Bind(options);
+                    options.ServerSideSessions.UserDisplayNameClaimType = "name";
+                }
+            )
+                .AddServerSideSessions()
                 .AddConfigurationStore<TConfigurationDbContext>()
                 .AddOperationalStore<TPersistedGrantDbContext>()
                 .AddAspNetIdentity<TUserIdentity>();

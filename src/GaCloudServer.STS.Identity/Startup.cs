@@ -32,6 +32,7 @@ namespace GaCloudServer.STS.Identity
         {
             var rootConfiguration = CreateRootConfiguration();
             services.AddSingleton(rootConfiguration);
+
             // Register DbContexts for IdentityServer and Identity
             RegisterDbContexts(services);
 
@@ -67,6 +68,8 @@ namespace GaCloudServer.STS.Identity
                         .AllowAnyHeader();
                     });
             });
+
+            services.AddRazorPages();
         
         }
 
@@ -100,6 +103,7 @@ namespace GaCloudServer.STS.Identity
             app.UseAuthorization();
             app.UseEndpoints(endpoint =>
             {
+                endpoint.MapRazorPages();
                 endpoint.MapDefaultControllerRoute();
                 endpoint.MapHealthChecks("/health", new HealthCheckOptions
                 {
@@ -118,6 +122,7 @@ namespace GaCloudServer.STS.Identity
             services.AddAuthenticationServices<AdminIdentityDbContext, UserIdentity, UserIdentityRole>(Configuration);
             services
                 .AddIdentityServer<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, UserIdentity>(Configuration)
+
                 .AddProfileService<ProfileService<UserIdentity>>();
         }
 

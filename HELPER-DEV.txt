@@ -132,3 +132,11 @@ per i file prendere come modello autorizzazioni
 
 12. Attivare il servizio
 GaCloudServer.BusinnessLogic.Extensions
+
+
+//Migrazione Identity
+Add Field On Class in C:\dev\GaCloud\GaCloudServer\src\GaCloudServer.Admin.EntityFramework.Shared\Entities\Identity
+Add Field on Class in C:\dev\GaCloud\GaCloudServer\src\GaCloudServer.Shared\Dtos\Extended\
+
+RUN C:\dev\GaCloud\GaCloudServer\src\GaCloudServer.Admin\MigrationsHelpers\add-migration.ps1 ddMMyyyyHHmm
+

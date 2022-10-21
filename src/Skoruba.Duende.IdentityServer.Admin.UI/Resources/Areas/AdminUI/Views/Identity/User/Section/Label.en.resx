@@ -159,6 +159,12 @@
   <data name="UserChangePasswordUserName_Label" xml:space="preserve">
     <value>User Name</value>
   </data>
+  <data name="UserDateOfBirth_Info" xml:space="preserve">
+    <value>User Date of Birth</value>
+  </data>
+  <data name="UserDateOfBirth_Label" xml:space="preserve">
+    <value>User Date of Birth</value>
+  </data>
   <data name="UserEmailConfirmed_Info" xml:space="preserve">
     <value>User Email Confirmed</value>
   </data>
@@ -194,6 +200,12 @@
   </data>
   <data name="UserLockoutEnd_Label" xml:space="preserve">
     <value>User Lockout End</value>
+  </data>
+  <data name="UserOfficePhoneNumber_Info" xml:space="preserve">
+    <value>User Office Phone Number</value>
+  </data>
+  <data name="UserOfficePhoneNumber_Label" xml:space="preserve">
+    <value>User Office Phone Number</value>
   </data>
   <data name="UserPhoneNumberConfirmed_Info" xml:space="preserve">
     <value>User Phone Number Confirmed</value>
