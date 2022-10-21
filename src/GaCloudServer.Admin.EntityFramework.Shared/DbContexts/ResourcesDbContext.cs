@@ -19,6 +19,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -169,6 +171,29 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
         public DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
         public DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
+        #endregion
+
+        #region GaCsr Tables
+        public DbSet<CsrCodiceCer> GaCsrCodiciCers { get; set; }
+        public DbSet<CsrComune> GaCsrComuni { get; set; }
+        public DbSet<CsrDestinatario> GaCsrDestinatari { get; set; }
+        public DbSet<CsrProduttore> GaCsrProduttori { get; set; }
+        public DbSet<CsrRegistrazione> GaCsrRegistrazioni { get; set; }
+        public DbSet<CsrRegistrazionePeso> GaCsrRegistrazioniPesi { get; set; }
+        public DbSet<CsrRipartizionePercentuale> GaCsrRipartizioniPercentuali { get; set; }
+        public DbSet<CsrTrasportatore> GaCsrTrasportatori { get; set; }
+
+        #region Views
+        public DbSet<ViewGaCsrCodiciCers> ViewGaCsrCodiciCers { get; set; }
+        public DbSet<ViewGaCsrDestinatari> ViewGaCsrDestinatari { get; set; }
+        public DbSet<ViewGaCsrExports> ViewGaCsrExports { get; set; }
+        public DbSet<ViewGaCsrProduttori> ViewGaCsrProduttori { get; set; }
+        public DbSet<ViewGaCsrRegistrazioni> ViewGaCsrRegistrazioni { get; set; }
+        public DbSet<ViewGaCsrRegistrazioniPesi> ViewGaCsrRegistrazioniPesi { get; set; }
+        public DbSet<ViewGaCsrRipartizioniPercentuali> ViewGaCsrRipartizioniPercentuali { get; set; }
+        public DbSet<ViewGaCsrTrasportatori> ViewGaCsrTrasportatori { get; set; }
+        #endregion
+
         #endregion
 
 
@@ -423,6 +448,65 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasNoKey();
             });
             #endregion
+
+            #region Csr
+            builder.Entity<ViewGaCsrCodiciCers>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCsrCodiciCers))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCsrDestinatari>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCsrDestinatari))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCsrExports>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCsrExports))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCsrProduttori>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCsrProduttori))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCsrRegistrazioni>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCsrRegistrazioni))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCsrRegistrazioniPesi>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCsrRegistrazioniPesi))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCsrRipartizioniPercentuali>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCsrRipartizioniPercentuali))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCsrTrasportatori>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaCsrTrasportatori))
+                    .HasKey(x => x.Id);
+            });
+            #endregion
+
 
             base.OnModelCreating(builder);
 

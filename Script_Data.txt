@@ -2596,3 +2596,697 @@ INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCen
 GO
 SET IDENTITY_INSERT [dbo].[GaPersonaleDipendenti] OFF
 GO
+
+--CSR
+
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrDestinatari] ON 
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (1, N'Relight SRL', N'Via Lainate 98/100 - RHO MI', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (4, N'SIDERURGICA GILARDENGHI S.R.L.', N'S.S. 10 PER VOGHERA 95 - 15057 TORTONA', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (5, N'GRASSANO S.P.A.', N'VIA PER RETORTO 31 - 15077 PREDOSA', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (6, N'SEVAL SRL', N'VIA SAN MARTINO 141B - 23010 PIANTEDO', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (7, N'GRUPPO MERCANTILE SERVIZI SRL', N'VIA E. MATTEI 9 - 27030 VILLANOVA D''ARDENGHI', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (8, N'SALMOIRAGHI SRL', N'LOC. FORNACE - 21030 CUVIO', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (9, N'TRANSISTOR SRL', N'VIA P. VERONESE 202 - 10148 TORINO', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (10, N'SEVAL SRL', N'VIA LA CROCE 10 - 23823 COLICO LC', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (11, N'RAEEMAN SRL', N'VIA L. STRAMESI 1 - 15045 SALE AL', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (12, N'DUE MAICH SERVIZI SRL', N'VIA TONALE 63 - 21050 MARNATE VA', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (14, N'STENA TECHNOWORLD SRL', N'VIA SANTA MARIA IN CAMPO 2 - CAVENAGO DI BRIANZA MB', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (15, N'MIRABELLI S.R.L.', N'VIA DELLE PIANE 83 - RONCO SCRIVIA GE', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (16, N'GENOVA MACERI S.R.L.', N'VIA CASSANO SN -15069 SERRAVALLE SCRIVIA', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (17, N'ECOSERVICE S.A. SRL', N'VIA GARIBALDI 30/B - 14022 CASTELNUOVO DON BOSCO ASTI AT', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (18, N'AMIAT SPA', N'VIA BRANDIZZO 150- 10088VOLPIANO(TO)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (19, N'FERAGAME SRL', N'VIA EMILIA 156 - 27058 - VOGHERA(PV)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (20, N'Dallera/Biglieri Recuperi S.R.L.', N'Strada Abbondanza 27058 Voghera (PV)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (21, N'DUE MAICH SERVIZI S.R.L.', N'21050 MARNATE (VA) VIA TONALE 63', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (22, N'FERAGAME SRL', N'ST.BRONESE 17/G 27043 BRONI PV', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (23, N'SEVAL CASEI SRL', N'STRADA PROVINCIALE 12/3 CASEI GEROLA (PV)27050', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (24, N'EFFEDUE SRL', N'LOC.BUSELA28/30 GAVARDO (BS) 25085', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (33, N'AMIAT S.P.A.', N'VIA GERMAGNANO 50, 10156 TORINO', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (34, N'STENA RECYCLING SRL', N'VIA SANTA MARIA IN CAMPO 2,20873 CAVENAGO DI BRIANZA (MI)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (35, N'MAGIFER SRL', N'STRADA CHIABERTO 19 COSTIGLIOLE D''ASTI 14055(AT)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (36, N'Ecotirrenia s.r.l.', N'Via Petazzi 12/14 Castelnuovo Scrivia *AL( 15053', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (37, N'AMBRO LOGISTICA SRL', N'VIA DELLA RONNA 21013 GALLARATE (VA)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (38, N'TREEE SRL', N'VIA LAINATE 98/100 RHO (MI) 20017', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (39, N'S.R.T SPA', N'LOCALITA'' TERLUCCA 15057 TORTONA (AL)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (40, N'S.R.T. S.P.A DISC.NOVI', N'STR.per BOSCOMARENGO 15057 NOVI (AL)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (41, N'LAVORO E AMBIENTE SRL', N'VIA PALUDE SNC 21020 TERNATE (VA)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (42, N'ECOTIRRENA SRL', N'LOC. POLLINO 62 GROSSETO (LI)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (43, N'ECOTIRRENA S.R.L.', N'VIA LIBECCIO 91,55049 VIAREGGIO (LU)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (44, N'RE.VETRO SRL', N'VIA ENRICO FERMI 27050 CASEI GEROLA (PV)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (45, N'MONDO SERVIZI SRL', N'VIA SAVIGLIANO19-12062 CHERASCO CN', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (46, N'TRANSISTOR SRL', N'VIA PEANO 118, 10040 LEINI (To)', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (47, N'TRANSISTOR SRL', N'VIA PEANO 118, 10040 LEINI (TO)', 1)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (49, N'TRANSISTOR S.R.L.', N'VIA PEANO 118, 10040 LEINI (TO)', 1)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (50, N'MPOLI SRL', N'LOC.CATENAROSSA 13/E PIOBESI D''ALBA (CN) 12040', 0)
+GO
+INSERT [dbo].[GaCsrDestinatari] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (51, N'F.G.F. AMBIENTE srls', N'STRADA PROV.LE PER GARBAGNA, 15050 SAREZZANO (AL)', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrDestinatari] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrTrasportatori] ON 
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (1, N'Relight SRL', N'Via Lainate 98/100 - RHO MI', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (3, N'GESTIONE AMBIENTE S.P.A.', N'VIA SPINELLI - 15067 NOVI LIGURE', 1)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (4, N'GRASSANO S.P.A.', N'VIA PER RETORTO 31 - 15077 POREDOSA', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (5, N'SETRA S.R.L.', N'VIA LA CROCE 10 - 23823 COLICO', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (6, N'VESCOVO ROMANO & C. SNC', N'VIA CERRETTA 30 - 13040 PALAZZOLO VERCELLESE', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (7, N'PULIECO SRL', N'VIA FERMI 7 - 26864 OSPEDALETTO LODIGIANO', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (8, N'SALMOIRAGHI SRL', N'VIA SARONNO 22 - 21053 CASTELLANZA', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (9, N'TRANSISTOR SRL', N'VIA P. VERONESE 202 - 10148 TORINO', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (10, N'GALLI ECOLOGISTICA SRL', N'VIA STEPHENSON 100 - 20157 MILANO', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (11, N'GRUPPO MERCANTILE SERVIZI SRL', N'VIALE L. LEONARDO DA VINCI 43 - 20090 TREZZANO SUL NAVIGLIO  MI', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (12, N'DU.ECO SRL', N'VIA SANTA MARTINA23/25 - 24062 COSTA VOLPINO BG', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (13, N'RAEEMAN SRL', N'VIAL L. STRAMESI 1 - 15045 SALE AL', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (14, N'ECOSAN SRL', N'VIA GIUDICARIA 10 - 20831 SEREGNO MB', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (15, N'DUE MAICH SERVIZI SRL', N'VIA TONALE 63 - 21050 MARNATE VA', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (16, N'GESTIONE AMBIENTE SPA', N'Strada di Boscomarengo 43', 1)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (17, N'ECOSERVICE S.A. SRL', N'CORSO TRAIANO 24/10 - 10135 TORINO TO', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (18, N'AUTOTRASPORTI BENDOTTI SRL', N'V.CARBONERA 9,24020 COLERE (BERGAMO)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (19, N'METALFER SRL', N'V.PISA9/11,10088 VOLPIANO(TO)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (20, N'COL TRANSPORT', N'CASCINA AMAVEGLIA LEVANTE 29-10088 VOLPIANO (TO)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (21, N'C.S.L. SRL', N'VIALE VARSAVIA 49-42015 CORREGGIO(RE)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (22, N'SIMONTRASPORT S.N.C.', N'VIA E.MATTEI 5-27030 VILLANOVA D''ARDENGHI(PV)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (23, N'GESTIONE AMBIENTE', N'-', 1)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (24, N'GESTIONE AMBIENTE', N'EX S.S.35 DEI GIOVI 42,15057 TORTONA(AL)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (25, N'Ambrogio Reverse Logistic S.R.L.', N'Strada delle Pignere 3,10060 Candiolo (TO)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (26, N'COL.TRANSPORT S.R.L.', N'CORSO ENRICO TAZZOLI 235/3 TORINO 10137', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (27, N'GALLI ECOLOGISTICA S.R.L.', N'V.FRATELLI BELTRAMI 50/52NOVATE MILANESE 20026 (MI)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (28, N'RAEEMAN S.A.S.', N'VIA SAN BAUDOLINO 9,15100 ALESSANDRIA', 1)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (29, N'C.S.L. SRL', N'VIA FOSDONDO 48 CORREGGIO (RE) 42015', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (30, N'NIAL NIZZOLI SRL', N'VIA FOSDONDO 48 CORREGGIO RE 42015', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (31, N'ARCOBALENO Coop.Soc.', N'Corso Trapani 95 TORINO 10141', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (32, N'MONDO SERVIZI SRL', N'STR. CROSIGLIE 12 - 12060 POCAPAGLIA (CN)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (33, N'TRANSPORTECO SAS', N'V.LE DELLE INDUSTRIE 16/G 20040 CAMBIAGO (MI)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (34, N'trasportatore', N'traspo', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (35, N'TOSANA AUTOTRASPORTI DI TOSANA MORENO', N'VIA NAZIONALE 32 NIARDO (BS) 25050', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (36, N'TORINO TRASPORTI SRL', N'VIA S. CATERINA 97/99BORGARO TORINESE 10071 (TO)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (37, N'ECOTIRRENA S.R.L.', N'Via Petazzi 12/14 Castelnuovo Scrivia 15053', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (38, N'AMBRO LOGISTICA SRL', N'VIA DELLA RONNA 21013 GALLARATE (VA)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (39, N'TREEE SRL', N'VIA GARBAGNATE 61/D 20020 LAINATE (MI)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (40, N'LAVORO E AMBIENTE SRL', N'VIA PALUDE SNC 21020 TERNATE (VA)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (41, N'ECOTIRRENA SRL', N'VIA PETAZZI 12714 CASTELNUOVO SC. (AL)', 1)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (42, N'FORMULA AMBIENTE SPA', N'VIA DEI ROTTAMAI 51, 47521 CESENA (FC)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (43, N'LA NETTATUTTO SRL', N'VIA DON GNOCCHI 22, 20838 RENATE (MB)', 0)
+GO
+INSERT [dbo].[GaCsrTrasportatori] ([Id], [RagioneSociale], [Indirizzo], [Disabled]) VALUES (44, N'MPOLI SRL', N'CORSO BRA 23, ALBA (CN) 12051', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrTrasportatori] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrCodiciCers] ON 
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (1, N'080318', N'', N'Toner Esauriti', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (2, N'130205', N'', N'Oli Minerali Esausti', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (3, N'160601', N'', N'Batterie Al Piombo', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (4, N'170107', N'', N'Materiale Edile', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (5, N'200110', N'', N'Abbigliamento', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (6, N'200121', N'', N'Tubi Fluorescenti', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (7, N'200123', N'', N'Apparecchiature Fuori Uso Contenenti CFC', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (8, N'200125', N'', N'Oli e Grassi Commestibili', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (9, N'200126', N'', N'Oli e Grassi Diversi da Quelli Di Cui Alla Voce 200125', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (10, N'200135', N'', N'Apparecchiature Elettriche Pericolosi', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (11, N'200136', N'R2', N'Apparecchiature Elettriche', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (12, N'200136', N'R4', N'Apparecchiature Elettriche', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (13, N'200140', N'', N'Materiali Ferrosi', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (14, N'200133', N'', N'Batterie al Piombo', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (15, N'200134', N'', N'Batterie e Accumulatori diversi da quelli di cui alla voce 200133', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (16, N'150104', N'', N'Imballaggi Metallici', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (17, N'170603', N'', N'Altri materiali isolanti contenenti o costituiti da sostanze pericolose', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (18, N'170604', N'', N'Materiali isolanti diversi da quelli di cui alle voci 170601 e 170603', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (19, N'150107', NULL, N'IMBALLAGGI IN VETRO', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (20, N'200307', NULL, N'RIFIUTI INGOMBRANTI', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (21, N'200301', NULL, N'Deiezioni canine', 0)
+GO
+INSERT [dbo].[GaCsrCodiciCers] ([Id], [Codice], [Modalita], [Descrizione], [Disabled]) VALUES (22, N'170802', NULL, N'MATERIALI DA COSTRUZIONE A BASE DI GESSO, DIVERSI DA QUELLI DI CUI ALLA VOCE 170801', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrCodiciCers] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrComuni] ON 
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (1, N'CASTELLAZZO', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (2, N'FRANCAVILLA', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (3, N'NOVI LIGURE', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (4, N'PREDOSA', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (5, N'SALE', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (6, N'CASSANO SPINOLA', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (7, N'TORTONA', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (8, N'VOLTAGGIO', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (9, N'CASTELNUOVO SCRIVIA', 0)
+GO
+INSERT [dbo].[GaCsrComuni] ([Id], [Descrizione], [Disabled]) VALUES (10, N'POZZOLO FORMIGARO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrComuni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrRegistrazioni] ON 
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (2, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 1, 13, 16, 24, 1000, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (3, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 1, 7, 10, 12, 1320, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (4, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 1, 14, 11, 13, 300, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (5, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 1, 9, 11, 13, 370, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (6, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 1, 11, 9, 9, 840, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (7, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 1, 12, 9, 9, 610, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (8, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 1, 11, 9, 9, 730, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (9, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 1, 10, 22, 30, 860, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (10, CAST(N'2019-02-01T00:00:00.0000000' AS DateTime2), 1, 13, 16, 24, 1420, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (11, CAST(N'2019-03-01T00:00:00.0000000' AS DateTime2), 1, 13, 16, 24, 2020, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (12, CAST(N'2019-03-01T00:00:00.0000000' AS DateTime2), 1, 9, 11, 13, 140, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (13, CAST(N'2019-03-01T00:00:00.0000000' AS DateTime2), 1, 14, 11, 13, 220, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (14, CAST(N'2019-03-01T00:00:00.0000000' AS DateTime2), 1, 1, 11, 13, 40, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (15, CAST(N'2019-03-01T00:00:00.0000000' AS DateTime2), 1, 15, 11, 13, 75, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (16, CAST(N'2019-04-01T00:00:00.0000000' AS DateTime2), 1, 13, 16, 24, 1060, N'NON SPECIFICATO', 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioni] ([Id], [Data], [CsrComuneId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [PesoTotale], [Operazione], [Disabled]) VALUES (17, CAST(N'2019-01-01T00:00:00.0000000' AS DateTime2), 4, 7, 6, 18, 1640, N'NON SPECIFICATO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrRegistrazioni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrProduttori] ON 
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (3, N'COMUNE DI BASALUZZO', N'#e93636', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (4, N'COMUNE DI CAPRIATA D''ORBA', N'#e67e13', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (5, N'COMUNE DI CASTELLAZZO BORMIDA', N'#dde039', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (6, N'COMUNE DI FRANCAVILLA BISIO', N'#84e645', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (7, N'COMUNE DI FRESONARA', N'#00a10b', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (8, N'COMUNE DI NOVI LIGURE', N'#4ee9d6', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (9, N'COMUNE DI PASTURANA', N'#0a45ad', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (10, N'COMUNE DI PREDOSA', N'#0f4f70', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (11, N'COMUNE DI SERRAVALLE SCRIVIA', N'#2b79ff', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (12, N'COMUNE DI TASSAROLO', N'#e42f56', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (13, N'COMUNE DI SALE', N'#a8ebf1', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (14, N'COMUNE DI ALLUVIONI PIOVERA', N'#2257b4', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (15, N'COMUNE DI CASSANO SPINOLA', N'#a19d9d', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (17, N'COMUNE DI SARDIGLIANO', N'#430000', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (18, N'COMUNE DI ALZANO SCRIVIA', N'#55c249', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (19, N'COMUNE DI CARBONARA SCRIVIA', N'#d0d0d0', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (20, N'COMUNE DI CASTELNUOVO SCRIVIA', N'#be2fba', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (21, N'COMUNE DI ISOLA SANT''ANTONIO', N'#d67474', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (22, N'COMUNE DI PONTECURONE', N'#5d00eb', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (23, N'COMUNE DI TORTONA', N'#017c19', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (24, N'COMUNE DI VIGUZZOLO', N'#bff700', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (25, N'COMUNE DI VILLAROMAGNANO', N'#ff6c00', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (26, N'COMUNE DI MOLINO DEI TORTI', N'#350707', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (28, N'COMUNE DI CAREZZANO', N'#e67575', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (29, N'COMUNE DI GUAZZORA', N'#491b1b', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (30, N'COMUNE DI GAVI', N'#35bc89', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (31, N'COMUNE DI POZZOLO FORMIGARO', NULL, 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (32, N'COMUNE DI SPINETO SCRIVIA', N'#dcd034', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (33, N'COMUNE DI CARROSIO', N'#fb0b0b', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (34, N'COMUNE DI FRACONALTO', N'#d4ff3f', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (35, N'COMUNE DI PARODI LIGURE', N'#a430ff', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (36, N'COMUNE DI VOLTAGGIO', N'#49cee2', 0)
+GO
+INSERT [dbo].[GaCsrProduttori] ([Id], [RagioneSociale], [Colore], [Disabled]) VALUES (37, N'COMUNE DI CASTELLAR GUIDOBONO', N'#993481', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrProduttori] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrRegistrazioniPesi] ON 
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (1, 3, 13, 16, 24, 1, 3, 30, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (2, 4, 13, 16, 24, 1, 3, 30, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (3, 5, 13, 16, 24, 1, 65, 650, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (4, 6, 13, 16, 24, 1, 1, 10, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (5, 7, 13, 16, 24, 1, 2, 20, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (6, 8, 13, 16, 24, 1, 11, 110, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (7, 9, 13, 16, 24, 1, 2, 20, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (8, 10, 13, 16, 24, 1, 10, 100, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (9, 11, 13, 16, 24, 1, 2, 20, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (10, 12, 13, 16, 24, 1, 1, 10, 2, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (11, 3, 7, 10, 12, 1, 3, 39.6, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (12, 4, 7, 10, 12, 1, 3, 39.6, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (13, 5, 7, 10, 12, 1, 65, 858, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (14, 6, 7, 10, 12, 1, 1, 13.2, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (15, 7, 7, 10, 12, 1, 2, 26.4, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (16, 8, 7, 10, 12, 1, 11, 145.2, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (17, 9, 7, 10, 12, 1, 2, 26.4, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (18, 10, 7, 10, 12, 1, 10, 132, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (19, 11, 7, 10, 12, 1, 2, 26.4, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (20, 12, 7, 10, 12, 1, 1, 13.2, 3, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (21, 3, 14, 11, 13, 1, 3, 9, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (22, 4, 14, 11, 13, 1, 3, 9, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (23, 5, 14, 11, 13, 1, 65, 195, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (24, 6, 14, 11, 13, 1, 1, 3, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (25, 7, 14, 11, 13, 1, 2, 6, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (26, 8, 14, 11, 13, 1, 11, 33, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (27, 9, 14, 11, 13, 1, 2, 6, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (28, 10, 14, 11, 13, 1, 10, 30, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (29, 11, 14, 11, 13, 1, 2, 6, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (30, 12, 14, 11, 13, 1, 1, 3, 4, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (31, 3, 9, 11, 13, 1, 3, 11.1, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (32, 4, 9, 11, 13, 1, 3, 11.1, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (33, 5, 9, 11, 13, 1, 65, 240.5, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (34, 6, 9, 11, 13, 1, 1, 3.7, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (35, 7, 9, 11, 13, 1, 2, 7.4, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (36, 8, 9, 11, 13, 1, 11, 40.7, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (37, 9, 9, 11, 13, 1, 2, 7.4, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (38, 10, 9, 11, 13, 1, 10, 37, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (39, 11, 9, 11, 13, 1, 2, 7.4, 5, 0)
+GO
+INSERT [dbo].[GaCsrRegistrazioniPesi] ([Id], [CsrProduttoreId], [CsrCodiceCerId], [CsrDestinatarioId], [CsrTrasportatoreId], [CsrComuneId], [Percentuale], [Peso], [CsrRegistrazioneId], [Disabled]) VALUES (40, 12, 9, 11, 13, 1, 1, 3.7, 5, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrRegistrazioniPesi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrRipartizioniPercentuali] ON 
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (2, 1, 3, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (3, 1, 4, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (4, 1, 5, 54, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (6, 1, 7, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (7, 1, 8, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (8, 1, 31, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (9, 1, 10, 12, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (10, 1, 13, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (11, 1, 23, 9, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (35, 3, 3, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (36, 3, 4, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (37, 3, 15, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (38, 3, 6, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (39, 3, 7, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (40, 3, 8, 40, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (41, 3, 9, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (42, 3, 10, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (43, 3, 11, 8, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (44, 3, 12, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (45, 5, 13, 47, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (46, 5, 14, 12, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (50, 7, 28, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (51, 7, 15, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (52, 7, 19, 9, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (53, 7, 20, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (54, 7, 21, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (55, 7, 8, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (56, 7, 31, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (57, 7, 22, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (58, 7, 13, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (59, 7, 32, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (60, 7, 23, 45, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (61, 7, 24, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (62, 7, 25, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (63, 5, 26, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (67, 6, 19, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (68, 6, 15, 17, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (69, 6, 28, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (70, 6, 30, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (71, 6, 8, 24, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (72, 6, 9, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (73, 6, 31, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (74, 6, 17, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (76, 6, 32, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (77, 6, 12, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (78, 6, 23, 10, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (79, 6, 25, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (80, 6, 11, 11, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (81, 2, 3, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (82, 2, 4, 10, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (83, 2, 33, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (84, 2, 6, 12, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (85, 2, 7, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (86, 2, 30, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (87, 2, 8, 21, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (88, 2, 35, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (89, 2, 9, 9, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (90, 2, 31, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (91, 2, 10, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (92, 2, 11, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (93, 2, 23, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (94, 2, 12, 8, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (95, 4, 3, 8, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (96, 4, 4, 9, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (97, 4, 5, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (98, 4, 6, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (99, 4, 7, 8, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (100, 4, 30, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (101, 4, 8, 17, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (102, 4, 9, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (103, 4, 31, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (104, 4, 10, 27, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (105, 4, 12, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (106, 4, 23, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (107, 8, 36, 26, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (108, 9, 14, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (109, 9, 18, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (110, 9, 19, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (111, 9, 37, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (112, 9, 20, 31, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (113, 9, 29, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (114, 9, 21, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (115, 9, 26, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (116, 9, 8, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (117, 9, 22, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (118, 9, 13, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (119, 9, 23, 17, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (120, 9, 24, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (121, 10, 3, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (122, 10, 4, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (123, 10, 19, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (124, 10, 28, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (125, 10, 15, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (126, 10, 6, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (127, 10, 7, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (128, 10, 8, 25, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (129, 10, 9, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (130, 10, 31, 26, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (131, 10, 10, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (132, 10, 11, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (133, 10, 32, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (134, 10, 12, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (135, 10, 23, 8, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (136, 10, 25, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (137, 1, 14, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (138, 5, 18, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (139, 5, 20, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (140, 5, 29, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (141, 5, 21, 6, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (142, 5, 8, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (143, 5, 22, 3, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (144, 5, 23, 8, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (145, 8, 33, 15, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (146, 8, 34, 10, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (147, 8, 30, 11, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (148, 8, 8, 14, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (149, 8, 35, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (150, 8, 31, 2, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (151, 8, 11, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (152, 8, 12, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (153, 8, 23, 7, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (154, 7, 37, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (155, 3, 30, 4, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (156, 3, 31, 8, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (157, 3, 23, 5, 0)
+GO
+INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttoreId], [Percentuale], [Disabled]) VALUES (158, 3, 17, 2, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaCsrRipartizioniPercentuali] OFF
+GO

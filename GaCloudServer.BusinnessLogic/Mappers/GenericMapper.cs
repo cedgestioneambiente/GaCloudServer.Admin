@@ -28,6 +28,7 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new NotificationMapperProfile(),
             new GlobalMapperProfile(),
             new PersonaleMapperProfile(),
+            new CsrMapperProfile(),
         };
 
         static GenericMapper() {

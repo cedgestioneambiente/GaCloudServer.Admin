@@ -1,5 +1,4 @@
-﻿
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;

@@ -406,21 +406,21 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateGaPersonaleDipendenteAsync/{id}/{userId")]
-        //public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleDipendenteAsync(long id, string userId)
-        //{
-        //    try
-        //    {
-        //        var response = await _gaPersonaleService.ValidateGaPersonaleDipendenteAsync(id, userId);
-        //        return new ApiResponse(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
+        [HttpGet("ValidateGaPersonaleDipendenteAsync/{id}/{userId}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleDipendenteAsync(long id, string userId)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.ValidateGaPersonaleDipendenteAsync(id, userId);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
 
-        //}
+        }
 
         [HttpGet("ChangeStatusGaPersonaleDipendenteAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> ChangeStatusGaPersonaleDipendenteAsync(long id)

@@ -4,6 +4,7 @@ using GaCloudServer.Resources.Api.Mappers.Aziende;
 using GaCloudServer.Resources.Api.Mappers.Cdr;
 using GaCloudServer.Resources.Api.Mappers.Comunicati;
 using GaCloudServer.Resources.Api.Mappers.Contratti;
+using GaCloudServer.Resources.Api.Mappers.Csr;
 using GaCloudServer.Resources.Api.Mappers.Global;
 using GaCloudServer.Resources.Api.Mappers.Mezzi;
 using GaCloudServer.Resources.Api.Mappers.Notification;
@@ -29,6 +30,7 @@ namespace GaCloudServer.Resources.Api.Mappers
             new NotificationMapperProfile(),
             new GlobalMapperProfile(),
             new PersonaleMapperProfile(),
+            new CsrMapperProfile(),
         };
 
         static GenericMapper() {

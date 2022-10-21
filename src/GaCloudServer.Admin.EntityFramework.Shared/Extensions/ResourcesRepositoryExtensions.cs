@@ -9,6 +9,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
@@ -158,6 +160,27 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PersonaleAssunzione>, GenericRepository<TResourcesDbContext, PersonaleAssunzione>>();
             #endregion
 
+            //Csr
+            #region Csr
+            services.AddTransient<IGenericRepository<CsrCodiceCer>, GenericRepository<TResourcesDbContext, CsrCodiceCer>>();
+            services.AddTransient<IGenericRepository<CsrComune>, GenericRepository<TResourcesDbContext, CsrComune>>();
+            services.AddTransient<IGenericRepository<CsrDestinatario>, GenericRepository<TResourcesDbContext, CsrDestinatario>>();
+            services.AddTransient<IGenericRepository<CsrProduttore>, GenericRepository<TResourcesDbContext, CsrProduttore>>();
+            services.AddTransient<IGenericRepository<CsrRegistrazione>, GenericRepository<TResourcesDbContext, CsrRegistrazione>>();
+            services.AddTransient<IGenericRepository<CsrRegistrazionePeso>, GenericRepository<TResourcesDbContext, CsrRegistrazionePeso>>();
+            services.AddTransient<IGenericRepository<CsrRipartizionePercentuale>, GenericRepository<TResourcesDbContext, CsrRipartizionePercentuale>>();
+            services.AddTransient<IGenericRepository<CsrTrasportatore>, GenericRepository<TResourcesDbContext, CsrTrasportatore>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaCsrCodiciCers>, GenericRepository<TResourcesDbContext, ViewGaCsrCodiciCers>>();
+            services.AddTransient<IGenericRepository<ViewGaCsrDestinatari>, GenericRepository<TResourcesDbContext, ViewGaCsrDestinatari>>();
+            services.AddTransient<IGenericRepository<ViewGaCsrExports>, GenericRepository<TResourcesDbContext, ViewGaCsrExports>>();
+            services.AddTransient<IGenericRepository<ViewGaCsrProduttori>, GenericRepository<TResourcesDbContext, ViewGaCsrProduttori>>();
+            services.AddTransient<IGenericRepository<ViewGaCsrRegistrazioni>, GenericRepository<TResourcesDbContext, ViewGaCsrRegistrazioni>>();
+            services.AddTransient<IGenericRepository<ViewGaCsrRegistrazioniPesi>, GenericRepository<TResourcesDbContext, ViewGaCsrRegistrazioniPesi>>();
+            services.AddTransient<IGenericRepository<ViewGaCsrRipartizioniPercentuali>, GenericRepository<TResourcesDbContext, ViewGaCsrRipartizioniPercentuali>>();
+            services.AddTransient<IGenericRepository<ViewGaCsrTrasportatori>, GenericRepository<TResourcesDbContext, ViewGaCsrTrasportatori>>();
+            #endregion
 
             return services; 
         }

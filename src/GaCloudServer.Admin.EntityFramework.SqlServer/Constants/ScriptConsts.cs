@@ -52,5 +52,10 @@
         public const string Notification = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Notification\";
         public const string CREATE_ViewNotification = "CREATE_ViewNotification.sql";
         public const string DROP_ViewNotification = "DROP_ViewNotification.sql";
+
+        //Csr
+        public const string GaCsrMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Csr\";
+        public const string CREATE_ViewGaCsr = "CREATE_ViewGaCsr.sql";
+        public const string DROP_ViewGaCsr = "DROP_ViewGaCsr.sql";
     }
 }
