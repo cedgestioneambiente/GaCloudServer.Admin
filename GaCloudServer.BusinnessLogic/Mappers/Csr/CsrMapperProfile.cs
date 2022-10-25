@@ -3,7 +3,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Csr;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
-namespace GaCloudServer.BusinessLogic.Mappers.Aziende
+namespace GaCloudServer.BusinessLogic.Mappers.Csr
 {
     internal class CsrMapperProfile : Profile
     {

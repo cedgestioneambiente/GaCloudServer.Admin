@@ -20,6 +20,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -184,6 +186,23 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaCsrRegistrazioniPesi> ViewGaCsrRegistrazioniPesi { get; set; }
         DbSet<ViewGaCsrRipartizioniPercentuali> ViewGaCsrRipartizioniPercentuali { get; set; }
         DbSet<ViewGaCsrTrasportatori> ViewGaCsrTrasportatori { get; set; }
+        #endregion
+
+        #endregion
+
+        #region GaReclami Tables
+        DbSet<ReclamiAzione> GaReclamiAzioni { get; set; }
+        DbSet<ReclamiDocumento> GaReclamiDocumenti { get; set; }
+        DbSet<ReclamiMittente> GaReclamiMittenti { get; set; }
+        DbSet<ReclamiStato> GaReclamiStati { get; set; }
+        DbSet<ReclamiTempoRisposta> GaReclamiTempiRisposte { get; set; }
+        DbSet<ReclamiTipoAzione> GaReclamiTipiAzioni { get; set; }
+        DbSet<ReclamiTipoOrigine> GaReclamiTipiOrigini { get; set; }
+
+        #region Views
+        DbSet<ViewGaReclamiAzioni> ViewGaReclamiAzioni { get; set; }
+        DbSet<ViewGaReclamiDocumenti> ViewGaReclamiDocumenti { get; set; }
+        DbSet<ViewGaReclamiRegistri> ViewGaReclamiRegistri { get; set; }
         #endregion
 
         #endregion

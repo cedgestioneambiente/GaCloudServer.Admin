@@ -3290,3 +3290,79 @@ INSERT [dbo].[GaCsrRipartizioniPercentuali] ([Id], [CsrComuneId], [CsrProduttore
 GO
 SET IDENTITY_INSERT [dbo].[GaCsrRipartizioniPercentuali] OFF
 GO
+
+
+-- RECLAMI
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiMittenti] ON 
+GO
+INSERT [dbo].[GaReclamiMittenti] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'COMUNE DI NOVI LIGURE')
+GO
+INSERT [dbo].[GaReclamiMittenti] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'COMUNE DI FRANCAVILLA BISIO')
+GO
+INSERT [dbo].[GaReclamiMittenti] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'COMUNE DI CASTELLAZZO BORMIDA')
+GO
+INSERT [dbo].[GaReclamiMittenti] ([Id], [Disabled], [Descrizione]) VALUES (4, 0, N'COMUNE DI POZZOLO FORMIGARO')
+GO
+INSERT [dbo].[GaReclamiMittenti] ([Id], [Disabled], [Descrizione]) VALUES (5, 0, N'COMUNE DI TORTONA')
+GO
+INSERT [dbo].[GaReclamiMittenti] ([Id], [Disabled], [Descrizione]) VALUES (13, 0, N'COMUNE DI PASTURANA')
+GO
+INSERT [dbo].[GaReclamiMittenti] ([Id], [Disabled], [Descrizione]) VALUES (14, 0, N'COMUNE DI ARQUATA SCRIVIA')
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiMittenti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiTempiRisposte] ON
+GO
+INSERT [dbo].[GaReclamiTempiRisposte] ([Id], [Descrizione], [Giorni], [Disabled]) VALUES (1, N'ENTRO 10 GIORNI', 10, 1)
+GO
+INSERT [dbo].[GaReclamiTempiRisposte] ([Id], [Descrizione], [Giorni], [Disabled]) VALUES (2, N'ENTRO 30 GIORNI', 30, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiTempiRisposte] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiTipiAzioni] ON 
+GO
+INSERT [dbo].[GaReclamiTipiAzioni] ([Id], [DescrizioneBreve], [Disabled], [Descrizione]) VALUES (1, N'C USC', 0, N'COMUNICAZIONE USCITA')
+GO
+INSERT [dbo].[GaReclamiTipiAzioni] ([Id], [DescrizioneBreve], [Disabled], [Descrizione]) VALUES (4, N'C VER', 0, N'COMUNICAZIONE VERBALE')
+GO
+INSERT [dbo].[GaReclamiTipiAzioni] ([Id], [DescrizioneBreve], [Disabled], [Descrizione]) VALUES (5, N'P USC', 0, N'PROTOCOLLO USCITA')
+GO
+INSERT [dbo].[GaReclamiTipiAzioni] ([Id], [DescrizioneBreve], [Disabled], [Descrizione]) VALUES (6, N'P ENT', 0, N'PROTOCOLLO ENTRATA')
+GO
+INSERT [dbo].[GaReclamiTipiAzioni] ([Id], [DescrizioneBreve], [Disabled], [Descrizione]) VALUES (7, N'SEGN', 0, N'SEGNALAZIONE')
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiTipiAzioni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiStati] ON 
+GO
+INSERT [dbo].[GaReclamiStati] ([Id], [Disabled], [Descrizione]) VALUES (0, 0, N'IN LAVORAZIONE')
+GO
+INSERT [dbo].[GaReclamiStati] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'CHIUSO')
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiStati] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiTipiOrigini] ON 
+GO
+INSERT [dbo].[GaReclamiTipiOrigini] ([Id], [DescrizioneBreve], [Disabled], [Descrizione]) VALUES (3, N'PROT', 0, N'PROTOCOLLO')
+GO
+INSERT [dbo].[GaReclamiTipiOrigini] ([Id], [DescrizioneBreve], [Disabled], [Descrizione]) VALUES (5, N'VERB', 0, N'VERBALE')
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiTipiOrigini] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiDocumenti] ON 
+GO
+INSERT [dbo].[GaReclamiDocumenti] ([Id], [ReclamiDocumentoId], [GlobalSedeId], [ReclamiTipoOrigineId], [OrigineDescrizione], [OrigineData], [ReclamiMittenteId], [Oggetto], [ReclamiTempoRispostaId], [RispostaEntroData], [Fondato], [Infondato], [ReclamiStatoId], [Note], [AzioniCorrettive], [RispostaInviata], [RispostaDefinitiva], [Disabled]) VALUES (5, N'1', 1, 3, N'AA', CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 5, N'PROVA', 2, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0, N'1', 1, NULL, NULL, NULL, NULL, 0)
+GO
+INSERT [dbo].[GaReclamiDocumenti] ([Id], [ReclamiDocumentoId], [GlobalSedeId], [ReclamiTipoOrigineId], [OrigineDescrizione], [OrigineData], [ReclamiMittenteId], [Oggetto], [ReclamiTempoRispostaId], [RispostaEntroData], [Fondato], [Infondato], [ReclamiStatoId], [Note], [AzioniCorrettive], [RispostaInviata], [RispostaDefinitiva], [Disabled]) VALUES (10, N'STRING', 2, 3, N'EEEEE', CAST(N'2020-01-01T00:00:00.0000000' AS DateTime2), 5, N'AA', 4, CAST(N'2020-02-02T00:00:00.0000000' AS DateTime2), 0, N'SI', 0, NULL, NULL, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiDocumenti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiAzioni] ON 
+GO
+INSERT [dbo].[GaReclamiAzioni] ([Id], [ReclamiDocumentoId], [ReclamiTipoAzioneId], [Data], [Note], [Risposta], [RispostaDefinitiva], [Disabled], [Descrizione]) VALUES (2440, 5, 1, CAST(N'2022-02-01T00:00:00.0000000' AS DateTime2), N'AAA', 0, CAST(N'2001-01-01T00:00:00.0000000' AS DateTime2), 0, N'AAA')
+GO
+INSERT [dbo].[GaReclamiAzioni] ([Id], [ReclamiDocumentoId], [ReclamiTipoAzioneId], [Data], [Note], [Risposta], [RispostaDefinitiva], [Disabled], [Descrizione]) VALUES (2443, 10, 1, CAST(N'2021-01-01T00:00:00.0000000' AS DateTime2), N'66', 0, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0, N'HH')
+GO
+SET IDENTITY_INSERT [dbo].[GaReclamiAzioni] OFF
+GO

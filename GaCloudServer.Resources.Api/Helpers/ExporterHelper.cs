@@ -43,7 +43,7 @@ namespace GaCloudServer.Resources.Api.Helpers
 
         public static byte[] ExportExcel(DataTable dataTable, string heading = "", string extra1 = "", string extra2 = "", string type = "", bool showSrNo = false, params string[] columnsToTake)
         {
-
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
             byte[] result = null;
             using (ExcelPackage package = new ExcelPackage())
             {
