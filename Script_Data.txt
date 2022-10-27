@@ -3366,3 +3366,71 @@ INSERT [dbo].[GaReclamiAzioni] ([Id], [ReclamiDocumentoId], [ReclamiTipoAzioneId
 GO
 SET IDENTITY_INSERT [dbo].[GaReclamiAzioni] OFF
 GO
+
+
+--SEGNALAZIONI
+GO
+SET IDENTITY_INSERT [dbo].[EcSegnalazioniStati] ON 
+GO
+INSERT [dbo].[EcSegnalazioniStati] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'stato1')
+GO
+INSERT [dbo].[EcSegnalazioniStati] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'stato2')
+GO
+SET IDENTITY_INSERT [dbo].[EcSegnalazioniStati] OFF
+GO
+SET IDENTITY_INSERT [dbo].[EcSegnalazioniTipi] ON 
+GO
+INSERT [dbo].[EcSegnalazioniTipi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'tipo1')
+GO
+INSERT [dbo].[EcSegnalazioniTipi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'tipo2')
+GO
+SET IDENTITY_INSERT [dbo].[EcSegnalazioniTipi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[EcSegnalazioniDocumenti] ON 
+GO
+INSERT [dbo].[EcSegnalazioniDocumenti] ([Id], [SegnalazioniTipoId], [SegnalazioniStatoId], [Note], [Longitudine], [Latitudine], [Indirizzo], [DataOra], [ImgFolder], [UserId], [Sanzione], [NoteSanzione], [NoteGestione], [Disabled]) VALUES (1, 1, 2, N'a', 23, 34, N'aa', CAST(N'2020-01-01T00:00:00.0000000' AS DateTime2), N'aa', N'cda60f19-8efb-461b-bf7a-20dc69863923', 0, N'aa', N'aa', 0)
+GO
+INSERT [dbo].[EcSegnalazioniDocumenti] ([Id], [SegnalazioniTipoId], [SegnalazioniStatoId], [Note], [Longitudine], [Latitudine], [Indirizzo], [DataOra], [ImgFolder], [UserId], [Sanzione], [NoteSanzione], [NoteGestione], [Disabled]) VALUES (3, 2, 1, N'bb', 5425, 5435, N'bbb', CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), NULL, N'cda60f19-8efb-461b-bf7a-20dc69863923', 0, NULL, NULL, 0)
+GO
+SET IDENTITY_INSERT [dbo].[EcSegnalazioniDocumenti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[EcSegnalazioniFotos] ON 
+GO
+INSERT [dbo].[EcSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (1, 1, 0, N'43243432', N'dd', N'dd', N'dwd', N'45')
+GO
+INSERT [dbo].[EcSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 3, 0, N'6', N'j', N'j', N'j', N'4')
+GO
+SET IDENTITY_INSERT [dbo].[EcSegnalazioniFotos] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaSegnalazioniStati] ON 
+GO
+INSERT [dbo].[GaSegnalazioniStati] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'stato1')
+GO
+INSERT [dbo].[GaSegnalazioniStati] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'stato2')
+GO
+SET IDENTITY_INSERT [dbo].[GaSegnalazioniStati] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaSegnalazioniTipi] ON 
+GO
+INSERT [dbo].[GaSegnalazioniTipi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'tipo1')
+GO
+INSERT [dbo].[GaSegnalazioniTipi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'tipo2')
+GO
+SET IDENTITY_INSERT [dbo].[GaSegnalazioniTipi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaSegnalazioniDocumenti] ON 
+GO
+INSERT [dbo].[GaSegnalazioniDocumenti] ([Id], [SegnalazioniTipoId], [SegnalazioniStatoId], [Note], [Longitudine], [Latitudine], [Indirizzo], [DataOra], [ImgFolder], [UserId], [Sanzione], [NoteSanzione], [NoteGestione], [Disabled]) VALUES (1, 1, 2, N'a', 23, 34, N'aa', CAST(N'2020-01-01T00:00:00.0000000' AS DateTime2), N'aa', N'cda60f19-8efb-461b-bf7a-20dc69863923', 0, N'aa', N'aa', 0)
+GO
+INSERT [dbo].[GaSegnalazioniDocumenti] ([Id], [SegnalazioniTipoId], [SegnalazioniStatoId], [Note], [Longitudine], [Latitudine], [Indirizzo], [DataOra], [ImgFolder], [UserId], [Sanzione], [NoteSanzione], [NoteGestione], [Disabled]) VALUES (3, 2, 1, N'bb', 5425, 5435, N'bbb', CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), NULL, N'cda60f19-8efb-461b-bf7a-20dc69863923', 0, NULL, NULL, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaSegnalazioniDocumenti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaSegnalazioniFotos] ON 
+GO
+INSERT [dbo].[GaSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (1, 1, 0, N'43243432', N'dd', N'dd', N'dwd', N'45')
+GO
+INSERT [dbo].[GaSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 3, 0, N'6', N'j', N'j', N'j', N'4')
+GO
+SET IDENTITY_INSERT [dbo].[GaSegnalazioniFotos] OFF
+GO

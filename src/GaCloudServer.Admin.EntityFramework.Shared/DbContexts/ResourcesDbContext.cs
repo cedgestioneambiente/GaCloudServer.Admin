@@ -23,6 +23,9 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -211,6 +214,30 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaReclamiAzioni> ViewGaReclamiAzioni { get; set; }
         public DbSet<ViewGaReclamiDocumenti> ViewGaReclamiDocumenti { get; set; }
         public DbSet<ViewGaReclamiRegistri> ViewGaReclamiRegistri { get; set; }
+        #endregion
+
+        #endregion
+
+        #region GaSegnalazioni Tables
+        public DbSet<SegnalazioniTipo> GaSegnalazioniTipi { get; set; }
+        public DbSet<SegnalazioniStato> GaSegnalazioniStati { get; set; }
+        public DbSet<SegnalazioniFoto> GaSegnalazioniFotos { get; set; }
+        public DbSet<SegnalazioniDocumento> GaSegnalazioniDocumenti { get; set; }
+
+        #region Views
+        public DbSet<ViewGaSegnalazioniDocumenti> ViewGaSegnalazioniDocumenti { get; set; }
+        #endregion
+
+        #endregion
+
+        #region EcSegnalazioni Tables
+        public DbSet<EcSegnalazioniTipo> EcSegnalazioniTipi { get; set; }
+        public DbSet<EcSegnalazioniStato> EcSegnalazioniStati { get; set; }
+        public DbSet<EcSegnalazioniFoto> EcSegnalazioniFotos { get; set; }
+        public DbSet<EcSegnalazioniDocumento> EcSegnalazioniDocumenti { get; set; }
+
+        #region Views
+        public DbSet<ViewEcSegnalazioniDocumenti> ViewEcSegnalazioniDocumenti { get; set; }
         #endregion
 
         #endregion
@@ -544,6 +571,26 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaReclamiRegistri))
+                    .HasKey(x => x.Id);
+            });
+
+            #endregion
+
+            #region Segnalazioni
+            builder.Entity<ViewGaSegnalazioniDocumenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaSegnalazioniDocumenti))
+                    .HasKey(x => x.Id);
+            });
+
+            #endregion
+
+            #region EcSegnalazioni
+            builder.Entity<ViewEcSegnalazioniDocumenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewEcSegnalazioniDocumenti))
                     .HasKey(x => x.Id);
             });
 

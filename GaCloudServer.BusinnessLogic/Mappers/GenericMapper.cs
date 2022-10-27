@@ -11,6 +11,8 @@ using GaCloudServer.BusinnessLogic.Mappers.Global;
 using GaCloudServer.BusinessLogic.Mappers.Personale;
 using GaCloudServer.BusinessLogic.Mappers.Csr;
 using GaCloudServer.BusinessLogic.Mappers.Reclami;
+using GaCloudServer.BusinessLogic.Mappers.Segnalazioni;
+using GaCloudServer.BusinessLogic.Mappers.EcSegnalazioni;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -32,6 +34,8 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new PersonaleMapperProfile(),
             new CsrMapperProfile(),
             new ReclamiMapperProfile(),
+            new SegnalazioniMapperProfile(),
+            new EcSegnalazioniMapperProfile(),
         };
 
         static GenericMapper() {

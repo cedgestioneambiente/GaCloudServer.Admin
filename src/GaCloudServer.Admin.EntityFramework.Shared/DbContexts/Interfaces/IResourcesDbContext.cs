@@ -22,6 +22,9 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -203,6 +206,30 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaReclamiAzioni> ViewGaReclamiAzioni { get; set; }
         DbSet<ViewGaReclamiDocumenti> ViewGaReclamiDocumenti { get; set; }
         DbSet<ViewGaReclamiRegistri> ViewGaReclamiRegistri { get; set; }
+        #endregion
+
+        #endregion
+
+        #region GaSegnalazioni Tables
+        DbSet<SegnalazioniTipo> GaSegnalazioniTipi { get; set; }
+        DbSet<SegnalazioniStato> GaSegnalazioniStati { get; set; }
+        DbSet<SegnalazioniFoto> GaSegnalazioniFotos { get; set; }
+        DbSet<SegnalazioniDocumento> GaSegnalazioniDocumenti { get; set; }
+
+        #region Views
+        DbSet<ViewGaSegnalazioniDocumenti> ViewGaSegnalazioniDocumenti { get; set; }
+        #endregion
+
+        #endregion
+
+        #region EcSegnalazioni Tables
+        DbSet<EcSegnalazioniTipo> EcSegnalazioniTipi { get; set; }
+        DbSet<EcSegnalazioniStato> EcSegnalazioniStati { get; set; }
+        DbSet<EcSegnalazioniFoto> EcSegnalazioniFotos { get; set; }
+        DbSet<EcSegnalazioniDocumento> EcSegnalazioniDocumenti { get; set; }
+
+        #region Views
+        DbSet<ViewEcSegnalazioniDocumenti> ViewEcSegnalazioniDocumenti { get; set; }
         #endregion
 
         #endregion

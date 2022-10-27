@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20221021110032_ViewGaReclami")]
-    partial class ViewGaReclami
+    [Migration("20221025091802_GaReclami")]
+    partial class GaReclami
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -3361,7 +3361,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaReclamiTempiRisposta");
+                    b.ToTable("GaReclamiTempiRisposte");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTipoAzione", b =>
@@ -3405,7 +3405,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaReclamiTipiOrigine");
+                    b.ToTable("GaReclamiTipiOrigini");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views.ViewGaReclamiAzioni", b =>
