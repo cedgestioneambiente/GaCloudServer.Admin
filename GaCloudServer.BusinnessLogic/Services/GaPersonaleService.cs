@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Personale;
 using GaCloudServer.BusinnessLogic.Mappers;
@@ -13,6 +14,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PersonaleAssunzione> gaPersonaleAssunzioniRepo;
         protected readonly IGenericRepository<PersonaleDipendente> gaPersonaleDipendentiRepo;
 
+        protected readonly IGenericRepository<ViewGaPersonaleUsersOnDipendenti> viewGaPersonaleUsersOnDipendentiRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleDipendenti> viewGaPersonaleDipendentiRepo;
+
         protected readonly IUnitOfWork unitOfWork;
 
         public GaPersonaleService(
@@ -20,11 +24,17 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<PersonaleAssunzione> gaPersonaleAssunzioniRepo,
             IGenericRepository<PersonaleDipendente> gaPersonaleDipendentiRepo,
 
+            IGenericRepository<ViewGaPersonaleUsersOnDipendenti> viewGaPersonaleUsersOnDipendentiRepo,
+            IGenericRepository<ViewGaPersonaleDipendenti> viewGaPersonaleDipendentiRepo,
+
             IUnitOfWork unitOfWork)
         {
             this.gaPersonaleQualificheRepo = gaPersonaleQualificheRepo;
             this.gaPersonaleAssunzioniRepo = gaPersonaleAssunzioniRepo;
             this.gaPersonaleDipendentiRepo = gaPersonaleDipendentiRepo;
+
+            this.viewGaPersonaleUsersOnDipendentiRepo = viewGaPersonaleUsersOnDipendentiRepo;
+            this.viewGaPersonaleDipendentiRepo = viewGaPersonaleDipendentiRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -264,6 +274,46 @@ namespace GaCloudServer.BusinnessLogic.Services
                 await SaveChanges();
                 return true;
             }
+
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPersonaleUsersOnDipendenti>> GetViewGaPersonaleUsersOnDipendentiAsync(bool all = true)
+        {
+            var view = all==true?await viewGaPersonaleUsersOnDipendentiRepo.GetAllAsync(1,0,"CognomeNome"): await viewGaPersonaleUsersOnDipendentiRepo.GetWithFilterAsync(x=>x.Active==all,1,0,"CognomeNome");
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaPersonaleDipendenti>> GetViewGaPersonaleDipendentiByQualificaAndSedeAsync(long qualificaId,long sedeId)
+        {
+            if (qualificaId == 0)
+            {
+                if (sedeId == 0)
+                {
+                    return await viewGaPersonaleDipendentiRepo.GetAllAsync();
+                }
+                else
+                {
+                    return await viewGaPersonaleDipendentiRepo.GetWithFilterAsync(x => x.SedeId == sedeId);
+                }
+            }
+            else
+            {
+                if (sedeId == 0)
+                {
+                    return await viewGaPersonaleDipendentiRepo.GetWithFilterAsync(x => x.QualificaId == qualificaId);
+                }
+                else
+                {
+                    return await viewGaPersonaleDipendentiRepo.GetWithFilterAsync(x => x.QualificaId == qualificaId && x.SedeId == sedeId);
+                }
+            }
+        }
+
+        public async Task<ViewGaPersonaleDipendenti> GetViewGaPersonaleDipendenteByIdAsync(long id)
+        {
+            return await viewGaPersonaleDipendentiRepo.GetSingleWithFilter(x => x.Id == id);
 
         }
         #endregion

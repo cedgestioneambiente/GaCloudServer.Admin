@@ -25,7 +25,6 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.View
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -169,6 +168,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
         DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
         DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
+
+        #region Views
+        DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }
+        DbSet<ViewGaPersonaleDipendenti> ViewGaPersonaleDipendenti { get; set; }
+        #endregion
         #endregion
 
         #region GaCsr Tables

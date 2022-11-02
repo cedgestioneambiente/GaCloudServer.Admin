@@ -122,6 +122,12 @@
     <None Update="Scripts\Notification\DROP_ViewNotification.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Scripts\Personale\CREATE_ViewGaPersonale.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Personale\DROP_ViewGaPersonale.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Scripts\PrenotazioneAuto\DROP_ViewGaPrenotazioneAuto.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -77,8 +77,8 @@
                                             <td>@session.SubjectId</td>
                                             <td>@session.SessionId</td>
                                             <td>@session.DisplayName</td>
-                                            <td>@session.Created</td>
-                                            <td>@session.Expires</td>
+                                            <td>@session.Created.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                            <td>@session.Expires.Value.ToString("dd/MM/yyyy HH:mm:ss")</td>
                                             <td>
                                                 <form method="post">
                                                     <input type="hidden" name="SessionId" value="@session.SessionId" />

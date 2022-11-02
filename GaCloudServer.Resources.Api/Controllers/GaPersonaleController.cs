@@ -439,6 +439,56 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #region Views
+        [HttpGet("GetViewGaPersonaleUsersOnDipendentiAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleUsersOnDipendentiAsync(bool all=true)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleUsersOnDipendentiAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaPersonaleDipendentiByQualificaAndSedeAsync/{qualificaId}/{sedeId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleDipendentiByQualificaAndSedeAsync(long qualificaId=0,long sedeId=0)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleDipendentiByQualificaAndSedeAsync(qualificaId,sedeId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaPersonaleDipendenteByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleDipendenteByIdAsync(long id)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleDipendenteByIdAsync(id);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
         #endregion
 
     }
