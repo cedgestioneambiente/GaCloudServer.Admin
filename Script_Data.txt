@@ -3362,7 +3362,7 @@ SET IDENTITY_INSERT [dbo].[GaReclamiAzioni] ON
 GO
 INSERT [dbo].[GaReclamiAzioni] ([Id], [ReclamiDocumentoId], [ReclamiTipoAzioneId], [Data], [Note], [Risposta], [RispostaDefinitiva], [Disabled], [Descrizione]) VALUES (2440, 5, 1, CAST(N'2022-02-01T00:00:00.0000000' AS DateTime2), N'AAA', 0, CAST(N'2001-01-01T00:00:00.0000000' AS DateTime2), 0, N'AAA')
 GO
-INSERT [dbo].[GaReclamiAzioni] ([Id], [ReclamiDocumentoId], [ReclamiTipoAzioneId], [Data], [Note], [Risposta], [RispostaDefinitiva], [Disabled], [Descrizione]) VALUES (2443, 10, 1, CAST(N'2021-01-01T00:00:00.0000000' AS DateTime2), N'66', 0, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0, N'HH')
+INSERT [dbo].[GaReclamiAzioni] ([Id], [ReclamiDocumentoId], [ReclamiTipoAzioneId], [Data], [Note], [Risposta], [RispostaDefinitiva], [Disabled], [Descrizione]) VALUES (2443, 5, 1, CAST(N'2021-01-01T00:00:00.0000000' AS DateTime2), N'66', 0, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0, N'HH')
 GO
 SET IDENTITY_INSERT [dbo].[GaReclamiAzioni] OFF
 GO
@@ -3433,4 +3433,60 @@ GO
 INSERT [dbo].[GaSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 3, 0, N'6', N'j', N'j', N'j', N'4')
 GO
 SET IDENTITY_INSERT [dbo].[GaSegnalazioniFotos] OFF
+GO
+
+
+--CONTACTCENTER
+
+
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterComuni] ON 
+GO
+INSERT [dbo].[GaContactCenterComuni] ([Id], [Descrizione], [Disabled]) VALUES (1, N'ALTRO', 0)
+GO
+INSERT [dbo].[GaContactCenterComuni] ([Id], [Descrizione], [Disabled]) VALUES (2, N'CASTELLAZZO BORMIDA', 0)
+GO
+INSERT [dbo].[GaContactCenterComuni] ([Id], [Descrizione], [Disabled]) VALUES (3, N'FRANCAVILLA BISIO', 0)
+GO
+INSERT [dbo].[GaContactCenterComuni] ([Id], [Descrizione], [Disabled]) VALUES (4, N'FRESONARA', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterComuni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterMails] ON 
+GO
+INSERT [dbo].[GaContactCenterMails] ([Id], [Descrizione], [Mail], [Disabled]) VALUES (5, N'FEDERICO LAIGUEGLIA', N'federico.laigueglia@gestioneambiente.net', 0)
+GO
+INSERT [dbo].[GaContactCenterMails] ([Id], [Descrizione], [Mail], [Disabled]) VALUES (11, N'CED', N'ced@gestioneambiente.net', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterMails] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterProvenienze] ON 
+GO
+INSERT [dbo].[GaContactCenterProvenienze] ([Id], [Descrizione], [Disabled]) VALUES (1, N'TELEFONATA', 0)
+GO
+INSERT [dbo].[GaContactCenterProvenienze] ([Id], [Descrizione], [Disabled]) VALUES (2, N'MAIL', 0)
+GO
+INSERT [dbo].[GaContactCenterProvenienze] ([Id], [Descrizione], [Disabled]) VALUES (3, N'ALTRO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterProvenienze] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterStatiRichieste] ON 
+GO
+INSERT [dbo].[GaContactCenterStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (1, N'IN GESTIONE', 0)
+GO
+INSERT [dbo].[GaContactCenterStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (2, N'GESTITO', 0)
+GO
+INSERT [dbo].[GaContactCenterStatiRichieste] ([Id], [Descrizione], [Disabled]) VALUES (3, N'ANNULLATO', 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterStatiRichieste] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterTipiRichieste] ON 
+GO
+INSERT [dbo].[GaContactCenterTipiRichieste] ([Id], [Descrizione], [Ingombranti], [Disabled]) VALUES (1, N'RACCOLTA INGOMBRANTI', 1, 0)
+GO
+INSERT [dbo].[GaContactCenterTipiRichieste] ([Id], [Descrizione], [Ingombranti], [Disabled]) VALUES (2, N'RACCOLTA VERDE', 0, 0)
+GO
+INSERT [dbo].[GaContactCenterTipiRichieste] ([Id], [Descrizione], [Ingombranti], [Disabled]) VALUES (3, N'RACCOLTA CARTA', 0, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterTipiRichieste] OFF
 GO

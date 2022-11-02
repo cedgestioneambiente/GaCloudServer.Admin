@@ -7,6 +7,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.V
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
@@ -230,6 +231,21 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             #endregion
 
+            //ContactCenter
+            #region ContactCenter
+            services.AddTransient<IGenericRepository<ContactCenterComune>, GenericRepository<TResourcesDbContext, ContactCenterComune>>();
+            services.AddTransient<IGenericRepository<ContactCenterProvenienza>, GenericRepository<TResourcesDbContext, ContactCenterProvenienza>>();
+            services.AddTransient<IGenericRepository<ContactCenterStatoRichiesta>, GenericRepository<TResourcesDbContext, ContactCenterStatoRichiesta>>();
+            services.AddTransient<IGenericRepository<ContactCenterTipoRichiesta>, GenericRepository<TResourcesDbContext, ContactCenterTipoRichiesta>>();
+            services.AddTransient<IGenericRepository<ContactCenterMail>, GenericRepository<TResourcesDbContext, ContactCenterMail>>();
+            services.AddTransient<IGenericRepository<ContactCenterAllegato>, GenericRepository<TResourcesDbContext, ContactCenterAllegato>>();
+            services.AddTransient<IGenericRepository<ContactCenterMailOnTicket>, GenericRepository<TResourcesDbContext, ContactCenterMailOnTicket>>();
+            services.AddTransient<IGenericRepository<ContactCenterTicket>, GenericRepository<TResourcesDbContext, ContactCenterTicket>>();
+
+
+
+            #endregion
+            
             return services; 
         }
     }

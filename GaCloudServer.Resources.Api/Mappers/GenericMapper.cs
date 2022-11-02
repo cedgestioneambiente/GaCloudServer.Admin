@@ -3,6 +3,7 @@ using GaCloudServer.Resources.Api.Mappers.Autorizzazioni;
 using GaCloudServer.Resources.Api.Mappers.Aziende;
 using GaCloudServer.Resources.Api.Mappers.Cdr;
 using GaCloudServer.Resources.Api.Mappers.Comunicati;
+using GaCloudServer.Resources.Api.Mappers.ContactCenter;
 using GaCloudServer.Resources.Api.Mappers.Contratti;
 using GaCloudServer.Resources.Api.Mappers.Csr;
 using GaCloudServer.Resources.Api.Mappers.Global;
@@ -35,6 +36,7 @@ namespace GaCloudServer.Resources.Api.Mappers
             new CsrMapperProfile(),
             new ReclamiMapperProfile(),
             new SegnalazioniMapperProfile(),
+            new ContactCenterMapperProfile(),
         };
 
         static GenericMapper() {

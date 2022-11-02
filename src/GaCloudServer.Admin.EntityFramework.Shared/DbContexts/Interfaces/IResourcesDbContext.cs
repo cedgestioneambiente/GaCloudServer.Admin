@@ -25,6 +25,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.View
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -233,5 +234,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #endregion
 
         #endregion
+
+        #region GaContactCenter Tables
+        DbSet<ContactCenterComune> GaContactCenterComuni { get; set; }
+        DbSet<ContactCenterProvenienza> GaContactCenterProvenienze { get; set; }
+        DbSet<ContactCenterTipoRichiesta> GaContactCenterTipiRichieste { get; set; }
+        DbSet<ContactCenterStatoRichiesta> GaContactCenterStatiRichieste { get; set; }
+        DbSet<ContactCenterMail> GaContactCenterMails { get; set; }
+        DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
+        DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
+        DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
+        #endregion
+
     }
 }

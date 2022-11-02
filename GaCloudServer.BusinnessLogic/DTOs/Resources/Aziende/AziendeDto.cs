@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Aziende
 {
-    #region AziendeLista
+    #region AziendeListe
     public class AziendeListaDto : GenericListDto
     {
     }

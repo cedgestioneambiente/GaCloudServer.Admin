@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Autorizzazioni
 {
-    #region AutorizzazioniTipo
+    #region AutorizzazioniTipi
     public class AutorizzazioniTipoDto : GenericListDto
     {
     }
@@ -13,7 +13,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Autorizzazioni
 
     #endregion
 
-    #region AutorizzazioniDocumento
+    #region AutorizzazioniDocumenti
     public class AutorizzazioniDocumentoDto : GenericDto
     {
         public string Numero { get; set; }
