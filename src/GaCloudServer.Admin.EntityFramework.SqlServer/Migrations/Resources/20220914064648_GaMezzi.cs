@@ -161,43 +161,43 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.MezziAlimentazioneId,
                         principalTable: "GaMezziAlimentazioni",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaMezziVeicoli_GaMezziCantieri_MezziCantiereId",
                         column: x => x.MezziCantiereId,
                         principalTable: "GaMezziCantieri",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaMezziVeicoli_GaMezziClassi_MezziClasseId",
                         column: x => x.MezziClasseId,
                         principalTable: "GaMezziClassi",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaMezziVeicoli_GaMezziPatenti_MezziPatenteId",
                         column: x => x.MezziPatenteId,
                         principalTable: "GaMezziPatenti",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaMezziVeicoli_GaMezziPeriodiScadenze_MezziPeriodoScadenzaId",
                         column: x => x.MezziPeriodoScadenzaId,
                         principalTable: "GaMezziPeriodiScadenze",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaMezziVeicoli_GaMezziProprietari_MezziProprietarioId",
                         column: x => x.MezziProprietarioId,
                         principalTable: "GaMezziProprietari",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaMezziVeicoli_GaMezziTipi_MezziTipoId",
                         column: x => x.MezziTipoId,
                         principalTable: "GaMezziTipi",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,7 +223,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.MezziVeicoloId,
                         principalTable: "GaMezziVeicoli",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,13 +252,13 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.MezziScadenzaTipoId,
                         principalTable: "GaMezziScadenzeTipi",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaMezziScadenze_GaMezziVeicoli_MezziVeicoloId",
                         column: x => x.MezziVeicoloId,
                         principalTable: "GaMezziVeicoli",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

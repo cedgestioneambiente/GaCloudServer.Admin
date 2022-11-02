@@ -20,6 +20,11 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
@@ -190,6 +195,47 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaCsrRegistrazioniPesi> ViewGaCsrRegistrazioniPesi { get; set; }
         DbSet<ViewGaCsrRipartizioniPercentuali> ViewGaCsrRipartizioniPercentuali { get; set; }
         DbSet<ViewGaCsrTrasportatori> ViewGaCsrTrasportatori { get; set; }
+        #endregion
+
+        #endregion
+
+        #region GaReclami Tables
+        DbSet<ReclamiAzione> GaReclamiAzioni { get; set; }
+        DbSet<ReclamiDocumento> GaReclamiDocumenti { get; set; }
+        DbSet<ReclamiMittente> GaReclamiMittenti { get; set; }
+        DbSet<ReclamiStato> GaReclamiStati { get; set; }
+        DbSet<ReclamiTempoRisposta> GaReclamiTempiRisposte { get; set; }
+        DbSet<ReclamiTipoAzione> GaReclamiTipiAzioni { get; set; }
+        DbSet<ReclamiTipoOrigine> GaReclamiTipiOrigini { get; set; }
+
+        #region Views
+        DbSet<ViewGaReclamiAzioni> ViewGaReclamiAzioni { get; set; }
+        DbSet<ViewGaReclamiDocumenti> ViewGaReclamiDocumenti { get; set; }
+        DbSet<ViewGaReclamiRegistri> ViewGaReclamiRegistri { get; set; }
+        #endregion
+
+        #endregion
+
+        #region GaSegnalazioni Tables
+        DbSet<SegnalazioniTipo> GaSegnalazioniTipi { get; set; }
+        DbSet<SegnalazioniStato> GaSegnalazioniStati { get; set; }
+        DbSet<SegnalazioniFoto> GaSegnalazioniFotos { get; set; }
+        DbSet<SegnalazioniDocumento> GaSegnalazioniDocumenti { get; set; }
+
+        #region Views
+        DbSet<ViewGaSegnalazioniDocumenti> ViewGaSegnalazioniDocumenti { get; set; }
+        #endregion
+
+        #endregion
+
+        #region EcSegnalazioni Tables
+        DbSet<EcSegnalazioniTipo> EcSegnalazioniTipi { get; set; }
+        DbSet<EcSegnalazioniStato> EcSegnalazioniStati { get; set; }
+        DbSet<EcSegnalazioniFoto> EcSegnalazioniFotos { get; set; }
+        DbSet<EcSegnalazioniDocumento> EcSegnalazioniDocumenti { get; set; }
+
+        #region Views
+        DbSet<ViewEcSegnalazioniDocumenti> ViewEcSegnalazioniDocumenti { get; set; }
         #endregion
 
         #endregion

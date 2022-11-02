@@ -1,0 +1,43 @@
+﻿using AutoMapper;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Segnalazioni;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+
+namespace GaCloudServer.BusinessLogic.Mappers.Segnalazioni
+{
+    internal class SegnalazioniMapperProfile : Profile
+    {
+        public SegnalazioniMapperProfile()
+        {
+            //SegnalazioniTipi
+            CreateMap<SegnalazioniTipo, SegnalazioniTipoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<SegnalazioniTipo>, SegnalazioniTipiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //SegnalazioniStati
+            CreateMap<SegnalazioniStato, SegnalazioniStatoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<SegnalazioniStato>, SegnalazioniStatiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //SegnalazioniFotos
+            CreateMap<SegnalazioniFoto, SegnalazioniFotoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<SegnalazioniFoto>, SegnalazioniFotosDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //SegnalazioniDocumenti
+            CreateMap<SegnalazioniDocumento, SegnalazioniDocumentoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<SegnalazioniDocumento>, SegnalazioniDocumentiDto>(MemberList.Destination)
+                .ReverseMap();
+        }
+    }
+}
+
+

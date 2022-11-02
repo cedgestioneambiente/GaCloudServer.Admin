@@ -94,13 +94,13 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.BackOfficeStatoTicketId,
                         principalTable: "GaBackOfficeStatiTickets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaBackOfficeTickets_GaBackOfficeTipiTickets_BackOfficeTipoTicketId",
                         column: x => x.BackOfficeTipoTicketId,
                         principalTable: "GaBackOfficeTipiTickets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

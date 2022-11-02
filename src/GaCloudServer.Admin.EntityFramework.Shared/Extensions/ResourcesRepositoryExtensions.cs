@@ -22,6 +22,9 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -202,6 +205,32 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaReclamiAzioni>, GenericRepository<TResourcesDbContext, ViewGaReclamiAzioni>>();
             services.AddTransient<IGenericRepository<ViewGaReclamiDocumenti>, GenericRepository<TResourcesDbContext, ViewGaReclamiDocumenti>>();
             services.AddTransient<IGenericRepository<ViewGaReclamiRegistri>, GenericRepository<TResourcesDbContext, ViewGaReclamiRegistri>>();
+
+            #endregion
+
+            //Segnalazioni
+            #region Segnalazioni
+            services.AddTransient<IGenericRepository<SegnalazioniTipo>, GenericRepository<TResourcesDbContext, SegnalazioniTipo>>();
+            services.AddTransient<IGenericRepository<SegnalazioniStato>, GenericRepository<TResourcesDbContext, SegnalazioniStato>>();
+            services.AddTransient<IGenericRepository<SegnalazioniFoto>, GenericRepository<TResourcesDbContext, SegnalazioniFoto>>();
+            services.AddTransient<IGenericRepository<SegnalazioniDocumento>, GenericRepository<TResourcesDbContext, SegnalazioniDocumento>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaSegnalazioniDocumenti>, GenericRepository<TResourcesDbContext, ViewGaSegnalazioniDocumenti>>();
+
+
+            #endregion
+
+            //EcSegnalazioni
+            #region EcSegnalazioni
+            services.AddTransient<IGenericRepository<EcSegnalazioniTipo>, GenericRepository<TResourcesDbContext, EcSegnalazioniTipo>>();
+            services.AddTransient<IGenericRepository<EcSegnalazioniStato>, GenericRepository<TResourcesDbContext, EcSegnalazioniStato>>();
+            services.AddTransient<IGenericRepository<EcSegnalazioniFoto>, GenericRepository<TResourcesDbContext, EcSegnalazioniFoto>>();
+            services.AddTransient<IGenericRepository<EcSegnalazioniDocumento>, GenericRepository<TResourcesDbContext, EcSegnalazioniDocumento>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewEcSegnalazioniDocumenti>, GenericRepository<TResourcesDbContext, ViewEcSegnalazioniDocumenti>>();
+
 
             #endregion
 

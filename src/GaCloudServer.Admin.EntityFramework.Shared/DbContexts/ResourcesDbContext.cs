@@ -21,6 +21,11 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
@@ -202,6 +207,46 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #endregion
 
+        #region GaReclami Tables
+        public DbSet<ReclamiAzione> GaReclamiAzioni { get; set; }
+        public DbSet<ReclamiDocumento> GaReclamiDocumenti { get; set; }
+        public DbSet<ReclamiMittente> GaReclamiMittenti { get; set; }
+        public DbSet<ReclamiStato> GaReclamiStati { get; set; }
+        public DbSet<ReclamiTempoRisposta> GaReclamiTempiRisposte { get; set; }
+        public DbSet<ReclamiTipoAzione> GaReclamiTipiAzioni { get; set; }
+        public DbSet<ReclamiTipoOrigine> GaReclamiTipiOrigini { get; set; }
+
+        #region Views
+        public DbSet<ViewGaReclamiAzioni> ViewGaReclamiAzioni { get; set; }
+        public DbSet<ViewGaReclamiDocumenti> ViewGaReclamiDocumenti { get; set; }
+        public DbSet<ViewGaReclamiRegistri> ViewGaReclamiRegistri { get; set; }
+        #endregion
+
+        #endregion
+
+        #region GaSegnalazioni Tables
+        public DbSet<SegnalazioniTipo> GaSegnalazioniTipi { get; set; }
+        public DbSet<SegnalazioniStato> GaSegnalazioniStati { get; set; }
+        public DbSet<SegnalazioniFoto> GaSegnalazioniFotos { get; set; }
+        public DbSet<SegnalazioniDocumento> GaSegnalazioniDocumenti { get; set; }
+
+        #region Views
+        public DbSet<ViewGaSegnalazioniDocumenti> ViewGaSegnalazioniDocumenti { get; set; }
+        #endregion
+
+        #endregion
+
+        #region EcSegnalazioni Tables
+        public DbSet<EcSegnalazioniTipo> EcSegnalazioniTipi { get; set; }
+        public DbSet<EcSegnalazioniStato> EcSegnalazioniStati { get; set; }
+        public DbSet<EcSegnalazioniFoto> EcSegnalazioniFotos { get; set; }
+        public DbSet<EcSegnalazioniDocumento> EcSegnalazioniDocumenti { get; set; }
+
+        #region Views
+        public DbSet<ViewEcSegnalazioniDocumenti> ViewEcSegnalazioniDocumenti { get; set; }
+        #endregion
+
+        #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
         {
@@ -511,6 +556,50 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                     .ToView(nameof(ViewGaCsrTrasportatori))
                     .HasKey(x => x.Id);
             });
+            #endregion
+
+            #region Reclami
+            builder.Entity<ViewGaReclamiAzioni>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaReclamiAzioni))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaReclamiDocumenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaReclamiDocumenti))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaReclamiRegistri>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaReclamiRegistri))
+                    .HasKey(x => x.Id);
+            });
+
+            #endregion
+
+            #region Segnalazioni
+            builder.Entity<ViewGaSegnalazioniDocumenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaSegnalazioniDocumenti))
+                    .HasKey(x => x.Id);
+            });
+
+            #endregion
+
+            #region EcSegnalazioni
+            builder.Entity<ViewEcSegnalazioniDocumenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewEcSegnalazioniDocumenti))
+                    .HasKey(x => x.Id);
+            });
+
             #endregion
 
             #region Personale

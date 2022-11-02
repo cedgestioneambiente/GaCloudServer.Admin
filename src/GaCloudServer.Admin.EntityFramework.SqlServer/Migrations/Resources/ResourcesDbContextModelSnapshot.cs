@@ -3216,6 +3216,746 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToView("ViewGaPrenotazioneAutoVeicoli");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiAzione", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ReclamiDocumentoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ReclamiTipoAzioneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Risposta")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RispostaDefinitiva")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReclamiDocumentoId");
+
+                    b.HasIndex("ReclamiTipoAzioneId");
+
+                    b.ToTable("GaReclamiAzioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiDocumento", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("AzioniCorrettive")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Fondato")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("GlobalSedeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Infondato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Oggetto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrigineData")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrigineDescrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReclamiDocumentoId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ReclamiMittenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ReclamiStatoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ReclamiTempoRispostaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ReclamiTipoOrigineId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("RispostaDefinitiva")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RispostaEntroData")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RispostaInviata")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GlobalSedeId");
+
+                    b.HasIndex("ReclamiMittenteId");
+
+                    b.HasIndex("ReclamiStatoId");
+
+                    b.HasIndex("ReclamiTempoRispostaId");
+
+                    b.HasIndex("ReclamiTipoOrigineId");
+
+                    b.ToTable("GaReclamiDocumenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiMittente", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaReclamiMittenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiStato", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaReclamiStati");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTempoRisposta", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Giorni")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaReclamiTempiRisposte");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTipoAzione", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescrizioneBreve")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaReclamiTipiAzioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTipoOrigine", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescrizioneBreve")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaReclamiTipiOrigini");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views.ViewGaReclamiAzioni", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DescrizioneAzione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ReclamiDocumentoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Risposta")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RispostaDefinitiva")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TipoAzione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaReclamiAzioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views.ViewGaReclamiDocumenti", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Avanzamento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cantiere")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Fondato")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Infondato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mittente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumeroReclamo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Oggetto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrigineReclamo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrigineReclamoData")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RispostaDefinitivaData")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RispostaEntroData")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RispostaInviataData")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Stato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaReclamiDocumenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views.ViewGaReclamiRegistri", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Avanzamento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AzioniIntraprese")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cliente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Fondato")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Infondato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Motivo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Numeratore")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RispostaDefinitiva")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RispostaEntro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RispostaInviata")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StatoReclamo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaReclamiRegistri");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniDocumento", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataOra")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Indirizzo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Latitudine")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Longitudine")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteGestione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteSanzione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Sanzione")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("SegnalazioniStatoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SegnalazioniTipoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SegnalazioniStatoId");
+
+                    b.HasIndex("SegnalazioniTipoId");
+
+                    b.ToTable("EcSegnalazioniDocumenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniFoto", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SegnalazioniDocumentoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SegnalazioniDocumentoId");
+
+                    b.ToTable("EcSegnalazioniFotos");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniStato", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EcSegnalazioniStati");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniTipo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EcSegnalazioniTipi");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniDocumento", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataOra")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Indirizzo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Latitudine")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Longitudine")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteGestione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteSanzione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Sanzione")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("SegnalazioniStatoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SegnalazioniTipoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SegnalazioniStatoId");
+
+                    b.HasIndex("SegnalazioniTipoId");
+
+                    b.ToTable("GaSegnalazioniDocumenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniFoto", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SegnalazioniDocumentoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SegnalazioniDocumentoId");
+
+                    b.ToTable("GaSegnalazioniFotos");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniStato", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaSegnalazioniStati");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniTipo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaSegnalazioniTipi");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views.ViewEcSegnalazioniDocumenti", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataOra")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Indirizzo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Latitudine")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Longitudine")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteGestione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteSanzione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Sanzione")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Stato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StatoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TipoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewEcSegnalazioniDocumenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views.ViewGaSegnalazioniDocumenti", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataOra")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Indirizzo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Latitudine")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Longitudine")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteGestione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteSanzione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Sanzione")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Stato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StatoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TipoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaSegnalazioniDocumenti");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniAllegato", b =>
                 {
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniDocumento", "AutorizzazioniDocumento")
@@ -3672,6 +4412,128 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .IsRequired();
 
                     b.Navigation("PrenotazioneAutoSede");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiAzione", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiDocumento", "ReclamiDocumento")
+                        .WithMany()
+                        .HasForeignKey("ReclamiDocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTipoAzione", "ReclamiTipoAzione")
+                        .WithMany()
+                        .HasForeignKey("ReclamiTipoAzioneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReclamiDocumento");
+
+                    b.Navigation("ReclamiTipoAzione");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiDocumento", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalSede", "GlobalSede")
+                        .WithMany()
+                        .HasForeignKey("GlobalSedeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiMittente", "ReclamiMittente")
+                        .WithMany()
+                        .HasForeignKey("ReclamiMittenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiStato", "ReclamiStato")
+                        .WithMany()
+                        .HasForeignKey("ReclamiStatoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTempoRisposta", "ReclamiTempoRisposta")
+                        .WithMany()
+                        .HasForeignKey("ReclamiTempoRispostaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTipoOrigine", "ReclamiTipoOrigine")
+                        .WithMany()
+                        .HasForeignKey("ReclamiTipoOrigineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GlobalSede");
+
+                    b.Navigation("ReclamiMittente");
+
+                    b.Navigation("ReclamiStato");
+
+                    b.Navigation("ReclamiTempoRisposta");
+
+                    b.Navigation("ReclamiTipoOrigine");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniDocumento", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniStato", "SegnalazioniStato")
+                        .WithMany()
+                        .HasForeignKey("SegnalazioniStatoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniTipo", "SegnalazioniTipo")
+                        .WithMany()
+                        .HasForeignKey("SegnalazioniTipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SegnalazioniStato");
+
+                    b.Navigation("SegnalazioniTipo");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniFoto", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniDocumento", "SegnalazioniDocumento")
+                        .WithMany()
+                        .HasForeignKey("SegnalazioniDocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SegnalazioniDocumento");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniDocumento", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniStato", "SegnalazioniStato")
+                        .WithMany()
+                        .HasForeignKey("SegnalazioniStatoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniTipo", "SegnalazioniTipo")
+                        .WithMany()
+                        .HasForeignKey("SegnalazioniTipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SegnalazioniStato");
+
+                    b.Navigation("SegnalazioniTipo");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniFoto", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniDocumento", "SegnalazioniDocumento")
+                        .WithMany()
+                        .HasForeignKey("SegnalazioniDocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SegnalazioniDocumento");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCentro", b =>

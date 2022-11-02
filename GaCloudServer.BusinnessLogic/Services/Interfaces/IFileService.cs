@@ -1,4 +1,5 @@
-﻿using GaCloudServer.BusinnessLogic.Models;
+﻿using DinkToPdf;
+using GaCloudServer.BusinnessLogic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Graph;
 
@@ -16,6 +17,6 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<string> CreateSharedLink(string fileId);
         Task<List<ItemDto>> GetRootFolderByName(string folderName);
         Task<List<ItemDto>> GetFolderContentById(string folderId, List<ItemDto> path);
-
+        //dynamic UploadOnServerReport(string _fileName, string _path, string _htmlContent, string title = "", string css = "", Orientation orientation = Orientation.Portrait);
     }
 }

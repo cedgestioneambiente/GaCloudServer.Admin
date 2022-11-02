@@ -58,6 +58,19 @@
         public const string CREATE_ViewGaCsr = "CREATE_ViewGaCsr.sql";
         public const string DROP_ViewGaCsr = "DROP_ViewGaCsr.sql";
 
+        //Reclami
+        public const string GaReclamiMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Reclami\";
+        public const string CREATE_ViewGaReclami = "CREATE_ViewGaReclami.sql";
+        public const string DROP_ViewGaReclami = "DROP_ViewGaReclami.sql";
+
+        //Segnalazioni
+        public const string GaSegnalazioniMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Segnalazioni\";
+        public const string EcSegnalazioniMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Segnalazioni\";
+        public const string CREATE_ViewGaSegnalazioni = "CREATE_ViewGaSegnalazioni.sql";
+        public const string DROP_ViewGaSegnalazioni = "DROP_ViewGaSegnalazioni.sql";
+        public const string CREATE_ViewEcSegnalazioni = "CREATE_ViewEcSegnalazioni.sql";
+        public const string DROP_ViewEcSegnalazioni = "DROP_ViewEcSegnalazioni.sql";
+
         //Personale
         public const string GaPersonaleMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Personale\";
         public const string CREATE_ViewGaPersonale = "CREATE_ViewGaPersonale.sql";
