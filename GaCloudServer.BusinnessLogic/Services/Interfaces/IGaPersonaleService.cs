@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.Personale;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Personale;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
@@ -48,6 +50,12 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateGaPersonaleDipendenteAsync(long id, string userId);
         Task<bool> ChangeStatusGaPersonaleDipendenteAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaPersonaleUsersOnDipendenti>> GetViewGaPersonaleUsersOnDipendentiAsync(bool all = true);
+        Task<PagedList<ViewGaPersonaleDipendenti>> GetViewGaPersonaleDipendentiByQualificaAndSedeAsync(long qualificaId,long sedeId);
+        Task<ViewGaPersonaleDipendenti> GetViewGaPersonaleDipendenteByIdAsync(long id);
         #endregion
 
         #endregion

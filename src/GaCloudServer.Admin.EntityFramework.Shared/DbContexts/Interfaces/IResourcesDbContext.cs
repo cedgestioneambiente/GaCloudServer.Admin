@@ -20,6 +20,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -163,6 +164,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
         DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
         DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
+
+        #region Views
+        DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }
+        DbSet<ViewGaPersonaleDipendenti> ViewGaPersonaleDipendenti { get; set; }
+        #endregion
         #endregion
 
         #region GaCsr Tables

@@ -21,6 +21,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -171,6 +172,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
         public DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
         public DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
+
+        #region Views
+        public DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }
+        public DbSet<ViewGaPersonaleDipendenti> ViewGaPersonaleDipendenti { get; set; }
+        #endregion
         #endregion
 
         #region GaCsr Tables
@@ -507,6 +513,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             });
             #endregion
 
+            #region Personale
+            builder.Entity<ViewGaPersonaleUsersOnDipendenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleUsersOnDipendenti))
+                    .HasKey(x=>x.UserId);
+            });
+
+            builder.Entity<ViewGaPersonaleDipendenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleDipendenti))
+                    .HasNoKey()
+                    .Property(x=>x.Id);
+            });
+            #endregion
 
             base.OnModelCreating(builder);
 

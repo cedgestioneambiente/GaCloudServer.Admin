@@ -57,5 +57,10 @@
         public const string GaCsrMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Csr\";
         public const string CREATE_ViewGaCsr = "CREATE_ViewGaCsr.sql";
         public const string DROP_ViewGaCsr = "DROP_ViewGaCsr.sql";
+
+        //Personale
+        public const string GaPersonaleMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Personale\";
+        public const string CREATE_ViewGaPersonale = "CREATE_ViewGaPersonale.sql";
+        public const string DROP_ViewGaPersonale = "DROP_ViewGaPersonale.sql";
     }
 }

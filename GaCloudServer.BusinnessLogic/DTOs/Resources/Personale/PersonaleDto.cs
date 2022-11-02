@@ -32,8 +32,6 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Personale
         public long GlobalCentroCostoId { get; set; }
         public long PersonaleQualificaId { get; set; }
         public long PersonaleAssunzioneId { get; set; }
-        public long MezziPatenteId { get; set; }
-        public long MezziPeriodoScadenzaId { get; set; }
         public DateTime? DataScadenza { get; set; }
         public string? Preposto { get; set; }
 
