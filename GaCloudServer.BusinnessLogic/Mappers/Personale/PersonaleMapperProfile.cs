@@ -29,6 +29,27 @@ namespace GaCloudServer.BusinessLogic.Mappers.Personale
 
             CreateMap<PagedList<PersonaleDipendente>, PersonaleDipendentiDto>(MemberList.Destination)
                 .ReverseMap();
+
+            //PersonaleDipendentiScadenze
+            CreateMap<PersonaleDipendenteScadenza, PersonaleDipendenteScadenzaDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<PersonaleDipendenteScadenza>, PersonaleDipendentiScadenzeDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleScadenzeTipi
+            CreateMap<PersonaleScadenzaTipo, PersonaleScadenzaTipoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<PersonaleScadenzaTipo>, PersonaleScadenzeTipiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleScadenzeDettagli
+            CreateMap<PersonaleScadenzaDettaglio, PersonaleScadenzaDettaglioDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<PersonaleScadenzaDettaglio>, PersonaleScadenzeDettagliDto>(MemberList.Destination)
+                .ReverseMap();
         }
     }
 }

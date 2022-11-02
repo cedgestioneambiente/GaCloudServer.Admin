@@ -59,5 +59,53 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #endregion
+
+        #region GaPersonaleScadenzeDettagli
+        Task<PersonaleScadenzeDettagliDto> GetGaPersonaleScadenzeDettagliAsync(int page = 1, int pageSize = 0);
+        Task<PersonaleScadenzaDettaglioDto> GetGaPersonaleScadenzaDettaglioByIdAsync(long id);
+
+        Task<long> AddGaPersonaleScadenzaDettaglioAsync(PersonaleScadenzaDettaglioDto dto);
+        Task<long> UpdateGaPersonaleScadenzaDettaglioAsync(PersonaleScadenzaDettaglioDto dto);
+
+        Task<bool> DeleteGaPersonaleScadenzaDettaglioAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaPersonaleScadenzaDettaglioAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaPersonaleScadenzaDettaglioAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region GaPersonaleScadenzeTipi
+        Task<PersonaleScadenzeTipiDto> GetGaPersonaleScadenzeTipiAsync(int page = 1, int pageSize = 0);
+        Task<PersonaleScadenzaTipoDto> GetGaPersonaleScadenzaTipoByIdAsync(long id);
+
+        Task<long> AddGaPersonaleScadenzaTipoAsync(PersonaleScadenzaTipoDto dto);
+        Task<long> UpdateGaPersonaleScadenzaTipoAsync(PersonaleScadenzaTipoDto dto);
+
+        Task<bool> DeleteGaPersonaleScadenzaTipoAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaPersonaleScadenzaTipoAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaPersonaleScadenzaTipoAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region GaPersonaleDipendentiScadenze
+        Task<PersonaleDipendentiScadenzeDto> GetGaPersonaleDipendentiScadenzeAsync(int page = 1, int pageSize = 0);
+        Task<PersonaleDipendenteScadenzaDto> GetGaPersonaleDipendenteScadenzaByIdAsync(long id);
+
+        Task<long> AddGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto);
+        Task<long> UpdateGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto);
+
+        Task<bool> DeleteGaPersonaleDipendenteScadenzaAsync(long id);
+
+        #region Functions
+        //Task<bool> ValidateGaPersonaleDipendenteScadenzaAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaPersonaleDipendenteScadenzaAsync(long id);
+        #endregion
+
+        #endregion
     }
 }

@@ -13,6 +13,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PersonaleQualifica> gaPersonaleQualificheRepo;
         protected readonly IGenericRepository<PersonaleAssunzione> gaPersonaleAssunzioniRepo;
         protected readonly IGenericRepository<PersonaleDipendente> gaPersonaleDipendentiRepo;
+        protected readonly IGenericRepository<PersonaleDipendenteScadenza> gaPersonaleDipendentiScadenzeRepo;
+        protected readonly IGenericRepository<PersonaleScadenzaTipo> gaPersonaleScadenzeTipiRepo;
+        protected readonly IGenericRepository<PersonaleScadenzaDettaglio> gaPersonaleScadenzeDettagliRepo;
 
         protected readonly IGenericRepository<ViewGaPersonaleUsersOnDipendenti> viewGaPersonaleUsersOnDipendentiRepo;
         protected readonly IGenericRepository<ViewGaPersonaleDipendenti> viewGaPersonaleDipendentiRepo;
@@ -23,6 +26,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<PersonaleQualifica> gaPersonaleQualificheRepo,
             IGenericRepository<PersonaleAssunzione> gaPersonaleAssunzioniRepo,
             IGenericRepository<PersonaleDipendente> gaPersonaleDipendentiRepo,
+            IGenericRepository<PersonaleDipendenteScadenza> gaPersonaleDipendentiScadenzeRepo,
+            IGenericRepository<PersonaleScadenzaTipo> gaPersonaleScadenzeTipiRepo,
+            IGenericRepository<PersonaleScadenzaDettaglio> gaPersonaleScadenzeDettagliRepo,
+
 
             IGenericRepository<ViewGaPersonaleUsersOnDipendenti> viewGaPersonaleUsersOnDipendentiRepo,
             IGenericRepository<ViewGaPersonaleDipendenti> viewGaPersonaleDipendentiRepo,
@@ -32,6 +39,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaPersonaleQualificheRepo = gaPersonaleQualificheRepo;
             this.gaPersonaleAssunzioniRepo = gaPersonaleAssunzioniRepo;
             this.gaPersonaleDipendentiRepo = gaPersonaleDipendentiRepo;
+            this.gaPersonaleDipendentiScadenzeRepo = gaPersonaleDipendentiScadenzeRepo;
+            this.gaPersonaleScadenzeTipiRepo = gaPersonaleScadenzeTipiRepo;
+            this.gaPersonaleScadenzeDettagliRepo = gaPersonaleScadenzeDettagliRepo;
 
             this.viewGaPersonaleUsersOnDipendentiRepo = viewGaPersonaleUsersOnDipendentiRepo;
             this.viewGaPersonaleDipendentiRepo = viewGaPersonaleDipendentiRepo;
@@ -314,6 +324,246 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<ViewGaPersonaleDipendenti> GetViewGaPersonaleDipendenteByIdAsync(long id)
         {
             return await viewGaPersonaleDipendentiRepo.GetSingleWithFilter(x => x.Id == id);
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PersonaleDipendentiScadenze
+        public async Task<PersonaleDipendentiScadenzeDto> GetGaPersonaleDipendentiScadenzeAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPersonaleDipendentiScadenzeRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PersonaleDipendentiScadenzeDto, PagedList<PersonaleDipendenteScadenza>>();
+            return dtos;
+        }
+
+        public async Task<PersonaleDipendenteScadenzaDto> GetGaPersonaleDipendenteScadenzaByIdAsync(long id)
+        {
+            var entity = await gaPersonaleDipendentiScadenzeRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenza>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto)
+        {
+            var entity = dto.ToEntity<PersonaleDipendenteScadenza, PersonaleDipendenteScadenzaDto>();
+            await gaPersonaleDipendentiScadenzeRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto)
+        {
+            var entity = dto.ToEntity<PersonaleDipendenteScadenza, PersonaleDipendenteScadenzaDto>();
+            gaPersonaleDipendentiScadenzeRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPersonaleDipendenteScadenzaAsync(long id)
+        {
+            var entity = await gaPersonaleDipendentiScadenzeRepo.GetByIdAsync(id);
+            gaPersonaleDipendentiScadenzeRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        //public async Task<bool> ValidateGaPersonaleDipendenteScadenzaAsync(long id, string descrizione)
+        //{
+        //    var entity = await gaPersonaleDipendentiScadenzeRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+        //    if (entity.Data.Count > 0)
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+        //}
+
+        public async Task<bool> ChangeStatusGaPersonaleDipendenteScadenzaAsync(long id)
+        {
+            var entity = await gaPersonaleDipendentiScadenzeRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaPersonaleDipendentiScadenzeRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaPersonaleDipendentiScadenzeRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PersonaleScadenzeTipi
+        public async Task<PersonaleScadenzeTipiDto> GetGaPersonaleScadenzeTipiAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPersonaleScadenzeTipiRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PersonaleScadenzeTipiDto, PagedList<PersonaleScadenzaTipo>>();
+            return dtos;
+        }
+
+        public async Task<PersonaleScadenzaTipoDto> GetGaPersonaleScadenzaTipoByIdAsync(long id)
+        {
+            var entity = await gaPersonaleScadenzeTipiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PersonaleScadenzaTipoDto, PersonaleScadenzaTipo>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPersonaleScadenzaTipoAsync(PersonaleScadenzaTipoDto dto)
+        {
+            var entity = dto.ToEntity<PersonaleScadenzaTipo, PersonaleScadenzaTipoDto>();
+            await gaPersonaleScadenzeTipiRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPersonaleScadenzaTipoAsync(PersonaleScadenzaTipoDto dto)
+        {
+            var entity = dto.ToEntity<PersonaleScadenzaTipo, PersonaleScadenzaTipoDto>();
+            gaPersonaleScadenzeTipiRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPersonaleScadenzaTipoAsync(long id)
+        {
+            var entity = await gaPersonaleScadenzeTipiRepo.GetByIdAsync(id);
+            gaPersonaleScadenzeTipiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaPersonaleScadenzaTipoAsync(long id, string descrizione)
+        {
+            var entity = await gaPersonaleScadenzeTipiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaPersonaleScadenzaTipoAsync(long id)
+        {
+            var entity = await gaPersonaleScadenzeTipiRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaPersonaleScadenzeTipiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaPersonaleScadenzeTipiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PersonaleScadenzeDettagli
+        public async Task<PersonaleScadenzeDettagliDto> GetGaPersonaleScadenzeDettagliAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPersonaleScadenzeDettagliRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PersonaleScadenzeDettagliDto, PagedList<PersonaleScadenzaDettaglio>>();
+            return dtos;
+        }
+
+        public async Task<PersonaleScadenzaDettaglioDto> GetGaPersonaleScadenzaDettaglioByIdAsync(long id)
+        {
+            var entity = await gaPersonaleScadenzeDettagliRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PersonaleScadenzaDettaglioDto, PersonaleScadenzaDettaglio>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPersonaleScadenzaDettaglioAsync(PersonaleScadenzaDettaglioDto dto)
+        {
+            var entity = dto.ToEntity<PersonaleScadenzaDettaglio, PersonaleScadenzaDettaglioDto>();
+            await gaPersonaleScadenzeDettagliRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPersonaleScadenzaDettaglioAsync(PersonaleScadenzaDettaglioDto dto)
+        {
+            var entity = dto.ToEntity<PersonaleScadenzaDettaglio, PersonaleScadenzaDettaglioDto>();
+            gaPersonaleScadenzeDettagliRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPersonaleScadenzaDettaglioAsync(long id)
+        {
+            var entity = await gaPersonaleScadenzeDettagliRepo.GetByIdAsync(id);
+            gaPersonaleScadenzeDettagliRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaPersonaleScadenzaDettaglioAsync(long id, string descrizione)
+        {
+            var entity = await gaPersonaleScadenzeDettagliRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaPersonaleScadenzaDettaglioAsync(long id)
+        {
+            var entity = await gaPersonaleScadenzeDettagliRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaPersonaleScadenzeDettagliRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaPersonaleScadenzeDettagliRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
 
         }
         #endregion

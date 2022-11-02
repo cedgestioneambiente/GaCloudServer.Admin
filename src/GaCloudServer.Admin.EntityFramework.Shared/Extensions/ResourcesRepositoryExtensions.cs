@@ -165,6 +165,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PersonaleDipendente>, GenericRepository<TResourcesDbContext, PersonaleDipendente>>();
             services.AddTransient<IGenericRepository<PersonaleQualifica>, GenericRepository<TResourcesDbContext, PersonaleQualifica>>();
             services.AddTransient<IGenericRepository<PersonaleAssunzione>, GenericRepository<TResourcesDbContext, PersonaleAssunzione>>();
+            services.AddTransient<IGenericRepository<PersonaleDipendenteScadenza>, GenericRepository<TResourcesDbContext, PersonaleDipendenteScadenza>>();
+            services.AddTransient<IGenericRepository<PersonaleScadenzaTipo>, GenericRepository<TResourcesDbContext, PersonaleScadenzaTipo>>();
+            services.AddTransient<IGenericRepository<PersonaleScadenzaDettaglio>, GenericRepository<TResourcesDbContext, PersonaleScadenzaDettaglio>>();
 
             services.AddTransient<IGenericRepository<ViewGaPersonaleUsersOnDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleUsersOnDipendenti>>();
             services.AddTransient<IGenericRepository<ViewGaPersonaleDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleDipendenti>>();

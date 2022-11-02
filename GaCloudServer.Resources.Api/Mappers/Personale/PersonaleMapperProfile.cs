@@ -16,7 +16,7 @@ namespace GaCloudServer.Resources.Api.Mappers.Personale
                 .ReverseMap();
 
             //PersonaleAssunzioni
-            CreateMap<PersonaleAssunzioneDto, PersonaleAssunzioneApiDto>(MemberList.Destination)
+            CreateMap<PersonaleScadenzaTipoDto, PersonaleScadenzaTipoApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<PersonaleAssunzioniDto, PersonaleAssunzioniApiDto>(MemberList.Destination)
@@ -27,6 +27,27 @@ namespace GaCloudServer.Resources.Api.Mappers.Personale
                 .ReverseMap();
 
             CreateMap<PersonaleDipendentiDto, PersonaleDipendentiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleDipendentiScadenze
+            CreateMap<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleDipendentiScadenzeDto, PersonaleDipendentiScadenzeApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleScadenzeTipi
+            CreateMap<PersonaleScadenzaTipoDto, PersonaleScadenzaTipoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleScadenzeTipiDto, PersonaleScadenzeTipiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleScadenzeDettagli
+            CreateMap<PersonaleScadenzaDettaglioDto, PersonaleScadenzaDettaglioApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleScadenzeDettagliDto, PersonaleScadenzeDettagliApiDto>(MemberList.Destination)
                 .ReverseMap();
 
         }

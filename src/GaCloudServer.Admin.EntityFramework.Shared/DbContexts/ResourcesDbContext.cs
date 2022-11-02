@@ -26,6 +26,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.View
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -176,6 +178,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
         public DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
         public DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
+        public DbSet<PersonaleDipendenteScadenza> GaPersonaleDipendentiScadenze { get; set; }
+        public DbSet<PersonaleScadenzaTipo> GaPersonaleScadenzeTipi { get; set; }
+        public DbSet<PersonaleScadenzaDettaglio> GaPersonaleScadenzeDettagli { get; set; }
 
         #region Views
         public DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }

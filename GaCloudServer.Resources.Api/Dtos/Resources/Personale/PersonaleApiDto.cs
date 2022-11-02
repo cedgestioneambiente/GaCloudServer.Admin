@@ -40,5 +40,39 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
         public class PersonaleDipendentiApiDto : GenericPagedListApiDto<PersonaleDipendenteApiDto>
         { 
         }
+    #endregion
+
+        #region PersonaleScadenzeTipi
+        public class PersonaleScadenzaTipoApiDto : GenericListApiDto
+        {
+        }
+
+        public class PersonaleScadenzeTipiApiDto : GenericPagedListApiDto<PersonaleScadenzaTipoApiDto>
+        {
+        }
+        #endregion
+
+        #region PersonaleScadenzeDettagli
+        public class PersonaleScadenzaDettaglioApiDto : GenericListApiDto
+        {
+        }
+
+        public class PersonaleScadenzeDettagliApiDto : GenericPagedListApiDto<PersonaleScadenzaDettaglioApiDto>
+        {
+        }
+        #endregion
+
+        #region PersonaleDipendentiScadenze
+        public class PersonaleDipendenteScadenzaApiDto : GenericFileApiDto
+        {
+            public long PersonaleDipendenteId { get; set; }
+            public long PersonaleScadenzaTipoId { get; set; }
+            public long PersonaleScadenzaDettaglioId { get; set; }
+            public DateTime DataScadenza { get; set; }
+        }
+
+        public class PersonaleDipendentiScadenzeApiDto : GenericPagedListApiDto<PersonaleDipendenteScadenzaApiDto>
+        {
+        }
         #endregion
 }

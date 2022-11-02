@@ -491,5 +491,415 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region PersonaleScadenzeDettagli
+        [HttpGet("GetGaPersonaleScadenzeDettagliAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleScadenzeDettagliAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPersonaleService.GetGaPersonaleScadenzeDettagliAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PersonaleScadenzeDettagliApiDto, PersonaleScadenzeDettagliDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaPersonaleScadenzaDettaglioByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleScadenzaDettaglioByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaPersonaleService.GetGaPersonaleScadenzaDettaglioByIdAsync(id);
+                var apiDto = dto.ToApiDto<PersonaleScadenzaDettaglioApiDto, PersonaleScadenzaDettaglioDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaPersonaleScadenzaDettaglioAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPersonaleScadenzaDettaglioAsync([FromBody] PersonaleScadenzaDettaglioApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PersonaleScadenzaDettaglioDto, PersonaleScadenzaDettaglioApiDto>();
+                var response = await _gaPersonaleService.AddGaPersonaleScadenzaDettaglioAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaPersonaleScadenzaDettaglioAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPersonaleScadenzaDettaglioAsync([FromBody] PersonaleScadenzaDettaglioApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PersonaleScadenzaDettaglioDto, PersonaleScadenzaDettaglioApiDto>();
+                var response = await _gaPersonaleService.UpdateGaPersonaleScadenzaDettaglioAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaPersonaleScadenzaDettaglioAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleScadenzaDettaglioAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.DeleteGaPersonaleScadenzaDettaglioAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaPersonaleScadenzaDettaglioAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleScadenzaDettaglioAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.ValidateGaPersonaleScadenzaDettaglioAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGaPersonaleScadenzaDettaglioAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPersonaleScadenzaDettaglioAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.ChangeStatusGaPersonaleScadenzaDettaglioAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PersonaleScadenzeTipi
+        [HttpGet("GetGaPersonaleScadenzeTipiAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleScadenzeTipiAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPersonaleService.GetGaPersonaleScadenzeTipiAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PersonaleScadenzeTipiApiDto, PersonaleScadenzeTipiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaPersonaleScadenzaTipoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleScadenzaTipoByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaPersonaleService.GetGaPersonaleScadenzaTipoByIdAsync(id);
+                var apiDto = dto.ToApiDto<PersonaleScadenzaTipoApiDto, PersonaleScadenzaTipoDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaPersonaleScadenzaTipoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPersonaleScadenzaTipoAsync([FromBody] PersonaleScadenzaTipoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PersonaleScadenzaTipoDto, PersonaleScadenzaTipoApiDto>();
+                var response = await _gaPersonaleService.AddGaPersonaleScadenzaTipoAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaPersonaleScadenzaTipoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPersonaleScadenzaTipoAsync([FromBody] PersonaleScadenzaTipoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PersonaleScadenzaTipoDto, PersonaleScadenzaTipoApiDto>();
+                var response = await _gaPersonaleService.UpdateGaPersonaleScadenzaTipoAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaPersonaleScadenzaTipoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleScadenzaTipoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.DeleteGaPersonaleScadenzaTipoAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaPersonaleScadenzaTipoAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleScadenzaTipoAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.ValidateGaPersonaleScadenzaTipoAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGaPersonaleScadenzaTipoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPersonaleScadenzaTipoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.ChangeStatusGaPersonaleScadenzaTipoAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PersonaleDipendentiScadenze
+        [HttpGet("GetGaPersonaleDipendentiScadenzeAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleDipendentiScadenzeAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPersonaleService.GetGaPersonaleDipendentiScadenzeAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PersonaleDipendentiScadenzeApiDto, PersonaleDipendentiScadenzeDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaPersonaleDipendenteScadenzaByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleDipendenteScadenzaByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaPersonaleService.GetGaPersonaleDipendenteScadenzaByIdAsync(id);
+                var apiDto = dto.ToApiDto<PersonaleDipendenteScadenzaApiDto, PersonaleDipendenteScadenzaDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaPersonaleDipendenteScadenzaAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPersonaleDipendenteScadenzaAsync([FromBody] PersonaleDipendenteScadenzaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>();
+                var response = await _gaPersonaleService.AddGaPersonaleDipendenteScadenzaAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaPersonaleDipendenteScadenzaAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPersonaleDipendenteScadenzaAsync([FromBody] PersonaleDipendenteScadenzaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>();
+                var response = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaPersonaleDipendenteScadenzaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleDipendenteScadenzaAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.DeleteGaPersonaleDipendenteScadenzaAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        //[HttpGet("ValidateGaPersonaleDipendenteScadenzaAsync/{id}/{descrizione}")]
+        //public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleDipendenteScadenzaAsync(long id, string descrizione)
+        //{
+        //    try
+        //    {
+        //        var response = await _gaPersonaleService.ValidateGaPersonaleDipendenteScadenzaAsync(id, descrizione);
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+
+        //}
+
+        [HttpGet("ChangeStatusGaPersonaleDipendenteScadenzaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPersonaleDipendenteScadenzaAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPersonaleService.ChangeStatusGaPersonaleDipendenteScadenzaAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
     }
 }
