@@ -116,6 +116,52 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         {
         }
 
-        #endregion
-    
+    #endregion
+
+
+    //Internal
+    public class ContactCenterIngByDateFilterApiDto
+    {
+        public long comuneId { get; set; }
+        public DateTime dataEsecuzione { get; set; }
+    }
+
+    public class ContactCenterSendMailApiDto
+    {
+        public long id { get; set; }
+        public string userid { get; set; }
+        public string userName { get; set; }
+        public long[] mailList { get; set; }
+        public string mailNote { get; set; }
+    }
+
+    public class ContactCenterDuplicateTicketsApiDto
+    {
+        public long[] ticketsId { get; set; }
+        public string userId { get; set; }
+        public bool stampato { get; set; }
+    }
+
+    public class ContactCenterStatusTicketsApiDto
+    {
+        public long[] ticketsId { get; set; }
+    }
+
+    public class ContactCenterIngPrintFilter
+    {
+        public long comuneId { get; set; }
+        public string comuneAltro { get; set; }
+        public DateTime? dataEsecuzione { get; set; }
+        public int tipoStampa { get; set; }
+        public bool all { get; set; }
+    }
+
+    public class ContactCenterIntPrintFilter
+    {
+        public long? fromId { get; set; }
+        public long? toId { get; set; }
+        public DateTime? fromData { get; set; }
+        public DateTime? toData { get; set; }
+        public bool all { get; set; }
+    }
 }
