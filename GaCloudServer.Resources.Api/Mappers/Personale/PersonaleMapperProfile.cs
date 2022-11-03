@@ -16,7 +16,7 @@ namespace GaCloudServer.Resources.Api.Mappers.Personale
                 .ReverseMap();
 
             //PersonaleAssunzioni
-            CreateMap<PersonaleScadenzaTipoDto, PersonaleScadenzaTipoApiDto>(MemberList.Destination)
+            CreateMap<PersonaleAssunzioneDto, PersonaleAssunzioneApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             CreateMap<PersonaleAssunzioniDto, PersonaleAssunzioniApiDto>(MemberList.Destination)

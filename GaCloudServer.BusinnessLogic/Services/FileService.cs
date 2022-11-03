@@ -132,34 +132,143 @@ namespace GaCloudServer.BusinnessLogic.Services
                 IFormFile fileToUpload = file;
                 Stream ms = new MemoryStream();
 
+                var subfolder = folder.Split("/").Count();
+
                 DriveItem uploadedFile = null;
                 var auth = Authenticate();
                 var driveRoot = await auth.Drive.Request().GetAsync();
                 var driveFolder = await auth.Drive.Root.Children.Request().GetAsync();
-                var targetFolder = (from x in driveFolder
+
+                DriveItem? targetFolder = null;
+
+                if (subfolder > 1)
+                { 
+                    var parentFolder= (from x in driveFolder
+                                       where x.Name == folder.Split("/")[0].ToString()
+                                       select x).FirstOrDefault();
+
+                    if (parentFolder == null)
+                    {
+                        var _folder = new DriveItem
+                        {
+                            Name = folder.Split("/")[0].ToString(),
+                            Folder = new Folder()
+                        };
+
+                        var createFolder = await auth
+                            .Sites["root"]
+                            .Drives[driveRoot.Id]
+                            .Root
+                            .Children
+                            .Request()
+                            .AddAsync(_folder);
+
+                        parentFolder = createFolder;
+
+                        var parentChildren = await auth
+                        .Sites["root"]
+                        .Drives[driveRoot.Id]
+                        .Items[parentFolder.Id]
+                        .Children
+                        .Request()
+                        .Filter($"name eq '{folder.Split("/")[1].ToString()}'")
+                        .GetAsync();
+
+                        var childrenFolder = (from x in parentChildren
+                                              where x.Name == folder.Split("/")[1].ToString()
+                                              select x).FirstOrDefault();
+
+                        if (childrenFolder == null)
+                        {
+                            _folder = new DriveItem
+                            {
+                                Name = folder.Split("/")[0].ToString(),
+                                Folder = new Folder()
+                            };
+
+                            createFolder = await auth
+                                .Sites["root"]
+                                .Drives[driveRoot.Id]
+                                .Items[parentFolder.Id]
+                                .Children
+                                .Request()
+                                .AddAsync(_folder);
+
+                            targetFolder = createFolder;
+                        }
+                        else
+                        {
+                            targetFolder = childrenFolder;
+                        }
+
+                    }
+                    else
+                    {
+                        var parentChildren= await auth
+                        .Sites["root"]
+                        .Drives[driveRoot.Id]
+                        .Items[parentFolder.Id]
+                        .Children
+                        .Request()
+                        .Filter($"name eq '{folder.Split("/")[1].ToString()}'")
+                        .GetAsync();
+
+
+                        var childrenFolder = (from x in parentChildren
+                                              where x.Name == folder.Split("/")[1].ToString()
+                                              select x).FirstOrDefault();
+
+                        if (childrenFolder == null)
+                        {
+                            var _folder = new DriveItem
+                            {
+                                Name = folder.Split("/")[1].ToString(),
+                                Folder = new Folder()
+                            };
+
+                            var createFolder = await auth
+                                .Sites["root"]
+                                .Drives[driveRoot.Id]
+                                .Items[parentFolder.Id]
+                                .Children
+                                .Request()
+                                .AddAsync(_folder);
+
+                            targetFolder = createFolder;
+                        }
+                        else
+                        {
+                            targetFolder = childrenFolder;
+                        }
+                    }
+
+                }
+                else
+                {
+                    targetFolder = (from x in driveFolder
                                     where x.Name == folder
                                     select x).FirstOrDefault();
 
-                if (targetFolder == null)
-                {
-                    var _folder = new DriveItem
+                    if (targetFolder == null)
                     {
-                        Name = folder,
-                        Folder = new Folder()
-                    };
+                        var _folder = new DriveItem
+                        {
+                            Name = folder,
+                            Folder = new Folder()
+                        };
 
-                    var createFolder = await auth
-                        .Sites["root"]
-                        .Drives[driveRoot.Id]
-                        .Root
-                        .Children
-                        .Request()
-                        .AddAsync(_folder);
+                        var createFolder = await auth
+                            .Sites["root"]
+                            .Drives[driveRoot.Id]
+                            .Root
+                            .Children
+                            .Request()
+                            .AddAsync(_folder);
 
-                    targetFolder = createFolder;
+                        targetFolder = createFolder;
 
+                    }
                 }
-
 
 
                 using (ms = new MemoryStream())

@@ -7,6 +7,7 @@ using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -19,13 +20,16 @@ namespace GaCloudServer.Resources.Api.Controllers
     {
         private readonly IGaPersonaleService _gaPersonaleService;
         private readonly ILogger<GaPersonaleController> _logger;
+        private readonly IFileService _fileService;
 
         public GaPersonaleController(
-            IGaPersonaleService gaPersonaleService
+            IGaPersonaleService gaPersonaleService,
+            IFileService fileService
             , ILogger<GaPersonaleController> logger)
         {
 
             _gaPersonaleService = gaPersonaleService;
+            _fileService = fileService;
             _logger = logger;
         }
 
@@ -766,12 +770,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region PersonaleDipendentiScadenze
-        [HttpGet("GetGaPersonaleDipendentiScadenzeAsync/{page}/{pageSize}")]
-        public async Task<ActionResult<ApiResponse>> GetGaPersonaleDipendentiScadenzeAsync(int page = 1, int pageSize = 0)
+        [HttpGet("GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync/{personaleDipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long personaleDipendenteId)
         {
             try
             {
-                var dtos = await _gaPersonaleService.GetGaPersonaleDipendentiScadenzeAsync(page, pageSize);
+                var dtos = await _gaPersonaleService.GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync(personaleDipendenteId);
                 var apiDtos = dtos.ToApiDto<PersonaleDipendentiScadenzeApiDto, PersonaleDipendentiScadenzeDto>();
                 return new ApiResponse(apiDtos);
             }
@@ -801,7 +805,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpPost("AddGaPersonaleDipendenteScadenzaAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaPersonaleDipendenteScadenzaAsync([FromBody] PersonaleDipendenteScadenzaApiDto apiDto)
+        public async Task<ActionResult<ApiResponse>> AddGaPersonaleDipendenteScadenzaAsync([FromForm] PersonaleDipendenteScadenzaApiDto apiDto)
         {
             try
             {
@@ -809,8 +813,21 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+                string fileFolder = "Personale/Dipendenti";
                 var dto = apiDto.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>();
                 var response = await _gaPersonaleService.AddGaPersonaleDipendenteScadenzaAsync(dto);
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
+                }
 
                 return new ApiResponse(response);
             }
@@ -828,7 +845,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpPost("UpdateGaPersonaleDipendenteScadenzaAsync")]
-        public async Task<ActionResult<ApiResponse>> UpdateGaPersonaleDipendenteScadenzaAsync([FromBody] PersonaleDipendenteScadenzaApiDto apiDto)
+        public async Task<ActionResult<ApiResponse>> UpdateGaPersonaleDipendenteScadenzaAsync([FromForm] PersonaleDipendenteScadenzaApiDto apiDto)
         {
             try
             {
@@ -836,10 +853,60 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+                string fileFolder = "Personale/Dipendenti";
                 var dto = apiDto.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>();
                 var response = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+                bool failureDelete = false;
+                if (apiDto.deleteFile)
+                {
+                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
+                    if (!deleteResponse)
+                    {
+                        failureDelete = true;
 
-                return new ApiResponse(response);
+                    }
+                    else
+                    {
+                        dto.Id = response;
+                        dto.FileFolder = null;
+                        dto.FileName = null;
+                        dto.FileSize = null;
+                        dto.FileType = null;
+                        dto.FileId = null;
+                        var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+                    }
+                }
+
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+
+                    if (!failureDelete)
+                    {
+                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
+                    }
+
+                }
+
+                if (!failureDelete)
+                {
+                    return new ApiResponse("Updated", response, code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
+                }
             }
             catch (Exception ex)
             {
@@ -898,6 +965,25 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync/{dipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long dipendenteId)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync(dipendenteId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #endregion

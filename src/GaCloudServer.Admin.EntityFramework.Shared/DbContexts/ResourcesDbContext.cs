@@ -185,7 +185,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Views
         public DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }
         public DbSet<ViewGaPersonaleDipendenti> ViewGaPersonaleDipendenti { get; set; }
+        public DbSet<ViewGaPersonaleDipendentiScadenze> ViewGaPersonaleDipendentiScadenze { get; set; }
         #endregion
+
         #endregion
 
         #region GaCsr Tables
@@ -631,6 +633,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                     .ToView(nameof(ViewGaPersonaleDipendenti))
                     .HasNoKey()
                     .Property(x=>x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleDipendentiScadenze>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleDipendentiScadenze))
+                    .HasNoKey()
+                    .Property(x => x.Id);
             });
             #endregion
 

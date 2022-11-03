@@ -171,6 +171,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             services.AddTransient<IGenericRepository<ViewGaPersonaleUsersOnDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleUsersOnDipendenti>>();
             services.AddTransient<IGenericRepository<ViewGaPersonaleDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleDipendenti>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleDipendentiScadenze>, GenericRepository<TResourcesDbContext, ViewGaPersonaleDipendentiScadenze>>();
             #endregion
 
             //Csr

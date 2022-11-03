@@ -177,7 +177,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Views
         DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }
         DbSet<ViewGaPersonaleDipendenti> ViewGaPersonaleDipendenti { get; set; }
+        DbSet<ViewGaPersonaleDipendentiScadenze> ViewGaPersonaleDipendentiScadenze { get; set; }
         #endregion
+
         #endregion
 
         #region GaCsr Tables

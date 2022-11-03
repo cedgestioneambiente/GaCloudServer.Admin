@@ -93,7 +93,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region GaPersonaleDipendentiScadenze
-        Task<PersonaleDipendentiScadenzeDto> GetGaPersonaleDipendentiScadenzeAsync(int page = 1, int pageSize = 0);
+        Task<PersonaleDipendentiScadenzeDto> GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long personaleDipendenteId);
         Task<PersonaleDipendenteScadenzaDto> GetGaPersonaleDipendenteScadenzaByIdAsync(long id);
 
         Task<long> AddGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto);
@@ -104,6 +104,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         //Task<bool> ValidateGaPersonaleDipendenteScadenzaAsync(long id, string descrizione);
         Task<bool> ChangeStatusGaPersonaleDipendenteScadenzaAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaPersonaleDipendentiScadenze>> GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long dipendenteId);
         #endregion
 
         #endregion

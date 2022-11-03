@@ -19,6 +19,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         protected readonly IGenericRepository<ViewGaPersonaleUsersOnDipendenti> viewGaPersonaleUsersOnDipendentiRepo;
         protected readonly IGenericRepository<ViewGaPersonaleDipendenti> viewGaPersonaleDipendentiRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleDipendentiScadenze> viewGaPersonaleDipendentiScadenzeRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -33,6 +34,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<ViewGaPersonaleUsersOnDipendenti> viewGaPersonaleUsersOnDipendentiRepo,
             IGenericRepository<ViewGaPersonaleDipendenti> viewGaPersonaleDipendentiRepo,
+            IGenericRepository<ViewGaPersonaleDipendentiScadenze> viewGaPersonaleDipendentiScadenzeRepo,
 
             IUnitOfWork unitOfWork)
         {
@@ -45,6 +47,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.viewGaPersonaleUsersOnDipendentiRepo = viewGaPersonaleUsersOnDipendentiRepo;
             this.viewGaPersonaleDipendentiRepo = viewGaPersonaleDipendentiRepo;
+            this.viewGaPersonaleDipendentiScadenzeRepo = viewGaPersonaleDipendentiScadenzeRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -331,9 +334,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region PersonaleDipendentiScadenze
-        public async Task<PersonaleDipendentiScadenzeDto> GetGaPersonaleDipendentiScadenzeAsync(int page = 1, int pageSize = 0)
+        public async Task<PersonaleDipendentiScadenzeDto> GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long personaleDipendenteId)
         {
-            var entities = await gaPersonaleDipendentiScadenzeRepo.GetAllAsync(page, pageSize);
+            var entities = await gaPersonaleDipendentiScadenzeRepo.GetWithFilterAsync(x=>x.PersonaleDipendenteId== personaleDipendenteId);
             var dtos = entities.ToDto<PersonaleDipendentiScadenzeDto, PagedList<PersonaleDipendenteScadenza>>();
             return dtos;
         }
@@ -350,6 +353,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<PersonaleDipendenteScadenza, PersonaleDipendenteScadenzaDto>();
             await gaPersonaleDipendentiScadenzeRepo.AddAsync(entity);
             await SaveChanges();
+            DetachEntity(entity);
+
             return entity.Id;
         }
 
@@ -358,6 +363,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<PersonaleDipendenteScadenza, PersonaleDipendenteScadenzaDto>();
             gaPersonaleDipendentiScadenzeRepo.Update(entity);
             await SaveChanges();
+            DetachEntity(entity);
 
             return entity.Id;
 
@@ -408,6 +414,14 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #region Views
+        public async Task<PagedList<ViewGaPersonaleDipendentiScadenze>> GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long dipendenteId)
+        {
+            var view = await viewGaPersonaleDipendentiScadenzeRepo.GetWithFilterAsync(x=>x.DipendenteId==dipendenteId);
+            return view;
+
+        }
+        #endregion
         #endregion
 
         #region PersonaleScadenzeTipi
