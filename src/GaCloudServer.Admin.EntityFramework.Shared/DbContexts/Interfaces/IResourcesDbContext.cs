@@ -173,6 +173,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PersonaleDipendenteScadenza> GaPersonaleDipendentiScadenze { get; set; }
         DbSet<PersonaleScadenzaTipo> GaPersonaleScadenzeTipi { get; set; }
         DbSet<PersonaleScadenzaDettaglio> GaPersonaleScadenzeDettagli { get; set; }
+        DbSet<PersonaleSanzione> GaPersonaleSanzioni { get; set; }
+        DbSet<PersonaleSanzioneDescrizione> GaPersonaleSanzioniDescrizioni { get; set; }
+        DbSet<PersonaleSanzioneMotivo> GaPersonaleSanzioniMotivi { get; set; }
+        DbSet<PersonaleAbilitazione> GaPersonaleAbilitazioni { get; set; }
+        DbSet<PersonaleAbilitazioneTipo> GaPersonaleAbilitazioniTipi { get; set; }
+        DbSet<PersonaleRetributivo> GaPersonaleRetributivi { get; set; }
+        DbSet<PersonaleRetributivoTipo> GaPersonaleRetributiviTipi { get; set; }
+        DbSet<PersonaleSchedaConsegna> GaPersonaleSchedeConsegne { get; set; }
+        DbSet<PersonaleSchedaConsegnaDettaglio> GaPersonaleSchedeConsegneDettagli { get; set; }
+        DbSet<PersonaleArticolo> GaPersonaleArticoli { get; set; }
+        DbSet<PersonaleArticoloModello> GaPersonaleArticoliModelli { get; set; }
+        DbSet<PersonaleArticoloTipologia> GaPersonaleArticoliTipologie { get; set; }
+        DbSet<PersonaleArticoloDpi> GaPersonaleArticoliDpis { get; set; }
 
         #region Views
         DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }

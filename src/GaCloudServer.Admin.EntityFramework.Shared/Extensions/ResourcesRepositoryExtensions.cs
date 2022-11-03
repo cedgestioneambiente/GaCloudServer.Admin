@@ -168,6 +168,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PersonaleDipendenteScadenza>, GenericRepository<TResourcesDbContext, PersonaleDipendenteScadenza>>();
             services.AddTransient<IGenericRepository<PersonaleScadenzaTipo>, GenericRepository<TResourcesDbContext, PersonaleScadenzaTipo>>();
             services.AddTransient<IGenericRepository<PersonaleScadenzaDettaglio>, GenericRepository<TResourcesDbContext, PersonaleScadenzaDettaglio>>();
+            services.AddTransient<IGenericRepository<PersonaleSanzioneMotivo>, GenericRepository<TResourcesDbContext, PersonaleSanzioneMotivo>>();
+            services.AddTransient<IGenericRepository<PersonaleSanzioneDescrizione>, GenericRepository<TResourcesDbContext, PersonaleSanzioneDescrizione>>();
+            services.AddTransient<IGenericRepository<PersonaleSanzione>, GenericRepository<TResourcesDbContext, PersonaleSanzione>>();
+            services.AddTransient<IGenericRepository<PersonaleAbilitazione>, GenericRepository<TResourcesDbContext, PersonaleAbilitazione>>();
+            services.AddTransient<IGenericRepository<PersonaleAbilitazioneTipo>, GenericRepository<TResourcesDbContext, PersonaleAbilitazioneTipo>>();
+            services.AddTransient<IGenericRepository<PersonaleRetributivo>, GenericRepository<TResourcesDbContext, PersonaleRetributivo>>();
+            services.AddTransient<IGenericRepository<PersonaleRetributivoTipo>, GenericRepository<TResourcesDbContext, PersonaleRetributivoTipo>>();
+            services.AddTransient<IGenericRepository<PersonaleSchedaConsegna>, GenericRepository<TResourcesDbContext, PersonaleSchedaConsegna>>();
+            services.AddTransient<IGenericRepository<PersonaleSchedaConsegnaDettaglio>, GenericRepository<TResourcesDbContext, PersonaleSchedaConsegnaDettaglio>>();
+            services.AddTransient<IGenericRepository<PersonaleArticolo>, GenericRepository<TResourcesDbContext, PersonaleArticolo>>();
+            services.AddTransient<IGenericRepository<PersonaleArticoloModello>, GenericRepository<TResourcesDbContext, PersonaleArticoloModello>>();
+            services.AddTransient<IGenericRepository<PersonaleArticoloTipologia>, GenericRepository<TResourcesDbContext, PersonaleArticoloTipologia>>();
+            services.AddTransient<IGenericRepository<PersonaleArticoloDpi>, GenericRepository<TResourcesDbContext, PersonaleArticoloDpi>>();
 
             services.AddTransient<IGenericRepository<ViewGaPersonaleUsersOnDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleUsersOnDipendenti>>();
             services.AddTransient<IGenericRepository<ViewGaPersonaleDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleDipendenti>>();

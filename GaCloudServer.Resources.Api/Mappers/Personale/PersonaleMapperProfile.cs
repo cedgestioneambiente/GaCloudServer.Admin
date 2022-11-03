@@ -50,6 +50,96 @@ namespace GaCloudServer.Resources.Api.Mappers.Personale
             CreateMap<PersonaleScadenzeDettagliDto, PersonaleScadenzeDettagliApiDto>(MemberList.Destination)
                 .ReverseMap();
 
+            //PersonaleSanzioniMotivi
+            CreateMap<PersonaleSanzioneMotivoDto, PersonaleSanzioneMotivoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleSanzioniMotiviDto, PersonaleSanzioniMotiviApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleSanzioniDescrizioni
+            CreateMap<PersonaleSanzioneDescrizioneDto, PersonaleSanzioneDescrizioneApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleSanzioniDescrizioniDto, PersonaleSanzioniDescrizioniApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleSanzioni
+            CreateMap<PersonaleSanzioneDto, PersonaleSanzioneApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleSanzioniDto, PersonaleSanzioniApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleAbilitazioniTipi
+            CreateMap<PersonaleAbilitazioneTipoDto, PersonaleAbilitazioneTipoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleAbilitazioniTipiDto, PersonaleAbilitazioniTipiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleAbilitazioni
+            CreateMap<PersonaleAbilitazioneDto, PersonaleAbilitazioneApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleAbilitazioniDto, PersonaleAbilitazioniApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleRetributiviTipi
+            CreateMap<PersonaleRetributivoTipoDto, PersonaleRetributivoTipoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleRetributiviTipiDto, PersonaleRetributiviTipiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleRetributivi
+            CreateMap<PersonaleRetributivoDto, PersonaleRetributivoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleRetributiviDto, PersonaleRetributiviApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleSchedeConsegne
+            CreateMap<PersonaleSchedaConsegnaDto, PersonaleSchedaConsegnaApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleSchedeConsegneDto, PersonaleSchedeConsegneApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleSchedeConsegnaDettagli
+            CreateMap<PersonaleSchedaConsegnaDettaglioDto, PersonaleSchedaConsegnaDettaglioApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleSchedeConsegneDettagliDto, PersonaleSchedeConsegneDettagliApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleArticoliModelli
+            CreateMap<PersonaleArticoloModelloDto, PersonaleArticoloModelloApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleArticoliModelliDto, PersonaleArticoliModelliApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleArticoliTipologie
+            CreateMap<PersonaleArticoloTipologiaDto, PersonaleArticoloTipologiaApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleArticoliTipologieDto, PersonaleArticoliTipologieApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleArticoliDpis
+            CreateMap<PersonaleArticoloDpiDto, PersonaleArticoloDpiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleArticoliDpisDto, PersonaleArticoliDpisApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PersonaleArticoli
+            CreateMap<PersonaleArticoloDto, PersonaleArticoloApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PersonaleArticoliDto, PersonaleArticoliApiDto>(MemberList.Destination)
+                .ReverseMap();
         }
     }
 }
