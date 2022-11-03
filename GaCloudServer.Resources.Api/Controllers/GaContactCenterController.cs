@@ -954,13 +954,13 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetGaContactCenterMailOnTicketByIdAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> GetGaContactCenterMailOnTicketByTicketIdAsync(long ticketId)
+        [HttpGet("GetGaContactCenterMailsOnTicketsByTicketIdAsync/{ticketId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContactCenterMailsOnTicketsByTicketIdAsync(long ticketId)
         {
             try
             {
-                var dto = await _gaContactCenterService.GetGaContactCenterMailOnTicketByIdAsync(ticketId);
-                var apiDto = dto.ToApiDto<ContactCenterMailOnTicketApiDto, ContactCenterMailOnTicketDto>();
+                var dto = await _gaContactCenterService.GetGaContactCenterMailsOnTicketsByTicketIdAsync(ticketId);
+                var apiDto = dto.ToApiDto<ContactCenterMailsOnTicketsApiDto, ContactCenterMailsOnTicketsDto>();
                 return new ApiResponse(apiDto);
             }
             catch (Exception ex)

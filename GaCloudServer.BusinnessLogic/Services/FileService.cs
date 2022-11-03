@@ -142,103 +142,74 @@ namespace GaCloudServer.BusinnessLogic.Services
                 DriveItem? targetFolder = null;
 
                 if (subfolder > 1)
-                { 
-                    var parentFolder= (from x in driveFolder
-                                       where x.Name == folder.Split("/")[0].ToString()
-                                       select x).FirstOrDefault();
-
-                    if (parentFolder == null)
+                {
+                    DriveItem? parentFolder = null;
+                    for (int i = 0; i < subfolder; i++)
                     {
-                        var _folder = new DriveItem
+                        
+                        if (i == 0)
                         {
-                            Name = folder.Split("/")[0].ToString(),
-                            Folder = new Folder()
-                        };
-
-                        var createFolder = await auth
-                            .Sites["root"]
-                            .Drives[driveRoot.Id]
-                            .Root
-                            .Children
-                            .Request()
-                            .AddAsync(_folder);
-
-                        parentFolder = createFolder;
-
-                        var parentChildren = await auth
-                        .Sites["root"]
-                        .Drives[driveRoot.Id]
-                        .Items[parentFolder.Id]
-                        .Children
-                        .Request()
-                        .Filter($"name eq '{folder.Split("/")[1].ToString()}'")
-                        .GetAsync();
-
-                        var childrenFolder = (from x in parentChildren
-                                              where x.Name == folder.Split("/")[1].ToString()
-                                              select x).FirstOrDefault();
-
-                        if (childrenFolder == null)
-                        {
-                            _folder = new DriveItem
+                            parentFolder = (from x in driveFolder
+                                            where x.Name == folder.Split("/")[i].ToString()
+                                            select x).FirstOrDefault();
+                            if (parentFolder == null)
                             {
-                                Name = folder.Split("/")[0].ToString(),
-                                Folder = new Folder()
-                            };
+                                var _folder = new DriveItem
+                                {
+                                    Name = folder.Split("/")[i].ToString(),
+                                    Folder = new Folder()
+                                };
 
-                            createFolder = await auth
-                                .Sites["root"]
-                                .Drives[driveRoot.Id]
-                                .Items[parentFolder.Id]
-                                .Children
-                                .Request()
-                                .AddAsync(_folder);
+                                var createFolder = await auth
+                                    .Sites["root"]
+                                    .Drives[driveRoot.Id]
+                                    .Root
+                                    .Children
+                                    .Request()
+                                    .AddAsync(_folder);
 
-                            targetFolder = createFolder;
+                                parentFolder = createFolder;
+                            }
                         }
                         else
                         {
-                            targetFolder = childrenFolder;
-                        }
+                            var parentChildren = await auth
+                           .Sites["root"]
+                           .Drives[driveRoot.Id]
+                           .Items[parentFolder.Id]
+                           .Children
+                           .Request()
+                           .Filter($"name eq '{folder.Split("/")[i].ToString()}'")
+                           .GetAsync();
 
-                    }
-                    else
-                    {
-                        var parentChildren= await auth
-                        .Sites["root"]
-                        .Drives[driveRoot.Id]
-                        .Items[parentFolder.Id]
-                        .Children
-                        .Request()
-                        .Filter($"name eq '{folder.Split("/")[1].ToString()}'")
-                        .GetAsync();
+                            var childrenFolder = (from x in parentChildren
+                                                  where x.Name == folder.Split("/")[i].ToString()
+                                                  select x).FirstOrDefault();
 
-
-                        var childrenFolder = (from x in parentChildren
-                                              where x.Name == folder.Split("/")[1].ToString()
-                                              select x).FirstOrDefault();
-
-                        if (childrenFolder == null)
-                        {
-                            var _folder = new DriveItem
+                            if (childrenFolder == null)
                             {
-                                Name = folder.Split("/")[1].ToString(),
-                                Folder = new Folder()
-                            };
+                                var _folder = new DriveItem
+                                {
+                                    Name = folder.Split("/")[i].ToString(),
+                                    Folder = new Folder()
+                                };
 
-                            var createFolder = await auth
-                                .Sites["root"]
-                                .Drives[driveRoot.Id]
-                                .Items[parentFolder.Id]
-                                .Children
-                                .Request()
-                                .AddAsync(_folder);
+                                var createFolder = await auth
+                                    .Sites["root"]
+                                    .Drives[driveRoot.Id]
+                                    .Items[parentFolder.Id]
+                                    .Children
+                                    .Request()
+                                    .AddAsync(_folder);
+                                parentFolder = createFolder;
+                                targetFolder = createFolder;
+                            }
+                            else
+                            {
+                                parentFolder = childrenFolder;
+                                targetFolder = childrenFolder;
+                            }
 
-                            targetFolder = createFolder;
-                        }
-                        else
-                        {
-                            targetFolder = childrenFolder;
                         }
                     }
 

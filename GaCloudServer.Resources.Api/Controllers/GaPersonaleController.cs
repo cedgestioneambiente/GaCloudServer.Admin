@@ -23,7 +23,6 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly IGaPersonaleService _gaPersonaleService;
         private readonly IFileService _fileService;
         private readonly ILogger<GaPersonaleController> _logger;
-        private readonly IFileService _fileService;
 
         public GaPersonaleController(
             IGaPersonaleService gaPersonaleService
@@ -816,7 +815,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Personale/Dipendenti";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Scadenze";
                 var dto = apiDto.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>();
                 var response = await _gaPersonaleService.AddGaPersonaleDipendenteScadenzaAsync(dto);
                 if (apiDto.uploadFile)
