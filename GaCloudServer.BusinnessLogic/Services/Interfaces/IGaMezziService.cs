@@ -152,6 +152,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ValidateGaMezziVeicoloAsync(long id, string targa);
         Task<bool> ChangeStatusGaMezziVeicoloAsync(long id);
         #endregion
+
         #region Views
         Task<PagedList<ViewGaMezziVeicoli>> GetViewGaMezziVeicoliAsync(bool all = true);
         #endregion

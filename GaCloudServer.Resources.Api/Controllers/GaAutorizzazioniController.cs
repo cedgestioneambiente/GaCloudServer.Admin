@@ -372,7 +372,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Autorizzazioni";
+                string fileFolder = "GaCloud/Autorizzazioni";
                 var dto = apiDto.ToDto<AutorizzazioniAllegatoDto, AutorizzazioniAllegatoApiDto>();
                 var response = await _gaAutorizzazioniService.AddGaAutorizzazioniAllegatoAsync(dto);
                 if (apiDto.uploadFile)
@@ -412,7 +412,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Autorizzazioni";
+                string fileFolder = "GaCloud/Autorizzazioni";
                 var dto = apiDto.ToDto<AutorizzazioniAllegatoDto, AutorizzazioniAllegatoApiDto>();
                 var response = await _gaAutorizzazioniService.UpdateGaAutorizzazioniAllegatoAsync(dto);
                 bool failureDelete = false;

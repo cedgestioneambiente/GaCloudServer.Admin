@@ -62,8 +62,8 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
         }
         #endregion
 
-        #region PersonaleDipendentiScadenze
-        public class PersonaleDipendenteScadenzaApiDto : GenericFileApiDto
+        #region PersonaleScadenze
+        public class PersonaleScadenzaApiDto : GenericFileApiDto
         {
             public long PersonaleDipendenteId { get; set; }
             public long PersonaleScadenzaTipoId { get; set; }
@@ -71,7 +71,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
             public DateTime DataScadenza { get; set; }
         }
 
-        public class PersonaleDipendentiScadenzeApiDto : GenericPagedListApiDto<PersonaleDipendenteScadenzaApiDto>
+        public class PersonaleScadenzeApiDto : GenericPagedListApiDto<PersonaleScadenzaApiDto>
         {
         }
     #endregion
@@ -158,7 +158,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
         {
             public long PersonaleDipendenteId { get; set; }
             public DateTime Data { get; set; }
-            public long DipendenteRetributivoTipoId { get; set; }
+            public long PersonaleRetributivoTipoId { get; set; }
             public string DettaglioRetributivo { get; set; }
         }
 

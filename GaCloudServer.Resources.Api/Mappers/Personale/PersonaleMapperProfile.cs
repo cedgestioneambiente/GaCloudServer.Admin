@@ -29,11 +29,11 @@ namespace GaCloudServer.Resources.Api.Mappers.Personale
             CreateMap<PersonaleDipendentiDto, PersonaleDipendentiApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            //PersonaleDipendentiScadenze
-            CreateMap<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>(MemberList.Destination)
+            //PersonaleScadenze
+            CreateMap<PersonaleScadenzaDto, PersonaleScadenzaApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PersonaleDipendentiScadenzeDto, PersonaleDipendentiScadenzeApiDto>(MemberList.Destination)
+            CreateMap<PersonaleScadenzeDto, PersonaleScadenzeApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //PersonaleScadenzeTipi

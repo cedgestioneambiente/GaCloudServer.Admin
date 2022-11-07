@@ -92,22 +92,23 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
-        #region GaPersonaleDipendentiScadenze
-        Task<PersonaleDipendentiScadenzeDto> GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long personaleDipendenteId);
-        Task<PersonaleDipendenteScadenzaDto> GetGaPersonaleDipendenteScadenzaByIdAsync(long id);
+        #region GaPersonaleScadenze
+        Task<PersonaleScadenzeDto> GetGaPersonaleScadenzeByDipendenteIdAsync(long personaleDipendenteId);
+        Task<PersonaleScadenzaDto> GetGaPersonaleScadenzaByIdAsync(long id);
 
-        Task<long> AddGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto);
-        Task<long> UpdateGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto);
+        Task<long> AddGaPersonaleScadenzaAsync(PersonaleScadenzaDto dto);
+        Task<long> UpdateGaPersonaleScadenzaAsync(PersonaleScadenzaDto dto);
 
-        Task<bool> DeleteGaPersonaleDipendenteScadenzaAsync(long id);
+        Task<bool> DeleteGaPersonaleScadenzaAsync(long id);
 
         #region Functions
-        //Task<bool> ValidateGaPersonaleDipendenteScadenzaAsync(long id, string descrizione);
-        Task<bool> ChangeStatusGaPersonaleDipendenteScadenzaAsync(long id);
+        //Task<bool> ValidateGaPersonaleScadenzaAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaPersonaleScadenzaAsync(long id);
         #endregion
 
         #region Views
-        Task<PagedList<ViewGaPersonaleDipendentiScadenze>> GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long dipendenteId);
+        Task<PagedList<ViewGaPersonaleScadenze>> GetViewGaPersonaleScadenzeByDipendenteIdAsync(long dipendenteId);
+        Task<PagedList<ViewGaPersonaleScadenziario>> GetViewGaPersonaleScadenziarioAsync(bool all = true);
         #endregion
 
         #endregion
@@ -158,6 +159,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusGaPersonaleSanzioneAsync(long id);
         #endregion
 
+        #region Views
+        Task<PagedList<ViewGaPersonaleSanzioni>> GetViewGaPersonaleSanzioniAsync(long dipendenteId);
+        #endregion
+
         #endregion
 
         #region GaPersonaleAbilitazioniTipi
@@ -188,6 +193,11 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         //Task<bool> ValidateGaPersonaleAbilitazioneAsync(long id, string descrizione);
         Task<bool> ChangeStatusGaPersonaleAbilitazioneAsync(long id);
+
+        #region Views
+        Task<PagedList<ViewGaPersonaleAbilitazioni>> GetViewGaPersonaleAbilitazioniAsync(long dipendenteId);
+        Task<PagedList<ViewGaPersonaleScadenziarioAbilitazioni>> GetViewGaPersonaleScadenziarioAbilitazioniAsync();
+        #endregion
         #endregion
 
         #endregion
@@ -222,6 +232,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusGaPersonaleRetributivoAsync(long id);
         #endregion
 
+        #region Views
+        Task<PagedList<ViewGaPersonaleRetributivi>> GetViewGaPersonaleRetributiviAsync(long dipendenteId);
+        #endregion
+
         #endregion
 
         #region GaPersonaleSchedeConsegne
@@ -238,6 +252,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         //Task<bool> ChangeStatusGaPersonaleSchedaConsegnaAsync(long id);
         #endregion
 
+        #region Views
+        Task<PagedList<ViewGaPersonaleSchedeConsegne>> GetViewGaPersonaleRiepilogoConsegneAsync();
+        #endregion
+
         #endregion
 
         #region GaPersonaleSchedeConsegneDettagli
@@ -252,6 +270,11 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         //Task<bool> ValidateGaPersonaleSchedaConsegnaDettaglioAsync(long id, string descrizione);
         //Task<bool> ChangeStatusGaPersonaleSchedaConsegnaDettaglioAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaPersonaleNuoveSchede>> GetViewGaPersonaleNuoveSchedeAsync();
+        Task<PagedList<ViewGaPersonaleSchedeConsegne>> GetViewGaPersonaleSchedeConsegneAsync(long schedaId);
         #endregion
 
         #endregion
@@ -318,6 +341,9 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusGaPersonaleArticoloAsync(long id);
         #endregion
 
+        #region Views
+        Task<PagedList<ViewGaPersonaleArticoli>> GetViewGaPersonaleArticoliAsync();
+        #endregion
         #endregion
     }
 }

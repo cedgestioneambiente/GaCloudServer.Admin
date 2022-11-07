@@ -1550,7 +1550,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Mezzi";
+                string fileFolder = "GaCloud/Mezzi";
                 var dto = apiDto.ToDto<MezziDocumentoDto, MezziDocumentoApiDto>();
                 var response = await _gaMezziService.AddGaMezziDocumentoAsync(dto);
                 if (apiDto.uploadFile)
@@ -1590,7 +1590,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Mezzi";
+                string fileFolder = "GaCloud/Mezzi";
                 var dto = apiDto.ToDto<MezziDocumentoDto, MezziDocumentoApiDto>();
                 var response = await _gaMezziService.UpdateGaMezziDocumentoAsync(dto);
                 bool failureDelete = false;

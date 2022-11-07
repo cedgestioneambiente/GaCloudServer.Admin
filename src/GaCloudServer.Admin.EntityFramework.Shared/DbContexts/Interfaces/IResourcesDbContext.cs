@@ -170,7 +170,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
         DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
         DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
-        DbSet<PersonaleDipendenteScadenza> GaPersonaleDipendentiScadenze { get; set; }
+        DbSet<PersonaleScadenza> GaPersonaleScadenze { get; set; }
         DbSet<PersonaleScadenzaTipo> GaPersonaleScadenzeTipi { get; set; }
         DbSet<PersonaleScadenzaDettaglio> GaPersonaleScadenzeDettagli { get; set; }
         DbSet<PersonaleSanzione> GaPersonaleSanzioni { get; set; }
@@ -190,7 +190,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Views
         DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }
         DbSet<ViewGaPersonaleDipendenti> ViewGaPersonaleDipendenti { get; set; }
-        DbSet<ViewGaPersonaleDipendentiScadenze> ViewGaPersonaleDipendentiScadenze { get; set; }
+        DbSet<ViewGaPersonaleScadenze> ViewGaPersonaleScadenze { get; set; }
+        DbSet<ViewGaPersonaleAbilitazioni> ViewGaPersonaleAbilitazioni { get; set; }
+        DbSet<ViewGaPersonaleArticoli> ViewGaPersonaleArticoli { get; set; }
+        DbSet<ViewGaPersonaleNuoveSchede> ViewGaPersonaleNuoveSchede { get; set; }
+        DbSet<ViewGaPersonaleRetributivi> ViewGaPersonaleRetributivi { get; set; }
+        DbSet<ViewGaPersonaleSanzioni> ViewGaPersonaleSanzioni { get; set; }
+        DbSet<ViewGaPersonaleScadenziario> ViewGaPersonaleScadenziario { get; set; }
+        DbSet<ViewGaPersonaleScadenziarioAbilitazioni> ViewGaPersonaleScadenziarioAbilitazioni { get; set; }
+        DbSet<ViewGaPersonaleSchedeConsegne> ViewGaPersonaleSchedeConsegne { get; set; }
         #endregion
 
         #endregion

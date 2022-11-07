@@ -5,10 +5,82 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class GaPersonale_V2 : Migration
+    public partial class GaPersonale : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "GaPersonaleAssunzioni",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Disabled = table.Column<bool>(type: "bit", nullable: false),
+                    Descrizione = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GaPersonaleAssunzioni", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GaPersonaleQualifiche",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Disabled = table.Column<bool>(type: "bit", nullable: false),
+                    Descrizione = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GaPersonaleQualifiche", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GaPersonaleDipendenti",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GlobalSedeId = table.Column<long>(type: "bigint", nullable: false),
+                    GlobalCentroCostoId = table.Column<long>(type: "bigint", nullable: false),
+                    PersonaleQualificaId = table.Column<long>(type: "bigint", nullable: false),
+                    PersonaleAssunzioneId = table.Column<long>(type: "bigint", nullable: false),
+                    DataScadenza = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Preposto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Disabled = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GaPersonaleDipendenti", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GaPersonaleDipendenti_GaPersonaleAssunzioni_PersonaleAssunzioneId",
+                        column: x => x.PersonaleAssunzioneId,
+                        principalTable: "GaPersonaleAssunzioni",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_GaPersonaleDipendenti_GaPersonaleQualifiche_PersonaleQualificaId",
+                        column: x => x.PersonaleQualificaId,
+                        principalTable: "GaPersonaleQualifiche",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_GaPersonaleDipendenti_GlobalCentriCosti_GlobalCentroCostoId",
+                        column: x => x.GlobalCentroCostoId,
+                        principalTable: "GlobalCentriCosti",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_GaPersonaleDipendenti_GlobalSedi_GlobalSedeId",
+                        column: x => x.GlobalSedeId,
+                        principalTable: "GlobalSedi",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateTable(
                 name: "GaPersonaleAbilitazioniTipi",
                 columns: table => new
@@ -240,10 +312,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonaleDipendenteId = table.Column<long>(type: "bigint", nullable: false),
+                    PersonaleRetributivoTipoId = table.Column<long>(type: "bigint", nullable: false),
                     Data = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DipendenteRetributivoTipoId = table.Column<long>(type: "bigint", nullable: false),
                     DettaglioRetributivo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PersonaleRetributivoTipoId = table.Column<long>(type: "bigint", nullable: true),
                     Disabled = table.Column<bool>(type: "bit", nullable: false),
                     FileId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FileFolder = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -264,7 +335,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         name: "FK_GaPersonaleRetributivi_GaPersonaleRetributiviTipi_PersonaleRetributivoTipoId",
                         column: x => x.PersonaleRetributivoTipoId,
                         principalTable: "GaPersonaleRetributiviTipi",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -309,7 +381,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 });
 
             migrationBuilder.CreateTable(
-                name: "GaPersonaleDipendentiScadenze",
+                name: "GaPersonaleScadenze",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -327,21 +399,21 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GaPersonaleDipendentiScadenze", x => x.Id);
+                    table.PrimaryKey("PK_GaPersonaleScadenze", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GaPersonaleDipendentiScadenze_GaPersonaleDipendenti_PersonaleDipendenteId",
+                        name: "FK_GaPersonaleScadenze_GaPersonaleDipendenti_PersonaleDipendenteId",
                         column: x => x.PersonaleDipendenteId,
                         principalTable: "GaPersonaleDipendenti",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GaPersonaleDipendentiScadenze_GaPersonaleScadenzeDettagli_PersonaleScadenzaDettaglioId",
+                        name: "FK_GaPersonaleScadenze_GaPersonaleScadenzeDettagli_PersonaleScadenzaDettaglioId",
                         column: x => x.PersonaleScadenzaDettaglioId,
                         principalTable: "GaPersonaleScadenzeDettagli",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GaPersonaleDipendentiScadenze_GaPersonaleScadenzeTipi_PersonaleScadenzaTipoId",
+                        name: "FK_GaPersonaleScadenze_GaPersonaleScadenzeTipi_PersonaleScadenzaTipoId",
                         column: x => x.PersonaleScadenzaTipoId,
                         principalTable: "GaPersonaleScadenzeTipi",
                         principalColumn: "Id",
@@ -378,6 +450,26 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_GaPersonaleDipendenti_GlobalCentroCostoId",
+                table: "GaPersonaleDipendenti",
+                column: "GlobalCentroCostoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GaPersonaleDipendenti_GlobalSedeId",
+                table: "GaPersonaleDipendenti",
+                column: "GlobalSedeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GaPersonaleDipendenti_PersonaleAssunzioneId",
+                table: "GaPersonaleDipendenti",
+                column: "PersonaleAssunzioneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GaPersonaleDipendenti_PersonaleQualificaId",
+                table: "GaPersonaleDipendenti",
+                column: "PersonaleQualificaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GaPersonaleAbilitazioni_PersonaleAbilitazioneTipoId",
                 table: "GaPersonaleAbilitazioni",
                 column: "PersonaleAbilitazioneTipoId");
@@ -401,21 +493,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 name: "IX_GaPersonaleArticoli_PersonaleArticoloTipologiaId",
                 table: "GaPersonaleArticoli",
                 column: "PersonaleArticoloTipologiaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GaPersonaleDipendentiScadenze_PersonaleDipendenteId",
-                table: "GaPersonaleDipendentiScadenze",
-                column: "PersonaleDipendenteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GaPersonaleDipendentiScadenze_PersonaleScadenzaDettaglioId",
-                table: "GaPersonaleDipendentiScadenze",
-                column: "PersonaleScadenzaDettaglioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GaPersonaleDipendentiScadenze_PersonaleScadenzaTipoId",
-                table: "GaPersonaleDipendentiScadenze",
-                column: "PersonaleScadenzaTipoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GaPersonaleRetributivi_PersonaleDipendenteId",
@@ -443,6 +520,21 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 column: "PersonaleSanzioneMotivoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GaPersonaleScadenze_PersonaleDipendenteId",
+                table: "GaPersonaleScadenze",
+                column: "PersonaleDipendenteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GaPersonaleScadenze_PersonaleScadenzaDettaglioId",
+                table: "GaPersonaleScadenze",
+                column: "PersonaleScadenzaDettaglioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GaPersonaleScadenze_PersonaleScadenzaTipoId",
+                table: "GaPersonaleScadenze",
+                column: "PersonaleScadenzaTipoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GaPersonaleSchedeConsegne_PersonaleDipendenteId",
                 table: "GaPersonaleSchedeConsegne",
                 column: "PersonaleDipendenteId");
@@ -461,10 +553,16 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GaPersonaleAbilitazioni");
+                name: "GaPersonaleDipendenti");
 
             migrationBuilder.DropTable(
-                name: "GaPersonaleDipendentiScadenze");
+                name: "GaPersonaleAssunzioni");
+
+            migrationBuilder.DropTable(
+                name: "GaPersonaleQualifiche");
+
+            migrationBuilder.DropTable(
+                name: "GaPersonaleAbilitazioni");
 
             migrationBuilder.DropTable(
                 name: "GaPersonaleRetributivi");
@@ -473,16 +571,13 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 name: "GaPersonaleSanzioni");
 
             migrationBuilder.DropTable(
+                name: "GaPersonaleScadenze");
+
+            migrationBuilder.DropTable(
                 name: "GaPersonaleSchedeConsegneDettagli");
 
             migrationBuilder.DropTable(
                 name: "GaPersonaleAbilitazioniTipi");
-
-            migrationBuilder.DropTable(
-                name: "GaPersonaleScadenzeDettagli");
-
-            migrationBuilder.DropTable(
-                name: "GaPersonaleScadenzeTipi");
 
             migrationBuilder.DropTable(
                 name: "GaPersonaleRetributiviTipi");
@@ -492,6 +587,12 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             migrationBuilder.DropTable(
                 name: "GaPersonaleSanzioniMotivi");
+
+            migrationBuilder.DropTable(
+                name: "GaPersonaleScadenzeDettagli");
+
+            migrationBuilder.DropTable(
+                name: "GaPersonaleScadenzeTipi");
 
             migrationBuilder.DropTable(
                 name: "GaPersonaleArticoli");

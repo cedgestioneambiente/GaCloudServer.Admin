@@ -339,7 +339,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Segnalazioni";
+                string fileFolder = "GaCloud/Segnalazioni";
                 var dto = apiDto.ToDto<SegnalazioniFotoDto, SegnalazioniFotoApiDto>();
                 var response = await _gaSegnalazioniService.AddGaSegnalazioniFotoAsync(dto);
                 if (apiDto.uploadFile)

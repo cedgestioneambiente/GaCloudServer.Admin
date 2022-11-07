@@ -178,7 +178,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PersonaleDipendente> GaPersonaleDipendenti { get; set; }
         public DbSet<PersonaleQualifica> GaPersonaleQualifiche { get; set; }
         public DbSet<PersonaleAssunzione> GaPersonaleAssunzioni { get; set; }
-        public DbSet<PersonaleDipendenteScadenza> GaPersonaleDipendentiScadenze { get; set; }
+        public DbSet<PersonaleScadenza> GaPersonaleScadenze { get; set; }
         public DbSet<PersonaleScadenzaTipo> GaPersonaleScadenzeTipi { get; set; }
         public DbSet<PersonaleScadenzaDettaglio> GaPersonaleScadenzeDettagli { get; set; }
         public DbSet<PersonaleSanzione> GaPersonaleSanzioni { get; set; }
@@ -198,7 +198,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Views
         public DbSet<ViewGaPersonaleUsersOnDipendenti> ViewGaPersonaleUsersOnDipendenti { get; set; }
         public DbSet<ViewGaPersonaleDipendenti> ViewGaPersonaleDipendenti { get; set; }
-        public DbSet<ViewGaPersonaleDipendentiScadenze> ViewGaPersonaleDipendentiScadenze { get; set; }
+        public DbSet<ViewGaPersonaleScadenze> ViewGaPersonaleScadenze { get; set; }
+        public DbSet<ViewGaPersonaleAbilitazioni> ViewGaPersonaleAbilitazioni { get; set; }
+        public DbSet<ViewGaPersonaleArticoli> ViewGaPersonaleArticoli { get; set; }
+        public DbSet<ViewGaPersonaleNuoveSchede> ViewGaPersonaleNuoveSchede { get; set; }
+        public DbSet<ViewGaPersonaleRetributivi> ViewGaPersonaleRetributivi { get; set; }
+        public DbSet<ViewGaPersonaleSanzioni> ViewGaPersonaleSanzioni { get; set; }
+        public DbSet<ViewGaPersonaleScadenziario> ViewGaPersonaleScadenziario { get; set; }
+        public DbSet<ViewGaPersonaleScadenziarioAbilitazioni> ViewGaPersonaleScadenziarioAbilitazioni { get; set; }
+        public DbSet<ViewGaPersonaleSchedeConsegne> ViewGaPersonaleSchedeConsegne { get; set; }
         #endregion
 
         #endregion
@@ -648,10 +656,74 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                     .Property(x=>x.Id);
             });
 
-            builder.Entity<ViewGaPersonaleDipendentiScadenze>(entity =>
+            builder.Entity<ViewGaPersonaleScadenze>(entity =>
             {
                 entity
-                    .ToView(nameof(ViewGaPersonaleDipendentiScadenze))
+                    .ToView(nameof(ViewGaPersonaleScadenze))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleAbilitazioni>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleAbilitazioni))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleArticoli>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleArticoli))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleNuoveSchede>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleNuoveSchede))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleRetributivi>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleRetributivi))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleSanzioni>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleSanzioni))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleScadenziario>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleScadenziario))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleScadenziarioAbilitazioni>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleScadenziarioAbilitazioni))
+                    .HasNoKey()
+                    .Property(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPersonaleSchedeConsegne>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPersonaleSchedeConsegne))
                     .HasNoKey()
                     .Property(x => x.Id);
             });
