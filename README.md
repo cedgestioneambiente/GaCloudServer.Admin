@@ -52,8 +52,26 @@ Tecologie Utilizzate:
   Su questo progetto è presente tutta la logica di businness, implementazione dei Services a livello applicativo e gestione degli oggetti tramite Dto.
   
   ## Utilizzo:
+  > Prerequisiti:
+  - SDK .Net 6.0 (EntityFramework 6.0)
+  - Angular 15.0
+  - npm
+  - node
+  - fuse 15.0 (min. ver)
+  
+  
   > Fasi preliminari:
-  Clonare la repository: 
+  Clonare la repository: https://github.com/cedgestioneambiente/GaCloudServer.Admin.git
+  
+  In fase di primo avvio verranno creati i db [IdentityServerAdmin, GaCloud].
+  Impostare le stringhe di connessione sui file appsettings.json dei seguenti progetti:
+  - GaCloudServer.Admin
+  - GaCloudServer.Admin.Api
+  - GaCloudServer.Resources.Api
+  - GaCloudServer.STS.Identity
+   
+ 
+  
 
 
  
