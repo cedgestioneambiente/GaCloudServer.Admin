@@ -60,7 +60,8 @@ Tecologie Utilizzate:
   - fuse 15.0 (min. ver)
   
   
-  > Fasi preliminari:
+  > Fasi preliminari: 
+  
   Clonare la repository: https://github.com/cedgestioneambiente/GaCloudServer.Admin.git
   
   In fase di primo avvio verranno creati i db [IdentityServerAdmin, GaCloud].
