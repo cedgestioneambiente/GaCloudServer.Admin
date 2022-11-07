@@ -77,7 +77,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Comunicati";
+                string fileFolder = "GaCloud/Comunicati";
                 var dto = apiDto.ToDto<ComunicatiDocumentoDto, ComunicatiDocumentoApiDto>();
                 var response = await _gaComunicatiService.AddGaComunicatiDocumentoAsync(dto);
                 if (apiDto.uploadFile)
@@ -117,7 +117,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Comunicati";
+                string fileFolder = "GaCloud/Comunicati";
                 var dto = apiDto.ToDto<ComunicatiDocumentoDto, ComunicatiDocumentoApiDto>();
                 var response = await _gaComunicatiService.UpdateGaComunicatiDocumentoAsync(dto);
                 bool failureDelete = false;

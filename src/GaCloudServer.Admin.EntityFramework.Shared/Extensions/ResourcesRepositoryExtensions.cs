@@ -165,7 +165,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PersonaleDipendente>, GenericRepository<TResourcesDbContext, PersonaleDipendente>>();
             services.AddTransient<IGenericRepository<PersonaleQualifica>, GenericRepository<TResourcesDbContext, PersonaleQualifica>>();
             services.AddTransient<IGenericRepository<PersonaleAssunzione>, GenericRepository<TResourcesDbContext, PersonaleAssunzione>>();
-            services.AddTransient<IGenericRepository<PersonaleDipendenteScadenza>, GenericRepository<TResourcesDbContext, PersonaleDipendenteScadenza>>();
+            services.AddTransient<IGenericRepository<PersonaleScadenza>, GenericRepository<TResourcesDbContext, PersonaleScadenza>>();
             services.AddTransient<IGenericRepository<PersonaleScadenzaTipo>, GenericRepository<TResourcesDbContext, PersonaleScadenzaTipo>>();
             services.AddTransient<IGenericRepository<PersonaleScadenzaDettaglio>, GenericRepository<TResourcesDbContext, PersonaleScadenzaDettaglio>>();
             services.AddTransient<IGenericRepository<PersonaleSanzioneMotivo>, GenericRepository<TResourcesDbContext, PersonaleSanzioneMotivo>>();
@@ -184,7 +184,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             services.AddTransient<IGenericRepository<ViewGaPersonaleUsersOnDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleUsersOnDipendenti>>();
             services.AddTransient<IGenericRepository<ViewGaPersonaleDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleDipendenti>>();
-            services.AddTransient<IGenericRepository<ViewGaPersonaleDipendentiScadenze>, GenericRepository<TResourcesDbContext, ViewGaPersonaleDipendentiScadenze>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleScadenze>, GenericRepository<TResourcesDbContext, ViewGaPersonaleScadenze>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleAbilitazioni>, GenericRepository<TResourcesDbContext, ViewGaPersonaleAbilitazioni>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleScadenziarioAbilitazioni>, GenericRepository<TResourcesDbContext, ViewGaPersonaleScadenziarioAbilitazioni>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleArticoli>, GenericRepository<TResourcesDbContext, ViewGaPersonaleArticoli>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleNuoveSchede>, GenericRepository<TResourcesDbContext, ViewGaPersonaleNuoveSchede>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleRetributivi>, GenericRepository<TResourcesDbContext, ViewGaPersonaleRetributivi>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleSanzioni>, GenericRepository<TResourcesDbContext, ViewGaPersonaleSanzioni>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleSchedeConsegne>, GenericRepository<TResourcesDbContext, ViewGaPersonaleSchedeConsegne>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleScadenziario>, GenericRepository<TResourcesDbContext, ViewGaPersonaleScadenziario>>();
+
             #endregion
 
             //Csr

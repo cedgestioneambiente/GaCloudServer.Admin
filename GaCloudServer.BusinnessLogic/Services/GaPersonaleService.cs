@@ -13,7 +13,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PersonaleQualifica> gaPersonaleQualificheRepo;
         protected readonly IGenericRepository<PersonaleAssunzione> gaPersonaleAssunzioniRepo;
         protected readonly IGenericRepository<PersonaleDipendente> gaPersonaleDipendentiRepo;
-        protected readonly IGenericRepository<PersonaleDipendenteScadenza> gaPersonaleDipendentiScadenzeRepo;
+        protected readonly IGenericRepository<PersonaleScadenza> gaPersonaleScadenzeRepo;
         protected readonly IGenericRepository<PersonaleScadenzaTipo> gaPersonaleScadenzeTipiRepo;
         protected readonly IGenericRepository<PersonaleScadenzaDettaglio> gaPersonaleScadenzeDettagliRepo;
         protected readonly IGenericRepository<PersonaleSanzioneMotivo> gaPersonaleSanzioniMotiviRepo;
@@ -32,7 +32,16 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         protected readonly IGenericRepository<ViewGaPersonaleUsersOnDipendenti> viewGaPersonaleUsersOnDipendentiRepo;
         protected readonly IGenericRepository<ViewGaPersonaleDipendenti> viewGaPersonaleDipendentiRepo;
-        protected readonly IGenericRepository<ViewGaPersonaleDipendentiScadenze> viewGaPersonaleDipendentiScadenzeRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleScadenze> viewGaPersonaleScadenzeRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleAbilitazioni> viewGaPersonaleAbilitazioniRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleArticoli> viewGaPersonaleArticoliRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleNuoveSchede> viewGaPersonaleNuoveSchedeRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleRetributivi> viewGaPersonaleRetributiviRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleSanzioni> viewGaPersonaleSanzioniRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleScadenziario> viewGaPersonaleScadenziarioRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleScadenziarioAbilitazioni> viewGaPersonaleScadenziarioAbilitazioniRepo;
+        protected readonly IGenericRepository<ViewGaPersonaleSchedeConsegne> viewGaPersonaleSchedeConsegneRepo;
+
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -40,7 +49,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<PersonaleQualifica> gaPersonaleQualificheRepo,
             IGenericRepository<PersonaleAssunzione> gaPersonaleAssunzioniRepo,
             IGenericRepository<PersonaleDipendente> gaPersonaleDipendentiRepo,
-            IGenericRepository<PersonaleDipendenteScadenza> gaPersonaleDipendentiScadenzeRepo,
+            IGenericRepository<PersonaleScadenza> gaPersonaleScadenzeRepo,
             IGenericRepository<PersonaleScadenzaTipo> gaPersonaleScadenzeTipiRepo,
             IGenericRepository<PersonaleScadenzaDettaglio> gaPersonaleScadenzeDettagliRepo,
             IGenericRepository<PersonaleSanzioneMotivo> gaPersonaleSanzioniMotiviRepo,
@@ -59,14 +68,22 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<ViewGaPersonaleUsersOnDipendenti> viewGaPersonaleUsersOnDipendentiRepo,
             IGenericRepository<ViewGaPersonaleDipendenti> viewGaPersonaleDipendentiRepo,
-            IGenericRepository<ViewGaPersonaleDipendentiScadenze> viewGaPersonaleDipendentiScadenzeRepo,
+            IGenericRepository<ViewGaPersonaleScadenze> viewGaPersonaleScadenzeRepo,
+            IGenericRepository<ViewGaPersonaleAbilitazioni> viewGaPersonaleAbilitazioniRepo,
+            IGenericRepository<ViewGaPersonaleArticoli> viewGaPersonaleArticoliRepo,
+            IGenericRepository<ViewGaPersonaleNuoveSchede> viewGaPersonaleNuoveSchedeRepo,
+            IGenericRepository<ViewGaPersonaleRetributivi> viewGaPersonaleRetributiviRepo,
+            IGenericRepository<ViewGaPersonaleSanzioni> viewGaPersonaleSanzioniRepo,
+            IGenericRepository<ViewGaPersonaleScadenziario> viewGaPersonaleScadenziarioRepo,
+            IGenericRepository<ViewGaPersonaleScadenziarioAbilitazioni> viewGaPersonaleScadenziarioAbilitazioniRepo,
+            IGenericRepository<ViewGaPersonaleSchedeConsegne> viewGaPersonaleSchedeConsegneRepo,
 
             IUnitOfWork unitOfWork)
         {
             this.gaPersonaleQualificheRepo = gaPersonaleQualificheRepo;
             this.gaPersonaleAssunzioniRepo = gaPersonaleAssunzioniRepo;
             this.gaPersonaleDipendentiRepo = gaPersonaleDipendentiRepo;
-            this.gaPersonaleDipendentiScadenzeRepo = gaPersonaleDipendentiScadenzeRepo;
+            this.gaPersonaleScadenzeRepo = gaPersonaleScadenzeRepo;
             this.gaPersonaleScadenzeTipiRepo = gaPersonaleScadenzeTipiRepo;
             this.gaPersonaleScadenzeDettagliRepo = gaPersonaleScadenzeDettagliRepo;
             this.gaPersonaleSanzioniMotiviRepo = gaPersonaleSanzioniMotiviRepo;
@@ -85,7 +102,15 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.viewGaPersonaleUsersOnDipendentiRepo = viewGaPersonaleUsersOnDipendentiRepo;
             this.viewGaPersonaleDipendentiRepo = viewGaPersonaleDipendentiRepo;
-            this.viewGaPersonaleDipendentiScadenzeRepo = viewGaPersonaleDipendentiScadenzeRepo;
+            this.viewGaPersonaleScadenzeRepo = viewGaPersonaleScadenzeRepo;
+            this.viewGaPersonaleAbilitazioniRepo = viewGaPersonaleAbilitazioniRepo;
+            this.viewGaPersonaleArticoliRepo = viewGaPersonaleArticoliRepo;
+            this.viewGaPersonaleNuoveSchedeRepo = viewGaPersonaleNuoveSchedeRepo;
+            this.viewGaPersonaleRetributiviRepo = viewGaPersonaleRetributiviRepo;
+            this.viewGaPersonaleSanzioniRepo = viewGaPersonaleSanzioniRepo;
+            this.viewGaPersonaleScadenziarioRepo = viewGaPersonaleScadenziarioRepo;
+            this.viewGaPersonaleScadenziarioAbilitazioniRepo = viewGaPersonaleScadenziarioAbilitazioniRepo;
+            this.viewGaPersonaleSchedeConsegneRepo = viewGaPersonaleSchedeConsegneRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -371,35 +396,35 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-        #region PersonaleDipendentiScadenze
-        public async Task<PersonaleDipendentiScadenzeDto> GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long personaleDipendenteId)
+        #region PersonaleScadenze
+        public async Task<PersonaleScadenzeDto> GetGaPersonaleScadenzeByDipendenteIdAsync(long personaleDipendenteId)
         {
-            var entities = await gaPersonaleDipendentiScadenzeRepo.GetWithFilterAsync(x=>x.PersonaleDipendenteId== personaleDipendenteId);
-            var dtos = entities.ToDto<PersonaleDipendentiScadenzeDto, PagedList<PersonaleDipendenteScadenza>>();
+            var entities = await gaPersonaleScadenzeRepo.GetWithFilterAsync(x=>x.PersonaleDipendenteId== personaleDipendenteId);
+            var dtos = entities.ToDto<PersonaleScadenzeDto, PagedList<PersonaleScadenza>>();
             return dtos;
         }
 
-        public async Task<PersonaleDipendenteScadenzaDto> GetGaPersonaleDipendenteScadenzaByIdAsync(long id)
+        public async Task<PersonaleScadenzaDto> GetGaPersonaleScadenzaByIdAsync(long id)
         {
-            var entity = await gaPersonaleDipendentiScadenzeRepo.GetByIdAsync(id);
-            var dto = entity.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenza>();
+            var entity = await gaPersonaleScadenzeRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PersonaleScadenzaDto, PersonaleScadenza>();
             return dto;
         }
 
-        public async Task<long> AddGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto)
+        public async Task<long> AddGaPersonaleScadenzaAsync(PersonaleScadenzaDto dto)
         {
-            var entity = dto.ToEntity<PersonaleDipendenteScadenza, PersonaleDipendenteScadenzaDto>();
-            await gaPersonaleDipendentiScadenzeRepo.AddAsync(entity);
+            var entity = dto.ToEntity<PersonaleScadenza, PersonaleScadenzaDto>();
+            await gaPersonaleScadenzeRepo.AddAsync(entity);
             await SaveChanges();
             DetachEntity(entity);
 
             return entity.Id;
         }
 
-        public async Task<long> UpdateGaPersonaleDipendenteScadenzaAsync(PersonaleDipendenteScadenzaDto dto)
+        public async Task<long> UpdateGaPersonaleScadenzaAsync(PersonaleScadenzaDto dto)
         {
-            var entity = dto.ToEntity<PersonaleDipendenteScadenza, PersonaleDipendenteScadenzaDto>();
-            gaPersonaleDipendentiScadenzeRepo.Update(entity);
+            var entity = dto.ToEntity<PersonaleScadenza, PersonaleScadenzaDto>();
+            gaPersonaleScadenzeRepo.Update(entity);
             await SaveChanges();
             DetachEntity(entity);
 
@@ -407,19 +432,19 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
-        public async Task<bool> DeleteGaPersonaleDipendenteScadenzaAsync(long id)
+        public async Task<bool> DeleteGaPersonaleScadenzaAsync(long id)
         {
-            var entity = await gaPersonaleDipendentiScadenzeRepo.GetByIdAsync(id);
-            gaPersonaleDipendentiScadenzeRepo.Remove(entity);
+            var entity = await gaPersonaleScadenzeRepo.GetByIdAsync(id);
+            gaPersonaleScadenzeRepo.Remove(entity);
             await SaveChanges();
 
             return true;
         }
 
         #region Functions
-        //public async Task<bool> ValidateGaPersonaleDipendenteScadenzaAsync(long id, string descrizione)
+        //public async Task<bool> ValidateGaPersonaleScadenzaAsync(long id, string descrizione)
         //{
-        //    var entity = await gaPersonaleDipendentiScadenzeRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+        //    var entity = await gaPersonaleScadenzeRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
 
         //    if (entity.Data.Count > 0)
         //    {
@@ -431,20 +456,20 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    }
         //}
 
-        public async Task<bool> ChangeStatusGaPersonaleDipendenteScadenzaAsync(long id)
+        public async Task<bool> ChangeStatusGaPersonaleScadenzaAsync(long id)
         {
-            var entity = await gaPersonaleDipendentiScadenzeRepo.GetByIdAsync(id);
+            var entity = await gaPersonaleScadenzeRepo.GetByIdAsync(id);
             if (entity.Disabled)
             {
                 entity.Disabled = false;
-                gaPersonaleDipendentiScadenzeRepo.Update(entity);
+                gaPersonaleScadenzeRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
             else
             {
                 entity.Disabled = true;
-                gaPersonaleDipendentiScadenzeRepo.Update(entity);
+                gaPersonaleScadenzeRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
@@ -453,12 +478,19 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaPersonaleDipendentiScadenze>> GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long dipendenteId)
+        public async Task<PagedList<ViewGaPersonaleScadenze>> GetViewGaPersonaleScadenzeByDipendenteIdAsync(long dipendenteId)
         {
-            var view = await viewGaPersonaleDipendentiScadenzeRepo.GetWithFilterAsync(x=>x.DipendenteId==dipendenteId);
+            var view = await viewGaPersonaleScadenzeRepo.GetWithFilterAsync(x=>x.DipendenteId==dipendenteId);
             return view;
 
         }
+
+        public async Task<PagedList<ViewGaPersonaleScadenziario>> GetViewGaPersonaleScadenziarioAsync(bool all = true)
+        {
+            var view = all == true ? await viewGaPersonaleScadenziarioRepo.GetAllAsync(1, 0, "Dipendente") : await viewGaPersonaleScadenziarioRepo.GetWithFilterAsync(x => x.Disabled == false, 1, 0, "Dipendente");
+            return view;
+        }
+
         #endregion
         #endregion
 
@@ -860,6 +892,22 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #region Views
+        public async Task<PagedList<ViewGaPersonaleSanzioni>> GetViewGaPersonaleSanzioniAsync(long dipendenteId)
+        {
+
+            try
+            {
+                return await viewGaPersonaleSanzioniRepo.GetWithFilterAsync(x => x.DipendenteId == dipendenteId);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        #endregion
+
         #endregion
 
         #region PersonaleAbilitazioniTipi
@@ -1017,6 +1065,34 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPersonaleAbilitazioni>> GetViewGaPersonaleAbilitazioniAsync(long dipendenteId)
+        {
+                if (dipendenteId == 0)
+                {
+                    return await viewGaPersonaleAbilitazioniRepo.GetAllAsync();
+                }
+                else
+                {
+                    return await viewGaPersonaleAbilitazioniRepo.GetWithFilterAsync(x => x.DipendenteId == dipendenteId);
+                }
+              
+
+        }
+        public async Task<PagedList<ViewGaPersonaleScadenziarioAbilitazioni>> GetViewGaPersonaleScadenziarioAbilitazioniAsync()
+        {
+            try
+            {
+                return await viewGaPersonaleScadenziarioAbilitazioniRepo.GetAllAsync(1, 0, "Dipendente");
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
         }
         #endregion
 
@@ -1180,6 +1256,22 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #region Views
+        public async Task<PagedList<ViewGaPersonaleRetributivi>> GetViewGaPersonaleRetributiviAsync(long dipendenteId)
+        {
+
+            try
+            {
+                return await viewGaPersonaleRetributiviRepo.GetWithFilterAsync(x => x.DipendenteId == dipendenteId);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        #endregion
+
         #endregion
 
         #region PersonaleSchedeConsegne
@@ -1260,6 +1352,21 @@ namespace GaCloudServer.BusinnessLogic.Services
         //}
         #endregion
 
+        #region Views
+        public async Task<PagedList<ViewGaPersonaleSchedeConsegne>> GetViewGaPersonaleRiepilogoConsegneAsync()
+        {
+            try
+            {
+                return await viewGaPersonaleSchedeConsegneRepo.GetAllAsync(1, 0, "Data", "OrderByDescending");
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        #endregion
+
         #endregion
 
         #region PersonaleSchedeConsegneDettagli
@@ -1338,6 +1445,35 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    }
 
         //}
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPersonaleNuoveSchede>> GetViewGaPersonaleNuoveSchedeAsync()
+        {
+            try
+            {
+                return await viewGaPersonaleNuoveSchedeRepo.GetAllAsync(1, 0);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
+        public async Task<PagedList<ViewGaPersonaleSchedeConsegne>> GetViewGaPersonaleSchedeConsegneAsync(long schedaId)
+        {
+
+            try
+            {
+                return await viewGaPersonaleSchedeConsegneRepo.GetWithFilterAsync(x => x.SchedaConsegnaId == schedaId);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
         #endregion
 
         #endregion
@@ -1657,6 +1793,21 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPersonaleArticoli>> GetViewGaPersonaleArticoliAsync()
+        {
+            try
+            {
+                return await viewGaPersonaleArticoliRepo.GetAllAsync(1, 0);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
         }
         #endregion
 

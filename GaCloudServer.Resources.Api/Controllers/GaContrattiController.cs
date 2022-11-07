@@ -799,7 +799,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Contratti";
+                string fileFolder = "GaCloud/Contratti";
                 var dto = apiDto.ToDto<ContrattiDocumentoDto, ContrattiDocumentoApiDto>();
                 var response = await _gaContrattiService.AddGaContrattiDocumentoAsync(dto);
                 if (apiDto.uploadFile)
@@ -839,7 +839,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Contratti";
+                string fileFolder = "GaCloud/Contratti";
                 var dto = apiDto.ToDto<ContrattiDocumentoDto, ContrattiDocumentoApiDto>();
                 var response = await _gaContrattiService.UpdateGaContrattiDocumentoAsync(dto);
                 bool failureDelete = false;

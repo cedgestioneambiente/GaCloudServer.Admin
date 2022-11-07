@@ -763,7 +763,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "ContactCenter";
+                string fileFolder = "GaCloud/ContactCenter";
                 var dto = apiDto.ToDto<ContactCenterAllegatoDto, ContactCenterAllegatoApiDto>();
                 var response = await _gaContactCenterService.AddGaContactCenterAllegatoAsync(dto);
                 if (apiDto.uploadFile)
@@ -803,7 +803,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "ContactCenter";
+                string fileFolder = "GaCloud/ContactCenter";
                 var dto = apiDto.ToDto<ContactCenterAllegatoDto, ContactCenterAllegatoApiDto>();
                 var response = await _gaContactCenterService.UpdateGaContactCenterAllegatoAsync(dto);
                 bool failureDelete = false;

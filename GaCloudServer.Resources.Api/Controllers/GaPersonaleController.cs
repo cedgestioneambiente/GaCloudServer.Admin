@@ -771,14 +771,14 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
-        #region PersonaleDipendentiScadenze
-        [HttpGet("GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync/{personaleDipendenteId}")]
-        public async Task<ActionResult<ApiResponse>> GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long personaleDipendenteId)
+        #region PersonaleScadenze
+        [HttpGet("GetGaPersonaleScadenzeByDipendenteIdAsync/{personaleDipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleScadenzeByDipendenteIdAsync(long personaleDipendenteId)
         {
             try
             {
-                var dtos = await _gaPersonaleService.GetGaPersonaleDipendentiScadenzeByDipendenteIdAsync(personaleDipendenteId);
-                var apiDtos = dtos.ToApiDto<PersonaleDipendentiScadenzeApiDto, PersonaleDipendentiScadenzeDto>();
+                var dtos = await _gaPersonaleService.GetGaPersonaleScadenzeByDipendenteIdAsync(personaleDipendenteId);
+                var apiDtos = dtos.ToApiDto<PersonaleScadenzeApiDto, PersonaleScadenzeDto>();
                 return new ApiResponse(apiDtos);
             }
             catch (Exception ex)
@@ -789,13 +789,13 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetGaPersonaleDipendenteScadenzaByIdAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> GetGaPersonaleDipendenteScadenzaByIdAsync(long id)
+        [HttpGet("GetGaPersonaleScadenzaByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPersonaleScadenzaByIdAsync(long id)
         {
             try
             {
-                var dto = await _gaPersonaleService.GetGaPersonaleDipendenteScadenzaByIdAsync(id);
-                var apiDto = dto.ToApiDto<PersonaleDipendenteScadenzaApiDto, PersonaleDipendenteScadenzaDto>();
+                var dto = await _gaPersonaleService.GetGaPersonaleScadenzaByIdAsync(id);
+                var apiDto = dto.ToApiDto<PersonaleScadenzaApiDto, PersonaleScadenzaDto>();
                 return new ApiResponse(apiDto);
             }
             catch (Exception ex)
@@ -806,8 +806,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("AddGaPersonaleDipendenteScadenzaAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaPersonaleDipendenteScadenzaAsync([FromForm] PersonaleDipendenteScadenzaApiDto apiDto)
+        [HttpPost("AddGaPersonaleScadenzaAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPersonaleScadenzaAsync([FromForm] PersonaleScadenzaApiDto apiDto)
         {
             try
             {
@@ -816,8 +816,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                     throw new ApiProblemDetailsException(ModelState);
                 }
                 string fileFolder = "GaCloud/Personale/Dipendenti/Scadenze";
-                var dto = apiDto.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>();
-                var response = await _gaPersonaleService.AddGaPersonaleDipendenteScadenzaAsync(dto);
+                var dto = apiDto.ToDto<PersonaleScadenzaDto, PersonaleScadenzaApiDto>();
+                var response = await _gaPersonaleService.AddGaPersonaleScadenzaAsync(dto);
                 if (apiDto.uploadFile)
                 {
                     var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
@@ -827,7 +827,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     dto.FileSize = apiDto.File.Length.ToString();
                     dto.FileType = apiDto.File.ContentType;
                     dto.FileId = fileUploadResponse.id;
-                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleScadenzaAsync(dto);
                     return new ApiResponse("CreatedWithFile", response, code.Status201Created);
                 }
 
@@ -846,8 +846,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("UpdateGaPersonaleDipendenteScadenzaAsync")]
-        public async Task<ActionResult<ApiResponse>> UpdateGaPersonaleDipendenteScadenzaAsync([FromForm] PersonaleDipendenteScadenzaApiDto apiDto)
+        [HttpPost("UpdateGaPersonaleScadenzaAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPersonaleScadenzaAsync([FromForm] PersonaleScadenzaApiDto apiDto)
         {
             try
             {
@@ -855,9 +855,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Personale/Dipendenti";
-                var dto = apiDto.ToDto<PersonaleDipendenteScadenzaDto, PersonaleDipendenteScadenzaApiDto>();
-                var response = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+                string fileFolder = "GaCloud/Personale/Dipendenti/Scadenze";
+                var dto = apiDto.ToDto<PersonaleScadenzaDto, PersonaleScadenzaApiDto>();
+                var response = await _gaPersonaleService.UpdateGaPersonaleScadenzaAsync(dto);
                 bool failureDelete = false;
                 if (apiDto.deleteFile)
                 {
@@ -875,7 +875,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                         dto.FileSize = null;
                         dto.FileType = null;
                         dto.FileId = null;
-                        var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+                        var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleScadenzaAsync(dto);
                     }
                 }
 
@@ -888,7 +888,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     dto.FileSize = apiDto.File.Length.ToString();
                     dto.FileType = apiDto.File.ContentType;
                     dto.FileId = fileUploadResponse.id;
-                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleDipendenteScadenzaAsync(dto);
+                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleScadenzaAsync(dto);
 
                     if (!failureDelete)
                     {
@@ -918,12 +918,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaPersonaleDipendenteScadenzaAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleDipendenteScadenzaAsync(long id)
+        [HttpDelete("DeleteGaPersonaleScadenzaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleScadenzaAsync(long id)
         {
             try
             {
-                var response = await _gaPersonaleService.DeleteGaPersonaleDipendenteScadenzaAsync(id);
+                var response = await _gaPersonaleService.DeleteGaPersonaleScadenzaAsync(id);
 
                 return new ApiResponse(response);
             }
@@ -936,12 +936,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        //[HttpGet("ValidateGaPersonaleDipendenteScadenzaAsync/{id}/{descrizione}")]
-        //public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleDipendenteScadenzaAsync(long id, string descrizione)
+        //[HttpGet("ValidateGaPersonaleScadenzaAsync/{id}/{descrizione}")]
+        //public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleScadenzaAsync(long id, string descrizione)
         //{
         //    try
         //    {
-        //        var response = await _gaPersonaleService.ValidateGaPersonaleDipendenteScadenzaAsync(id, descrizione);
+        //        var response = await _gaPersonaleService.ValidateGaPersonaleScadenzaAsync(id, descrizione);
         //        return new ApiResponse(response);
         //    }
         //    catch (Exception ex)
@@ -952,12 +952,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         //}
 
-        [HttpGet("ChangeStatusGaPersonaleDipendenteScadenzaAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPersonaleDipendenteScadenzaAsync(long id)
+        [HttpGet("ChangeStatusGaPersonaleScadenzaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPersonaleScadenzaAsync(long id)
         {
             try
             {
-                var response = await _gaPersonaleService.ChangeStatusGaPersonaleDipendenteScadenzaAsync(id);
+                var response = await _gaPersonaleService.ChangeStatusGaPersonaleScadenzaAsync(id);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -970,12 +970,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpGet("GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync/{dipendenteId}")]
-        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync(long dipendenteId)
+        [HttpGet("GetViewGaPersonaleScadenzeByDipendenteIdAsync/{dipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleScadenzeByDipendenteIdAsync(long dipendenteId)
         {
             try
             {
-                var view = await _gaPersonaleService.GetViewGaPersonaleDipendentiScadenzeByDipendenteIdAsync(dipendenteId);
+                var view = await _gaPersonaleService.GetViewGaPersonaleScadenzeByDipendenteIdAsync(dipendenteId);
                 return new ApiResponse(view);
             }
             catch (Exception ex)
@@ -986,10 +986,26 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        #endregion
+        [HttpGet("GetViewGaPersonaleScadenziarioAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleScadenziarioAsync(bool all = true)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleScadenziarioAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
 
         #endregion
 
+        #endregion
 
         #region PersonaleSanzioniMotivi
         [HttpGet("GetGaPersonaleSanzioniMotiviAsync/{page}/{pageSize}")]
@@ -1309,7 +1325,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "PersonaleSanzioni";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Sanzioni";
                 var dto = apiDto.ToDto<PersonaleSanzioneDto, PersonaleSanzioneApiDto>();
                 var response = await _gaPersonaleService.AddGaPersonaleSanzioneAsync(dto);
                 if (apiDto.uploadFile)
@@ -1349,7 +1365,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "PersonaleSanzioni";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Sanzioni";
                 var dto = apiDto.ToDto<PersonaleSanzioneDto, PersonaleSanzioneApiDto>();
                 var response = await _gaPersonaleService.UpdateGaPersonaleSanzioneAsync(dto);
                 bool failureDelete = false;
@@ -1463,34 +1479,51 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        //[HttpGet("ExportGaDipendentiSanzioni")]
-        //[ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(BadRequestObjectResult), 400)]
-        //[AutoWrapIgnore]
-        //public IActionResult ExportGaDipendentiSanzioni()
-        //{
+        [HttpGet("ExportGaDipendentiSanzioni")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaDipendentiSanzioni()
+        {
 
-        //    try
-        //    {
-        //        var entities = _gaPersonaleService.GetViewGaDipendentiSanzioniAsync(0).Result.Data;
-        //        string title = "Riepilogo Sanzioni Dipendenti";
-        //        string[] columns = { "Id", "Dipendente", "Sede", "Data", "Motivo", "Descrizione", "DettaglioSanzione", "Disabled" };
-        //        byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "RIEPILOGO_SANZIONI_DIPENDENTI", true, columns);
+            try
+            {
+                var entities = _gaPersonaleService.GetViewGaPersonaleSanzioniAsync(0).Result.Data;
+                string title = "Riepilogo Sanzioni Dipendenti";
+                string[] columns = { "Id", "Dipendente", "Sede", "Data", "Motivo", "Descrizione", "DettaglioSanzione", "Disabled" };
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "RIEPILOGO_SANZIONI_DIPENDENTI", true, columns);
 
-        //        return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
-        //        {
-        //            FileDownloadName = "Riepilogo_Sanzioni_Dipendenti.xlsx"
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApiException(ex.Message);
-        //    }
-        //}
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Riepilogo_Sanzioni_Dipendenti.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaPersonaleSanzioniIdAsync/{dipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleSanzioniAsync(long dipendenteId)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleSanzioniAsync(dipendenteId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #endregion
-
 
         #region PersonaleAbilitazioniTipi
         [HttpGet("GetGaPersonaleAbilitazioniTipiAsync/{page}/{pageSize}")]
@@ -1673,7 +1706,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "PersonaleAbilitazioni";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Abilitazioni";
                 var dto = apiDto.ToDto<PersonaleAbilitazioneDto, PersonaleAbilitazioneApiDto>();
                 var response = await _gaPersonaleService.AddGaPersonaleAbilitazioneAsync(dto);
                 if (apiDto.uploadFile)
@@ -1713,7 +1746,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "PersonaleAbilitazioni";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Abilitazioni";
                 var dto = apiDto.ToDto<PersonaleAbilitazioneDto, PersonaleAbilitazioneApiDto>();
                 var response = await _gaPersonaleService.UpdateGaPersonaleAbilitazioneAsync(dto);
                 bool failureDelete = false;
@@ -1795,7 +1828,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateGaPersonaleAbilitazioneAsync/{id}/{descrizione}")]
+        //[HttpGet("ValidateGaPersonaleAbilitazioneAsync/{id}/{descrizione}")]
         //public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleAbilitazioneAsync(long id, string descrizione)
         //{
         //    try
@@ -1827,35 +1860,68 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        //[HttpGet("ExportGaDipendentiScadenziarioIdoneita")]
-        //[ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(BadRequestObjectResult), 400)]
-        //[AutoWrapIgnore]
-        //public IActionResult ExportGaDipendentiScadenziarioIdoneita()
-        //{
+        [HttpGet("ExportGaDipendentiScadenziarioAbilitazione")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaDipendentiScadenziarioAbilitazione()
+        {
 
-        //    try
-        //    {
-        //        var entities = _gaPersonaleService.GetViewGaDipendentiScadenziarioIdoneitaAsync().Result.Data;
-        //        string title = "Scadenziario Idoneità Dipendenti";
-        //        string[] columns = { "Id", "Dipendente", "Sede", "DataScadenza", "DataVisita", "IdoneitaTipo", "IdoneitaDettaglio", "Stato", "Disabled" };
-        //        byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "SCADENZIARIO_IDONEITA_DIPENDENTI", true, columns);
+            try
+            {
+                var entities = _gaPersonaleService.GetViewGaPersonaleScadenziarioAbilitazioniAsync().Result.Data;
+                string title = "Scadenziario Abilitazione Dipendenti";
+                string[] columns = { "Id", "Dipendente", "Sede", "DataScadenza", "DataVisita", "AbilitazioneTipo", "AbilitazioneDettaglio", "Stato", "Disabled" };
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "SCADENZIARIO_ABILITAZIONE_DIPENDENTI", true, columns);
 
-        //        return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
-        //        {
-        //            FileDownloadName = "Scadenziario_Idoneita_Dipendenti.xlsx"
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApiException(ex.Message);
-        //    }
-        //}
-
-        #endregion
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Scadenziario_Abilitazione_Dipendenti.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
 
         #endregion
 
+        #region Views
+        [HttpGet("GetViewGaPersonaleAbilitazioniIdAsync/{dipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleAbilitazioniAsync(long dipendenteId)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleAbilitazioniAsync(dipendenteId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaPersonaleScadenziarioAbilitazioniAsync")]
+        public async Task<ApiResponse> GetViewGaPersonaleScadenziarioAbilitazioniAsync()
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleScadenziarioAbilitazioniAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            };
+        }
+        #endregion
+
+
+        #endregion
 
         #region PersonaleRetributiviTipi
         [HttpGet("GetGaPersonaleRetributiviTipiAsync/{page}/{pageSize}")]
@@ -2038,7 +2104,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "PersonaleRetributivi";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Retributivi";
                 var dto = apiDto.ToDto<PersonaleRetributivoDto, PersonaleRetributivoApiDto>();
                 var response = await _gaPersonaleService.AddGaPersonaleRetributivoAsync(dto);
                 if (apiDto.uploadFile)
@@ -2078,7 +2144,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "PersonaleRetributivi";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Retributivi";
                 var dto = apiDto.ToDto<PersonaleRetributivoDto, PersonaleRetributivoApiDto>();
                 var response = await _gaPersonaleService.UpdateGaPersonaleRetributivoAsync(dto);
                 bool failureDelete = false;
@@ -2160,7 +2226,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateGaPersonaleRetributivoAsync/{id}/{descrizione}")]
+        //[HttpGet("ValidateGaPersonaleRetributivoAsync/{id}/{descrizione}")]
         //public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleRetributivoAsync(long id, string descrizione)
         //{
         //    try
@@ -2192,35 +2258,52 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        //[HttpGet("ExportGaDipendentiScadenziarioIdoneita")]
-        //[ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(BadRequestObjectResult), 400)]
-        //[AutoWrapIgnore]
-        //public IActionResult ExportGaDipendentiScadenziarioIdoneita()
-        //{
+        [HttpGet("ExportGaPersonaleScadenziarioRetributivi")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaPersonaleScadenziarioRetributivi()
+        {
 
-        //    try
-        //    {
-        //var entities = _gaPersonaleService.GetViewGaDipendentiRetributiviAsync(0).Result.Data;
-        //string title = "Riepilogo Retributivi Dipendenti";
-        //string[] columns = { "Id", "Dipendente", "Sede", "Data", "Tipo", "DettaglioRetributivo", "Disabled" };
-        //byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "RIEPILOGO_RETRIBUTIVI_DIPENDENTI", true, columns);
+            try
+            {
+                var entities = _gaPersonaleService.GetViewGaPersonaleRetributiviAsync(0).Result.Data;
+                string title = "Riepilogo Retributivi Dipendenti";
+                string[] columns = { "Id", "Dipendente", "Sede", "Data", "Tipo", "DettaglioRetributivo", "Disabled" };
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "RIEPILOGO_RETRIBUTIVI_DIPENDENTI", true, columns);
 
-        //        return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
-        //{
-        //    FileDownloadName = "Riepilogo_Retributivi_Dipendenti.xlsx"
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApiException(ex.Message);
-        //    }
-        //}
-
-        #endregion
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Riepilogo_Retributivi_Dipendenti.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
 
         #endregion
 
+        #region Views
+        [HttpGet("GetViewGaPersonaleRetributiviIdAsync/{dipendenteId}")]
+            public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleRetributiviAsync(long dipendenteId)
+            {
+                try
+                {
+                    var view = await _gaPersonaleService.GetViewGaPersonaleRetributiviAsync(dipendenteId);
+                    return new ApiResponse(view);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message, ex);
+                    throw new ApiException(ex.Message);
+                }
+
+        }
+        #endregion
+
+        #endregion
 
         #region PersonaleSchedeConsegne
         [HttpGet("GetGaPersonaleSchedeConsegneAsync/{personaleDipendenteId}")]
@@ -2266,7 +2349,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "PersonaleSchedeConsegne";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Consegne";
                 var dto = apiDto.ToDto<PersonaleSchedaConsegnaDto, PersonaleSchedaConsegnaApiDto>();
                 var response = await _gaPersonaleService.AddGaPersonaleSchedaConsegnaAsync(dto);
                 if (apiDto.uploadFile)
@@ -2306,7 +2389,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "PersonaleSchedeConsegne";
+                string fileFolder = "GaCloud/Personale/Dipendenti/Consegne";
                 var dto = apiDto.ToDto<PersonaleSchedaConsegnaDto, PersonaleSchedaConsegnaApiDto>();
                 var response = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
                 bool failureDelete = false;
@@ -2420,12 +2503,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         //}
 
-        //[HttpGet("PrintDipendentiSchedaById/{id}")]
-        //public async Task<ApiResponse> PrintDipendentiSchedaById(long id)
+        //[HttpGet("PrintPersonaleSchedaById/{id}")]
+        //public async Task<ApiResponse> PrintPersonaleSchedaById(long id)
         //{
         //    try
         //    {
-        //        var entities = await _gaPersonaleService.GetViewGaDipendentiSchedeConsegnaAsync(id);
+        //        var entities = await _gaPersonaleService.GetViewGaPersonaleSchedeConsegneAsync(id);
         //        var scheda = entities.Data.FirstOrDefault();
 
         //        string path = @"Report/dipendenti_schede";
@@ -2459,31 +2542,48 @@ namespace GaCloudServer.Resources.Api.Controllers
         //    }
         //}
 
-        //[HttpGet("ExportGaDipendentiRiepilogoConsegne")]
-        //[ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(BadRequestObjectResult), 400)]
-        //[AutoWrapIgnore]
-        //public IActionResult ExportGaDipendentiRiepilogoConsegne()
-        //{
+        [HttpGet("ExportGaPersonaleRiepilogoConsegne")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaPersonaleRiepilogoConsegne()
+        {
 
-        //    try
-        //    {
-        //        var entities = _gaPersonaleService.GetViewGaDipendentiRiepilogoConsegneAsync().Result.Data;
-        //        string title = "Riepilogo Consegne Dipendenti";
-        //        string[] columns = { "Id", "Data", "Numero", "Dipendente", "Sede", "Articolo", "Taglia", "Qta" };
-        //        byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "RIEPILOGO_CONSEGNE_DIPENDENTI", true, columns);
+            try
+            {
+                var entities = _gaPersonaleService.GetViewGaPersonaleRiepilogoConsegneAsync().Result.Data;
+                string title = "Riepilogo Consegne Dipendenti";
+                string[] columns = { "Id", "Data", "Numero", "Dipendente", "Sede", "Articolo", "Taglia", "Qta" };
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "RIEPILOGO_CONSEGNE_DIPENDENTI", true, columns);
 
-        //        return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
-        //        {
-        //            FileDownloadName = "Riepilogo_Consegne_Dipendenti.xlsx"
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApiException(ex.Message);
-        //    }
-        //}
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Riepilogo_Consegne_Dipendenti.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
 
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaPersonaleRiepilogoConsegneAsync")]
+        public async Task<ApiResponse> GetViewGaPersonaleRiepilogoConsegneAsync()
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleRiepilogoConsegneAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            };
+        }
         #endregion
 
         #endregion
@@ -2623,8 +2723,40 @@ namespace GaCloudServer.Resources.Api.Controllers
         //}
         #endregion
 
+        #region Views
+        [HttpGet("GetViewGaPersonaleNuoveSchedeAsync")]
+        public async Task<ApiResponse> GetViewGaPersonaleNuoveSchedeAsync()
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleNuoveSchedeAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            };
+        }
+
+        [HttpGet("GetViewGaPersonaleSchedeConsegneAsync/{schedaId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleSchedeConsegneAsync(long schedaId)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleSchedeConsegneAsync(schedaId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
+        #endregion
 
         #region PersonaleArticoliModelli
         [HttpGet("GetGaPersonaleArticoliModelliAsync/{page}/{pageSize}")]
@@ -3169,6 +3301,23 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
 
+        }
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaPersonaleArticoliAsync")]
+        public async Task<ApiResponse> GetViewGaPersonaleArticoliAsync()
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleArticoliAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            };
         }
         #endregion
 

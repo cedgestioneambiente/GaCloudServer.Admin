@@ -10,8 +10,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personal
     public class PersonaleRetributivo : GenericFileEntity
     {
         public long PersonaleDipendenteId { get; set; }
+        public long PersonaleRetributivoTipoId { get; set; }
         public DateTime Data { get; set; }
-        public long DipendenteRetributivoTipoId { get; set; }
         public string DettaglioRetributivo { get; set; }
 
         public PersonaleDipendente PersonaleDipendente { get; set; }

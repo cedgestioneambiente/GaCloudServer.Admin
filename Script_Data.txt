@@ -2590,6 +2590,139 @@ INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCen
 GO
 SET IDENTITY_INSERT [dbo].[GaPersonaleDipendenti] OFF
 GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleAbilitazioniTipi] ON 
+GO
+INSERT [dbo].[GaPersonaleAbilitazioniTipi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'ABI1')
+GO
+INSERT [dbo].[GaPersonaleAbilitazioniTipi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'ABI2')
+GO
+INSERT [dbo].[GaPersonaleAbilitazioniTipi] ([Id], [Disabled], [Descrizione]) VALUES (5, 0, N'ABI3')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleAbilitazioniTipi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleAbilitazioni] ON 
+GO
+INSERT [dbo].[GaPersonaleAbilitazioni] ([Id], [PersonaleDipendenteId], [PersonaleAbilitazioneTipoId], [DataVisita], [DataScadenza], [DettaglioAbilitazione], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (1, 3, 1, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), CAST(N'2023-01-01T00:00:00.0000000' AS DateTime2), N'A', 0, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[GaPersonaleAbilitazioni] ([Id], [PersonaleDipendenteId], [PersonaleAbilitazioneTipoId], [DataVisita], [DataScadenza], [DettaglioAbilitazione], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 9, 2, CAST(N'2023-01-01T00:00:00.0000000' AS DateTime2), CAST(N'2024-01-01T00:00:00.0000000' AS DateTime2), N'A', 0, NULL, NULL, NULL, NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleAbilitazioni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleArticoliDpis] ON 
+GO
+INSERT [dbo].[GaPersonaleArticoliDpis] ([Id], [Caratteristiche], [OmettiStampa], [Disabled], [Descrizione]) VALUES (1, N'A', 1, 0, N'DPI1')
+GO
+INSERT [dbo].[GaPersonaleArticoliDpis] ([Id], [Caratteristiche], [OmettiStampa], [Disabled], [Descrizione]) VALUES (2, N'B', 1, 0, N'DPI2')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleArticoliDpis] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleArticoliModelli] ON 
+GO
+INSERT [dbo].[GaPersonaleArticoliModelli] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'MODELLO1')
+GO
+INSERT [dbo].[GaPersonaleArticoliModelli] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'MODELLO2')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleArticoliModelli] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleArticoliTipologie] ON 
+GO
+INSERT [dbo].[GaPersonaleArticoliTipologie] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'TIP1')
+GO
+INSERT [dbo].[GaPersonaleArticoliTipologie] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'TIP2')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleArticoliTipologie] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleArticoli] ON 
+GO
+INSERT [dbo].[GaPersonaleArticoli] ([Id], [PersonaleArticoloTipologiaId], [PersonaleArticoloModelloId], [PersonaleArticoloDpiId], [Disabled]) VALUES (1, 1, 1, 1, 0)
+GO
+INSERT [dbo].[GaPersonaleArticoli] ([Id], [PersonaleArticoloTipologiaId], [PersonaleArticoloModelloId], [PersonaleArticoloDpiId], [Disabled]) VALUES (4, 2, 3, 2, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleArticoli] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleRetributiviTipi] ON 
+GO
+INSERT [dbo].[GaPersonaleRetributiviTipi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'RETR1')
+GO
+INSERT [dbo].[GaPersonaleRetributiviTipi] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'RETR2')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleRetributiviTipi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleRetributivi] ON 
+GO
+INSERT [dbo].[GaPersonaleRetributivi] ([Id], [PersonaleDipendenteId], [Data],  [DettaglioRetributivo], [PersonaleRetributivoTipoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (1, 3, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), N'A', 1, 0, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[GaPersonaleRetributivi] ([Id], [PersonaleDipendenteId], [Data],  [DettaglioRetributivo], [PersonaleRetributivoTipoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 9, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), N'B', 3, 0, NULL, NULL, NULL, NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleRetributivi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSanzioniDescrizioni] ON 
+GO
+INSERT [dbo].[GaPersonaleSanzioniDescrizioni] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'DESC1')
+GO
+INSERT [dbo].[GaPersonaleSanzioniDescrizioni] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'DESC2')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSanzioniDescrizioni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSanzioniMotivi] ON 
+GO
+INSERT [dbo].[GaPersonaleSanzioniMotivi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'MOT1')
+GO
+INSERT [dbo].[GaPersonaleSanzioniMotivi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'MOT2')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSanzioniMotivi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSanzioni] ON 
+GO
+INSERT [dbo].[GaPersonaleSanzioni] ([Id], [PersonaleDipendenteId], [Data], [PersonaleSanzioneMotivoId], [PersonaleSanzioneDescrizioneId], [DettaglioSanzione], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (1, 3, CAST(N'2020-01-01T00:00:00.0000000' AS DateTime2), 1, 1, N'AAAAAA', 0, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[GaPersonaleSanzioni] ([Id], [PersonaleDipendenteId], [Data], [PersonaleSanzioneMotivoId], [PersonaleSanzioneDescrizioneId], [DettaglioSanzione], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 9, CAST(N'2020-01-01T00:00:00.0000000' AS DateTime2), 2, 2, N'VDVDVF', 0, NULL, NULL, NULL, NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSanzioni] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleScadenzeDettagli] ON 
+GO
+INSERT [dbo].[GaPersonaleScadenzeDettagli] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'SCAD1')
+GO
+INSERT [dbo].[GaPersonaleScadenzeDettagli] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'SCAD2')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleScadenzeDettagli] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleScadenzeTipi] ON 
+GO
+INSERT [dbo].[GaPersonaleScadenzeTipi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'TIP1')
+GO
+INSERT [dbo].[GaPersonaleScadenzeTipi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'TIP2')
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleScadenzeTipi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleScadenze] ON 
+GO
+INSERT [dbo].[GaPersonaleScadenze] ([Id], [PersonaleDipendenteId], [PersonaleScadenzaTipoId], [PersonaleScadenzaDettaglioId], [DataScadenza], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (1, 3, 1, 1, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[GaPersonaleScadenze] ([Id], [PersonaleDipendenteId], [PersonaleScadenzaTipoId], [PersonaleScadenzaDettaglioId], [DataScadenza], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 3, 2, 2, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[GaPersonaleScadenze] ([Id], [PersonaleDipendenteId], [PersonaleScadenzaTipoId], [PersonaleScadenzaDettaglioId], [DataScadenza], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (3, 9, 1, 2, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0, NULL, NULL, NULL, NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleScadenze] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSchedeConsegne] ON 
+GO
+INSERT [dbo].[GaPersonaleSchedeConsegne] ([Id], [PersonaleDipendenteId], [Data], [Numero], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (3, 3, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), N'1', 0, NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[GaPersonaleSchedeConsegne] ([Id], [PersonaleDipendenteId], [Data], [Numero], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (4, 9, CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), N'32232', 0, NULL, NULL, NULL, NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSchedeConsegne] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSchedeConsegneDettagli] ON 
+GO
+INSERT [dbo].[GaPersonaleSchedeConsegneDettagli] ([Id], [PersonaleSchedaConsegnaId], [PersonaleMagazzinoArticoloId], [Taglia], [Qta], [PersonaleArticoloId], [Disabled]) VALUES (3, 3, 1, N'XL', 231, 1, 0)
+GO
+INSERT [dbo].[GaPersonaleSchedeConsegneDettagli] ([Id], [PersonaleSchedaConsegnaId], [PersonaleMagazzinoArticoloId], [Taglia], [Qta], [PersonaleArticoloId], [Disabled]) VALUES (4, 4, 2, N'M', 5, 1, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaPersonaleSchedeConsegneDettagli] OFF
+GO
+
 
 --CSR
 
