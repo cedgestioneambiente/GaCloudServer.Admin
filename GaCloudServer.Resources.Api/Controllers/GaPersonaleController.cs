@@ -2364,7 +2364,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     dettaglio.Id = 0;
                     dettaglio.Disabled = false;
                     dettaglio.PersonaleSchedaConsegnaId = response;
-                    dettaglio.PERSO = itm.Id;
+                    dettaglio.PersonaleArticoloId = itm.Id;
                     dettaglio.Taglia = itm.Taglia;
                     dettaglio.Qta = itm.Qta;
 
