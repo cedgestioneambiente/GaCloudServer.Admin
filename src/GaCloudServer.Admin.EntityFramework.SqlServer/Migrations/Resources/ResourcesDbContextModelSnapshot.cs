@@ -3904,10 +3904,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("PersonaleArticoloId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PersonaleMagazzinoArticoloId")
+                    b.Property<long>("PersonaleArticoloId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PersonaleSchedaConsegnaId")
@@ -5829,7 +5826,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 {
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticolo", "PersonaleArticolo")
                         .WithMany()
-                        .HasForeignKey("PersonaleArticoloId");
+                        .HasForeignKey("PersonaleArticoloId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSchedaConsegna", "PersonaleSchedeConsegna")
                         .WithMany()
