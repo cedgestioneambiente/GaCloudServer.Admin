@@ -90,14 +90,21 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
     #region ContactCenterTickets
     public class ContactCenterTicketDto : GenericDto
     {
-        //da implementare
+        public string UtenteTariId { get; set; }
+        public string NumCon { get; set; }
+        public string Partita { get; set; }
+        public string CfPiva { get; set; }
+        public string Via { get; set; }
+        public string NumCiv { get; set; }
+        public string Zona { get; set; }
         public DateTime DataTicket { get; set; }
         public DateTime? EseguitoIl { get; set; }
         public DateTime? DataEsecuzione { get; set; }
         public long ContactCenterStatoRichiestaId { get; set; }
         public long ContactCenterProvenienzaId { get; set; }
+        public long ContactCenterComuneId { get; set; }
         public long GlobalSedeId { get; set; }
-        public string RichiedenteId { get; set; }
+        public string UserId { get; set; }
         public bool Inviato { get; set; }
         public string Materiali { get; set; }
         public bool Promemoria { get; set; }

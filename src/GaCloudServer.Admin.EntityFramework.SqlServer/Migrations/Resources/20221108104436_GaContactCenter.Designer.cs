@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20221027142016_GaContactCenter")]
+    [Migration("20221108104436_GaContactCenter")]
     partial class GaContactCenter
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1450,7 +1450,10 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long?>("ContactCenterComuneId")
+                    b.Property<string>("CfPiva")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ContactCenterComuneId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ContactCenterProvenienzaId")
@@ -1492,14 +1495,20 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Note3")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NumCiv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumCon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Partita")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Promemoria")
                         .HasColumnType("bit");
 
                     b.Property<bool>("Reclamo")
                         .HasColumnType("bit");
-
-                    b.Property<string>("RichiedenteId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Stampato")
                         .HasColumnType("bit");
@@ -1508,6 +1517,18 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipoTicket")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtenteTariId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Via")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Zona")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -3200,6 +3221,169 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToView("ViewNotificationUsersOnApps");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAbilitazione", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataScadenza")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataVisita")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DettaglioAbilitazione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PersonaleAbilitazioneTipoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleDipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaleAbilitazioneTipoId");
+
+                    b.HasIndex("PersonaleDipendenteId");
+
+                    b.ToTable("GaPersonaleAbilitazioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAbilitazioneTipo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleAbilitazioniTipi");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticolo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("PersonaleArticoloDpiId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleArticoloModelloId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleArticoloTipologiaId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaleArticoloDpiId");
+
+                    b.HasIndex("PersonaleArticoloModelloId");
+
+                    b.HasIndex("PersonaleArticoloTipologiaId");
+
+                    b.ToTable("GaPersonaleArticoli");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloDpi", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Caratteristiche")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("OmettiStampa")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleArticoliDpis");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloModello", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleArticoliModelli");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloTipologia", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleArticoliTipologie");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAssunzione", b =>
                 {
                     b.Property<long>("Id")
@@ -3281,6 +3465,698 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasKey("Id");
 
                     b.ToTable("GaPersonaleQualifiche");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleRetributivo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DettaglioRetributivo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PersonaleDipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleRetributivoTipoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaleDipendenteId");
+
+                    b.HasIndex("PersonaleRetributivoTipoId");
+
+                    b.ToTable("GaPersonaleRetributivi");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleRetributivoTipo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleRetributiviTipi");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzione", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DettaglioSanzione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PersonaleDipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleSanzioneDescrizioneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleSanzioneMotivoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaleDipendenteId");
+
+                    b.HasIndex("PersonaleSanzioneDescrizioneId");
+
+                    b.HasIndex("PersonaleSanzioneMotivoId");
+
+                    b.ToTable("GaPersonaleSanzioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzioneDescrizione", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleSanzioniDescrizioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzioneMotivo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleSanzioniMotivi");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenza", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DataScadenza")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PersonaleDipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleScadenzaDettaglioId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleScadenzaTipoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaleDipendenteId");
+
+                    b.HasIndex("PersonaleScadenzaDettaglioId");
+
+                    b.HasIndex("PersonaleScadenzaTipoId");
+
+                    b.ToTable("GaPersonaleScadenze");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenzaDettaglio", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleScadenzeDettagli");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenzaTipo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPersonaleScadenzeTipi");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSchedaConsegna", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Numero")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PersonaleDipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaleDipendenteId");
+
+                    b.ToTable("GaPersonaleSchedeConsegne");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSchedaConsegnaDettaglio", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("PersonaleArticoloId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleMagazzinoArticoloId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PersonaleSchedaConsegnaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Qta")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Taglia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaleArticoloId");
+
+                    b.HasIndex("PersonaleSchedaConsegnaId");
+
+                    b.ToTable("GaPersonaleSchedeConsegneDettagli");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleAbilitazioni", b =>
+                {
+                    b.Property<DateTime>("DataScadenza")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataVisita")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DettaglioAbilitazione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("DipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleAbilitazioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleArticoli", b =>
+                {
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Dpi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Modello")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tipologia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleArticoli");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleDipendenti", b =>
+                {
+                    b.Property<string>("Cognome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Qualifica")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("QualificaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Sede")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SedeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleDipendenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleNuoveSchede", b =>
+                {
+                    b.Property<string>("Articolo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Dpi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Qta")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Taglia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleNuoveSchede");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleRetributivi", b =>
+                {
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DettaglioRetributivo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dipendente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("DipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Sede")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SedeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleRetributivi");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleSanzioni", b =>
+                {
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DettaglioSanzione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dipendente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("DipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Motivo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sede")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SedeId")
+                        .HasColumnType("bigint");
+
+                    b.ToView("ViewGaPersonaleSanzioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleScadenze", b =>
+                {
+                    b.Property<DateTime>("DataScadenza")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("DipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ScadenzaDettaglio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ScadenzaTipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ScadenzaTipoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Stato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleScadenze");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleScadenziario", b =>
+                {
+                    b.Property<DateTime>("DataScadenza")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dipendente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ScadenzaDettaglio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ScadenzaTipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sede")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Stato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleScadenziario");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleScadenziarioAbilitazioni", b =>
+                {
+                    b.Property<string>("AbilitazioneDettaglio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AbilitazioneTipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DataScadenza")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataVisita")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dipendente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Sede")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Stato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleScadenziarioAbilitazioni");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleSchedeConsegne", b =>
+                {
+                    b.Property<string>("Articolo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dipendente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("DipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Dpi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Numero")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Qta")
+                        .HasColumnType("int");
+
+                    b.Property<long>("SchedaConsegnaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Sede")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Taglia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPersonaleSchedeConsegne");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleUsersOnDipendenti", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Cognome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CognomeNome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("DipendenteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToView("ViewGaPersonaleUsersOnDipendenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.PrenotazioneAutoRegistrazione", b =>
@@ -4350,7 +5226,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 {
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterComune", "ContactCenterComune")
                         .WithMany()
-                        .HasForeignKey("ContactCenterComuneId");
+                        .HasForeignKey("ContactCenterComuneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterProvenienza", "ContactCenterProvenienza")
                         .WithMany()
@@ -4633,6 +5511,52 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Navigation("NotificationApp");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAbilitazione", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAbilitazioneTipo", "PersonaleAbilitazioneTipo")
+                        .WithMany()
+                        .HasForeignKey("PersonaleAbilitazioneTipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
+                        .WithMany()
+                        .HasForeignKey("PersonaleDipendenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonaleAbilitazioneTipo");
+
+                    b.Navigation("PersonaleDipendente");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticolo", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloDpi", "PersonaleArticoloDpi")
+                        .WithMany()
+                        .HasForeignKey("PersonaleArticoloDpiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloModello", "PersonaleArticoloModello")
+                        .WithMany()
+                        .HasForeignKey("PersonaleArticoloModelloId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloTipologia", "PersonaleArticoloTipologia")
+                        .WithMany()
+                        .HasForeignKey("PersonaleArticoloTipologiaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonaleArticoloDpi");
+
+                    b.Navigation("PersonaleArticoloModello");
+
+                    b.Navigation("PersonaleArticoloTipologia");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", b =>
                 {
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalCentroCosto", "GlobalCentroCosto")
@@ -4666,6 +5590,107 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Navigation("PersonaleAssunzione");
 
                     b.Navigation("PersonaleQualifica");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleRetributivo", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
+                        .WithMany()
+                        .HasForeignKey("PersonaleDipendenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleRetributivoTipo", "PersonaleRetributivoTipo")
+                        .WithMany()
+                        .HasForeignKey("PersonaleRetributivoTipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonaleDipendente");
+
+                    b.Navigation("PersonaleRetributivoTipo");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzione", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
+                        .WithMany()
+                        .HasForeignKey("PersonaleDipendenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzioneDescrizione", "PersonaleSanzioneDescrizione")
+                        .WithMany()
+                        .HasForeignKey("PersonaleSanzioneDescrizioneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzioneMotivo", "PersonaleSanzioneMotivo")
+                        .WithMany()
+                        .HasForeignKey("PersonaleSanzioneMotivoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonaleDipendente");
+
+                    b.Navigation("PersonaleSanzioneDescrizione");
+
+                    b.Navigation("PersonaleSanzioneMotivo");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenza", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
+                        .WithMany()
+                        .HasForeignKey("PersonaleDipendenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenzaDettaglio", "PersonaleScadenzaDettaglio")
+                        .WithMany()
+                        .HasForeignKey("PersonaleScadenzaDettaglioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenzaTipo", "PersonaleScadenzaTipo")
+                        .WithMany()
+                        .HasForeignKey("PersonaleScadenzaTipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonaleDipendente");
+
+                    b.Navigation("PersonaleScadenzaDettaglio");
+
+                    b.Navigation("PersonaleScadenzaTipo");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSchedaConsegna", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
+                        .WithMany()
+                        .HasForeignKey("PersonaleDipendenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonaleDipendente");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSchedaConsegnaDettaglio", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticolo", "PersonaleArticolo")
+                        .WithMany()
+                        .HasForeignKey("PersonaleArticoloId");
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSchedaConsegna", "PersonaleSchedeConsegna")
+                        .WithMany()
+                        .HasForeignKey("PersonaleSchedaConsegnaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonaleArticolo");
+
+                    b.Navigation("PersonaleSchedeConsegna");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.PrenotazioneAutoRegistrazione", b =>

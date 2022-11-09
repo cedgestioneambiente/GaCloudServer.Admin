@@ -725,7 +725,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 {
                     var entity = gaContactCenterTicketsRepo.GetByIdAsNoTraking(x => x.Id == itm);
                     entity.Id = 0;
-                    entity.RichiedenteId = userId;
+                    entity.UserId = userId;
                     entity.Stampato = false;
                     gaContactCenterTicketsRepo.Add(entity);
 
