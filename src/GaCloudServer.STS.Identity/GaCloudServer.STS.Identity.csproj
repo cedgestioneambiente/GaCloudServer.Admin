@@ -55,6 +55,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <EmbeddedResource Update="Resources\Views\Account\RegisterConfirmation.it.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
         <EmbeddedResource Update="Resources\Views\Account\RegisterConfirmation.ru.resx">
             <Generator>ResXFileCodeGenerator</Generator>
         </EmbeddedResource>

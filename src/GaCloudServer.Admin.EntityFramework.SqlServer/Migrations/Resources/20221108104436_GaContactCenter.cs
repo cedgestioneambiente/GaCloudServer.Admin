@@ -107,13 +107,21 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UtenteTariId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumCon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Partita = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CfPiva = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Via = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumCiv = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Zona = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataTicket = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EseguitoIl = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DataEsecuzione = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ContactCenterStatoRichiestaId = table.Column<long>(type: "bigint", nullable: false),
                     ContactCenterProvenienzaId = table.Column<long>(type: "bigint", nullable: false),
+                    ContactCenterComuneId = table.Column<long>(type: "bigint", nullable: false),
                     GlobalSedeId = table.Column<long>(type: "bigint", nullable: false),
-                    RichiedenteId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Inviato = table.Column<bool>(type: "bit", nullable: false),
                     Materiali = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Promemoria = table.Column<bool>(type: "bit", nullable: false),
@@ -125,7 +133,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     Note2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Note3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Reclamo = table.Column<bool>(type: "bit", nullable: false),
-                    ContactCenterComuneId = table.Column<long>(type: "bigint", nullable: true),
                     Disabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -135,7 +142,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         name: "FK_GaContactCenterTickets_GaContactCenterComuni_ContactCenterComuneId",
                         column: x => x.ContactCenterComuneId,
                         principalTable: "GaContactCenterComuni",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaContactCenterTickets_GaContactCenterProvenienze_ContactCenterProvenienzaId",
                         column: x => x.ContactCenterProvenienzaId,

@@ -7,7 +7,7 @@ using GaCloudServer.Resources.Api.Dtos.Segnalazioni;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Resources.Api.Report.Segnalazioni;
-using GaCloudServer.Resources.Api.Resources;
+using GaCloudServer.Resources.Api.Resources; 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
