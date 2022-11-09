@@ -10,7 +10,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personal
     public class PersonaleSchedaConsegnaDettaglio : GenericEntity
     {
         public long PersonaleSchedaConsegnaId { get; set; }
-        public long PersonaleMagazzinoArticoloId { get; set; }
+        public long PersonaleArticoloId { get; set; }
         public string Taglia { get; set; }
         public int Qta { get; set; }
 

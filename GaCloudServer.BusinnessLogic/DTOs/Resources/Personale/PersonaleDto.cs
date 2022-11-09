@@ -233,6 +233,10 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Personale
 
     public class PersonaleSchedaConsegnaDettaglioDto : GenericDto
     {
+        public long PersonaleSchedaConsegnaId { get; set; }
+        public long PersonaleArticoloArticoloId { get; set; }
+        public string Taglia { get; set; }
+        public int Qta { get; set; }
     }
 
     public class PersonaleSchedeConsegneDettagliDto : GenericPagedListDto<PersonaleSchedaConsegnaDettaglioDto>

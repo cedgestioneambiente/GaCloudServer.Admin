@@ -2341,7 +2341,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpPost("AddGaPersonaleSchedaConsegnaAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaPersonaleSchedaConsegnaAsync([FromForm] PersonaleSchedaConsegnaApiDto apiDto)
+        public async Task<ActionResult<ApiResponse>> AddGaPersonaleSchedaConsegnaAsync([FromBody] PersonaleSchedaConsegnaNewApiDto apiDto)
         {
             try
             {
@@ -2349,20 +2349,26 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "GaCloud/Personale/Dipendenti/Consegne";
-                var dto = apiDto.ToDto<PersonaleSchedaConsegnaDto, PersonaleSchedaConsegnaApiDto>();
+
+                var dto = new PersonaleSchedaConsegnaDto();
+                dto.Id = 0;
+                dto.Disabled = false;
+                dto.Numero = apiDto.Numero;
+                dto.PersonaleDipendenteId = apiDto.PersonaleDipendenteId;
+                dto.Data = apiDto.Data;
+
                 var response = await _gaPersonaleService.AddGaPersonaleSchedaConsegnaAsync(dto);
-                if (apiDto.uploadFile)
+                foreach (var itm in apiDto.Articoli)
                 {
-                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-                    dto.Id = response;
-                    dto.FileFolder = fileFolder;
-                    dto.FileName = fileUploadResponse.fileName;
-                    dto.FileSize = apiDto.File.Length.ToString();
-                    dto.FileType = apiDto.File.ContentType;
-                    dto.FileId = fileUploadResponse.id;
-                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
-                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
+                    var dettaglio = new PersonaleSchedaConsegnaDettaglioDto();
+                    dettaglio.Id = 0;
+                    dettaglio.Disabled = false;
+                    dettaglio.PersonaleSchedaConsegnaId = response;
+                    dettaglio.PERSO = itm.Id;
+                    dettaglio.Taglia = itm.Taglia;
+                    dettaglio.Qta = itm.Qta;
+
+                    var insertDettagli = await _gaPersonaleService.AddGaPersonaleSchedaConsegnaDettaglioAsync(dettaglio);
                 }
 
                 return new ApiResponse(response);
@@ -2385,64 +2391,72 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    throw new ApiProblemDetailsException(ModelState);
-                }
-                string fileFolder = "GaCloud/Personale/Dipendenti/Consegne";
-                var dto = apiDto.ToDto<PersonaleSchedaConsegnaDto, PersonaleSchedaConsegnaApiDto>();
-                var response = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
-                bool failureDelete = false;
-                if (apiDto.deleteFile)
-                {
-                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
-                    if (!deleteResponse)
-                    {
-                        failureDelete = true;
+                //if (!ModelState.IsValid)
+                //{
+                //    throw new ApiProblemDetailsException(ModelState);
+                //}
 
-                    }
-                    else
-                    {
-                        dto.Id = response;
-                        dto.FileFolder = null;
-                        dto.FileName = null;
-                        dto.FileSize = null;
-                        dto.FileType = null;
-                        dto.FileId = null;
-                        var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
-                    }
-                }
 
-                if (apiDto.uploadFile)
-                {
-                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-                    dto.Id = response;
-                    dto.FileFolder = fileFolder;
-                    dto.FileName = fileUploadResponse.fileName;
-                    dto.FileSize = apiDto.File.Length.ToString();
-                    dto.FileType = apiDto.File.ContentType;
-                    dto.FileId = fileUploadResponse.id;
-                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
+                //var dto = new PersonaleSchedaConsegnaDto();
+                //dto.Id = 0;
+                //dto.Disabled = false;
+                //dto.Numero = apiDto.Numero;
+                //dto.PersonaleDipendenteId = apiDto.PersonaleDipendenteId;
+                //dto.Data = apiDto.Data;
 
-                    if (!failureDelete)
-                    {
-                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
-                    }
-                    else
-                    {
-                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
-                    }
+                //var response = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
+                //bool failureDelete = false;
+                //if (apiDto.deleteFile)
+                //{
+                //    var deleteResponse = await _fileService.Remove(apiDto.FileId);
+                //    if (!deleteResponse)
+                //    {
+                //        failureDelete = true;
 
-                }
+                //    }
+                //    else
+                //    {
+                //        dto.Id = response;
+                //        dto.FileFolder = null;
+                //        dto.FileName = null;
+                //        dto.FileSize = null;
+                //        dto.FileType = null;
+                //        dto.FileId = null;
+                //        var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
+                //    }
+                //}
 
-                if (!failureDelete)
-                {
-                    return new ApiResponse("Updated", response, code.Status200OK);
-                }
-                else
-                {
-                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
-                }
+                //if (apiDto.uploadFile)
+                //{
+                //    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                //    dto.Id = response;
+                //    dto.FileFolder = fileFolder;
+                //    dto.FileName = fileUploadResponse.fileName;
+                //    dto.FileSize = apiDto.File.Length.ToString();
+                //    dto.FileType = apiDto.File.ContentType;
+                //    dto.FileId = fileUploadResponse.id;
+                //    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
+
+                //    if (!failureDelete)
+                //    {
+                //        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
+                //    }
+                //    else
+                //    {
+                //        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
+                //    }
+
+                //}
+
+                //if (!failureDelete)
+                //{
+                //    return new ApiResponse("Updated", response, code.Status200OK);
+                //}
+                //else
+                //{
+                //    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
+                //}
+                return null;
 
             }
             catch (Exception ex)

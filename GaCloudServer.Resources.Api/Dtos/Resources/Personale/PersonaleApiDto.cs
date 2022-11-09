@@ -1,4 +1,5 @@
-﻿using GaCloudServer.Resources.Api.Dtos.Base;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
+using GaCloudServer.Resources.Api.Dtos.Base;
 
 
 namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
@@ -193,7 +194,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
 
         public class PersonaleArticoloDpiApiDto : GenericListApiDto
         {
-            public string Caratteristiche { get; set; }
+            public string? Caratteristiche { get; set; }
             public bool OmettiStampa { get; set; }
         }
 
@@ -204,7 +205,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
 
         #region PersonaleArticoli
 
-        public class PersonaleArticoloApiDto : GenericListApiDto
+        public class PersonaleArticoloApiDto : GenericApiDto
         {
             public long PersonaleArticoloTipologiaId { get; set; }
             public long PersonaleArticoloModelloId { get; set; }
@@ -223,6 +224,8 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
             public long PersonaleDipendenteId { get; set; }
             public DateTime Data { get; set; }
             public string Numero { get; set; }
+
+
         }
 
         public class PersonaleSchedeConsegneApiDto : GenericPagedListApiDto<PersonaleSchedaConsegnaApiDto>
@@ -234,6 +237,10 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
 
         public class PersonaleSchedaConsegnaDettaglioApiDto : GenericApiDto
         {
+            public long PersonaleSchedaConsegnaId { get; set; }
+            public long PersonaleArticoloId { get; set; }
+            public string Taglia { get; set; }
+            public int Qta { get; set; }
         }
 
         public class PersonaleSchedeConsegneDettagliApiDto : GenericPagedListApiDto<PersonaleSchedaConsegnaDettaglioApiDto>
@@ -241,8 +248,14 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
         }
     #endregion
 
-        //Internal
-        public class DipendentiNuovaScheda
+    //Internal
+    public class PersonaleSchedaConsegnaNewApiDto : GenericApiDto {
+        public long PersonaleDipendenteId { get; set; }
+        public DateTime Data { get; set; }
+        public string Numero { get; set; }
+        public List<PersonaleSchedaConsegnaArticoloApiDto> Articoli { get; set; }
+    }
+        public class PersonaleSchedaConsegnaArticoloApiDto
         {
             public long Id { get; set; }
             public string Articolo { get; set; }
