@@ -1488,7 +1488,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
             try
             {
-                var entities = _gaPersonaleService.GetViewGaPersonaleSanzioniAsync(0).Result.Data;
+                var entities = _gaPersonaleService.GetViewGaPersonaleSanzioniByDipendenteIdAsync(0).Result.Data;
                 string title = "Riepilogo Sanzioni Dipendenti";
                 string[] columns = { "Id", "Dipendente", "Sede", "Data", "Motivo", "Descrizione", "DettaglioSanzione", "Disabled" };
                 byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "RIEPILOGO_SANZIONI_DIPENDENTI", true, columns);
@@ -1506,12 +1506,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpGet("GetViewGaPersonaleSanzioniIdAsync/{dipendenteId}")]
-        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleSanzioniAsync(long dipendenteId)
+        [HttpGet("GetViewGaPersonaleSanzioniByDipendenteIdAsync/{dipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleSanzioniByDipendenteIdAsync(long dipendenteId)
         {
             try
             {
-                var view = await _gaPersonaleService.GetViewGaPersonaleSanzioniAsync(dipendenteId);
+                var view = await _gaPersonaleService.GetViewGaPersonaleSanzioniByDipendenteIdAsync(dipendenteId);
                 return new ApiResponse(view);
             }
             catch (Exception ex)
@@ -1888,12 +1888,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpGet("GetViewGaPersonaleAbilitazioniIdAsync/{dipendenteId}")]
-        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleAbilitazioniAsync(long dipendenteId)
+        [HttpGet("GetViewGaPersonaleAbilitazioniByDipendenteIdAsync/{dipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleAbilitazioniByDipendenteIdAsync(long dipendenteId)
         {
             try
             {
-                var view = await _gaPersonaleService.GetViewGaPersonaleAbilitazioniAsync(dipendenteId);
+                var view = await _gaPersonaleService.GetViewGaPersonaleAbilitazioniByDipendenteIdAsync(dipendenteId);
                 return new ApiResponse(view);
             }
             catch (Exception ex)
@@ -2267,7 +2267,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
             try
             {
-                var entities = _gaPersonaleService.GetViewGaPersonaleRetributiviAsync(0).Result.Data;
+                var entities = _gaPersonaleService.GetViewGaPersonaleRetributiviByDipendenteIdAsync(0).Result.Data;
                 string title = "Riepilogo Retributivi Dipendenti";
                 string[] columns = { "Id", "Dipendente", "Sede", "Data", "Tipo", "DettaglioRetributivo", "Disabled" };
                 byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "RIEPILOGO_RETRIBUTIVI_DIPENDENTI", true, columns);
@@ -2286,12 +2286,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpGet("GetViewGaPersonaleRetributiviIdAsync/{dipendenteId}")]
-            public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleRetributiviAsync(long dipendenteId)
+        [HttpGet("GetViewGaPersonaleRetributiviByDipendenteIdAsync/{dipendenteId}")]
+            public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleRetributiviByDipendenteIdAsync(long dipendenteId)
             {
                 try
                 {
-                    var view = await _gaPersonaleService.GetViewGaPersonaleRetributiviAsync(dipendenteId);
+                    var view = await _gaPersonaleService.GetViewGaPersonaleRetributiviByDipendenteIdAsync(dipendenteId);
                     return new ApiResponse(view);
                 }
                 catch (Exception ex)

@@ -106,7 +106,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
             public DateTime Data { get; set; }
             public long PersonaleSanzioneMotivoId { get; set; }
             public long PersonaleSanzioneDescrizioneId { get; set; }
-            public string DettaglioSanzione { get; set; }
+            public string? DettaglioSanzione { get; set; }
         }
 
         public class PersonaleSanzioniApiDto : GenericPagedListApiDto<PersonaleSanzioneApiDto>
@@ -133,7 +133,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
             public long PersonaleAbilitazioneTipoId { get; set; }
             public DateTime DataVisita { get; set; }
             public DateTime DataScadenza { get; set; }
-            public string DettaglioAbilitazione { get; set; }
+            public string? DettaglioAbilitazione { get; set; }
         }
 
         public class PersonaleAbilitazioniApiDto : GenericPagedListApiDto<PersonaleAbilitazioneApiDto>
@@ -159,7 +159,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Personale
             public long PersonaleDipendenteId { get; set; }
             public DateTime Data { get; set; }
             public long PersonaleRetributivoTipoId { get; set; }
-            public string DettaglioRetributivo { get; set; }
+            public string? DettaglioRetributivo { get; set; }
         }
 
         public class PersonaleRetributiviApiDto : GenericPagedListApiDto<PersonaleRetributivoApiDto>

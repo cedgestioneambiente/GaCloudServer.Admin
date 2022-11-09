@@ -893,12 +893,14 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaPersonaleSanzioni>> GetViewGaPersonaleSanzioniAsync(long dipendenteId)
+        public async Task<PagedList<ViewGaPersonaleSanzioni>> GetViewGaPersonaleSanzioniByDipendenteIdAsync(long dipendenteId)
         {
 
             try
             {
-                return await viewGaPersonaleSanzioniRepo.GetWithFilterAsync(x => x.DipendenteId == dipendenteId);
+
+                var result=dipendenteId==0?await viewGaPersonaleSanzioniRepo.GetAllAsync(): await viewGaPersonaleSanzioniRepo.GetWithFilterAsync(x => x.DipendenteId == dipendenteId);
+                return result;
             }
             catch (Exception ex)
             {
@@ -1069,7 +1071,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaPersonaleAbilitazioni>> GetViewGaPersonaleAbilitazioniAsync(long dipendenteId)
+        public async Task<PagedList<ViewGaPersonaleAbilitazioni>> GetViewGaPersonaleAbilitazioniByDipendenteIdAsync(long dipendenteId)
         {
                 if (dipendenteId == 0)
                 {
@@ -1257,16 +1259,15 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaPersonaleRetributivi>> GetViewGaPersonaleRetributiviAsync(long dipendenteId)
+        public async Task<PagedList<ViewGaPersonaleRetributivi>> GetViewGaPersonaleRetributiviByDipendenteIdAsync(long dipendenteId)
         {
 
             try
             {
-                return await viewGaPersonaleRetributiviRepo.GetWithFilterAsync(x => x.DipendenteId == dipendenteId);
+                return dipendenteId==0?await viewGaPersonaleRetributiviRepo.GetAllAsync():  await viewGaPersonaleRetributiviRepo.GetWithFilterAsync(x => x.DipendenteId == dipendenteId);
             }
             catch (Exception ex)
             {
-                await SaveChanges();
                 throw;
             }
         }
