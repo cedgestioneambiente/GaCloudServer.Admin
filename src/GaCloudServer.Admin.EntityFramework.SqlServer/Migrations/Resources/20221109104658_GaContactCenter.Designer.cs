@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20221108104436_GaContactCenter")]
+    [Migration("20221109104658_GaContactCenter")]
     partial class GaContactCenter
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1462,6 +1462,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("ContactCenterStatoRichiestaId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("ContactCenterTipoRichiestaId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("DaFatturare")
                         .HasColumnType("bit");
 
@@ -1516,10 +1519,10 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("TelefonoMail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TipoTicket")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("Utente")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UtenteTariId")
@@ -1538,6 +1541,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasIndex("ContactCenterProvenienzaId");
 
                     b.HasIndex("ContactCenterStatoRichiestaId");
+
+                    b.HasIndex("ContactCenterTipoRichiestaId");
 
                     b.HasIndex("GlobalSedeId");
 
@@ -5242,6 +5247,12 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterTipoRichiesta", "ContactCenterTipoRichiesta")
+                        .WithMany()
+                        .HasForeignKey("ContactCenterTipoRichiestaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalSede", "GlobalSede")
                         .WithMany()
                         .HasForeignKey("GlobalSedeId")
@@ -5253,6 +5264,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Navigation("ContactCenterProvenienza");
 
                     b.Navigation("ContactCenterStatoRichiesta");
+
+                    b.Navigation("ContactCenterTipoRichiesta");
 
                     b.Navigation("GlobalSede");
                 });

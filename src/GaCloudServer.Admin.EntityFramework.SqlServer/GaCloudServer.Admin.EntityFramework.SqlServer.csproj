@@ -68,6 +68,12 @@
     <None Update="Scripts\Cdr\CREATE_ViewGaCdr.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Scripts\ContactCenter\CREATE_ViewGaContactCenter.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\ContactCenter\DROP_ViewGaContactCenter.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Scripts\Contratti\DROP_ViewGaContratti.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

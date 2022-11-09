@@ -75,5 +75,10 @@
         public const string GaPersonaleMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Personale\";
         public const string CREATE_ViewGaPersonale = "CREATE_ViewGaPersonale.sql";
         public const string DROP_ViewGaPersonale = "DROP_ViewGaPersonale.sql";
+
+        //ContactCenter
+        public const string GaContactCenterMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\ContactCenter\";
+        public const string CREATE_ViewGaContactCenter = "CREATE_ViewGaContactCenter.sql";
+        public const string DROP_ViewGaContactCenter = "DROP_ViewGaContactCenter.sql";
     }
 }

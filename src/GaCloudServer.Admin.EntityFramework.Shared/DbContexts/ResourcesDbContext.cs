@@ -28,6 +28,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -284,6 +285,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
         public DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
         public DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
+
+        #region Views
+        public DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
+        public DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
+        #endregion
+
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -728,6 +735,25 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                     .Property(x => x.Id);
             });
             #endregion
+
+            #region ContactCenter
+            builder.Entity<ViewGaContactCenterTickets>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaContactCenterTickets))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaContactCenterTicketsIngombranti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaContactCenterTicketsIngombranti))
+                    .HasKey(x => x.Id);
+            });
+
+
+            #endregion
+
 
             base.OnModelCreating(builder);
 

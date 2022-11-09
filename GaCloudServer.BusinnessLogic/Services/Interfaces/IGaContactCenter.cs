@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
@@ -111,7 +113,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<ContactCenterMailsOnTicketsDto> GetGaContactCenterMailsOnTicketsByTicketIdAsync(long ticketId);
         Task<ContactCenterMailOnTicketDto> GetGaContactCenterMailOnTicketByIdAsync(long id);
 
-        Task<long> AddGaContactCenterMailOnTicketAsync(long id, ContactCenterMailOnTicketDto dto);
+        //Task<long> AddGaContactCenterMailOnTicketAsync(long id, ContactCenterMailOnTicketDto dto);
         Task<long> UpdateGaContactCenterMailOnTicketAsync(ContactCenterMailOnTicketDto dto);
 
         Task<bool> DeleteGaContactCenterMailOnTicketAsync(long id);
@@ -139,6 +141,18 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> SetDoneGaContactCenterTicketAsync(long[] ticketsId);
         Task<bool> SetUndoneGaContactCenterTicketAsync(long[] ticketsId);
         Task<bool> SetPrintedGaContactCenterTicketAsync(long[] ticketsId);
+        #endregion
+
+        #region Views
+        Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa);
+        //Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa);
+        Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
+        //Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
+        PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryable(GridOperationsModel filterParams);
+        //PagedList<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryable(GridOperationsModel filterParams);
+        List<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams);
+        //List<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams);
+        Task<ViewGaContactCenterTickets> GetViewGaContactCenterTicketById(long id);
         #endregion
 
         #endregion

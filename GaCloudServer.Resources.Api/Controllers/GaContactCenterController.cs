@@ -1,9 +1,12 @@
-﻿using AutoWrapper.Wrappers;
+﻿using AutoWrapper.Filters;
+using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -1216,7 +1219,73 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #endregion
+        #region Views
+        [HttpPost("ExportGaContactCenterTicketsQueryable")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaContactCenterTicketsQueryable(GridOperationsModel filter)
+        {
 
+            try
+            {
+                var entities = _gaContactCenterService.GetViewGaContactCenterTicketsQueryableNoSkip(filter);
+                string title = "Lista Ticket";
+                string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Utente","TelefonoMail","TipoTicket","Materiali",
+                                "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl"};
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "TICKET_CONTACT_CENTER", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Ticket_ContactCenter.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
+        //[HttpPost("ExportFoContactCenterTicketsQueryable")]
+        //[ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        //[AutoWrapIgnore]
+        //public IActionResult ExportFoContactCenterTicketsQueryable(GridOperationsModel filter)
+        //{
+
+        //    try
+        //    {
+        //        var entities = _gaContactCenterService.GetViewFoContactCenterTicketsQueryableNoSkip(filter);
+        //        string title = "Lista Ticket";
+        //        string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Utente","TelefonoMail","TipoTicket","Materiali",
+        //                        "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl"};
+        //        byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "TICKET_CONTACT_CENTER", true, columns);
+
+        //        return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+        //        {
+        //            FileDownloadName = "Ticket_ContactCenter.xlsx"
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ApiProblemDetailsException(code.Status400BadRequest);
+        //    }
+        //}
+
+        [HttpPost("GetViewGaContactCenterTicketsQueryable")]
+        public ApiResponse GetViewGaContactCenterTicketsQueryable(GridOperationsModel filter)
+        {
+            try
+            {
+                var entities = _gaContactCenterService.GetViewGaContactCenterTicketsQueryable(filter);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
+        #endregion
         #endregion
     }
 }

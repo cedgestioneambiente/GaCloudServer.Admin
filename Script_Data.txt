@@ -3617,3 +3617,19 @@ INSERT [dbo].[GaContactCenterTipiRichieste] ([Id], [Descrizione], [Ingombranti],
 GO
 SET IDENTITY_INSERT [dbo].[GaContactCenterTipiRichieste] OFF
 GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterTickets] ON 
+GO
+INSERT [dbo].[GaContactCenterTickets] ([Id], [UtenteTariId], [Utente], [NumCon], [Partita], [CfPiva], [Via], [NumCiv], [Zona], [DataTicket], [EseguitoIl], [DataEsecuzione], [ContactCenterStatoRichiestaId], [ContactCenterProvenienzaId], [ContactCenterComuneId], [ContactCenterTipoRichiestaId], [GlobalSedeId], [UserId], [Inviato], [Materiali], [Promemoria], [DaFatturare], [Stampato], [TelefonoMail], [Note1], [Note2], [Note3], [Reclamo], [Disabled]) VALUES (11, N'05851', N'MARIO ROSSI', N'00208708', N'0000256541', N'FNTCRD83R20F965B', N'ROMA', N'12', N'ZONA 5', CAST(N'2016-10-19T13:58:13.0000000' AS DateTime2), CAST(N'2016-10-19T13:58:13.0000000' AS DateTime2), CAST(N'2016-10-19T13:58:13.0000000' AS DateTime2), 1, 1, 1, 1, 1, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 1, N'a', 1, 1, 1, N'1', N'1', N'1', N'1', 1, 0)
+GO
+INSERT [dbo].[GaContactCenterTickets] ([Id], [UtenteTariId], [Utente], [NumCon], [Partita], [CfPiva], [Via], [NumCiv], [Zona], [DataTicket], [EseguitoIl], [DataEsecuzione], [ContactCenterStatoRichiestaId], [ContactCenterProvenienzaId], [ContactCenterComuneId], [ContactCenterTipoRichiestaId], [GlobalSedeId], [UserId], [Inviato], [Materiali], [Promemoria], [DaFatturare], [Stampato], [TelefonoMail], [Note1], [Note2], [Note3], [Reclamo], [Disabled]) VALUES (14, N'04460', N'MARCO VERDI', N'00207137', N'0000252611', N'PGGSVN72B52F965J', N'MILANO', N'324', N'ZONA 1', CAST(N'2022-10-14T10:04:50.4860000' AS DateTime2), CAST(N'2022-10-14T10:04:50.4860000' AS DateTime2), CAST(N'2022-10-14T10:04:50.4860000' AS DateTime2), 2, 2, 2, 2, 2, N'NULLcda60f19-8efb-461b-bf7a-20dc69863923', 1, N'e', 1, 1, 1, N'1', N'1', N'3', N'2', 1, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterTickets] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterMailsOnTickets] ON 
+GO
+INSERT [dbo].[GaContactCenterMailsOnTickets] ([Id], [ContactCenterTicketId], [ContactCenterMailId], [MailAddress], [Data], [Disabled]) VALUES (34, 11, 11, N'ced@gestioneambiente.net', CAST(N'2020-11-01T00:00:00.0000000' AS DateTime2), 0)
+GO
+INSERT [dbo].[GaContactCenterMailsOnTickets] ([Id], [ContactCenterTicketId], [ContactCenterMailId], [MailAddress], [Data], [Disabled]) VALUES (37, 14, 11, N'ced@gestioneambiente.net', CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaContactCenterMailsOnTickets] OFF
+GO

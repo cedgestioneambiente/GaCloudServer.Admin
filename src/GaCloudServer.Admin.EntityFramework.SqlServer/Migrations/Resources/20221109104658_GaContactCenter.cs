@@ -108,6 +108,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UtenteTariId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Utente = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumCon = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Partita = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CfPiva = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -120,6 +121,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     ContactCenterStatoRichiestaId = table.Column<long>(type: "bigint", nullable: false),
                     ContactCenterProvenienzaId = table.Column<long>(type: "bigint", nullable: false),
                     ContactCenterComuneId = table.Column<long>(type: "bigint", nullable: false),
+                    ContactCenterTipoRichiestaId = table.Column<long>(type: "bigint", nullable: false),
                     GlobalSedeId = table.Column<long>(type: "bigint", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Inviato = table.Column<bool>(type: "bit", nullable: false),
@@ -128,7 +130,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     DaFatturare = table.Column<bool>(type: "bit", nullable: false),
                     Stampato = table.Column<bool>(type: "bit", nullable: false),
                     TelefonoMail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TipoTicket = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Note1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Note2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Note3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -154,6 +155,12 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         name: "FK_GaContactCenterTickets_GaContactCenterStatiRichieste_ContactCenterStatoRichiestaId",
                         column: x => x.ContactCenterStatoRichiestaId,
                         principalTable: "GaContactCenterStatiRichieste",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_GaContactCenterTickets_GaContactCenterTipiRichieste_ContactCenterTipoRichiestaId",
+                        column: x => x.ContactCenterTipoRichiestaId,
+                        principalTable: "GaContactCenterTipiRichieste",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -219,6 +226,11 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 column: "ContactCenterStatoRichiestaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GaContactCenterTickets_ContactCenterTipoRichiestaId",
+                table: "GaContactCenterTickets",
+                column: "ContactCenterTipoRichiestaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GaContactCenterTickets_GlobalSedeId",
                 table: "GaContactCenterTickets",
                 column: "GlobalSedeId");
@@ -236,9 +248,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 name: "GaContactCenterMailsOnTickets");
 
             migrationBuilder.DropTable(
-                name: "GaContactCenterTipiRichieste");
-
-            migrationBuilder.DropTable(
                 name: "GaContactCenterTickets");
 
             migrationBuilder.DropTable(
@@ -249,6 +258,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             migrationBuilder.DropTable(
                 name: "GaContactCenterStatiRichieste");
+
+            migrationBuilder.DropTable(
+                name: "GaContactCenterTipiRichieste");
         }
     }
 }

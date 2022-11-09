@@ -27,6 +27,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -276,6 +277,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
         DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
         DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
+
+        #region Views
+        DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
+        DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
+        #endregion
+
         #endregion
 
     }

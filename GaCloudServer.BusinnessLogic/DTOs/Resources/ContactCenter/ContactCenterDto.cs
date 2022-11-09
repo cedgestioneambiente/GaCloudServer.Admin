@@ -91,6 +91,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
     public class ContactCenterTicketDto : GenericDto
     {
         public string UtenteTariId { get; set; }
+        public string Utente { get; set; }
         public string NumCon { get; set; }
         public string Partita { get; set; }
         public string CfPiva { get; set; }
@@ -111,7 +112,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
         public bool DaFatturare { get; set; }
         public bool Stampato { get; set; }
         public string TelefonoMail { get; set; }
-        public string TipoTicket { get; set; }
+        public long ContactCenterTipoRichiestaId { get; set; }
         public string Note1 { get; set; }
         public string Note2 { get; set; }
         public string Note3 { get; set; }

@@ -11,6 +11,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
     public class ContactCenterTicket : GenericEntity
     {
         public string UtenteTariId { get; set; }
+        public string Utente { get; set; }
         public string NumCon { get; set; }
         public string Partita { get; set; }
         public string CfPiva { get; set; }
@@ -23,6 +24,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public long ContactCenterStatoRichiestaId { get; set; }
         public long ContactCenterProvenienzaId { get; set; }
         public long ContactCenterComuneId { get; set; }
+        public long ContactCenterTipoRichiestaId { get; set; }
         public long GlobalSedeId { get; set; }
         public string UserId { get; set; }
         public bool Inviato { get; set; }
@@ -31,7 +33,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public bool DaFatturare { get; set; }
         public bool Stampato { get; set; }
         public string TelefonoMail { get; set; }
-        public string TipoTicket { get; set; }
         public string Note1 { get; set; }
         public string Note2 { get; set; }
         public string Note3 { get; set; }
@@ -41,7 +42,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public ContactCenterStatoRichiesta ContactCenterStatoRichiesta { get; set; }
         public GlobalSede GlobalSede { get; set; }
         public ContactCenterProvenienza ContactCenterProvenienza { get; set; }
-
-
+        public ContactCenterTipoRichiesta ContactCenterTipoRichiesta { get; set; }
     }
 }

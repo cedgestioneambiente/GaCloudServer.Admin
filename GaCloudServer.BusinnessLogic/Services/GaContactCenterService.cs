@@ -1,5 +1,7 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -18,6 +20,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ContactCenterMailOnTicket> gaContactCenterMailsOnTicketsRepo;
         protected readonly IGenericRepository<ContactCenterTicket> gaContactCenterTicketsRepo;
 
+        protected readonly IGenericRepository<ViewGaContactCenterTickets> viewGaContactCenterTicketsRepo;
+        protected readonly IGenericRepository<ViewGaContactCenterTicketsIngombranti> viewGaContactCenterTicketsIngombrantiRepo;
+
         protected readonly IUnitOfWork unitOfWork;
 
         public GaContactCenterService(
@@ -31,6 +36,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ContactCenterMailOnTicket> gaContactCenterMailsOnTicketsRepo,
             IGenericRepository<ContactCenterTicket> gaContactCenterTicketsRepo,
 
+            IGenericRepository<ViewGaContactCenterTickets> viewGaContactCenterTicketsRepo,
+            IGenericRepository<ViewGaContactCenterTicketsIngombranti> viewGaContactCenterTicketsIngombrantiRepo,
+
+
         IUnitOfWork unitOfWork)
         {
             this.gaContactCenterComuniRepo = gaContactCenterComuniRepo;
@@ -41,6 +50,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaContactCenterAllegatiRepo = gaContactCenterAllegatiRepo;
             this.gaContactCenterMailsOnTicketsRepo = gaContactCenterMailsOnTicketsRepo;
             this.gaContactCenterTicketsRepo = gaContactCenterTicketsRepo;
+
+            this.viewGaContactCenterTicketsRepo = viewGaContactCenterTicketsRepo;
+            this.viewGaContactCenterTicketsIngombrantiRepo = viewGaContactCenterTicketsIngombrantiRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -808,7 +820,192 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
         #endregion
-       
+
+        #region Views
+        public async Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa)
+        {
+            try
+            {
+                if (dataEsecuzione != null)
+                {
+                    if (tipoStampa == 1)
+                    {
+
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && x.DataEsecuzione == dataEsecuzione && (x.TipoTicket == "RACCOLTA INGOMBRANTI" || x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (tipoStampa == 2)
+                    {
+  
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && x.DataEsecuzione == dataEsecuzione && (x.TipoTicket == "RACCOLTA INGOMBRANTI"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (tipoStampa == 3)
+                    {
+
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && x.DataEsecuzione == dataEsecuzione && (x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && x.DataEsecuzione == dataEsecuzione && (x.TipoTicket == "RACCOLTA INGOMBRANTI" || x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+                else
+                {
+                    if (tipoStampa == 1)
+                    {
+    
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && (x.TipoTicket == "RACCOLTA INGOMBRANTI" || x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (tipoStampa == 2)
+                    {
+     
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && (x.TipoTicket == "RACCOLTA INGOMBRANTI"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (tipoStampa == 3)
+                    {
+                  
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && (x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                  
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && (x.TipoTicket == "RACCOLTA INGOMBRANTI" || x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        public async Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData)
+        {
+
+            try
+            {
+                if (fromId == null && toId != null)
+                {
+                    if (fromData == null && toData != null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id <= toId && x.DataEsecuzione <= toData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData == null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id <= toId && x.DataEsecuzione >= fromData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData != null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id <= toId && (x.DataEsecuzione >= fromData && x.DataEsecuzione <= toData) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id <= toId && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+                else if (fromId != null && toId == null)
+                {
+                    if (fromData == null && toData != null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id >= fromId && x.DataEsecuzione <= toData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData == null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id >= fromId && x.DataEsecuzione >= fromData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData != null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id >= fromId && (x.DataEsecuzione >= fromData && x.DataEsecuzione <= toData) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id >= fromId && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+                else if (fromId != null && toId != null)
+                {
+                    if (fromData == null && toData != null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => (x.Id >= fromId && x.Id <= toId) && x.DataEsecuzione <= toData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData == null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => (x.Id >= fromId && x.Id <= toId) && x.DataEsecuzione >= fromData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData != null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => (x.Id >= fromId && x.Id <= toId) && (x.DataEsecuzione >= fromData && x.DataEsecuzione <= toData) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => (x.Id >= fromId && x.Id <= toId) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+                else
+                {
+                    if (fromData == null && toData != null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.DataEsecuzione <= toData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData == null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.DataEsecuzione >= fromData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData != null)
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => (x.DataEsecuzione >= fromData && x.DataEsecuzione <= toData) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        public async Task<ViewGaContactCenterTickets> GetViewGaContactCenterTicketById(long id)
+        {
+            var view = await viewGaContactCenterTicketsRepo.GetByIdAsync(id);
+            return view;
+        }
+
+        public PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryable(GridOperationsModel filterParams)
+        {
+
+                if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+                {
+                    var filterResult = viewGaContactCenterTicketsRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewGaContactCenterTicketsRepo.GetAllQueryableV2(filterParams);
+                    return filterResult;
+                }
+
+        }
+
+        public List<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams)
+        {
+                if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+                {
+                    var filterResult = viewGaContactCenterTicketsRepo.GetAllQueryableV2WithQuickFilterNoSkip(filterParams, filterParams.quickFilter).Data;
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewGaContactCenterTicketsRepo.GetAllQueryableV2NoSkip(filterParams).Data;
+                    return filterResult;
+                }
+        }
+        #endregion
+
         #endregion
 
         #region Common
@@ -822,10 +1019,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             unitOfWork.DetachEntity(entity);
         }
 
-        public Task<long> AddGaContactCenterMailOnTicketAsync(long id, ContactCenterMailOnTicketDto dto)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
     }
