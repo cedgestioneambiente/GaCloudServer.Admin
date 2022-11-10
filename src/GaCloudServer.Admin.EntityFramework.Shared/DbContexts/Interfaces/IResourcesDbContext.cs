@@ -269,19 +269,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #endregion
 
         #region GaContactCenter Tables
-        DbSet<ContactCenterComune> GaContactCenterComuni { get; set; }
-        DbSet<ContactCenterProvenienza> GaContactCenterProvenienze { get; set; }
-        DbSet<ContactCenterTipoRichiesta> GaContactCenterTipiRichieste { get; set; }
-        DbSet<ContactCenterStatoRichiesta> GaContactCenterStatiRichieste { get; set; }
-        DbSet<ContactCenterMail> GaContactCenterMails { get; set; }
-        DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
-        DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
-        DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
+        //DbSet<ContactCenterComune> GaContactCenterComuni { get; set; }
+        //DbSet<ContactCenterProvenienza> GaContactCenterProvenienze { get; set; }
+        //DbSet<ContactCenterTipoRichiesta> GaContactCenterTipiRichieste { get; set; }
+        //DbSet<ContactCenterStatoRichiesta> GaContactCenterStatiRichieste { get; set; }
+        //DbSet<ContactCenterMail> GaContactCenterMails { get; set; }
+        //DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
+        //DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
+        //DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
 
-        #region Views
-        DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
-        DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
-        #endregion
+        //#region Views
+        //DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
+        //DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
+        //#endregion
 
         #endregion
 

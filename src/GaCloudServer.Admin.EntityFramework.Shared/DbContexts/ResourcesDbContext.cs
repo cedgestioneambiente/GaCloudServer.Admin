@@ -277,19 +277,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #endregion
 
         #region GaContactCenter Tables
-        public DbSet<ContactCenterComune> GaContactCenterComuni { get; set; }
-        public DbSet<ContactCenterProvenienza> GaContactCenterProvenienze { get; set; }
-        public DbSet<ContactCenterTipoRichiesta> GaContactCenterTipiRichieste { get; set; }
-        public DbSet<ContactCenterStatoRichiesta> GaContactCenterStatiRichieste { get; set; }
-        public DbSet<ContactCenterMail> GaContactCenterMails { get; set; }
-        public DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
-        public DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
-        public DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
+        //public DbSet<ContactCenterComune> GaContactCenterComuni { get; set; }
+        //public DbSet<ContactCenterProvenienza> GaContactCenterProvenienze { get; set; }
+        //public DbSet<ContactCenterTipoRichiesta> GaContactCenterTipiRichieste { get; set; }
+        //public DbSet<ContactCenterStatoRichiesta> GaContactCenterStatiRichieste { get; set; }
+        //public DbSet<ContactCenterMail> GaContactCenterMails { get; set; }
+        //public DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
+        //public DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
+        //public DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
 
-        #region Views
-        public DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
-        public DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
-        #endregion
+        //#region Views
+        //public DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
+        //public DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
+        //#endregion
 
         #endregion
 
