@@ -23,5 +23,16 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Global
         {
         }
 
-        #endregion
+    #endregion
+
+        #region GlobalSettori
+    public class GlobalSettoreDto : GenericListDto
+    {
+    }
+
+    public class GlobalSettoriDto : GenericPagedListDto<GlobalSettoreDto>
+    {
+    }
+
+    #endregion
 }

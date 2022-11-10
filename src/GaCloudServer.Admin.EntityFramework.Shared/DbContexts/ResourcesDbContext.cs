@@ -29,6 +29,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -37,6 +38,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region GaGlobal Tables
         public DbSet<GlobalSede> GlobalSedi { get; set; }
         public DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }
+        public DbSet<GlobalSettore> GlobalSettori { get; set; }
         #endregion
 
         #region GaAutorizzazioni Tables
@@ -277,19 +279,37 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #endregion
 
         #region GaContactCenter Tables
-        //public DbSet<ContactCenterComune> GaContactCenterComuni { get; set; }
-        //public DbSet<ContactCenterProvenienza> GaContactCenterProvenienze { get; set; }
-        //public DbSet<ContactCenterTipoRichiesta> GaContactCenterTipiRichieste { get; set; }
-        //public DbSet<ContactCenterStatoRichiesta> GaContactCenterStatiRichieste { get; set; }
-        //public DbSet<ContactCenterMail> GaContactCenterMails { get; set; }
-        //public DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
-        //public DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
-        //public DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
+        public DbSet<ContactCenterComune> GaContactCenterComuni { get; set; }
+        public DbSet<ContactCenterProvenienza> GaContactCenterProvenienze { get; set; }
+        public DbSet<ContactCenterTipoRichiesta> GaContactCenterTipiRichieste { get; set; }
+        public DbSet<ContactCenterStatoRichiesta> GaContactCenterStatiRichieste { get; set; }
+        public DbSet<ContactCenterMail> GaContactCenterMails { get; set; }
+        public DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
+        public DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
+        public DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
 
-        //#region Views
-        //public DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
-        //public DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
-        //#endregion
+        #region Views
+        public DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
+        public DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
+        #endregion
+
+        #endregion
+
+        #region GaPresenze Tables
+        public DbSet<PresenzeStatoRichiesta> GaPresenzeStatiRichieste { get; set; }
+        public DbSet<PresenzeRichiesta> GaPresenzeRichieste { get; set; }
+        public DbSet<PresenzeTipoOra> GaPresenzeTipiOre { get; set; }
+        public DbSet<PresenzeResponsabile> GaPresenzeResponsabili { get; set; }
+        public DbSet<PresenzeResponsabileOnSettore> GaPresenzeResponsabiliOnSettori { get; set; }
+        public DbSet<PresenzeProfilo> GaPresenzeProfili { get; set; }
+        public DbSet<PresenzeDataEsclusa> GaPresenzeDateEscluse { get; set; }
+        public DbSet<PresenzeBancaOra> GaPresenzeBancheOre { get; set; }
+        public DbSet<PresenzeBancaOraUtilizzo> GaPresenzeBancheOreUtilizzi { get; set; }
+
+
+        #region Views
+
+        #endregion
 
         #endregion
 

@@ -2563,6 +2563,18 @@ INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'TORT
 GO
 SET IDENTITY_INSERT [dbo].[GlobalSedi] OFF
 GO
+SET IDENTITY_INSERT [dbo].[GlobalSettori] ON 
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'COMUNICAZIONE')
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AFFARI GENERALI')
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'CONTABILITA')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSettori] OFF
+GO
+
+
 
 --PERSONALE
 
@@ -2584,9 +2596,9 @@ SET IDENTITY_INSERT [dbo].[GaPersonaleQualifiche] OFF
 GO
 SET IDENTITY_INSERT [dbo].[GaPersonaleDipendenti] ON 
 GO
-INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (3, N'cda60f19-8efb-461b-bf7a-20dc69863923', 1, 1, 2, 1, CAST(N'2030-01-01T00:00:00.0000000' AS DateTime2), NULL, 0)
+INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalSettoreId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (3, N'cda60f19-8efb-461b-bf7a-20dc69863923', 1, 2, 1, 2, 1, CAST(N'2030-01-01T00:00:00.0000000' AS DateTime2), NULL, 0)
 GO
-INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (9, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 2, 2, 3, 2, CAST(N'2030-01-01T00:00:00.0000000' AS DateTime2), NULL, 0)
+INSERT [dbo].[GaPersonaleDipendenti] ([Id], [UserId], [GlobalSedeId], [GlobalSettoreId], [GlobalCentroCostoId], [PersonaleQualificaId], [PersonaleAssunzioneId], [DataScadenza], [Preposto], [Disabled]) VALUES (9, N'de9b6300-1208-4203-b9a7-e0164d9c9f8f', 2, 1, 2, 3, 2, CAST(N'2030-01-01T00:00:00.0000000' AS DateTime2), NULL, 0)
 GO
 SET IDENTITY_INSERT [dbo].[GaPersonaleDipendenti] OFF
 GO

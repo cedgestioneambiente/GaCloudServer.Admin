@@ -23,4 +23,15 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Global
     }
 
     #endregion
+
+    #region GlobalSettori
+    public class GlobalSettoreApiDto : GenericListApiDto
+    {
+    }
+
+    public class GlobalSettoriApiDto : GenericPagedListApiDto<GlobalSettoreApiDto>
+    {
+    }
+
+    #endregion
 }

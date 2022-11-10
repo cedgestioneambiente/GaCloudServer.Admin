@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221110090631_GaContactCenter")]
+    partial class GaContactCenter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2729,25 +2731,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToTable("GlobalSedi");
                 });
 
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalSettore", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GlobalSettori");
-                });
-
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziAlimentazione", b =>
                 {
                     b.Property<long>("Id")
@@ -3583,9 +3566,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("GlobalSedeId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("GlobalSettoreId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("PersonaleAssunzioneId")
                         .HasColumnType("bigint");
 
@@ -3603,8 +3583,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasIndex("GlobalCentroCostoId");
 
                     b.HasIndex("GlobalSedeId");
-
-                    b.HasIndex("GlobalSettoreId");
 
                     b.HasIndex("PersonaleAssunzioneId");
 
@@ -5741,12 +5719,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalSettore", "GlobalSettore")
-                        .WithMany()
-                        .HasForeignKey("GlobalSettoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAssunzione", "PersonaleAssunzione")
                         .WithMany()
                         .HasForeignKey("PersonaleAssunzioneId")
@@ -5762,8 +5734,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Navigation("GlobalCentroCosto");
 
                     b.Navigation("GlobalSede");
-
-                    b.Navigation("GlobalSettore");
 
                     b.Navigation("PersonaleAssunzione");
 

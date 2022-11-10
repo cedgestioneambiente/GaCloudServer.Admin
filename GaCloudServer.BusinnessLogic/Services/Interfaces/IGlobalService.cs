@@ -41,5 +41,21 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #endregion
+
+        #region GlobalSettori
+        Task<GlobalSettoriDto> GetGlobalSettoriAsync(int page = 1, int pageSize = 0);
+        Task<GlobalSettoreDto> GetGlobalSettoreByIdAsync(long id);
+
+        Task<long> AddGlobalSettoreAsync(GlobalSettoreDto dto);
+        Task<long> UpdateGlobalSettoreAsync(GlobalSettoreDto dto);
+
+        Task<bool> DeleteGlobalSettoreAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGlobalSettoreAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGlobalSettoreAsync(long id);
+        #endregion
+
+        #endregion
     }
 }

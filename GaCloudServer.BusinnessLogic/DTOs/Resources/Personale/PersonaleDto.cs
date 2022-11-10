@@ -29,6 +29,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Personale
     {
         public string UserId { get; set; }
         public long GlobalSedeId { get; set; }
+        public long GlobalSettoreId { get; set; }
         public long GlobalCentroCostoId { get; set; }
         public long PersonaleQualificaId { get; set; }
         public long PersonaleAssunzioneId { get; set; }

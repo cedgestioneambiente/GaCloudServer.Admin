@@ -305,5 +305,141 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region GlobalSettori
+        [HttpGet("GetGlobalSettoriAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGlobalSettoriAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _globalService.GetGlobalSettoriAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<GlobalSettoriApiDto, GlobalSettoriDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGlobalSettoreByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGlobalSettoreByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _globalService.GetGlobalSettoreByIdAsync(id);
+                var apiDto = dto.ToApiDto<GlobalSettoreApiDto, GlobalSettoreDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGlobalSettoreAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGlobalSettoreAsync([FromBody] GlobalSettoreApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<GlobalSettoreDto, GlobalSettoreApiDto>();
+                var response = await _globalService.AddGlobalSettoreAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGlobalSettoreAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGlobalSettoreAsync([FromBody] GlobalSettoreApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<GlobalSettoreDto, GlobalSettoreApiDto>();
+                var response = await _globalService.UpdateGlobalSettoreAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGlobalSettoreAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGlobalSettoreAsync(long id)
+        {
+            try
+            {
+                var response = await _globalService.DeleteGlobalSettoreAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGlobalSettoreAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGlobalSettoreAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _globalService.ValidateGlobalSettoreAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGlobalSettoreAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGlobalSettoreAsync(long id)
+        {
+            try
+            {
+                var response = await _globalService.ChangeStatusGlobalSettoreAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
     }
 }

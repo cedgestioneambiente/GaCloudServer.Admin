@@ -19,6 +19,13 @@ namespace GaCloudServer.Resources.Api.Mappers.Global
                 .ReverseMap();
             CreateMap<GlobalCentriCostiDto, GlobalCentriCostiApiDto>(MemberList.Destination)
                 .ReverseMap();
+
+            //GlobalSettori
+            CreateMap<GlobalSettoreDto, GlobalSettoreApiDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<GlobalSettoriDto, GlobalSettoriApiDto>(MemberList.Destination)
+                .ReverseMap();
+
         }
     }
 }
