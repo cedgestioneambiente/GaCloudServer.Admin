@@ -1,6 +1,8 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Personale;
+using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.Personale;
@@ -23,16 +25,19 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly IGaPersonaleService _gaPersonaleService;
         private readonly IFileService _fileService;
         private readonly ILogger<GaPersonaleController> _logger;
+        private readonly IPrintService _printService;
 
         public GaPersonaleController(
             IGaPersonaleService gaPersonaleService
             , IFileService fileService
-            , ILogger<GaPersonaleController> logger)
+            , ILogger<GaPersonaleController> logger,
+            IPrintService printService)
         {
 
             _gaPersonaleService = gaPersonaleService;
             _fileService = fileService;
             _logger = logger;
+            _printService = printService;
         }
 
 
@@ -1479,6 +1484,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+
         [HttpGet("ExportGaDipendentiSanzioni")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
@@ -2391,72 +2397,66 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                //if (!ModelState.IsValid)
-                //{
-                //    throw new ApiProblemDetailsException(ModelState);
-                //}
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
 
+                string fileFolder = "GaCloud/Personale/Dipendenti/SchedeConsegne";
+                var dto = apiDto.ToDto<PersonaleSchedaConsegnaDto, PersonaleSchedaConsegnaApiDto>();
+                var response = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
+                bool failureDelete = false;
 
-                //var dto = new PersonaleSchedaConsegnaDto();
-                //dto.Id = 0;
-                //dto.Disabled = false;
-                //dto.Numero = apiDto.Numero;
-                //dto.PersonaleDipendenteId = apiDto.PersonaleDipendenteId;
-                //dto.Data = apiDto.Data;
+                if (apiDto.deleteFile)
+                {
+                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
+                    if (!deleteResponse)
+                    {
+                        failureDelete = true;
 
-                //var response = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
-                //bool failureDelete = false;
-                //if (apiDto.deleteFile)
-                //{
-                //    var deleteResponse = await _fileService.Remove(apiDto.FileId);
-                //    if (!deleteResponse)
-                //    {
-                //        failureDelete = true;
+                    }
+                    else
+                    {
+                        dto.Id = response;
+                        dto.FileFolder = null;
+                        dto.FileName = null;
+                        dto.FileSize = null;
+                        dto.FileType = null;
+                        dto.FileId = null;
+                        var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
+                    }
+                }
 
-                //    }
-                //    else
-                //    {
-                //        dto.Id = response;
-                //        dto.FileFolder = null;
-                //        dto.FileName = null;
-                //        dto.FileSize = null;
-                //        dto.FileType = null;
-                //        dto.FileId = null;
-                //        var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
-                //    }
-                //}
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
 
-                //if (apiDto.uploadFile)
-                //{
-                //    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-                //    dto.Id = response;
-                //    dto.FileFolder = fileFolder;
-                //    dto.FileName = fileUploadResponse.fileName;
-                //    dto.FileSize = apiDto.File.Length.ToString();
-                //    dto.FileType = apiDto.File.ContentType;
-                //    dto.FileId = fileUploadResponse.id;
-                //    var updateFileResponse = await _gaPersonaleService.UpdateGaPersonaleSchedaConsegnaAsync(dto);
+                    if (!failureDelete)
+                    {
+                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
+                    }
 
-                //    if (!failureDelete)
-                //    {
-                //        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
-                //    }
-                //    else
-                //    {
-                //        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
-                //    }
+                }
 
-                //}
-
-                //if (!failureDelete)
-                //{
-                //    return new ApiResponse("Updated", response, code.Status200OK);
-                //}
-                //else
-                //{
-                //    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
-                //}
-                return null;
+                if (!failureDelete)
+                {
+                    return new ApiResponse("Updated", response, code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
+                }
 
             }
             catch (Exception ex)
@@ -2467,12 +2467,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaPersonaleSchedaConsegnaAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleSchedaConsegnaAsync(long id)
+        [HttpDelete("DeleteGaPersonaleSchedaConsegnaAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleSchedaConsegnaAsync(long id,string fileId)
         {
             try
             {
                 var response = await _gaPersonaleService.DeleteGaPersonaleSchedaConsegnaAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }
@@ -2485,6 +2497,37 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
+        [HttpGet("PrintGaPersonaleSchedaConsegnaById/{id}")]
+        public async Task<ActionResult<ApiResponse>> PrintGaPersonaleSchedaConsegnaById(long id)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleSchedeConsegneAsync(id);
+                PersonaleSchedaConsegnaTemplateDto dto = new PersonaleSchedaConsegnaTemplateDto();
+                dto.FileName = "PersonaleSchedaConsegna.pdf";
+                dto.FilePath = @"Print/Personale";
+                dto.Title = "Scheda Consegna";
+                dto.Css = "PersonaleSchedaConsegna";
+
+                dto.Numero = view.Data.FirstOrDefault().Numero;
+                dto.Data = view.Data.FirstOrDefault().Data.ToString("dd/MM/yyyy");
+                dto.Lavoratore = view.Data.FirstOrDefault().Dipendente;
+                dto.Articoli = new List<dynamic>();
+                foreach (var itm in view.Data)
+                {
+                    dto.Articoli.Add(itm);
+                }
+
+                var response = await _printService.Print("PersonaleSchedaConsegna", dto);
+                return new ApiResponse(response);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
         //[HttpGet("ValidateGaPersonaleSchedaConsegnaAsync/{id}/{descrizione}")]
         //public async Task<ActionResult<ApiResponse>> ValidateGaPersonaleSchedaConsegnaAsync(long id, string descrizione)
         //{

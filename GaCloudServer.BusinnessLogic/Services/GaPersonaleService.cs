@@ -1293,8 +1293,11 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> AddGaPersonaleSchedaConsegnaAsync(PersonaleSchedaConsegnaDto dto)
         {
             var entity = dto.ToEntity<PersonaleSchedaConsegna, PersonaleSchedaConsegnaDto>();
+            entity.Numero = await GenerateNumberPersonaleSchedaConsegna(dto.Data.Year);
             await gaPersonaleSchedeConsegneRepo.AddAsync(entity);
             await SaveChanges();
+            DetachEntity(entity);
+
             return entity.Id;
         }
 
@@ -1303,6 +1306,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<PersonaleSchedaConsegna, PersonaleSchedaConsegnaDto>();
             gaPersonaleSchedeConsegneRepo.Update(entity);
             await SaveChanges();
+            DetachEntity(entity);
 
             return entity.Id;
 
@@ -1310,6 +1314,14 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<bool> DeleteGaPersonaleSchedaConsegnaAsync(long id)
         {
+            var linkedEntities = await gaPersonaleSchedeConsegneDettagliRepo.GetWithFilterAsync(x => x.PersonaleSchedaConsegnaId == id);
+            foreach (var itm in linkedEntities.Data)
+            {
+                gaPersonaleSchedeConsegneDettagliRepo.Remove(itm);
+                await SaveChanges();
+            }
+                
+
             var entity = await gaPersonaleSchedeConsegneRepo.GetByIdAsync(id);
             gaPersonaleSchedeConsegneRepo.Remove(entity);
             await SaveChanges();
@@ -1825,6 +1837,25 @@ namespace GaCloudServer.BusinnessLogic.Services
             unitOfWork.DetachEntity(entity);
         }
         #endregion
+
+        #region Private Functions
+        private async Task<string> GenerateNumberPersonaleSchedaConsegna(int year)
+        {
+            try
+            {
+                var entities = await gaPersonaleSchedeConsegneRepo.GetWithFilterAsync(x => x.Data.Year == year);
+                int num = 0;
+                if (entities.Data.Count() > 0) { num = entities.Data.Select(x => int.Parse(x.Numero.Substring(0, x.Numero.IndexOf("/")))).Max(); }
+                return (Convert.ToInt32(num) + 1).ToString() + "/" + year.ToString();
+            }
+            catch (Exception)
+            {
+                return "1/" + year.ToString();
+            }
+        }
+        #endregion
+
+
 
     }
 }

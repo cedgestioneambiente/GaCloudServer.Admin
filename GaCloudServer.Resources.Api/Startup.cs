@@ -120,6 +120,7 @@ namespace GaCloudServer.Resources.Api
                     setup.AddHealthCheckEndpoint("ServerStatusEndpoint", "https://localhost:44312/health");
                 })
                 .AddInMemoryStorage();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ResourcesApiConfiguration resourcesApiConfiguration)

@@ -1,6 +1,9 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
+﻿using DinkToPdf;
+using DinkToPdf.Contracts;
+using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +16,11 @@ namespace GaCloudServer.BusinnessLogic.Extensions
         public static IServiceCollection AddResourcesServices<TResourcesDbContext>(this IServiceCollection services)
             where TResourcesDbContext:DbContext,IResourcesDbContext
         {
+            var context = new CustomAssemblyLoadContext();
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "libwkhtmltox.dll"));
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
             services.AddTransient<IGaAutorizzazioniService, GaAutorizzazioniService>();
             services.AddTransient<IGaCdrService,GaCdrService>();
             services.AddTransient<IGaContrattiService, GaContrattiService>();
@@ -31,8 +39,12 @@ namespace GaCloudServer.BusinnessLogic.Extensions
 
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IPrintService, PrintService>();
+            services.AddTransient<ILocalFileService, LocalFileService>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork<TResourcesDbContext>>();
+
+
 
             return services;
         }

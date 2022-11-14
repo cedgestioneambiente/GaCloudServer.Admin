@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DinkToPdf;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace GaCloudServer.BusinnessLogic.DTOs.Base
@@ -43,6 +44,22 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Base
         public GenericPagedListDto()
         {
             Data= new List<T>();
+        }
+    }
+
+    public class GenericPrintDto
+    { 
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
+        public string Title { get; set; }
+        public string Css { get; set; }
+        public Orientation Orientation { get; set; }
+
+        public GenericPrintDto()
+        {
+            this.Title = "";
+            this.Css = "";
+            this.Orientation=Orientation.Portrait;
         }
     }
 }
