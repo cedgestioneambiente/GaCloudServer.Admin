@@ -140,6 +140,12 @@
     <None Update="Scripts\PrenotazioneAuto\CREATE_ViewGaPrenotazioneAuto.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Scripts\Presenze\CREATE_ViewGaPresenze.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Presenze\DROP_ViewGaPresenze.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Scripts\Segnalazioni\CREATE_ViewEcSegnalazioni.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

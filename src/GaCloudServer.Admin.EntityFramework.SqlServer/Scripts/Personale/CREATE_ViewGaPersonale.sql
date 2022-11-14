@@ -7,11 +7,13 @@ GO
 
 CREATE VIEW [dbo].[ViewGaPersonaleDipendenti]
 AS
-SELECT A.Id, B.Id UserId,FirstName Nome,LastName Cognome,C.Descrizione Sede,C.Id SedeId,D.Descrizione Qualifica,D.Id QualificaId, A.Disabled
-FROM GaPersonaleDipendenti A 
-LEFT JOIN IdentityServerAdmin.dbo.Users B ON A.UserId=B.Id
-LEFT JOIN GlobalSedi C ON C.Id= A.GlobalSedeId
-LEFT JOIN GaPersonaleQualifiche D ON D.Id=A.PersonaleQualificaId
+SELECT        A.Id, B.Id AS UserId, B.FirstName AS Nome, B.LastName AS Cognome, C.Descrizione AS Sede, C.Id AS SedeId, D.Descrizione AS Qualifica, D.Id AS QualificaId, A.Disabled, dbo.GlobalSettori.Descrizione AS Settore, 
+                         dbo.GlobalSettori.Id AS SettoreId
+FROM            dbo.GaPersonaleDipendenti AS A INNER JOIN
+                         dbo.GlobalSettori ON A.GlobalSettoreId = dbo.GlobalSettori.Id LEFT OUTER JOIN
+                         IdentityServerAdmin.dbo.Users AS B ON A.UserId = B.Id LEFT OUTER JOIN
+                         dbo.GlobalSedi AS C ON C.Id = A.GlobalSedeId LEFT OUTER JOIN
+                         dbo.GaPersonaleQualifiche AS D ON D.Id = A.PersonaleQualificaId
 GO
 
 CREATE VIEW [dbo].[ViewGaPersonaleScadenze]

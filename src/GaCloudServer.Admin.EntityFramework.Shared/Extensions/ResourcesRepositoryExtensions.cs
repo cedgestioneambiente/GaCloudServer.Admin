@@ -22,6 +22,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
@@ -43,6 +44,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Global
             services.AddTransient<IGenericRepository<GlobalSede>, GenericRepository<TResourcesDbContext, GlobalSede>>();
             services.AddTransient<IGenericRepository<GlobalCentroCosto>, GenericRepository<TResourcesDbContext, GlobalCentroCosto>>();
+            services.AddTransient<IGenericRepository<GlobalSettore>, GenericRepository<TResourcesDbContext, GlobalSettore>>();
             #endregion
 
             //Autorizzazioni
@@ -279,6 +281,23 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             #endregion
 
+            //Presenze
+            #region Presenze
+            services.AddTransient<IGenericRepository<PresenzeStatoRichiesta>, GenericRepository<TResourcesDbContext, PresenzeStatoRichiesta>>();
+            services.AddTransient<IGenericRepository<PresenzeRichiesta>, GenericRepository<TResourcesDbContext, PresenzeRichiesta>>();
+            services.AddTransient<IGenericRepository<PresenzeTipoOra>, GenericRepository<TResourcesDbContext, PresenzeTipoOra>>();
+            services.AddTransient<IGenericRepository<PresenzeResponsabile>, GenericRepository<TResourcesDbContext, PresenzeResponsabile>>();
+            services.AddTransient<IGenericRepository<PresenzeResponsabileOnSettore>, GenericRepository<TResourcesDbContext, PresenzeResponsabileOnSettore>>();
+            services.AddTransient<IGenericRepository<PresenzeProfilo>, GenericRepository<TResourcesDbContext, PresenzeProfilo>>();
+            services.AddTransient<IGenericRepository<PresenzeOpDataEsclusa>, GenericRepository<TResourcesDbContext, PresenzeOpDataEsclusa>>();
+            services.AddTransient<IGenericRepository<PresenzeOpBancaOra>, GenericRepository<TResourcesDbContext, PresenzeOpBancaOra>>();
+            services.AddTransient<IGenericRepository<PresenzeOpBancaOraUtilizzo>, GenericRepository<TResourcesDbContext, PresenzeOpBancaOraUtilizzo>>();
+
+            //Views
+
+
+            #endregion
+            
             return services; 
         }
     }

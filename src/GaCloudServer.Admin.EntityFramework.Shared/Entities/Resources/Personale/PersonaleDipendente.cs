@@ -14,6 +14,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personal
 		public string UserId { get; set; }
 		public long GlobalSedeId { get; set; }
 		public long GlobalCentroCostoId { get; set; }
+		public long GlobalSettoreId { get; set; }
 		public long PersonaleQualificaId { get; set; }
 		public long PersonaleAssunzioneId { get; set; }
 		public DateTime? DataScadenza { get; set; }
@@ -21,6 +22,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personal
 
 		public GlobalSede GlobalSede { get; set; }
 		public GlobalCentroCosto GlobalCentroCosto { get; set; }
+		public GlobalSettore GlobalSettore { get; set; }
 		public PersonaleQualifica PersonaleQualifica { get; set; }
 		public PersonaleAssunzione PersonaleAssunzione { get; set; }
 	}

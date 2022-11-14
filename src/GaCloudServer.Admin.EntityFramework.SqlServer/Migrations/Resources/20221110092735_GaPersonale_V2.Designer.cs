@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221110092735_GaPersonale_V2")]
+    partial class GaPersonale_V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4478,165 +4480,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToView("ViewGaPrenotazioneAutoVeicoli");
                 });
 
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeProfilo", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("GgFerie")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GgLavorativi")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GgPermessiCcnl")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HhPermessiCcnl")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaPresenzeProfili");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeResponsabile", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("PersonaleDipendenteId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonaleDipendenteId");
-
-                    b.ToTable("GaPresenzeResponsabili");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeResponsabileOnSettore", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("GlobalSettoreId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PresenzeResponsabileId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GlobalSettoreId");
-
-                    b.HasIndex("PresenzeResponsabileId");
-
-                    b.ToTable("GaPresenzeResponsabiliOnSettori");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeRichiesta", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DataFine")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataInizio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("PersonaleDipendenteId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PresenzeStatoRichiestaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PresenzeTipoOraId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonaleDipendenteId");
-
-                    b.HasIndex("PresenzeStatoRichiestaId");
-
-                    b.HasIndex("PresenzeTipoOraId");
-
-                    b.ToTable("GaPresenzeRichieste");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeStatoRichiesta", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaPresenzeStatiRichieste");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeTipoOra", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("ApprovazioneAutomatica")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("DecrementaTipo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaPresenzeTipiOre");
-                });
-
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiAzione", b =>
                 {
                     b.Property<long>("Id")
@@ -6052,63 +5895,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .IsRequired();
 
                     b.Navigation("PrenotazioneAutoSede");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeResponsabile", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
-                        .WithMany()
-                        .HasForeignKey("PersonaleDipendenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PersonaleDipendente");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeResponsabileOnSettore", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalSettore", "GlobalSettore")
-                        .WithMany()
-                        .HasForeignKey("GlobalSettoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeResponsabile", "PresenzeResponsabile")
-                        .WithMany()
-                        .HasForeignKey("PresenzeResponsabileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GlobalSettore");
-
-                    b.Navigation("PresenzeResponsabile");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeRichiesta", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
-                        .WithMany()
-                        .HasForeignKey("PersonaleDipendenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeStatoRichiesta", "PresenzeStatoRichiesta")
-                        .WithMany()
-                        .HasForeignKey("PresenzeStatoRichiestaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeTipoOra", "PresenzeTipoOra")
-                        .WithMany()
-                        .HasForeignKey("PresenzeTipoOraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PersonaleDipendente");
-
-                    b.Navigation("PresenzeStatoRichiesta");
-
-                    b.Navigation("PresenzeTipoOra");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiAzione", b =>

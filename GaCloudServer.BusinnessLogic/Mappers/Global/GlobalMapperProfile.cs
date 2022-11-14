@@ -21,6 +21,12 @@ namespace GaCloudServer.BusinnessLogic.Mappers.Global
             CreateMap<PagedList<GlobalCentroCosto>, GlobalCentriCostiDto>(MemberList.Destination)
                 .ReverseMap();
 
+            //GlobalSettori
+            CreateMap<GlobalSettore, GlobalSettoreDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<PagedList<GlobalSettore>, GlobalSettoriDto>(MemberList.Destination)
+                .ReverseMap();
+
         }
     }
 }

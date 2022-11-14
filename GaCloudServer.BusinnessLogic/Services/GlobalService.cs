@@ -11,6 +11,7 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         protected readonly IGenericRepository<GlobalSede> globalSediRepo;
         protected readonly IGenericRepository<GlobalCentroCosto> globalCentriCostiRepo;
+        protected readonly IGenericRepository<GlobalSettore> globalSettoriRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -18,11 +19,13 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<GlobalSede> globalSediRepo,
             IGenericRepository<GlobalCentroCosto> globalCentriCostiRepo,
+            IGenericRepository<GlobalSettore> globalSettoriRepo,
 
             IUnitOfWork unitOfWork)
         {
             this.globalSediRepo = globalSediRepo;
             this.globalCentriCostiRepo = globalCentriCostiRepo;
+            this.globalSettoriRepo = globalSettoriRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -179,6 +182,86 @@ namespace GaCloudServer.BusinnessLogic.Services
             {
                 entity.Disabled = true;
                 globalCentriCostiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region GlobalSettori
+        public async Task<GlobalSettoriDto> GetGlobalSettoriAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await globalSettoriRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<GlobalSettoriDto, PagedList<GlobalSettore>>();
+            return dtos;
+        }
+
+        public async Task<GlobalSettoreDto> GetGlobalSettoreByIdAsync(long id)
+        {
+            var entity = await globalSettoriRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<GlobalSettoreDto, GlobalSettore>();
+            return dto;
+        }
+
+        public async Task<long> AddGlobalSettoreAsync(GlobalSettoreDto dto)
+        {
+            var entity = dto.ToEntity<GlobalSettore, GlobalSettoreDto>();
+            await globalSettoriRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGlobalSettoreAsync(GlobalSettoreDto dto)
+        {
+            var entity = dto.ToEntity<GlobalSettore, GlobalSettoreDto>();
+            globalSettoriRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGlobalSettoreAsync(long id)
+        {
+            var entity = await globalSettoriRepo.GetByIdAsync(id);
+            globalSettoriRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGlobalSettoreAsync(long id, string descrizione)
+        {
+            var entity = await globalSettoriRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGlobalSettoreAsync(long id)
+        {
+            var entity = await globalSettoriRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                globalSettoriRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                globalSettoriRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
