@@ -294,9 +294,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PresenzeResponsabile> GaPresenzeResponsabili { get; set; }
         DbSet<PresenzeResponsabileOnSettore> GaPresenzeResponsabiliOnSettori { get; set; }
         DbSet<PresenzeProfilo> GaPresenzeProfili { get; set; }
-        DbSet<PresenzeDataEsclusa> GaPresenzeDateEscluse { get; set; }
-        DbSet<PresenzeBancaOra> GaPresenzeBancheOre { get; set; }
-        DbSet<PresenzeBancaOraUtilizzo> GaPresenzeBancheOreUtilizzi { get; set; }
+        //DbSet<PresenzeOpDataEsclusa> GaPresenzeDateEscluse { get; set; }
+        //DbSet<PresenzeOpBancaOra> GaPresenzeBancheOre { get; set; }
+        //DbSet<PresenzeOpBancaOraUtilizzo> GaPresenzeBancheOreUtilizzi { get; set; }
 
 
         #region Views

@@ -302,9 +302,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PresenzeResponsabile> GaPresenzeResponsabili { get; set; }
         public DbSet<PresenzeResponsabileOnSettore> GaPresenzeResponsabiliOnSettori { get; set; }
         public DbSet<PresenzeProfilo> GaPresenzeProfili { get; set; }
-        public DbSet<PresenzeDataEsclusa> GaPresenzeDateEscluse { get; set; }
-        public DbSet<PresenzeBancaOra> GaPresenzeBancheOre { get; set; }
-        public DbSet<PresenzeBancaOraUtilizzo> GaPresenzeBancheOreUtilizzi { get; set; }
+        //public DbSet<PresenzeOpDataEsclusa> GaPresenzeDateEscluse { get; set; }
+        //public DbSet<PresenzeOpBancaOra> GaPresenzeBancheOre { get; set; }
+        //public DbSet<PresenzeOpBancaOraUtilizzo> GaPresenzeBancheOreUtilizzi { get; set; }
 
 
         #region Views

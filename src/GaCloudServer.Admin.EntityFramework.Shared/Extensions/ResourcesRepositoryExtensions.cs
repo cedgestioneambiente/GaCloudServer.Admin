@@ -289,9 +289,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PresenzeResponsabile>, GenericRepository<TResourcesDbContext, PresenzeResponsabile>>();
             services.AddTransient<IGenericRepository<PresenzeResponsabileOnSettore>, GenericRepository<TResourcesDbContext, PresenzeResponsabileOnSettore>>();
             services.AddTransient<IGenericRepository<PresenzeProfilo>, GenericRepository<TResourcesDbContext, PresenzeProfilo>>();
-            services.AddTransient<IGenericRepository<PresenzeDataEsclusa>, GenericRepository<TResourcesDbContext, PresenzeDataEsclusa>>();
-            services.AddTransient<IGenericRepository<PresenzeBancaOra>, GenericRepository<TResourcesDbContext, PresenzeBancaOra>>();
-            services.AddTransient<IGenericRepository<PresenzeBancaOraUtilizzo>, GenericRepository<TResourcesDbContext, PresenzeBancaOraUtilizzo>>();
+            services.AddTransient<IGenericRepository<PresenzeOpDataEsclusa>, GenericRepository<TResourcesDbContext, PresenzeOpDataEsclusa>>();
+            services.AddTransient<IGenericRepository<PresenzeOpBancaOra>, GenericRepository<TResourcesDbContext, PresenzeOpBancaOra>>();
+            services.AddTransient<IGenericRepository<PresenzeOpBancaOraUtilizzo>, GenericRepository<TResourcesDbContext, PresenzeOpBancaOraUtilizzo>>();
 
             //Views
 

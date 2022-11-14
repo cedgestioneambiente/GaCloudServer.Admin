@@ -3645,3 +3645,57 @@ INSERT [dbo].[GaContactCenterMailsOnTickets] ([Id], [ContactCenterTicketId], [Co
 GO
 SET IDENTITY_INSERT [dbo].[GaContactCenterMailsOnTickets] OFF
 GO
+
+-- PRESENZE
+
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeResponsabili] ON 
+GO
+INSERT [dbo].[GaPresenzeResponsabili] ([Id], [PersonaleDipendenteId], [Disabled]) VALUES (1, 3, 0)
+GO
+INSERT [dbo].[GaPresenzeResponsabili] ([Id], [PersonaleDipendenteId], [Disabled]) VALUES (2, 9, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeResponsabili] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeResponsabiliOnSettori] ON 
+GO
+INSERT [dbo].[GaPresenzeResponsabiliOnSettori] ([Id], [PresenzeResponsabileId], [GlobalSettoreId], [Disabled]) VALUES (1, 1, 1, 0)
+GO
+INSERT [dbo].[GaPresenzeResponsabiliOnSettori] ([Id], [PresenzeResponsabileId], [GlobalSettoreId], [Disabled]) VALUES (2, 1, 2, 0)
+GO
+INSERT [dbo].[GaPresenzeResponsabiliOnSettori] ([Id], [PresenzeResponsabileId], [GlobalSettoreId], [Disabled]) VALUES (3, 2, 3, 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeResponsabiliOnSettori] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeStatiRichieste] ON 
+GO
+INSERT [dbo].[GaPresenzeStatiRichieste] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'CONFERMATA')
+GO
+INSERT [dbo].[GaPresenzeStatiRichieste] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'IN ATTESA')
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeStatiRichieste] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeTipiOre] ON 
+GO
+INSERT [dbo].[GaPresenzeTipiOre] ([Id], [ApprovazioneAutomatica], [DecrementaTipo], [Disabled], [Descrizione]) VALUES (2, 0, 1, 0, N'FERIE')
+GO
+INSERT [dbo].[GaPresenzeTipiOre] ([Id], [ApprovazioneAutomatica], [DecrementaTipo], [Disabled], [Descrizione]) VALUES (3, 0, 2, 0, N'MALATTIA')
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeTipiOre] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeProfili] ON 
+GO
+INSERT [dbo].[GaPresenzeProfili] ([Id], [GgLavorativi], [GgFerie], [GgPermessiCcnl], [HhPermessiCcnl], [Disabled], [Descrizione]) VALUES (1, 10, 10, 10, 10, 0, N'OPERATIVO 6 GG')
+GO
+INSERT [dbo].[GaPresenzeProfili] ([Id], [GgLavorativi], [GgFerie], [GgPermessiCcnl], [HhPermessiCcnl], [Disabled], [Descrizione]) VALUES (2, 20, 20, 20, 20, 0, N'AMMINISTRATIVO 5 GG')
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeProfili] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeRichieste] ON 
+GO
+INSERT [dbo].[GaPresenzeRichieste] ([Id], [PersonaleDipendenteId], [PresenzeStatoRichiestaId], [PresenzeTipoOraId], [DataInizio], [DataFine], [Disabled]) VALUES (3, 3, 2, 2, CAST(N'2022-11-28T00:00:00.0000000' AS DateTime2), CAST(N'2022-11-29T00:00:00.0000000' AS DateTime2), 0)
+GO
+INSERT [dbo].[GaPresenzeRichieste] ([Id], [PersonaleDipendenteId], [PresenzeStatoRichiestaId], [PresenzeTipoOraId], [DataInizio], [DataFine], [Disabled]) VALUES (6, 9, 1, 3, CAST(N'2022-12-01T00:00:00.0000000' AS DateTime2), CAST(N'2022-12-02T00:00:00.0000000' AS DateTime2), 0)
+GO
+SET IDENTITY_INSERT [dbo].[GaPresenzeRichieste] OFF
+GO

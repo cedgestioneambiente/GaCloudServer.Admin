@@ -14,6 +14,7 @@ using GaCloudServer.BusinessLogic.Mappers.Reclami;
 using GaCloudServer.BusinessLogic.Mappers.Segnalazioni;
 using GaCloudServer.BusinessLogic.Mappers.EcSegnalazioni;
 using GaCloudServer.BusinessLogic.Mappers.ContactCenter;
+using GaCloudServer.BusinessLogic.Mappers.Presenze;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -38,6 +39,7 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new SegnalazioniMapperProfile(),
             new EcSegnalazioniMapperProfile(),
             new ContactCenterMapperProfile(),
+            new PresenzeMapperProfile(),
         };
 
         static GenericMapper() {

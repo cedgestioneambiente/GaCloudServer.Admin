@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
-    public class PresenzeDataEsclusa : GenericEntity
+    public class PresenzeOpDataEsclusa : GenericEntity
     {
         public DateTime Data { get; set; }
     }

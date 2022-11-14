@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
-    public class PresenzeBancaOra : GenericEntity
+    public class PresenzeOpBancaOraUtilizzo : GenericEntity
     {
         public long PersonaleDipendenteId { get; set; }
-        public double GgFerie { get; set; }
-        public double GgFerieCcnl { get; set; }
-        public double HhPermessoCcnl { get; set; }
-        public double HhRecupero { get; set; }
+        public long PresenzeRichiestaId { get; set; }
+        public int Tipo { get; set; }
+        public double Qta { get; set; }
 
         public PersonaleDipendente PersonaleDipendente { get; set; }
+        public PresenzeRichiesta PresenzeRichiesta { get; set; }
     }
 }
