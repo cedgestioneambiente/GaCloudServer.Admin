@@ -10,12 +10,12 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaPersonaleMigration, ScriptConsts.CREATE_ViewGaPersonale));
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaPersonaleMigration, ScriptConsts.DROP_ViewGaPersonale));
+
         }
     }
 }

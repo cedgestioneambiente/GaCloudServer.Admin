@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class ViewGaMezzi : Migration
+    public partial class ViewGaMezzi_V2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaMezziMigration, ScriptConsts.CREATE_ViewGaMezzi));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaMezziMigration, ScriptConsts.DROP_ViewGaMezzi));
         }
     }
 }

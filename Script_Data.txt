@@ -8,7 +8,39 @@ GO
 
 USE [GaCloud]
 
+--GLOBAL
 
+GO
+SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] ON 
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'ICT')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AMMINISTRAZIONE')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'PERSONALE')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (4, 0, N'ACQUISTI')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSedi] ON 
+GO
+INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'NOVI LIGURE')
+GO
+INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'TORTONA')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSedi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSettori] ON 
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'COMUNICAZIONE')
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AFFARI GENERALI')
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'CONTABILITA')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSettori] OFF
+GO
 
 --AUTORIZZAZIONI
 
@@ -2529,41 +2561,6 @@ INSERT [dbo].[GaAziendeListe] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'
 GO
 SET IDENTITY_INSERT [dbo].[GaAziendeListe] OFF
 GO
-
---GLOBAL
-
-GO
-SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] ON 
-GO
-INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'ICT')
-GO
-INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AMMINISTRAZIONE')
-GO
-INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'PERSONALE')
-GO
-INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (4, 0, N'ACQUISTI')
-GO
-SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] OFF
-GO
-SET IDENTITY_INSERT [dbo].[GlobalSedi] ON 
-GO
-INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'NOVI LIGURE')
-GO
-INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'TORTONA')
-GO
-SET IDENTITY_INSERT [dbo].[GlobalSedi] OFF
-GO
-SET IDENTITY_INSERT [dbo].[GlobalSettori] ON 
-GO
-INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'COMUNICAZIONE')
-GO
-INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AFFARI GENERALI')
-GO
-INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'CONTABILITA')
-GO
-SET IDENTITY_INSERT [dbo].[GlobalSettori] OFF
-GO
-
 
 
 --PERSONALE
