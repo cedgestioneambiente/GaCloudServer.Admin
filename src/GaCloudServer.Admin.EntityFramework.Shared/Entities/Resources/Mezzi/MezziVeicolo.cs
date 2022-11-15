@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi
@@ -23,7 +24,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi
         public bool CatalogoRicambi { get; set; }
         public long MezziTipoId { get; set; }
         public long MezziProprietarioId { get; set; }
-        public long MezziCantiereId { get; set; }
+        public long GlobalSedeId { get; set; }
         public long MezziClasseId { get; set; }
         public long MezziAlimentazioneId { get; set; }
         public long MezziPatenteId { get; set; }
@@ -32,7 +33,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi
 
         public MezziTipo MezziTipo { get; set; }
         public MezziProprietario MezziProprietario { get; set; }
-        public MezziCantiere MezziCantiere { get; set; }
+        public GlobalSede GlobalSede { get; set; }
         public MezziClasse MezziClasse { get; set; }
         public MezziAlimentazione MezziAlimentazione { get; set; }
         public MezziPatente MezziPatente { get; set; }

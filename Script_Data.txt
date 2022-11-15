@@ -8,7 +8,39 @@ GO
 
 USE [GaCloud]
 
+--GLOBAL
 
+GO
+SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] ON 
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'ICT')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AMMINISTRAZIONE')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'PERSONALE')
+GO
+INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (4, 0, N'ACQUISTI')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSedi] ON 
+GO
+INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'NOVI LIGURE')
+GO
+INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'TORTONA')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSedi] OFF
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSettori] ON 
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'COMUNICAZIONE')
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AFFARI GENERALI')
+GO
+INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'CONTABILITA')
+GO
+SET IDENTITY_INSERT [dbo].[GlobalSettori] OFF
+GO
 
 --AUTORIZZAZIONI
 
@@ -2068,16 +2100,6 @@ INSERT [dbo].[GaMezziAlimentazioni] ([Id], [Descrizione], [Disabled]) VALUES (9,
 GO
 SET IDENTITY_INSERT [dbo].[GaMezziAlimentazioni] OFF
 GO
-SET IDENTITY_INSERT [dbo].[GaMezziCantieri] ON 
-GO
-INSERT [dbo].[GaMezziCantieri] ([Id], [Descrizione], [Disabled]) VALUES (1, N'NOVI LIGURE', 0)
-GO
-INSERT [dbo].[GaMezziCantieri] ([Id], [Descrizione], [Disabled]) VALUES (2, N'TORTONA', 0)
-GO
-INSERT [dbo].[GaMezziCantieri] ([Id], [Descrizione], [Disabled]) VALUES (4, N'ASMT', 0)
-GO
-SET IDENTITY_INSERT [dbo].[GaMezziCantieri] OFF
-GO
 SET IDENTITY_INSERT [dbo].[GaMezziClassi] ON 
 GO
 INSERT [dbo].[GaMezziClassi] ([Id], [Descrizione], [Disabled]) VALUES (1, N'0', 0)
@@ -2192,31 +2214,31 @@ SET IDENTITY_INSERT [dbo].[GaMezziTipi] OFF
 GO
 SET IDENTITY_INSERT [dbo].[GaMezziVeicoli] ON 
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (9, N'AC74987', NULL, N'ZORZI 20R', N'BTE', 2003, N'1 - 4 - 5', NULL, NULL, N'ZAX20R07019A08017', 16550, 20000, 0, NULL, 0, 1, 0, 11, 5, 1, 8, 1, 3, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (9, N'AC74987', NULL, N'ZORZI 20R', N'BTE', 2003, N'1 - 4 - 5', NULL, NULL, N'ZAX20R07019A08017', 16550, 20000, 0, NULL, 0, 1, 0, 11, 5, 1, 8, 1, 3, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (10, N'AD569LX', NULL, N'IVECO 150 E 18', N'MEC', 1995, N'1 - 4 - 5', NULL, NULL, N'ZCFFA1LD0002112877', 7250, 15000, 0, NULL, 0, 0, 0, 17, 5, 1, 2, 1, 2, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (10, N'AD569LX', NULL, N'IVECO 150 E 18', N'MEC', 1995, N'1 - 4 - 5', NULL, NULL, N'ZCFFA1LD0002112877', 7250, 15000, 0, NULL, 0, 0, 0, 17, 5, 1, 2, 1, 2, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (11, N'AGE052', NULL, N'ELETTRICA', N'UCM 360UE', 2008, N'1', NULL, NULL, N'36OUE1071', 350, 2150, 1, CAST(N'2019-05-28T00:00:00.0000000' AS DateTime2), 0, 0, 0, 14, 5, 2, 8, 5, 1, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (11, N'AGE052', NULL, N'ELETTRICA', N'UCM 360UE', 2008, N'1', NULL, NULL, N'36OUE1071', 350, 2150, 1, CAST(N'2019-05-28T00:00:00.0000000' AS DateTime2), 0, 0, 0, 14, 5, 2, 8, 5, 1, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (12, N'BE517PW', NULL, N'IVECO 170E27', N'FARID MP 16', 1999, N'1 - 4', NULL, NULL, N'ZCFA1RLJ002247511', 7450, 18000, 1, CAST(N'2019-05-28T00:00:00.0000000' AS DateTime2), 0, 0, 1, 3, 5, 2, 3, 1, 2, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (12, N'BE517PW', NULL, N'IVECO 170E27', N'FARID MP 16', 1999, N'1 - 4', NULL, NULL, N'ZCFA1RLJ002247511', 7450, 18000, 1, CAST(N'2019-05-28T00:00:00.0000000' AS DateTime2), 0, 0, 1, 3, 5, 2, 3, 1, 2, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (13, N'BE907YF', NULL, N'MERCEDES 412 DT 40/35', N'FURGONE BRIANTEA-SPONDA ELEFANTCAR', 1999, N'1 - 4 - 5', NULL, NULL, N'WDB9044131P08538', 570, 3500, 1, CAST(N'2017-12-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 8, 5, 1, 3, 1, 1, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (13, N'BE907YF', NULL, N'MERCEDES 412 DT 40/35', N'FURGONE BRIANTEA-SPONDA ELEFANTCAR', 1999, N'1 - 4 - 5', NULL, NULL, N'WDB9044131P08538', 570, 3500, 1, CAST(N'2017-12-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 8, 5, 1, 3, 1, 1, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (14, N'BG796EC', NULL, N'PANDA', NULL, 2000, NULL, NULL, N'CANTIERE', N'ZFA141A0001662655', 0, 1150, 0, NULL, 0, 0, 0, 1, 5, 1, 3, 2, 1, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (14, N'BG796EC', NULL, N'PANDA', NULL, 2000, NULL, NULL, N'CANTIERE', N'ZFA141A0001662655', 0, 1150, 0, NULL, 0, 0, 0, 1, 5, 1, 3, 2, 1, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (15, N'BJ354RH', NULL, N'RENAULT', N'FARID MP 16', 2000, N'1 - 4', NULL, NULL, N'VF622AXA000100171', 7110, 18000, 1, CAST(N'2020-07-30T00:00:00.0000000' AS DateTime2), 0, 1, 1, 3, 5, 1, 3, 1, 2, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (15, N'BJ354RH', NULL, N'RENAULT', N'FARID MP 16', 2000, N'1 - 4', NULL, NULL, N'VF622AXA000100171', 7110, 18000, 1, CAST(N'2020-07-30T00:00:00.0000000' AS DateTime2), 0, 1, 1, 3, 5, 1, 3, 1, 2, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (16, N'BP095SR', NULL, N'PIAGGIO', N'CARROZZERIA MODERNA', 2001, N'1 - 4', NULL, NULL, N'ZAPS8500000506212', 380, 1550, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 9, 5, 1, 3, 2, 1, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (16, N'BP095SR', NULL, N'PIAGGIO', N'CARROZZERIA MODERNA', 2001, N'1 - 4', NULL, NULL, N'ZAPS8500000506212', 380, 1550, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 9, 5, 1, 3, 2, 1, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (17, N'BP522SS', NULL, N'IVECO MAGIRUS 260', N'MAZZOCCHIA CURSOR', 2001, N'1 - 4 - 5', NULL, NULL, N'WJME2NN000C085069', 12450, 26000, 1, CAST(N'2021-05-28T00:00:00.0000000' AS DateTime2), 1, 1, 0, 3, 5, 1, 3, 1, 2, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (17, N'BP522SS', NULL, N'IVECO MAGIRUS 260', N'MAZZOCCHIA CURSOR', 2001, N'1 - 4 - 5', NULL, NULL, N'WJME2NN000C085069', 12450, 26000, 1, CAST(N'2021-05-28T00:00:00.0000000' AS DateTime2), 1, 1, 0, 3, 5, 1, 3, 1, 2, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (18, N'BT567YW', NULL, N'IVECO 150', N'B.O.B. CON GRU BOB', 2001, N'1 - 4 - 5', NULL, NULL, N'ZCFA1LJ0102355061', 5500, 15000, 1, CAST(N'2018-01-24T00:00:00.0000000' AS DateTime2), 0, 1, 0, 10, 5, 2, 4, 1, 2, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (18, N'BT567YW', NULL, N'IVECO 150', N'B.O.B. CON GRU BOB', 2001, N'1 - 4 - 5', NULL, NULL, N'ZCFA1LJ0102355061', 5500, 15000, 1, CAST(N'2018-01-24T00:00:00.0000000' AS DateTime2), 0, 1, 0, 10, 5, 2, 4, 1, 2, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (19, N'BW489YJ', NULL, N'IVECO MAGIRUS 190', N'MAZZOCCHIA CURSOR', 2001, N'1 - 4', NULL, NULL, N'WJMA1VMM004245097', 5600, 18000, 1, CAST(N'2020-07-30T00:00:00.0000000' AS DateTime2), 0, 0, 0, 3, 5, 2, 4, 1, 2, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (19, N'BW489YJ', NULL, N'IVECO MAGIRUS 190', N'MAZZOCCHIA CURSOR', 2001, N'1 - 4', NULL, NULL, N'WJMA1VMM004245097', 5600, 18000, 1, CAST(N'2020-07-30T00:00:00.0000000' AS DateTime2), 0, 0, 0, 3, 5, 2, 4, 1, 2, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (20, N'BW766YJ', NULL, N'IVECO 180 TECTOR', N'MAZZOCCHIA', 2001, N'1 - 4', NULL, NULL, N'ZCFA1TM0102347877', 6950, 18000, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 3, 5, 2, 4, 1, 2, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (20, N'BW766YJ', NULL, N'IVECO 180 TECTOR', N'MAZZOCCHIA', 2001, N'1 - 4', NULL, NULL, N'ZCFA1TM0102347877', 6950, 18000, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 0, 0, 0, 3, 5, 2, 4, 1, 2, 1, 0, 0)
 GO
-INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [MezziCantiereId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (21, N'FJ987YH', N'BX833CW', N'IVECO 100', N'FARID MINIPAC MK2', 2002, N'1 - 4', NULL, NULL, N'ZCFA1AD1102383860', 3150, 10000, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 1, 1, 1, 3, 5, 1, 4, 1, 2, 1, 0, 0)
+INSERT [dbo].[GaMezziVeicoli] ([Id], [Targa], [TargaPrecedente], [Carro], [Attrezzatura], [AnnoImmatricolazione], [AlboGestori], [ScadenzaContratto], [Note], [NumeroTelaio], [PortataKg], [MassaKg], [Dismesso], [DismessoData], [Ce], [ManualeUsoManutenzione], [CatalogoRicambi], [MezziTipoId], [MezziProprietarioId], [GlobalSedeId], [MezziClasseId], [MezziAlimentazioneId], [MezziPatenteId], [MezziPeriodoScadenzaId], [Garanzia], [Disabled]) VALUES (21, N'FJ987YH', N'BX833CW', N'IVECO 100', N'FARID MINIPAC MK2', 2002, N'1 - 4', NULL, NULL, N'ZCFA1AD1102383860', 3150, 10000, 1, CAST(N'2020-11-20T00:00:00.0000000' AS DateTime2), 1, 1, 1, 3, 5, 1, 4, 1, 2, 1, 0, 0)
 GO
 SET IDENTITY_INSERT [dbo].[GaMezziVeicoli] OFF
 GO 
@@ -2539,41 +2561,6 @@ INSERT [dbo].[GaAziendeListe] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'
 GO
 SET IDENTITY_INSERT [dbo].[GaAziendeListe] OFF
 GO
-
---GLOBAL
-
-GO
-SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] ON 
-GO
-INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'ICT')
-GO
-INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AMMINISTRAZIONE')
-GO
-INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'PERSONALE')
-GO
-INSERT [dbo].[GlobalCentriCosti] ([Id], [Disabled], [Descrizione]) VALUES (4, 0, N'ACQUISTI')
-GO
-SET IDENTITY_INSERT [dbo].[GlobalCentriCosti] OFF
-GO
-SET IDENTITY_INSERT [dbo].[GlobalSedi] ON 
-GO
-INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'NOVI LIGURE')
-GO
-INSERT [dbo].[GlobalSedi] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'TORTONA')
-GO
-SET IDENTITY_INSERT [dbo].[GlobalSedi] OFF
-GO
-SET IDENTITY_INSERT [dbo].[GlobalSettori] ON 
-GO
-INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'COMUNICAZIONE')
-GO
-INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (2, 0, N'AFFARI GENERALI')
-GO
-INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'CONTABILITA')
-GO
-SET IDENTITY_INSERT [dbo].[GlobalSettori] OFF
-GO
-
 
 
 --PERSONALE
@@ -3533,14 +3520,6 @@ INSERT [dbo].[EcSegnalazioniDocumenti] ([Id], [SegnalazioniTipoId], [Segnalazion
 GO
 SET IDENTITY_INSERT [dbo].[EcSegnalazioniDocumenti] OFF
 GO
-SET IDENTITY_INSERT [dbo].[EcSegnalazioniFotos] ON 
-GO
-INSERT [dbo].[EcSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (1, 1, 0, N'43243432', N'dd', N'dd', N'dwd', N'45')
-GO
-INSERT [dbo].[EcSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 3, 0, N'6', N'j', N'j', N'j', N'4')
-GO
-SET IDENTITY_INSERT [dbo].[EcSegnalazioniFotos] OFF
-GO
 SET IDENTITY_INSERT [dbo].[GaSegnalazioniStati] ON 
 GO
 INSERT [dbo].[GaSegnalazioniStati] ([Id], [Disabled], [Descrizione]) VALUES (1, 0, N'stato1')
@@ -3564,14 +3543,6 @@ GO
 INSERT [dbo].[GaSegnalazioniDocumenti] ([Id], [SegnalazioniTipoId], [SegnalazioniStatoId], [Note], [Longitudine], [Latitudine], [Indirizzo], [DataOra], [ImgFolder], [UserId], [Sanzione], [NoteSanzione], [NoteGestione], [Disabled]) VALUES (3, 2, 1, N'bb', 5425, 5435, N'bbb', CAST(N'2022-01-01T00:00:00.0000000' AS DateTime2), NULL, N'cda60f19-8efb-461b-bf7a-20dc69863923', 0, NULL, NULL, 0)
 GO
 SET IDENTITY_INSERT [dbo].[GaSegnalazioniDocumenti] OFF
-GO
-SET IDENTITY_INSERT [dbo].[GaSegnalazioniFotos] ON 
-GO
-INSERT [dbo].[GaSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (1, 1, 0, N'43243432', N'dd', N'dd', N'dwd', N'45')
-GO
-INSERT [dbo].[GaSegnalazioniFotos] ([Id], [SegnalazioniDocumentoId], [Disabled], [FileId], [FileFolder], [FileName], [FileType], [FileSize]) VALUES (2, 3, 0, N'6', N'j', N'j', N'j', N'4')
-GO
-SET IDENTITY_INSERT [dbo].[GaSegnalazioniFotos] OFF
 GO
 
 

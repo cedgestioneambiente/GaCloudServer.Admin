@@ -13,11 +13,6 @@ namespace GaCloudServer.Resources.Api.Mappers.Mezzi
             CreateMap<MezziAlimentazioniDto, MezziAlimentazioniApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<MezziCantiereDto, MezziCantiereApiDto>(MemberList.Destination)
-                .ReverseMap();
-            CreateMap<MezziCantieriDto, MezziCantieriApiDto>(MemberList.Destination)
-                .ReverseMap();
-
             CreateMap<MezziClasseDto, MezziClasseApiDto>(MemberList.Destination)
                 .ReverseMap();
             CreateMap<MezziClassiDto, MezziClassiApiDto>(MemberList.Destination)

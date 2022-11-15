@@ -19,14 +19,6 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Mezzi
     {
     }
 
-    public class MezziCantiereApiDto : GenericListApiDto
-    {
-    }
-
-    public class MezziCantieriApiDto : GenericPagedListApiDto<MezziCantiereApiDto>
-    {
-    }
-
     public class MezziClasseApiDto : GenericListApiDto
     {
     }
@@ -89,7 +81,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Mezzi
         public bool CatalogoRicambi { get; set; }
         public long MezziTipoId { get; set; }
         public long MezziProprietarioId { get; set; }
-        public long MezziCantiereId { get; set; }
+        public long GlobalSedeId { get; set; }
         public long MezziClasseId { get; set; }
         public long MezziAlimentazioneId { get; set; }
         public long MezziPatenteId { get; set; }

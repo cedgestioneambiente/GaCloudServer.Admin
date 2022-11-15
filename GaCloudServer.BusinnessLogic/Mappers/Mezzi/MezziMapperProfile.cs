@@ -14,11 +14,6 @@ namespace GaCloudServer.BusinnessLogic.Mappers.Mezzi
             CreateMap<PagedList<MezziAlimentazione>, MezziAlimentazioniDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<MezziCantiere, MezziCantiereDto>(MemberList.Destination)
-                .ReverseMap();
-            CreateMap<PagedList<MezziCantiere>, MezziCantieriDto>(MemberList.Destination)
-                .ReverseMap();
-
             CreateMap<MezziClasse, MezziClasseDto>(MemberList.Destination)
                 .ReverseMap();
             CreateMap<PagedList<MezziClasse>, MezziClassiDto>(MemberList.Destination)

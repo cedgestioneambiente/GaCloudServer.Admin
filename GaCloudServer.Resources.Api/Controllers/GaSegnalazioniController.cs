@@ -311,15 +311,15 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
-        #region SegnalazioniFotos
+        #region SegnalazioniAllegati
 
-        [HttpGet("GetGaSegnalazioniFotoBySegnalazioneId/{segnalazioniDocumentoId}")]
-        public async Task<ActionResult<ApiResponse>> GetGaSegnalazioniFotoBySegnalazioneId(long segnalazioniDocumentoId)
+        [HttpGet("GetGaSegnalazioniAllegatoBySegnalazioneDocumentoId/{segnalazioniDocumentoId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaSegnalazioniAllegatoBySegnalazioneDocumentoId(long segnalazioniDocumentoId)
         {
             try
             {
-                var dto = await _gaSegnalazioniService.GetGaSegnalazioneFotoBySegnalazioneIdAsync(segnalazioniDocumentoId);
-                var apiDto = dto.ToApiDto<SegnalazioniFotoApiDto, SegnalazioniFotoDto>();
+                var dto = await _gaSegnalazioniService.GetGaSegnalazioneAllegatoBySegnalazioneDocumentoIdAsync(segnalazioniDocumentoId);
+                var apiDto = dto.ToApiDto<SegnalazioniAllegatoApiDto, SegnalazioniAllegatoDto>();
                 return new ApiResponse(apiDto);
             }
             catch (Exception ex)
@@ -330,8 +330,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("AddGaSegnalazioniFotoAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaSegnalazioniFotoAsync([FromForm] SegnalazioniFotoApiDto apiDto)
+        [HttpPost("AddGaSegnalazioniAllegatoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaSegnalazioniAllegatoAsync([FromForm] SegnalazioniAllegatoApiDto apiDto)
         {
             try
             {
@@ -340,8 +340,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                     throw new ApiProblemDetailsException(ModelState);
                 }
                 string fileFolder = "GaCloud/Segnalazioni";
-                var dto = apiDto.ToDto<SegnalazioniFotoDto, SegnalazioniFotoApiDto>();
-                var response = await _gaSegnalazioniService.AddGaSegnalazioniFotoAsync(dto);
+                var dto = apiDto.ToDto<SegnalazioniAllegatoDto, SegnalazioniAllegatoApiDto>();
+                var response = await _gaSegnalazioniService.AddGaSegnalazioniAllegatoAsync(dto);
                 if (apiDto.uploadFile)
                 {
                     var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
@@ -351,7 +351,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     dto.FileSize = apiDto.File.Length.ToString();
                     dto.FileType = apiDto.File.ContentType;
                     dto.FileId = fileUploadResponse.id;
-                    //var updateFileResponse = await _gaSegnalazioniService.UpdateGaSegnalazioniFotoAsync(dto);
+                    //var updateFileResponse = await _gaSegnalazioniService.UpdateGaSegnalazioniAllegatoAsync(dto);
                     return new ApiResponse("CreatedWithFile", response, code.Status201Created);
                 }
 
@@ -370,12 +370,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaSegnalazioniFotoAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaSegnalazioniFotoAsync(long id)
+        [HttpDelete("DeleteGaSegnalazioniAllegatoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaSegnalazioniAllegatoAsync(long id)
         {
             try
             {
-                var response = await _gaSegnalazioniService.DeleteGaSegnalazioniFotoAsync(id);
+                var response = await _gaSegnalazioniService.DeleteGaSegnalazioniAllegatoAsync(id);
 
                 return new ApiResponse(response);
             }
@@ -388,12 +388,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        //[HttpGet("ValidateGaSegnalazioniFotoAsync/{id}/{descrizione}")]
-        //public async Task<ActionResult<ApiResponse>> ValidateGaSegnalazioniFotoAsync(long id, string descrizione)
+        //[HttpGet("ValidateGaSegnalazioniAllegatoAsync/{id}/{descrizione}")]
+        //public async Task<ActionResult<ApiResponse>> ValidateGaSegnalazioniAllegatoAsync(long id, string descrizione)
         //{
         //    try
         //    {
-        //        var response = await _gaSegnalazioniService.ValidateGaSegnalazioniFotoAsync(id, descrizione);
+        //        var response = await _gaSegnalazioniService.ValidateGaSegnalazioniAllegatoAsync(id, descrizione);
         //        return new ApiResponse(response);
         //    }
         //    catch (Exception ex)
@@ -404,12 +404,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         //}
 
-        //[HttpGet("ChangeStatusGaSegnalazioniFotoAsync/{id}")]
-        //public async Task<ActionResult<ApiResponse>> ChangeStatusGaSegnalazioniFotoAsync(long id)
+        //[HttpGet("ChangeStatusGaSegnalazioniAllegatoAsync/{id}")]
+        //public async Task<ActionResult<ApiResponse>> ChangeStatusGaSegnalazioniAllegatoAsync(long id)
         //{
         //    try
         //    {
-        //        var response = await _gaSegnalazioniService.ChangeStatusGaSegnalazioniFotoAsync(id);
+        //        var response = await _gaSegnalazioniService.ChangeStatusGaSegnalazioniAllegatoAsync(id);
         //        return new ApiResponse(response);
         //    }
         //    catch (Exception ex)
@@ -531,7 +531,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         //    try
         //    {
         //        var segnalazione = await _gaSegnalazioniService.GetViewGaSegnalazioniDocumentoByIdAsync(id);
-        //        var segnalazioneFoto = await _gaSegnalazioniService.GetGaSegnalazioneFotoBySegnalazioneIdAsync(id);
+        //        var segnalazioneAllegato = await _gaSegnalazioniService.GetGaSegnalazioneAllegatoBySegnalazioneIdAsync(id);
 
         //        string path = @"Report/Segnalazioni";
         //        string fileName = "segnalazione.pdf";
@@ -556,13 +556,13 @@ namespace GaCloudServer.Resources.Api.Controllers
         //            "</div>" +
         //            "<div id='notes' class='clearfix'>" +
         //            "<div id='notices'>" +
-        //            "<div> FOTO:</div>" +
+        //            "<div> Allegato:</div>" +
         //            "</div>" +
         //            "</div>";
 
         //        string table = "<div id='photo'>";
         //        int index = 1;
-        //        foreach (var itm in segnalazioneFoto.Data)
+        //        foreach (var itm in segnalazioneAllegato.Data)
         //        {
         //            table +=
         //                "<div class='detail'>" +

@@ -103,7 +103,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region GaMezzi Tables
         DbSet<MezziVeicolo> GaMezziVeicoli { get; set; }
         DbSet<MezziAlimentazione> GaMezziAlimentazioni { get; set; }
-        DbSet<MezziCantiere> GaMezziCantieri { get; set; }
         DbSet<MezziClasse> GaMezziClassi { get; set; }
         DbSet<MezziDocumento> GaMezziDocumenti { get; set; }
         DbSet<MezziPatente> GaMezziPatenti { get; set; }
@@ -249,7 +248,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region GaSegnalazioni Tables
         DbSet<SegnalazioniTipo> GaSegnalazioniTipi { get; set; }
         DbSet<SegnalazioniStato> GaSegnalazioniStati { get; set; }
-        DbSet<SegnalazioniFoto> GaSegnalazioniFotos { get; set; }
+        DbSet<SegnalazioniAllegato> GaSegnalazioniAllegati { get; set; }
         DbSet<SegnalazioniDocumento> GaSegnalazioniDocumenti { get; set; }
 
         #region Views
@@ -261,7 +260,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region EcSegnalazioni Tables
         DbSet<EcSegnalazioniTipo> EcSegnalazioniTipi { get; set; }
         DbSet<EcSegnalazioniStato> EcSegnalazioniStati { get; set; }
-        DbSet<EcSegnalazioniFoto> EcSegnalazioniFotos { get; set; }
+        DbSet<EcSegnalazioniAllegato> EcSegnalazioniAllegati { get; set; }
         DbSet<EcSegnalazioniDocumento> EcSegnalazioniDocumenti { get; set; }
 
         #region Views

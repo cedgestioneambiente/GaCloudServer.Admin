@@ -27,22 +27,6 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
-        #region GaMezziCantieri
-        Task<MezziCantieriDto> GetGaMezziCantieriAsync(int page = 1, int pageSize = 0);
-        Task<MezziCantiereDto> GetGaMezziCantiereByIdAsync(long id);
-
-        Task<long> AddGaMezziCantiereAsync(MezziCantiereDto dto);
-        Task<long> UpdateGaMezziCantiereAsync(MezziCantiereDto dto);
-
-        Task<bool> DeleteGaMezziCantiereAsync(long id);
-
-        #region Functions
-        Task<bool> ValidateGaMezziCantiereAsync(long id, string descrizione);
-        Task<bool> ChangeStatusGaMezziCantiereAsync(long id);
-        #endregion
-
-        #endregion
-
         #region GaMezziClassi
         Task<MezziClassiDto> GetGaMezziClassiAsync(int page = 1, int pageSize = 0);
         Task<MezziClasseDto> GetGaMezziClasseByIdAsync(long id);

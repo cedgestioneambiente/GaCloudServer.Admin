@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221115074312_Ga_EcSegnalazioni_V2")]
+    partial class Ga_EcSegnalazioni_V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2767,6 +2769,25 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToTable("GaMezziAlimentazioni");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziCantiere", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaMezziCantieri");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziClasse", b =>
                 {
                     b.Property<long>("Id")
@@ -3008,9 +3029,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Garanzia")
                         .HasColumnType("bit");
 
-                    b.Property<long>("GlobalSedeId")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("ManualeUsoManutenzione")
                         .HasColumnType("bit");
 
@@ -3018,6 +3036,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("int");
 
                     b.Property<long>("MezziAlimentazioneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MezziCantiereId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("MezziClasseId")
@@ -3055,9 +3076,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GlobalSedeId");
-
                     b.HasIndex("MezziAlimentazioneId");
+
+                    b.HasIndex("MezziCantiereId");
 
                     b.HasIndex("MezziClasseId");
 
@@ -5742,15 +5763,15 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziVeicolo", b =>
                 {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalSede", "GlobalSede")
-                        .WithMany()
-                        .HasForeignKey("GlobalSedeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziAlimentazione", "MezziAlimentazione")
                         .WithMany()
                         .HasForeignKey("MezziAlimentazioneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziCantiere", "MezziCantiere")
+                        .WithMany()
+                        .HasForeignKey("MezziCantiereId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -5784,9 +5805,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GlobalSede");
-
                     b.Navigation("MezziAlimentazione");
+
+                    b.Navigation("MezziCantiere");
 
                     b.Navigation("MezziClasse");
 
