@@ -22,11 +22,11 @@ namespace GaCloudServer.Resources.Api.Mappers.Segnalazioni
             CreateMap<SegnalazioniStatiDto, SegnalazioniStatiApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            //SegnalazioniFotos
-            CreateMap<SegnalazioniFotoDto, SegnalazioniFotoApiDto>(MemberList.Destination)
+            //SegnalazioniAllegati
+            CreateMap<SegnalazioniAllegatoDto, SegnalazioniAllegatoApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<SegnalazioniFotosDto, SegnalazioniFotosApiDto>(MemberList.Destination)
+            CreateMap<SegnalazioniAllegatiDto, SegnalazioniAllegatiApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //SegnalazioniDocumenti

@@ -24,10 +24,10 @@ namespace GaCloudServer.BusinessLogic.Mappers.Segnalazioni
                 .ReverseMap();
 
             //SegnalazioniFotos
-            CreateMap<SegnalazioniFoto, SegnalazioniFotoDto>(MemberList.Destination)
+            CreateMap<SegnalazioniAllegato, SegnalazioniAllegatoDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PagedList<SegnalazioniFoto>, SegnalazioniFotosDto>(MemberList.Destination)
+            CreateMap<PagedList<SegnalazioniAllegato>, SegnalazioniAllegatiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //SegnalazioniDocumenti

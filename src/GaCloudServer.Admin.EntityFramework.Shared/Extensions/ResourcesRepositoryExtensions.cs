@@ -87,7 +87,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Mezzi
             #region Mezzi
             services.AddTransient<IGenericRepository<MezziAlimentazione>, GenericRepository<TResourcesDbContext, MezziAlimentazione>>();
-            services.AddTransient<IGenericRepository<MezziCantiere>, GenericRepository<TResourcesDbContext, MezziCantiere>>();
             services.AddTransient<IGenericRepository<MezziClasse>, GenericRepository<TResourcesDbContext, MezziClasse>>();
             services.AddTransient<IGenericRepository<MezziDocumento>, GenericRepository<TResourcesDbContext, MezziDocumento>>();
             services.AddTransient<IGenericRepository<MezziPatente>, GenericRepository<TResourcesDbContext, MezziPatente>>();
@@ -242,7 +241,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Segnalazioni
             services.AddTransient<IGenericRepository<SegnalazioniTipo>, GenericRepository<TResourcesDbContext, SegnalazioniTipo>>();
             services.AddTransient<IGenericRepository<SegnalazioniStato>, GenericRepository<TResourcesDbContext, SegnalazioniStato>>();
-            services.AddTransient<IGenericRepository<SegnalazioniFoto>, GenericRepository<TResourcesDbContext, SegnalazioniFoto>>();
+            services.AddTransient<IGenericRepository<SegnalazioniAllegato>, GenericRepository<TResourcesDbContext, SegnalazioniAllegato>>();
             services.AddTransient<IGenericRepository<SegnalazioniDocumento>, GenericRepository<TResourcesDbContext, SegnalazioniDocumento>>();
 
             //Views
@@ -255,7 +254,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region EcSegnalazioni
             services.AddTransient<IGenericRepository<EcSegnalazioniTipo>, GenericRepository<TResourcesDbContext, EcSegnalazioniTipo>>();
             services.AddTransient<IGenericRepository<EcSegnalazioniStato>, GenericRepository<TResourcesDbContext, EcSegnalazioniStato>>();
-            services.AddTransient<IGenericRepository<EcSegnalazioniFoto>, GenericRepository<TResourcesDbContext, EcSegnalazioniFoto>>();
+            services.AddTransient<IGenericRepository<EcSegnalazioniAllegato>, GenericRepository<TResourcesDbContext, EcSegnalazioniAllegato>>();
             services.AddTransient<IGenericRepository<EcSegnalazioniDocumento>, GenericRepository<TResourcesDbContext, EcSegnalazioniDocumento>>();
 
             //Views

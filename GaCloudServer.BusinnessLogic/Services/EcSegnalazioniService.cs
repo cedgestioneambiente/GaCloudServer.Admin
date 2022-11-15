@@ -13,7 +13,7 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         protected readonly IGenericRepository<EcSegnalazioniTipo> ecSegnalazioniTipiRepo;
         protected readonly IGenericRepository<EcSegnalazioniStato> ecSegnalazioniStatiRepo;
-        protected readonly IGenericRepository<EcSegnalazioniFoto> ecSegnalazioniFotosRepo;
+        protected readonly IGenericRepository<EcSegnalazioniAllegato> ecSegnalazioniAllegatiRepo;
         protected readonly IGenericRepository<EcSegnalazioniDocumento> ecSegnalazioniDocumentiRepo;
 
         protected readonly IGenericRepository<ViewEcSegnalazioniDocumenti> viewEcSegnalazioniDocumentiRepo;
@@ -23,7 +23,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public EcSegnalazioniService(
             IGenericRepository<EcSegnalazioniTipo> ecSegnalazioniTipiRepo,
             IGenericRepository<EcSegnalazioniStato> ecSegnalazioniStatiRepo,
-            IGenericRepository<EcSegnalazioniFoto> ecSegnalazioniFotosRepo,
+            IGenericRepository<EcSegnalazioniAllegato> ecSegnalazioniAllegatiRepo,
             IGenericRepository<EcSegnalazioniDocumento> ecSegnalazioniDocumentiRepo,
 
             IGenericRepository<ViewEcSegnalazioniDocumenti> viewEcSegnalazioniDocumentiRepo,
@@ -32,7 +32,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             this.ecSegnalazioniTipiRepo = ecSegnalazioniTipiRepo;
             this.ecSegnalazioniStatiRepo = ecSegnalazioniStatiRepo;
-            this.ecSegnalazioniFotosRepo = ecSegnalazioniFotosRepo;
+            this.ecSegnalazioniAllegatiRepo = ecSegnalazioniAllegatiRepo;
             this.ecSegnalazioniDocumentiRepo = ecSegnalazioniDocumentiRepo;
 
             this.viewEcSegnalazioniDocumentiRepo = viewEcSegnalazioniDocumentiRepo;
@@ -200,52 +200,52 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-        #region SegnalazioniFotos
-        //public async Task<EcSegnalazioniFotosDto> GetEcSegnalazioniFotosAsync(int page = 1, int pageSize = 0)
+        #region SegnalazioniAllegati
+        //public async Task<EcSegnalazioniAllegatiDto> GetEcSegnalazioniAllegatiAsync(int page = 1, int pageSize = 0)
         //{
-        //    var entities = await ecSegnalazioniFotosRepo.GetAllAsync(page, pageSize);
-        //    var dtos = entities.ToDto<SegnalazioniFotosDto, PagedList<SegnalazioniFoto>>();
+        //    var entities = await ecSegnalazioniAllegatiRepo.GetAllAsync(page, pageSize);
+        //    var dtos = entities.ToDto<SegnalazioniAllegatiDto, PagedList<SegnalazioniAllegato>>();
         //    return dtos;
         //}
 
-        public async Task<SegnalazioniFotoDto> GetEcSegnalazioneFotoBySegnalazioneIdAsync(long segnalazioniDocumentoId)
+        public async Task<SegnalazioniAllegatoDto> GetEcSegnalazioneAllegatoBySegnalazioneIdAsync(long segnalazioniDocumentoId)
         {
-            var entity = await ecSegnalazioniFotosRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
-            var dto = entity.ToDto<SegnalazioniFotoDto, PagedList<EcSegnalazioniFoto>>();
+            var entity = await ecSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
+            var dto = entity.ToDto<SegnalazioniAllegatoDto, PagedList<EcSegnalazioniAllegato>>();
             return dto;
         }
 
-        public async Task<long> AddEcSegnalazioniFotoAsync(SegnalazioniFotoDto dto)
+        public async Task<long> AddEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
         {
-            var entity = dto.ToEntity<EcSegnalazioniFoto, SegnalazioniFotoDto>();
-            await ecSegnalazioniFotosRepo.AddAsync(entity);
+            var entity = dto.ToEntity<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>();
+            await ecSegnalazioniAllegatiRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
         }
 
-        //public async Task<long> UpdateEcSegnalazioniFotoAsync(SegnalazioniFotoDto dto)
+        //public async Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
         //{
-        //    var entity = dto.ToEntity<EcSegnalazioniFoto, SegnalazioniFotoDto>();
-        //    ecSegnalazioniFotosRepo.Update(entity);
+        //    var entity = dto.ToEntity<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>();
+        //    ecSegnalazioniAllegatiRepo.Update(entity);
         //    await SaveChanges();
 
         //    return entity.Id;
 
         //}
 
-        public async Task<bool> DeleteEcSegnalazioniFotoAsync(long id)
+        public async Task<bool> DeleteEcSegnalazioniAllegatoAsync(long id)
         {
-            var entity = await ecSegnalazioniFotosRepo.GetByIdAsync(id);
-            ecSegnalazioniFotosRepo.Remove(entity);
+            var entity = await ecSegnalazioniAllegatiRepo.GetByIdAsync(id);
+            ecSegnalazioniAllegatiRepo.Remove(entity);
             await SaveChanges();
 
             return true;
         }
 
         //#region Functions
-        //public async Task<bool> ValidateEcSegnalazioniFotoAsync(long id, string descrizione)
+        //public async Task<bool> ValidateEcSegnalazioniAllegatoAsync(long id, string descrizione)
         //{
-        //    var entity = await ecSegnalazioniFotosRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+        //    var entity = await ecSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
 
         //    if (entity.Data.Count > 0)
         //    {
@@ -257,20 +257,20 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    }
         //}
 
-        //public async Task<bool> ChangeStatusEcSegnalazioniFotoAsync(long id)
+        //public async Task<bool> ChangeStatusEcSegnalazioniAllegatoAsync(long id)
         //{
-        //    var entity = await ecSegnalazioniFotosRepo.GetByIdAsync(id);
+        //    var entity = await ecSegnalazioniAllegatiRepo.GetByIdAsync(id);
         //    if (entity.Disabled)
         //    {
         //        entity.Disabled = false;
-        //        ecSegnalazioniFotosRepo.Update(entity);
+        //        ecSegnalazioniAllegatiRepo.Update(entity);
         //        await SaveChanges();
         //        return true;
         //    }
         //    else
         //    {
         //        entity.Disabled = true;
-        //        ecSegnalazioniFotosRepo.Update(entity);
+        //        ecSegnalazioniAllegatiRepo.Update(entity);
         //        await SaveChanges();
         //        return true;
         //    }

@@ -11,7 +11,6 @@ namespace GaCloudServer.BusinnessLogic.Services
     public class GaMezziService:IGaMezziService
     {
         protected readonly IGenericRepository<MezziAlimentazione> gaMezziAlimentazioniRepo;
-        protected readonly IGenericRepository<MezziCantiere> gaMezziCantieriRepo;
         protected readonly IGenericRepository<MezziClasse> gaMezziClassiRepo;
         protected readonly IGenericRepository<MezziPatente> gaMezziPatentiRepo;
         protected readonly IGenericRepository<MezziPeriodoScadenza> gaMezziPeriodiScadenzeRepo;
@@ -31,7 +30,6 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public GaMezziService(
             IGenericRepository<MezziAlimentazione> gaMezziAlimentazioniRepo,
-            IGenericRepository<MezziCantiere> gaMezziCantieriRepo,
             IGenericRepository<MezziClasse> gaMezziClassiRepo,
             IGenericRepository<MezziPatente> gaMezziPatentiRepo,
             IGenericRepository<MezziPeriodoScadenza> gaMezziPeriodiScadenzeRepo,
@@ -49,7 +47,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             IUnitOfWork unitOfWork)
         {
             this.gaMezziAlimentazioniRepo = gaMezziAlimentazioniRepo;
-            this.gaMezziCantieriRepo = gaMezziCantieriRepo;
             this.gaMezziClassiRepo = gaMezziClassiRepo;
             this.gaMezziPatentiRepo = gaMezziPatentiRepo;
             this.gaMezziPeriodiScadenzeRepo = gaMezziPeriodiScadenzeRepo;
@@ -143,86 +140,6 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
             
-        }
-        #endregion
-
-        #endregion
-
-        #region MezziCantieri
-        public async Task<MezziCantieriDto> GetGaMezziCantieriAsync(int page = 1, int pageSize = 0)
-        {
-            var entities = await gaMezziCantieriRepo.GetAllAsync(page, pageSize);
-            var dtos = entities.ToDto<MezziCantieriDto, PagedList<MezziCantiere>>();
-            return dtos;
-        }
-
-        public async Task<MezziCantiereDto> GetGaMezziCantiereByIdAsync(long id)
-        {
-            var entity = await gaMezziCantieriRepo.GetByIdAsync(id);
-            var dto = entity.ToDto<MezziCantiereDto, MezziCantiere>();
-            return dto;
-        }
-
-        public async Task<long> AddGaMezziCantiereAsync(MezziCantiereDto dto)
-        {
-            var entity = dto.ToEntity<MezziCantiere, MezziCantiereDto>();
-            await gaMezziCantieriRepo.AddAsync(entity);
-            await SaveChanges();
-            return entity.Id;
-        }
-
-        public async Task<long> UpdateGaMezziCantiereAsync(MezziCantiereDto dto)
-        {
-            var entity = dto.ToEntity<MezziCantiere, MezziCantiereDto>();
-            gaMezziCantieriRepo.Update(entity);
-            await SaveChanges();
-
-            return entity.Id;
-
-        }
-
-        public async Task<bool> DeleteGaMezziCantiereAsync(long id)
-        {
-            var entity = await gaMezziCantieriRepo.GetByIdAsync(id);
-            gaMezziCantieriRepo.Remove(entity);
-            await SaveChanges();
-
-            return true;
-        }
-
-        #region Functions
-        public async Task<bool> ValidateGaMezziCantiereAsync(long id, string descrizione)
-        {
-            var entity = await gaMezziCantieriRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
-
-            if (entity.Data.Count > 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        public async Task<bool> ChangeStatusGaMezziCantiereAsync(long id)
-        {
-            var entity = await gaMezziCantieriRepo.GetByIdAsync(id);
-            if (entity.Disabled)
-            {
-                entity.Disabled = false;
-                gaMezziCantieriRepo.Update(entity);
-                await SaveChanges();
-                return true;
-            }
-            else
-            {
-                entity.Disabled = true;
-                gaMezziCantieriRepo.Update(entity);
-                await SaveChanges();
-                return true;
-            }
-
         }
         #endregion
 

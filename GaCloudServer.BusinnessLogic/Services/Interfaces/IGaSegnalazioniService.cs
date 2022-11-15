@@ -39,17 +39,17 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
-        #region GaSegnalazioniFotos
-        Task<SegnalazioniFotoDto> GetGaSegnalazioneFotoBySegnalazioneIdAsync(long segnalazioniDocumentoId);
+        #region GaSegnalazioniAllegati
+        Task<SegnalazioniAllegatoDto> GetGaSegnalazioneAllegatoBySegnalazioneIdAsync(long segnalazioniDocumentoId);
 
-        Task<long> AddGaSegnalazioniFotoAsync(SegnalazioniFotoDto dto);
-        //Task<long> UpdateGaSegnalazioniFotoAsync(SegnalazioniFotoDto dto);
+        Task<long> AddGaSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
+        //Task<long> UpdateGaSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
 
-        Task<bool> DeleteGaSegnalazioniFotoAsync(long id);
+        Task<bool> DeleteGaSegnalazioniAllegatoAsync(long id);
 
         #region Functions
-        //Task<bool> ValidateGaSegnalazioniFotoAsync(long id, string descrizione);
-        //Task<bool> ChangeStatusGaSegnalazioniFotoAsync(long id);
+        //Task<bool> ValidateGaSegnalazioniAllegatoAsync(long id, string descrizione);
+        //Task<bool> ChangeStatusGaSegnalazioniAllegatoAsync(long id);
         #endregion
 
         #endregion
