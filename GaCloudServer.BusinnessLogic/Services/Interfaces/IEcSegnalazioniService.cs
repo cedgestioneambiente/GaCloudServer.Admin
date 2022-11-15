@@ -40,7 +40,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region EcSegnalazioniAllegati
-        Task<SegnalazioniAllegatoDto> GetEcSegnalazioneAllegatoBySegnalazioneIdAsync(long segnalazioniDocumentoId);
+        Task<SegnalazioniAllegatoDto> GetEcSegnalazioneAllegatoBySegnalazioneDocumentoIdAsync(long segnalazioniDocumentoId);
 
         Task<long> AddEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
         //Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);

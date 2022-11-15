@@ -17,9 +17,6 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PresenzeProfilo> gaPresenzeProfiliRepo;
 
 
-        //protected readonly IGenericRepository<ViewGaPresenzeUsersOnDipendenti> viewGaPresenzeUsersOnDipendentiRepo;
-
-
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -32,10 +29,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<PresenzeProfilo> gaPresenzeProfiliRepo,
 
 
-
-        //IGenericRepository<ViewGaPresenzeUsersOnDipendenti> viewGaPresenzeUsersOnDipendentiRepo,
-
-
         IUnitOfWork unitOfWork)
         {
             this.gaPresenzeStatiRichiesteRepo = gaPresenzeStatiRichiesteRepo;
@@ -44,9 +37,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaPresenzeResponsabiliRepo = gaPresenzeResponsabiliRepo;
             this.gaPresenzeResponsabiliOnSettoriRepo = gaPresenzeResponsabiliOnSettoriRepo;
             this.gaPresenzeProfiliRepo = gaPresenzeProfiliRepo;
-
-
-            //this.viewGaPresenzeUsersOnDipendentiRepo = viewGaPresenzeUsersOnDipendentiRepo;
 
 
             this.unitOfWork = unitOfWork;

@@ -311,12 +311,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #region SegnalazioniAllegati
 
-        [HttpGet("GetEcSegnalazioniAllegatoBySegnalazioneId/{segnalazioniDocumentoId}")]
+        [HttpGet("GetEcSegnalazioniAllegatoBySegnalazioneDocumentoId/{segnalazioniDocumentoId}")]
         public async Task<ActionResult<ApiResponse>> GetEcSegnalazioniAllegatoBySegnalazioneId(long segnalazioniDocumentoId)
         {
             try
             {
-                var dto = await _ecSegnalazioniService.GetEcSegnalazioneAllegatoBySegnalazioneIdAsync(segnalazioniDocumentoId);
+                var dto = await _ecSegnalazioniService.GetEcSegnalazioneAllegatoBySegnalazioneDocumentoIdAsync(segnalazioniDocumentoId);
                 var apiDto = dto.ToApiDto<SegnalazioniAllegatoApiDto, SegnalazioniAllegatoDto>();
                 return new ApiResponse(apiDto);
             }
