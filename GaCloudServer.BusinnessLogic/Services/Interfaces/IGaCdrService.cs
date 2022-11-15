@@ -66,6 +66,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region GaCdrCersDettagli
         Task<CdrCersDettagliDto> GetGaCdrCersDettagliAsync(int page = 1, int pageSize = 0);
+        Task<CdrCersDettagliDto> GetGaCdrCersDettagliByCerIdAsync(long cerId);
         Task<CdrCerDettaglioDto> GetGaCdrCerDettaglioByIdAsync(long id);
 
         Task<long> AddGaCdrCerDettaglioAsync(CdrCerDettaglioDto dto);

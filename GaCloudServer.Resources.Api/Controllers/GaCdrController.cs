@@ -484,6 +484,23 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetGaCdrCersDettagliByCerIdAsync/{cerId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCdrCersDettagliByCerIdAsync(long cerId)
+        {
+            try
+            {
+                var dtos = await _gaCdrService.GetGaCdrCersDettagliByCerIdAsync(cerId);
+                var apiDtos = dtos.ToApiDto<CdrCersDettagliApiDto, CdrCersDettagliDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetGaCdrCerDettaglioByIdAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetGaCdrCerDettaglioByIdAsync(long id)
         {

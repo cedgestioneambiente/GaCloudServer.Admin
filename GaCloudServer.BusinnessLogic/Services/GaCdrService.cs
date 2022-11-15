@@ -333,6 +333,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dtos;
         }
 
+        public async Task<CdrCersDettagliDto> GetGaCdrCersDettagliByCerIdAsync(long cerId)
+        {
+            var entities = await gaCdrCersDettagliRepo.GetWithFilterAsync(x=>x.CdrCerId==cerId);
+            var dtos = entities.ToDto<CdrCersDettagliDto, PagedList<CdrCerDettaglio>>();
+            return dtos;
+        }
+
         public async Task<CdrCerDettaglioDto> GetGaCdrCerDettaglioByIdAsync(long id)
         {
             var entity = await gaCdrCersDettagliRepo.GetByIdAsync(id);

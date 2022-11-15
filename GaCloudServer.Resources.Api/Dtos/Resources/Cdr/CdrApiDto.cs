@@ -142,7 +142,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Cdr
         public DateTime? DataChiusura { get; set; }
         public double PesoPresunto { get; set; }
         public double PesoDestino { get; set; }
-        public string Note { get; set; }
+        public string? Note { get; set; }
         public bool Inviata { get; set; }
     }
 
