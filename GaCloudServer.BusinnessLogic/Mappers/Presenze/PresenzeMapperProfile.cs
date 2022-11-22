@@ -51,29 +51,40 @@ namespace GaCloudServer.BusinessLogic.Mappers.Presenze
             CreateMap<PagedList<PresenzeProfilo>, PresenzeProfiliDto>(MemberList.Destination)
                 .ReverseMap();
 
-            
-            //OPERATIVI
-            
-            ////PresenzeDateEscluse
-            //CreateMap<PresenzeOpDataEsclusa, PresenzeDataEsclusaDto>(MemberList.Destination)
-            //    .ReverseMap();
+            //PresenzeDateEscluse
+            CreateMap<PresenzeDataEsclusa, PresenzeDataEsclusaDto>(MemberList.Destination)
+                .ReverseMap();
 
-            //CreateMap<PagedList<PresenzeOpDataEsclusa>, PresenzeDateEscluseDto>(MemberList.Destination)
-            //    .ReverseMap();
+            CreateMap<PagedList<PresenzeDataEsclusa>, PresenzeDateEscluseDto>(MemberList.Destination)
+                .ReverseMap();
 
-            ////PresenzeBancheOre
-            //CreateMap<PresenzeOpBancaOra, PresenzeBancaOraDto>(MemberList.Destination)
-            //    .ReverseMap();
+            //PresenzeBancheOreUtilizzi
+            CreateMap<PresenzeBancaOraUtilizzo, PresenzeBancaOraUtilizzoDto>(MemberList.Destination)
+                .ReverseMap();
 
-            //CreateMap<PagedList<PresenzeOpBancaOra>, PresenzeBancheOreDto>(MemberList.Destination)
-            //    .ReverseMap();
+            CreateMap<PagedList<PresenzeBancaOraUtilizzo>, PresenzeBancheOreUtilizziDto>(MemberList.Destination)
+                .ReverseMap();
 
-            ////PresenzeBancheOreUtilizzi
-            //CreateMap<PresenzeOpBancaOraUtilizzo, PresenzeBancaOraUtilizzoDto>(MemberList.Destination)
-            //    .ReverseMap();
+            //PresenzeDipendenti
+            CreateMap<PresenzeDipendente, PresenzeDipendenteDto>(MemberList.Destination)
+                .ReverseMap();
 
-            //CreateMap<PagedList<PresenzeOpBancaOraUtilizzo>, PresenzeBancheOreUtilizziDto>(MemberList.Destination)
-            //    .ReverseMap();
+            CreateMap<PagedList<PresenzeDipendente>, PresenzeDipendentiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PresenzeOrari
+            CreateMap<PresenzeOrario, PresenzeOrarioDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<PresenzeOrario>, PresenzeOrariDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //PresenzeOrariGiornate
+            CreateMap<PresenzeOrarioGiornata, PresenzeOrarioGiornataDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<PresenzeOrarioGiornata>, PresenzeOrariGiornateDto>(MemberList.Destination)
+                .ReverseMap();
         }
     }
 }

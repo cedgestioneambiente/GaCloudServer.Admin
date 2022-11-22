@@ -4,8 +4,6 @@ using GaCloudServer.Resources.Api.Dtos.Base;
 
 namespace GaCloudServer.Resources.Api.Dtos.Resources.Presenze
 {
-    //Amministrativi
-
     #region PresenzeStatiRichieste
 
     public class PresenzeStatoRichiestaApiDto : GenericListApiDto
@@ -21,11 +19,12 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Presenze
 
     public class PresenzeRichiestaApiDto : GenericApiDto
     {
-        public long PersonaleDipendenteId { get; set; }
+        public long PresenzeDipendenteId { get; set; }
         public long PresenzeStatoRichiestaId { get; set; }
         public long PresenzeTipoOraId { get; set; }
         public DateTime DataInizio { get; set; }
         public DateTime DataFine { get; set; }
+        public double TotaleOre { get; set; }
     }
 
     public class PresenzeRichiesteApiDto : GenericPagedListApiDto<PresenzeRichiestaApiDto>
@@ -78,6 +77,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Presenze
         public int GgLavorativi { get; set; }
         public int GgFerie { get; set; }
         public int GgPermessiCcnl { get; set; }
+        public int HhFerie { get; set; }
         public int HhPermessiCcnl { get; set; }
     }
 
@@ -86,39 +86,21 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Presenze
     }
     #endregion
 
-    //Operativi
+    #region PresenzeDateEscluse
 
-    #region PresenzeOpDateEscluse
-
-    public class PresenzeOpDataEsclusaApiDto : GenericApiDto
+    public class PresenzeDataEsclusaApiDto : GenericApiDto
     {
         public DateTime Data { get; set; }
     }
 
-    public class PresenzeOpDateEscluseApiDto : GenericPagedListApiDto<PresenzeOpDataEsclusaApiDto>
+    public class PresenzeDateEscluseApiDto : GenericPagedListApiDto<PresenzeDataEsclusaApiDto>
     {
     }
     #endregion
 
-    #region PresenzeOpBancheOre
+    #region PresenzeBancheOreUtilizzi
 
-    public class PresenzeOpBancaOraApiDto : GenericApiDto
-    {
-        public long PersonaleDipendenteId { get; set; }
-        public double GgFerie { get; set; }
-        public double GgFerieCcnl { get; set; }
-        public double HhPermessoCcnl { get; set; }
-        public double HhRecupero { get; set; }
-    }
-
-    public class PresenzeOpBancheOreApiDto : GenericPagedListApiDto<PresenzeOpBancaOraApiDto>
-    {
-    }
-    #endregion
-
-    #region PresenzeOpBancheOreUtilizzi
-
-    public class PresenzeOpBancaOraUtilizzoApiDto : GenericApiDto
+    public class PresenzeBancaOraUtilizzoApiDto : GenericApiDto
     {
         public long PersonaleDipendenteId { get; set; }
         public long PresenzeRichiestaId { get; set; }
@@ -126,7 +108,59 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Presenze
         public double Qta { get; set; }
     }
 
-    public class PresenzeOpBancheOreUtilizziApiDto : GenericPagedListApiDto<PresenzeOpBancaOraUtilizzoApiDto>
+    public class PresenzeBancheOreUtilizziApiDto : GenericPagedListApiDto<PresenzeBancaOraUtilizzoApiDto>
+    {
+    }
+    #endregion
+
+    #region PresenzeDipendenti
+
+    public class PresenzeDipendenteApiDto : GenericApiDto
+    {
+        public long PersonaleDipendenteId { get; set; }
+        public string Matricola { get; set; }
+        public long PresenzeOrarioId { get; set; }
+        public long PresenzeProfiloId { get; set; }
+        public double HhFerie { get; set; }
+        public double GgFerie { get; set; }
+        public double GgPermessiCcnl { get; set; }
+        public double HhPermessiCcnl { get; set; }
+        public double HhRecupero { get; set; }
+        public bool Abilitato { get; set; }
+        public bool PrivilegiElevati { get; set; }
+        public bool AutoApprova { get; set; }
+        public bool SuperUser { get; set; }
+    }
+
+    public class PresenzeDipendentiApiDto : GenericPagedListApiDto<PresenzeDipendenteApiDto>
+    {
+    }
+    #endregion
+
+    #region PresenzeOrari
+
+    public class PresenzeOrarioApiDto : GenericListApiDto
+    {
+    }
+
+    public class PresenzeOrariApiDto : GenericPagedListApiDto<PresenzeOrarioApiDto>
+    {
+    }
+    #endregion
+
+    #region PresenzeOrariGiornate
+
+    public class PresenzeOrarioGiornataApiDto : GenericApiDto
+    {
+        public long PresenzeOrarioId { get; set; }
+        public int Giorno { get; set; }
+        public DateTime OraInizio { get; set; }
+        public DateTime OraFine { get; set; }
+        public DateTime? PausaInizio { get; set; }
+        public DateTime? PausaFine { get; set; }
+    }
+
+    public class PresenzeOrariGiornateApiDto : GenericPagedListApiDto<PresenzeOrarioGiornataApiDto>
     {
     }
     #endregion

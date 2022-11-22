@@ -80,5 +80,10 @@
         public const string GaContactCenterMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\ContactCenter\";
         public const string CREATE_ViewGaContactCenter = "CREATE_ViewGaContactCenter.sql";
         public const string DROP_ViewGaContactCenter = "DROP_ViewGaContactCenter.sql";
+
+        //Presenze
+        public const string GaPresenzeMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Presenze\";
+        public const string CREATE_ViewGaPresenze = "CREATE_ViewGaPresenze.sql";
+        public const string DROP_ViewGaPresenze = "DROP_ViewGaPresenze.sql";
     }
 }

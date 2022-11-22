@@ -15,6 +15,12 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PresenzeResponsabile> gaPresenzeResponsabiliRepo;
         protected readonly IGenericRepository<PresenzeResponsabileOnSettore> gaPresenzeResponsabiliOnSettoriRepo;
         protected readonly IGenericRepository<PresenzeProfilo> gaPresenzeProfiliRepo;
+        protected readonly IGenericRepository<PresenzeDipendente> gaPresenzeDipendentiRepo;
+        protected readonly IGenericRepository<PresenzeDataEsclusa> gaPresenzeDateEscluseRepo;
+        protected readonly IGenericRepository<PresenzeOrario> gaPresenzeOrariRepo;
+        protected readonly IGenericRepository<PresenzeOrarioGiornata> gaPresenzeOrariGiornateRepo;
+        protected readonly IGenericRepository<PresenzeBancaOraUtilizzo> gaPresenzeBancheOreUtilizziRepo;
+
 
 
 
@@ -27,6 +33,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<PresenzeResponsabile> gaPresenzeResponsabiliRepo,
             IGenericRepository<PresenzeResponsabileOnSettore> gaPresenzeResponsabiliOnSettoriRepo,
             IGenericRepository<PresenzeProfilo> gaPresenzeProfiliRepo,
+            IGenericRepository<PresenzeDipendente> gaPresenzeDipendentiRepo,
+            IGenericRepository<PresenzeDataEsclusa> gaPresenzeDateEscluseRepo,
+            IGenericRepository<PresenzeOrario> gaPresenzeOrariRepo,
+            IGenericRepository<PresenzeOrarioGiornata> gaPresenzeOrariGiornateRepo,
+            IGenericRepository<PresenzeBancaOraUtilizzo> gaPresenzeBancheOreUtilizziRepo,
+
 
 
         IUnitOfWork unitOfWork)
@@ -37,6 +49,11 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaPresenzeResponsabiliRepo = gaPresenzeResponsabiliRepo;
             this.gaPresenzeResponsabiliOnSettoriRepo = gaPresenzeResponsabiliOnSettoriRepo;
             this.gaPresenzeProfiliRepo = gaPresenzeProfiliRepo;
+            this.gaPresenzeDipendentiRepo = gaPresenzeDipendentiRepo;
+            this.gaPresenzeDateEscluseRepo = gaPresenzeDateEscluseRepo;
+            this.gaPresenzeOrariRepo = gaPresenzeOrariRepo;
+            this.gaPresenzeOrariGiornateRepo = gaPresenzeOrariGiornateRepo;
+            this.gaPresenzeBancheOreUtilizziRepo = gaPresenzeBancheOreUtilizziRepo;
 
 
             this.unitOfWork = unitOfWork;
@@ -180,7 +197,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Functions
         public async Task<bool> ValidateGaPresenzeRichiestaAsync(PresenzeRichiestaDto dto)
         {
-            var entity = await gaPresenzeRichiesteRepo.GetWithFilterAsync(x => x.PersonaleDipendenteId == dto.PersonaleDipendenteId && (dto.DataInizio <= x.DataFine && x.DataInizio < dto.DataFine) && x.Id != dto.Id, 1, 0);
+            var entity = await gaPresenzeRichiesteRepo.GetWithFilterAsync(x => x.PresenzeDipendenteId == dto.PresenzeDipendenteId && (dto.DataInizio <= x.DataFine && x.DataInizio < dto.DataFine) && x.Id != dto.Id, 1, 0);
 
             if (entity.Data.Count > 0)
             {
@@ -469,7 +486,367 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-        //manca richieste internal (necessita view ruoli)
+        #region PresenzeDipendenti
+        public async Task<PresenzeDipendentiDto> GetGaPresenzeDipendentiAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPresenzeDipendentiRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PresenzeDipendentiDto, PagedList<PresenzeDipendente>>();
+            return dtos;
+        }
+
+        public async Task<PresenzeDipendenteDto> GetGaPresenzeDipendenteByIdAsync(long id)
+        {
+            var entity = await gaPresenzeDipendentiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PresenzeDipendenteDto, PresenzeDipendente>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPresenzeDipendenteAsync(PresenzeDipendenteDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeDipendente, PresenzeDipendenteDto>();
+            await gaPresenzeDipendentiRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPresenzeDipendenteAsync(PresenzeDipendenteDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeDipendente, PresenzeDipendenteDto>();
+            gaPresenzeDipendentiRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPresenzeDipendenteAsync(long id)
+        {
+            var entity = await gaPresenzeDipendentiRepo.GetByIdAsync(id);
+            gaPresenzeDipendentiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaPresenzeDipendenteAsync(long id, string matricola)
+        {
+            var entity = await gaPresenzeDipendentiRepo.GetWithFilterAsync(x => x.Matricola == matricola && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id)
+        {
+            var entity = await gaPresenzeDipendentiRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaPresenzeDipendentiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaPresenzeDipendentiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PresenzeDateEscluse
+        public async Task<PresenzeDateEscluseDto> GetGaPresenzeDateEscluseAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPresenzeDateEscluseRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PresenzeDateEscluseDto, PagedList<PresenzeDataEsclusa>>();
+            return dtos;
+        }
+
+        public async Task<PresenzeDataEsclusaDto> GetGaPresenzeDataEsclusaByIdAsync(long id)
+        {
+            var entity = await gaPresenzeDateEscluseRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PresenzeDataEsclusaDto, PresenzeDataEsclusa>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPresenzeDataEsclusaAsync(PresenzeDataEsclusaDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeDataEsclusa, PresenzeDataEsclusaDto>();
+            await gaPresenzeDateEscluseRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPresenzeDataEsclusaAsync(PresenzeDataEsclusaDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeDataEsclusa, PresenzeDataEsclusaDto>();
+            gaPresenzeDateEscluseRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPresenzeDataEsclusaAsync(long id)
+        {
+            var entity = await gaPresenzeDateEscluseRepo.GetByIdAsync(id);
+            gaPresenzeDateEscluseRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+
+        public async Task<bool> ChangeStatusGaPresenzeDataEsclusaAsync(long id)
+        {
+            var entity = await gaPresenzeDateEscluseRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaPresenzeDateEscluseRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaPresenzeDateEscluseRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PresenzeOrari
+        public async Task<PresenzeOrariDto> GetGaPresenzeOrariAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPresenzeOrariRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PresenzeOrariDto, PagedList<PresenzeOrario>>();
+            return dtos;
+        }
+
+        public async Task<PresenzeOrarioDto> GetGaPresenzeOrarioByIdAsync(long id)
+        {
+            var entity = await gaPresenzeOrariRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PresenzeOrarioDto, PresenzeOrario>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPresenzeOrarioAsync(PresenzeOrarioDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeOrario, PresenzeOrarioDto>();
+            await gaPresenzeOrariRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPresenzeOrarioAsync(PresenzeOrarioDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeOrario, PresenzeOrarioDto>();
+            gaPresenzeOrariRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPresenzeOrarioAsync(long id)
+        {
+            var entity = await gaPresenzeOrariRepo.GetByIdAsync(id);
+            gaPresenzeOrariRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaPresenzeOrarioAsync(long id, string descrizione)
+        {
+            var entity = await gaPresenzeOrariRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaPresenzeOrarioAsync(long id)
+        {
+            var entity = await gaPresenzeOrariRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaPresenzeOrariRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaPresenzeOrariRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PresenzeOrariGiornate
+        public async Task<PresenzeOrariGiornateDto> GetGaPresenzeOrariGiornateAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPresenzeOrariGiornateRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PresenzeOrariGiornateDto, PagedList<PresenzeOrarioGiornata>>();
+            return dtos;
+        }
+
+        public async Task<PresenzeOrarioGiornataDto> GetGaPresenzeOrarioGiornataByIdAsync(long id)
+        {
+            var entity = await gaPresenzeOrariGiornateRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PresenzeOrarioGiornataDto, PresenzeOrarioGiornata>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPresenzeOrarioGiornataAsync(PresenzeOrarioGiornataDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeOrarioGiornata, PresenzeOrarioGiornataDto>();
+            await gaPresenzeOrariGiornateRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPresenzeOrarioGiornataAsync(PresenzeOrarioGiornataDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeOrarioGiornata, PresenzeOrarioGiornataDto>();
+            gaPresenzeOrariGiornateRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPresenzeOrarioGiornataAsync(long id)
+        {
+            var entity = await gaPresenzeOrariGiornateRepo.GetByIdAsync(id);
+            gaPresenzeOrariGiornateRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+
+        public async Task<bool> ChangeStatusGaPresenzeOrarioGiornataAsync(long id)
+        {
+            var entity = await gaPresenzeOrariGiornateRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaPresenzeOrariGiornateRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaPresenzeOrariGiornateRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PresenzeBancheOreUtilizzi
+        public async Task<PresenzeBancheOreUtilizziDto> GetGaPresenzeBancheOreUtilizziAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPresenzeBancheOreUtilizziRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PresenzeBancheOreUtilizziDto, PagedList<PresenzeBancaOraUtilizzo>>();
+            return dtos;
+        }
+
+        public async Task<PresenzeBancaOraUtilizzoDto> GetGaPresenzeBancaOraUtilizzoByIdAsync(long id)
+        {
+            var entity = await gaPresenzeBancheOreUtilizziRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PresenzeBancaOraUtilizzoDto, PresenzeBancaOraUtilizzo>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPresenzeBancaOraUtilizzoAsync(PresenzeBancaOraUtilizzoDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeBancaOraUtilizzo, PresenzeBancaOraUtilizzoDto>();
+            await gaPresenzeBancheOreUtilizziRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPresenzeBancaOraUtilizzoAsync(PresenzeBancaOraUtilizzoDto dto)
+        {
+            var entity = dto.ToEntity<PresenzeBancaOraUtilizzo, PresenzeBancaOraUtilizzoDto>();
+            gaPresenzeBancheOreUtilizziRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPresenzeBancaOraUtilizzoAsync(long id)
+        {
+            var entity = await gaPresenzeBancheOreUtilizziRepo.GetByIdAsync(id);
+            gaPresenzeBancheOreUtilizziRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+
+        public async Task<bool> ChangeStatusGaPresenzeBancaOraUtilizzoAsync(long id)
+        {
+            var entity = await gaPresenzeBancheOreUtilizziRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaPresenzeBancheOreUtilizziRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaPresenzeBancheOreUtilizziRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
         #region Common
         private async Task<long> SaveChanges()
         {

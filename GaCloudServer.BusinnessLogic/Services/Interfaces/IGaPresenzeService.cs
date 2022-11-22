@@ -4,8 +4,6 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
     public interface IGaPresenzeService
     {
-        //Amministrativi
-
         #region GaPresenzeStatiRichieste
         Task<PresenzeStatiRichiesteDto> GetGaPresenzeStatiRichiesteAsync(int page = 1, int pageSize = 0);
         Task<PresenzeStatoRichiestaDto> GetGaPresenzeStatoRichiestaByIdAsync(long id);
@@ -96,8 +94,84 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
-        //Operativi
+        #region GaPresenzeOrari
+        Task<PresenzeOrariDto> GetGaPresenzeOrariAsync(int page = 1, int pageSize = 0);
+        Task<PresenzeOrarioDto> GetGaPresenzeOrarioByIdAsync(long id);
 
+        Task<long> AddGaPresenzeOrarioAsync(PresenzeOrarioDto dto);
+        Task<long> UpdateGaPresenzeOrarioAsync(PresenzeOrarioDto dto);
 
+        Task<bool> DeleteGaPresenzeOrarioAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaPresenzeOrarioAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaPresenzeOrarioAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region GaPresenzeDipendenti
+        Task<PresenzeDipendentiDto> GetGaPresenzeDipendentiAsync(int page = 1, int pageSize = 0);
+        Task<PresenzeDipendenteDto> GetGaPresenzeDipendenteByIdAsync(long id);
+
+        Task<long> AddGaPresenzeDipendenteAsync(PresenzeDipendenteDto dto);
+        Task<long> UpdateGaPresenzeDipendenteAsync(PresenzeDipendenteDto dto);
+
+        Task<bool> DeleteGaPresenzeDipendenteAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaPresenzeDipendenteAsync(long id, string matricola);
+        Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region GaPresenzeOrariGiornate
+        Task<PresenzeOrariGiornateDto> GetGaPresenzeOrariGiornateAsync(int page = 1, int pageSize = 0);
+        Task<PresenzeOrarioGiornataDto> GetGaPresenzeOrarioGiornataByIdAsync(long id);
+
+        Task<long> AddGaPresenzeOrarioGiornataAsync(PresenzeOrarioGiornataDto dto);
+        Task<long> UpdateGaPresenzeOrarioGiornataAsync(PresenzeOrarioGiornataDto dto);
+
+        Task<bool> DeleteGaPresenzeOrarioGiornataAsync(long id);
+
+        #region Functions
+        //Task<bool> ValidateGaPresenzeOrarioGiornataAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaPresenzeOrarioGiornataAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region GaPresenzeBancheOreUtilizzi
+        Task<PresenzeBancheOreUtilizziDto> GetGaPresenzeBancheOreUtilizziAsync(int page = 1, int pageSize = 0);
+        Task<PresenzeBancaOraUtilizzoDto> GetGaPresenzeBancaOraUtilizzoByIdAsync(long id);
+
+        Task<long> AddGaPresenzeBancaOraUtilizzoAsync(PresenzeBancaOraUtilizzoDto dto);
+        Task<long> UpdateGaPresenzeBancaOraUtilizzoAsync(PresenzeBancaOraUtilizzoDto dto);
+
+        Task<bool> DeleteGaPresenzeBancaOraUtilizzoAsync(long id);
+
+        #region Functions
+        //Task<bool> ValidateGaPresenzeBancaOraUtilizzoAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaPresenzeBancaOraUtilizzoAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region GaPresenzeDateEscluse
+        Task<PresenzeDateEscluseDto> GetGaPresenzeDateEscluseAsync(int page = 1, int pageSize = 0);
+        Task<PresenzeDataEsclusaDto> GetGaPresenzeDataEsclusaByIdAsync(long id);
+
+        Task<long> AddGaPresenzeDataEsclusaAsync(PresenzeDataEsclusaDto dto);
+        Task<long> UpdateGaPresenzeDataEsclusaAsync(PresenzeDataEsclusaDto dto);
+
+        Task<bool> DeleteGaPresenzeDataEsclusaAsync(long id);
+
+        #region Functions
+        //Task<bool> ValidateGaPresenzeDataEsclusaAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaPresenzeDataEsclusaAsync(long id);
+        #endregion
+
+        #endregion
     }
 }
