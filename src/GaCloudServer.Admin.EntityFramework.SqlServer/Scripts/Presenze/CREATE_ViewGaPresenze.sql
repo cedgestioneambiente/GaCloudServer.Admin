@@ -1,4 +1,10 @@
-﻿CREATE VIEW [dbo].[PrivateViewGaPresenzeResponsabiliList]
+﻿--CREATE VIEW [dbo].[ViewGaPresenzeResponsabili]
+--AS
+--    SELECT 
+
+--GO
+
+CREATE VIEW [dbo].[PrivateViewGaPresenzeResponsabiliList]
 AS
 SELECT   dbo.GaPresenzeResponsabili.Id AS ResponsabileId, dbo.GaPresenzeResponsabili.PersonaleDipendenteId AS DipendenteId, 
                          dbo.PrivateViewIdentityServerAdminUserList.FullName AS Responsabile, dbo.GlobalSettori.Descrizione AS Settore, dbo.PrivateViewIdentityServerAdminUserList.Email, 

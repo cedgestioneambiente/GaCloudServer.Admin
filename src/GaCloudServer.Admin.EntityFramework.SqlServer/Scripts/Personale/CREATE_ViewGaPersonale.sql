@@ -7,7 +7,7 @@ GO
 
 CREATE VIEW [dbo].[ViewGaPersonaleDipendenti]
 AS
-SELECT        A.Id, B.Id AS UserId, B.FirstName AS Nome, B.LastName AS Cognome, C.Descrizione AS Sede, C.Id AS SedeId, D.Descrizione AS Qualifica, D.Id AS QualificaId, A.Disabled, dbo.GlobalSettori.Descrizione AS Settore, 
+SELECT        A.Id, B.Id AS UserId, B.FirstName AS Nome, B.LastName AS Cognome, CONCAT(B.LastName,' ',B.FirstName) CognomeNome, C.Descrizione AS Sede, C.Id AS SedeId, D.Descrizione AS Qualifica, D.Id AS QualificaId, A.Disabled, dbo.GlobalSettori.Descrizione AS Settore, 
                          dbo.GlobalSettori.Id AS SettoreId
 FROM            dbo.GaPersonaleDipendenti AS A INNER JOIN
                          dbo.GlobalSettori ON A.GlobalSettoreId = dbo.GlobalSettori.Id LEFT OUTER JOIN
