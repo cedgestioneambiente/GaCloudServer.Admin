@@ -3,8 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
 {
-    //Amministrativi
-
     #region PresenzeStatiRichieste
 
     public class PresenzeStatoRichiestaDto : GenericListDto
@@ -20,11 +18,12 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
 
     public class PresenzeRichiestaDto : GenericDto
     {
-        public long PersonaleDipendenteId { get; set; }
+        public long PresenzeDipendenteId { get; set; }
         public long PresenzeStatoRichiestaId { get; set; }
         public long PresenzeTipoOraId { get; set; }
         public DateTime DataInizio { get; set; }
         public DateTime DataFine { get; set; }
+        public double TotaleOre { get; set; }
     }
 
     public class PresenzeRichiesteDto : GenericPagedListDto<PresenzeRichiestaDto>
@@ -77,6 +76,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
         public int GgLavorativi { get; set; }
         public int GgFerie { get; set; }
         public int GgPermessiCcnl { get; set; }
+        public int HhFerie { get; set; }
         public int HhPermessiCcnl { get; set; }
     }
 
@@ -85,39 +85,21 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
     }
     #endregion
 
-    //Operativi
+    #region PresenzeDateEscluse
 
-    #region PresenzeOpDateEscluse
-
-    public class PresenzeOpDataEsclusaDto : GenericDto
+    public class PresenzeDataEsclusaDto : GenericDto
     {
         public DateTime Data { get; set; }
     }
 
-    public class PresenzeOpDateEscluseDto : GenericPagedListDto<PresenzeOpDataEsclusaDto>
+    public class PresenzeDateEscluseDto : GenericPagedListDto<PresenzeDataEsclusaDto>
     {
     }
     #endregion
 
-    #region PresenzeOpBancheOre
+    #region PresenzeBancheOreUtilizzi
 
-    public class PresenzeOpBancaOraDto : GenericDto
-    {
-        public long PersonaleDipendenteId { get; set; }
-        public double GgFerie { get; set; }
-        public double GgFerieCcnl { get; set; }
-        public double HhPermessoCcnl { get; set; }
-        public double HhRecupero { get; set; }
-    }
-
-    public class PresenzeOpBancheOreDto : GenericPagedListDto<PresenzeOpBancaOraDto>
-    {
-    }
-    #endregion
-
-    #region PresenzeOpBancheOreUtilizzi
-
-    public class PresenzeOpBancaOraUtilizzoDto : GenericDto
+    public class PresenzeBancaOraUtilizzoDto : GenericDto
     {
         public long PersonaleDipendenteId { get; set; }
         public long PresenzeRichiestaId { get; set; }
@@ -125,67 +107,61 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
         public double Qta { get; set; }
     }
 
-    public class PresenzeOpBancheOreUtilizziDto : GenericPagedListDto<PresenzeOpBancaOraUtilizzoDto>
+    public class PresenzeBancheOreUtilizziDto : GenericPagedListDto<PresenzeBancaOraUtilizzoDto>
     {
     }
     #endregion
 
+    #region PresenzeDipendenti
 
-
-
-    //Internal da rivedere
-    public class PresenzeProfiloUtenteDto
+    public class PresenzeDipendenteDto : GenericDto
     {
-        public string userId { get; set; }
-        public bool isAdmin { get; set; }
-        public bool isResponsabile { get; set; }
-        public bool isPresenze { get; set; }
-        public bool privilegiElevati { get; set; }
-        public bool approvazioneConsentita { get; set; }
-        public PresenzeProfiloUtenteSettoriDto settori { get; set; }
+        public long PersonaleDipendenteId { get; set; }
+        public string Matricola { get; set; }
+        public long PresenzeOrarioId { get; set; }
+        public long PresenzeProfiloId { get; set; }
+        public double HhFerie { get; set; }
+        public double GgFerie { get; set; }
+        public double GgPermessiCcnl { get; set; }
+        public double HhPermessiCcnl { get; set; }
+        public double HhRecupero { get; set; }
+        public bool Abilitato { get; set; }
+        public bool PrivilegiElevati { get; set; }
+        public bool AutoApprova { get; set; }
+        public bool SuperUser { get; set; }
     }
 
-    public class PresenzeRichiestaUtenteDto
+    public class PresenzeDipendentiDto : GenericPagedListDto<PresenzeDipendenteDto>
     {
-        public long Id { get; set; }
-        public string Descrizione { get; set; }
-        public bool Disabled { get; set; }
+    }
+    #endregion
+
+    #region PresenzeOrari
+
+    public class PresenzeOrarioDto : GenericListDto
+    {
     }
 
-    public class PresenzeRichiesteUtentiDto
+    public class PresenzeOrariDto : GenericPagedListDto<PresenzeOrarioDto>
     {
-        public PresenzeRichiesteUtentiDto()
-        {
-            Data = new List<PresenzeRichiestaUtenteDto>();
-        }
+    }
+    #endregion
 
-        public List<PresenzeRichiestaUtenteDto> Data { get; set; }
+    #region PresenzeOrariGiornate
 
-        public int TotalCount { get; set; }
-
-        public int PageSize { get; set; }
+    public class PresenzeOrarioGiornataDto : GenericDto
+    {
+        public long PresenzeOrarioId { get; set; }
+        public int Giorno { get; set; }
+        public DateTime OraInizio { get; set; }
+        public DateTime OraFine { get; set; }
+        public DateTime? PausaInizio { get; set; }
+        public DateTime? PausaFine { get; set; }
     }
 
-    public class PresenzeProfiloUtenteSettoreDto
+    public class PresenzeOrariGiornateDto : GenericPagedListDto<PresenzeOrarioGiornataDto>
     {
-        public long Id { get; set; }
-        public string Descrizione { get; set; }
-        public bool isResponsabile { get; set; }
-        public bool Disabled { get; set; }
     }
-
-    public class PresenzeProfiloUtenteSettoriDto
-    {
-        public PresenzeProfiloUtenteSettoriDto()
-        {
-            Data = new List<PresenzeProfiloUtenteSettoreDto>();
-        }
-
-        public List<PresenzeProfiloUtenteSettoreDto> Data { get; set; }
-
-        public int TotalCount { get; set; }
-
-        public int PageSize { get; set; }
-    }
+    #endregion
 }
 

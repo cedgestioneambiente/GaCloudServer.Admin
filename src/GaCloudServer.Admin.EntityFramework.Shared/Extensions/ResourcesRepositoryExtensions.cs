@@ -288,15 +288,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PresenzeResponsabile>, GenericRepository<TResourcesDbContext, PresenzeResponsabile>>();
             services.AddTransient<IGenericRepository<PresenzeResponsabileOnSettore>, GenericRepository<TResourcesDbContext, PresenzeResponsabileOnSettore>>();
             services.AddTransient<IGenericRepository<PresenzeProfilo>, GenericRepository<TResourcesDbContext, PresenzeProfilo>>();
-            services.AddTransient<IGenericRepository<PresenzeOpDataEsclusa>, GenericRepository<TResourcesDbContext, PresenzeOpDataEsclusa>>();
-            services.AddTransient<IGenericRepository<PresenzeOpBancaOra>, GenericRepository<TResourcesDbContext, PresenzeOpBancaOra>>();
-            services.AddTransient<IGenericRepository<PresenzeOpBancaOraUtilizzo>, GenericRepository<TResourcesDbContext, PresenzeOpBancaOraUtilizzo>>();
+            services.AddTransient<IGenericRepository<PresenzeDataEsclusa>, GenericRepository<TResourcesDbContext, PresenzeDataEsclusa>>();
+            services.AddTransient<IGenericRepository<PresenzeBancaOraUtilizzo>, GenericRepository<TResourcesDbContext, PresenzeBancaOraUtilizzo>>();
+            services.AddTransient<IGenericRepository<PresenzeDipendente>, GenericRepository<TResourcesDbContext, PresenzeDipendente>>();
+            services.AddTransient<IGenericRepository<PresenzeOrario>, GenericRepository<TResourcesDbContext, PresenzeOrario>>();
+            services.AddTransient<IGenericRepository<PresenzeOrarioGiornata>, GenericRepository<TResourcesDbContext, PresenzeOrarioGiornata>>();
 
             //Views
 
 
             #endregion
-            
+
             return services; 
         }
     }

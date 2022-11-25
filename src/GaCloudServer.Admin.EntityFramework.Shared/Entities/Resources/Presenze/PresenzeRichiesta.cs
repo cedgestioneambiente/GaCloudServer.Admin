@@ -10,11 +10,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
     public class PresenzeRichiesta : GenericEntity
     {
-        public long PersonaleDipendenteId { get; set; }
+        public long PresenzeDipendenteId { get; set; }
         public long PresenzeStatoRichiestaId { get; set; }
         public long PresenzeTipoOraId { get; set; }
         public DateTime DataInizio { get; set; }
         public DateTime DataFine { get; set; }
+        public double TotaleOre { get; set; }
 
         public PersonaleDipendente PersonaleDipendente { get; set; }
         public PresenzeStatoRichiesta PresenzeStatoRichiesta { get; set; }

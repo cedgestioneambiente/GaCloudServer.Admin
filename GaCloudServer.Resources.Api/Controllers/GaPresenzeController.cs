@@ -24,7 +24,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         public GaPresenzeController(
             IGaPresenzeService gaPresenzeService
-            , ILogger<GaPresenzeController> logger)
+            ,ILogger<GaPresenzeController> logger)
         {
 
             _gaPresenzeService = gaPresenzeService;
@@ -738,5 +738,523 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region PresenzeBancheOreUtilizzi
+        [HttpGet("GetGaPresenzeBancheOreUtilizziAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeBancheOreUtilizziAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPresenzeService.GetGaPresenzeBancheOreUtilizziAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PresenzeBancheOreUtilizziApiDto, PresenzeBancheOreUtilizziDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaPresenzeBancaOraUtilizzoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeBancaOraUtilizzoByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaPresenzeService.GetGaPresenzeBancaOraUtilizzoByIdAsync(id);
+                var apiDto = dto.ToApiDto<PresenzeBancaOraUtilizzoApiDto, PresenzeBancaOraUtilizzoDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaPresenzeBancaOraUtilizzoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPresenzeBancaOraUtilizzoAsync([FromBody] PresenzeBancaOraUtilizzoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PresenzeBancaOraUtilizzoDto, PresenzeBancaOraUtilizzoApiDto>();
+                var response = await _gaPresenzeService.AddGaPresenzeBancaOraUtilizzoAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaPresenzeBancaOraUtilizzoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPresenzeBancaOraUtilizzoAsync([FromBody] PresenzeBancaOraUtilizzoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PresenzeBancaOraUtilizzoDto, PresenzeBancaOraUtilizzoApiDto>();
+                var response = await _gaPresenzeService.UpdateGaPresenzeBancaOraUtilizzoAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaPresenzeBancaOraUtilizzoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPresenzeBancaOraUtilizzoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.DeleteGaPresenzeBancaOraUtilizzoAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaPresenzeBancaOraUtilizzoAsync/{id}/{descrizione}")]
+
+        [HttpGet("ChangeStatusGaPresenzeBancaOraUtilizzoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeBancaOraUtilizzoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.ChangeStatusGaPresenzeBancaOraUtilizzoAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PresenzeDipendenti
+        [HttpGet("GetGaPresenzeDipendentiAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeDipendentiAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPresenzeService.GetGaPresenzeDipendentiAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PresenzeDipendentiApiDto, PresenzeDipendentiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaPresenzeDipendenteByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeDipendenteByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaPresenzeService.GetGaPresenzeDipendenteByIdAsync(id);
+                var apiDto = dto.ToApiDto<PresenzeDipendenteApiDto, PresenzeDipendenteDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaPresenzeDipendenteAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPresenzeDipendenteAsync([FromBody] PresenzeDipendenteApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PresenzeDipendenteDto, PresenzeDipendenteApiDto>();
+                var response = await _gaPresenzeService.AddGaPresenzeDipendenteAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaPresenzeDipendenteAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPresenzeDipendenteAsync([FromBody] PresenzeDipendenteApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PresenzeDipendenteDto, PresenzeDipendenteApiDto>();
+                var response = await _gaPresenzeService.UpdateGaPresenzeDipendenteAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaPresenzeDipendenteAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPresenzeDipendenteAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.DeleteGaPresenzeDipendenteAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaPresenzeDipendenteAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPresenzeDipendenteAsync(long id, string matricola)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.ValidateGaPresenzeDipendenteAsync(id, matricola);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGaPresenzeDipendenteAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeDipendenteAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.ChangeStatusGaPresenzeDipendenteAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PresenzeOrario
+        [HttpGet("GetGaPresenzeOrariAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeOrariAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPresenzeService.GetGaPresenzeOrariAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PresenzeOrariApiDto, PresenzeOrariDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaPresenzeOrarioByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeOrarioByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaPresenzeService.GetGaPresenzeOrarioByIdAsync(id);
+                var apiDto = dto.ToApiDto<PresenzeOrarioApiDto, PresenzeOrarioDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaPresenzeOrarioAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPresenzeOrarioAsync([FromBody] PresenzeOrarioApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PresenzeOrarioDto, PresenzeOrarioApiDto>();
+                var response = await _gaPresenzeService.AddGaPresenzeOrarioAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaPresenzeOrarioAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPresenzeOrarioAsync([FromBody] PresenzeOrarioApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PresenzeOrarioDto, PresenzeOrarioApiDto>();
+                var response = await _gaPresenzeService.UpdateGaPresenzeOrarioAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaPresenzeOrarioAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPresenzeOrarioAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.DeleteGaPresenzeOrarioAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaPresenzeOrarioAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPresenzeOrarioAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.ValidateGaPresenzeOrarioAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGaPresenzeOrarioAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeOrarioAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.ChangeStatusGaPresenzeOrarioAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region PresenzeOrariGiornate
+        [HttpGet("GetGaPresenzeOrariGiornateAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeOrariGiornateAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPresenzeService.GetGaPresenzeOrariGiornateAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PresenzeOrariGiornateApiDto, PresenzeOrariGiornateDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaPresenzeOrarioGiornataByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeOrarioGiornataByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaPresenzeService.GetGaPresenzeOrarioGiornataByIdAsync(id);
+                var apiDto = dto.ToApiDto<PresenzeOrarioGiornataApiDto, PresenzeOrarioGiornataDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaPresenzeOrarioGiornataAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPresenzeOrarioGiornataAsync([FromBody] PresenzeOrarioGiornataApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PresenzeOrarioGiornataDto, PresenzeOrarioGiornataApiDto>();
+                var response = await _gaPresenzeService.AddGaPresenzeOrarioGiornataAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaPresenzeOrarioGiornataAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPresenzeOrarioGiornataAsync([FromBody] PresenzeOrarioGiornataApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PresenzeOrarioGiornataDto, PresenzeOrarioGiornataApiDto>();
+                var response = await _gaPresenzeService.UpdateGaPresenzeOrarioGiornataAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaPresenzeOrarioGiornataAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPresenzeOrarioGiornataAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.DeleteGaPresenzeOrarioGiornataAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+
+        [HttpGet("ChangeStatusGaPresenzeOrarioGiornataAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeOrarioGiornataAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.ChangeStatusGaPresenzeOrarioGiornataAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
     }
 }
