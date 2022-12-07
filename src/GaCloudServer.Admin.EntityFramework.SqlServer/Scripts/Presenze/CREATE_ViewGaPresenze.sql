@@ -34,12 +34,14 @@ FROM            dbo.GaPresenzeOrari RIGHT OUTER JOIN
                          dbo.ViewGaPersonaleDipendenti ON dbo.GaPresenzeDipendenti.PersonaleDipendenteId = dbo.ViewGaPersonaleDipendenti.Id
 GO
 
+
 CREATE VIEW [dbo].[ViewGaPresenzeOrariGiornate]
 AS
 SELECT        Id, PresenzeOrarioId, 
                          CASE WHEN Giorno = '1' THEN 'LUN' WHEN Giorno = '2' THEN 'MAR' WHEN Giorno = '3' THEN 'MERC' WHEN Giorno = '4' THEN 'GIOV' WHEN Giorno = '5' THEN 'VEN' WHEN Giorno = '6' THEN 'SAB' WHEN Giorno = '7' THEN 'DOM'
                           END AS GiornoDescrizione, OraInizio, OraFine, PausaInizio, PausaFine, Disabled
 FROM            dbo.GaPresenzeOrariGiornate
+
 GO
 
 CREATE VIEW [dbo].[ViewGaPresenzeRichieste]

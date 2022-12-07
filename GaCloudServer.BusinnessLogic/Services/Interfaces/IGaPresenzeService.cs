@@ -202,6 +202,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Extras
         Task<PresenzeProfiloUtenteDto> GetGaPresenzeProfiloUtenteByUserIdAsync(string userId, bool isAdmin);
         Task<PagedList<GlobalSettore>> GetGaPresenzeGlobalSettoriByUserId(string userId, bool isAdmin);
+        Task<double> CalcTimeGaPresenzeRichiestaAsync(PresenzeRichiestaDto dto);
 
         #endregion
     }

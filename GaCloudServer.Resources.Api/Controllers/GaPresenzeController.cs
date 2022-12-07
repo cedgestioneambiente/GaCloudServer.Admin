@@ -1420,7 +1420,26 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpPost("CalcTimeGaPresenzeRichiestaAsync")]
+        public async Task<ActionResult<ApiResponse>> CalcTimeGaPresenzeRichiestaAsync([FromBody] PresenzeRichiestaApiDto apiDto)
+        {
+            try
+            {
+                var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+                apiDto.DataInizio = apiDto.DataInizio.Add(offset);
+                apiDto.DataFine = apiDto.DataFine.Add(offset);
 
+                var dto = apiDto.ToDto<PresenzeRichiestaDto, PresenzeRichiestaApiDto>();
+                var result = await _gaPresenzeService.CalcTimeGaPresenzeRichiestaAsync(dto);
+                return new ApiResponse(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
 
         #endregion
     }
