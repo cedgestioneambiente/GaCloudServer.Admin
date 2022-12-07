@@ -74,11 +74,8 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Presenze
 
     public class PresenzeProfiloApiDto : GenericListApiDto
     {
-        public int GgLavorativi { get; set; }
-        public int GgFerie { get; set; }
-        public int GgPermessiCcnl { get; set; }
-        public int HhFerie { get; set; }
-        public int HhPermessiCcnl { get; set; }
+        public double HhFerie { get; set; }
+        public double HhPermessiCcnl { get; set; }
     }
 
     public class PresenzeProfiliApiDto : GenericPagedListApiDto<PresenzeProfiloApiDto>
@@ -118,18 +115,16 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Presenze
     public class PresenzeDipendenteApiDto : GenericApiDto
     {
         public long PersonaleDipendenteId { get; set; }
-        public string Matricola { get; set; }
+        public string? Matricola { get; set; }
         public long PresenzeOrarioId { get; set; }
         public long PresenzeProfiloId { get; set; }
         public double HhFerie { get; set; }
-        public double GgFerie { get; set; }
-        public double GgPermessiCcnl { get; set; }
         public double HhPermessiCcnl { get; set; }
         public double HhRecupero { get; set; }
-        public bool Abilitato { get; set; }
         public bool PrivilegiElevati { get; set; }
         public bool AutoApprova { get; set; }
         public bool SuperUser { get; set; }
+        public bool BancaOre { get; set; }
     }
 
     public class PresenzeDipendentiApiDto : GenericPagedListApiDto<PresenzeDipendenteApiDto>

@@ -1,4 +1,6 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze;
 using GaCloudServer.BusinnessLogic.Mappers;
@@ -21,7 +23,13 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PresenzeOrarioGiornata> gaPresenzeOrariGiornateRepo;
         protected readonly IGenericRepository<PresenzeBancaOraUtilizzo> gaPresenzeBancheOreUtilizziRepo;
 
+        protected readonly IGenericRepository<ViewGaPresenzeResponsabili> viewGaPresenzeResponsabiliRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeResponsabiliOnSettori> viewGaPresenzeResponsabiliOnSettoriRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeDipendenti> viewGaPresenzeDipendentiRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeOrariGiornate> viewGaPresenzeOrariGiornateRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeRichieste> viewGaPresenzeRichiesteRepo;
 
+        protected readonly IGenericRepository<GlobalSettore> globalSettoriRepo;
 
 
         protected readonly IUnitOfWork unitOfWork;
@@ -39,7 +47,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<PresenzeOrarioGiornata> gaPresenzeOrariGiornateRepo,
             IGenericRepository<PresenzeBancaOraUtilizzo> gaPresenzeBancheOreUtilizziRepo,
 
+            IGenericRepository<ViewGaPresenzeResponsabili> viewGaPresenzeResponsabiliRepo,
+            IGenericRepository<ViewGaPresenzeResponsabiliOnSettori> viewGaPresenzeResponsabiliOnSettoriRepo,
+            IGenericRepository<ViewGaPresenzeDipendenti> viewGaPresenzeDipendentiRepo,
+            IGenericRepository<ViewGaPresenzeOrariGiornate> viewGaPresenzeOrariGiornateRepo,
+            IGenericRepository<ViewGaPresenzeRichieste> viewGaPresenzeRichiesteRepo,
 
+            IGenericRepository<GlobalSettore> globalSettoriRepo,
 
         IUnitOfWork unitOfWork)
         {
@@ -54,6 +68,14 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaPresenzeOrariRepo = gaPresenzeOrariRepo;
             this.gaPresenzeOrariGiornateRepo = gaPresenzeOrariGiornateRepo;
             this.gaPresenzeBancheOreUtilizziRepo = gaPresenzeBancheOreUtilizziRepo;
+
+            this.viewGaPresenzeResponsabiliRepo = viewGaPresenzeResponsabiliRepo;
+            this.viewGaPresenzeResponsabiliOnSettoriRepo = viewGaPresenzeResponsabiliOnSettoriRepo;
+            this.viewGaPresenzeDipendentiRepo = viewGaPresenzeDipendentiRepo;
+            this.viewGaPresenzeOrariGiornateRepo = viewGaPresenzeOrariGiornateRepo;
+            this.viewGaPresenzeRichiesteRepo = viewGaPresenzeRichiesteRepo;
+
+            this.globalSettoriRepo = globalSettoriRepo;
 
 
             this.unitOfWork = unitOfWork;
@@ -161,7 +183,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var approvazioneAutomatica = gaPresenzeTipiOreRepo.GetByIdAsync(entity.PresenzeTipoOraId).Result.ApprovazioneAutomatica;
             if (approvazioneAutomatica && entity.PresenzeStatoRichiestaId != 3)
             {
-                entity.PresenzeStatoRichiestaId = 2;
+                entity.PresenzeStatoRichiestaId = 1;
             }
             await gaPresenzeRichiesteRepo.AddAsync(entity);
             await SaveChanges();
@@ -195,18 +217,31 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateGaPresenzeRichiestaAsync(PresenzeRichiestaDto dto)
+        public async Task<int> ValidateGaPresenzeRichiestaAsync(PresenzeRichiestaValidateDto dto)
         {
-            var entity = await gaPresenzeRichiesteRepo.GetWithFilterAsync(x => x.PresenzeDipendenteId == dto.PresenzeDipendenteId && (dto.DataInizio <= x.DataFine && x.DataInizio < dto.DataFine) && x.Id != dto.Id, 1, 0);
+            var entities = await gaPresenzeRichiesteRepo.GetWithFilterAsync(x => x.PresenzeDipendenteId == dto.richiesta.PresenzeDipendenteId && (dto.richiesta.DataInizio <= x.DataFine && x.DataInizio < dto.richiesta.DataFine) && x.Id != dto.richiesta.Id, 1, 0);
 
-            if (entity.Data.Count > 0)
+            if (entities.Data.Count > 0)
             {
-                return false;
+                return -1;
             }
-            else
+
+            if (dto.richiesta.DataInizio > dto.richiesta.DataFine)
             {
-                return true;
+                return -2;
             }
+
+            if (!dto.IsAdmin && !dto.profiloUtente.SuperUser)
+            {
+                var dipendente = await viewGaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.UserId == dto.UserId);
+                if (dto.richiesta.PresenzeDipendenteId == dipendente.Id && dto.richiesta.PresenzeStatoRichiestaId != 2 && !dto.profiloUtente.AutoApprova)
+                {
+                    return -3;
+                }
+            }
+
+
+            return 0;
         }
 
         public async Task<bool> ChangeStatusGaPresenzeRichiestaAsync(long id)
@@ -227,6 +262,14 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPresenzeRichieste>> GetGaViewPresenzeRichiesteBySettoreIdAsync(long globalSettoreId)
+        {
+            var view = await viewGaPresenzeRichiesteRepo.GetWithFilterAsync(x=>x.SettoreId==globalSettoreId);
+            return view;
         }
         #endregion
 
@@ -388,21 +431,55 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+       
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPresenzeResponsabili>> GetViewGaPresenzeResponsabiliAsync(bool all=true)
+        {
+            var view = all? await viewGaPresenzeResponsabiliRepo.GetAllAsync(1,0):await viewGaPresenzeResponsabiliRepo.GetWithFilterAsync(x=>x.Disabled==all);
+            return view;
+        }
+
+
         #endregion
 
         #endregion
 
         #region PresenzeResponsabiliOnSettori
 
-        public async Task<long> UpdateGaPresenzeResponsabileOnSettoreAsync(PresenzeResponsabileOnSettoreDto dto)
+        public async Task<bool> UpdateGaPresenzeResponsabileOnSettoreAsync(long responsabileId, long settoreId)
         {
-            var entity = dto.ToEntity<PresenzeResponsabileOnSettore, PresenzeResponsabileOnSettoreDto>();
-            gaPresenzeResponsabiliOnSettoriRepo.Update(entity);
-            await SaveChanges();
-
-            return entity.Id;
+            var entities = await gaPresenzeResponsabiliOnSettoriRepo.GetWithFilterAsync(x => x.PresenzeResponsabileId == responsabileId && x.GlobalSettoreId == settoreId);
+            if (entities.Data.Count > 0)
+            {
+                var entity = entities.Data[0];
+                gaPresenzeResponsabiliOnSettoriRepo.Remove(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                var entity = new PresenzeResponsabileOnSettore();
+                entity.Id = 0;
+                entity.PresenzeResponsabileId = responsabileId;
+                entity.GlobalSettoreId = settoreId;
+                entity.Disabled = false;
+                await gaPresenzeResponsabiliOnSettoriRepo.AddAsync(entity);
+                await SaveChanges();
+                return true;
+            }
 
         }
+
+        #region Views
+        public async Task<PagedList<ViewGaPresenzeResponsabiliOnSettori>> GetViewGaPresenzeResponsabiliOnSettoriByDipendenteAsync(long personaleDipendenteId)
+        {
+            var view = await viewGaPresenzeResponsabiliOnSettoriRepo.GetWithFilterAsync(x => x.Id == personaleDipendenteId, 1, 0, "Settore");
+            return view;
+        }
+        #endregion
 
         #endregion
 
@@ -543,24 +620,54 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
-        public async Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id)
+        public async Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id,long personaleDipendenteId)
         {
-            var entity = await gaPresenzeDipendentiRepo.GetByIdAsync(id);
-            if (entity.Disabled)
+            if (id == 0)
             {
+                var entity = new PresenzeDipendente();
+                entity.Id = 0;
+                entity.PersonaleDipendenteId = personaleDipendenteId;
+                entity.PresenzeOrarioId = 1;
+                entity.PresenzeProfiloId = 1;
+                entity.HhFerie = 190;
+                entity.HhPermessiCcnl = 0;
+                entity.HhRecupero = 0;
                 entity.Disabled = false;
-                gaPresenzeDipendentiRepo.Update(entity);
+
+                await gaPresenzeDipendentiRepo.AddAsync(entity);
                 await SaveChanges();
                 return true;
+
+
             }
             else
             {
-                entity.Disabled = true;
-                gaPresenzeDipendentiRepo.Update(entity);
-                await SaveChanges();
-                return true;
+
+                var entity = await gaPresenzeDipendentiRepo.GetByIdAsync(id);
+                if (entity.Disabled)
+                {
+                    entity.Disabled = false;
+                    gaPresenzeDipendentiRepo.Update(entity);
+                    await SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    entity.Disabled = true;
+                    gaPresenzeDipendentiRepo.Update(entity);
+                    await SaveChanges();
+                    return true;
+                }
             }
 
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPresenzeDipendenti>> GetViewGaPresenzeDipendentiBySettoreIdAsync(long globalSettoreId)
+        {
+            var view = globalSettoreId==0 ? await viewGaPresenzeDipendentiRepo.GetAllAsync(1, 0) : await viewGaPresenzeDipendentiRepo.GetWithFilterAsync(x => x.SettoreId == globalSettoreId);
+            return view;
         }
         #endregion
 
@@ -756,6 +863,20 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
+        public async Task<bool> ValidateGaPresenzeOrarioGiornataAsync(long id,long orarioId, int giorno)
+        {
+
+            var entity = await gaPresenzeOrariGiornateRepo.GetWithFilterAsync(x => x.PresenzeOrarioId==orarioId && x.Giorno == giorno && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
         public async Task<bool> ChangeStatusGaPresenzeOrarioGiornataAsync(long id)
         {
@@ -775,6 +896,14 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPresenzeOrariGiornate>> GetViewGaPresenzeOrariGiornateByOrarioIdAsync(long orarioId)
+        {
+            var view = await viewGaPresenzeOrariGiornateRepo.GetWithFilterAsync(x=>x.PresenzeOrarioId==orarioId);
+            return view;
         }
         #endregion
 
@@ -844,6 +973,134 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
         #endregion
+
+        #endregion
+
+        #region Extras
+        public async Task<PresenzeProfiloUtenteDto> GetGaPresenzeProfiloUtenteByUserIdAsync(string userId,bool isAdmin)
+        {
+            PresenzeProfiloUtenteDto profiloUtente = new PresenzeProfiloUtenteDto();
+            if (!isAdmin)
+            {
+                var dipendente = await viewGaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.UserId == userId);
+                var dipendenteConfig = await gaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.PersonaleDipendenteId == dipendente.PersonaleDipendenteId);
+                var settore = dipendente.SettoreId;
+                var responsabile = await gaPresenzeResponsabiliRepo.GetSingleWithFilter(x => x.PersonaleDipendenteId == dipendente.PersonaleDipendenteId);
+
+                List<long> responsabileSettori = new List<long>();
+                if (responsabile != null && !dipendenteConfig.SuperUser)
+                {
+                    var settori = await gaPresenzeResponsabiliOnSettoriRepo.GetWithFilterAsync(x => x.PresenzeResponsabileId == responsabile.Id);
+                    foreach (var itm in settori.Data)
+                    {
+                        responsabileSettori.Add(itm.GlobalSettoreId);
+                    }
+                }
+                else if (responsabile != null && dipendenteConfig.SuperUser)
+                {
+                    var settori = await globalSettoriRepo.GetAllAsync();
+                    foreach (var itm in settori.Data)
+                    {
+                        responsabileSettori.Add(itm.Id);
+                    }
+                }
+                else if (responsabile == null && dipendenteConfig.SuperUser)
+                {
+                    var settori = await globalSettoriRepo.GetAllAsync();
+                    foreach (var itm in settori.Data)
+                    {
+                        responsabileSettori.Add(itm.Id);
+                    }
+                }
+
+                profiloUtente.PresenzeDipendenteId =dipendente.Id;
+                profiloUtente.UserId = userId;
+                profiloUtente.SettoreId = dipendente.SettoreId;
+                profiloUtente.ResponsabileSettori = responsabileSettori;
+                profiloUtente.SuperUser = dipendenteConfig.SuperUser;
+                profiloUtente.PrivilegiElevati = dipendenteConfig.PrivilegiElevati;
+                profiloUtente.AutoApprova = dipendenteConfig.AutoApprova;
+                profiloUtente.BancaOre = dipendenteConfig.BancaOre;
+
+                return profiloUtente;
+            }
+            else
+            {
+                List<long> responsabileSettori = new List<long>();
+                var settori = await globalSettoriRepo.GetAllAsync();
+                foreach (var itm in settori.Data)
+                {
+                    responsabileSettori.Add(itm.Id);
+                }
+
+                profiloUtente.PresenzeDipendenteId = 0;
+                profiloUtente.UserId = userId;
+                profiloUtente.SettoreId = 0;
+                profiloUtente.ResponsabileSettori = responsabileSettori;
+                profiloUtente.SuperUser = true;
+                profiloUtente.PrivilegiElevati = false;
+                profiloUtente.AutoApprova = false;
+                profiloUtente.BancaOre = false;
+
+                return profiloUtente;
+            }
+        }
+
+        public async Task<PagedList<GlobalSettore>> GetGaPresenzeGlobalSettoriByUserId(string userId, bool isAdmin)
+        {
+            if (!isAdmin)
+            {
+                var dipendente = await viewGaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.UserId == userId);
+                var dipendenteConfig = await gaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.PersonaleDipendenteId == dipendente.PersonaleDipendenteId);
+                var responsabile = await gaPresenzeResponsabiliRepo.GetSingleWithFilter(x => x.PersonaleDipendenteId == dipendente.PersonaleDipendenteId);
+
+                var settore = dipendente.SettoreId;
+
+                List<long> responsabileSettori = new List<long>();
+                if (responsabile != null  && !dipendenteConfig.SuperUser)
+                {
+                    var settori = await gaPresenzeResponsabiliOnSettoriRepo.GetWithFilterAsync(x => x.PresenzeResponsabileId == responsabile.Id);
+                    foreach (var itm in settori.Data)
+                    {
+                        responsabileSettori.Add(itm.GlobalSettoreId);
+                    }
+                }
+                else if (responsabile != null && dipendenteConfig.SuperUser)
+                {
+                    var settori = await globalSettoriRepo.GetAllAsync();
+                    foreach (var itm in settori.Data)
+                    {
+                        responsabileSettori.Add(itm.Id);
+                    }
+                }
+                else if (responsabile == null && dipendenteConfig.SuperUser)
+                {
+                    var settori = await globalSettoriRepo.GetAllAsync();
+                    foreach (var itm in settori.Data)
+                    {
+                        responsabileSettori.Add(itm.Id);
+                    }
+                }
+
+                responsabileSettori.Add(settore);
+
+                return await globalSettoriRepo.GetWithFilterAsync(x => responsabileSettori.Distinct().Any(r=>r==x.Id));
+
+
+            }
+            else
+            {
+                List<long> responsabileSettori = new List<long>();
+                var settori = await globalSettoriRepo.GetAllAsync();
+                foreach (var itm in settori.Data)
+                {
+                    responsabileSettori.Add(itm.Id);
+                }
+
+                return await globalSettoriRepo.GetWithFilterAsync(x => responsabileSettori.Distinct().Contains(x.Id));
+            }
+        }
+
 
         #endregion
 

@@ -17,7 +17,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
         public DateTime DataFine { get; set; }
         public double TotaleOre { get; set; }
 
-        public PersonaleDipendente PersonaleDipendente { get; set; }
+        public PresenzeDipendente PresenzeDipendente { get; set; }
         public PresenzeStatoRichiesta PresenzeStatoRichiesta { get; set; }
         public PresenzeTipoOra PresenzeTipoOra { get; set; }
     }

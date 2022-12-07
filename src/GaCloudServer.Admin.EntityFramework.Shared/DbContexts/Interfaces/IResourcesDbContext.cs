@@ -29,6 +29,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -301,6 +302,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
 
         #region Views
+        DbSet<ViewGaPresenzeResponsabili> ViewGaPresenzeResponsabili { get; set; }
+        DbSet<ViewGaPresenzeResponsabiliOnSettori> ViewGaPresenzeResponsabiliOnSettori { get; set; }
+        DbSet<ViewGaPresenzeDipendenti> ViewGaPresenzeDipendenti { get; set; }
+        DbSet<ViewGaPresenzeOrariGiornate> ViewGaPresenzeOrariGiornate { get; set; }
+        DbSet<ViewGaPresenzeRichieste> ViewGaPresenzeRichieste { get; set; }
 
         #endregion
 

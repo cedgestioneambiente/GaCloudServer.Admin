@@ -1,4 +1,7 @@
-﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
@@ -30,8 +33,12 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteGaPresenzeRichiestaAsync(long id);
 
         #region Functions
-        Task<bool> ValidateGaPresenzeRichiestaAsync(PresenzeRichiestaDto dto);
+        Task<int> ValidateGaPresenzeRichiestaAsync(PresenzeRichiestaValidateDto dto);
         Task<bool> ChangeStatusGaPresenzeRichiestaAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaPresenzeRichieste>> GetGaViewPresenzeRichiesteBySettoreIdAsync(long globalSettoreId);
         #endregion
 
         #endregion
@@ -66,14 +73,22 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusGaPresenzeResponsabileAsync(long id);
         #endregion
 
+        #region Views
+        Task<PagedList<ViewGaPresenzeResponsabili>> GetViewGaPresenzeResponsabiliAsync(bool all = true);
+        #endregion
+
         #endregion
 
         #region GaPresenzeResponsabiliOnSettori
-        Task<long> UpdateGaPresenzeResponsabileOnSettoreAsync(PresenzeResponsabileOnSettoreDto dto);
+        Task<bool> UpdateGaPresenzeResponsabileOnSettoreAsync(long responsabileId, long settoreId);
 
         #region Functions
         //Task<bool> ValidateGaPresenzeResponsabileOnSettoreAsync(long id, string descrizione);
         //Task<bool> ChangeStatusGaPresenzeResponsabileOnSettoreAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaPresenzeResponsabiliOnSettori>> GetViewGaPresenzeResponsabiliOnSettoriByDipendenteAsync(long personaleDipendenteId);
         #endregion
 
         #endregion
@@ -108,6 +123,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusGaPresenzeOrarioAsync(long id);
         #endregion
 
+
+
         #endregion
 
         #region GaPresenzeDipendenti
@@ -121,7 +138,11 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         Task<bool> ValidateGaPresenzeDipendenteAsync(long id, string matricola);
-        Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id);
+        Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id,long personaleDipendenteId);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaPresenzeDipendenti>> GetViewGaPresenzeDipendentiBySettoreIdAsync(long globalSettoreId);
         #endregion
 
         #endregion
@@ -136,8 +157,12 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteGaPresenzeOrarioGiornataAsync(long id);
 
         #region Functions
-        //Task<bool> ValidateGaPresenzeOrarioGiornataAsync(long id, string descrizione);
+        Task<bool> ValidateGaPresenzeOrarioGiornataAsync(long id, long orarioId, int giorno);
         Task<bool> ChangeStatusGaPresenzeOrarioGiornataAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaPresenzeOrariGiornate>> GetViewGaPresenzeOrariGiornateByOrarioIdAsync(long orarioId);
         #endregion
 
         #endregion
@@ -171,6 +196,12 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         //Task<bool> ValidateGaPresenzeDataEsclusaAsync(long id, string descrizione);
         Task<bool> ChangeStatusGaPresenzeDataEsclusaAsync(long id);
         #endregion
+
+        #endregion
+
+        #region Extras
+        Task<PresenzeProfiloUtenteDto> GetGaPresenzeProfiloUtenteByUserIdAsync(string userId, bool isAdmin);
+        Task<PagedList<GlobalSettore>> GetGaPresenzeGlobalSettoriByUserId(string userId, bool isAdmin);
 
         #endregion
     }

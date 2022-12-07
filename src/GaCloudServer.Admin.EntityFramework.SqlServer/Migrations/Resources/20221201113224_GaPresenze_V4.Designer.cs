@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221201113224_GaPresenze_V4")]
+    partial class GaPresenze_V4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4712,6 +4714,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
+                    b.Property<long?>("PersonaleDipendenteId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("PresenzeDipendenteId")
                         .HasColumnType("bigint");
 
@@ -4726,7 +4731,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PresenzeDipendenteId");
+                    b.HasIndex("PersonaleDipendenteId");
 
                     b.HasIndex("PresenzeStatoRichiestaId");
 
@@ -4802,14 +4807,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Orario")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("PersonaleDipendenteId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Profilo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sede")
                         .HasColumnType("nvarchar(max)");
@@ -4827,39 +4826,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.ToView("ViewGaPresenzeDipendenti");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views.ViewGaPresenzeOrariGiornate", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("GiornoDescrizione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OraFine")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("OraInizio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PausaFine")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PausaInizio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("PresenzeOrarioId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToView("ViewGaPresenzeOrariGiornate");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views.ViewGaPresenzeResponsabili", b =>
@@ -4910,42 +4876,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.ToView("ViewGaPresenzeResponsabiliOnSettori");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views.ViewGaPresenzeRichieste", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Settore")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("SettoreId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToView("ViewGaPresenzeRichieste");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiAzione", b =>
@@ -6454,11 +6384,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeRichiesta", b =>
                 {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeDipendente", "PresenzeDipendente")
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
                         .WithMany()
-                        .HasForeignKey("PresenzeDipendenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonaleDipendenteId");
 
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeStatoRichiesta", "PresenzeStatoRichiesta")
                         .WithMany()
@@ -6472,7 +6400,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PresenzeDipendente");
+                    b.Navigation("PersonaleDipendente");
 
                     b.Navigation("PresenzeStatoRichiesta");
 

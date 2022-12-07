@@ -166,6 +166,24 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #region Views
+        [HttpGet("GetGaViewPresenzeRichiesteBySettoreIdAsync/{globalSettoreId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaViewPresenzeRichiesteBySettoreIdAsync(long globalSettoreId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetGaViewPresenzeRichiesteBySettoreIdAsync(globalSettoreId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
         #endregion
 
         #region PresenzeRichieste
@@ -280,6 +298,21 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
+        [HttpPost("ValidateGaPresenzeRichiestaAsync")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPresenzeRichiestaAsync([FromBody] PresenzeRichiestaValidateDto apiDto)
+        {
+            try
+            {
+                var dtos = await _gaPresenzeService.ValidateGaPresenzeRichiestaAsync(apiDto);
+                return new ApiResponse(dtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
 
         [HttpGet("ChangeStatusGaPresenzeRichiestaAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeRichiestaAsync(long id)
@@ -570,24 +603,38 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaPresenzeResponsabiliAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeResponsabiliAsync(bool all=true)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeResponsabiliAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #endregion
 
         #region PresenzeResponsabiliOnSettori
 
-        [HttpPost("UpdateGaPresenzeResponsabileOnSettoreAsync")]
-        public async Task<ActionResult<ApiResponse>> UpdateGaPresenzeResponsabileOnSettoreAsync([FromBody] PresenzeResponsabileOnSettoreApiDto apiDto)
+        [HttpGet("UpdateGaPresenzeResponsabileOnSettoreAsync/{responsabileId}/{settoreId}")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPresenzeResponsabileOnSettoreAsync(long responsabileId, long settoreId)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    throw new ApiProblemDetailsException(ModelState);
-                }
-                var dto = apiDto.ToDto<PresenzeResponsabileOnSettoreDto, PresenzeResponsabileOnSettoreApiDto>();
-                var response = await _gaPresenzeService.UpdateGaPresenzeResponsabileOnSettoreAsync(dto);
-
+                var response = await _gaPresenzeService.UpdateGaPresenzeResponsabileOnSettoreAsync(responsabileId, settoreId);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -598,6 +645,23 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        #region Views
+        [HttpGet("GetViewGaPresenzeResponsabiliOnSettoriByDipendenteAsync/{personaleDipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeResponsabiliOnSettoriByDipendenteAsync(long personaleDipendenteId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeResponsabiliOnSettoriByDipendenteAsync(personaleDipendenteId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
 
         #endregion
 
@@ -979,13 +1043,31 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ChangeStatusGaPresenzeDipendenteAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeDipendenteAsync(long id)
+        [HttpGet("ChangeStatusGaPresenzeDipendenteAsync/{id}/{personaleDipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeDipendenteAsync(long id,long personaleDipendenteId)
         {
             try
             {
-                var response = await _gaPresenzeService.ChangeStatusGaPresenzeDipendenteAsync(id);
+                var response = await _gaPresenzeService.ChangeStatusGaPresenzeDipendenteAsync(id,personaleDipendenteId);
                 return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaPresenzeDipendentiBySettoreIdAsync/{globalSettoreId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeDipendentiBySettoreIdAsync(long globalSettoreId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeDipendentiBySettoreIdAsync(globalSettoreId);
+                return new ApiResponse(view);
             }
             catch (Exception ex)
             {
@@ -1179,6 +1261,13 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+
+                var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+                apiDto.OraInizio = apiDto.OraInizio.Add(offset);
+                apiDto.OraFine = apiDto.OraFine.Add(offset);
+                apiDto.PausaInizio = apiDto.PausaInizio.GetValueOrDefault().Add(offset);
+                apiDto.PausaFine = apiDto.PausaFine.GetValueOrDefault().Add(offset);
+
                 var dto = apiDto.ToDto<PresenzeOrarioGiornataDto, PresenzeOrarioGiornataApiDto>();
                 var response = await _gaPresenzeService.AddGaPresenzeOrarioGiornataAsync(dto);
 
@@ -1206,6 +1295,12 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+                var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+                apiDto.OraInizio = apiDto.OraInizio.Add(offset);
+                apiDto.OraFine = apiDto.OraFine.Add(offset);
+                apiDto.PausaInizio = apiDto.PausaInizio.GetValueOrDefault().Add(offset);
+                apiDto.PausaFine = apiDto.PausaFine.GetValueOrDefault().Add(offset);
+
                 var dto = apiDto.ToDto<PresenzeOrarioGiornataDto, PresenzeOrarioGiornataApiDto>();
                 var response = await _gaPresenzeService.UpdateGaPresenzeOrarioGiornataAsync(dto);
 
@@ -1237,6 +1332,21 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
+        [HttpGet("ValidateGaPresenzeOrarioGiornataAsync/{id}/{orarioId}/{giorno}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPresenzeOrarioGiornataAsync(long id, long orarioId,int giorno)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.ValidateGaPresenzeOrarioGiornataAsync(id, orarioId,giorno);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
 
         [HttpGet("ChangeStatusGaPresenzeOrarioGiornataAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeOrarioGiornataAsync(long id)
@@ -1254,6 +1364,63 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
         #endregion
+
+        #region Views
+        [HttpGet("GetViewGaPresenzeOrariGiornateByOrarioIdAsync/{orarioId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeOrariGiornateByOrarioIdAsync(long orarioId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeOrariGiornateByOrarioIdAsync(orarioId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Extras
+
+        [HttpGet("GetGaPresenzeProfiloUtenteByUserIdAsync/{userId}/{isAdmin}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeProfiloUtenteByUserIdAsync(string userId,bool isAdmin)
+        {
+            try
+            {
+                var dto = await _gaPresenzeService.GetGaPresenzeProfiloUtenteByUserIdAsync(userId,isAdmin);
+                return new ApiResponse(dto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+
+        [HttpGet("GetGaPresenzeGlobalSettoriByUserId/{userId}/{isAdmin}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPresenzeGlobalSettoriByUserId(string userId, bool isAdmin)
+        {
+            try
+            {
+                var dtos = await _gaPresenzeService.GetGaPresenzeGlobalSettoriByUserId(userId, isAdmin);
+                return new ApiResponse(dtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+
 
         #endregion
     }

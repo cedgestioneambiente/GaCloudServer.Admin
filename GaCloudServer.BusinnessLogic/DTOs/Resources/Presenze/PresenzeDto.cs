@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+using GaCloudServer.BusinnessLogic.DTOs.Base;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Global;
 using System.ComponentModel.DataAnnotations;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
@@ -73,11 +75,8 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
 
     public class PresenzeProfiloDto : GenericListDto
     {
-        public int GgLavorativi { get; set; }
-        public int GgFerie { get; set; }
-        public int GgPermessiCcnl { get; set; }
-        public int HhFerie { get; set; }
-        public int HhPermessiCcnl { get; set; }
+        public double HhFerie { get; set; }
+        public double HhPermessiCcnl { get; set; }
     }
 
     public class PresenzeProfiliDto : GenericPagedListDto<PresenzeProfiloDto>
@@ -121,14 +120,12 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
         public long PresenzeOrarioId { get; set; }
         public long PresenzeProfiloId { get; set; }
         public double HhFerie { get; set; }
-        public double GgFerie { get; set; }
-        public double GgPermessiCcnl { get; set; }
         public double HhPermessiCcnl { get; set; }
         public double HhRecupero { get; set; }
-        public bool Abilitato { get; set; }
         public bool PrivilegiElevati { get; set; }
         public bool AutoApprova { get; set; }
         public bool SuperUser { get; set; }
+        public bool BancaOre { get; set; }
     }
 
     public class PresenzeDipendentiDto : GenericPagedListDto<PresenzeDipendenteDto>
@@ -163,5 +160,30 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
     {
     }
     #endregion
+
+    //Internal
+    public class PresenzeProfiloUtenteDto 
+    { 
+        public string UserId { get; set; }
+        public long PresenzeDipendenteId { get; set; }
+        public long SettoreId { get; set; }
+        public List<long>? ResponsabileSettori { get; set; }
+        public bool SuperUser { get; set; }
+        public bool PrivilegiElevati { get; set; }
+        public bool AutoApprova { get; set; }
+        public bool BancaOre { get; set; }
+
+        public PresenzeProfiloUtenteDto() { }
+
+
+    }
+
+    public class PresenzeRichiestaValidateDto
+    { 
+        public PresenzeRichiestaDto richiesta { get; set; }
+        public PresenzeProfiloUtenteDto profiloUtente { get; set; }
+        public string UserId { get; set; }
+        public bool IsAdmin { get; set; }
+    }
 }
 

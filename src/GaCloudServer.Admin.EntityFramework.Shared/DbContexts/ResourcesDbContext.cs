@@ -30,6 +30,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -309,6 +310,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
 
         #region Views
+        public DbSet<ViewGaPresenzeResponsabili> ViewGaPresenzeResponsabili { get; set; }
+        public DbSet<ViewGaPresenzeResponsabiliOnSettori> ViewGaPresenzeResponsabiliOnSettori { get; set; }
+        public DbSet<ViewGaPresenzeDipendenti> ViewGaPresenzeDipendenti { get; set; }
+        public DbSet<ViewGaPresenzeOrariGiornate> ViewGaPresenzeOrariGiornate { get; set; }
+        public DbSet<ViewGaPresenzeRichieste> ViewGaPresenzeRichieste { get; set; }
 
         #endregion
 
@@ -772,6 +778,45 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                     .HasKey(x => x.Id);
             });
 
+
+            #endregion
+
+            #region Presenze
+            builder.Entity<ViewGaPresenzeResponsabili>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPresenzeResponsabili))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPresenzeResponsabiliOnSettori>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPresenzeResponsabiliOnSettori))
+                    .HasNoKey();
+            });
+
+            builder.Entity<ViewGaPresenzeDipendenti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPresenzeDipendenti))
+                    .HasNoKey();
+            });
+
+            builder.Entity<ViewGaPresenzeOrariGiornate>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPresenzeOrariGiornate))
+                    .HasKey(x => x.Id);
+            });
+
+
+            builder.Entity<ViewGaPresenzeRichieste>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPresenzeRichieste))
+                    .HasKey(x => x.Id);
+            });
 
             #endregion
 

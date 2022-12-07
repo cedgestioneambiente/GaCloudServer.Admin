@@ -9,10 +9,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
     public class PresenzeProfilo : GenericListEntity
     {
-        public int GgLavorativi { get; set; }
-        public int GgFerie { get; set; }
-        public int GgPermessiCcnl { get; set; }
-        public int HhFerie { get; set; }
-        public int HhPermessiCcnl { get; set; }
+        public double HhFerie { get; set; }
+        public double HhPermessiCcnl { get; set; }
     }
 }
