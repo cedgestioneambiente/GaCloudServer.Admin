@@ -7,7 +7,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Csr
     public class CsrCodiceCerApiDto : GenericListApiDto
     {
         public string Codice { get; set; }
-        public string Modalita { get; set; }
+        public string? Modalita { get; set; }
     }
 
     public class CsrCodiciCersApiDto : GenericPagedListApiDto<CsrCodiceCerApiDto>

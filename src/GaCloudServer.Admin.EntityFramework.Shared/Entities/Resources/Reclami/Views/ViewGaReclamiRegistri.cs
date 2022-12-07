@@ -17,7 +17,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.
         public string StatoReclamo { get; set; }
         public string Note { get; set; }
         public string AzioniIntraprese { get; set; }
-
         public string Avanzamento { get; set; }
     }
 }

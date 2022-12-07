@@ -3656,9 +3656,9 @@ SET IDENTITY_INSERT [dbo].[GaPresenzeTipiOre] OFF
 GO
 SET IDENTITY_INSERT [dbo].[GaPresenzeProfili] ON 
 GO
-INSERT [dbo].[GaPresenzeProfili] ([Id], [GgLavorativi], [GgFerie], [GgPermessiCcnl], [HhPermessiCcnl], [Disabled], [Descrizione]) VALUES (1, 10, 10, 10, 10, 0, N'OPERATIVO 6 GG')
+INSERT [dbo].[GaPresenzeProfili] ([Id], [HhPermessiCcnl], [Disabled], [Descrizione]) VALUES (1, 10, 0, N'OPERATIVO 6 GG')
 GO
-INSERT [dbo].[GaPresenzeProfili] ([Id], [GgLavorativi], [GgFerie], [GgPermessiCcnl], [HhPermessiCcnl], [Disabled], [Descrizione]) VALUES (2, 20, 20, 20, 20, 0, N'AMMINISTRATIVO 5 GG')
+INSERT [dbo].[GaPresenzeProfili] ([Id], [HhPermessiCcnl], [Disabled], [Descrizione]) VALUES (2, 20, 0, N'AMMINISTRATIVO 5 GG')
 GO
 SET IDENTITY_INSERT [dbo].[GaPresenzeProfili] OFF
 GO
