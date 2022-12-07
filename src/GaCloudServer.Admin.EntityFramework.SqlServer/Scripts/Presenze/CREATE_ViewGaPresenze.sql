@@ -26,23 +26,22 @@ SELECT        ISNULL(dbo.GaPresenzeDipendenti.Id, 0) AS Id, dbo.ViewGaPersonaleD
                          dbo.ViewGaPersonaleDipendenti.Sede, dbo.ViewGaPersonaleDipendenti.SedeId, dbo.ViewGaPersonaleDipendenti.Settore, dbo.ViewGaPersonaleDipendenti.SettoreId, ISNULL(dbo.GaPresenzeDipendenti.HhFerie, 0) AS HhFerie, 
                          ISNULL(dbo.GaPresenzeDipendenti.HhPermessiCcnl, 0) AS HhPermessiCcnl, ISNULL(dbo.GaPresenzeDipendenti.HhRecupero, 0) AS HhRecupero, CASE WHEN (dbo.GaPresenzeDipendenti.Id IS NULL OR
                          GaPresenzeDipendenti.Disabled = 'True') THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END AS Enabled, CASE WHEN (dbo.GaPresenzeDipendenti.Id IS NULL OR
-                         GaPresenzeDipendenti.Disabled = 'True') THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS Disabled
-FROM            dbo.ViewGaPersonaleDipendenti LEFT OUTER JOIN
-                         dbo.GaPresenzeDipendenti ON dbo.ViewGaPersonaleDipendenti.Id = dbo.GaPresenzeDipendenti.PersonaleDipendenteId
-GO
-
-CREATE VIEW [dbo].[ViewGaPresenzeOrariGiornate]
-AS
-SELECT        ISNULL(dbo.GaPresenzeDipendenti.Id, 0) AS Id, dbo.ViewGaPersonaleDipendenti.Id AS PersonaleDipendenteId, dbo.ViewGaPersonaleDipendenti.UserId, dbo.ViewGaPersonaleDipendenti.CognomeNome, 
-                         dbo.ViewGaPersonaleDipendenti.Sede, dbo.ViewGaPersonaleDipendenti.SedeId, dbo.ViewGaPersonaleDipendenti.Settore, dbo.ViewGaPersonaleDipendenti.SettoreId, ISNULL(dbo.GaPresenzeDipendenti.HhFerie, 0) AS HhFerie, 
-                         ISNULL(dbo.GaPresenzeDipendenti.HhPermessiCcnl, 0) AS HhPermessiCcnl, ISNULL(dbo.GaPresenzeDipendenti.HhRecupero, 0) AS HhRecupero, CASE WHEN (dbo.GaPresenzeDipendenti.Id IS NULL OR
-                         GaPresenzeDipendenti.Disabled = 'True') THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END AS Enabled, CASE WHEN (dbo.GaPresenzeDipendenti.Id IS NULL OR
                          GaPresenzeDipendenti.Disabled = 'True') THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS Disabled, ISNULL(dbo.GaPresenzeProfili.Descrizione, 'NESSUN PROFILO IMPOSTATO') AS Profilo, 
                          ISNULL(dbo.GaPresenzeOrari.Descrizione, 'NESSUN ORARIO IMPOSTATO') AS Orario
 FROM            dbo.GaPresenzeOrari RIGHT OUTER JOIN
                          dbo.GaPresenzeDipendenti ON dbo.GaPresenzeOrari.Id = dbo.GaPresenzeDipendenti.PresenzeOrarioId LEFT OUTER JOIN
                          dbo.GaPresenzeProfili ON dbo.GaPresenzeDipendenti.PresenzeProfiloId = dbo.GaPresenzeProfili.Id RIGHT OUTER JOIN
                          dbo.ViewGaPersonaleDipendenti ON dbo.GaPresenzeDipendenti.PersonaleDipendenteId = dbo.ViewGaPersonaleDipendenti.Id
+GO
+
+
+CREATE VIEW [dbo].[ViewGaPresenzeOrariGiornate]
+AS
+SELECT        Id, PresenzeOrarioId, 
+                         CASE WHEN Giorno = '1' THEN 'LUN' WHEN Giorno = '2' THEN 'MAR' WHEN Giorno = '3' THEN 'MERC' WHEN Giorno = '4' THEN 'GIOV' WHEN Giorno = '5' THEN 'VEN' WHEN Giorno = '6' THEN 'SAB' WHEN Giorno = '7' THEN 'DOM'
+                          END AS GiornoDescrizione, OraInizio, OraFine, PausaInizio, PausaFine, Disabled
+FROM            dbo.GaPresenzeOrariGiornate
+
 GO
 
 CREATE VIEW [dbo].[ViewGaPresenzeRichieste]

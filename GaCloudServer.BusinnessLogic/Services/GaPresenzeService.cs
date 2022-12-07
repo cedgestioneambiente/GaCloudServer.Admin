@@ -3,9 +3,12 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze;
+using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Mappers;
+using GaCloudServer.BusinnessLogic.Models;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+using static GaCloudServer.BusinnessLogic.Extensions.MiscExtensions;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -187,7 +190,17 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
             await gaPresenzeRichiesteRepo.AddAsync(entity);
             await SaveChanges();
-            return entity.Id;
+
+            if (await ManageBancaOre(entity))
+            {
+                return entity.Id;
+            }
+            else
+            {
+                gaPresenzeRichiesteRepo.Remove(entity);
+                await SaveChanges();
+                return -1;
+            }
         }
 
         public async Task<long> UpdateGaPresenzeRichiestaAsync(PresenzeRichiestaDto dto)
@@ -198,28 +211,44 @@ namespace GaCloudServer.BusinnessLogic.Services
             var approvazioneAutomatica = gaPresenzeTipiOreRepo.GetByIdAsync(entity.PresenzeTipoOraId).Result.ApprovazioneAutomatica;
             if (approvazioneAutomatica && entity.PresenzeStatoRichiestaId != 3)
             {
-                entity.PresenzeStatoRichiestaId = 2;
+                entity.PresenzeStatoRichiestaId = 1;
             }
             gaPresenzeRichiesteRepo.Update(entity);
             await SaveChanges();
 
-            return entity.Id;
-
+            if (await ManageBancaOre(entity))
+            {
+                return entity.Id;
+            }
+            else
+            {
+                gaPresenzeRichiesteRepo.Remove(entity);
+                await SaveChanges();
+                return -1;
+            }
         }
 
         public async Task<bool> DeleteGaPresenzeRichiestaAsync(long id)
         {
             var entity = await gaPresenzeRichiesteRepo.GetByIdAsync(id);
-            gaPresenzeRichiesteRepo.Remove(entity);
-            await SaveChanges();
-
-            return true;
+            if (await ManageDeleteBancaOre(entity))
+            {
+                gaPresenzeRichiesteRepo.Remove(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #region Functions
         public async Task<int> ValidateGaPresenzeRichiestaAsync(PresenzeRichiestaValidateDto dto)
         {
             var entities = await gaPresenzeRichiesteRepo.GetWithFilterAsync(x => x.PresenzeDipendenteId == dto.richiesta.PresenzeDipendenteId && (dto.richiesta.DataInizio <= x.DataFine && x.DataInizio < dto.richiesta.DataFine) && x.Id != dto.richiesta.Id, 1, 0);
+            var dipendente = await viewGaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.UserId == dto.UserId);
+            var bancaOre = gaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.Id == dto.richiesta.PresenzeDipendenteId).Result.BancaOre;
 
             if (entities.Data.Count > 0)
             {
@@ -233,11 +262,17 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             if (!dto.IsAdmin && !dto.profiloUtente.SuperUser)
             {
-                var dipendente = await viewGaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.UserId == dto.UserId);
+                
                 if (dto.richiesta.PresenzeDipendenteId == dipendente.Id && dto.richiesta.PresenzeStatoRichiestaId != 2 && !dto.profiloUtente.AutoApprova)
                 {
                     return -3;
                 }
+            }
+
+            if (bancaOre)
+            {
+                var validateBancaOre = await ValidateBancaOre(dto.richiesta);
+                if (!validateBancaOre) { return -4; }
             }
 
 
@@ -1101,7 +1136,395 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
+        public async Task<double> CalcTimeGaPresenzeRichiestaAsync(PresenzeRichiestaDto dto)
+        {
+            try
+            {
+                var dipendente = await gaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.Id == dto.PresenzeDipendenteId);
+                var orariGiornate = await gaPresenzeOrariGiornateRepo.GetWithFilterAsync(x => x.PresenzeOrarioId == dipendente.PresenzeOrarioId);
+                var dateEscluse = GetDateEscluse();
 
+                return CalcToHour(dto.DataInizio, dto.DataFine, orariGiornate.Data.ToList(), dateEscluse);
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+        #endregion
+
+        #region Private
+        private double CalcToHour(DateTime start, DateTime end, List<PresenzeOrarioGiornata> orari, HashSet<DateTime> dateEscluse)
+        {
+            if (start.ToString("dd/MM/yyyy") == end.ToString("dd/MM/yyyy"))
+            {
+                var dayOfWeek = (int)start.DayOfWeek;
+                var orario = (from x in orari where x.Giorno == dayOfWeek select x).FirstOrDefault();
+
+                if (orario != null)
+                {
+                    if (!dateEscluse.Contains(start))
+                    {
+                        var pausaInizio = start.SetTime(orario.PausaInizio.GetValueOrDefault().Hour, orario.PausaInizio.GetValueOrDefault().Minute, orario.PausaInizio.GetValueOrDefault().Second);
+                        var pausaFine = end.SetTime(orario.PausaFine.GetValueOrDefault().Hour, orario.PausaFine.GetValueOrDefault().Minute, orario.PausaFine.GetValueOrDefault().Second);
+
+                        var calc = new Calculation(new List<DateTime>(), new OpenHoursModel(orario.OraInizio.ToString("HH:mm") + ";" + orario.OraFine.ToString("HH:mm")));
+                        var calcPausa = new Calculation(new List<DateTime>(), new OpenHoursModel(orario.PausaInizio.GetValueOrDefault().ToString("HH:mm") + ";" + orario.PausaFine.GetValueOrDefault().ToString("HH:mm")));
+                        var elapsed = calc.getElapsedMinutes(start, end);
+                        var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault());
+                        if ((pausaInizio >= start && pausaInizio < end) && (pausaFine > start && pausaFine <= end) && (pausaInizio < pausaFine))
+                        { elapsed -= pausa; }
+                        return elapsed.From100to60Time();
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                HashSet<DateTime> dates = new HashSet<DateTime>();
+                dates.Add(start);
+                for (var d = start.SetTime(0, 0, 0).AddDays(1); d < end.SetTime(0, 0, 0); d = d.AddDays(1))
+                {
+                    dates.Add(d);
+                }
+
+                dates.Add(end);
+
+                var totalDates = dates.Count;
+                var index = 1;
+                double totalElapsed = 0;
+                double elapsed = 0;
+
+                foreach (var d in dates)
+                {
+                    var dayOfWeek = (int)d.DayOfWeek;
+                    var orario = (from x in orari where x.Giorno == dayOfWeek select x).FirstOrDefault();
+
+                    if (orario != null)
+                    {
+                        if (!dateEscluse.Contains(d))
+                        {
+                            var calc = new Calculation(new List<DateTime>(), new OpenHoursModel(orario.OraInizio.ToString("HH:mm") + ";" + orario.OraFine.ToString("HH:mm")));
+                            var calcPausa = new Calculation(new List<DateTime>(), new OpenHoursModel(orario.PausaInizio.GetValueOrDefault().ToString("HH:mm") + ";" + orario.PausaFine.GetValueOrDefault().ToString("HH:mm")));
+
+                            if (index == 1)
+                            {
+                                var startDate = d;
+                                var endDate = d.SetTime(23, 59, 0);//.Add(new TimeSpan(23, 59, 0));
+                                var pausaInizio = startDate.SetTime(orario.PausaInizio.GetValueOrDefault().Hour, orario.PausaInizio.GetValueOrDefault().Minute, orario.PausaInizio.GetValueOrDefault().Second);
+                                var pausaFine = endDate.SetTime(orario.PausaFine.GetValueOrDefault().Hour, orario.PausaFine.GetValueOrDefault().Minute, orario.PausaFine.GetValueOrDefault().Second);
+
+                                elapsed = calc.getElapsedMinutes(startDate, endDate);
+
+                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault());
+                                if ((pausaInizio >= startDate && pausaInizio < endDate) && (pausaFine > startDate && pausaFine <= endDate) && (pausaInizio < pausaFine))
+                                { elapsed -= pausa; }
+                                totalElapsed += elapsed;
+                                index++;
+                            }
+                            else if (index == totalDates)
+                            {
+                                var startDate = d.SetTime(0, 0, 0);//.Add(new TimeSpan(0, 0, 0));
+                                var endDate = d;
+                                var pausaInizio = startDate.SetTime(orario.PausaInizio.GetValueOrDefault().Hour, orario.PausaInizio.GetValueOrDefault().Minute, orario.PausaInizio.GetValueOrDefault().Second);
+                                var pausaFine = endDate.SetTime(orario.PausaFine.GetValueOrDefault().Hour, orario.PausaFine.GetValueOrDefault().Minute, orario.PausaFine.GetValueOrDefault().Second);
+
+                                elapsed = calc.getElapsedMinutes(startDate, endDate);
+
+                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault());
+                                if ((pausaInizio >= startDate && pausaInizio < endDate) && (pausaFine > startDate && pausaFine <= endDate) && (pausaInizio < pausaFine))
+                                { elapsed -= pausa; }
+                                totalElapsed += elapsed;
+                                index++;
+                            }
+                            else
+                            {
+                                var startDate = d.SetTime(0, 0, 0);//.Add(new TimeSpan(0, 0, 0));
+                                var endDate = d.SetTime(23, 59, 0);//.Add(new TimeSpan(23, 59, 0));
+                                var pausaInizio = startDate.SetTime(orario.PausaInizio.GetValueOrDefault().Hour, orario.PausaInizio.GetValueOrDefault().Minute, orario.PausaInizio.GetValueOrDefault().Second);
+                                var pausaFine = endDate.SetTime(orario.PausaFine.GetValueOrDefault().Hour, orario.PausaFine.GetValueOrDefault().Minute, orario.PausaFine.GetValueOrDefault().Second);
+
+                                elapsed = calc.getElapsedMinutes(startDate, endDate);
+
+                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault());
+                                if ((pausaInizio >= startDate && pausaInizio < endDate) && (pausaFine > startDate && pausaFine <= endDate) && (pausaInizio < pausaFine))
+                                { elapsed -= pausa; }
+                                totalElapsed += elapsed;
+                                index++;
+                            }
+
+                        }
+                    }
+                }
+                return totalElapsed.From100to60Time();
+            }
+        }
+
+        private async Task<bool> ValidateBancaOre(PresenzeRichiestaDto dto)
+        {
+            //{ id: 0,descrizione: 'NON DECREMENTARE',disabled: false},
+            //{ id: 1,descrizione: 'FERIE ORE',disabled: false },
+            //{ id: 2, descrizione: 'FERIE ORE CCNL',disabled: false},
+            //{ id: 3, descrizione: 'ORE RECUPERO',disabled: false}
+
+            try
+            {
+                var dipendente = await viewGaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.Id == dto.PresenzeDipendenteId);
+                var tipoDec = gaPresenzeTipiOreRepo.GetSingleWithFilter(x => x.Id == dto.PresenzeTipoOraId).Result.DecrementaTipo;
+                if (tipoDec != 0 && (tipoDec == 1 || tipoDec == 2))
+                {
+                    double risdipendente = 0;
+                    switch (tipoDec)
+                    {
+                        case 1:
+                            risdipendente = dipendente.HhFerie;
+                            break;
+                        case 2:
+                            risdipendente = dipendente.HhPermessiCcnl;
+                            break;
+                        case 3:
+                            risdipendente = dipendente.HhRecupero;
+                            break;
+                        default:
+                            risdipendente = 0;
+                            break;
+                    }
+
+                    if (dto.TotaleOre > risdipendente) { return false; }
+                    else { return true; }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        private HashSet<DateTime> GetDateEscluse()
+        {
+            HashSet<DateTime> excludedDates = new HashSet<DateTime>(); ;
+            var dates = gaPresenzeDateEscluseRepo.GetAll().ToList();
+            foreach (var itm in dates)
+            {
+                excludedDates.Add(itm.Data);
+            }
+            return excludedDates;
+        }
+
+        private async Task<bool> ManageBancaOre(PresenzeRichiesta dto)
+        {
+            try
+            {
+                var dipendente = await gaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.Id == dto.PresenzeDipendenteId);
+                var tipoDec = gaPresenzeTipiOreRepo.GetSingleWithFilter(x => x.Id == dto.PresenzeTipoOraId).Result.DecrementaTipo;
+                var bancaOreUtilizzi = await gaPresenzeBancheOreUtilizziRepo.GetSingleWithFilter(x => x.PresenzeDipendenteId == dipendente.Id && x.PresenzeRichiestaId == dto.Id);
+
+                if (bancaOreUtilizzi != null)
+                {
+                    switch (bancaOreUtilizzi.Tipo)
+                    {
+                        case 1:
+                            dipendente.HhFerie = dipendente.HhFerie.From60to100TimeHour();
+                            dipendente.HhFerie += bancaOreUtilizzi.Qta.From60to100TimeHour();
+                            dipendente.HhFerie = dipendente.HhFerie.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        case 2:
+                            dipendente.HhPermessiCcnl = dipendente.HhPermessiCcnl.From60to100TimeHour();
+                            dipendente.HhPermessiCcnl += bancaOreUtilizzi.Qta.From60to100TimeHour();
+                            dipendente.HhPermessiCcnl = dipendente.HhPermessiCcnl.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        case 3:
+                            dipendente.HhRecupero = dipendente.HhRecupero.From60to100TimeHour();
+                            dipendente.HhRecupero += bancaOreUtilizzi.Qta.From60to100TimeHour();
+                            dipendente.HhRecupero = dipendente.HhRecupero.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        default:
+
+                            break;
+
+                    }
+
+                    switch (tipoDec)
+                    {
+                        case 1:
+                            dipendente.HhFerie = dipendente.HhFerie.From60to100TimeHour();
+                            dipendente.HhFerie -= dto.TotaleOre.From60to100TimeHour();
+                            dipendente.HhFerie = dipendente.HhFerie.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        case 2:
+                            dipendente.HhPermessiCcnl = dipendente.HhPermessiCcnl.From60to100TimeHour();
+                            dipendente.HhPermessiCcnl -= dto.TotaleOre.From60to100TimeHour();
+                            dipendente.HhPermessiCcnl = dipendente.HhPermessiCcnl.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        case 3:
+                            dipendente.HhRecupero = dipendente.HhRecupero.From60to100TimeHour();
+                            dipendente.HhRecupero -= dto.TotaleOre.From60to100TimeHour();
+                            dipendente.HhRecupero = dipendente.HhRecupero.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        default:
+
+                            break;
+
+                    }
+
+                    bancaOreUtilizzi.Tipo = tipoDec;
+                    bancaOreUtilizzi.Qta = dto.PresenzeTipoOraId;
+                    gaPresenzeBancheOreUtilizziRepo.Update(bancaOreUtilizzi);
+                    await SaveChanges();
+
+                    return true;
+                }
+                else
+                {
+                    switch (tipoDec)
+                    {
+                        case 1:
+                            dipendente.HhFerie = dipendente.HhFerie.From60to100TimeHour();
+                            dipendente.HhFerie -= dto.TotaleOre.From60to100TimeHour();
+                            dipendente.HhFerie = dipendente.HhFerie.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        case 2:
+                            dipendente.HhPermessiCcnl = dipendente.HhPermessiCcnl.From60to100TimeHour();
+                            dipendente.HhPermessiCcnl -= dto.TotaleOre.From60to100TimeHour();
+                            dipendente.HhPermessiCcnl = dipendente.HhPermessiCcnl.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        case 3:
+                            dipendente.HhRecupero = dipendente.HhRecupero.From60to100TimeHour();
+                            dipendente.HhRecupero -= dto.TotaleOre.From60to100TimeHour();
+                            dipendente.HhRecupero = dipendente.HhRecupero.From100to60TimeHour();
+                            gaPresenzeDipendentiRepo.Update(dipendente);
+                            await SaveChanges();
+                            break;
+                        default:
+
+                            break;
+
+                    }
+
+                    bancaOreUtilizzi = new PresenzeBancaOraUtilizzo();
+                    bancaOreUtilizzi.Id = 0;
+                    bancaOreUtilizzi.PresenzeDipendenteId = dto.PresenzeDipendenteId;
+                    bancaOreUtilizzi.PresenzeRichiestaId = dto.Id;
+                    bancaOreUtilizzi.Tipo = tipoDec;
+                    bancaOreUtilizzi.Qta = dto.TotaleOre;
+                    bancaOreUtilizzi.Disabled = false;
+
+                    gaPresenzeBancheOreUtilizziRepo.Update(bancaOreUtilizzi);
+                    await SaveChanges();
+
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> ManageDeleteBancaOre(PresenzeRichiesta dto)
+        {
+            try
+            {
+                var tipoDec = gaPresenzeTipiOreRepo.GetSingleWithFilter(x => x.Id == dto.PresenzeTipoOraId).Result.DecrementaTipo;
+
+                if (tipoDec != 0)
+                {
+                    var dipendente = await gaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.Id == dto.PresenzeDipendenteId);
+                    var bancaOreUtilizzi = await gaPresenzeBancheOreUtilizziRepo.GetSingleWithFilter(x => x.PresenzeDipendenteId == dipendente.Id && x.PresenzeRichiestaId == dto.Id);
+
+                    //Ricarica Banca Ore
+                    if (bancaOreUtilizzi != null)
+                    {
+                        switch (tipoDec)
+                        {
+                            case 1:
+                                dipendente.HhFerie = dipendente.HhFerie.From60to100TimeHour();
+                                dipendente.HhFerie += bancaOreUtilizzi.Qta.From60to100TimeHour();
+                                dipendente.HhFerie = dipendente.HhFerie.From100to60TimeHour();
+                                gaPresenzeDipendentiRepo.Update(dipendente);
+                                await SaveChanges();
+                                break;
+                            case 2:
+                                dipendente.HhPermessiCcnl = dipendente.HhPermessiCcnl.From60to100TimeHour();
+                                dipendente.HhPermessiCcnl += bancaOreUtilizzi.Qta.From60to100TimeHour();
+                                dipendente.HhPermessiCcnl = dipendente.HhPermessiCcnl.From100to60TimeHour();
+                                gaPresenzeDipendentiRepo.Update(dipendente);
+                                await SaveChanges();
+                                break;
+                            case 4:
+                                dipendente.HhRecupero = dipendente.HhRecupero.From60to100TimeHour();
+                                dipendente.HhRecupero += bancaOreUtilizzi.Qta.From60to100TimeHour();
+                                dipendente.HhRecupero = dipendente.HhRecupero.From100to60TimeHour();
+                                gaPresenzeDipendentiRepo.Update(dipendente);
+                                await SaveChanges();
+                                break;
+                            default:
+
+                                break;
+
+                        }
+
+                        gaPresenzeBancheOreUtilizziRepo.Remove(bancaOreUtilizzi);
+                        await SaveChanges();
+
+                        return true;
+                    }
+                    return true;
+                }
+                else
+                {
+                    var dipendente = await gaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.Id == dto.PresenzeDipendenteId);
+                    var bancaOreUtilizzi = await gaPresenzeBancheOreUtilizziRepo.GetSingleWithFilter(x => x.PresenzeDipendenteId == dipendente.Id && x.PresenzeRichiestaId == dto.Id);
+
+                    //Ricarica Banca Ore
+                    if (bancaOreUtilizzi != null)
+                    {
+                        gaPresenzeBancheOreUtilizziRepo.Remove(bancaOreUtilizzi);
+                        await SaveChanges();
+
+                        return true;
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region Common
