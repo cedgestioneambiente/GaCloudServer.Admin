@@ -30,6 +30,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Vi
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -308,6 +309,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaPresenzeOrariGiornate> ViewGaPresenzeOrariGiornate { get; set; }
         DbSet<ViewGaPresenzeRichieste> ViewGaPresenzeRichieste { get; set; }
 
+        #endregion
+
+        #endregion
+
+        #region GaRecapiti Tables
+
+        #region Views
+        DbSet<ViewGaRecapitiContatti> ViewGaRecapitiContatti { get; set; }
         #endregion
 
         #endregion
