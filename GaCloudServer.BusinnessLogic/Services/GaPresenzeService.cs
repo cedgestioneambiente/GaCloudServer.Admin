@@ -1394,7 +1394,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     }
 
                     bancaOreUtilizzi.Tipo = tipoDec;
-                    bancaOreUtilizzi.Qta = dto.PresenzeTipoOraId;
+                    bancaOreUtilizzi.Qta = dto.TotaleOre;
                     gaPresenzeBancheOreUtilizziRepo.Update(bancaOreUtilizzi);
                     await SaveChanges();
 
