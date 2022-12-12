@@ -24,6 +24,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
@@ -295,16 +296,25 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PresenzeOrario>, GenericRepository<TResourcesDbContext, PresenzeOrario>>();
             services.AddTransient<IGenericRepository<PresenzeOrarioGiornata>, GenericRepository<TResourcesDbContext, PresenzeOrarioGiornata>>();
 
+            //Views
             services.AddTransient<IGenericRepository<ViewGaPresenzeResponsabili>, GenericRepository<TResourcesDbContext, ViewGaPresenzeResponsabili>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeResponsabiliOnSettori>, GenericRepository<TResourcesDbContext, ViewGaPresenzeResponsabiliOnSettori>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPresenzeDipendenti>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeOrariGiornate>, GenericRepository<TResourcesDbContext, ViewGaPresenzeOrariGiornate>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeRichieste>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichieste>>();
-            //Views
+
 
 
             #endregion
 
+
+            //Recapiti
+            #region Recapiti
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaRecapitiContatti>, GenericRepository<TResourcesDbContext, ViewGaRecapitiContatti>>();
+
+            #endregion
             return services; 
         }
     }

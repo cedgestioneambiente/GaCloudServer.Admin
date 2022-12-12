@@ -1182,12 +1182,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpGet("GetViewGaCsrRipartizioniPercentualiByComuneId/{comuneId}")]
-        public async Task<ApiResponse> GetViewGaCsrRipartizioniPercentualiByComuneId(long comuneId)
+        [HttpGet("GetViewGaCsrRipartizioniPercentualiByComuneIdAsync/{comuneId}")]
+        public async Task<ApiResponse> GetViewGaCsrRipartizioniPercentualiByComuneIdAsync(long comuneId)
         {
             try
             {
-                var view = await _gaCsrService.GetViewGaCsrRipartizioniPercentualiByComuneId(comuneId);
+                var view = await _gaCsrService.GetViewGaCsrRipartizioniPercentualiByComuneIdAsync(comuneId);
                 return new ApiResponse(view);
             }
             catch (Exception ex)

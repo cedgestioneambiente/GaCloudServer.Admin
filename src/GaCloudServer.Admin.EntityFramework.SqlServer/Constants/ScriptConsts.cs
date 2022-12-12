@@ -85,5 +85,10 @@
         public const string GaPresenzeMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Presenze\";
         public const string CREATE_ViewGaPresenze = "CREATE_ViewGaPresenze.sql";
         public const string DROP_ViewGaPresenze = "DROP_ViewGaPresenze.sql";
+
+        //Recapiti
+        public const string GaRecapitiMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Recapiti\";
+        public const string CREATE_ViewGaRecapiti = "CREATE_ViewGaRecapiti.sql";
+        public const string DROP_ViewGaRecapiti = "DROP_ViewGaRecapiti.sql";
     }
 }

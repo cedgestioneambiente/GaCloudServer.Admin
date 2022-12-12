@@ -900,7 +900,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaCsrRipartizioniPercentuali>> GetViewGaCsrRipartizioniPercentualiByComuneId(long comuneId)
+        public async Task<PagedList<ViewGaCsrRipartizioniPercentuali>> GetViewGaCsrRipartizioniPercentualiByComuneIdAsync(long comuneId)
         {
             try
             {

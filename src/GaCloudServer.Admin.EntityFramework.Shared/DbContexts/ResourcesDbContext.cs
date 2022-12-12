@@ -31,6 +31,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Vi
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -320,6 +321,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #endregion
 
+        #region GaRecapiti Tables
+
+        #region Views
+        public DbSet<ViewGaRecapitiContatti> ViewGaRecapitiContatti { get; set; }
+        #endregion
+
+        #endregion
+
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
         {
 
@@ -598,7 +607,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaCsrProduttori))
-                    .HasKey(x => x.Id);
+                    .HasNoKey()
+                    .Property(x => x.Id);
             });
 
             builder.Entity<ViewGaCsrRegistrazioni>(entity =>
@@ -619,7 +629,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaCsrRipartizioniPercentuali))
-                    .HasKey(x => x.Id);
+                    .HasNoKey()
+                    .Property(x => x.Id);
             });
 
             builder.Entity<ViewGaCsrTrasportatori>(entity =>
@@ -820,6 +831,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
             #endregion
 
+            #region Recapiti
+            builder.Entity<ViewGaRecapitiContatti>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaRecapitiContatti))
+                .HasNoKey()
+                .Property(x => x.Id);
+            });
+
+            #endregion
 
             base.OnModelCreating(builder);
 
