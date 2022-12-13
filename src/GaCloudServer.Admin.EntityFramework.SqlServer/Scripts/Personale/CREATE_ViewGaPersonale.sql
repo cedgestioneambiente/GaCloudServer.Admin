@@ -1,9 +1,10 @@
 ﻿CREATE VIEW [dbo].[ViewGaPersonaleUsersOnDipendenti]
 AS
-SELECT CAST('0' AS BIGINT) Id, A.Id UserId,FirstName Nome,LastName Cognome, CONCAT(LastName,' ',FirstName) CognomeNome,Email,UserName, CASE WHEN(B.Id IS NULL) THEN CASt(0 as bigint) else B.Id END DipendenteId, CASE WHEN(B.Id IS NOT NULL) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END Active,CAST(0 as BIT) Disabled
+SELECT CAST('0' AS BIGINT) Id, A.Id UserId,FirstName Nome,LastName Cognome, CONCAT(LastName,' ',FirstName) CognomeNome,Email,UserName, CASE WHEN(B.Id IS NULL) THEN CAST(0 as bigint) else B.Id END DipendenteId, CASE WHEN(B.Id IS NOT NULL) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END Active, A.ShowEmailInContacts, A.ShowInApp, 
+                         A.ShowInContacts, CAST(0 as BIT) Disabled
 FROM IdentityServerAdmin.dbo.Users A
 LEFT JOIN GaPersonaleDipendenti B ON A.Id=B.UserId
-GO  --mod
+GO 
 
 CREATE VIEW [dbo].[ViewGaPersonaleDipendenti]
 AS
