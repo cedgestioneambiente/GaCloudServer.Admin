@@ -5,5 +5,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notifica
     public class NotificationApp:GenericListEntity
     {
         public string Info { get; set; }
+        public string Icon { get; set; }
     }
 }

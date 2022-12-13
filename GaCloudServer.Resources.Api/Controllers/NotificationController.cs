@@ -1,6 +1,6 @@
 ﻿using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
-using GaCloudServer.BusinnessLogic.Dtos.Resources.Notifiation;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.ExceptionHandling;
@@ -288,6 +288,66 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
         #endregion
+
+        #region NotificationEvents
+
+        [HttpDelete("DeleteNotificationEventAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteNotificationEventAsync(long id)
+        {
+            try
+            {
+                var response = await _notificationService.DeleteNotificationEventAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+
+        [HttpGet("ChangeStatusNotificationEventAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusNotificationEventAsync(long id)
+        {
+            try
+            {
+                var response = await _notificationService.ChangeStatusNotificationEventAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewViewNotificationEventsByUserIdAsync/{userId}/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewViewNotificationEventsByUserIdAsync(string userId,bool all = true)
+        {
+            try
+            {
+                var views = await _notificationService.GetViewViewNotificationEventsByUserIdAsync(userId,all);
+                return new ApiResponse(views);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
 
     }
 }

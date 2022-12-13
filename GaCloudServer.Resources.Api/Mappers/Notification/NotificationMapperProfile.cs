@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GaCloudServer.BusinnessLogic.Dtos.Resources.Notifiation;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using GaCloudServer.Resources.Dtos.Resources.Notification;
 
 namespace GaCloudServer.Resources.Api.Mappers.Notification

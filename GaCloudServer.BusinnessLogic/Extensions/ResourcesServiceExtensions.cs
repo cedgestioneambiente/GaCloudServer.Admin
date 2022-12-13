@@ -56,6 +56,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             where TResourcesDbContext : DbContext, IResourcesDbContext
         {
             services.AddTransient<IMailService, MailService>();
+            services.AddTransient<INotificationService, NotificationService>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork<TResourcesDbContext>>();
 

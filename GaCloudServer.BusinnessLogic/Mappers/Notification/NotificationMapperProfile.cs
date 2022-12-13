@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
-using GaCloudServer.BusinnessLogic.Dtos.Resources.Notifiation;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Mappers.Notification
@@ -19,12 +19,17 @@ namespace GaCloudServer.BusinnessLogic.Mappers.Notification
             CreateMap<PagedList<NotificationRoleOnApp>, NotificationRolesOnAppsDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<NotificationUserOnApp, NotificationUserOnApp>(MemberList.Destination)
+            CreateMap<NotificationUserOnApp, NotificationUserOnAppDto>(MemberList.Destination)
                 .ReverseMap();
             CreateMap<PagedList<NotificationUserOnApp>, NotificationRolesOnAppsDto>(MemberList.Destination)
                 .ReverseMap();
 
-            
+            CreateMap<NotificationEvent, NotificationEventDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<PagedList<NotificationEvent>, NotificationEventsDto>(MemberList.Destination)
+                .ReverseMap();
+
+
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
-using GaCloudServer.BusinnessLogic.Dtos.Resources.Notifiation;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
@@ -13,9 +13,11 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<NotificationApp> notificationAppsRepo;
         protected readonly IGenericRepository<NotificationRoleOnApp> notificationRolesOnAppsRepo;
         protected readonly IGenericRepository<NotificationUserOnApp> notificationUsersOnAppsRepo;
+        protected readonly IGenericRepository<NotificationEvent> notificationEventsRepo;
 
         protected readonly IGenericRepository<ViewNotificationRolesOnApps> viewNotificationRolesOnAppsRepo;
         protected readonly IGenericRepository<ViewNotificationUsersOnApps> viewNotificationUsersOnAppsRepo;
+        protected readonly IGenericRepository<ViewNotificationEvents> viewNotificationEventsRepo;
 
 
         protected readonly IUnitOfWork unitOfWork;
@@ -24,18 +26,22 @@ namespace GaCloudServer.BusinnessLogic.Services
         IGenericRepository<NotificationApp> notificationAppsRepo,
         IGenericRepository<NotificationRoleOnApp> notificationRolesOnAppsRepo,
         IGenericRepository<NotificationUserOnApp> notificationUsersOnAppsRepo,
+        IGenericRepository<NotificationEvent> notificationEventsRepo,
 
         IGenericRepository<ViewNotificationRolesOnApps> viewNotificationRolesOnAppsRepo,
         IGenericRepository<ViewNotificationUsersOnApps> viewNotificationUsersOnAppsRepo,
+        IGenericRepository<ViewNotificationEvents> viewNotificationEventsRepo,
 
         IUnitOfWork unitOfWork)
         {
             this.notificationAppsRepo = notificationAppsRepo;
             this.notificationRolesOnAppsRepo = notificationRolesOnAppsRepo;
             this.notificationUsersOnAppsRepo = notificationUsersOnAppsRepo;
+            this.notificationEventsRepo = notificationEventsRepo;
 
             this.viewNotificationRolesOnAppsRepo = viewNotificationRolesOnAppsRepo;
             this.viewNotificationUsersOnAppsRepo = viewNotificationUsersOnAppsRepo;
+            this.viewNotificationEventsRepo = viewNotificationEventsRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -213,6 +219,56 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<PagedList<ViewNotificationUsersOnApps>> GetViewViewNotificationUsersOnAppsByAppIdAsync(long AppId)
         {
             var view = await viewNotificationUsersOnAppsRepo.GetWithFilterAsync(x => x.AppId == AppId && x.Enabled==true, 1, 0, "AppName");
+            return view;
+        }
+        #endregion
+
+        #endregion
+
+        #region NotificationEvents
+        public async Task<long> AddNotificationEventAsync(NotificationEventDto dto)
+        {
+            var entity = dto.ToEntity<NotificationEvent, NotificationEventDto>();
+            await notificationEventsRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<bool> DeleteNotificationEventAsync(long id)
+        {
+            var entity = await notificationEventsRepo.GetByIdAsync(id);
+            notificationEventsRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ChangeStatusNotificationEventAsync(long id)
+        {
+            var entity = await notificationEventsRepo.GetByIdAsync(id);
+            if (entity.Read)
+            {
+                entity.Read = false;
+                notificationEventsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Read = true;
+                notificationEventsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewNotificationEvents>> GetViewViewNotificationEventsByUserIdAsync(string userId, bool all = true)
+        {
+            var view = all ? await viewNotificationEventsRepo.GetWithFilterAsync(x => x.UserId == userId,1,0,"DateEvent","OrderByDescending") : await viewNotificationEventsRepo.GetWithFilterAsync(x => x.UserId == userId && x.Read == false, 1, 0, "DateEvent", "OrderByDescending");
             return view;
         }
         #endregion

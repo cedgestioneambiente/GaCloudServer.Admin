@@ -6,6 +6,7 @@ using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.Presenze;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Resources.Api.Resources;
 using Microsoft.AspNetCore.Authorization;
@@ -381,6 +382,21 @@ namespace GaCloudServer.Resources.Api.Controllers
                             break;
                     }
 
+                    List<string> descriptors = new List<string>() {
+                        "Richiedente",
+                        "Data Iniziale",
+                        "Data Finale",
+                        "Tipo Richiesta",
+                        "Stato"
+                    };
+
+                    List<string> details = new List<string>() {
+                        richiestaMail.Richiedente,
+                        richiestaMail.DataInizio.ToString("dd/MM/yyyy HH:mm"),
+                        richiestaMail.DataFine.ToString("dd/MM/yyyy HH:mm"),
+                        richiestaMail.Tipo,
+                        richiestaMail.Stato
+                    };
 
                     var response = await _mailService.AddMailJobAsync(new MailJob()
                     {
@@ -390,9 +406,12 @@ namespace GaCloudServer.Resources.Api.Controllers
                         Title = "Richiesta Assenza",
                         MailingTo = mailTo,
                         MailCc = mailCC,
-                        Application = AppConsts.Presenze,
-                        Content = "prova contenuto",
-                        Template = "DefaultMailJob.html"
+                        Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Presenze),
+                        Content = HtmlHelpers.GenerateList(descriptors,details),
+                        Template = "DefaultMailJob.html",
+                        UserId=richiestaMail.UserId,
+                        OkMessage="La tua richiesta è stata inoltrata correttamente.",
+                        KoMessage="Si è verificato un problema durante l'invio della tua richiesta."
 
                     });
                     return new ApiResponse(response);

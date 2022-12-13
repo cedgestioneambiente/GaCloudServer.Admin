@@ -115,6 +115,20 @@ namespace GaCloudServer.Jobs.Helpers
             (BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public);
             return properties;
         }
+
+        public static long AppSplit(string app)
+        {
+            try
+            {
+                var result = app.Split('|')[0];
+                return Convert.ToInt64(result);
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
+
+        }
     }
 }
 

@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.Services.Interfaces;
+﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
+using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using GaCloudServer.Jobs.Helpers;
 using GaCloudServer.Jobs.Services;
 using Quartz;
 
@@ -20,6 +22,7 @@ namespace GaCloudServer.Jobs.Jobs
             {
                 var mailService = scope.ServiceProvider.GetService<IMailService>();
                 var mailJobService = scope.ServiceProvider.GetService<IMailJobService>();
+                var notificationService = scope.ServiceProvider.GetService<INotificationService>();
 
                 var mails = mailService.GetMailJobsAsync(false).Result;
 
@@ -30,10 +33,36 @@ namespace GaCloudServer.Jobs.Jobs
                         var result = mailJobService.SendMail(mail).Result;
                         if (result == false)
                         {
+                            var notification = notificationService.AddNotificationEventAsync(new NotificationEventDto()
+                            {
+                                Id = 0,
+                                DateEvent = DateTime.Now,
+                                UserId = mail.UserId,
+                                NotificationAppId = TextHelpers.AppSplit(mail.Application),
+                                Title = mail.Title,
+                                Message = mail.KoMessage,
+                                Read = false,
+                                Disabled = false
+                            }).Result;
+
+                            
+
                             var setError = mailService.SetErrorOnMailJobAsync(mail.Id).Result;
                         }
                         else
                         {
+                            var notification = notificationService.AddNotificationEventAsync(new NotificationEventDto()
+                            {
+                                Id = 0,
+                                DateEvent = DateTime.Now,
+                                UserId = mail.UserId,
+                                NotificationAppId = TextHelpers.AppSplit(mail.Application),
+                                Title = mail.Title,
+                                Message = mail.OkMessage,
+                                Read = false,
+                                Disabled = false
+                            }).Result;
+
                             var setSended = mailService.SetSendedOnMailJobAsync(mail.Id).Result;
                         }
                     }

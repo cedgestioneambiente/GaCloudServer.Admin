@@ -19,6 +19,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail
         public string Content { get; set; }
         public string UserId { get; set; }
         public DateTime DateSend { get; set; }
+        public string OkMessage { get; set; }
+        public string KoMessage { get; set; }
         public bool IsSended { get; set; }
         public bool IsError { get; set; }
     }

@@ -172,10 +172,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<NotificationApp> NotificationApps { get; set; }
         public DbSet<NotificationRoleOnApp> NotificationRolesOnApps { get; set; }
         public DbSet<NotificationUserOnApp> NotificationUsersOnApps { get; set; }
+        public DbSet<NotificationEvent> NotificationEvents { get; set; }
 
         #region Views
         public DbSet<ViewNotificationRolesOnApps> ViewNotificationRolesOnApps { get; set; }
         public DbSet<ViewNotificationUsersOnApps> ViewNotificationUsersOnApps { get; set; }
+        public DbSet<ViewNotificationEvents> ViewNotificationEvents { get; set; }
         #endregion
         #endregion
 
@@ -584,6 +586,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 entity
                 .ToView(nameof(ViewNotificationUsersOnApps))
                 .HasNoKey();
+            });
+
+            builder.Entity<ViewNotificationEvents>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewNotificationEvents))
+                .HasKey(x=>x.Id);
             });
             #endregion
 

@@ -1,5 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
-using GaCloudServer.BusinnessLogic.Dtos.Resources.Notifiation;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
@@ -43,6 +43,21 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewNotificationUsersOnApps>> GetViewViewNotificationUsersOnAppsByUserIdAsync(string userId);
         Task<PagedList<ViewNotificationUsersOnApps>> GetViewViewNotificationUsersOnAppsByAppIdAsync(long appId);
         #endregion
+        #endregion
+
+        #region NotificationEvents
+        Task<long> AddNotificationEventAsync(NotificationEventDto dto);
+
+        Task<bool> DeleteNotificationEventAsync(long id);
+
+        #region Functions
+        Task<bool> ChangeStatusNotificationEventAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewNotificationEvents>> GetViewViewNotificationEventsByUserIdAsync(string userId,bool all = true);
+        #endregion
+
         #endregion
 
 

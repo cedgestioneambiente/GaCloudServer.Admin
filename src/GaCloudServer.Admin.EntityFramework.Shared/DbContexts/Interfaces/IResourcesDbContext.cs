@@ -164,10 +164,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<NotificationApp> NotificationApps { get; set; }
         DbSet<NotificationRoleOnApp> NotificationRolesOnApps { get; set; }
         DbSet<NotificationUserOnApp> NotificationUsersOnApps { get; set; }
+        DbSet<NotificationEvent> NotificationEvents { get; set; }
 
         #region Views
         DbSet<ViewNotificationRolesOnApps> ViewNotificationRolesOnApps { get; set; }
         DbSet<ViewNotificationUsersOnApps> ViewNotificationUsersOnApps { get; set; }
+        DbSet<ViewNotificationEvents> ViewNotificationEvents { get; set; }   
         #endregion
         #endregion
 

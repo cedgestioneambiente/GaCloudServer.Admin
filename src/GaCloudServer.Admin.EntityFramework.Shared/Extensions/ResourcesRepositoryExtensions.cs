@@ -160,9 +160,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<NotificationApp>, GenericRepository<TResourcesDbContext, NotificationApp>>();
             services.AddTransient<IGenericRepository<NotificationRoleOnApp>, GenericRepository<TResourcesDbContext, NotificationRoleOnApp>>();
             services.AddTransient<IGenericRepository<NotificationUserOnApp>, GenericRepository<TResourcesDbContext, NotificationUserOnApp>>();
+            services.AddTransient<IGenericRepository<NotificationEvent>, GenericRepository<TResourcesDbContext, NotificationEvent>>();
 
             services.AddTransient<IGenericRepository<ViewNotificationRolesOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationRolesOnApps>>();
             services.AddTransient<IGenericRepository<ViewNotificationUsersOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationUsersOnApps>>();
+            services.AddTransient<IGenericRepository<ViewNotificationEvents>, GenericRepository<TResourcesDbContext, ViewNotificationEvents>>();
             #endregion
 
             //Personale
@@ -330,6 +332,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
         public static IServiceCollection AddJobsResourcesRepository<TResourcesDbContext>(this IServiceCollection services)
     where TResourcesDbContext : DbContext, IResourcesDbContext
         {
+
+            //Notifications
+            #region Notification
+            services.AddTransient<IGenericRepository<NotificationApp>, GenericRepository<TResourcesDbContext, NotificationApp>>();
+            services.AddTransient<IGenericRepository<NotificationRoleOnApp>, GenericRepository<TResourcesDbContext, NotificationRoleOnApp>>();
+            services.AddTransient<IGenericRepository<NotificationUserOnApp>, GenericRepository<TResourcesDbContext, NotificationUserOnApp>>();
+            services.AddTransient<IGenericRepository<NotificationEvent>, GenericRepository<TResourcesDbContext, NotificationEvent>>();
+
+            services.AddTransient<IGenericRepository<ViewNotificationRolesOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationRolesOnApps>>();
+            services.AddTransient<IGenericRepository<ViewNotificationUsersOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationUsersOnApps>>();
+            services.AddTransient<IGenericRepository<ViewNotificationEvents>, GenericRepository<TResourcesDbContext, ViewNotificationEvents>>();
+            #endregion
 
             //Mail
             #region Mail

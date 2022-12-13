@@ -6,6 +6,7 @@ namespace GaCloudServer.Resources.Dtos.Resources.Notification
     public class NotificationAppApiDto : GenericListApiDto
     {
         public string Info { get; set; }
+        public string Icon { get; set; }
     }
 
     public class NotificationAppsApiDto : GenericPagedListApiDto<NotificationAppApiDto>

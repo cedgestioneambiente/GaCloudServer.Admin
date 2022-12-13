@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Notifiation
+namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Notification
 {
     public class NotificationAppDto:GenericListDto
     {
         public string Info { get; set; }
+        public string Icon { get; set; }
     }
 
     public class NotificationAppsDto : GenericPagedListDto<NotificationAppDto>
@@ -31,6 +32,19 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Notifiation
     }
 
     public class NotificationUsersOnAppsDto : GenericPagedListDto<NotificationUserOnAppDto>
+    { }
+
+    public class NotificationEventDto : GenericDto
+    {
+        public DateTime DateEvent { get; set; }
+        public string UserId { get; set; }
+        public long NotificationAppId { get; set; }
+        public string Title { get; set; }
+        public string Message { get; set; }
+        public bool Read { get; set; }
+    }
+
+    public class NotificationEventsDto : GenericPagedListDto<NotificationEventDto>
     { }
 }
 
