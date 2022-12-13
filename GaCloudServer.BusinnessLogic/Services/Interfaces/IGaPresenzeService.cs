@@ -39,6 +39,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         Task<PagedList<ViewGaPresenzeRichieste>> GetGaViewPresenzeRichiesteBySettoreIdAsync(long globalSettoreId);
+        Task<ViewGaPresenzeRichiestaMail> GetViewGaPresenzeRichiestaMailByIdAsync(long id);
         #endregion
 
         #endregion
@@ -89,6 +90,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         Task<PagedList<ViewGaPresenzeResponsabiliOnSettori>> GetViewGaPresenzeResponsabiliOnSettoriByDipendenteAsync(long personaleDipendenteId);
+        Task<PagedList<ViewGaPresenzeResponsabiliOnSettori>> GetViewGaPresenzeResponsabiliOnSettoreMailBySettoreId(long settoreId);
         #endregion
 
         #endregion

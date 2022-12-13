@@ -253,6 +253,16 @@ namespace GaCloudServer.Admin.Api.Helpers
                                  (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == adminApiConfiguration.AdministrationRole))
                             ) && context.User.HasClaim(c => c.Type == JwtClaimTypes.Scope && c.Value == adminApiConfiguration.OidcApiName)
                         ));
+
+                options.AddPolicy(AuthorizationConsts.AdminOrUserPolicy,
+                    policy =>
+                        policy.RequireAssertion(context => context.User.HasClaim(c =>
+                                (c.Type == JwtClaimTypes.Role && c.Value == adminApiConfiguration.AdministrationRole) ||
+                                (c.Type == JwtClaimTypes.Role && c.Value == adminApiConfiguration.UserRole) ||
+                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == adminApiConfiguration.AdministrationRole) ||
+                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == adminApiConfiguration.UserRole) 
+                            )
+                        ));
             });
         }
 

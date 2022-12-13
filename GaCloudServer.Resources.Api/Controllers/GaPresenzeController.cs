@@ -1,7 +1,9 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.Presenze;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
@@ -20,14 +22,20 @@ namespace GaCloudServer.Resources.Api.Controllers
     public class GaPresenzeController : Controller
     {
         private readonly IGaPresenzeService _gaPresenzeService;
+        private readonly INotificationService _notificationService;
+        private readonly IMailService _mailService;
         private readonly ILogger<GaPresenzeController> _logger;
 
         public GaPresenzeController(
-            IGaPresenzeService gaPresenzeService
+            IGaPresenzeService gaPresenzeService,
+            INotificationService notificationService,
+            IMailService mailService
             ,ILogger<GaPresenzeController> logger)
         {
 
             _gaPresenzeService = gaPresenzeService;
+            _notificationService = notificationService;
+            _mailService = mailService;
             _logger = logger;
         }
 
@@ -328,6 +336,78 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
 
+        }
+
+        [HttpGet("SendGaPresenzeRichiestaAsync/{id}/{direction}")]
+        public async Task<ApiResponse> SendGaPresenzeRichiestaAsync(long id, long direction)
+        {
+            try
+            {
+                var richiestaMail = await _gaPresenzeService.GetViewGaPresenzeRichiestaMailByIdAsync(id);
+                var respList = await _gaPresenzeService.GetViewGaPresenzeResponsabiliOnSettoreMailBySettoreId(richiestaMail.SettoreId);
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Presenze);
+                var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+                List<string> userMails = new List<string>();
+                List<string> respMails = new List<string>();
+
+                foreach (var itm in respList.Data)
+                {
+                    foreach (var user in notifications.Data)
+                    {
+                        if (user.UserId == itm.UserId) { respMails.Add(itm.Email); }
+                    }
+                }
+
+                foreach (var user in notifications.Data)
+                {
+                    if (user.UserId == richiestaMail.UserId) { userMails.Add(richiestaMail.RichiedenteEmail); }
+                }
+
+                if (userMails.Count > 0 || respMails.Count > 0)
+                {
+                    string mailTo = "";
+                    string mailCC = "";
+
+                    switch (direction)
+                    {
+                        case 1:
+                            mailTo = string.Join(";", respMails);
+                            mailCC = string.Join(";", userMails);
+                            break;
+                        case 2:
+                            mailTo = string.Join(";", userMails);
+                            mailCC = string.Join(";", respMails);
+                            break;
+                    }
+
+
+                    var response = await _mailService.AddMailJobAsync(new MailJob()
+                    {
+                        Id = 0,
+                        Description = "Richiesta Assenza",
+                        DateScheduled = DateTime.Now,
+                        Title = "Richiesta Assenza",
+                        MailingTo = mailTo,
+                        MailCc = mailCC,
+                        Application = AppConsts.Presenze,
+                        Content = "prova contenuto",
+                        Template = "DefaultMailJob.html"
+
+                    });
+                    return new ApiResponse(response);
+
+                }
+
+
+
+                return new ApiResponse(0);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
         }
         #endregion
 

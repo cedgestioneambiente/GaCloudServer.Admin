@@ -14,6 +14,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Vi
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
@@ -302,6 +303,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaPresenzeDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPresenzeDipendenti>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeOrariGiornate>, GenericRepository<TResourcesDbContext, ViewGaPresenzeOrariGiornate>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeRichieste>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichieste>>();
+            services.AddTransient<IGenericRepository<ViewGaPresenzeRichiestaMail>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichiestaMail>>();
 
 
 
@@ -315,7 +317,27 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaRecapitiContatti>, GenericRepository<TResourcesDbContext, ViewGaRecapitiContatti>>();
 
             #endregion
+
+            //Mail
+            #region Mail
+            services.AddTransient<IGenericRepository<MailJob>, GenericRepository<TResourcesDbContext, MailJob>>();
+            #endregion
+
+
             return services; 
+        }
+
+        public static IServiceCollection AddJobsResourcesRepository<TResourcesDbContext>(this IServiceCollection services)
+    where TResourcesDbContext : DbContext, IResourcesDbContext
+        {
+
+            //Mail
+            #region Mail
+            services.AddTransient<IGenericRepository<MailJob>, GenericRepository<TResourcesDbContext, MailJob>>();
+            #endregion
+
+
+            return services;
         }
     }
 }

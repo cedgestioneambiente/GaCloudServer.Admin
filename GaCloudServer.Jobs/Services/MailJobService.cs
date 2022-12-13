@@ -1,0 +1,86 @@
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
+
+namespace GaCloudServer.Jobs.Services
+{
+    public class MailJobService : IMailJobService
+    {
+        private readonly IWebHostEnvironment _env;
+        private readonly string sender;
+        private readonly string senderPassword;
+
+        public MailJobService(IWebHostEnvironment env)
+        {
+            sender = "helpdesk@gestioneambiente.net";
+            senderPassword = "Husa9919";
+            _env = env;
+        }
+
+
+
+        public async Task<bool> SendMail(MailJob mailJob)
+        {
+            try
+            {
+                var email = new MimeMessage();
+
+                if (mailJob.MailingTo != null && mailJob.MailingTo.Length > 0)
+                {
+                    foreach (var mail in mailJob.MailingTo.Split(';'))
+                    {
+                        email.To.Add(MailboxAddress.Parse(mail));
+                    }
+                }
+
+                if (mailJob.MailCc != null && mailJob.MailCc.Length > 0)
+                {
+                    foreach (var mail in mailJob.MailCc.Split(';'))
+                    {
+                        email.Cc.Add(MailboxAddress.Parse(mail));
+                    }
+                }
+
+
+
+                email.From.Add(MailboxAddress.Parse(sender));
+                email.Subject = mailJob.Title;
+                string body = string.Empty;
+                string templatePath = Path.Combine(_env.ContentRootPath, "Templates/Mail/" + mailJob.Template);
+
+                using (StreamReader reader = new StreamReader(templatePath))
+                {
+
+                    body = reader.ReadToEnd();
+
+                }
+
+                body = body.Replace("{jobTitle}", mailJob.Title);
+                body = body.Replace("{jobContent}", mailJob.Content);
+                body = body.Replace("{jobDate}", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+
+                email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
+
+
+                using (var client = new SmtpClient())
+                {
+                    await client.ConnectAsync("smtp.office365.com", 587, SecureSocketOptions.StartTls);
+                    await client.AuthenticateAsync(sender, senderPassword);
+                    await client.SendAsync(email);
+                    await client.DisconnectAsync(true);
+                }
+
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
+
+
+    }
+}

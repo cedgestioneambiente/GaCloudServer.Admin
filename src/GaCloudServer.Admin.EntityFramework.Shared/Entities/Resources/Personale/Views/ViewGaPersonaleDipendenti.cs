@@ -12,5 +12,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personal
         public long SedeId { get; set; }
         public string Qualifica { get; set; }
         public long QualificaId { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -55,6 +55,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             var dto = entity.ToDto<NotificationAppDto, NotificationApp>();
             return dto;
         }
+        public async Task<NotificationAppDto> GetNotificationAppByDescrizioneAsync(string descrizione)
+        {
+            var entity = await notificationAppsRepo.GetSingleWithFilter(x=>x.Descrizione==descrizione);
+            var dto = entity.ToDto<NotificationAppDto, NotificationApp>();
+            return dto;
+        }
 
         public async Task<long> AddNotificationAppAsync(NotificationAppDto dto)
         {
@@ -200,7 +206,13 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<PagedList<ViewNotificationUsersOnApps>> GetViewViewNotificationUsersOnAppsByUserIdAsync(string userId)
         {
-            var view = await viewNotificationUsersOnAppsRepo.GetWithFilterAsync(x => x.UserId == userId, 1, 0, "AppName");
+            var view = await viewNotificationUsersOnAppsRepo.GetWithFilterAsync(x => x.UserId == userId && x.Show==true, 1, 0, "AppName");
+            return view;
+        }
+
+        public async Task<PagedList<ViewNotificationUsersOnApps>> GetViewViewNotificationUsersOnAppsByAppIdAsync(long AppId)
+        {
+            var view = await viewNotificationUsersOnAppsRepo.GetWithFilterAsync(x => x.AppId == AppId && x.Enabled==true, 1, 0, "AppName");
             return view;
         }
         #endregion

@@ -31,6 +31,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -308,6 +309,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaPresenzeDipendenti> ViewGaPresenzeDipendenti { get; set; }
         DbSet<ViewGaPresenzeOrariGiornate> ViewGaPresenzeOrariGiornate { get; set; }
         DbSet<ViewGaPresenzeRichieste> ViewGaPresenzeRichieste { get; set; }
+        DbSet<ViewGaPresenzeRichiestaMail> ViewGaPresenzeRichiestaMail { get; set; }
 
         #endregion
 
@@ -318,6 +320,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Views
         DbSet<ViewGaRecapitiContatti> ViewGaRecapitiContatti { get; set; }
         #endregion
+
+        #endregion
+
+        #region Mail Tables
+
+        DbSet<MailJob> MailJobs { get; set; }
 
         #endregion
     }

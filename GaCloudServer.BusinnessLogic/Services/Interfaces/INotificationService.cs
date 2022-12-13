@@ -9,6 +9,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region NotificationApps
         Task<NotificationAppsDto> GetNotificationAppsAsync(int page = 1, int pageSize = 0);
         Task<NotificationAppDto> GetNotificationAppByIdAsync(long id);
+        Task<NotificationAppDto> GetNotificationAppByDescrizioneAsync(string descrizione);
         Task<long> AddNotificationAppAsync(NotificationAppDto dto);
         Task<long> UpdateNotificationAppAsync(NotificationAppDto dto);
         Task<bool> DeleteNotificationAppAsync(long id);
@@ -40,6 +41,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Views
         Task<PagedList<ViewNotificationUsersOnApps>> GetViewViewNotificationUsersOnAppsAsync(bool all = true);
         Task<PagedList<ViewNotificationUsersOnApps>> GetViewViewNotificationUsersOnAppsByUserIdAsync(string userId);
+        Task<PagedList<ViewNotificationUsersOnApps>> GetViewViewNotificationUsersOnAppsByAppIdAsync(long appId);
         #endregion
         #endregion
 

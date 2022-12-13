@@ -15,6 +15,9 @@ namespace GaCloudServer.Shared.Dtos.Extended
         string FullName { get; set; }
         string OfficePhoneNumber { get; set; }
         DateTime? DateOfBirth { get; set; }
+        public bool ShowInContacts { get; set; }
+        public bool ShowEmailInContacts { get; set; }
+        public bool ShowInApp { get; set; }
     }
 
     public class ExtendedUserDto<TKey> : UserDto<TKey>, IExtendedUserDto
@@ -24,5 +27,8 @@ namespace GaCloudServer.Shared.Dtos.Extended
         public string FullName { get ; set; }
         public string OfficePhoneNumber { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public bool ShowInContacts { get; set; }
+        public bool ShowEmailInContacts { get; set; }
+        public bool ShowInApp { get; set; }
     }
 }

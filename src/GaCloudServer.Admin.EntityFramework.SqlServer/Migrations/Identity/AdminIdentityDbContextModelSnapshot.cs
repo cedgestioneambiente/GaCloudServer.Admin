@@ -82,6 +82,15 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Identity
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("ShowEmailInContacts")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ShowInApp")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ShowInContacts")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 

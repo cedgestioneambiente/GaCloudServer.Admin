@@ -237,6 +237,24 @@
   <data name="UserProviderProviderKey_Label" xml:space="preserve">
     <value>Provider Key</value>
   </data>
+  <data name="UserShowEmailInContacts_Info" xml:space="preserve">
+    <value>Show User Email in Contacts</value>
+  </data>
+  <data name="UserShowEmailInContacts_Label" xml:space="preserve">
+    <value>Show User Email in Contacts</value>
+  </data>
+  <data name="UserShowInApp_Info" xml:space="preserve">
+    <value>Show User in App</value>
+  </data>
+  <data name="UserShowInApp_Label" xml:space="preserve">
+    <value>Show User in App</value>
+  </data>
+  <data name="UserShowInContacts_Info" xml:space="preserve">
+    <value>Show User in Contacts</value>
+  </data>
+  <data name="UserShowInContacts_Label" xml:space="preserve">
+    <value>Show User in Contacts</value>
+  </data>
   <data name="UserTwoFactorEnabled_Info" xml:space="preserve">
     <value>User Two Factor Enabled</value>
   </data>

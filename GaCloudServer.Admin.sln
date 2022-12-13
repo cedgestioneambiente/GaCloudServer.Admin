@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.Duende.IdentityServer.Admin.UI", "src\Skoruba.Duende.IdentityServer.Admin.UI\Skoruba.Duende.IdentityServer.Admin.UI.csproj", "{218AACFE-16CB-4114-A6EF-9B4CE7B3CE5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaCloudServer.Jobs", "GaCloudServer.Jobs\GaCloudServer.Jobs.csproj", "{3494B613-8E85-487C-ADBC-8FE775403148}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -178,6 +180,18 @@ Global
 		{218AACFE-16CB-4114-A6EF-9B4CE7B3CE5B}.Release|x64.Build.0 = Release|Any CPU
 		{218AACFE-16CB-4114-A6EF-9B4CE7B3CE5B}.Release|x86.ActiveCfg = Release|Any CPU
 		{218AACFE-16CB-4114-A6EF-9B4CE7B3CE5B}.Release|x86.Build.0 = Release|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Debug|x64.Build.0 = Debug|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Debug|x86.Build.0 = Debug|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|x64.ActiveCfg = Release|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|x64.Build.0 = Release|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|x86.ActiveCfg = Release|Any CPU
+		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +208,7 @@ Global
 		{558DEBCA-5AF5-48E2-84BF-1B5A3105CF69} = {14C37872-1BB6-42B7-A8EC-BC7907F12D3F}
 		{2AF984C3-02A9-4834-A156-A026A6F8C065} = {14C37872-1BB6-42B7-A8EC-BC7907F12D3F}
 		{218AACFE-16CB-4114-A6EF-9B4CE7B3CE5B} = {14C37872-1BB6-42B7-A8EC-BC7907F12D3F}
+		{3494B613-8E85-487C-ADBC-8FE775403148} = {14C37872-1BB6-42B7-A8EC-BC7907F12D3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C5574385-586F-49AE-BBF7-DC83BE30A069}

@@ -10,5 +10,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
         public long GlobalIdSettore { get; set; }
         public string Settore { get; set; }
         public bool Abilitato { get; set; }
+        public string Email { get; set; }
     }
 }

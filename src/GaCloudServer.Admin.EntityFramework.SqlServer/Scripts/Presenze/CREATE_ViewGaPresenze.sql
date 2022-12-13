@@ -9,15 +9,13 @@ GO
 
 CREATE VIEW [dbo].[ViewGaPresenzeResponsabiliOnSettori]
 AS
-SELECT A.*,
-CAST(CASE WHEN B.Id IS NULL THEN 'false' ELSE 'true' END as BIT) Abilitato,CAST(0 as BIT) Disabled
-FROM(
-SELECT A.Id,PersonaleDipendenteId,B.CognomeNome,B.UserId,C.Id GlobalIdSettore,C.Descrizione Settore
-FROM [dbo].[GaPresenzeResponsabili] A
-LEFT JOIN ViewGaPersonaleDipendenti B ON A.PersonaleDipendenteId=B.Id
-CROSS JOIN dbo.GlobalSettori C) A
-LEFT OUTER JOIN dbo.GaPresenzeResponsabiliOnSettori B 
-ON A.GlobalIdSettore=B.GlobalSettoreId AND A.Id=B.PresenzeResponsabileId
+SELECT        A_1.Id, A_1.PersonaleDipendenteId, A_1.CognomeNome, A_1.UserId, A_1.GlobalIdSettore, A_1.Settore, CAST(CASE WHEN B.Id IS NULL THEN 'false' ELSE 'true' END AS BIT) AS Abilitato, CAST(0 AS BIT) AS Disabled, 
+                         A_1.Email
+FROM            (SELECT        A.Id, A.PersonaleDipendenteId, B.CognomeNome, B.UserId, C.Id AS GlobalIdSettore, C.Descrizione AS Settore, B.Email
+                          FROM            dbo.GaPresenzeResponsabili AS A LEFT OUTER JOIN
+                                                    dbo.ViewGaPersonaleDipendenti AS B ON A.PersonaleDipendenteId = B.Id CROSS JOIN
+                                                    dbo.GlobalSettori AS C) AS A_1 LEFT OUTER JOIN
+                         dbo.GaPresenzeResponsabiliOnSettori AS B ON A_1.GlobalIdSettore = B.GlobalSettoreId AND A_1.Id = B.PresenzeResponsabileId
 GO
 
 CREATE VIEW [dbo].[ViewGaPresenzeDipendenti]
@@ -27,7 +25,7 @@ SELECT        ISNULL(dbo.GaPresenzeDipendenti.Id, 0) AS Id, dbo.ViewGaPersonaleD
                          ISNULL(dbo.GaPresenzeDipendenti.HhPermessiCcnl, 0) AS HhPermessiCcnl, ISNULL(dbo.GaPresenzeDipendenti.HhRecupero, 0) AS HhRecupero, CASE WHEN (dbo.GaPresenzeDipendenti.Id IS NULL OR
                          GaPresenzeDipendenti.Disabled = 'True') THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END AS Enabled, CASE WHEN (dbo.GaPresenzeDipendenti.Id IS NULL OR
                          GaPresenzeDipendenti.Disabled = 'True') THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END AS Disabled, ISNULL(dbo.GaPresenzeProfili.Descrizione, 'NESSUN PROFILO IMPOSTATO') AS Profilo, 
-                         ISNULL(dbo.GaPresenzeOrari.Descrizione, 'NESSUN ORARIO IMPOSTATO') AS Orario
+                         ISNULL(dbo.GaPresenzeOrari.Descrizione, 'NESSUN ORARIO IMPOSTATO') AS Orario,dbo.ViewGaPersonaleDipendenti.Email
 FROM            dbo.GaPresenzeOrari RIGHT OUTER JOIN
                          dbo.GaPresenzeDipendenti ON dbo.GaPresenzeOrari.Id = dbo.GaPresenzeDipendenti.PresenzeOrarioId LEFT OUTER JOIN
                          dbo.GaPresenzeProfili ON dbo.GaPresenzeDipendenti.PresenzeProfiloId = dbo.GaPresenzeProfili.Id RIGHT OUTER JOIN
@@ -50,6 +48,17 @@ SELECT        dbo.GaPresenzeRichieste.Id, dbo.GaPresenzeRichieste.DataInizio AS 
                          dbo.ViewGaPresenzeDipendenti.Settore, CASE WHEN PresenzeStatoRichiestaId = '1' THEN '#4caf50' WHEN PresenzeStatoRichiestaId = '2' THEN '#ff9800' WHEN PresenzeStatoRichiestaId = '3' THEN '#f44336' END AS Color, 
                          dbo.ViewGaPresenzeDipendenti.UserId, CAST(0 AS BIT) AS Disabled
 FROM            dbo.GaPresenzeRichieste INNER JOIN
+                         dbo.ViewGaPresenzeDipendenti ON dbo.GaPresenzeRichieste.PresenzeDipendenteId = dbo.ViewGaPresenzeDipendenti.Id
+GO
+
+CREATE VIEW [dbo].[ViewGaPresenzeRichiestaMail]
+AS
+SELECT        dbo.GaPresenzeRichieste.Id, dbo.ViewGaPresenzeDipendenti.CognomeNome Richiedente, GETDATE() AS Data, dbo.GaPresenzeRichieste.DataInizio, dbo.GaPresenzeRichieste.DataFine, 
+                         dbo.GaPresenzeRichieste.PresenzeStatoRichiestaId AS StatoId, dbo.GaPresenzeStatiRichieste.Descrizione AS Stato, dbo.GaPresenzeRichieste.PresenzeTipoOraId AS TipoId, dbo.GaPresenzeTipiOre.Descrizione AS Tipo, 
+                         dbo.ViewGaPresenzeDipendenti.SettoreId, dbo.ViewGaPresenzeDipendenti.Settore, dbo.ViewGaPresenzeDipendenti.UserId, dbo.ViewGaPresenzeDipendenti.Email RichiedenteEmail,CAST(0 as bit) Disabled
+FROM            dbo.GaPresenzeStatiRichieste INNER JOIN
+                         dbo.GaPresenzeRichieste ON dbo.GaPresenzeStatiRichieste.Id = dbo.GaPresenzeRichieste.PresenzeStatoRichiestaId INNER JOIN
+                         dbo.GaPresenzeTipiOre ON dbo.GaPresenzeRichieste.PresenzeTipoOraId = dbo.GaPresenzeTipiOre.Id LEFT OUTER JOIN
                          dbo.ViewGaPresenzeDipendenti ON dbo.GaPresenzeRichieste.PresenzeDipendenteId = dbo.ViewGaPresenzeDipendenti.Id
 GO
 

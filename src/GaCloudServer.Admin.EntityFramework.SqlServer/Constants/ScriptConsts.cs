@@ -90,5 +90,10 @@
         public const string GaRecapitiMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Recapiti\";
         public const string CREATE_ViewGaRecapiti = "CREATE_ViewGaRecapiti.sql";
         public const string DROP_ViewGaRecapiti = "DROP_ViewGaRecapiti.sql";
+
+        //Jobs
+        public const string JobsMigration = @"..\GaCloudServer.Admin.EntityFramework.SqlServer\Scripts\Jobs\";
+        public const string CREATE_TableJobs = "CREATE_TableJobs.sql";
+        public const string DROP_TableJobs = "DROP_TableJobs.sql";
     }
 }

@@ -357,7 +357,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Views
         public async Task<PagedList<ViewGaPersonaleUsersOnDipendenti>> GetViewGaPersonaleUsersOnDipendentiAsync(bool all = true)
         {
-            var view = all==true?await viewGaPersonaleUsersOnDipendentiRepo.GetAllAsync(1,0,"CognomeNome"): await viewGaPersonaleUsersOnDipendentiRepo.GetWithFilterAsync(x=>x.Active==all,1,0,"CognomeNome");
+            var view = all==true?await viewGaPersonaleUsersOnDipendentiRepo.GetAllAsync(1,0,"CognomeNome"): await viewGaPersonaleUsersOnDipendentiRepo.GetWithFilterAsync(x=>x.Active==all ,1,0,"CognomeNome");
             return view;
         }
 

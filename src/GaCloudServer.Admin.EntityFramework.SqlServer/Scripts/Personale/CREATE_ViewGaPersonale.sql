@@ -3,12 +3,12 @@ AS
 SELECT CAST('0' AS BIGINT) Id, A.Id UserId,FirstName Nome,LastName Cognome, CONCAT(LastName,' ',FirstName) CognomeNome,Email,UserName, CASE WHEN(B.Id IS NULL) THEN CASt(0 as bigint) else B.Id END DipendenteId, CASE WHEN(B.Id IS NOT NULL) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END Active,CAST(0 as BIT) Disabled
 FROM IdentityServerAdmin.dbo.Users A
 LEFT JOIN GaPersonaleDipendenti B ON A.Id=B.UserId
-GO
+GO  --mod
 
 CREATE VIEW [dbo].[ViewGaPersonaleDipendenti]
 AS
 SELECT        A.Id, B.Id AS UserId, B.FirstName AS Nome, B.LastName AS Cognome, CONCAT(B.LastName,' ',B.FirstName) CognomeNome, C.Descrizione AS Sede, C.Id AS SedeId, D.Descrizione AS Qualifica, D.Id AS QualificaId, A.Disabled, dbo.GlobalSettori.Descrizione AS Settore, 
-                         dbo.GlobalSettori.Id AS SettoreId
+                         dbo.GlobalSettori.Id AS SettoreId,B.Email
 FROM            dbo.GaPersonaleDipendenti AS A INNER JOIN
                          dbo.GlobalSettori ON A.GlobalSettoreId = dbo.GlobalSettori.Id LEFT OUTER JOIN
                          IdentityServerAdmin.dbo.Users AS B ON A.UserId = B.Id LEFT OUTER JOIN

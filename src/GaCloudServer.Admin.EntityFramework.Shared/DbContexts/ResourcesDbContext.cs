@@ -32,6 +32,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -316,6 +317,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaPresenzeDipendenti> ViewGaPresenzeDipendenti { get; set; }
         public DbSet<ViewGaPresenzeOrariGiornate> ViewGaPresenzeOrariGiornate { get; set; }
         public DbSet<ViewGaPresenzeRichieste> ViewGaPresenzeRichieste { get; set; }
+        public DbSet<ViewGaPresenzeRichiestaMail> ViewGaPresenzeRichiestaMail { get; set; }
 
         #endregion
 
@@ -327,6 +329,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaRecapitiContatti> ViewGaRecapitiContatti { get; set; }
         #endregion
 
+        #endregion
+
+        #region Mail Tables
+        public DbSet<MailJob> MailJobs { get; set; }
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -826,6 +832,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaPresenzeRichieste))
+                    .HasKey(x => x.Id);
+            });
+
+
+            builder.Entity<ViewGaPresenzeRichiestaMail>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPresenzeRichiestaMail))
                     .HasKey(x => x.Id);
             });
 

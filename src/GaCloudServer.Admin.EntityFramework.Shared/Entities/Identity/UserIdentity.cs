@@ -13,6 +13,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity
 		public string FullName { get; set; }
 		public string OfficePhoneNumber { get; set; }
 		public DateTime? DateOfBirth { get; set; }
+		public bool ShowInContacts { get; set; }
+		public bool ShowEmailInContacts { get; set; }
+		public bool ShowInApp { get; set; }
+
 	}
 }
 

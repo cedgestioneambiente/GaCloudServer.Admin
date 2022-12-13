@@ -31,6 +31,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaPresenzeDipendenti> viewGaPresenzeDipendentiRepo;
         protected readonly IGenericRepository<ViewGaPresenzeOrariGiornate> viewGaPresenzeOrariGiornateRepo;
         protected readonly IGenericRepository<ViewGaPresenzeRichieste> viewGaPresenzeRichiesteRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeRichiestaMail> viewGaPresenzeRichiestaMailRepo;
 
         protected readonly IGenericRepository<GlobalSettore> globalSettoriRepo;
 
@@ -55,6 +56,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaPresenzeDipendenti> viewGaPresenzeDipendentiRepo,
             IGenericRepository<ViewGaPresenzeOrariGiornate> viewGaPresenzeOrariGiornateRepo,
             IGenericRepository<ViewGaPresenzeRichieste> viewGaPresenzeRichiesteRepo,
+            IGenericRepository<ViewGaPresenzeRichiestaMail> viewGaPresenzeRichiestaMailRepo,
 
             IGenericRepository<GlobalSettore> globalSettoriRepo,
 
@@ -77,6 +79,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaPresenzeDipendentiRepo = viewGaPresenzeDipendentiRepo;
             this.viewGaPresenzeOrariGiornateRepo = viewGaPresenzeOrariGiornateRepo;
             this.viewGaPresenzeRichiesteRepo = viewGaPresenzeRichiesteRepo;
+            this.viewGaPresenzeRichiestaMailRepo = viewGaPresenzeRichiestaMailRepo;
 
             this.globalSettoriRepo = globalSettoriRepo;
 
@@ -262,7 +265,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             if (!dto.IsAdmin && !dto.profiloUtente.SuperUser)
             {
-                
+
                 if (dto.richiesta.PresenzeDipendenteId == dipendente.Id && dto.richiesta.PresenzeStatoRichiestaId != 2 && !dto.profiloUtente.AutoApprova)
                 {
                     return -3;
@@ -303,7 +306,13 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Views
         public async Task<PagedList<ViewGaPresenzeRichieste>> GetGaViewPresenzeRichiesteBySettoreIdAsync(long globalSettoreId)
         {
-            var view = await viewGaPresenzeRichiesteRepo.GetWithFilterAsync(x=>x.SettoreId==globalSettoreId);
+            var view = await viewGaPresenzeRichiesteRepo.GetWithFilterAsync(x => x.SettoreId == globalSettoreId);
+            return view;
+        }
+
+        public async Task<ViewGaPresenzeRichiestaMail> GetViewGaPresenzeRichiestaMailByIdAsync(long id)
+        {
+            var view = await viewGaPresenzeRichiestaMailRepo.GetSingleWithFilter(x => x.Id == id);
             return view;
         }
         #endregion
@@ -467,13 +476,13 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
-       
+
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaPresenzeResponsabili>> GetViewGaPresenzeResponsabiliAsync(bool all=true)
+        public async Task<PagedList<ViewGaPresenzeResponsabili>> GetViewGaPresenzeResponsabiliAsync(bool all = true)
         {
-            var view = all? await viewGaPresenzeResponsabiliRepo.GetAllAsync(1,0):await viewGaPresenzeResponsabiliRepo.GetWithFilterAsync(x=>x.Disabled==all);
+            var view = all ? await viewGaPresenzeResponsabiliRepo.GetAllAsync(1, 0) : await viewGaPresenzeResponsabiliRepo.GetWithFilterAsync(x => x.Disabled == all);
             return view;
         }
 
@@ -512,6 +521,12 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<PagedList<ViewGaPresenzeResponsabiliOnSettori>> GetViewGaPresenzeResponsabiliOnSettoriByDipendenteAsync(long personaleDipendenteId)
         {
             var view = await viewGaPresenzeResponsabiliOnSettoriRepo.GetWithFilterAsync(x => x.Id == personaleDipendenteId, 1, 0, "Settore");
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaPresenzeResponsabiliOnSettori>> GetViewGaPresenzeResponsabiliOnSettoreMailBySettoreId(long settoreId)
+        {
+            var view = await viewGaPresenzeResponsabiliOnSettoriRepo.GetWithFilterAsync(x => x.GlobalIdSettore == settoreId && x.Abilitato==true);
             return view;
         }
         #endregion

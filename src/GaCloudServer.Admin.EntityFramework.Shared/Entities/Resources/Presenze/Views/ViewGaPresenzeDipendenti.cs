@@ -17,5 +17,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 		public double HhPermessiCcnl { get; set; }
 		public double HhRecupero { get; set; }
 		public bool Enabled { get; set; }
+		public string Email { get; set; }
 	}
 }

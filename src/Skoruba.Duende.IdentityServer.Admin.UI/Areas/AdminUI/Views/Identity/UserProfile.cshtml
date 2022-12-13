@@ -199,6 +199,42 @@
                         </div>
                     </div>
 
+                    <!--Checkbox-->
+                    <div class="form-group row">
+                        <label asp-for="ShowInContacts" class="col-sm-3 col-form-label">
+                            @await Html.PartialAsync("User/Section/Label", "UserShowInContacts")
+                        </label>
+                        <div class="col-sm-9">
+                            <toggle-button>
+                                <input asp-for="ShowInContacts" type="checkbox">
+                            </toggle-button>
+                        </div>
+                    </div>
+
+                    <!--Checkbox-->
+                    <div class="form-group row">
+                        <label asp-for="ShowEmailInContacts" class="col-sm-3 col-form-label">
+                            @await Html.PartialAsync("User/Section/Label", "UserShowEmailInContacts")
+                        </label>
+                        <div class="col-sm-9">
+                            <toggle-button>
+                                <input asp-for="ShowEmailInContacts" type="checkbox">
+                            </toggle-button>
+                        </div>
+                    </div>
+
+                    <!--Checkbox-->
+                    <div class="form-group row">
+                        <label asp-for="ShowInApp" class="col-sm-3 col-form-label">
+                            @await Html.PartialAsync("User/Section/Label", "UserShowInApp")
+                        </label>
+                        <div class="col-sm-9">
+                            <toggle-button>
+                                <input asp-for="ShowInApp" type="checkbox">
+                            </toggle-button>
+                        </div>
+                    </div>
+
                     <!--Button-->
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">
