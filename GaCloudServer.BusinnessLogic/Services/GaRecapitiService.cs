@@ -32,8 +32,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Views
         public async Task<PagedList<ViewGaRecapitiContatti>> GetViewGaRecapitiContattiAsync()
         {
-            var entities =  await viewGaRecapitiContattiRepo.GetAllAsync(1, 0);
-            return entities;
+            var view = await viewGaRecapitiContattiRepo.GetWithFilterAsync(x => x.ShowInContacts == true);
+            return view;
         }
         #endregion
 

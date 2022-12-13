@@ -17,5 +17,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personal
         public string Email { get; set; }
         public string UserName { get; set; }
         public bool Active { get; set; }
+        public bool ShowEmailInContacts { get; set; }
+        public bool ShowInApp { get; set; }
+        public bool ShowInContacts { get; set; }
     }
 }
