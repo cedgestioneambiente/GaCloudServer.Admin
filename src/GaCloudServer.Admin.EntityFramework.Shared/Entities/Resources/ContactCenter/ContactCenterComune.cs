@@ -9,5 +9,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
 {
     public class ContactCenterComune : GenericListEntity
     {
+        public string CodAzi { get; set; }
     }
 }

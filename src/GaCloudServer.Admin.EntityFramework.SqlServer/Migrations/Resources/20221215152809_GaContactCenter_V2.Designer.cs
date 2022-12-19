@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221215152809_GaContactCenter_V2")]
+    partial class GaContactCenter_V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1454,9 +1456,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("CfPiva")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ComuneAltro")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("ContactCenterComuneId")
                         .HasColumnType("bigint");
 
@@ -1527,6 +1526,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Utente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UtenteTariId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Via")

@@ -6,6 +6,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         #region ContactCenterComuni
         public class ContactCenterComuneApiDto : GenericListApiDto
         {
+            public string CodAzi { get; set; }
         }
 
         public class ContactCenterComuniApiDto : GenericPagedListApiDto<ContactCenterComuneApiDto>
@@ -91,7 +92,6 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         #region ContactCenterTickets
         public class ContactCenterTicketApiDto : GenericApiDto
         {
-        public string UtenteTariId { get; set; }
         public string Utente { get; set; }
         public string NumCon { get; set; }
         public string Partita { get; set; }
@@ -105,6 +105,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         public long ContactCenterStatoRichiestaId { get; set; }
         public long ContactCenterProvenienzaId { get; set; }
         public long ContactCenterComuneId { get; set; }
+        public string ComuneAltro { get; set; }
         public long GlobalSedeId { get; set; }
         public string UserId { get; set; }
         public bool Inviato { get; set; }

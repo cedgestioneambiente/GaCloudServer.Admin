@@ -6,7 +6,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
     public class ViewGaContactCenterTickets : GenericEntity
     {
         public string Richiedente { get; set; }
-        public string UtenteTariId { get; set; }
         public string RagioneSociale { get; set; }
         public string NumCon { get; set; }
         public string Partita { get; set; }

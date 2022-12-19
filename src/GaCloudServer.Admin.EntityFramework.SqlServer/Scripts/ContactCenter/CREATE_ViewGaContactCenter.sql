@@ -16,8 +16,7 @@ GO
 
 CREATE VIEW [dbo].[ViewGaContactCenterTickets]
 AS
-SELECT        dbo.GaContactCenterTickets.Id, dbo.PrivateViewIdentityServerAdminUserList.FullName AS Richiedente, dbo.GaContactCenterTickets.Disabled, dbo.GaContactCenterTickets.UtenteTariId, 
-                         dbo.ViewGaBackOfficeUtenzeGrouped.RagCli AS RagioneSociale, dbo.GaContactCenterTickets.NumCon, dbo.GaContactCenterTickets.Partita, dbo.ViewGaBackOfficeUtenzeGrouped.CodFis AS CfPiva, 
+SELECT        dbo.GaContactCenterTickets.Id, dbo.PrivateViewIdentityServerAdminUserList.FullName AS Richiedente, dbo.GaContactCenterTickets.Disabled, dbo.ViewGaBackOfficeUtenzeGrouped.RagCli AS RagioneSociale, dbo.GaContactCenterTickets.NumCon, dbo.GaContactCenterTickets.Partita, dbo.ViewGaBackOfficeUtenzeGrouped.CodFis AS CfPiva, 
                          dbo.ViewGaBackOfficeComuni.Descrizione AS Comune, dbo.GlobalSedi.Descrizione AS Cantiere, dbo.GaContactCenterStatiRichieste.Descrizione AS Stato, dbo.GaContactCenterProvenienze.Descrizione AS Provenienza, 
                          dbo.GaContactCenterTipiRichieste.Descrizione AS TipoTicket, dbo.GaContactCenterTickets.Via + N'N ' + dbo.GaContactCenterTickets.NumCiv AS Indirizzo, dbo.GaContactCenterTickets.Zona, 
                          dbo.GaContactCenterTickets.DataTicket, dbo.GaContactCenterTickets.EseguitoIl, dbo.GaContactCenterTickets.DataEsecuzione, dbo.GaContactCenterTickets.Materiali, dbo.GaContactCenterTickets.Promemoria, 
