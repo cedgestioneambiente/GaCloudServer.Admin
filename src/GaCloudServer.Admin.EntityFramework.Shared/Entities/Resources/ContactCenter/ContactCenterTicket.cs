@@ -1,10 +1,6 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter
 {
@@ -25,7 +21,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public long ContactCenterComuneId { get; set; }
         public string ComuneAltro { get; set; }
         public long ContactCenterTipoRichiestaId { get; set; }
-        public long GlobalSedeId { get; set; }
+        public long AziendeListaId { get; set; }
         public string UserId { get; set; }
         public bool Inviato { get; set; }
         public string Materiali { get; set; }
@@ -40,7 +36,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
 
         public ContactCenterComune ContactCenterComune { get; set; }
         public ContactCenterStatoRichiesta ContactCenterStatoRichiesta { get; set; }
-        public GlobalSede GlobalSede { get; set; }
+        public AziendeLista AziendeLista { get; set; }
         public ContactCenterProvenienza ContactCenterProvenienza { get; set; }
         public ContactCenterTipoRichiesta ContactCenterTipoRichiesta { get; set; }
     }

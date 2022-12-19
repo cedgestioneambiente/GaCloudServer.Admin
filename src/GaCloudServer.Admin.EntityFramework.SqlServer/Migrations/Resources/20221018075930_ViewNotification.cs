@@ -10,12 +10,12 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.Notification, ScriptConsts.CREATE_ViewNotification));
+           
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.Notification, ScriptConsts.DROP_ViewNotification));
+
         }
     }
 }

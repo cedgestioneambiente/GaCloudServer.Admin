@@ -105,6 +105,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         public long ContactCenterStatoRichiestaId { get; set; }
         public long ContactCenterProvenienzaId { get; set; }
         public long ContactCenterComuneId { get; set; }
+        public long AziendeListaId { get; set; }
         public string ComuneAltro { get; set; }
         public long GlobalSedeId { get; set; }
         public string UserId { get; set; }
