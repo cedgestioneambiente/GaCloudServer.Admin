@@ -6,16 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class ViewGaContactCenter : Migration
+    public partial class ViewNotification_V2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.Notification, ScriptConsts.CREATE_ViewNotification));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.Notification, ScriptConsts.DROP_ViewNotification));
         }
     }
 }
+

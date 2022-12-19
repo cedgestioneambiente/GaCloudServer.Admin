@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class ViewGaContactCenter : Migration
+    public partial class ViewGaContactCenter_V2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContactCenterMigration, ScriptConsts.CREATE_ViewGaContactCenter));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContactCenterMigration, ScriptConsts.DROP_ViewGaContactCenter));
         }
     }
 }

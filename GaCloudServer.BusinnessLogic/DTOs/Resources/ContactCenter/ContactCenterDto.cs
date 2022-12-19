@@ -104,7 +104,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
         public long ContactCenterStatoRichiestaId { get; set; }
         public long ContactCenterProvenienzaId { get; set; }
         public long ContactCenterComuneId { get; set; }
-        public long GlobalSedeId { get; set; }
+        public long AziendeListaId { get; set; }
         public string UserId { get; set; }
         public bool Inviato { get; set; }
         public string Materiali { get; set; }
