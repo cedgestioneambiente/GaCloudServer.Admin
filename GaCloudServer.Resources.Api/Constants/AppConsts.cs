@@ -10,5 +10,6 @@ namespace GaCloudServer.Resources.Api.Constants
     public static class AppConsts
     {
         public const string Presenze = "Presenze";
+        public const string ContactCenter = "ContactCenter";
     }
 }

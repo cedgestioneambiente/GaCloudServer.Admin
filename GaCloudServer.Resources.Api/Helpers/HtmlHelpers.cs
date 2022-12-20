@@ -47,5 +47,15 @@
             return list;
 
         }
+
+        public static string GenerateText(string content)
+        {
+            var text = "<div style='width:100%'>";
+            text += "<p style='margin: 0; font-size: 14px; line-height: 18px'>" + content + "</p>";
+
+            text += "</div>";
+            return text;
+
+        }
     }
 }

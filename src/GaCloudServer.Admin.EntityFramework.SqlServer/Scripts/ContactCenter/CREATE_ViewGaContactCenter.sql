@@ -23,7 +23,8 @@ SELECT        GaContactCenterTickets.Id, PrivateViewIdentityServerAdminUserList.
                          GaContactCenterTickets.Zona, GaContactCenterTickets.DataTicket, GaContactCenterTickets.EseguitoIl, GaContactCenterTickets.DataEsecuzione, GaContactCenterTickets.Materiali, GaContactCenterTickets.Promemoria, 
                          GaContactCenterTickets.Inviato, GaContactCenterTickets.Note1, GaContactCenterTickets.Note2, GaContactCenterTickets.Reclamo, GaContactCenterTickets.Stampato, GaContactCenterTickets.DaFatturare, 
                          GaContactCenterTickets.TelefonoMail, GaContactCenterTickets.Id AS Numero,CASE WHEN Ingombranti IS NULL 
-                         THEN 'False' ELSE Ingombranti END AS Ingombranti
+                         THEN 'False' ELSE Ingombranti END AS Ingombranti,
+						 ViewGaContactCenterTicketsMailsInfos.Info, GaContactCenterTickets.Disabled
 
 FROM            GaContactCenterTickets INNER JOIN
                          PrivateViewIdentityServerAdminUserList ON GaContactCenterTickets.UserId = PrivateViewIdentityServerAdminUserList.Id INNER JOIN

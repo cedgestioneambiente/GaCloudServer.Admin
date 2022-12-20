@@ -60,7 +60,17 @@ namespace GaCloudServer.Jobs.Services
                 body = body.Replace("{jobContent}", mailJob.Content);
                 body = body.Replace("{jobDate}", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
 
-                email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
+                if (!mailJob.Attachment)
+                {
+                    email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
+                }
+                else
+                {
+                    var builder = new BodyBuilder();
+                    builder.HtmlBody = mailJob.Content;
+                    builder.Attachments.Add(mailJob.AttachmentPath);
+                    email.Body = builder.ToMessageBody();
+                }
 
 
                 using (var client = new SmtpClient())

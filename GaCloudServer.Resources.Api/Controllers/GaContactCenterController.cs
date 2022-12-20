@@ -1,11 +1,14 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Aziende;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Aziende;
 using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
@@ -29,14 +32,18 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly IGaAziendeService _gaAziendeService;
         private readonly IFileService _fileService;
         private readonly IPrintService _printService;
+        private readonly IMailService _mailService;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<GaContactCenterController> _logger;
         private readonly CultureInfo itIT = new CultureInfo("it-IT");
 
         public GaContactCenterController(
             IGaContactCenterService gaContactCenterService,
             IGaAziendeService gaAziendeService
-            , IFileService fileService
+            ,IFileService fileService
             ,IPrintService printService
+            ,IMailService mailService
+            ,INotificationService notificationService
             , ILogger<GaContactCenterController> logger)
         {
 
@@ -44,6 +51,8 @@ namespace GaCloudServer.Resources.Api.Controllers
             _gaAziendeService = gaAziendeService;
             _fileService = fileService;
             _printService = printService;
+            _mailService = mailService;
+            _notificationService= notificationService;
             _logger = logger;
         }
 
@@ -1141,6 +1150,96 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
+        [HttpPost("SendGaContactCenterTicketAsync")]
+        public async Task<ApiResponse> SendGaContactCenterTicketAsync([FromBody] ContactCenterSendMailApiDto apiDto)
+        {
+            try 
+            {
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.ContactCenter);
+                var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+                var ticket = await _gaContactCenterService.GetViewGaContactCenterTicketById(apiDto.id);
+
+                string dataStampa = "-";
+                if (ticket.DataEsecuzione != null)
+                {
+
+                    dataStampa = Convert.ToDateTime(ticket.DataEsecuzione).ToString("dddd dd MMMM yyyy", itIT);
+                }
+
+                ContactCenterMailsOnTicketsApiDto mailList = new ContactCenterMailsOnTicketsApiDto();
+                string mailTo = "";
+
+                foreach (var mailId in apiDto.mailList)
+                {
+                    var mail = await _gaContactCenterService.GetGaContactCenterMailByIdAsync(mailId);
+                    mailList.Data.Add(new ContactCenterMailOnTicketApiDto() { Id = 0,ContactCenterTicketId=apiDto.id,ContactCenterMailId=mailId,MailAddress=mail.Mail,Data=DateTime.Now,Disabled=false });
+                }
+
+                mailTo = string.Join(";",(from x in mailList.Data
+                          select x.MailAddress).ToList<string>());
+
+                if (!ticket.Ingombranti)
+                {
+                    var dto = GenerateContactCenterTicketIntTemplate(ticket, dataStampa);
+
+                    var attachPath = await _printService.Print("ContactCenterTicketInt", dto);
+
+
+                    var response = await _mailService.AddMailJobAsync(new MailJob()
+                    {
+                        Id = 0,
+                        Description = "Ticket Contact Center",
+                        DateScheduled = DateTime.Now,
+                        Title = "Ticket Contact Center",
+                        MailingTo = mailTo,
+                        MailCc = "",
+                        Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.ContactCenter),
+                        Content = HtmlHelpers.GenerateText("In allegato il ticket."),
+                        Template = "DefaultMailJob.html",
+                        UserId = apiDto.userid,
+                        OkMessage = "La tua richiesta è stata inoltrata correttamente.",
+                        KoMessage = "Si è verificato un problema durante l'invio della tua richiesta.",
+                        Attachment = true,
+                        AttachmentPath = attachPath
+                    });
+                    
+
+                    return new ApiResponse(response);
+                }
+                else
+                {
+                    var dto = GenerateContactCenterTicketIngTemplate(ticket, dataStampa);
+
+                    var attachPath = await _printService.Print("ContactCenterTicketIng", dto);
+                    var response = await _mailService.AddMailJobAsync(new MailJob()
+                    {
+                        Id = 0,
+                        Description = "Ticket Contact Center",
+                        DateScheduled = DateTime.Now,
+                        Title = "Ticket Contact Center",
+                        MailingTo = mailTo,
+                        MailCc = "",
+                        Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.ContactCenter),
+                        Content = HtmlHelpers.GenerateText("In allegato il ticket."),
+                        Template = "DefaultMailJob.html",
+                        UserId = apiDto.userid,
+                        OkMessage = "La tua richiesta è stata inoltrata correttamente.",
+                        KoMessage = "Si è verificato un problema durante l'invio della tua richiesta.",
+                        Attachment = true,
+                        AttachmentPath = attachPath
+                    });
+
+                    return new ApiResponse(response);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
         [HttpPost("SetPrintedGaContactCenterTicketsAsync")]
         public async Task<ApiResponse> SetPrintedGaContactCenterTicketsAsync([FromBody] long[] ticketsId)
         {
@@ -1172,65 +1271,19 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 if (!ticket.Ingombranti)
                 {
-                    var dto = new ContactCenterTicketIntTemplateDto() { 
-                        FileName="ContactCenterInterventoTicket.pdf",
-                        FilePath=@"Print/ContactCenter",
-                        Title="Contact Center Ticket Intervento",
-                        Css="ContactCenterTicketInt"
-                    
-                    };
-
-                    dto.Id = ticket.Id.ToString();
-                    dto.DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy");
-                    dto.Comune = ticket.Comune;
-                    dto.Indirizzo = ticket.Indirizzo;
-                    dto.Utente = ticket.RagioneSociale;
-                    dto.TelefonoMail = ticket.TelefonoMail;
-                    dto.TipoTicket = ticket.TipoTicket;
-                    dto.DataStampa = dataStampa;
-                    dto.Richiedente = ticket.Richiedente;
-                    dto.Note1 = ticket.Note1;
-                    dto.Note2 = ticket.Note2;
-                    dto.Provenienza = ticket.Provenienza;
-                    dto.EseguitoIl = ticket.EseguitoIl.GetValueOrDefault().ToString();
-                    dto.Promemoria = ticket.Promemoria == true ? "&#9745;" : "&#9744;";
-                    dto.Reclamo = ticket.Reclamo == true ? "&#9745;" : "&#9744;";
-                    dto.DaFatturare = ticket.DaFatturare == true ? "&#9745;" : "&#9744;";
+                   var dto= GenerateContactCenterTicketIntTemplate(ticket,dataStampa);
 
                     var response = await _printService.Print("ContactCenterTicketInt", dto);
                     return new ApiResponse(response);
                 }
                 else
                 {
-                    var dto = new ContactCenterTicketIngTemplateDto()
-                    {
-                        FileName = "ContactCenterInterventoTicket.pdf",
-                        FilePath = @"Print/ContactCenter",
-                        Title = "Contact Center Ticket Intervento",
-                        Css = "ContactCenterTicketInt"
-
-                    };
-
-                    dto.Id = ticket.Id.ToString();
-                    dto.DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy");
-                    dto.Comune = ticket.Comune;
-                    dto.Indirizzo = ticket.Indirizzo;
-                    dto.Utente = ticket.RagioneSociale;
-                    dto.TelefonoMail = ticket.TelefonoMail;
-                    dto.TipoTicket = ticket.TipoTicket;
-                    dto.DataStampa = dataStampa;
-                    dto.Richiedente = ticket.Richiedente;
-                    dto.Note1 = ticket.Note1;
-                    dto.Note2 = ticket.Note2;
-                    dto.Materiali = ticket.Materiali;
+                    var dto = GenerateContactCenterTicketIngTemplate(ticket, dataStampa);
 
                     var response = await _printService.Print("ContactCenterTicketIng", dto);
                     return new ApiResponse(response);
-
                     
                 }
-
-
 
             }
             catch (Exception ex)
@@ -1415,6 +1468,66 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
 
+        }
+        #endregion
+
+        #region Helpers
+        private ContactCenterTicketIntTemplateDto GenerateContactCenterTicketIntTemplate(ViewGaContactCenterTickets ticket, string dataStampa) 
+        {
+            var dto = new ContactCenterTicketIntTemplateDto()
+            {
+                FileName = "ContactCenterInterventoTicket.pdf",
+                FilePath = @"Print/ContactCenter",
+                Title = "Contact Center Ticket Intervento",
+                Css = "ContactCenterTicketInt"
+
+            };
+
+            dto.Id = ticket.Id.ToString();
+            dto.DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy");
+            dto.Comune = ticket.Comune;
+            dto.Indirizzo = ticket.Indirizzo;
+            dto.Utente = ticket.RagioneSociale;
+            dto.TelefonoMail = ticket.TelefonoMail;
+            dto.TipoTicket = ticket.TipoTicket;
+            dto.DataStampa = dataStampa;
+            dto.Richiedente = ticket.Richiedente;
+            dto.Note1 = ticket.Note1;
+            dto.Note2 = ticket.Note2;
+            dto.Provenienza = ticket.Provenienza;
+            dto.EseguitoIl = ticket.EseguitoIl == null ? "" : ticket.EseguitoIl.ToString();
+            dto.Promemoria = ticket.Promemoria == true ? "&#9745;" : "&#9744;";
+            dto.Reclamo = ticket.Reclamo == true ? "&#9745;" : "&#9744;";
+            dto.DaFatturare = ticket.DaFatturare == true ? "&#9745;" : "&#9744;";
+
+            return dto;
+        }
+
+        private ContactCenterTicketIngTemplateDto GenerateContactCenterTicketIngTemplate(ViewGaContactCenterTickets ticket, string dataStampa)
+        {
+            var dto = new ContactCenterTicketIngTemplateDto()
+            {
+                FileName = "ContactCenterInterventoTicket.pdf",
+                FilePath = @"Print/ContactCenter",
+                Title = "Contact Center Ticket Intervento",
+                Css = "ContactCenterTicketInt"
+
+            };
+
+            dto.Id = ticket.Id.ToString();
+            dto.DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy");
+            dto.Comune = ticket.Comune;
+            dto.Indirizzo = ticket.Indirizzo;
+            dto.Utente = ticket.RagioneSociale;
+            dto.TelefonoMail = ticket.TelefonoMail;
+            dto.TipoTicket = ticket.TipoTicket;
+            dto.DataStampa = dataStampa;
+            dto.Richiedente = ticket.Richiedente;
+            dto.Note1 = ticket.Note1;
+            dto.Note2 = ticket.Note2;
+            dto.Materiali = ticket.Materiali;
+
+            return dto;
         }
         #endregion
     }
