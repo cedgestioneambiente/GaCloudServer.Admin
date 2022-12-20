@@ -589,7 +589,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #region Views
         [HttpGet("GetViewGaSegnalazioniDocumentiAsync/{mode}/{userId}")]
-        public async Task<ApiResponse> GetViewGaSegnalazioniAsync(int mode = 1, string userId = "ga-s-administrator")
+        public async Task<ApiResponse> GetViewGaSegnalazioniDocumentiAsync(int mode = 1, string userId = "ga-s-administrator")
         {
 
             var response = await _gaSegnalazioniService.GetViewGaSegnalazioniDocumentiAsync((SegnalazioniDocumentiMode)mode, userId);
@@ -597,11 +597,27 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpGet("GetViewGaSegnalazioniDocumentiAsync/{mode}/{userId}/{page}/{pageSize}")]
-        public async Task<ApiResponse> GetViewGaSegnalazioniAsync(int mode = 1, string userId = "ga-s-administrator", int page = 1, int pageSize = 100)
+        public async Task<ApiResponse> GetViewGaSegnalazioniDocumentiAsync(int mode = 1, string userId = "ga-s-administrator", int page = 1, int pageSize = 100)
         {
 
             var response = await _gaSegnalazioniService.GetViewGaSegnalazioniDocumentiAsync((SegnalazioniDocumentiMode)mode, userId, page, pageSize);
             return new ApiResponse("GetView", response);
+        }
+
+        [HttpGet("GetViewGaSegnalazioniDocumentoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaSegnalazioniDocumentoByIdAsync(long id)
+        {
+            try
+            {
+                var view = await _gaSegnalazioniService.GetViewGaSegnalazioniDocumentoByIdAsync(id);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
         }
         #endregion
 
