@@ -24,5 +24,31 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             sb.AppendFormat(@fileContent, dto.Numero,dto.Data,dto.Preposto,dto.Lavoratore,dto.Mansioni,table);
             return sb.ToString();
         }
+
+        public static string ContactCenterTicketInt(ContactCenterTicketIntTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ContactCenterTicketInt/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            sb.AppendFormat(@fileContent, dto.Id, dto.DataTicket,dto.Comune,dto.Indirizzo,dto.Utente,dto.TelefonoMail,dto.TipoTicket,dto.DataStampa,dto.Richiedente,dto.Note1,dto.Note2,dto.Provenienza,
+                dto.EseguitoIl,dto.Promemoria,dto.Reclamo,dto.DaFatturare);
+            return sb.ToString();
+
+
+        }
+
+        public static string ContactCenterTicketIng(ContactCenterTicketIngTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ContactCenterTicketIng/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            sb.AppendFormat(@fileContent, dto.Id, dto.DataTicket, dto.Comune, dto.Indirizzo, dto.Utente, dto.TelefonoMail, dto.TipoTicket, dto.DataStampa, dto.Richiedente,
+                dto.Note1, dto.Note2, dto.Materiali);
+            return sb.ToString();
+
+
+        }
     }
 }

@@ -32,6 +32,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dtos;
         }
 
+        public async Task<AziendeListeDto> GetGaAziendeListeForContactCenterAsync()
+        {
+            var entities = await gaAziendeListeRepo.GetWithFilterAsync(x => x.ContactCenterTicket == true);
+            var dtos = entities.ToDto<AziendeListeDto, PagedList<AziendeLista>>();
+            return dtos;
+        }
+
         public async Task<AziendeListaDto> GetGaAziendeListaByIdAsync(long id)
         {
             var entity = await gaAziendeListeRepo.GetByIdAsync(id);

@@ -798,7 +798,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
-        public async Task<bool> SetPrintedGaContactCenterTicketAsync(long[] ticketsId)
+        public async Task<bool> SetPrintedGaContactCenterTicketsAsync(long[] ticketsId)
         {
             try
             {

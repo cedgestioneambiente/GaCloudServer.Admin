@@ -28,7 +28,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public bool Stampato { get; set; }
         public string Note1 { get; set; }
         public string Note2 { get; set; }
-        public string Note3 { get; set; }
         public string TelefonoMail { get; set; }
         public string Info { get; set; }
         public long Numero { get; set; }

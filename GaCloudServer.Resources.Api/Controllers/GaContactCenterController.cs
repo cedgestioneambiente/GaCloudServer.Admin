@@ -1,15 +1,19 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Aziende;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
+using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Dtos.Aziende;
 using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -22,17 +26,24 @@ namespace GaCloudServer.Resources.Api.Controllers
     public class GaContactCenterController : Controller
     {
         private readonly IGaContactCenterService _gaContactCenterService;
+        private readonly IGaAziendeService _gaAziendeService;
         private readonly IFileService _fileService;
+        private readonly IPrintService _printService;
         private readonly ILogger<GaContactCenterController> _logger;
+        private readonly CultureInfo itIT = new CultureInfo("it-IT");
 
         public GaContactCenterController(
-            IGaContactCenterService gaContactCenterService
+            IGaContactCenterService gaContactCenterService,
+            IGaAziendeService gaAziendeService
             , IFileService fileService
+            ,IPrintService printService
             , ILogger<GaContactCenterController> logger)
         {
 
             _gaContactCenterService = gaContactCenterService;
+            _gaAziendeService = gaAziendeService;
             _fileService = fileService;
+            _printService = printService;
             _logger = logger;
         }
 
@@ -1071,6 +1082,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+                apiDto.DataTicket = DateTime.UtcNow;
                 var dto = apiDto.ToDto<ContactCenterTicketDto, ContactCenterTicketApiDto>();
                 var response = await _gaContactCenterService.AddGaContactCenterTicketAsync(dto);
 
@@ -1129,6 +1141,104 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
+        [HttpPost("SetPrintedGaContactCenterTicketsAsync")]
+        public async Task<ApiResponse> SetPrintedGaContactCenterTicketsAsync([FromBody] long[] ticketsId)
+        {
+            try
+            {
+                var entities = await _gaContactCenterService.SetPrintedGaContactCenterTicketsAsync(ticketsId);
+                return new ApiResponse(entities, code.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
+
+        [HttpGet("PrintGaContactCenterTicketByIdAsync/{id}")]
+        public async Task<ApiResponse> PrintGaContactCenterTicketByIdAsync(long id)
+        {
+            try
+            {
+                var ticket = await _gaContactCenterService.GetViewGaContactCenterTicketById(id);
+
+                string dataStampa = "-";
+                if (ticket.DataEsecuzione != null)
+                {
+
+                    dataStampa = Convert.ToDateTime(ticket.DataEsecuzione).ToString("dddd dd MMMM yyyy", itIT);
+                }
+
+                if (!ticket.Ingombranti)
+                {
+                    var dto = new ContactCenterTicketIntTemplateDto() { 
+                        FileName="ContactCenterInterventoTicket.pdf",
+                        FilePath=@"Print/ContactCenter",
+                        Title="Contact Center Ticket Intervento",
+                        Css="ContactCenterTicketInt"
+                    
+                    };
+
+                    dto.Id = ticket.Id.ToString();
+                    dto.DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy");
+                    dto.Comune = ticket.Comune;
+                    dto.Indirizzo = ticket.Indirizzo;
+                    dto.Utente = ticket.RagioneSociale;
+                    dto.TelefonoMail = ticket.TelefonoMail;
+                    dto.TipoTicket = ticket.TipoTicket;
+                    dto.DataStampa = dataStampa;
+                    dto.Richiedente = ticket.Richiedente;
+                    dto.Note1 = ticket.Note1;
+                    dto.Note2 = ticket.Note2;
+                    dto.Provenienza = ticket.Provenienza;
+                    dto.EseguitoIl = ticket.EseguitoIl.GetValueOrDefault().ToString();
+                    dto.Promemoria = ticket.Promemoria == true ? "&#9745;" : "&#9744;";
+                    dto.Reclamo = ticket.Reclamo == true ? "&#9745;" : "&#9744;";
+                    dto.DaFatturare = ticket.DaFatturare == true ? "&#9745;" : "&#9744;";
+
+                    var response = await _printService.Print("ContactCenterTicketInt", dto);
+                    return new ApiResponse(response);
+                }
+                else
+                {
+                    var dto = new ContactCenterTicketIngTemplateDto()
+                    {
+                        FileName = "ContactCenterInterventoTicket.pdf",
+                        FilePath = @"Print/ContactCenter",
+                        Title = "Contact Center Ticket Intervento",
+                        Css = "ContactCenterTicketInt"
+
+                    };
+
+                    dto.Id = ticket.Id.ToString();
+                    dto.DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy");
+                    dto.Comune = ticket.Comune;
+                    dto.Indirizzo = ticket.Indirizzo;
+                    dto.Utente = ticket.RagioneSociale;
+                    dto.TelefonoMail = ticket.TelefonoMail;
+                    dto.TipoTicket = ticket.TipoTicket;
+                    dto.DataStampa = dataStampa;
+                    dto.Richiedente = ticket.Richiedente;
+                    dto.Note1 = ticket.Note1;
+                    dto.Note2 = ticket.Note2;
+                    dto.Materiali = ticket.Materiali;
+
+                    var response = await _printService.Print("ContactCenterTicketIng", dto);
+                    return new ApiResponse(response);
+
+                    
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
         //[HttpGet("ValidateGaContactCenterTicketAsync/{id}/{descrizione}")]
         //public async Task<ActionResult<ApiResponse>> ValidateGaContactCenterTicketAsync(long id, string descrizione)
         //{
@@ -1209,7 +1319,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                var entities = await _gaContactCenterService.SetPrintedGaContactCenterTicketAsync(apiDto.ticketsId);
+                var entities = await _gaContactCenterService.SetPrintedGaContactCenterTicketsAsync(apiDto.ticketsId);
                 return new ApiResponse(entities);
             }
             catch (Exception ex)
@@ -1219,6 +1329,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #endregion
+
         #region Views
         [HttpPost("ExportGaContactCenterTicketsQueryable")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
@@ -1286,6 +1397,25 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
         #endregion
+        #endregion
+
+        #region Extras
+        [HttpGet("GetGaContactCenterCantieriAsync")]
+        public async Task<ActionResult<ApiResponse>> GetGaContactCenterCantietiAsync()
+        {
+            try
+            {
+                var dtos = await _gaAziendeService.GetGaAziendeListeForContactCenterAsync();
+                var apiDtos = dtos.ToApiDto<AziendeListeApiDto, AziendeListeDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
     }
 }

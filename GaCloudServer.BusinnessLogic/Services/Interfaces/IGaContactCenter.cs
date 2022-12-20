@@ -140,7 +140,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DuplicateGaContactCenterTicketAsync(long[] ticketsId, string userId, bool stampato);
         Task<bool> SetDoneGaContactCenterTicketAsync(long[] ticketsId);
         Task<bool> SetUndoneGaContactCenterTicketAsync(long[] ticketsId);
-        Task<bool> SetPrintedGaContactCenterTicketAsync(long[] ticketsId);
+        Task<bool> SetPrintedGaContactCenterTicketsAsync(long[] ticketsId);
         #endregion
 
         #region Views

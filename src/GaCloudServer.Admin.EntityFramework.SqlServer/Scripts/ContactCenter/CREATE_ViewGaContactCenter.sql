@@ -16,25 +16,21 @@ GO
 
 CREATE VIEW [dbo].[ViewGaContactCenterTickets]
 AS
-SELECT        dbo.GaContactCenterTickets.Id, dbo.PrivateViewIdentityServerAdminUserList.FullName AS Richiedente, dbo.GaContactCenterTickets.Disabled, dbo.GaContactCenterTickets.UtenteTariId, 
-                         dbo.ViewGaBackOfficeUtenzeGrouped.RagCli AS RagioneSociale, dbo.GaContactCenterTickets.NumCon, dbo.GaContactCenterTickets.Partita, dbo.ViewGaBackOfficeUtenzeGrouped.CodFis AS CfPiva, 
-                         dbo.ViewGaBackOfficeComuni.Descrizione AS Comune, dbo.GaAziendeListe.Descrizione AS Cantiere, dbo.GaContactCenterStatiRichieste.Descrizione AS Stato, dbo.GaContactCenterProvenienze.Descrizione AS Provenienza, 
-SELECT        dbo.GaContactCenterTickets.Id, dbo.PrivateViewIdentityServerAdminUserList.FullName AS Richiedente, dbo.GaContactCenterTickets.Disabled, dbo.ViewGaBackOfficeUtenzeGrouped.RagCli AS RagioneSociale, dbo.GaContactCenterTickets.NumCon, dbo.GaContactCenterTickets.Partita, dbo.ViewGaBackOfficeUtenzeGrouped.CodFis AS CfPiva, 
-                         dbo.ViewGaBackOfficeComuni.Descrizione AS Comune, dbo.GlobalSedi.Descrizione AS Cantiere, dbo.GaContactCenterStatiRichieste.Descrizione AS Stato, dbo.GaContactCenterProvenienze.Descrizione AS Provenienza, 
-                         dbo.GaContactCenterTipiRichieste.Descrizione AS TipoTicket, dbo.GaContactCenterTickets.Via + N'N ' + dbo.GaContactCenterTickets.NumCiv AS Indirizzo, dbo.GaContactCenterTickets.Zona, 
-                         dbo.GaContactCenterTickets.DataTicket, dbo.GaContactCenterTickets.EseguitoIl, dbo.GaContactCenterTickets.DataEsecuzione, dbo.GaContactCenterTickets.Materiali, dbo.GaContactCenterTickets.Promemoria, 
-                         dbo.GaContactCenterTickets.Inviato, dbo.GaContactCenterTickets.Note1, dbo.GaContactCenterTickets.Note2, dbo.GaContactCenterTickets.Note3, dbo.GaContactCenterTickets.Reclamo, dbo.GaContactCenterTickets.Stampato, 
-                         dbo.GaContactCenterTickets.DaFatturare, dbo.GaContactCenterTickets.TelefonoMail, dbo.ViewGaContactCenterTicketsMailsInfos.Info, dbo.GaContactCenterTickets.Id AS Numero, CASE WHEN Ingombranti IS NULL 
+SELECT        GaContactCenterTickets.Id, PrivateViewIdentityServerAdminUserList.FullName AS Richiedente, 
+                         CASE WHEN GaContactCenterComuni.CodAzi = 'C00' THEN GaContactCenterTickets.ComuneAltro ELSE GaContactCenterComuni.Descrizione END AS Comune, GaContactCenterTickets.Utente AS RagioneSociale, 
+                         GaContactCenterTickets.NumCon, GaContactCenterTickets.Partita, GaContactCenterTickets.CfPiva, GaAziendeListe.DescrizioneBreve AS Cantiere, GaContactCenterStatiRichieste.Descrizione AS Stato, 
+                         GaContactCenterProvenienze.Descrizione AS Provenienza, GaContactCenterTipiRichieste.Descrizione AS TipoTicket, CONCAT(GaContactCenterTickets.Via, ', ', GaContactCenterTickets.NumCiv)  AS Indirizzo, 
+                         GaContactCenterTickets.Zona, GaContactCenterTickets.DataTicket, GaContactCenterTickets.EseguitoIl, GaContactCenterTickets.DataEsecuzione, GaContactCenterTickets.Materiali, GaContactCenterTickets.Promemoria, 
+                         GaContactCenterTickets.Inviato, GaContactCenterTickets.Note1, GaContactCenterTickets.Note2, GaContactCenterTickets.Reclamo, GaContactCenterTickets.Stampato, GaContactCenterTickets.DaFatturare, 
+                         GaContactCenterTickets.TelefonoMail, GaContactCenterTickets.Id AS Numero,CASE WHEN Ingombranti IS NULL 
                          THEN 'False' ELSE Ingombranti END AS Ingombranti
-FROM            dbo.GaContactCenterTickets INNER JOIN
-                         dbo.PrivateViewIdentityServerAdminUserList ON dbo.GaContactCenterTickets.UserId = dbo.PrivateViewIdentityServerAdminUserList.Id COLLATE DATABASE_DEFAULT INNER JOIN
-                         dbo.GaContactCenterComuni ON dbo.GaContactCenterTickets.ContactCenterComuneId = dbo.GaContactCenterComuni.Id INNER JOIN
-                         dbo.GaContactCenterProvenienze ON dbo.GaContactCenterTickets.ContactCenterProvenienzaId = dbo.GaContactCenterProvenienze.Id INNER JOIN
-                         dbo.GaContactCenterStatiRichieste ON dbo.GaContactCenterTickets.ContactCenterStatoRichiestaId = dbo.GaContactCenterStatiRichieste.Id INNER JOIN
-                         dbo.GaContactCenterTipiRichieste ON dbo.GaContactCenterTickets.ContactCenterTipoRichiestaId = dbo.GaContactCenterTipiRichieste.Id INNER JOIN
-                         dbo.GaAziendeListe ON dbo.GaContactCenterTickets.AziendeListaId = dbo.GaAziendeListe.Id INNER JOIN
-                         dbo.ViewGaContactCenterTicketsMailsInfos ON dbo.GaContactCenterTickets.Id = dbo.ViewGaContactCenterTicketsMailsInfos.ContactCenterTicketId LEFT OUTER JOIN
-                         dbo.ViewGaBackOfficeComuni ON CAST(dbo.GaContactCenterTickets.ContactCenterComuneId AS VARCHAR) COLLATE DATABASE_DEFAULT = CAST(dbo.ViewGaBackOfficeComuni.Id AS VARCHAR) LEFT OUTER JOIN
-                         dbo.ViewGaBackOfficeUtenzeGrouped ON CAST(dbo.GaContactCenterTickets.NumCon AS VARCHAR) COLLATE DATABASE_DEFAULT = CAST(dbo.ViewGaBackOfficeUtenzeGrouped.NumCon AS VARCHAR) AND 
-                         CAST(dbo.GaContactCenterTickets.Partita AS VARCHAR) COLLATE DATABASE_DEFAULT = CAST(dbo.ViewGaBackOfficeUtenzeGrouped.Partita AS VARCHAR)
+
+FROM            GaContactCenterTickets INNER JOIN
+                         PrivateViewIdentityServerAdminUserList ON GaContactCenterTickets.UserId = PrivateViewIdentityServerAdminUserList.Id INNER JOIN
+                         GaContactCenterComuni ON GaContactCenterTickets.ContactCenterComuneId = GaContactCenterComuni.Id INNER JOIN
+                         GaAziendeListe ON GaContactCenterTickets.AziendeListaId = GaAziendeListe.Id INNER JOIN
+                         GaContactCenterStatiRichieste ON GaContactCenterTickets.ContactCenterStatoRichiestaId = GaContactCenterStatiRichieste.Id INNER JOIN
+                         GaContactCenterProvenienze ON GaContactCenterTickets.ContactCenterProvenienzaId = GaContactCenterProvenienze.Id INNER JOIN
+                         GaContactCenterTipiRichieste ON GaContactCenterTickets.ContactCenterTipoRichiestaId = GaContactCenterTipiRichieste.Id LEFT OUTER JOIN
+                         ViewGaContactCenterTicketsMailsInfos ON GaContactCenterTickets.Id = ViewGaContactCenterTicketsMailsInfos.ContactCenterTicketId
 GO

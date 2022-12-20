@@ -6,6 +6,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
     {
         #region GaAziendeListe
         Task<AziendeListeDto> GetGaAziendeListeAsync(int page = 1, int pageSize = 0);
+        Task<AziendeListeDto> GetGaAziendeListeForContactCenterAsync();
         Task<AziendeListaDto> GetGaAziendeListaByIdAsync(long id);
 
         Task<long> AddGaAziendeListaAsync(AziendeListaDto dto);
