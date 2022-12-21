@@ -113,7 +113,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<ContactCenterMailsOnTicketsDto> GetGaContactCenterMailsOnTicketsByTicketIdAsync(long ticketId);
         Task<ContactCenterMailOnTicketDto> GetGaContactCenterMailOnTicketByIdAsync(long id);
 
-        //Task<long> AddGaContactCenterMailOnTicketAsync(long id, ContactCenterMailOnTicketDto dto);
+        Task<bool> AddGaContactCenterMailOnTicketAsync(long id, ContactCenterMailsOnTicketsDto dto);
         Task<long> UpdateGaContactCenterMailOnTicketAsync(ContactCenterMailOnTicketDto dto);
 
         Task<bool> DeleteGaContactCenterMailOnTicketAsync(long id);
@@ -137,6 +137,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         //Task<bool> ValidateGaContactCenterTicketAsync(long id, string descrizione);
         //Task<bool> ChangeStatusGaContactCenterTicketAsync(long id);
+        Task<PagedList<ViewGaContactCenterTicketsIngombranti>> GetGaContactCenterTicketsIngAsync(long comuneId, DateTime dataEsecuzione);
         Task<bool> DuplicateGaContactCenterTicketAsync(long[] ticketsId, string userId, bool stampato);
         Task<bool> SetDoneGaContactCenterTicketAsync(long[] ticketsId);
         Task<bool> SetUndoneGaContactCenterTicketAsync(long[] ticketsId);

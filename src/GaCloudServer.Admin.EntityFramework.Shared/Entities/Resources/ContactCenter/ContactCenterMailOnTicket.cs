@@ -15,6 +15,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public DateTime Data { get; set; }
 
         public ContactCenterTicket ContactCenterTicket { get; set; }
-        public ContactCenterTicket ContactCenterMail { get; set; }
+        public ContactCenterMail ContactCenterMail { get; set; }
     }
 }
