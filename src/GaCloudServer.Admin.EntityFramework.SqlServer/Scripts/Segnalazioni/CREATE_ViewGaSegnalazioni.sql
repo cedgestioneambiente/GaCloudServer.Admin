@@ -5,6 +5,6 @@ SELECT        dbo.GaSegnalazioniDocumenti.Id, dbo.GaSegnalazioniTipi.Id AS TipoI
                          dbo.GaSegnalazioniStati.Descrizione AS Stato, dbo.GaSegnalazioniDocumenti.Sanzione, dbo.GaSegnalazioniDocumenti.NoteSanzione, dbo.GaSegnalazioniDocumenti.NoteGestione, dbo.GaSegnalazioniDocumenti.Disabled
 FROM            dbo.GaSegnalazioniDocumenti INNER JOIN
                          dbo.GaSegnalazioniStati ON dbo.GaSegnalazioniDocumenti.SegnalazioniStatoId = dbo.GaSegnalazioniStati.Id INNER JOIN
-                         dbo.GaSegnalazioniTipi ON dbo.GaSegnalazioniDocumenti.SegnalazioniTipoId = dbo.GaSegnalazioniTipi.Id INNER JOIN
+                         dbo.GaSegnalazioniTipi ON dbo.GaSegnalazioniDocumenti.SegnalazioniTipoId = dbo.GaSegnalazioniTipi.Id LEFT JOIN
                          dbo.PrivateViewIdentityServerAdminUserList ON dbo.GaSegnalazioniDocumenti.UserId = dbo.PrivateViewIdentityServerAdminUserList.Id
 GO

@@ -342,6 +342,13 @@ namespace GaCloudServer.BusinnessLogic.Services
 
                 return entity;
         }
+
+        public async Task<PagedList<ViewGaSegnalazioniDocumenti>> GetViewGaSegnalazioniDocumentiAsync(bool all = true)
+        {
+            var entities = all ? await viewGaSegnalazioniDocumentiRepo.GetAllAsync(1, 0) : await viewGaSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Disabled == false);
+            return entities;
+        }
+
         public async Task<PagedList<ViewGaSegnalazioniDocumenti>> GetViewGaSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ga-s-administrator")
         {
             try
