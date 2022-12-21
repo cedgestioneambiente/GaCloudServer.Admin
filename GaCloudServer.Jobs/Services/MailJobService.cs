@@ -66,9 +66,13 @@ namespace GaCloudServer.Jobs.Services
                 }
                 else
                 {
+                    string projectDirectory = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+                    string wwwrootPath = Path.Combine(projectDirectory, "GaCloudServer\\GaCloudServer.Resources.Api", "wwwroot");
+
+
                     var builder = new BodyBuilder();
-                    builder.HtmlBody = mailJob.Content;
-                    builder.Attachments.Add(mailJob.AttachmentPath);
+                    builder.HtmlBody = body;
+                    builder.Attachments.Add(Path.Combine(wwwrootPath, mailJob.AttachmentPath).Replace("/","\\"));
                     email.Body = builder.ToMessageBody();
                 }
 

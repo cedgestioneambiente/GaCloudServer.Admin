@@ -564,35 +564,29 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
-        //public async Task<long> AddGaContactCenterMailOnTicketAsync(ContactCenterMailOnTicketDto dto)
-        //{
-        //    try
-        //    {
-        //        foreach (var itm in dto.Data)
-        //        {
-        //            var entity = new ContactCenterMailOnTicket();
-        //            entity.Id = 0;
-        //            entity.ContactCenterMailId = itm.ContactCenterMailId;
-        //            entity.MailAddress = itm.MailAddress;
-        //            entity.ContactCenterTicketId = id;
-        //            entity.Disabled = false;
-        //            entity.Data = itm.Data;
-        //            await gaContactCenterMailsOnTicketsRepo.AddAsync(entity);
-        //            await SaveChanges();
-        //        }
-        //        var ticket = gaContactCenterTicketsRepo.GetById(id);
-        //        ticket.Inviato = true;
-        //        gaContactCenterTicketsRepo.Update(ticket);
-        //        await SaveChanges();
+        public async Task<bool> AddGaContactCenterMailOnTicketAsync(long id, ContactCenterMailsOnTicketsDto dto)
+        {
+            try
+            {
+                foreach (var itm in dto.Data)
+                {
+                    var entity=itm.ToEntity<ContactCenterMailOnTicket, ContactCenterMailOnTicketDto>();
+                    await gaContactCenterMailsOnTicketsRepo.AddAsync(entity);
+                    await SaveChanges();
+                }
+                var ticket = gaContactCenterTicketsRepo.GetById(id);
+                ticket.Inviato = true;
+                gaContactCenterTicketsRepo.Update(ticket);
+                await SaveChanges();
 
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await SaveChanges();
-        //        throw;
-        //    }
-        //}
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
 
         public async Task<long> UpdateGaContactCenterMailOnTicketAsync(ContactCenterMailOnTicketDto dto)
         {
@@ -727,7 +721,22 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    }
 
         //}
-        
+
+
+        public async Task<PagedList<ViewGaContactCenterTicketsIngombranti>> GetGaContactCenterTicketsIngAsync(long comuneId, DateTime dataEsecuzione)
+        {
+            try
+            {
+                var entities = await viewGaContactCenterTicketsIngombrantiRepo.GetWithFilterAsync(x => x.ComuneId == comuneId && x.DataEsecuzione == dataEsecuzione);
+                return entities;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
 
         public async Task<bool> DuplicateGaContactCenterTicketAsync(long[] ticketsId, string userId, bool stampato)
         {

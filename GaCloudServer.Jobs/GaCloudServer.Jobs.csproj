@@ -21,4 +21,8 @@
     <ProjectReference Include="..\src\GaCloudServer.Admin.EntityFramework.Shared\GaCloudServer.Admin.EntityFramework.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="LocalLibrary\Print\ContactCenter\" />
+  </ItemGroup>
+
 </Project>

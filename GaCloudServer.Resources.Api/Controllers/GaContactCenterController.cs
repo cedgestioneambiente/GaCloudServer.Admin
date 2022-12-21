@@ -1186,53 +1186,57 @@ namespace GaCloudServer.Resources.Api.Controllers
                     var attachPath = await _printService.Print("ContactCenterTicketInt", dto);
 
 
-                    var response = await _mailService.AddMailJobAsync(new MailJob()
+                    var result = await _mailService.AddMailJobAsync(new MailJob()
                     {
                         Id = 0,
-                        Description = "Ticket Contact Center",
+                        Description = "Ticket Contact Center N° "+apiDto.id,
                         DateScheduled = DateTime.Now,
-                        Title = "Ticket Contact Center",
+                        Title = "Ticket Contact Center N° " + apiDto.id,
                         MailingTo = mailTo,
                         MailCc = "",
                         Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.ContactCenter),
-                        Content = HtmlHelpers.GenerateText("In allegato il ticket."),
+                        Content = HtmlHelpers.GenerateText("In allegato è possibile visionare il ticket.<br>Note:"+apiDto.mailNote+"<br>"+apiDto.userName+""),
                         Template = "DefaultMailJob.html",
                         UserId = apiDto.userid,
-                        OkMessage = "La tua richiesta è stata inoltrata correttamente.",
-                        KoMessage = "Si è verificato un problema durante l'invio della tua richiesta.",
+                        OkMessage = String.Format("Il Ticket {0} è stato inoltrato correttamente.", ticket.Id),
+                        KoMessage = String.Format("Si è verificato un problema durante l'invio del ticket {0}.",ticket.Id),
                         Attachment = true,
                         AttachmentPath = attachPath
                     });
                     
 
-                    return new ApiResponse(response);
+                    
                 }
                 else
                 {
                     var dto = GenerateContactCenterTicketIngTemplate(ticket, dataStampa);
 
                     var attachPath = await _printService.Print("ContactCenterTicketIng", dto);
-                    var response = await _mailService.AddMailJobAsync(new MailJob()
+                    var result = await _mailService.AddMailJobAsync(new MailJob()
                     {
                         Id = 0,
-                        Description = "Ticket Contact Center",
+                        Description = "Ticket Contact Center N° " + apiDto.id,
                         DateScheduled = DateTime.Now,
-                        Title = "Ticket Contact Center",
+                        Title = "Ticket Contact Center N° " + apiDto.id,
                         MailingTo = mailTo,
                         MailCc = "",
                         Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.ContactCenter),
-                        Content = HtmlHelpers.GenerateText("In allegato il ticket."),
+                        Content = HtmlHelpers.GenerateText("In allegato è possibile visionare il ticket.<br>Note:" + apiDto.mailNote + "<br>" + apiDto.userName + ""),
                         Template = "DefaultMailJob.html",
                         UserId = apiDto.userid,
-                        OkMessage = "La tua richiesta è stata inoltrata correttamente.",
-                        KoMessage = "Si è verificato un problema durante l'invio della tua richiesta.",
+                        OkMessage = String.Format("Il Ticket {0} è stato inoltrato correttamente.",ticket.Id),
+                        KoMessage = String.Format("Si è verificato un problema durante l'invio del ticket {0}.", ticket.Id),
                         Attachment = true,
                         AttachmentPath = attachPath
                     });
 
-                    return new ApiResponse(response);
 
                 }
+
+                var dtos = mailList.ToDto<ContactCenterMailsOnTicketsDto, ContactCenterMailsOnTicketsApiDto>();
+                var response = await _gaContactCenterService.AddGaContactCenterMailOnTicketAsync(ticket.Id, dtos);
+                return new ApiResponse(response);
+
             }
             catch (Exception ex)
             {
@@ -1291,6 +1295,22 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
+
+        [HttpPost("GetGaContactCenterTicketsIngAsync")]
+        public async Task<ApiResponse> GetGaContactCenterTicketsIngAsync([FromBody] ContactCenterIngByDateFilterApiDto apiDto)
+        {
+            try
+            {
+                var response = await _gaContactCenterService.GetGaContactCenterTicketsIngAsync(apiDto.comuneId, apiDto.dataEsecuzione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+
+        }
+
 
         //[HttpGet("ValidateGaContactCenterTicketAsync/{id}/{descrizione}")]
         //public async Task<ActionResult<ApiResponse>> ValidateGaContactCenterTicketAsync(long id, string descrizione)
@@ -1507,10 +1527,10 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             var dto = new ContactCenterTicketIngTemplateDto()
             {
-                FileName = "ContactCenterInterventoTicket.pdf",
+                FileName = "ContactCenterIngombrantiTicket.pdf",
                 FilePath = @"Print/ContactCenter",
-                Title = "Contact Center Ticket Intervento",
-                Css = "ContactCenterTicketInt"
+                Title = "Contact Center Ticket Ingombranti",
+                Css = "ContactCenterTicketIng"
 
             };
 
