@@ -6,6 +6,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="DbContexts\ResourcesDbContext_original.cs" />
+	  <Compile Remove="Entities\Resources\test.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AK.System.Linq.Dynamic" Version="1.1.33" />
 		<PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.1" />
 		<PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />
