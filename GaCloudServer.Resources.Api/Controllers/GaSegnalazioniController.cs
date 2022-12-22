@@ -596,6 +596,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             return new ApiResponse("GetView", response);
         }
 
+        [HttpGet("GetViewGaSegnalazioniDocumentiAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaSegnalazioniDocumentiAsync(bool all = true)
+        {
+            try
+            {
+                var view = await _gaSegnalazioniService.GetViewGaSegnalazioniDocumentiAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetViewGaSegnalazioniDocumentiAsync/{mode}/{userId}/{page}/{pageSize}")]
         public async Task<ApiResponse> GetViewGaSegnalazioniDocumentiAsync(int mode = 1, string userId = "ga-s-administrator", int page = 1, int pageSize = 100)
         {

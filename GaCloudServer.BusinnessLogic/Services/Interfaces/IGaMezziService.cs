@@ -41,7 +41,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusGaMezziClasseAsync(long id);
         #endregion
 
-        #endregion
+        #endregion 
 
         #region GaMezziPatenti
         Task<MezziPatentiDto> GetGaMezziPatentiAsync(int page = 1, int pageSize = 0);

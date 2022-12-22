@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{14C37872-1BB6-42B7-A8EC-BC7907F12D3F}"
 	ProjectSection(SolutionItems) = preProject
 		HELPER-DEV.txt = HELPER-DEV.txt
+		..\..\..\Users\giancarlo.masini\Desktop\Insert_Data_Migration.txt = ..\..\..\Users\giancarlo.masini\Desktop\Insert_Data_Migration.txt
 		Script_Data.txt = Script_Data.txt
 	EndProjectSection
 EndProject
@@ -36,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skoruba.Duende.IdentityServer.Admin.UI", "src\Skoruba.Duende.IdentityServer.Admin.UI\Skoruba.Duende.IdentityServer.Admin.UI.csproj", "{218AACFE-16CB-4114-A6EF-9B4CE7B3CE5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaCloudServer.Jobs", "GaCloudServer.Jobs\GaCloudServer.Jobs.csproj", "{3494B613-8E85-487C-ADBC-8FE775403148}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaCloudServer.Jobs", "GaCloudServer.Jobs\GaCloudServer.Jobs.csproj", "{3494B613-8E85-487C-ADBC-8FE775403148}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

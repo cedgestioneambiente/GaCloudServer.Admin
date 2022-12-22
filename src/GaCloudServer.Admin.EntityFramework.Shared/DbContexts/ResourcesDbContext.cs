@@ -36,7 +36,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
-    public class ResourcesDbContext : DbContext,IResourcesDbContext
+    public class ResourcesDbContext : DbContext, IResourcesDbContext
     {
         #region GaGlobal Tables
         public DbSet<GlobalSede> GlobalSedi { get; set; }
@@ -396,7 +396,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 entity
                     .ToView(nameof(ViewGaCdrComuniOnCentri))
                     .HasNoKey()
-                    .Property(x=>x.Id);
+                    .Property(x => x.Id);
             });
 
             builder.Entity<ViewGaCdrComuni>(entity =>
@@ -592,7 +592,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewNotificationEvents))
-                .HasKey(x=>x.Id);
+                .HasKey(x => x.Id);
             });
             #endregion
 
@@ -705,7 +705,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaPersonaleUsersOnDipendenti))
-                    .HasKey(x=>x.UserId);
+                    .HasKey(x => x.UserId);
             });
 
             builder.Entity<ViewGaPersonaleDipendenti>(entity =>
@@ -713,7 +713,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 entity
                     .ToView(nameof(ViewGaPersonaleDipendenti))
                     .HasNoKey()
-                    .Property(x=>x.Id);
+                    .Property(x => x.Id);
             });
 
             builder.Entity<ViewGaPersonaleScadenze>(entity =>

@@ -27,6 +27,9 @@
     <ProjectReference Include="..\GaCloudServer.Admin.EntityFramework.Shared\GaCloudServer.Admin.EntityFramework.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Migrations\Resources\20220901132235_DbInit.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Update="Migrations\Resources\20220901132313_GaAutorizzazioni.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -52,6 +55,69 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Migrations\Resources\20220919151606_GaCdr.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221151420_Global.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221151702_GaAziende.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221152755_Jobs.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221152934_Notification.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221153257_GaBackOffice.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221153919_GaComunicati.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221154138_GaAutorizzazioni.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221155547_GaCdr.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221155747_GaMezzi.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221160044_GaPrenotazioneAuto.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221221160229_GaCsr.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222071715_GaContratti.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222072032_GaReclami.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222073031_GaSegnalazioni.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222073148_EcSegnalazioni.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222073310_GaPersonale.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222073908_GaPresenze.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222074144_GaContactCenter.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222085826_View.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222092412_App_Views.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Migrations\Resources\20221222104007_App_Stored_Procedure.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
@@ -104,16 +170,16 @@
     <None Update="Scripts\Csr\DROP_ViewGaCsr.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\Global\CREATE_ObjectGaGlobal.sql">
+    <None Update="Scripts\Global\CREATE_ObjectGlobal.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\Global\CREATE_ViewGaGlobal.sql">
+    <None Update="Scripts\Global\CREATE_ViewGlobal.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\Global\DROP_ObjectGaGlobal.sql">
+    <None Update="Scripts\Global\DROP_ObjectGlobal.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\Global\DROP_ViewGaGlobal.sql">
+    <None Update="Scripts\Global\DROP_ViewGlobal.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Mezzi\CREATE_ViewGaMezzi.sql">

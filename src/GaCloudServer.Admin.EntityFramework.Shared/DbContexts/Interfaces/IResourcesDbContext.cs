@@ -48,9 +48,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<AutorizzazioniDocumento> GaAutorizzazioniDocumenti { get; set; }
         DbSet<AutorizzazioniAllegato> GaAutorizzazioniAllegati { get; set; }
 
-        //#region Views
+        #region Views
         DbSet<ViewGaAutorizzazioniDocumenti> ViewGaAutorizzazioniDocumenti { get; set; }
-        //#endregion
+        #endregion
         #endregion
 
         #region GaCdr Tables
@@ -65,14 +65,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<CdrStatoRichiesta> GaCdrStatiRichieste { get; set; }
         DbSet<CdrUtente> GaCdrUtenti { get; set; }
 
-        //#region Views
+        #region Views
         DbSet<ViewGaCdrCersOnCentri> ViewGaCdrCersOnCentri { get; set; }
         DbSet<ViewGaCdrComuniOnCentri> ViewGaCdrComuniOnCentri { get; set; }
         DbSet<ViewGaCdrComuni> ViewGaCdrComuni { get; set; }
         DbSet<ViewGaCdrConferimenti> ViewGaCdrConferimenti { get; set; }
         DbSet<ViewGaCdrRichiesteViaggi> ViewGaCdrRichiesteViaggi { get; set; }
         DbSet<ViewGaCdrUtenti> ViewGaCdrUtenti { get; set; }
-        //#endregion
+        #endregion
         #endregion
 
         #region GaContratti Tables
@@ -84,19 +84,20 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ContrattiFornitore> GaContrattiFornitori { get; set; }
         DbSet<ContrattiDocumento> GaContrattiDocumenti { get; set; }
 
-        //#region Views
+        #region Views
         DbSet<ViewGaContrattiUtenti> ViewGaContrattiUtenti { get; set; }
         DbSet<ViewGaContrattiUtentiOnPermessi> ViewGaContrattiUtentiOnPermessi { get; set; }
         DbSet<ViewGaContrattiDocumenti> ViewGaContrattiDocumenti { get; set; }
         DbSet<ViewGaContrattiDocumentiList> ViewGaContrattiDocumentiList { get; set; }
         DbSet<ViewGaContrattiNumeratori> ViewGaContrattiNumeratori { get; set; }
+        #endregion
 
-        //Sp
+        # region Sp
         DbSet<SpGaContrattiNumeratore> SpGaContrattiNumeratori { get; set; }
         DbSet<SpGaContrattiPermesso> SpGaContrattiPermessi { get; set; }
         DbSet<SpGaContrattiPermessoMode> SpGaContrattiPermessiModes { get; set; }
-        
-        //#endregion
+
+        #endregion
         #endregion
 
         #region GaComunicati Tables
@@ -169,7 +170,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Views
         DbSet<ViewNotificationRolesOnApps> ViewNotificationRolesOnApps { get; set; }
         DbSet<ViewNotificationUsersOnApps> ViewNotificationUsersOnApps { get; set; }
-        DbSet<ViewNotificationEvents> ViewNotificationEvents { get; set; }   
+        DbSet<ViewNotificationEvents> ViewNotificationEvents { get; set; }
         #endregion
         #endregion
 

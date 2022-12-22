@@ -5,6 +5,6 @@ SELECT        dbo.EcSegnalazioniDocumenti.Id, dbo.EcSegnalazioniTipi.Id AS TipoI
                          dbo.EcSegnalazioniStati.Descrizione AS Stato, dbo.EcSegnalazioniDocumenti.Sanzione, dbo.EcSegnalazioniDocumenti.NoteSanzione, dbo.EcSegnalazioniDocumenti.NoteGestione, dbo.EcSegnalazioniDocumenti.Disabled
 FROM            dbo.EcSegnalazioniDocumenti INNER JOIN
                          dbo.EcSegnalazioniStati ON dbo.EcSegnalazioniDocumenti.SegnalazioniStatoId = dbo.EcSegnalazioniStati.Id INNER JOIN
-                         dbo.EcSegnalazioniTipi ON dbo.EcSegnalazioniDocumenti.SegnalazioniTipoId = dbo.EcSegnalazioniTipi.Id INNER JOIN
+                         dbo.EcSegnalazioniTipi ON dbo.EcSegnalazioniDocumenti.SegnalazioniTipoId = dbo.EcSegnalazioniTipi.Id LEFT JOIN
                          dbo.PrivateViewIdentityServerAdminUserList ON dbo.EcSegnalazioniDocumenti.UserId = dbo.PrivateViewIdentityServerAdminUserList.Id
 GO
