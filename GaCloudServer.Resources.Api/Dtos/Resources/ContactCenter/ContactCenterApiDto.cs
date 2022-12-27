@@ -157,7 +157,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         public long[] ticketsId { get; set; }
     }
 
-    public class ContactCenterIngPrintFilter
+    public class ContactCenterIngPrintFilterApiDto
     {
         public long comuneId { get; set; }
         public string comuneAltro { get; set; }
@@ -166,12 +166,12 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         public bool all { get; set; }
     }
 
-    public class ContactCenterIntPrintFilter
+    public class ContactCenterIntPrintFilterApiDto
     {
         public long? fromId { get; set; }
         public long? toId { get; set; }
-        public DateTime? fromData { get; set; }
-        public DateTime? toData { get; set; }
+        public DateTime? fromDate { get; set; }
+        public DateTime? toDate { get; set; }
         public bool all { get; set; }
     }
 }

@@ -1259,6 +1259,22 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
 
+
+        [HttpPost("GetGaContactCenterTicketsIngAsync")]
+        public async Task<ApiResponse> GetGaContactCenterTicketsIngAsync([FromBody] ContactCenterIngByDateFilterApiDto apiDto)
+        {
+            try
+            {
+                var response = await _gaContactCenterService.GetGaContactCenterTicketsIngAsync(apiDto.comuneId, apiDto.dataEsecuzione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+
+        }
+
         [HttpGet("PrintGaContactCenterTicketByIdAsync/{id}")]
         public async Task<ApiResponse> PrintGaContactCenterTicketByIdAsync(long id)
         {
@@ -1275,7 +1291,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 if (!ticket.Ingombranti)
                 {
-                   var dto= GenerateContactCenterTicketIntTemplate(ticket,dataStampa);
+                    var dto = GenerateContactCenterTicketIntTemplate(ticket, dataStampa);
 
                     var response = await _printService.Print("ContactCenterTicketInt", dto);
                     return new ApiResponse(response);
@@ -1286,7 +1302,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                     var response = await _printService.Print("ContactCenterTicketIng", dto);
                     return new ApiResponse(response);
-                    
+
                 }
 
             }
@@ -1296,19 +1312,103 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpPost("GetGaContactCenterTicketsIngAsync")]
-        public async Task<ApiResponse> GetGaContactCenterTicketsIngAsync([FromBody] ContactCenterIngByDateFilterApiDto apiDto)
+        [HttpPost("PrintGaContactCenterIngByFilterAsync")]
+        public async Task<ApiResponse> PrintGaContactCenterIngByFilterAsync([FromBody] ContactCenterIngPrintFilterApiDto apiDto)
         {
             try
             {
-                var response = await _gaContactCenterService.GetGaContactCenterTicketsIngAsync(apiDto.comuneId, apiDto.dataEsecuzione);
+                if (apiDto.comuneId != 1)
+                {
+                    var comune = await _gaContactCenterService.GetGaContactCenterComuneByIdAsync(apiDto.comuneId);
+                    apiDto.comuneAltro = comune.Descrizione;
+                }
+
+                var list = await _gaContactCenterService.GetGaContactCenterTicketsIngPrintAsync(apiDto.comuneAltro, apiDto.dataEsecuzione, apiDto.tipoStampa);
+
+                if (list == null || (apiDto.all == false && list.Where(x => x.Stato == "IN GESTIONE").Count() == 0))
+                {
+                    return new ApiResponse("NoData", null, code.Status200OK);
+                }
+
+                var dto = GenerateContactCenterTicketsIngTemplate(apiDto.all?list:list.Where(x=>x.Stato=="IN GESTIONE").ToList(), apiDto.comuneAltro, apiDto.dataEsecuzione.GetValueOrDefault(), apiDto.tipoStampa);
+                var response = await _printService.Print("ContactCenterTicketsIng", dto);
+
+
+                var printDto = new ContactCenterStatusTicketsApiDto();
+                if(apiDto.all)
+                {
+                    printDto.ticketsId = (from x in list
+                                          select x.Id).ToArray();
+
+                }
+                else
+                {
+                    printDto.ticketsId = (from x in list
+                                          where x.Stato=="IN GESTIONE"
+                                          select x.Id).ToArray();
+
+                }
+                await _gaContactCenterService.SetPrintedGaContactCenterTicketsAsync(printDto.ticketsId);
+
                 return new ApiResponse(response);
+
             }
             catch (Exception ex)
             {
                 throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
+        }
 
+        [HttpPost("PrintGaContactCenterIntByFilterAsync")]
+        public async Task<ApiResponse> PrintGaContactCenterIntByFilterAsync([FromBody] ContactCenterIntPrintFilterApiDto apiDto)
+        {
+            try
+            {
+
+                var list = await _gaContactCenterService.GetGaContactCenterTicketsIntPrintAsync(apiDto.fromId, apiDto.toId, apiDto.fromDate,apiDto.toDate);
+                int nInt = 0;
+                if (apiDto.all)
+                {
+                    nInt = nInt + list.Where(x => x.Stato == "IN GESTIONE").Count() + list.Where(x => x.Stato == "GESTITO").Count();
+                }
+                else
+                {
+                    nInt = nInt + list.Where(x => x.Stato == "IN GESTIONE").Count();
+                }
+
+                if (list == null || nInt == 0)
+                {
+                    return new ApiResponse("NoData", null, code.Status200OK);
+                }
+
+               
+
+                var dto = GenerateContactCenterTicketsIntTemplate(apiDto.all ? list : list.Where(x => x.Stato == "IN GESTIONE").ToList());
+                var response = await _printService.Print("ContactCenterTicketsInt", dto);
+
+                var printDto = new ContactCenterStatusTicketsApiDto();
+                if (apiDto.all)
+                {
+                    printDto.ticketsId = (from x in list
+                                          select x.Id).ToArray();
+
+                }
+                else
+                {
+                    printDto.ticketsId = (from x in list
+                                          where x.Stato == "IN GESTIONE"
+                                          select x.Id).ToArray();
+
+                }
+                await _gaContactCenterService.SetPrintedGaContactCenterTicketsAsync(printDto.ticketsId);
+
+                return new ApiResponse(response);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
         }
 
 
@@ -1549,6 +1649,104 @@ namespace GaCloudServer.Resources.Api.Controllers
 
             return dto;
         }
+
+        private ContactCenterTicketsIngTemplateDto GenerateContactCenterTicketsIngTemplate(List<ViewGaContactCenterTickets> tickets, string comune,DateTime data,int tipoStampa)
+        {
+
+            string descStampa = "";
+
+            switch (tipoStampa)
+            {
+                case 1:
+                    descStampa = "Ritiro Ingombranti + RAEE";
+                    break;
+                case 2:
+                    descStampa = "Ritiro Ingombranti";
+                    break;
+                case 3:
+                    descStampa = "Ritiro Ingombranti RAEE";
+                    break;
+            }
+
+            var dto = new ContactCenterTicketsIngTemplateDto()
+            {
+                FileName = "ContactCenterIngombrantiTickets.pdf",
+                FilePath = @"Print/ContactCenter",
+                Title = "Contact Center Tickets Ingombranti",
+                Css = "ContactCenterTicketsIng",
+                Comune=comune,
+                Data=data.ToString("dd/MM/yyyy"),
+                TipoStampa=descStampa,
+                Items= new List<ContactCenterTicketIngTemplateDto>()
+            };
+
+            foreach (var itm in tickets)
+            {
+                dto.Items.Add(new ContactCenterTicketIngTemplateDto()
+                {
+                    Id = itm.Id.ToString(),
+                    DataTicket = itm.DataTicket.ToString("dd-MM-yyyy"),
+                    Comune = itm.Comune,
+                    Indirizzo = itm.Indirizzo,
+                    Utente = itm.RagioneSociale,
+                    TelefonoMail = itm.TelefonoMail,
+                    TipoTicket = itm.TipoTicket,
+                    DataStampa = "",
+                    Richiedente = itm.Richiedente,
+                    Note1 = itm.Note1,
+                    Note2 = itm.Note2,
+                    Materiali = itm.Materiali
+                });
+                
+            }          
+
+            return dto;
+        }
+
+        private ContactCenterTicketsIntTemplateDto GenerateContactCenterTicketsIntTemplate(List<ViewGaContactCenterTickets> tickets)
+        {
+            var dto = new ContactCenterTicketsIntTemplateDto()
+            {
+                FileName = "ContactCenterIngombrantiTickets.pdf",
+                FilePath = @"Print/ContactCenter",
+                Title = "Contact Center Tickets Ingombranti",
+                Css = "ContactCenterTicketsIng",
+                Items = new List<ContactCenterTicketIntTemplateDto>()
+            };
+
+            List<ContactCenterTicketIntTemplateDto> dtos = new List<ContactCenterTicketIntTemplateDto>();
+            foreach (var ticket in tickets)
+            {
+                string dataStampa = "-";
+                if (ticket.DataEsecuzione != null)
+                {
+                    dataStampa = Convert.ToDateTime(ticket.DataEsecuzione).ToString("dddd dd MMMM yyyy", itIT);
+                }
+
+                dto.Items.Add(new ContactCenterTicketIntTemplateDto() {
+                    Id = ticket.Id.ToString(),
+                    DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy"),
+                    Comune = ticket.Comune,
+                    Indirizzo = ticket.Indirizzo,
+                    Utente = ticket.RagioneSociale,
+                    TelefonoMail = ticket.TelefonoMail,
+                    TipoTicket = ticket.TipoTicket,
+                    DataStampa = dataStampa,
+                    Richiedente = ticket.Richiedente,
+                    Note1 = ticket.Note1,
+                    Note2 = ticket.Note2,
+                    Provenienza = ticket.Provenienza,
+                    EseguitoIl = ticket.EseguitoIl == null ? "" : ticket.EseguitoIl.ToString(),
+                    Promemoria = ticket.Promemoria == true ? "&#9745;" : "&#9744;",
+                    Reclamo = ticket.Reclamo == true ? "&#9745;" : "&#9744;",
+                    DaFatturare = ticket.DaFatturare == true ? "&#9745;" : "&#9744;",
+            });
+
+            }
+
+            return dto;
+        }
+
         #endregion
     }
 }

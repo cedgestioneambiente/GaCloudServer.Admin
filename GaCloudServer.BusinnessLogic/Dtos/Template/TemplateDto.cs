@@ -53,4 +53,18 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public string Note2 { get; set; }
         public string Materiali { get; set; }
     }
+
+    public class ContactCenterTicketsIngTemplateDto : GenericPrintDto
+    { 
+        public string Comune { get; set; }
+        public string Data { get; set; }
+        public string TipoStampa { get; set; }
+        public List<ContactCenterTicketIngTemplateDto> Items { get; set; }
+    }
+
+    public class ContactCenterTicketsIntTemplateDto : GenericPrintDto
+    {
+        public List<ContactCenterTicketIntTemplateDto> Items { get; set; }
+    }
+
 }

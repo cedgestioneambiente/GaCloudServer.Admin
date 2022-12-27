@@ -50,5 +50,230 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
         }
+
+        public static string ContactCenterTicketsIng(ContactCenterTicketsIngTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ContactCenterTicketsIng/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+            foreach (var itm in dto.Items)
+            {
+                table+=String.Format("" +
+                    "<table class='table-dpi' style='width:97%'>" +
+                    "<thead>" +
+                    "<tr>" +
+                    "<th style='border:1px solid #000;width:10%;'>" +
+                    "N°" +
+                    "</th>" +
+                    "<th style='border:1px solid #000;width:40%;'>" +
+                    "Utente" +
+                    "</th>" +
+                    "<th style='border:1px solid #000;widt:30%;'>" +
+                    "Materiale" +
+                    "</th>" +
+                    "<th style='border:1px solid #000;width:20%;'>" +
+                    "Note" +
+                    "</th>" +
+                    "</tr>" +
+                    "</thead>" +
+                    "<tbody" +
+                    "<tr>" +
+                    "<td style='border: 1px solid #000;padding:5px;'>{0}</td>" +
+                    "<td style='border: 1px solid #000;padding:5px;'>Richiedente: {1}<br />Telefono: {2}<br />Indirizzo: {3}</td>" +
+                    "<td style='border: 1px solid #000;padding:5px;'>{4}</td>" +
+                    "<td style='border: 1px solid #000;padding:5px;'>{5}</td>" +
+                    "</tr>" +
+                    "</tbody>" +
+                    "</table>",
+                    itm.Id.ToString(), itm.Utente, itm.TelefonoMail, itm.Indirizzo, itm.Materiali, itm.Note1);
+            }
+
+
+
+            sb.AppendFormat(@fileContent,dto.Comune,dto.Data,table,dto.TipoStampa);
+            return sb.ToString();
+
+
+        }
+
+        public static string ContactCenterTicketsInt(ContactCenterTicketsIntTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ContactCenterTicketsInt/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+            foreach (var itm in dto.Items)
+            {
+                table += String.Format(
+                        "<div class='header'>" +
+                            "<div class='header-logo'>" +
+                                "<img class='header-logo-img' src='http://dev.gestioneambiente.net/wwwroot/assets/logo_ga.png' />" +
+                                    "</div>" +
+                                    "<div class='header-title'>" +
+                                        "<b>" +
+                                        "REG. CCGA - 01<br />" +
+                                        "Richiesta di Intervento" +
+                                        "</b>" +
+                                    "</div>" +
+                                    "<div class='header-title-2'>" +
+                                    "<b>" +
+                                      "IO.SER. 04<br />" +
+                                      "Edizione 2 del 16/01/2018<br />" +
+                                      "Revisione 1 del 30/01/2020" +
+                                    "</b>" +
+                                    "</div>" +
+                            "</div>" +
+                            "<div class='line-1'>" +
+                                "<div class='line-1-col-1'>" +
+                                "Richiesta di intervento" +
+                                "</div>" +
+                                "<div class='line-1-col-2' style='padding-left:5px;'>" +
+                                "<b> N° {0}</b>" +
+                                "</div>" +
+                            "</div>" +
+                            "<div class='line-1'>" +
+                            "<div class='line-1-col-1'>" +
+                            "Data" +
+                            "</div>" +
+                            "<div class='line-1-col-2' style='padding-left:5px;'>" +
+                            "<b> {1}</b>" +
+                            "</div>" +
+                            "</div>" +
+                            "<div class='line-5'>" +
+                            "<div class='line-5-col-1'>" +
+                              "Tipo Servizio" +
+                            "</div>" +
+                            "<div class='line-5-col-2'>" +
+                                "<b> {6}</b>" +
+                            "</div>" +
+                            "</div>" +
+                              "<div class='content'>" +
+                                  "<div class='line-6'>" +
+                                    "<table style='width:97%'>" +
+                                    "<thead>" +
+                                    "<tr>" +
+                                    "<th style='border: 1px solid #000;text-align:center;'>DA ESEGUIRE IL:</th>" +
+                                    "</tr>" +
+                                    "</thead>" +
+                                    "<tbody>" +
+                                    "<tr>" +
+                                    "<td style='border: 1px solid #000;text-align:center;'><b>{7}</b></td>" +
+                                    "</tr>" +
+                                    "</tbody>" +
+                                    "</table>" +
+                                  "</div>" +
+                                  "<div class='line-2'>" +
+                                      "<table style='width:97%;font-size:18px;'>" +
+                                          "<tbody>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Comune:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{2}</td>" +
+                                              "</tr>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Indirizzo:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{3}</td>" +
+                                              "</tr>" +
+                                          "</tbody>" +
+                                      "</table>" +
+                                  "</div>" +
+                                  "<div class='line-2'>" +
+                                      "<table style='width:97%;font-size:18px;'>" +
+                                          "<tbody>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Utente:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{4}</td>" +
+                                              "</tr>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Telefono/Mail:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{5}</td>" +
+                                              "</tr>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Data Esecuzione:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{7}</td>" +
+                                              "</tr>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Addetto segnalazione:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{8}</td>" +
+                                              "</tr>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Provenienza richiesta:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{11}</td>" +
+                                              "</tr>" +
+                                          "</tbody>" +
+                                      "</table>" +
+                                  "</div>" +
+                                  "<div class='line-2'>" +
+                                      "<table style='width:97%;font-size:18px;'>" +
+                                          "<tbody>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Note Call Center:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{9}</td>" +
+                                              "</tr>" +
+                                              "<tr>" +
+                                               "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Eseguito il:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{12}</td>" +
+                                              "</tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;height:200px;'>" +
+                                                      "Note Operatore:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;height:200px;'>{10}</td>" +
+                                              "</tr>" +
+                                          "</tbody>" +
+                                      "</table>" +
+                                  "</div>" +
+                                  "<div class='line-2'>" +
+                                      "<table style='width:97%;font-size:18px;'>" +
+                                          "<tbody>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:33%; text-align:left;padding-left:5px;'>" +
+                                                      "Promemoria: {13}" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;width:33%;padding-left:5px;'>" +
+                                                        "Reclamo: {14}" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;width:33%;padding-left:5px;'>" +
+                                                        "Da Fatturare: {15}" +
+                                                  "</td>" +
+                                              "</tr>" +
+                                          "</tbody>" +
+                                      "</table>" +
+                                  "</div>" +
+                              "</div>" +
+                              "<div style='page-break-before: always;'></div>", itm.Id.ToString(), itm.DataTicket, itm.Comune, itm.Indirizzo, itm.Utente, itm.TelefonoMail,
+                        itm.TipoTicket, itm.DataStampa, itm.Richiedente, itm.Note1, itm.Note2, itm.Provenienza, itm.EseguitoIl,
+                        itm.Promemoria ,
+                        itm.Reclamo ,
+                        itm.DaFatturare
+                        );
+            }
+
+
+
+            sb.AppendFormat(@fileContent, table);
+            return sb.ToString();
+
+
+        }
     }
 }
