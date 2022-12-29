@@ -82,54 +82,72 @@
             }
         ],
         "Clients": [
-            {
-                "ClientId": "ga-cloud-server",
-                "ClientName": "ga-cloud-server",
-                "ClientUri": "https://localhost:44303",
-                "AllowedGrantTypes": [
-                    "authorization_code"
-                ],
-                "RequirePkce": true,
-                "ClientSecrets": [
-                    {
-                        "Value": "GaAdm!!6985$"
-                    }
-                ],
-                "RedirectUris": [
-                    "https://localhost:44303/signin-oidc"
-                ],
-                "FrontChannelLogoutUri": "https://localhost:44303/signout-oidc",
-                "PostLogoutRedirectUris": [
-                    "https://localhost:44303/signout-callback-oidc"
-                ],
-                "AllowedCorsOrigins": [
-                    "https://localhost:44303"
-                ],
-                "AllowedScopes": [
-                    "openid",
-                    "email",
-                    "profile",
-                    "roles"
-                ]
-            },
-            {
-                "ClientId": "ga-cloud-server_api_swaggerui",
-                "ClientName": "ga-cloud-server_api_swaggerui",
-                "AllowedGrantTypes": [
-                    "authorization_code"
-                ],
-                "RequireClientSecret": false,
-                "RequirePkce": true,
-                "RedirectUris": [
-                    "https://localhost:44302/swagger/oauth2-redirect.html"
-                ],
-                "AllowedScopes": [
-                    "ga-cloud-server_api"
-                ],
-                "AllowedCorsOrigins": [
-                    "https://localhost:44302"
-                ]
-            }
+          {
+            "ClientId": "ga-cloud-server",
+            "ClientName": "ga-cloud-server",
+            "ClientUri": "https://adm.gestioneambiente.net",
+            "AllowedGrantTypes": [
+              "authorization_code"
+            ],
+            "RequirePkce": true,
+            "ClientSecrets": [
+              {
+                "Value": "GaAdm!!6985$"
+              }
+            ],
+            "RedirectUris": [
+              "https://adm.gestioneambiente.net/signin-oidc"
+            ],
+            "FrontChannelLogoutUri": "https://adm.gestioneambiente.net/signout-oidc",
+            "PostLogoutRedirectUris": [
+              "https://adm.gestioneambiente.net/signout-callback-oidc"
+            ],
+            "AllowedCorsOrigins": [
+              "https://adm.gestioneambiente.net"
+            ],
+            "AllowedScopes": [
+              "openid",
+              "email",
+              "profile",
+              "roles"
+            ]
+          },
+          {
+            "ClientId": "ga-cloud-server_api_swaggerui",
+            "ClientName": "ga-cloud-server_api_swaggerui",
+            "AllowedGrantTypes": [
+              "authorization_code"
+            ],
+            "RequireClientSecret": false,
+            "RequirePkce": true,
+            "RedirectUris": [
+              "https://api-adm.gestioneambiente.net/swagger/oauth2-redirect.html"
+            ],
+            "AllowedScopes": [
+              "ga-cloud-server_api"
+            ],
+            "AllowedCorsOrigins": [
+              "https://api-adm.gestioneambiente.net"
+            ]
+          },
+          {
+            "ClientId": "ga-cloud-server_api_res_swaggerui",
+            "ClientName": "ga-cloud-server_api_res_swaggerui",
+            "AllowedGrantTypes": [
+              "authorization_code"
+            ],
+            "RequireClientSecret": false,
+            "RequirePkce": true,
+            "RedirectUris": [
+              "https://api-res.gestioneambiente.net/swagger/oauth2-redirect.html"
+            ],
+            "AllowedScopes": [
+              "ga-cloud-server_api_res"
+            ],
+            "AllowedCorsOrigins": [
+              "https://api-res.gestioneambiente.net"
+            ]
+          }
         ]
     }
 }

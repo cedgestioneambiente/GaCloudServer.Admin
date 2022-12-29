@@ -115,11 +115,23 @@ namespace GaCloudServer.Resources.Api
 
             services.AddIdSHealthChecks<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminIdentityDbContext, AdminLogDbContext, AdminAuditLogDbContext, IdentityServerDataProtectionDbContext,ResourcesDbContext>(Configuration, resourcesApiConfiguration);
 
-            services
+            if (HostingEnvironment.IsDevelopment())
+            {
+                services
                 .AddHealthChecksUI(setupSettings: setup => {
                     setup.AddHealthCheckEndpoint("ServerStatusEndpoint", "https://localhost:44312/health");
                 })
                 .AddInMemoryStorage();
+            }
+            else
+            {
+                //services
+                //.AddHealthChecksUI(setupSettings: setup => {
+                //    setup.AddHealthCheckEndpoint("ServerStatusEndpoint", @"https://api-res.gestioneambiente.net/health");
+                //})
+                //.AddInMemoryStorage();
+            }
+
 
         }
 

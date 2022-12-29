@@ -1,0 +1,7 @@
+﻿DROP VIEW [dbo].[PrivateViewGaPresenzeResponsabiliList]
+DROP VIEW [dbo].[ViewGaPresenzeResponsabiliOnSettori]
+DROP VIEW [dbo].[ViewGaPresenzeResponsabili]
+DROP VIEW [dbo].[ViewGaPresenzeRichieste]
+DROP VIEW [dbo].[ViewGaPresenzeRichiesteEventi]
+DROP VIEW [dbo].[ViewGaPresenzeRichiesteMails]
+DROP VIEW [dbo].[ViewGaPresenzeRichiesteRisorse]

@@ -7,7 +7,10 @@
 
 @if ((await AuthorizationService.AuthorizeAsync(User, AuthorizationConsts.AdministrationPolicy)).Succeeded)
 {
-    <a class="menu-item my-2 btn btn-outline-primary mr-md-3" href="@Model">@Localizer["IdentityServerAdmin"]</a>
+@*    <a class="menu-item my-2 btn btn-outline-primary mr-md-3" href="@Model">@Localizer["IdentityServerAdmin"]</a>*@
+    <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="@Model">
+        <i class="fa fa-lock opacity-6 text-dark me-1"></i>@Localizer["IdentityServerAdmin"]
+    </a>
 }
 
 

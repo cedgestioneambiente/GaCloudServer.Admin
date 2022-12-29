@@ -1,0 +1,8 @@
+﻿DROP VIEW [dbo].[ViewGaCsrCodiciCers]
+DROP VIEW [dbo].[ViewGaCsrDestinatari]
+DROP VIEW [dbo].[ViewGaCsrProduttori]
+DROP VIEW [dbo].[ViewGaCsrRegistrazioni]
+DROP VIEW [dbo].[ViewGaCsrRegistrazioniPesi]
+DROP VIEW [dbo].[ViewGaCsrRipartizioniPercentuali]
+DROP VIEW [dbo].[ViewGaCsrTrasportatori]
+DROP VIEW [dbo].[ViewGaCsrExports]

@@ -1,4 +1,11 @@
 @using Duende.IdentityServer.Extensions
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity
+@using GaCloudServer.STS.Identity.Configuration.Interfaces
+
+@inject IRootConfiguration RootConfiguration
+@inject IViewLocalizer Localizer
 @{
     string name = null;
     if (!true.Equals(ViewData["signed-out"]))
@@ -7,27 +14,77 @@
     }
 }
 
-<div class="nav-page">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-        <a href="~/" class="navbar-brand">
-            @*<img src="~/duende-logo.svg" class="icon-banner">*@
-            IdentityServer Session Manager
-        </a>
-
-        @if (!string.IsNullOrWhiteSpace(name))
-        {
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">@name <b class="caret"></b></a>
-                    
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" asp-page="~/">Home</a>
-                        <a class="dropdown-item" asp-page="/Account/Logout/Index">Logout</a>
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="container position-sticky z-index-sticky top-0">
+        <div class="row">
+            <div class="col-12">
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+                    <div class="container-fluid pe-0">
+                        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.LogoOndeUri)" style="height:34px;"> @RootConfiguration.AdminConfiguration.PageTitle
+                        </a>
+                        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon mt-2">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navigation">
+                            <li class="nav-item d-flex align-items-center">
+                                <a class="btn btn-round btn-sm mb-0 btn-outline-dark me-2" href="~/.well-known/openid-configuration">@Localizer["Discovery"]</a>
+                            </li>
+                        </div>
                     </div>
-              </li>
-            </ul>
-        }
-    
-    </nav>
-</div>
+                </nav>
+                <!-- End Navbar -->
+            </div>
+        </div>
+    </div>
+}
+
+@if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
+{
+    <div class="container position-sticky z-index-sticky top-0">
+        <div class="row">
+            <div class="col-12">
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+                    <div class="container-fluid pe-0">
+                        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.LogoOndeUri)" style="height:34px;"> @RootConfiguration.AdminConfiguration.PageTitle
+                        </a>
+                        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon mt-2">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navigation">
+                            <ul class="navbar-nav mx-auto ms-xl-auto me-xl-7">
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/ServerSideSessions">
+                                        <i class="fa fa-server opacity-6 text-dark me-1"></i>
+                                        @Localizer["Sessions"]
+                                    </a>
+                                </li>
+                                <vc:identity-server-admin-link></vc:identity-server-admin-link>
+                            </ul>
+                            <li class="nav-item d-flex align-items-center">
+                                <a class="btn btn-round btn-sm mb-0 btn-outline-dark me-2" href="~/.well-known/openid-configuration">@Localizer["Discovery"]</a>
+                                <a class="btn btn-round btn-sm mb-0 btn-dark me-2" asp-action="Logout" asp-controller="Account">@Localizer["Signout"]</a>
+                            </li>
+                        </div>
+                    </div>
+                </nav>
+                <!-- End Navbar -->
+            </div>
+        </div>
+    </div>
+}
+
+
