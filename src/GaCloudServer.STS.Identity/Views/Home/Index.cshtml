@@ -3,12 +3,17 @@
 @using GaCloudServer.STS.Identity.Configuration.Interfaces
 @inject IViewLocalizer Localizer
 @inject IRootConfiguration RootConfiguration
-<div class="welcome-block px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4"><img class="img-fluid" alt="Logo" src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.HomePageLogoUri)"><br />@RootConfiguration.AdminConfiguration.PageTitle</h1>
+
+<div class="container">
+
+
+<div class="welcome-block px-3 py-8 pb-md-4 mx-auto text-center">
+@*    <h1 class="display-4"><img class="img-fluid" alt="Logo" src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.HomePageLogoUri)"><br />@RootConfiguration.AdminConfiguration.PageTitle</h1>*@
     <p class="lead">@Localizer["SubTitle", RootConfiguration.AdminConfiguration.PageTitle]</p>
 </div>
 
-<div class="card-deck mb-3 text-center">
+
+<div class="card-deck mb-3 mt-3 text-center">
     @if (!User.IsAuthenticated())
     {
         <div class="card mb-4 box-shadow">
@@ -16,11 +21,14 @@
                 <h4 class="my-0 font-weight-normal">@Localizer["Login"]</h4>
             </div>
             <div class="card-body">
+                
                 <h1 class="card-title">
-                    <span class="oi oi-lock-locked" title="@Localizer["Login"]" aria-hidden="true"></span>
+                    <i class="fa fa-lock" title="@Localizer["Login"]" aria-hidden="true"></i>
                 </h1>
-                <a asp-controller="Account" asp-action="Login" class="btn btn-lg btn-block btn-primary">@Localizer["Login"]</a>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-lg btn-block btn-dark">@Localizer["Login"]</a>
+                    
             </div>
+                <i class="fa fa-lock opacity-6 text-dark me-1" style="position:absolute;left:0;bottom:0;width:210px;height:130px;font-size:200px;overflow:hidden;"></i>
         </div>
     }
 
@@ -32,10 +40,12 @@
             </div>
             <div class="card-body">
                 <h1 class="card-title">
-                    <span class="oi oi-key" title="@Localizer["Grants"]" aria-hidden="true"></span>
+                   <i title="@Localizer["Grants"]" aria-hidden="true" class="fa fa-universal-access"></i>
                 </h1>
-                <a asp-controller="Grants" asp-action="Index" class="btn btn-lg btn-block btn-primary">@Localizer["Grants"]</a>
+                <a asp-controller="Grants" asp-action="Index" class="btn btn-lg btn-block btn-dark">@Localizer["Grants"]</a>
+                   
             </div>
+                <i class="fa fa-universal-access opacity-6 text-dark me-1" style="position:absolute;left:0;bottom:0;width:210px;height:130px;font-size:200px;overflow:hidden;"></i>
         </div>
     }
 
@@ -45,10 +55,12 @@
         </div>
         <div class="card-body">
             <h1 class="card-title">
-                <span class="oi oi-monitor" title="@Localizer["Discovery"]" aria-hidden="true"></span>
+                    <i class="fa fa-passport" title="@Localizer["Discovery"]" aria-hidden="true"></i>
             </h1>
-            <a href="~/.well-known/openid-configuration" class="btn btn-lg btn-block btn-outline-primary">@Localizer["Discovery"]</a>
+            <a href="~/.well-known/openid-configuration" class="btn btn-lg btn-block btn-outline-dark">@Localizer["Discovery"]</a>
+            
         </div>
+            <i class="fa fa-passport opacity-6 text-dark me-1" style="position:absolute;left:0;bottom:0;width:210px;height:130px;font-size:200px;overflow:hidden;"></i>
     </div>
 
     @if (User.IsAuthenticated())
@@ -59,10 +71,12 @@
             </div>
             <div class="card-body">
                 <h1 class="card-title">
-                    <span class="oi oi-person" title="@Localizer["ManageProfile"]" aria-hidden="true"></span>
+                    <i class="fa fa-user" title="@Localizer["ManageProfile"]" aria-hidden="true"></i>
                 </h1>
-                <a asp-controller="Manage" asp-action="Index" class="btn btn-lg btn-block btn-primary">@Localizer["ManageProfile"]</a>
+                <a asp-controller="Manage" asp-action="Index" class="btn btn-lg btn-block btn-dark">@Localizer["ManageProfile"]</a>
+                    
             </div>
+                <i class="fa fa-user opacity-6 text-dark me-1" style="position:absolute;left:0;bottom:0;width:210px;height:130px;font-size:200px;overflow:hidden;"></i>
         </div>
     }
 </div>
@@ -76,10 +90,12 @@
             </div>
             <div class="card-body">
                 <h1 class="card-title">
-                    <span class="oi oi-cloud-download" title="@Localizer["ManagePersonalData"]" aria-hidden="true"></span>
+                        <i class="fa fa-asterisk" title="@Localizer["ManagePersonalData"]" aria-hidden="true"></i>
                 </h1>
-                <a asp-controller="Manage" asp-action="PersonalData" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ManagePersonalData"]</a>
+                <a asp-controller="Manage" asp-action="PersonalData" class="btn btn-lg btn-block btn-outline-dark">@Localizer["ManagePersonalData"]</a>
+                   
             </div>
+                 <i class="fa fa-asterisk opacity-6 text-dark me-1" style="position:absolute;left:0;bottom:0;width:210px;height:130px;font-size:200px;overflow:hidden;"></i>
         </div>
 
         <div class="card mb-4 box-shadow">
@@ -88,10 +104,12 @@
             </div>
             <div class="card-body">
                 <h1 class="card-title">
-                    <span class="oi oi-phone" title="@Localizer["2FA"]" aria-hidden="true"></span>
+                    <i class="fa fa-mobile" title="@Localizer["2FA"]" aria-hidden="true"></i>
                 </h1>
-                <a asp-controller="Manage" asp-action="TwoFactorAuthentication" class="btn btn-lg btn-block btn-primary">@Localizer["2FA"]</a>
+                <a asp-controller="Manage" asp-action="TwoFactorAuthentication" class="btn btn-lg btn-block btn-dark">@Localizer["2FA"]</a>
+                    
             </div>
+                <i class="fa fa-mobile opacity-6 text-dark me-1" style="position:absolute;left:0;bottom:0;width:210px;height:130px;font-size:200px;overflow:hidden;"></i>
         </div>
 
         <div class="card mb-4 box-shadow">
@@ -100,13 +118,17 @@
             </div>
             <div class="card-body">
                 <h1 class="card-title">
-                    <span class="oi oi-pencil" title="@Localizer["ChangePassword"]" aria-hidden="true"></span>
+                    <i class="fa fa-pencil" title="@Localizer["ChangePassword"]" aria-hidden="true"></i>
                 </h1>
-                <a asp-controller="Manage" asp-action="ChangePassword" class="btn btn-lg btn-block btn-outline-primary">@Localizer["ChangePassword"]</a>
+                <a asp-controller="Manage" asp-action="ChangePassword" class="btn btn-lg btn-block btn-outline-dark">@Localizer["ChangePassword"]</a>
+                    
             </div>
+                <i class="fa fa-pencil opacity-6 text-dark me-1" style="position:absolute;left:0;bottom:0;width:210px;height:130px;font-size:200px;overflow:hidden;"></i>
         </div>
     </div>
 }
+
+</div>
 
 
 

@@ -7,6 +7,7 @@ namespace GaCloudServer.STS.Identity.Configuration
     {
         public string PageTitle { get; set; }
         public string HomePageLogoUri { get; set; }
+        public string LogoOndeUri { get; set; }
         public string FaviconUri { get; set; }
         public string IdentityAdminBaseUrl { get; set; }
         public string AdministrationRole { get; set; }

@@ -67,6 +67,10 @@ namespace GaCloudServer.STS.Identity
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                     });
+                options.AddPolicy("CORSPolicyProd",
+                    builder => {
+                        builder.AllowAnyOrigin();
+                    });
             });
 
             services.AddRazorPages();
@@ -98,6 +102,7 @@ namespace GaCloudServer.STS.Identity
             app.UseMvcLocalizationServices();
 
             app.UseCors("CORSPolicy");
+            app.UseCors("CORSPolicyProd");
 
             app.UseRouting();
             app.UseAuthorization();

@@ -29,13 +29,29 @@
 
     <environment include="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-        @await Html.PartialAsync("Common/ThemeResources")
-        <link href="~/dist/css/web.css" asp-append-version="true" rel="stylesheet" />
+        <!--     Fonts and icons     -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+        <!-- Nucleo Icons -->
+        <link href="~/css/nucleo-icons.css" rel="stylesheet" />
+        <link href="~/css/nucleo-svg.css" rel="stylesheet" />
+        <!-- Font Awesome Icons -->
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <link href="~/css/nucleo-svg.css" rel="stylesheet" />
+        <!-- CSS Files -->
+        <link id="pagestyle" href="~/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/dist/css/bundle.min.css" asp-append-version="true" rel="stylesheet" />
-        @await Html.PartialAsync("Common/ThemeResources")
-        <link href="~/dist/css/web.min.css" asp-append-version="true" rel="stylesheet" />
+        <!--     Fonts and icons     -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+        <!-- Nucleo Icons -->
+        <link href="~/css/nucleo-icons.css" rel="stylesheet" />
+        <link href="~/css/nucleo-svg.css" rel="stylesheet" />
+        <!-- Font Awesome Icons -->
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <link href="~/css/nucleo-svg.css" rel="stylesheet" />
+        <!-- CSS Files -->
+        <link id="pagestyle" href="~/css/soft-ui-dashboard.min.css?v=1.0.7" rel="stylesheet" />
     </environment>
 
     @if (!string.IsNullOrEmpty(RootConfiguration.AdminConfiguration.CustomThemeCss))
@@ -45,50 +61,84 @@
 
     @await RenderSectionAsync("styles", required: false)
 </head>
-<body>
+<body class="bg-gray-100">
 
-    <div class="menu d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow">
-        <!--Site name -->
-        <h3 class="menu-logo my-0 mr-md-auto font-weight-normal"><a class="logo" asp-area="" asp-controller="Home" asp-action="Index">@RootConfiguration.AdminConfiguration.PageTitle</a></h3>
-        <!--Menu item -->
-        @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
-        {
-            <a class="menu-item my-2 my-md-0 mr-md-3 btn btn-primary" href="/ServerSideSessions">@Localizer["Sessions"]</a>
-
-            <!--Menu item -->
-            <vc:identity-server-admin-link></vc:identity-server-admin-link>
-
-            <!--Menu item -->
-            <div class="menu-item my-2 my-md-0 mr-md-3 dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    @Localizer["Settings"] - @name
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="Index">@Localizer["ManageProfile"]</a>
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="PersonalData">@Localizer["ManagePersonalData"]</a>
-                    @if (hasExternalLogins)
-                    {
-                        <a class="dropdown-item" asp-controller="Manage" asp-action="ExternalLogins">@Localizer["ExternalLogins"]</a>
-                    }
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="TwoFactorAuthentication">@Localizer["2FA"]</a>
-                    <a class="dropdown-item" asp-controller="Manage" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
-                    <a class="dropdown-item" asp-controller="Grants" asp-action="Index">@Localizer["Grants"]</a>
+    @if(!User.Identity.IsAuthenticated)
+    {
+        <div class="container position-sticky z-index-sticky top-0">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Navbar -->
+                    <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+                        <div class="container-fluid pe-0">
+                            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " asp-area="" asp-controller="Home" asp-action="Index">
+                                <img src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.LogoOndeUri)"style="height:34px;"> @RootConfiguration.AdminConfiguration.PageTitle
+                            </a>
+                            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon mt-2">
+                                    <span class="navbar-toggler-bar bar1"></span>
+                                    <span class="navbar-toggler-bar bar2"></span>
+                                    <span class="navbar-toggler-bar bar3"></span>
+                                </span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navigation">
+                                <li class="nav-item d-flex align-items-center">
+                                    <a class="btn btn-round btn-sm mb-0 btn-outline-dark me-2" href="~/.well-known/openid-configuration">@Localizer["Discovery"]</a>
+                                </li>
+                            </div>
+                        </div>
+                    </nav>
+                    <!-- End Navbar -->
                 </div>
             </div>
+        </div>
+    }
 
-            <a class="menu-item my-2 btn btn-outline-primary" asp-action="Logout" asp-controller="Account">@Localizer["Signout"]</a>
-        }
-
-        <!--Menu button - show in < MD -->
-        <a class="my-2 btn btn-outline-primary menu-button" href="#">
-            <span class="oi oi-menu" title="menu" aria-hidden="true"></span> @Localizer["Menu"]
-        </a>
-    </div>
+    @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(name))
+    {
+        <div class="container position-sticky z-index-sticky top-0">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Navbar -->
+                    <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+                        <div class="container-fluid pe-0">
+                            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " asp-area="" asp-controller="Home" asp-action="Index">
+                                <img src="@UrlHelper.Content(RootConfiguration.AdminConfiguration.LogoOndeUri)" style="height:34px;"> @RootConfiguration.AdminConfiguration.PageTitle
+                            </a>
+                            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon mt-2">
+                                    <span class="navbar-toggler-bar bar1"></span>
+                                    <span class="navbar-toggler-bar bar2"></span>
+                                    <span class="navbar-toggler-bar bar3"></span>
+                                </span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navigation">
+                                <ul class="navbar-nav mx-auto ms-xl-auto me-xl-7">
+                                    <li class="nav-item">
+                                        <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/ServerSideSessions">
+                                            <i class="fa fa-server opacity-6 text-dark me-1"></i>
+                                            @Localizer["Sessions"]
+                                        </a>
+                                    </li>
+                                    <vc:identity-server-admin-link></vc:identity-server-admin-link>
+                                </ul>
+                                <li class="nav-item d-flex align-items-center">
+                                    <a class="btn btn-round btn-sm mb-0 btn-outline-dark me-2" href="~/.well-known/openid-configuration">@Localizer["Discovery"]</a>
+                                    <a class="btn btn-round btn-sm mb-0 btn-dark me-2" asp-action="Logout" asp-controller="Account">@Localizer["Signout"]</a>
+                                </li>
+                            </div>
+                        </div>
+                    </nav>
+                    <!-- End Navbar -->
+                </div>
+            </div>
+        </div>
+    }
 
     <div class="container">
         @RenderBody()
 
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+@*        <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
                 <div class="col-6 col-md">
                     @RootConfiguration.AdminConfiguration.PageTitle
@@ -101,14 +151,44 @@
                     @await Html.PartialAsync("Common/SelectLanguage")
                 </div>
             </div>
-        </footer>
+        </footer>*@
     </div>
 
     <environment include="Development">
         <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
+        <script src="~/js/core/popper.min.js"></script>
+        <script src="~/js/core/bootstrap.min.js"></script>
+        <script src="~/js/plugins/perfect-scrollbar.min.js"></script>
+        <script src="~/js/plugins/smooth-scrollbar.min.js"></script>
+        <script>
+            var win = navigator.platform.indexOf('Win') > -1;
+            if (win && document.querySelector('#sidenav-scrollbar')) {
+                var options = {
+                    damping: '0.5'
+                }
+                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+            }
+        </script>
+        <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+        <script src="~/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
+        <script src="~/js/core/popper.min.js"></script>
+        <script src="~/js/core/bootstrap.min.js"></script>
+        <script src="~/js/plugins/perfect-scrollbar.min.js"></script>
+        <script src="~/js/plugins/smooth-scrollbar.min.js"></script>
+        <script>
+            var win = navigator.platform.indexOf('Win') > -1;
+            if (win && document.querySelector('#sidenav-scrollbar')) {
+                var options = {
+                    damping: '0.5'
+                }
+                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+            }
+        </script>
+        <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+        <script src="~/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
     </environment>
 
     @await RenderSectionAsync("scripts", required: false)

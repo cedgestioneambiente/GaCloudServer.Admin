@@ -5,7 +5,7 @@
     ViewData["Title"] = Localizer["Title"];
 }
 
-<div class="row">
+<div class="row" style="margin-top:100px;">
 
     <div class="col-12">
         <h3>@ViewData["Title"]</h3>
@@ -67,11 +67,11 @@
     <div class="col-12">
         @if (!Model.HasAuthenticator)
         {
-            <a id="enable-authenticator" asp-action="EnableAuthenticator" class="btn btn-primary">@Localizer["AddAuthenticator"]</a>
+            <a id="enable-authenticator" asp-action="EnableAuthenticator" class="btn btn-dark">@Localizer["AddAuthenticator"]</a>
         }
         else
         {
-            <a id="enable-authenticator" asp-action="EnableAuthenticator" class="btn btn-primary">@Localizer["SetupAuthenticator"]</a>
+            <a id="enable-authenticator" asp-action="EnableAuthenticator" class="btn btn-dark">@Localizer["SetupAuthenticator"]</a>
             <a id="reset-authenticator" asp-action="ResetAuthenticatorWarning" class="btn btn-danger">@Localizer["ResetAuthenticator"]</a>
         }
     </div>

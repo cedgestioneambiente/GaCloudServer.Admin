@@ -5,7 +5,7 @@
     ViewData["Title"] = Localizer["Title"];
 }
 
-<h4>@ViewData["Title"]</h4>
+<h4 style="margin-top:100px;">@ViewData["Title"]</h4>
 <div>
     <p>@Localizer["SubTitle"]</p>
     <ol class="list">
@@ -37,7 +37,7 @@
                             <input asp-for="Code" class="form-control" autocomplete="off" />
                             <span asp-validation-for="Code" class="text-danger"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary">@Localizer["Verify"]</button>
+                        <button type="submit" class="btn btn-dark">@Localizer["Verify"]</button>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     </form>
                 </div>
