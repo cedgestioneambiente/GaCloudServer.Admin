@@ -1,0 +1,7 @@
+Dati delle tabelle di gestione inseriti nelle migrazioni:
+
+GaAutorizzazioniTipi
+GlobalSedi
+Ga_Ec_SegnalazioniStati
+ContactCenterProvenienze
+GaContactCenterStatiRichieste

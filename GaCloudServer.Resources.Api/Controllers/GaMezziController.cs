@@ -1193,7 +1193,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Mezzi";
+                string fileFolder = "GaCloud/Mezzi/Scadenze";
                 var dto = apiDto.ToDto<MezziScadenzaDto, MezziScadenzaApiDto>();
                 var response = await _gaMezziService.AddGaMezziScadenzaAsync(dto);
                 if (apiDto.uploadFile)
@@ -1233,7 +1233,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "Mezzi";
+                string fileFolder = "GaCloud/Mezzi/Scadenze";
                 var dto = apiDto.ToDto<MezziScadenzaDto, MezziScadenzaApiDto>();
                 var response = await _gaMezziService.UpdateGaMezziScadenzaAsync(dto);
                 bool failureDelete = false;
