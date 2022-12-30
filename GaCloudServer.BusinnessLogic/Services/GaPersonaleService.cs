@@ -834,6 +834,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<PersonaleSanzione, PersonaleSanzioneDto>();
             await gaPersonaleSanzioniRepo.AddAsync(entity);
             await SaveChanges();
+            DetachEntity(entity);
+
             return entity.Id;
         }
 
@@ -842,6 +844,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<PersonaleSanzione, PersonaleSanzioneDto>();
             gaPersonaleSanzioniRepo.Update(entity);
             await SaveChanges();
+            DetachEntity(entity);
 
             return entity.Id;
 

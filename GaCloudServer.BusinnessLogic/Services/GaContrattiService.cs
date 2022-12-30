@@ -555,6 +555,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<ContrattiDocumento, ContrattiDocumentoDto>();
             await gaContrattiDocumentiRepo.AddAsync(entity);
             await SaveChanges();
+            DetachEntity(entity);
+
             return entity.Id;
         }
 
@@ -563,6 +565,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<ContrattiDocumento, ContrattiDocumentoDto>();
             gaContrattiDocumentiRepo.Update(entity);
             await SaveChanges();
+            DetachEntity(entity);
 
             return entity.Id;
 
