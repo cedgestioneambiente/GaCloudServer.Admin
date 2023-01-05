@@ -1297,12 +1297,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaMezziScadenzaAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaMezziScadenzaAsync(long id)
+        [HttpDelete("DeleteGaMezziScadenzaAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaMezziScadenzaAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaMezziService.DeleteGaMezziScadenzaAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }
@@ -1517,12 +1529,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaMezziDocumentoAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaMezziDocumentoAsync(long id)
+        [HttpDelete("DeleteGaMezziDocumentoAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaMezziDocumentoAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaMezziService.DeleteGaMezziDocumentoAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }

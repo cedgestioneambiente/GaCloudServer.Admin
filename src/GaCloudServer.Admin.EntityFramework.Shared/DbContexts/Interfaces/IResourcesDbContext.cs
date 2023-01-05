@@ -287,6 +287,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #region Views
         DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
+        DbSet<ViewFoContactCenterTickets> ViewFoContactCenterTickets { get; set; }
         DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
         #endregion
 

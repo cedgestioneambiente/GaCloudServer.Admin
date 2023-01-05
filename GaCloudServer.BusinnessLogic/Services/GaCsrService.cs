@@ -656,7 +656,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<PagedList<ViewGaCsrRegistrazioni>> GetViewGaCsrRegistrazioniAsync()
+        public async Task<PagedList<ViewGaCsrRegistrazioni>> GetViewGaCsrRegistrazioniAsync(bool all = true)
         {
             try
             {

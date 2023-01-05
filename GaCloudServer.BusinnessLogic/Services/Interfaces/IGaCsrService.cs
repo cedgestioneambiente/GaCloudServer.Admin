@@ -94,7 +94,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Views
-        Task<PagedList<ViewGaCsrRegistrazioni>> GetViewGaCsrRegistrazioniAsync();
+        Task<PagedList<ViewGaCsrRegistrazioni>> GetViewGaCsrRegistrazioniAsync(bool all = true);
         Task<List<ViewGaCsrExports>> GetGaCsrExports(int anno, List<int> comuni);
         #endregion
         #endregion

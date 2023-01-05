@@ -368,12 +368,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteEcSegnalazioniAllegatoAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteEcSegnalazioniAllegatoAsync(long id)
+        [HttpDelete("DeleteEcSegnalazioniAllegatoAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteEcSegnalazioniAllegatoAsync(long id, string fileId)
         {
             try
             {
                 var response = await _ecSegnalazioniService.DeleteEcSegnalazioniAllegatoAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }

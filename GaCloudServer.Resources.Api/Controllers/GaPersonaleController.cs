@@ -923,12 +923,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaPersonaleScadenzaAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleScadenzaAsync(long id)
+        [HttpDelete("DeleteGaPersonaleScadenzaAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleScadenzaAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaPersonaleService.DeleteGaPersonaleScadenzaAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }
@@ -1434,12 +1446,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaPersonaleSanzioneAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleSanzioneAsync(long id)
+        [HttpDelete("DeleteGaPersonaleSanzioneAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleSanzioneAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaPersonaleService.DeleteGaPersonaleSanzioneAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }
@@ -1816,12 +1840,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaPersonaleAbilitazioneAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleAbilitazioneAsync(long id)
+        [HttpDelete("DeleteGaPersonaleAbilitazioneAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleAbilitazioneAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaPersonaleService.DeleteGaPersonaleAbilitazioneAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }
@@ -2214,12 +2250,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaPersonaleRetributivoAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleRetributivoAsync(long id)
+        [HttpDelete("DeleteGaPersonaleRetributivoAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPersonaleRetributivoAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaPersonaleService.DeleteGaPersonaleRetributivoAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }

@@ -760,6 +760,23 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        //[HttpGet("GetGaContactCenterAllegatiByTicketIdAsync/{contactCenterTicketId}")]
+        //public async Task<ActionResult<ApiResponse>> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId)
+        //{
+        //    try
+        //    {
+        //        var dto = await _gaContactCenterService.GetGaContactCenterAllegatiByTicketIdAsync(contactCenterTicketId);
+        //        var apiDto = dto.ToApiDto<ContactCenterAllegatoApiDto, ContactCenterAllegatoDto>();
+        //        return new ApiResponse(apiDto);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+
+        //}
+
         [HttpGet("GetGaContactCenterAllegatoByIdAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetGaContactCenterAllegatoByIdAsync(long id)
         {
@@ -889,12 +906,24 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteGaContactCenterAllegatoAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaContactCenterAllegatoAsync(long id)
+        [HttpDelete("DeleteGaContactCenterAllegatoAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaContactCenterAllegatoAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaContactCenterService.DeleteGaContactCenterAllegatoAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }
@@ -1530,31 +1559,31 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        //[HttpPost("ExportFoContactCenterTicketsQueryable")]
-        //[ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(BadRequestObjectResult), 400)]
-        //[AutoWrapIgnore]
-        //public IActionResult ExportFoContactCenterTicketsQueryable(GridOperationsModel filter)
-        //{
+        [HttpPost("ExportFoContactCenterTicketsQueryable")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportFoContactCenterTicketsQueryable(GridOperationsModel filter)
+        {
 
-        //    try
-        //    {
-        //        var entities = _gaContactCenterService.GetViewFoContactCenterTicketsQueryableNoSkip(filter);
-        //        string title = "Lista Ticket";
-        //        string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Utente","TelefonoMail","TipoTicket","Materiali",
-        //                        "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl"};
-        //        byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "TICKET_CONTACT_CENTER", true, columns);
+            try
+            {
+                var entities = _gaContactCenterService.GetViewFoContactCenterTicketsQueryableNoSkip(filter);
+                string title = "Lista Ticket";
+                string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Utente","TelefonoMail","TipoTicket","Materiali",
+                                "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl"};
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "TICKET_CONTACT_CENTER", true, columns);
 
-        //        return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
-        //        {
-        //            FileDownloadName = "Ticket_ContactCenter.xlsx"
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApiProblemDetailsException(code.Status400BadRequest);
-        //    }
-        //}
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Ticket_ContactCenter.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
 
         [HttpPost("GetViewGaContactCenterTicketsQueryable")]
         public ApiResponse GetViewGaContactCenterTicketsQueryable(GridOperationsModel filter)
@@ -1562,6 +1591,20 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var entities = _gaContactCenterService.GetViewGaContactCenterTicketsQueryable(filter);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpPost("GetViewFoContactCenterTicketsQueryable")]
+        public ApiResponse GetViewFoContactCenterTicketsQueryable(GridOperationsModel filter)
+        {
+            try
+            {
+                var entities = _gaContactCenterService.GetViewFoContactCenterTicketsQueryable(filter);
                 return new ApiResponse(entities);
             }
             catch (Exception ex)

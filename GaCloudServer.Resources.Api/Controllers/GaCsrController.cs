@@ -957,12 +957,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpGet("GetViewGaCsrRegistrazioniAsync")]
-        public async Task<ApiResponse> GetViewGaCsrRegistrazioniAsync()
+        [HttpGet("GetViewGaCsrRegistrazioniAsync/{all}")]
+        public async Task<ApiResponse> GetViewGaCsrRegistrazioniAsync(bool all = true)
         {
             try
             {
-                var view = await _gaCsrService.GetViewGaCsrRegistrazioniAsync();
+                var view = await _gaCsrService.GetViewGaCsrRegistrazioniAsync(all);
                 return new ApiResponse(view);
             }
             catch (Exception ex)

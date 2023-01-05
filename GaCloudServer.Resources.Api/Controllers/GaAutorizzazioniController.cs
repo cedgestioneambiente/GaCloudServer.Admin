@@ -21,16 +21,22 @@ namespace GaCloudServer.Resources.Api.Controllers
     {
         private readonly IGaAutorizzazioniService _gaAutorizzazioniService;
         private readonly IFileService _fileService;
+        private readonly INotificationService _notificationService;
+        private readonly IMailService _mailService;
         private readonly ILogger<GaAutorizzazioniController> _logger;
 
         public GaAutorizzazioniController(
-            IGaAutorizzazioniService gaAutorizzazioniService
-            ,IFileService fileService
-            ,ILogger<GaAutorizzazioniController> logger)
+            IGaAutorizzazioniService gaAutorizzazioniService,
+            IFileService fileService,
+            INotificationService notificationService,
+            IMailService mailService
+            , ILogger<GaAutorizzazioniController> logger)
         {
 
             _gaAutorizzazioniService = gaAutorizzazioniService;
             _fileService = fileService;
+            _notificationService = notificationService;
+            _mailService = mailService;
             _logger = logger;
         }
 
@@ -476,12 +482,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaAutorizzazioniAllegatoAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaAutorizzazioniAllegatoAsync(long id)
+        [HttpDelete("DeleteGaAutorizzazioniAllegatoAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaAutorizzazioniAllegatoAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaAutorizzazioniService.DeleteGaAutorizzazioniAllegatoAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
                 return new ApiResponse(response);
             }

@@ -83,7 +83,13 @@
 	  <None Update="Scripts\Cdr\DROP_ViewGaCdr.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\ContactCenter\CREATE_ViewFoContactCenter.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\ContactCenter\CREATE_ViewGaContactCenter.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\ContactCenter\DROP_ViewFoContactCenter.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\ContactCenter\DROP_ViewGaContactCenter.sql">

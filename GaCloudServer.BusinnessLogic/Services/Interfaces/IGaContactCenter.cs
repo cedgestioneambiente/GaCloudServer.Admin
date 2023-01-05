@@ -94,6 +94,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region GaContactCenterAllegati
         Task<ContactCenterAllegatiDto> GetGaContactCenterAllegatiAsync(long id);
+        //Task<ContactCenterAllegatoDto> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId);
         Task<ContactCenterAllegatoDto> GetGaContactCenterAllegatoByIdAsync(long id);
 
         Task<long> AddGaContactCenterAllegatoAsync(ContactCenterAllegatoDto dto);
@@ -146,13 +147,13 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa);
-        //Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa);
+        Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa);
         Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
-        //Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
+        Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
         PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryable(GridOperationsModel filterParams);
-        //PagedList<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryable(GridOperationsModel filterParams);
+        PagedList<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryable(GridOperationsModel filterParams);
         List<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams);
-        //List<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams);
+        List<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams);
         Task<ViewGaContactCenterTickets> GetViewGaContactCenterTicketById(long id);
         #endregion
 

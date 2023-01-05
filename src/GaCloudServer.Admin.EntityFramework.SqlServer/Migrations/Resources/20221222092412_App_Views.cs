@@ -27,6 +27,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaPersonaleMigration, ScriptConsts.CREATE_ViewGaPersonale));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaPresenzeMigration, ScriptConsts.CREATE_ViewGaPresenze));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContactCenterMigration, ScriptConsts.CREATE_ViewGaContactCenter));
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContactCenterMigration, ScriptConsts.CREATE_ViewFoContactCenter));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaRecapitiMigration, ScriptConsts.CREATE_ViewGaRecapiti));
         }
 
@@ -49,6 +50,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaPersonaleMigration, ScriptConsts.DROP_ViewGaPersonale));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaPresenzeMigration, ScriptConsts.DROP_ViewGaPresenze));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContactCenterMigration, ScriptConsts.DROP_ViewGaContactCenter));
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContactCenterMigration, ScriptConsts.DROP_ViewFoContactCenter));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaRecapitiMigration, ScriptConsts.DROP_ViewGaRecapiti));
         }
     }

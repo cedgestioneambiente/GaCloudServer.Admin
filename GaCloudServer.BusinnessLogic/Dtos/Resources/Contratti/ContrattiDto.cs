@@ -83,9 +83,9 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
     {
         public long ContrattiFornitoreId { get; set; }
         public int Numero { get; set; }
-        public string Descrizione { get; set; }
-        public string CodiceCig { get; set; }
-        public string Faldone { get; set; }
+        public string? Descrizione { get; set; }
+        public string? CodiceCig { get; set; }
+        public string? Faldone { get; set; }
         public DateTime? DataScadenza { get; set; }
         public long ContrattiModalitaId { get; set; }
         public bool Direzione { get; set; }
@@ -99,7 +99,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
         public bool Archiviato { get; set; }
         public long ContrattiServizioId { get; set; }
         public bool Preventivo { get; set; }
-        public string PreventivoNumero { get; set; }
+        public string? PreventivoNumero { get; set; }
         public long ContrattiTipologiaId { get; set; }
     }
 

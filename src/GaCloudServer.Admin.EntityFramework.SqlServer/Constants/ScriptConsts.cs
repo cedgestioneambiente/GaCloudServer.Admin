@@ -80,6 +80,8 @@
         public const string GaContactCenterMigration = @".\Scripts\ContactCenter\";
         public const string CREATE_ViewGaContactCenter = "CREATE_ViewGaContactCenter.sql";
         public const string DROP_ViewGaContactCenter = "DROP_ViewGaContactCenter.sql";
+        public const string CREATE_ViewFoContactCenter = "CREATE_ViewFoContactCenter.sql";
+        public const string DROP_ViewFoContactCenter = "DROP_ViewFoContactCenter.sql";
 
         //Presenze
         public const string GaPresenzeMigration = @".\Scripts\Presenze\";

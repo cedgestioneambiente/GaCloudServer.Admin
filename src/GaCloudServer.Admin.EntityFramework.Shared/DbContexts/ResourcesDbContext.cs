@@ -294,6 +294,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region Views
         public DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
+        public DbSet<ViewFoContactCenterTickets> ViewFoContactCenterTickets { get; set; }
         public DbSet<ViewGaContactCenterTicketsIngombranti> ViewGaContactCenterTicketsIngombranti { get; set; }
         #endregion
 
@@ -794,6 +795,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaContactCenterTickets))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewFoContactCenterTickets>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewFoContactCenterTickets))
                     .HasKey(x => x.Id);
             });
 

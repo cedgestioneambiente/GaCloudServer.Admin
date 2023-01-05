@@ -21,6 +21,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ContactCenterTicket> gaContactCenterTicketsRepo;
 
         protected readonly IGenericRepository<ViewGaContactCenterTickets> viewGaContactCenterTicketsRepo;
+        protected readonly IGenericRepository<ViewFoContactCenterTickets> viewFoContactCenterTicketsRepo;
         protected readonly IGenericRepository<ViewGaContactCenterTicketsIngombranti> viewGaContactCenterTicketsIngombrantiRepo;
 
         protected readonly IUnitOfWork unitOfWork;
@@ -37,6 +38,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ContactCenterTicket> gaContactCenterTicketsRepo,
 
             IGenericRepository<ViewGaContactCenterTickets> viewGaContactCenterTicketsRepo,
+            IGenericRepository<ViewFoContactCenterTickets> viewFoContactCenterTicketsRepo,
             IGenericRepository<ViewGaContactCenterTicketsIngombranti> viewGaContactCenterTicketsIngombrantiRepo,
 
 
@@ -52,6 +54,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaContactCenterTicketsRepo = gaContactCenterTicketsRepo;
 
             this.viewGaContactCenterTicketsRepo = viewGaContactCenterTicketsRepo;
+            this.viewFoContactCenterTicketsRepo = viewFoContactCenterTicketsRepo;
             this.viewGaContactCenterTicketsIngombrantiRepo = viewGaContactCenterTicketsIngombrantiRepo;
 
             this.unitOfWork = unitOfWork;
@@ -467,6 +470,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             await SaveChanges();
             return dtos;
         }
+
+        //public async Task<ContactCenterAllegatoDto> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId)
+        //{
+        //    var entity = await gaContactCenterAllegatiRepo.GetByIdAsync(contactCenterTicketId);
+        //    var dto = entity.ToDto<ContactCenterAllegatiDto, ContactCenterAllegato>();
+        //    return dto;
+        //}
 
         public async Task<ContactCenterAllegatoDto> GetGaContactCenterAllegatoByIdAsync(long id)
         {
@@ -1013,6 +1023,189 @@ namespace GaCloudServer.BusinnessLogic.Services
                     var filterResult = viewGaContactCenterTicketsRepo.GetAllQueryableV2NoSkip(filterParams).Data;
                     return filterResult;
                 }
+        }
+
+        public async Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa)
+        {
+            try
+            {
+                if (dataEsecuzione != null)
+                {
+                    if (tipoStampa == 1)
+                    {
+
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && x.DataEsecuzione == dataEsecuzione && (x.TipoTicket == "RACCOLTA INGOMBRANTI" || x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (tipoStampa == 2)
+                    {
+
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && x.DataEsecuzione == dataEsecuzione && (x.TipoTicket == "RACCOLTA INGOMBRANTI"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (tipoStampa == 3)
+                    {
+
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && x.DataEsecuzione == dataEsecuzione && (x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && x.DataEsecuzione == dataEsecuzione && (x.TipoTicket == "RACCOLTA INGOMBRANTI" || x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+                else
+                {
+                    if (tipoStampa == 1)
+                    {
+
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && (x.TipoTicket == "RACCOLTA INGOMBRANTI" || x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (tipoStampa == 2)
+                    {
+
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && (x.TipoTicket == "RACCOLTA INGOMBRANTI"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (tipoStampa == 3)
+                    {
+
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && (x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Comune == comune && (x.TipoTicket == "RACCOLTA INGOMBRANTI" || x.TipoTicket == "RACCOLTA INGOMBRANTI RAEE"), 1, 0).Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        public async Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData)
+        {
+
+            try
+            {
+                if (fromId == null && toId != null)
+                {
+                    if (fromData == null && toData != null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id <= toId && x.DataEsecuzione <= toData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData == null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id <= toId && x.DataEsecuzione >= fromData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData != null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id <= toId && (x.DataEsecuzione >= fromData && x.DataEsecuzione <= toData) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id <= toId && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+                else if (fromId != null && toId == null)
+                {
+                    if (fromData == null && toData != null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id >= fromId && x.DataEsecuzione <= toData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData == null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id >= fromId && x.DataEsecuzione >= fromData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData != null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id >= fromId && (x.DataEsecuzione >= fromData && x.DataEsecuzione <= toData) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.Id >= fromId && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+                else if (fromId != null && toId != null)
+                {
+                    if (fromData == null && toData != null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => (x.Id >= fromId && x.Id <= toId) && x.DataEsecuzione <= toData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData == null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => (x.Id >= fromId && x.Id <= toId) && x.DataEsecuzione >= fromData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData != null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => (x.Id >= fromId && x.Id <= toId) && (x.DataEsecuzione >= fromData && x.DataEsecuzione <= toData) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => (x.Id >= fromId && x.Id <= toId) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+                else
+                {
+                    if (fromData == null && toData != null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.DataEsecuzione <= toData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData == null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.DataEsecuzione >= fromData && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else if (fromData != null && toData != null)
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => (x.DataEsecuzione >= fromData && x.DataEsecuzione <= toData) && x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                    else
+                    {
+                        return viewFoContactCenterTicketsRepo.GetWithFilterAsync(x => x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        public async Task<ViewFoContactCenterTickets> GetViewFoContactCenterTicketById(long id)
+        {
+            var view = await viewFoContactCenterTicketsRepo.GetByIdAsync(id);
+            return view;
+        }
+
+        public PagedList<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryable(GridOperationsModel filterParams)
+        {
+
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+                var filterResult = viewFoContactCenterTicketsRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                return filterResult;
+            }
+            else
+            {
+                var filterResult = viewFoContactCenterTicketsRepo.GetAllQueryableV2(filterParams);
+                return filterResult;
+            }
+
+        }
+
+        public List<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams)
+        {
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+                var filterResult = viewFoContactCenterTicketsRepo.GetAllQueryableV2WithQuickFilterNoSkip(filterParams, filterParams.quickFilter).Data;
+                return filterResult;
+            }
+            else
+            {
+                var filterResult = viewFoContactCenterTicketsRepo.GetAllQueryableV2NoSkip(filterParams).Data;
+                return filterResult;
+            }
         }
         #endregion
 

@@ -281,6 +281,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             //Views
             services.AddTransient<IGenericRepository<ViewGaContactCenterTickets>, GenericRepository<TResourcesDbContext, ViewGaContactCenterTickets>>();
+            services.AddTransient<IGenericRepository<ViewFoContactCenterTickets>, GenericRepository<TResourcesDbContext, ViewFoContactCenterTickets>>();
             services.AddTransient<IGenericRepository<ViewGaContactCenterTicketsIngombranti>, GenericRepository<TResourcesDbContext, ViewGaContactCenterTicketsIngombranti>>();
 
             #endregion
