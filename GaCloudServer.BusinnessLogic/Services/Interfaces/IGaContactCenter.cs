@@ -93,8 +93,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region GaContactCenterAllegati
-        Task<ContactCenterAllegatiDto> GetGaContactCenterAllegatiAsync(long id);
-        //Task<ContactCenterAllegatoDto> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId);
+        Task<ContactCenterAllegatiDto> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId);
         Task<ContactCenterAllegatoDto> GetGaContactCenterAllegatoByIdAsync(long id);
 
         Task<long> AddGaContactCenterAllegatoAsync(ContactCenterAllegatoDto dto);

@@ -64,7 +64,13 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
     public class ContactCenterAllegatoDto : GenericFileDto
     {
         public long ContactCenterTicketId { get; set; }
-        public string Descrizione { get; set; }
+        public string? Descrizione { get; set; }
+
+
+        public ContactCenterAllegatoDto()
+        {
+            Descrizione = string.Empty;
+        }
     }
 
     public class ContactCenterAllegatiDto : GenericPagedListDto<ContactCenterAllegatoDto>

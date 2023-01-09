@@ -462,21 +462,12 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region ContactCenterAllegati
-        public async Task<ContactCenterAllegatiDto> GetGaContactCenterAllegatiAsync(long id)
+        public async Task<ContactCenterAllegatiDto> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId)
         {
-            var entities = await gaContactCenterAllegatiRepo.GetWithFilterAsync(x => x.ContactCenterTicketId == id);
+            var entities = await gaContactCenterAllegatiRepo.GetWithFilterAsync(x => x.ContactCenterTicketId == contactCenterTicketId);
             var dtos = entities.ToDto<ContactCenterAllegatiDto, PagedList<ContactCenterAllegato>>();
-
-            await SaveChanges();
             return dtos;
         }
-
-        //public async Task<ContactCenterAllegatoDto> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId)
-        //{
-        //    var entity = await gaContactCenterAllegatiRepo.GetByIdAsync(contactCenterTicketId);
-        //    var dto = entity.ToDto<ContactCenterAllegatiDto, ContactCenterAllegato>();
-        //    return dto;
-        //}
 
         public async Task<ContactCenterAllegatoDto> GetGaContactCenterAllegatoByIdAsync(long id)
         {
@@ -490,6 +481,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<ContactCenterAllegato, ContactCenterAllegatoDto>();
             await gaContactCenterAllegatiRepo.AddAsync(entity);
             await SaveChanges();
+            DetachEntity(entity);
+
             return entity.Id;
         }
 
@@ -498,6 +491,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<ContactCenterAllegato, ContactCenterAllegatoDto>();
             gaContactCenterAllegatiRepo.Update(entity);
             await SaveChanges();
+            DetachEntity(entity);
 
             return entity.Id;
 

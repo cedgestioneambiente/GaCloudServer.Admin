@@ -66,16 +66,23 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         {
             public long ContactCenterTicketId { get; set; }
             public string Descrizione { get; set; }
-        }
+        
 
-        public class ContactCenterAllegatiApiDto : GenericPagedListApiDto<ContactCenterAllegatoApiDto>
+        public ContactCenterAllegatoApiDto()
         {
+            Descrizione = string.Empty;
         }
 
+        }
+        public class ContactCenterAllegatiApiDto : GenericPagedListApiDto<ContactCenterAllegatoApiDto>
+            {
+
+            }
+        
         #endregion
 
         #region ContactCenterMailsOnTickets
-        public class ContactCenterMailOnTicketApiDto : GenericApiDto
+    public class ContactCenterMailOnTicketApiDto : GenericApiDto
         {
             public long ContactCenterTicketId { get; set; }
             public long ContactCenterMailId { get; set; }

@@ -17,6 +17,7 @@ using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using static GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter.ContactCenterAllegatoApiDto;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -44,7 +45,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             ,IPrintService printService
             ,IMailService mailService
             ,INotificationService notificationService
-            , ILogger<GaContactCenterController> logger)
+            ,ILogger<GaContactCenterController> logger)
         {
 
             _gaContactCenterService = gaContactCenterService;
@@ -743,12 +744,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region ContactCenterAllegati
-        [HttpGet("GetGaContactCenterAllegatiAsync")]
-        public async Task<ActionResult<ApiResponse>> GetGaContactCenterAllegatiAsync(long id)
+        [HttpGet("GetGaContactCenterAllegatiByTicketIdAsync/{contactCenterTicketId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId)
         {
             try
             {
-                var dtos = await _gaContactCenterService.GetGaContactCenterAllegatiAsync(id);
+                var dtos = await _gaContactCenterService.GetGaContactCenterAllegatiByTicketIdAsync(contactCenterTicketId);
                 var apiDtos = dtos.ToApiDto<ContactCenterAllegatiApiDto, ContactCenterAllegatiDto>();
                 return new ApiResponse(apiDtos);
             }
@@ -759,23 +760,6 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
-
-        //[HttpGet("GetGaContactCenterAllegatiByTicketIdAsync/{contactCenterTicketId}")]
-        //public async Task<ActionResult<ApiResponse>> GetGaContactCenterAllegatiByTicketIdAsync(long contactCenterTicketId)
-        //{
-        //    try
-        //    {
-        //        var dto = await _gaContactCenterService.GetGaContactCenterAllegatiByTicketIdAsync(contactCenterTicketId);
-        //        var apiDto = dto.ToApiDto<ContactCenterAllegatoApiDto, ContactCenterAllegatoDto>();
-        //        return new ApiResponse(apiDto);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
-
-        //}
 
         [HttpGet("GetGaContactCenterAllegatoByIdAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetGaContactCenterAllegatoByIdAsync(long id)
