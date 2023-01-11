@@ -33,17 +33,24 @@ namespace GaCloudServer.Jobs.Jobs
                         var result = mailJobService.SendMail(mail).Result;
                         if (result == false)
                         {
-                            var notification = notificationService.AddNotificationEventAsync(new NotificationEventDto()
+                            foreach (var itm in mail.UserId.Split(";"))
                             {
-                                Id = 0,
-                                DateEvent = DateTime.Now,
-                                UserId = mail.UserId,
-                                NotificationAppId = TextHelpers.AppSplit(mail.Application),
-                                Title = mail.Title,
-                                Message = mail.KoMessage,
-                                Read = false,
-                                Disabled = false
-                            }).Result;
+                                var userNotification = notificationService.GetViewViewNotificationUsersOnAppsByUserIdAsync(itm).Result;
+                                if ((from x in userNotification.Data where x.AppId== TextHelpers.AppSplit(mail.Application) select x).ToList().Count>0)
+                                {
+                                    var notification = notificationService.AddNotificationEventAsync(new NotificationEventDto()
+                                    {
+                                        Id = 0,
+                                        DateEvent = DateTime.Now,
+                                        UserId = itm,
+                                        NotificationAppId = TextHelpers.AppSplit(mail.Application),
+                                        Title = mail.Title,
+                                        Message = mail.KoMessage,
+                                        Read = false,
+                                        Disabled = false
+                                    }).Result;
+                                }
+                            }
 
                             
 
@@ -51,17 +58,24 @@ namespace GaCloudServer.Jobs.Jobs
                         }
                         else
                         {
-                            var notification = notificationService.AddNotificationEventAsync(new NotificationEventDto()
+                            foreach (var itm in mail.UserId.Split(";"))
                             {
-                                Id = 0,
-                                DateEvent = DateTime.Now,
-                                UserId = mail.UserId,
-                                NotificationAppId = TextHelpers.AppSplit(mail.Application),
-                                Title = mail.Title,
-                                Message = mail.OkMessage,
-                                Read = false,
-                                Disabled = false
-                            }).Result;
+                                var userNotification = notificationService.GetViewViewNotificationUsersOnAppsByUserIdAsync(itm).Result;
+                                if ((from x in userNotification.Data where x.AppId == TextHelpers.AppSplit(mail.Application) select x).ToList().Count > 0)
+                                {
+                                    var notification = notificationService.AddNotificationEventAsync(new NotificationEventDto()
+                                    {
+                                        Id = 0,
+                                        DateEvent = DateTime.Now,
+                                        UserId = itm,
+                                        NotificationAppId = TextHelpers.AppSplit(mail.Application),
+                                        Title = mail.Title,
+                                        Message = mail.OkMessage,
+                                        Read = false,
+                                        Disabled = false
+                                    }).Result;
+                                }
+                            }
 
                             var setSended = mailService.SetSendedOnMailJobAsync(mail.Id).Result;
                         }

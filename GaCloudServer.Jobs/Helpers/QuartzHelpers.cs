@@ -53,7 +53,7 @@ namespace GaCloudServer.Jobs.Helpers
                 ["quartz.jobStore.tablePrefix"] = "QRTZ_",
                 ["quartz.jobStore.driverDelegateType"] = "Quartz.Impl.AdoJobStore.SqlServerDelegate, Quartz",
                 ["quartz.dataSource.default.provider"] = "SqlServer", // SqlServer-41 is the new provider for .NET Core
-                ["quartz.dataSource.default.connectionString"] = @"Server=.\sqlexpress;Database=GaCloud;Trusted_Connection=True;MultipleActiveResultSets=true"
+                ["quartz.dataSource.default.connectionString"] = @"Server=.\sqlexpress;Database=GaCloud;Persist Security Info=True;User ID=sa;Password=No7AsbmFxqJMm!768vWB!!EPubFQ3Q;Connection Timeout=60;MultipleActiveResultSets=True"
             };
         }
     }

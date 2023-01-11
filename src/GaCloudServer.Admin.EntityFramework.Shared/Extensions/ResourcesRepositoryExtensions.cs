@@ -333,6 +333,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
         public static IServiceCollection AddJobsResourcesRepository<TResourcesDbContext>(this IServiceCollection services)
     where TResourcesDbContext : DbContext, IResourcesDbContext
         {
+            //Autorizzazioni
+            #region Autorizzazioni
+            services.AddTransient<IGenericRepository<AutorizzazioniTipo>, GenericRepository<TResourcesDbContext, AutorizzazioniTipo>>();
+            services.AddTransient<IGenericRepository<AutorizzazioniDocumento>, GenericRepository<TResourcesDbContext, AutorizzazioniDocumento>>();
+            services.AddTransient<IGenericRepository<AutorizzazioniAllegato>, GenericRepository<TResourcesDbContext, AutorizzazioniAllegato>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaAutorizzazioniDocumenti>, GenericRepository<TResourcesDbContext, ViewGaAutorizzazioniDocumenti>>();
+            #endregion
 
             //Notifications
             #region Notification
