@@ -15,6 +15,8 @@ using Quartz.Spi;
 using System.Collections.Specialized;
 using System.Text;
 using Skoruba.AuditLogging.EntityFramework.Entities;
+using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using GaCloudServer.BusinnessLogic.Services;
 
 namespace GaCloudServer.Jobs
 {
@@ -85,6 +87,8 @@ namespace GaCloudServer.Jobs
             services.AddHostedService<QuartzHostedService>();
 
             services.AddScoped<MailJobs>();
+            services.AddScoped<ScadJobs.GaAutorizzazioniScadenziarioJob>();
+            services.AddScoped<ScadJobs.GaMezziScadenziarioJob>();
 
 
 
@@ -156,7 +160,9 @@ namespace GaCloudServer.Jobs
                 new CrystalQuartzOptions {
                     AllowedJobTypes = new[]
                     { 
-                        typeof(MailJobs)
+                        typeof(MailJobs),
+                        typeof(ScadJobs.GaAutorizzazioniScadenziarioJob),
+                        typeof(ScadJobs.GaMezziScadenziarioJob)
                     }
                 }
                 );

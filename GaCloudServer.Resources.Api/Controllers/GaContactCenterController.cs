@@ -1150,6 +1150,17 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
+                var allegati = await _gaContactCenterService.GetGaContactCenterAllegatiByTicketIdAsync(id);
+                foreach (var itm in allegati.Data)
+                {
+                    var fileId = itm.FileId;
+                    var resp = await _gaContactCenterService.DeleteGaContactCenterAllegatoAsync(itm.Id);
+                    if (resp && fileId != null && fileId != "null" && fileId != "")
+                    {
+                        var deleteResponse = await _fileService.Remove(fileId);
+                    }
+                }
+
                 var response = await _gaContactCenterService.DeleteGaContactCenterTicketAsync(id);
 
                 return new ApiResponse(response);

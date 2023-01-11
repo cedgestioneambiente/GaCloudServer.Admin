@@ -1,10 +1,34 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Landing Page";
 }
 
-<div class="text-center">
+<!-- home container id starts -->
+<div id="home-container">
+    <!-- inner sub id starts -->
+    <div id="inner">
+        <img src="./images/gestione-onde.png" alt="Ga logo" id="logo">
+        <h1>GA CLOUD JOB SCHEDULER</h1>
+        <p class="subtitle">Pianifica operazioni e servizi</p>
+        <a href="/quartz" class="cta cta--white ">Accedi al Portale</a>
+    </div>
+    <!-- inner sub id ends -->
+    <!-- illustration sub id starts -->
+    <div id="illustration">
+        <lord-icon style="height: 300px;width: 300px;"
+                   trigger="loop"
+                   src="./anim/67025-business-analysis.json"></lord-icon>
+@*        <img src="assets/dash.svg" alt="dash img" id="dash" class="crypto-icons">
+        <img src="assets/miota.svg" alt="iota img" id="iota" class="crypto-icons">
+        <img src="assets/eth.svg" alt="eth img" id="eth" class="crypto-icons">
+        <img src="assets/monitor.svg" alt="monitor img" id="monitor">*@
+    </div>
+    <!-- illustration sub id ends -->
+</div>
+<!-- home container id ends -->
+
+@*<div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</div>*@

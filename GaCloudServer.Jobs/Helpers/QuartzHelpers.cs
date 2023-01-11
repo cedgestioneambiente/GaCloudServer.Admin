@@ -9,7 +9,7 @@ namespace GaCloudServer.Jobs.Helpers
         { 
             return new NameValueCollection
             {
-                ["quartz.scheduler.instanceName"] = "AuthServer.SSO Scheduler",
+                ["quartz.scheduler.instanceName"] = "GaCloud.Jobs",
                 // json serialization is the one supported under .NET Core (binary isn't)
                 ["quartz.serializer.type"] = "json",
                 ["org.quartz.scheduler.makeSchedulerThreadDaemon"] = "true",
@@ -35,7 +35,7 @@ namespace GaCloudServer.Jobs.Helpers
         {
             return new NameValueCollection
             {
-                ["quartz.scheduler.instanceName"] = "AuthServer.SSO Scheduler",
+                ["quartz.scheduler.instanceName"] = "GaCloud.Jobs",
                 // json serialization is the one supported under .NET Core (binary isn't)
                 ["quartz.serializer.type"] = "json",
                 ["org.quartz.scheduler.makeSchedulerThreadDaemon"] = "true",
@@ -53,7 +53,7 @@ namespace GaCloudServer.Jobs.Helpers
                 ["quartz.jobStore.tablePrefix"] = "QRTZ_",
                 ["quartz.jobStore.driverDelegateType"] = "Quartz.Impl.AdoJobStore.SqlServerDelegate, Quartz",
                 ["quartz.dataSource.default.provider"] = "SqlServer", // SqlServer-41 is the new provider for .NET Core
-                ["quartz.dataSource.default.connectionString"] = @"Server=.\sqlexpress;Database=GaCloud;Trusted_Connection=True;MultipleActiveResultSets=true"
+                ["quartz.dataSource.default.connectionString"] = @"Server=.\sqlexpress;Database=GaCloud;Persist Security Info=True;User ID=sa;Password=No7AsbmFxqJMm!768vWB!!EPubFQ3Q;Connection Timeout=60;MultipleActiveResultSets=True"
             };
         }
     }
