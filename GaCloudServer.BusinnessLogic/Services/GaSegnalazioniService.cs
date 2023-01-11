@@ -208,10 +208,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    return dtos;
         //}
 
-        public async Task<SegnalazioniAllegatoDto> GetGaSegnalazioniAllegatoByDocumentoIdAsync(long segnalazioniDocumentoId)
+        public async Task<SegnalazioniAllegatiDto> GetGaSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId)
         {
             var entity = await gaSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
-            var dto = entity.ToDto<SegnalazioniAllegatoDto, PagedList<SegnalazioniAllegato>>();
+            var dto = entity.ToDto<SegnalazioniAllegatiDto, PagedList<SegnalazioniAllegato>>();
             return dto;
         }
 

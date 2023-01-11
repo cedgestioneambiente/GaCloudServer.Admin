@@ -1517,7 +1517,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpPost("ExportGaContactCenterTicketsQueryable")]
+        [HttpGet("ExportGaContactCenterTicketsQueryable")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
         [AutoWrapIgnore]
@@ -1543,7 +1543,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpPost("ExportFoContactCenterTicketsQueryable")]
+        [HttpGet("ExportFoContactCenterTicketsQueryable")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
         [AutoWrapIgnore]

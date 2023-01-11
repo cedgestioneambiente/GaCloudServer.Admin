@@ -1,9 +1,11 @@
-﻿using AutoWrapper.Wrappers;
+﻿using AutoWrapper.Filters;
+using AutoWrapper.Wrappers;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Mezzi;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.Mezzi;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -1126,6 +1128,35 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("ExportGaMezziVeicoli")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaMezziVeicoli()
+        {
+
+            try
+            {
+                var entities = _gaMezziService.GetViewGaMezziVeicoliAsync().Result.Data;
+                string title = "Lista Mezzi";
+                string[] columns = { "Id", "Targa", "Tipo", "Proprietario", "Cantiere", "AlboGestori","Alimentazione",
+                    "Patente","Euro","NumeroTelaio","PortataKg","MassaKg","AnnoImmatricolazione","Ce","ManualeUsoManutenzione","CatalogoRicambi","Garanzia","Note","CDP","CDPD","Dismesso","DismessoData","ScadenzaContratto" };
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "LISTA_MEZZI", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Lista_Mezzi.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
+
+
         #endregion
 
         #region Views
