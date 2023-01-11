@@ -88,6 +88,7 @@ namespace GaCloudServer.Jobs
 
             services.AddScoped<MailJobs>();
             services.AddScoped<ScadJobs.GaAutorizzazioniScadenziarioJob>();
+            services.AddScoped<ScadJobs.GaMezziScadenziarioJob>();
 
 
 
@@ -160,7 +161,8 @@ namespace GaCloudServer.Jobs
                     AllowedJobTypes = new[]
                     { 
                         typeof(MailJobs),
-                        typeof(ScadJobs.GaAutorizzazioniScadenziarioJob)
+                        typeof(ScadJobs.GaAutorizzazioniScadenziarioJob),
+                        typeof(ScadJobs.GaMezziScadenziarioJob)
                     }
                 }
                 );

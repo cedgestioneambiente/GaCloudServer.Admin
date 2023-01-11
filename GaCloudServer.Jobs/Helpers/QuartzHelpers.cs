@@ -9,7 +9,7 @@ namespace GaCloudServer.Jobs.Helpers
         { 
             return new NameValueCollection
             {
-                ["quartz.scheduler.instanceName"] = "AuthServer.SSO Scheduler",
+                ["quartz.scheduler.instanceName"] = "GaCloud.Jobs",
                 // json serialization is the one supported under .NET Core (binary isn't)
                 ["quartz.serializer.type"] = "json",
                 ["org.quartz.scheduler.makeSchedulerThreadDaemon"] = "true",
@@ -35,7 +35,7 @@ namespace GaCloudServer.Jobs.Helpers
         {
             return new NameValueCollection
             {
-                ["quartz.scheduler.instanceName"] = "AuthServer.SSO Scheduler",
+                ["quartz.scheduler.instanceName"] = "GaCloud.Jobs",
                 // json serialization is the one supported under .NET Core (binary isn't)
                 ["quartz.serializer.type"] = "json",
                 ["org.quartz.scheduler.makeSchedulerThreadDaemon"] = "true",
