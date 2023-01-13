@@ -91,10 +91,10 @@ namespace GaCloudServer.Resources.Api.Dtos.Reclami
         public long ReclamiTempoRispostaId { get; set; }
         public DateTime RispostaEntroData { get; set; }
         public bool Fondato { get; set; }
-        public string Infondato { get; set; }
+        public string? Infondato { get; set; }
         public long ReclamiStatoId { get; set; }
-        public string Note { get; set; }
-        public string AzioniCorrettive { get; set; }
+        public string? Note { get; set; }
+        public string? AzioniCorrettive { get; set; }
         public DateTime? RispostaInviata { get; set; }
         public DateTime? RispostaDefinitiva { get; set; }
     }

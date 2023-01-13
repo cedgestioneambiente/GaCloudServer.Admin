@@ -6,8 +6,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.
     public class ViewGaReclamiDocumenti : GenericEntity
     {
         public string NumeroReclamo { get; set; }
-        public string OrigineReclamo { get; set; }
-        public DateTime OrigineReclamoData { get; set; }
+        public string OrigineReclami { get; set; }
+        public DateTime OrigineReclamiData { get; set; }
         public string Mittente { get; set; }
         public string Oggetto { get; set; }
         public DateTime RispostaEntroData { get; set; }
