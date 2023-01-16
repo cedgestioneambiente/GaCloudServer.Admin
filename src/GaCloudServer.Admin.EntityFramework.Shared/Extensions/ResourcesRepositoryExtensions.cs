@@ -312,7 +312,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             #endregion
 
-
             //Recapiti
             #region Recapiti
 
@@ -362,6 +361,66 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaMezziScadenze>, GenericRepository<TResourcesDbContext, ViewGaMezziScadenze>>();
             #endregion
 
+            //Contratti
+            #region Contratti
+            services.AddTransient<IGenericRepository<ContrattiPermesso>, GenericRepository<TResourcesDbContext, ContrattiPermesso>>();
+            services.AddTransient<IGenericRepository<ContrattiServizio>, GenericRepository<TResourcesDbContext, ContrattiServizio>>();
+            services.AddTransient<IGenericRepository<ContrattiTipologia>, GenericRepository<TResourcesDbContext, ContrattiTipologia>>();
+            services.AddTransient<IGenericRepository<ContrattiUtenteOnPermesso>, GenericRepository<TResourcesDbContext, ContrattiUtenteOnPermesso>>();
+            services.AddTransient<IGenericRepository<ContrattiModalita>, GenericRepository<TResourcesDbContext, ContrattiModalita>>();
+            services.AddTransient<IGenericRepository<ContrattiFornitore>, GenericRepository<TResourcesDbContext, ContrattiFornitore>>();
+            services.AddTransient<IGenericRepository<ContrattiDocumento>, GenericRepository<TResourcesDbContext, ContrattiDocumento>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaContrattiUtenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtenti>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiUtentiOnPermessi>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtentiOnPermessi>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiDocumenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumenti>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiDocumentiList>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumentiList>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiNumeratori>, GenericRepository<TResourcesDbContext, ViewGaContrattiNumeratori>>();
+
+            //Sp
+            services.AddTransient<IProcedureManager<SpGaContrattiNumeratore>, ProcedureManager<TResourcesDbContext, SpGaContrattiNumeratore>>();
+            services.AddTransient<IProcedureManager<SpGaContrattiPermesso>, ProcedureManager<TResourcesDbContext, SpGaContrattiPermesso>>();
+            services.AddTransient<IProcedureManager<SpGaContrattiPermessoMode>, ProcedureManager<TResourcesDbContext, SpGaContrattiPermessoMode>>();
+
+            #endregion
+
+            //Personale
+            #region Personale
+            services.AddTransient<IGenericRepository<PersonaleDipendente>, GenericRepository<TResourcesDbContext, PersonaleDipendente>>();
+            services.AddTransient<IGenericRepository<PersonaleQualifica>, GenericRepository<TResourcesDbContext, PersonaleQualifica>>();
+            services.AddTransient<IGenericRepository<PersonaleAssunzione>, GenericRepository<TResourcesDbContext, PersonaleAssunzione>>();
+            services.AddTransient<IGenericRepository<PersonaleScadenza>, GenericRepository<TResourcesDbContext, PersonaleScadenza>>();
+            services.AddTransient<IGenericRepository<PersonaleScadenzaTipo>, GenericRepository<TResourcesDbContext, PersonaleScadenzaTipo>>();
+            services.AddTransient<IGenericRepository<PersonaleScadenzaDettaglio>, GenericRepository<TResourcesDbContext, PersonaleScadenzaDettaglio>>();
+            services.AddTransient<IGenericRepository<PersonaleSanzioneMotivo>, GenericRepository<TResourcesDbContext, PersonaleSanzioneMotivo>>();
+            services.AddTransient<IGenericRepository<PersonaleSanzioneDescrizione>, GenericRepository<TResourcesDbContext, PersonaleSanzioneDescrizione>>();
+            services.AddTransient<IGenericRepository<PersonaleSanzione>, GenericRepository<TResourcesDbContext, PersonaleSanzione>>();
+            services.AddTransient<IGenericRepository<PersonaleAbilitazione>, GenericRepository<TResourcesDbContext, PersonaleAbilitazione>>();
+            services.AddTransient<IGenericRepository<PersonaleAbilitazioneTipo>, GenericRepository<TResourcesDbContext, PersonaleAbilitazioneTipo>>();
+            services.AddTransient<IGenericRepository<PersonaleRetributivo>, GenericRepository<TResourcesDbContext, PersonaleRetributivo>>();
+            services.AddTransient<IGenericRepository<PersonaleRetributivoTipo>, GenericRepository<TResourcesDbContext, PersonaleRetributivoTipo>>();
+            services.AddTransient<IGenericRepository<PersonaleSchedaConsegna>, GenericRepository<TResourcesDbContext, PersonaleSchedaConsegna>>();
+            services.AddTransient<IGenericRepository<PersonaleSchedaConsegnaDettaglio>, GenericRepository<TResourcesDbContext, PersonaleSchedaConsegnaDettaglio>>();
+            services.AddTransient<IGenericRepository<PersonaleArticolo>, GenericRepository<TResourcesDbContext, PersonaleArticolo>>();
+            services.AddTransient<IGenericRepository<PersonaleArticoloModello>, GenericRepository<TResourcesDbContext, PersonaleArticoloModello>>();
+            services.AddTransient<IGenericRepository<PersonaleArticoloTipologia>, GenericRepository<TResourcesDbContext, PersonaleArticoloTipologia>>();
+            services.AddTransient<IGenericRepository<PersonaleArticoloDpi>, GenericRepository<TResourcesDbContext, PersonaleArticoloDpi>>();
+
+            services.AddTransient<IGenericRepository<ViewGaPersonaleUsersOnDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleUsersOnDipendenti>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleDipendenti>, GenericRepository<TResourcesDbContext, ViewGaPersonaleDipendenti>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleScadenze>, GenericRepository<TResourcesDbContext, ViewGaPersonaleScadenze>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleAbilitazioni>, GenericRepository<TResourcesDbContext, ViewGaPersonaleAbilitazioni>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleScadenziarioAbilitazioni>, GenericRepository<TResourcesDbContext, ViewGaPersonaleScadenziarioAbilitazioni>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleArticoli>, GenericRepository<TResourcesDbContext, ViewGaPersonaleArticoli>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleNuoveSchede>, GenericRepository<TResourcesDbContext, ViewGaPersonaleNuoveSchede>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleRetributivi>, GenericRepository<TResourcesDbContext, ViewGaPersonaleRetributivi>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleSanzioni>, GenericRepository<TResourcesDbContext, ViewGaPersonaleSanzioni>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleSchedeConsegne>, GenericRepository<TResourcesDbContext, ViewGaPersonaleSchedeConsegne>>();
+            services.AddTransient<IGenericRepository<ViewGaPersonaleScadenziario>, GenericRepository<TResourcesDbContext, ViewGaPersonaleScadenziario>>();
+
+            #endregion
+
             //Notifications
             #region Notification
             services.AddTransient<IGenericRepository<NotificationApp>, GenericRepository<TResourcesDbContext, NotificationApp>>();
@@ -372,6 +431,23 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewNotificationRolesOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationRolesOnApps>>();
             services.AddTransient<IGenericRepository<ViewNotificationUsersOnApps>, GenericRepository<TResourcesDbContext, ViewNotificationUsersOnApps>>();
             services.AddTransient<IGenericRepository<ViewNotificationEvents>, GenericRepository<TResourcesDbContext, ViewNotificationEvents>>();
+            #endregion
+
+            //Reclami
+            #region Reclami
+            services.AddTransient<IGenericRepository<ReclamiAzione>, GenericRepository<TResourcesDbContext, ReclamiAzione>>();
+            services.AddTransient<IGenericRepository<ReclamiDocumento>, GenericRepository<TResourcesDbContext, ReclamiDocumento>>();
+            services.AddTransient<IGenericRepository<ReclamiMittente>, GenericRepository<TResourcesDbContext, ReclamiMittente>>();
+            services.AddTransient<IGenericRepository<ReclamiStato>, GenericRepository<TResourcesDbContext, ReclamiStato>>();
+            services.AddTransient<IGenericRepository<ReclamiTempoRisposta>, GenericRepository<TResourcesDbContext, ReclamiTempoRisposta>>();
+            services.AddTransient<IGenericRepository<ReclamiTipoAzione>, GenericRepository<TResourcesDbContext, ReclamiTipoAzione>>();
+            services.AddTransient<IGenericRepository<ReclamiTipoOrigine>, GenericRepository<TResourcesDbContext, ReclamiTipoOrigine>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaReclamiAzioni>, GenericRepository<TResourcesDbContext, ViewGaReclamiAzioni>>();
+            services.AddTransient<IGenericRepository<ViewGaReclamiDocumenti>, GenericRepository<TResourcesDbContext, ViewGaReclamiDocumenti>>();
+            services.AddTransient<IGenericRepository<ViewGaReclamiRegistri>, GenericRepository<TResourcesDbContext, ViewGaReclamiRegistri>>();
+
             #endregion
 
             //Mail

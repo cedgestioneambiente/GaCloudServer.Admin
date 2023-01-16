@@ -711,7 +711,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             {
                 var entities = await viewGaReclamiDocumentiRepo.GetAllAsync();
                 var anni = from x in entities.Data
-                           select x.OrigineReclamoData.Year;
+                           select x.OrigineReclamiData.Year;
                 anni = anni.Distinct();
                 return anni.ToList();
             }
@@ -730,7 +730,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             try
             {
-                return await viewGaReclamiDocumentiRepo.GetAllAsync(1, 0, "OrigineReclamoData", "OrderByDescending");
+                return await viewGaReclamiDocumentiRepo.GetAllAsync(1, 0, "OrigineReclamiData", "OrderByDescending");
             }
             catch (Exception ex)
             {
