@@ -1282,8 +1282,6 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-
-
         [HttpPost("GetGaContactCenterTicketsIngAsync")]
         public async Task<ApiResponse> GetGaContactCenterTicketsIngAsync([FromBody] ContactCenterIngByDateFilterApiDto apiDto)
         {
@@ -1608,6 +1606,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
         #endregion
+
         #endregion
 
         #region Extras

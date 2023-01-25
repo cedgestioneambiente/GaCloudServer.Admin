@@ -1,6 +1,7 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Reclami;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
@@ -8,7 +9,6 @@ using GaCloudServer.Resources.Api.Dtos.Reclami;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
-using GaCloudServer.Resources.Api.Report.ReclamiRegistro;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
@@ -24,16 +24,19 @@ namespace GaCloudServer.Resources.Api.Controllers
     {
         private readonly IGaReclamiService _gaReclamiService;
         private readonly IFileService _fileService;
+        private readonly IPrintService _printService;
         private readonly ILogger<GaReclamiController> _logger;
 
         public GaReclamiController(
             IGaReclamiService gaReclamiService
             , IFileService fileService
+            ,IPrintService printService
             , ILogger<GaReclamiController> logger)
         {
 
             _gaReclamiService = gaReclamiService;
             _fileService = fileService;
+            _printService = printService;
             _logger = logger;
         }
 
@@ -1029,23 +1032,6 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
-        #endregion
-
-        #region Views
-        [HttpGet("GetViewGaReclamiDocumentiAsync")]
-        public async Task<ApiResponse> GetViewGaReclamiDocumentiAsync()
-        {
-            try
-            {
-                var view = await _gaReclamiService.GetViewGaReclamiDocumentiAsync();
-                return new ApiResponse(view);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-                throw new ApiException(ex.Message);
-            };
-        }
 
         [HttpGet("ExportGaReclamiDocumentiAsync")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
@@ -1073,10 +1059,52 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
         }
+        #endregion
 
-        //[HttpGet("PrintGaReclamiRegistro/{anno}")]
-        //public async Task<ApiResponse> PrintGaReclamiRegistro(int anno)
-        //{
+        #region Views
+        [HttpGet("GetViewGaReclamiDocumentiAsync")]
+        public async Task<ApiResponse> GetViewGaReclamiDocumentiAsync()
+        {
+            try
+            {
+                var view = await _gaReclamiService.GetViewGaReclamiDocumentiAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            };
+        }
+
+
+
+        [HttpGet("PrintGaReclamiRegistro/{anno}")]
+        public async Task<ApiResponse> PrintGaReclamiRegistro(int anno)
+        {
+            try {
+                var registro = await _gaReclamiService.GetGaReclamiRegistriAsync(anno);
+                var registro_stampa = new List<ViewGaReclamiRegistri>();
+
+                foreach (var itm in registro)
+                {
+                    itm.AzioniIntraprese = _gaReclamiService.CreateAzioni(itm.Id);
+                    registro_stampa.Add(itm);
+                }
+
+                var dto = GenerateReclamiRegistroItemsTemplate(registro_stampa, anno.ToString());
+                var response = await _printService.Print("ReclamiRegistro", dto);
+
+                return new ApiResponse(response);
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+
+        }
         //    try
         //    {
         //        var registro = await _gaReclamiService.GetGaReclamiRegistriAsync(anno);
@@ -1130,5 +1158,45 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #endregion
+
+        #region Helpers
+        private ReclamiRegistroItemsTemplateDto GenerateReclamiRegistroItemsTemplate(List<ViewGaReclamiRegistri> items, string anno)
+        {
+            var dto = new ReclamiRegistroItemsTemplateDto()
+            {
+                FileName = "ReclamiRegistro.pdf",
+                FilePath = @"Print/Reclami",
+                Title = "Reclami Registro",
+                Css = "ReclamiRegistro",
+                Orientation= DinkToPdf.Orientation.Landscape,
+                Anno=anno,
+                Items = new List<ReclamiRegistroItemTemplateDto>()
+            };
+
+            List<ReclamiRegistroItemTemplateDto> dtos = new List<ReclamiRegistroItemTemplateDto>();
+            foreach (var item in items)
+            {
+
+                dto.Items.Add(new ReclamiRegistroItemTemplateDto()
+                {
+                    Numeratore = item.Numeratore,
+                    Data = item.Data.ToString("dd-MM-yyyy"),
+                    Cliente = item.Cliente,
+                    Motivo = item.Motivo,
+                    RispostaEntro = item.RispostaEntro.ToString("dd-MM-yyyy"),
+                    RispostaInviata = item.RispostaInviata!=null? item.RispostaInviata.GetValueOrDefault().ToString("dd-MM-yyyy"):"/",
+                    AzioniIntraprese = item.AzioniIntraprese,
+                    Fondato = item.Fondato?"SI":"NO",
+                    Infondato = item.Infondato,
+                    RispostaDefinitiva = item.RispostaDefinitiva!=null?item.RispostaDefinitiva.GetValueOrDefault().ToString("dd-MM-yyyy"):"/"
+                });
+
+            }
+
+            return dto;
+        }
+        #endregion
+
+
     }
 }

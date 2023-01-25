@@ -87,6 +87,8 @@
         public const string GaPresenzeMigration = @".\Scripts\Presenze\";
         public const string CREATE_ViewGaPresenze = "CREATE_ViewGaPresenze.sql";
         public const string DROP_ViewGaPresenze = "DROP_ViewGaPresenze.sql";
+        public const string CREATE_ViewGaPresenze_V2 = "CREATE_ViewGaPresenze_V2.sql";
+        public const string DROP_ViewGaPresenze_V2 = "DROP_ViewGaPresenze_V2.sql";
 
         //Recapiti
         public const string GaRecapitiMigration = @".\Scripts\Recapiti\";

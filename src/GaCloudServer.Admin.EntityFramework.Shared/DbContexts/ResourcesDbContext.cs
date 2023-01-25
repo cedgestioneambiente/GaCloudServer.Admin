@@ -321,6 +321,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaPresenzeOrariGiornate> ViewGaPresenzeOrariGiornate { get; set; }
         public DbSet<ViewGaPresenzeRichieste> ViewGaPresenzeRichieste { get; set; }
         public DbSet<ViewGaPresenzeRichiestaMail> ViewGaPresenzeRichiestaMail { get; set; }
+        public DbSet<ViewGaPresenzeRichiesteRisorse> ViewGaPresenzeRichiesteRisorse { get; set; }
+        public DbSet<ViewGaPresenzeRichiesteEventi> ViewGaPresenzeRichiesteEventi { get; set; }
 
         #endregion
 
@@ -858,6 +860,20 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 entity
                     .ToView(nameof(ViewGaPresenzeRichiestaMail))
                     .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPresenzeRichiesteRisorse>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPresenzeRichiesteRisorse))
+                    .HasNoKey();
+            });
+
+            builder.Entity<ViewGaPresenzeRichiesteEventi>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaPresenzeRichiesteEventi))
+                    .HasNoKey();
             });
 
             #endregion

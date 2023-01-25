@@ -176,21 +176,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpGet("GetGaViewPresenzeRichiesteBySettoreIdAsync/{globalSettoreId}")]
-        public async Task<ActionResult<ApiResponse>> GetGaViewPresenzeRichiesteBySettoreIdAsync(long globalSettoreId)
-        {
-            try
-            {
-                var view = await _gaPresenzeService.GetGaViewPresenzeRichiesteBySettoreIdAsync(globalSettoreId);
-                return new ApiResponse(view);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-                throw new ApiException(ex.Message);
-            }
-
-        }
+        
         #endregion
 
         #endregion
@@ -427,6 +413,56 @@ namespace GaCloudServer.Resources.Api.Controllers
                 _logger.LogError(ex.Message, ex);
                 throw new ApiException(ex.Message);
             }
+        }
+        #endregion
+
+        #region Views
+        [HttpGet("GetGaViewPresenzeRichiesteBySettoreIdAsync/{globalSettoreId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaViewPresenzeRichiesteBySettoreIdAsync(long globalSettoreId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetGaViewPresenzeRichiesteBySettoreIdAsync(globalSettoreId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaViewPresenzeRichiesteRisorseBySettoreIdAsync/{globalSettoreId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaViewPresenzeRichiesteRisorseBySettoreIdAsync(long globalSettoreId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeRichiesteRisorseBySettoreIdAsync(globalSettoreId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaPresenzeRichiesteEventiBySettoreIdAsync/{globalSettoreId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeRichiesteEventiBySettoreIdAsync(long globalSettoreId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeRichiesteEventiBySettoreIdAsync(globalSettoreId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
         }
         #endregion
 
@@ -1162,6 +1198,22 @@ namespace GaCloudServer.Resources.Api.Controllers
         #region Views
         [HttpGet("GetViewGaPresenzeDipendentiBySettoreIdAsync/{globalSettoreId}")]
         public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeDipendentiBySettoreIdAsync(long globalSettoreId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeDipendentiBySettoreIdAsync(globalSettoreId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaPresenzeDipendentiResourcesBySettoreIdAsync/{globalSettoreId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeDipendentiResourcesBySettoreIdAsync(long globalSettoreId)
         {
             try
             {

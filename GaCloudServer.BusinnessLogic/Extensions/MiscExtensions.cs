@@ -132,10 +132,10 @@ namespace GaCloudServer.BusinnessLogic.Extensions
                 {
                     return prevOpenDayAfterHoliday(endDate);
                 }
-                if (endDate.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    return prevOpenDayAfterHoliday(endDate);
-                }
+                //if (endDate.DayOfWeek == DayOfWeek.Saturday)
+                //{
+                //    return prevOpenDayAfterHoliday(endDate);
+                //}
                 if (endDate.DayOfWeek == DayOfWeek.Sunday)
                 {
                     return prevOpenDayAfterHoliday(endDate);
@@ -153,7 +153,9 @@ namespace GaCloudServer.BusinnessLogic.Extensions
 
             private bool isWorkingDay(DateTime date)
             {
-                return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday &&
+                //return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday &&
+                //       !_holidays.Contains(date.ToString(DateFormat));
+                return date.DayOfWeek != DayOfWeek.Sunday &&
                        !_holidays.Contains(date.ToString(DateFormat));
             }
 
@@ -166,10 +168,10 @@ namespace GaCloudServer.BusinnessLogic.Extensions
                 {
                     return nextOpenDayAfterHoliday(startDate);
                 }
-                if (startDate.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    return nextOpenDayAfterHoliday(startDate);
-                }
+                //if (startDate.DayOfWeek == DayOfWeek.Saturday)
+                //{
+                //    return nextOpenDayAfterHoliday(startDate);
+                //}
                 if (startDate.DayOfWeek == DayOfWeek.Sunday)
                 {
                     return nextOpenDayAfterHoliday(startDate);

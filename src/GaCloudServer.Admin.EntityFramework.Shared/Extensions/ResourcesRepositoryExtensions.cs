@@ -307,6 +307,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaPresenzeOrariGiornate>, GenericRepository<TResourcesDbContext, ViewGaPresenzeOrariGiornate>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeRichieste>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichieste>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeRichiestaMail>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichiestaMail>>();
+            services.AddTransient<IGenericRepository<ViewGaPresenzeRichiesteRisorse>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichiesteRisorse>>();
+            services.AddTransient<IGenericRepository<ViewGaPresenzeRichiesteEventi>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichiesteEventi>>();
 
 
 

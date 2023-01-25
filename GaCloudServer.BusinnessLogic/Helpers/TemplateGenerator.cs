@@ -275,5 +275,38 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
         }
+
+        public static string ReclamiRegistro(ReclamiRegistroItemsTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ReclamiRegistro/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+            foreach (var itm in dto.Items)
+            {
+                table += String.Format("<tr>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{0}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;min-width:90px;'>{1}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{2}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{3}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{4}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{5}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{10}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{6}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{7}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{8}</td>" +
+                        "<td style='border: 1px solid #000;padding:5px;'>{9}</td>" +
+                        "</tr>",
+                        itm.Numeratore, itm.Data, itm.Cliente,itm.Motivo,
+                        itm.RispostaEntro,itm.RispostaInviata,itm.AzioniIntraprese,
+                        itm.Fondato,itm.Infondato,itm.Note,
+                        itm.RispostaDefinitiva
+                        );
+            }
+
+            sb.AppendFormat(@fileContent, dto.Anno, table);
+            return sb.ToString();
+        }
     }
 }

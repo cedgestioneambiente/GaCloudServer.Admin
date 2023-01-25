@@ -67,4 +67,27 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public List<ContactCenterTicketIntTemplateDto> Items { get; set; }
     }
 
+    public class ReclamiRegistroItemTemplateDto
+    { 
+        public string Numeratore { get; set; }
+        public string Data { get; set; }
+        public string Cliente { get; set; }
+        public string Motivo { get; set; }
+        public string RispostaEntro { get; set; }
+        public string RispostaInviata { get; set; }
+        public string AzioniIntraprese { get; set; }
+        public string Fondato { get; set; }
+        public string Infondato { get; set; }
+        public string Note { get; set; }
+        public string RispostaDefinitiva { get; set; }
+
+        
+    }
+
+    public class ReclamiRegistroItemsTemplateDto : GenericPrintDto
+    { 
+        public string Anno { get; set; }
+        public List<ReclamiRegistroItemTemplateDto> Items { get; set; }
+    }
+
 }

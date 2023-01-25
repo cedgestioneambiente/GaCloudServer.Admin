@@ -32,6 +32,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaPresenzeOrariGiornate> viewGaPresenzeOrariGiornateRepo;
         protected readonly IGenericRepository<ViewGaPresenzeRichieste> viewGaPresenzeRichiesteRepo;
         protected readonly IGenericRepository<ViewGaPresenzeRichiestaMail> viewGaPresenzeRichiestaMailRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeRichiesteRisorse> viewGaPresenzeRichiesteRisorseRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeRichiesteEventi> viewGaPresenzeRichiesteEventiRepo;
 
         protected readonly IGenericRepository<GlobalSettore> globalSettoriRepo;
 
@@ -57,6 +59,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaPresenzeOrariGiornate> viewGaPresenzeOrariGiornateRepo,
             IGenericRepository<ViewGaPresenzeRichieste> viewGaPresenzeRichiesteRepo,
             IGenericRepository<ViewGaPresenzeRichiestaMail> viewGaPresenzeRichiestaMailRepo,
+            IGenericRepository<ViewGaPresenzeRichiesteRisorse> viewGaPresenzeRichiesteRisorseRepo,
+            IGenericRepository<ViewGaPresenzeRichiesteEventi> viewGaPresenzeRichiesteEventiRepo,
 
             IGenericRepository<GlobalSettore> globalSettoriRepo,
 
@@ -80,6 +84,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaPresenzeOrariGiornateRepo = viewGaPresenzeOrariGiornateRepo;
             this.viewGaPresenzeRichiesteRepo = viewGaPresenzeRichiesteRepo;
             this.viewGaPresenzeRichiestaMailRepo = viewGaPresenzeRichiestaMailRepo;
+            this.viewGaPresenzeRichiesteRisorseRepo = viewGaPresenzeRichiesteRisorseRepo;
+            this.viewGaPresenzeRichiesteEventiRepo = viewGaPresenzeRichiesteEventiRepo;
 
             this.globalSettoriRepo = globalSettoriRepo;
 
@@ -313,6 +319,18 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<ViewGaPresenzeRichiestaMail> GetViewGaPresenzeRichiestaMailByIdAsync(long id)
         {
             var view = await viewGaPresenzeRichiestaMailRepo.GetSingleWithFilter(x => x.Id == id);
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaPresenzeRichiesteRisorse>> GetViewGaPresenzeRichiesteRisorseBySettoreIdAsync(long globalSettoreId)
+        {
+            var view = await viewGaPresenzeRichiesteRisorseRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId);
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaPresenzeRichiesteEventi>> GetViewGaPresenzeRichiesteEventiBySettoreIdAsync(long globalSettoreId)
+        {
+            var view = await viewGaPresenzeRichiesteEventiRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId);
             return view;
         }
         #endregion
