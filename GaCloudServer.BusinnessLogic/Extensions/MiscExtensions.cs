@@ -22,7 +22,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
                 _openHours = openHours;
             }
 
-            public double getElapsedMinutes(DateTime startDate, DateTime endDate)
+            public double getElapsedMinutes(DateTime startDate, DateTime endDate, bool isSaturdayWorking=false)
             {
                 //if (_openHours.StartHour == 0 || _openHours.EndHour == 0)
                 //    throw new InvalidOperationException("Open hours cannot be started with zero hours or ended with zero hours");
@@ -40,8 +40,8 @@ namespace GaCloudServer.BusinnessLogic.Extensions
                     endDate = DateTime.Parse(string.Format("{0} {1}:{2}", endDate.ToString(DateFormat), _openHours.EndHour, _openHours.EndMinute));
                 }
 
-                startDate = nextOpenDay(startDate);
-                endDate = prevOpenDay(endDate);
+                startDate = nextOpenDay(startDate,isSaturdayWorking);
+                endDate = prevOpenDay(endDate,isSaturdayWorking);
 
 
                 if (startDate > endDate)
@@ -49,10 +49,10 @@ namespace GaCloudServer.BusinnessLogic.Extensions
 
                 if (startDate.ToString(DateFormat).Equals(endDate.ToString(DateFormat)))
                 {
-                    if (!isWorkingDay(startDate))
+                    if (!isWorkingDay(startDate,isSaturdayWorking))
                         return 0;
 
-                    if (startDate.DayOfWeek == DayOfWeek.Saturday || startDate.DayOfWeek == DayOfWeek.Sunday ||
+                    if ((!isSaturdayWorking && startDate.DayOfWeek == DayOfWeek.Saturday) || startDate.DayOfWeek == DayOfWeek.Sunday ||
                         _holidays.Contains(startDate.ToString(DateFormat)))
                         return 0;
 
@@ -126,16 +126,16 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             }
 
 
-            private DateTime prevOpenDay(DateTime endDate)
+            private DateTime prevOpenDay(DateTime endDate,bool isSaturdayWorking=false)
             {
                 if (_holidays.Contains(endDate.ToString(DateFormat)))
                 {
                     return prevOpenDayAfterHoliday(endDate);
                 }
-                //if (endDate.DayOfWeek == DayOfWeek.Saturday)
-                //{
-                //    return prevOpenDayAfterHoliday(endDate);
-                //}
+                if (!isSaturdayWorking && endDate.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    return prevOpenDayAfterHoliday(endDate);
+                }
                 if (endDate.DayOfWeek == DayOfWeek.Sunday)
                 {
                     return prevOpenDayAfterHoliday(endDate);
@@ -151,30 +151,37 @@ namespace GaCloudServer.BusinnessLogic.Extensions
                 return endDate;
             }
 
-            private bool isWorkingDay(DateTime date)
+            private bool isWorkingDay(DateTime date, bool isSaturdayWorking=false)
             {
-                //return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday &&
+                if (date.DayOfWeek == DayOfWeek.Saturday && isSaturdayWorking)
+                {
+                    return true;
+                }
+                else
+                {
+                    return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday &&
+                           !_holidays.Contains(date.ToString(DateFormat));
+                }
+                //return date.DayOfWeek != DayOfWeek.Sunday &&
                 //       !_holidays.Contains(date.ToString(DateFormat));
-                return date.DayOfWeek != DayOfWeek.Sunday &&
-                       !_holidays.Contains(date.ToString(DateFormat));
             }
 
 
 
 
-            private DateTime nextOpenDay(DateTime startDate)
+            private DateTime nextOpenDay(DateTime startDate, bool isSaturdayWorking = false)
             {
                 if (_holidays.Contains(startDate.ToString(DateFormat)))
                 {
-                    return nextOpenDayAfterHoliday(startDate);
+                    return nextOpenDayAfterHoliday(startDate,isSaturdayWorking);
                 }
-                //if (startDate.DayOfWeek == DayOfWeek.Saturday)
-                //{
-                //    return nextOpenDayAfterHoliday(startDate);
-                //}
+                if (!isSaturdayWorking && startDate.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    return nextOpenDayAfterHoliday(startDate,isSaturdayWorking);
+                }
                 if (startDate.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    return nextOpenDayAfterHoliday(startDate);
+                    return nextOpenDayAfterHoliday(startDate,isSaturdayWorking);
                 }
                 if (isDateBeforeOpenHours(startDate))
                 {
@@ -187,17 +194,17 @@ namespace GaCloudServer.BusinnessLogic.Extensions
 
                     if (_holidays.Contains(nextDate.ToString(DateFormat)))
                     {
-                        return nextOpenDayAfterHoliday(nextDate);
+                        return nextOpenDayAfterHoliday(nextDate,isSaturdayWorking);
                     }
                     return getStartOfDay(nextDate);
                 }
                 return startDate;
             }
 
-            private DateTime nextOpenDayAfterHoliday(DateTime holiday)
+            private DateTime nextOpenDayAfterHoliday(DateTime holiday, bool isSaturdayWorking = false)
             {
                 var nextDay = holiday.AddDays(1);
-                if (nextDay.DayOfWeek == DayOfWeek.Saturday)
+                if (!isSaturdayWorking && nextDay.DayOfWeek == DayOfWeek.Saturday)
                     nextDay = nextDay.AddDays(2);
                 if (nextDay.DayOfWeek == DayOfWeek.Sunday)
                     nextDay = nextDay.AddDays(1);
@@ -208,10 +215,10 @@ namespace GaCloudServer.BusinnessLogic.Extensions
                 return getStartOfDay(nextDay);
             }
 
-            private DateTime prevOpenDayAfterHoliday(DateTime holiday)
+            private DateTime prevOpenDayAfterHoliday(DateTime holiday, bool isSaturdayWorking = false)
             {
                 var prevDay = holiday.AddDays(-1);
-                if (prevDay.DayOfWeek == DayOfWeek.Saturday)
+                if ( !isSaturdayWorking && prevDay.DayOfWeek == DayOfWeek.Saturday)
                     prevDay = prevDay.AddDays(-1);
                 if (prevDay.DayOfWeek == DayOfWeek.Sunday)
                     prevDay = prevDay.AddDays(-2);

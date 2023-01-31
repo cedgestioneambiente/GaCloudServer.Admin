@@ -1239,14 +1239,17 @@ namespace GaCloudServer.BusinnessLogic.Services
                 var index = 1;
                 double totalElapsed = 0;
                 double elapsed = 0;
+                bool isSaturdayWorking = false;
 
                 foreach (var d in dates)
                 {
                     var dayOfWeek = (int)d.DayOfWeek;
                     var orario = (from x in orari where x.Giorno == dayOfWeek select x).FirstOrDefault();
+                     
 
                     if (orario != null)
                     {
+                        isSaturdayWorking = orario.Giorno == 6 ? true : false;
                         if (!dateEscluse.Contains(d))
                         {
                             var calc = new Calculation(new List<DateTime>(), new OpenHoursModel(orario.OraInizio.ToString("HH:mm") + ";" + orario.OraFine.ToString("HH:mm")));
@@ -1259,9 +1262,9 @@ namespace GaCloudServer.BusinnessLogic.Services
                                 var pausaInizio = startDate.SetTime(orario.PausaInizio.GetValueOrDefault().Hour, orario.PausaInizio.GetValueOrDefault().Minute, orario.PausaInizio.GetValueOrDefault().Second);
                                 var pausaFine = endDate.SetTime(orario.PausaFine.GetValueOrDefault().Hour, orario.PausaFine.GetValueOrDefault().Minute, orario.PausaFine.GetValueOrDefault().Second);
 
-                                elapsed = calc.getElapsedMinutes(startDate, endDate);
+                                elapsed = calc.getElapsedMinutes(startDate, endDate,isSaturdayWorking);
 
-                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault());
+                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault(),isSaturdayWorking);
                                 if ((pausaInizio >= startDate && pausaInizio < endDate) && (pausaFine > startDate && pausaFine <= endDate) && (pausaInizio < pausaFine))
                                 { elapsed -= pausa; }
                                 totalElapsed += elapsed;
@@ -1274,9 +1277,9 @@ namespace GaCloudServer.BusinnessLogic.Services
                                 var pausaInizio = startDate.SetTime(orario.PausaInizio.GetValueOrDefault().Hour, orario.PausaInizio.GetValueOrDefault().Minute, orario.PausaInizio.GetValueOrDefault().Second);
                                 var pausaFine = endDate.SetTime(orario.PausaFine.GetValueOrDefault().Hour, orario.PausaFine.GetValueOrDefault().Minute, orario.PausaFine.GetValueOrDefault().Second);
 
-                                elapsed = calc.getElapsedMinutes(startDate, endDate);
+                                elapsed = calc.getElapsedMinutes(startDate, endDate,isSaturdayWorking);
 
-                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault());
+                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault(), isSaturdayWorking);
                                 if ((pausaInizio >= startDate && pausaInizio < endDate) && (pausaFine > startDate && pausaFine <= endDate) && (pausaInizio < pausaFine))
                                 { elapsed -= pausa; }
                                 totalElapsed += elapsed;
@@ -1289,9 +1292,9 @@ namespace GaCloudServer.BusinnessLogic.Services
                                 var pausaInizio = startDate.SetTime(orario.PausaInizio.GetValueOrDefault().Hour, orario.PausaInizio.GetValueOrDefault().Minute, orario.PausaInizio.GetValueOrDefault().Second);
                                 var pausaFine = endDate.SetTime(orario.PausaFine.GetValueOrDefault().Hour, orario.PausaFine.GetValueOrDefault().Minute, orario.PausaFine.GetValueOrDefault().Second);
 
-                                elapsed = calc.getElapsedMinutes(startDate, endDate);
+                                elapsed = calc.getElapsedMinutes(startDate, endDate, isSaturdayWorking);
 
-                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault());
+                                var pausa = calcPausa.getElapsedMinutes(orario.PausaInizio.GetValueOrDefault(), orario.PausaFine.GetValueOrDefault(), isSaturdayWorking);
                                 if ((pausaInizio >= startDate && pausaInizio < endDate) && (pausaFine > startDate && pausaFine <= endDate) && (pausaInizio < pausaFine))
                                 { elapsed -= pausa; }
                                 totalElapsed += elapsed;
