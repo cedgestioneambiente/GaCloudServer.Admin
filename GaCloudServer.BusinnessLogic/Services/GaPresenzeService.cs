@@ -688,17 +688,18 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
-        public async Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id,long personaleDipendenteId)
+        public async Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id, long personaleDipendenteId, long profiloId, long orarioId)
         {
             if (id == 0)
             {
+                var profilo= await gaPresenzeProfiliRepo.GetByIdAsync(profiloId);
                 var entity = new PresenzeDipendente();
                 entity.Id = 0;
                 entity.PersonaleDipendenteId = personaleDipendenteId;
-                entity.PresenzeOrarioId = 1;
-                entity.PresenzeProfiloId = 1;
-                entity.HhFerie = 190;
-                entity.HhPermessiCcnl = 0;
+                entity.PresenzeOrarioId = orarioId;
+                entity.PresenzeProfiloId = profiloId;
+                entity.HhFerie = profilo.HhFerie;
+                entity.HhPermessiCcnl = profilo.HhPermessiCcnl;
                 entity.HhRecupero = 0;
                 entity.Disabled = false;
 

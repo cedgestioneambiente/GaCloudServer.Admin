@@ -19,6 +19,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
@@ -325,6 +326,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Mail
             #region Mail
             services.AddTransient<IGenericRepository<MailJob>, GenericRepository<TResourcesDbContext, MailJob>>();
+            #endregion
+
+            //Ost
+            #region Ost
+            services.AddTransient<IGenericRepository<ViewOstTickets>, GenericRepository<TResourcesDbContext, ViewOstTickets>>();
             #endregion
 
 

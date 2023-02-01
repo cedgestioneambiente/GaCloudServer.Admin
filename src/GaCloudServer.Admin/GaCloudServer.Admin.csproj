@@ -143,6 +143,12 @@
 	  <None Update="Scripts\Notification\DROP_ViewNotification.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Ost\CREATE_ViewOst.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Ost\DROP_ViewOst.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Personale\CREATE_ViewGaPersonale.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

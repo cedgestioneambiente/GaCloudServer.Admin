@@ -1178,12 +1178,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ChangeStatusGaPresenzeDipendenteAsync/{id}/{personaleDipendenteId}")]
-        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeDipendenteAsync(long id,long personaleDipendenteId)
+        [HttpGet("ChangeStatusGaPresenzeDipendenteAsync/{id}/{personaleDipendenteId}/{profiloId}/{orarioId}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaPresenzeDipendenteAsync(long id,long personaleDipendenteId,long profiloId,long orarioId)
         {
             try
             {
-                var response = await _gaPresenzeService.ChangeStatusGaPresenzeDipendenteAsync(id,personaleDipendenteId);
+                var response = await _gaPresenzeService.ChangeStatusGaPresenzeDipendenteAsync(id,personaleDipendenteId,profiloId,orarioId);
                 return new ApiResponse(response);
             }
             catch (Exception ex)

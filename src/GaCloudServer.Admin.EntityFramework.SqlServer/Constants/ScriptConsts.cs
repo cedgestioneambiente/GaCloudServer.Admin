@@ -99,5 +99,10 @@
         public const string JobsMigration = @".\Scripts\Jobs\";
         public const string CREATE_TableJobs = "CREATE_TableJobs.sql";
         public const string DROP_TableJobs = "DROP_TableJobs.sql";
+
+        //Ost
+        public const string OstMigration = @".\Scripts\Ost\";
+        public const string CREATE_ViewOst = "CREATE_ViewOst.sql";
+        public const string DROP_ViewOst = "DROP_ViewOst.sql";
     }
 }

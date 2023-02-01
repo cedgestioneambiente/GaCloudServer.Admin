@@ -33,6 +33,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -338,6 +339,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region Mail Tables
         public DbSet<MailJob> MailJobs { get; set; }
+        #endregion
+
+        #region Ost Tables
+        public DbSet<ViewOstTickets> ViewOstTickets { get; set; }
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -888,6 +893,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             });
 
             #endregion
+
+            #region Ost
+            builder.Entity<ViewOstTickets>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewOstTickets))
+                .HasNoKey()
+                .Property(x => x.Id);
+            });
+
+            #endregion
+
 
             base.OnModelCreating(builder);
 

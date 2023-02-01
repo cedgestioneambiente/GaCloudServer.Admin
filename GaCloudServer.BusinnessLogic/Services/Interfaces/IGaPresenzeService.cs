@@ -142,7 +142,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         Task<bool> ValidateGaPresenzeDipendenteAsync(long id, string matricola);
-        Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id,long personaleDipendenteId);
+        Task<bool> ChangeStatusGaPresenzeDipendenteAsync(long id,long personaleDipendenteId,long profiloId,long orarioId);
         #endregion
 
         #region Views
