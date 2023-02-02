@@ -1193,6 +1193,54 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("SetStatusEnabledGaPresenzeDipendentiAsync/{id}/{personaleDipendenteId}/{profiloId}/{orarioId}")]
+        public async Task<ActionResult<ApiResponse>> SetStatusEnabledGaPresenzeDipendentiAsync(long id, long personaleDipendenteId, long profiloId, long orarioId)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.SetStatusEnabledGaPresenzeDipendentiAsync(id, personaleDipendenteId, profiloId, orarioId);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("SetStatusDisabledGaPresenzeDipendentiAsync/{id}/{personaleDipendenteId}/{profiloId}/{orarioId}")]
+        public async Task<ActionResult<ApiResponse>> SetStatusDisabledGaPresenzeDipendentiAsync(long id, long personaleDipendenteId, long profiloId, long orarioId)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.SetStatusDisabledGaPresenzeDipendentiAsync(id, personaleDipendenteId, profiloId, orarioId);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("UpdateOreGaPresenzeDipendentiAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateOreGaPresenzeDipendentiAsync([FromBody] List<long> ids)
+        {
+            try
+            {
+                var response = await _gaPresenzeService.UpdateOreGaPresenzeDipendentiAsync(ids);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #region Views
