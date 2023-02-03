@@ -16,6 +16,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffi
         public string CodZona { get; set; }
         public string Descri { get; set; }
         public string Domest { get; set; }
+        public string Categ { get; set; }
+        public string Destar { get; set; }
 
     }
 }

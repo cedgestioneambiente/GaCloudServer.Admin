@@ -142,5 +142,43 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region BackOfficeContenitori
+
+        #region Views
+        [HttpGet("GetViewGaBackOfficeContenitoriLettureByIdentiAsync/{identi}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeContenitoriLettureByIdentiAsync(string identi)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeContenitoriLettureByIdentiAsync(identi);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaBackOfficeContenitoriLettureByComuneAndNumConAsync/{codComune}/{numCon}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeContenitoriLettureByComuneAndNumConAsync(string codComune,string numCon)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeContenitoriLettureByComuneAndNumConAsync(codComune,numCon);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
     }
 }

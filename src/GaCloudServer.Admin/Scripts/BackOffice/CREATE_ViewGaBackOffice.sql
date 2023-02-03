@@ -50,6 +50,7 @@ DESISTAT as DesIstat,
 CODZONA as CodZona,
 DESCRI as Descri,
 DOMEST as Domest,
+Categ,Destar,
 CAST('false' as bit) as Disabled
 
 FROM [20.82.75.6].[TARI].dbo.[UTENTI_LIST]
@@ -62,9 +63,9 @@ CREATE VIEW [dbo].[ViewGaBackOfficeUtenzeGrouped]
 
 AS
 
-SELECT        CAST(0 AS BIGINT) AS Id,CODAZI CodAzi, CODFIS CodFis, NUMCON NumCon, CODCOM CodCom,PARTITA Partita, RAGCLI RagCli, COMUNE Comune, DESVIA DesVia, CIVICO Civico, CODZONA CodZona, DESCRI Descri,DOMEST Domest,CAST('false' AS bit) AS Disabled
+SELECT        CAST(0 AS BIGINT) AS Id,CODAZI CodAzi, CODFIS CodFis, NUMCON NumCon, CODCOM CodCom,PARTITA Partita, RAGCLI RagCli, COMUNE Comune, DESVIA DesVia, CIVICO Civico, CODZONA CodZona, DESCRI Descri,DOMEST Domest, Categ,Destar,CAST('false' AS bit) AS Disabled
 FROM            [20.82.75.6].TARI.dbo.UTENTI_LIST
-group by CODAZI, CODFIS, NUMCON, CODCOM, PARTITA,RAGCLI, COMUNE, DESVIA, CIVICO, CODZONA, DESCRI,DOMEST
+group by CODAZI, CODFIS, NUMCON, CODCOM, PARTITA,RAGCLI, COMUNE, DESVIA, CIVICO, CODZONA, DESCRI,DOMEST,Categ,Destar
 GO
 
 /****** Object:  View [dbo].[ViewGaBackOfficeComuni]    Script Date: 22/02/2022 14:02:53 ******/

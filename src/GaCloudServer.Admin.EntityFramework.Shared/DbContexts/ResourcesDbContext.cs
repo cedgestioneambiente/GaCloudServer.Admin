@@ -147,6 +147,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaBackOfficeUtenzeGrouped> ViewGaBackOfficeUtenzeGrouped { get; set; }
         public DbSet<ViewGaBackOfficeComuni> ViewGaBackOfficeComuni { get; set; }
         public DbSet<ViewGaBackOfficeCategorie> ViewGaBackOfficeCategorie { get; set; }
+        public DbSet<ViewGaBackOfficeContenitoriLetture> ViewGaBackOfficeContenitoriLetture { get; set; }
         #endregion
 
         #region Sp
@@ -539,6 +540,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .ToView(nameof(ViewGaBackOfficeCategorie))
                 .HasNoKey()
                 .Property(x => x.Tipo);
+            });
+
+
+            builder.Entity<ViewGaBackOfficeContenitoriLetture>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeContenitoriLetture))
+                .HasNoKey()
+                .Property(x => x.Identi1);
             });
 
 

@@ -144,6 +144,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeGrouped>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenze>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenzeGrouped>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeContenitoriLetture>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeContenitoriLetture>>();
             #endregion
 
             //PrenotazioneAuto

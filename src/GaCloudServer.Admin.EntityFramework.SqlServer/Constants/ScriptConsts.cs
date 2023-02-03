@@ -36,7 +36,9 @@
         public const string CREATE_SpGaBackOffice = "CREATE_SpGaBackOffice.sql";
         public const string DROP_SpGaBackOffice = "DROP_SpGaBackOffice.sql";
         public const string CREATE_ViewGaBackOffice = "CREATE_ViewGaBackOffice.sql";
+        public const string CREATE_ViewGaBackOffice_V2 = "CREATE_ViewGaBackOffice_V2.sql";
         public const string DROP_ViewGaBackOffice = "DROP_ViewGaBackOffice.sql";
+        public const string DROP_ViewGaBackOffice_V2 = "DROP_ViewGaBackOffice_V2.sql";
 
         //PrenotazioneAuto
         public const string GaPrenotazioneAutoMigration = @".\Scripts\PrenotazioneAuto\";

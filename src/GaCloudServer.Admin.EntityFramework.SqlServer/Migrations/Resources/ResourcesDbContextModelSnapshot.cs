@@ -3595,6 +3595,59 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToView("ViewNotificationUsersOnApps");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views.ViewOstTickets", b =>
+                {
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("dateClosed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("dateLastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("isanswered")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("settore")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("source")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("staff")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ticket_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("topic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("userOpen")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("userOpenEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewOstTickets");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAbilitazione", b =>
                 {
                     b.Property<long>("Id")

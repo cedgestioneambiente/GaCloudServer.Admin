@@ -16,6 +16,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeGrouped> viewGaBackOfficeUtenzeGroupedRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeNdUtenze> viewGaBackOfficeNdUtenzeRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeNdUtenzeGrouped> viewGaBackOfficeNdUtenzeGroupedRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeContenitoriLetture> viewGaBackOfficeContenitoriLettureRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -26,6 +27,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeUtenzeGrouped> viewGaBackOfficeUtenzeGroupedRepo,
             IGenericRepository<ViewGaBackOfficeNdUtenze> viewGaBackOfficeNdUtenzeRepo,
             IGenericRepository<ViewGaBackOfficeNdUtenzeGrouped> viewGaBackOfficeNdUtenzeGroupedRepo,
+            IGenericRepository<ViewGaBackOfficeContenitoriLetture> viewGaBackOfficeContenitoriLettureRepo,
 
             IUnitOfWork unitOfWork)
         {
@@ -35,6 +37,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaBackOfficeNdUtenzeGroupedRepo = viewGaBackOfficeNdUtenzeGroupedRepo;
 
             this.viewGaBackOfficeComuniRepo = viewGaBackOfficeComuniRepo;
+
+            this.viewGaBackOfficeContenitoriLettureRepo = viewGaBackOfficeContenitoriLettureRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -91,6 +95,32 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
+        #endregion
+
+        #endregion
+
+        #region BackOfficeContenitori
+
+        #region Views
+        public async Task<PagedList<ViewGaBackOfficeContenitoriLetture>> GetViewGaBackOfficeContenitoriLettureByIdentiAsync(string identi)
+        {
+            if (identi.Length == 12)
+            {
+                var view = await viewGaBackOfficeContenitoriLettureRepo.GetWithFilterAsync(x => x.Identi2 == (identi),1,0,"DtReg","OrderByDescending");
+                return view;
+            }
+            else
+            {
+                var view = await viewGaBackOfficeContenitoriLettureRepo.GetWithFilterAsync(x => x.Identi1 == (identi), 1, 0, "DtReg", "OrderByDescending");
+                return view;
+            }
+        }
+
+        public async Task<PagedList<ViewGaBackOfficeContenitoriLetture>> GetViewGaBackOfficeContenitoriLettureByComuneAndNumConAsync(string codComune,string numCon)
+        {
+            var view = await viewGaBackOfficeContenitoriLettureRepo.GetWithFilterAsync(x => x.CodComune.Trim()==codComune && x.NumCon.Trim()==numCon,1,0,"DtReg", "OrderByDescending");
+            return view;
+        }
         #endregion
 
         #endregion

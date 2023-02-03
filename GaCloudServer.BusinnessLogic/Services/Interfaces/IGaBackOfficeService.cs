@@ -29,6 +29,11 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region BackOfficeContenitori
+        Task<PagedList<ViewGaBackOfficeContenitoriLetture>> GetViewGaBackOfficeContenitoriLettureByIdentiAsync(string identi);
+        Task<PagedList<ViewGaBackOfficeContenitoriLetture>> GetViewGaBackOfficeContenitoriLettureByComuneAndNumConAsync(string codComune,string numCon);
+        #endregion
+
 
     }
 }
