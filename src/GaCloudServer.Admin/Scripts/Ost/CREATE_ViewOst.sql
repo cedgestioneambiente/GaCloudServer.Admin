@@ -33,5 +33,5 @@ SELECT        cast(dbo.ViewOstTicket.ticket_id as bigint) Id, cast(dbo.ViewOstTi
 FROM            dbo.ViewOstTicket LEFT OUTER JOIN
                          dbo.GlobalSettori INNER JOIN
                          dbo.GaPersonaleDipendenti ON dbo.GlobalSettori.Id = dbo.GaPersonaleDipendenti.GlobalSettoreId  INNER JOIN
-                         AuthServerSSO.dbo.Users ON dbo.GaPersonaleDipendenti.UserId = AuthServerSSO.dbo.Users.Id ON dbo.ViewOstTicket.userOpenEmail = AuthServerSSO.dbo.Users.Email COLLATE database_default
+                         IdentityServerAdmin.dbo.Users ON dbo.GaPersonaleDipendenti.UserId = IdentityServerAdmin.dbo.Users.Id ON dbo.ViewOstTicket.userOpenEmail = IdentityServerAdmin.dbo.Users.Email COLLATE database_default
 GO
