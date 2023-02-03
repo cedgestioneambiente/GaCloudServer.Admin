@@ -141,6 +141,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaBackOfficeUtenzeGrouped> ViewGaBackOfficeUtenzeGrouped { get; set; }
         DbSet<ViewGaBackOfficeComuni> ViewGaBackOfficeComuni { get; set; }
         DbSet<ViewGaBackOfficeCategorie> ViewGaBackOfficeCategorie { get; set; }
+        DbSet<ViewGaBackOfficeContenitoriLetture> ViewGaBackOfficeContenitoriLetture { get; set; }
         #endregion
 
         #region Sp
