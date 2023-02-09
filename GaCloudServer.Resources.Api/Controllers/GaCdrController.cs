@@ -1,6 +1,7 @@
 ﻿using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
+using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Cdr;
@@ -1163,6 +1164,15 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #endregion
+
+        #region App
+        [HttpGet("CheckGaCdrCanUse/{comune}/{centroId}")]
+        public async Task<ApiResponse> CheckGaCdrAuth(string comune, long centroId)
+        {
+            var response = await _gaCdrService.CheckGaCdrCanUse(comune, centroId);
+            return new ApiResponse(response);
+        }
         #endregion
 
     }

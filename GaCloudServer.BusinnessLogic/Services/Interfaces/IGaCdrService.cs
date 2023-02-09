@@ -159,6 +159,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region App
+        Task<bool> CheckGaCdrCanUse(string comune, long centroId);
+        #endregion
+
         //#region CdrUtente
         //Task<CdrUtentiDto> GetGaCdrUtentiAsync(int page = 1, int pageSize = 0);
         //Task<CdrUtenteDto> GetGaCdrUtenteByIdAsync(long id);

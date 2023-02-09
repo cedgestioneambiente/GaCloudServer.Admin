@@ -916,6 +916,14 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
+        #region App
+        public async Task<bool> CheckGaCdrCanUse(string comune, long centroId)
+        {
+            var entities = await viewGaCdrComuniOnCentriRepo.GetWithFilterAsync(x=>x.CentroId==centroId && x.Comune==comune && x.Abilitato==true);
+            return entities.Data.Count > 0 ? true : false;
+        }
+        #endregion
+
         #region Common
         private async Task<long> SaveChanges()
         {
