@@ -35,7 +35,7 @@ GO
 
 CREATE VIEW [dbo].[PrivateViewGaCdrCersList]
                 AS
-                SELECT        dbo.GaCdrCentri.Id AS CdrId, dbo.GaCdrCentri.Centro, dbo.GaCdrCers.Id, dbo.GaCdrCers.Descrizione
+                SELECT        dbo.GaCdrCentri.Id AS CdrId, dbo.GaCdrCentri.Centro, dbo.GaCdrCers.Id, dbo.GaCdrCers.Descrizione,dbo.GaCdrCers.Imm
                 FROM            dbo.GaCdrCentri CROSS JOIN
                                          dbo.GaCdrCers
 GO
@@ -59,7 +59,7 @@ GO
 CREATE VIEW [dbo].[ViewGaCdrCersOnCentri]
                 AS
                 SELECT        dbo.PrivateViewGaCdrCersList.CdrId AS Id, dbo.PrivateViewGaCdrCersList.CdrId AS CentroId, dbo.PrivateViewGaCdrCersList.Id AS CerId, dbo.PrivateViewGaCdrCersList.Descrizione AS Cer, 
-                                         CAST(CASE WHEN gacdrCersOnCentri.Id IS NULL THEN 'false' ELSE 'true' END AS bit) AS Abilitato, CAST('false' AS bit) AS Disabled
+                                         CAST(CASE WHEN gacdrCersOnCentri.Id IS NULL THEN 'false' ELSE 'true' END AS bit) AS Abilitato, dbo.PrivateViewGaCdrCersList.Imm, CAST('false' AS bit) AS Disabled
                 FROM            dbo.PrivateViewGaCdrCersList LEFT OUTER JOIN
                                          dbo.GaCdrCersOnCentri ON dbo.PrivateViewGaCdrCersList.CdrId = dbo.GaCdrCersOnCentri.CdrCentroId AND dbo.PrivateViewGaCdrCersList.Id = dbo.GaCdrCersOnCentri.CdrCerId
 GO
