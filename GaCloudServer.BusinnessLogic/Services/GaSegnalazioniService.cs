@@ -336,11 +336,18 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<ViewGaSegnalazioniDocumenti> GetViewGaSegnalazioniDocumentoByIdAsync(long id)
+        public async Task<PagedList<ViewGaSegnalazioniDocumenti>> GetViewGaSegnalazioniDocumentoByIdAsync(long id)
         {
-                var entity = await viewGaSegnalazioniDocumentiRepo.GetByIdAsync(id);
 
-                return entity;
+            try
+            {
+                return await viewGaSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
         }
 
         public async Task<PagedList<ViewGaSegnalazioniDocumenti>> GetViewGaSegnalazioniDocumentiAsync(bool all = true)
