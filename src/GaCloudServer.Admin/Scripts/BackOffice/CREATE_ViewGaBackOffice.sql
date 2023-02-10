@@ -50,7 +50,6 @@ DESISTAT as DesIstat,
 CODZONA as CodZona,
 DESCRI as Descri,
 DOMEST as Domest,
-Categ,Destar,
 CAST('false' as bit) as Disabled
 
 FROM [20.82.75.6].[TARI].dbo.[UTENTI_LIST]
