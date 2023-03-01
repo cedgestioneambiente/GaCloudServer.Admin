@@ -39,20 +39,20 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
-        #region EcSegnalazioniAllegati
-        Task<SegnalazioniAllegatiDto> GetEcSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId);
+        //#region EcSegnalazioniAllegati
+        //Task<SegnalazioniAllegatiDto> GetEcSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId);
 
-        Task<long> AddEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
-        //Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
+        //Task<long> AddEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
+        ////Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
 
-        Task<bool> DeleteEcSegnalazioniAllegatoAsync(long id);
+        //Task<bool> DeleteEcSegnalazioniAllegatoAsync(long id);
 
-        #region Functions
-        //Task<bool> ValidateEcSegnalazioniAllegatoAsync(long id, string descrizione);
-        //Task<bool> ChangeStatusEcSegnalazioniAllegatoAsync(long id);
-        #endregion
+        //#region Functions
+        ////Task<bool> ValidateEcSegnalazioniAllegatoAsync(long id, string descrizione);
+        ////Task<bool> ChangeStatusEcSegnalazioniAllegatoAsync(long id);
+        //#endregion
 
-        #endregion
+        //#endregion
 
         #region EcSegnalazioniDocumenti
         Task<SegnalazioniDocumentiDto> GetEcSegnalazioniDocumentiAsync(int page = 1, int pageSize = 0);

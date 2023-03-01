@@ -321,6 +321,193 @@ namespace GaCloudServer.BusinnessLogic.Services
                 
         }
 
+        public async Task<UploadFileResponseModel> UploadStream(MemoryStream stream, string folder, string fileName)
+        {
+            try
+            {
+                Stream ms = new MemoryStream();
+
+                var subfolder = folder.Split("/").Count();
+
+                DriveItem uploadedFile = null;
+                var auth = Authenticate();
+                var driveRoot = await auth.Drive.Request().GetAsync();
+                var driveFolder = await auth.Drive.Root.Children.Request().GetAsync();
+
+                DriveItem? targetFolder = null;
+
+                if (subfolder > 1)
+                {
+                    DriveItem? parentFolder = null;
+                    for (int i = 0; i < subfolder; i++)
+                    {
+
+                        if (i == 0)
+                        {
+                            parentFolder = (from x in driveFolder
+                                            where x.Name == folder.Split("/")[i].ToString()
+                                            select x).FirstOrDefault();
+                            if (parentFolder == null)
+                            {
+                                var _folder = new DriveItem
+                                {
+                                    Name = folder.Split("/")[i].ToString(),
+                                    Folder = new Folder()
+                                };
+
+                                var createFolder = await auth
+                                    .Sites["root"]
+                                    .Drives[driveRoot.Id]
+                                    .Root
+                                    .Children
+                                    .Request()
+                                    .AddAsync(_folder);
+
+                                parentFolder = createFolder;
+                            }
+                        }
+                        else
+                        {
+                            var parentChildren = await auth
+                           .Sites["root"]
+                           .Drives[driveRoot.Id]
+                           .Items[parentFolder.Id]
+                           .Children
+                           .Request()
+                           .Filter($"name eq '{folder.Split("/")[i].ToString()}'")
+                           .GetAsync();
+
+                            var childrenFolder = (from x in parentChildren
+                                                  where x.Name == folder.Split("/")[i].ToString()
+                                                  select x).FirstOrDefault();
+
+                            if (childrenFolder == null)
+                            {
+                                var _folder = new DriveItem
+                                {
+                                    Name = folder.Split("/")[i].ToString(),
+                                    Folder = new Folder()
+                                };
+
+                                var createFolder = await auth
+                                    .Sites["root"]
+                                    .Drives[driveRoot.Id]
+                                    .Items[parentFolder.Id]
+                                    .Children
+                                    .Request()
+                                    .AddAsync(_folder);
+                                parentFolder = createFolder;
+                                targetFolder = createFolder;
+                            }
+                            else
+                            {
+                                parentFolder = childrenFolder;
+                                targetFolder = childrenFolder;
+                            }
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    targetFolder = (from x in driveFolder
+                                    where x.Name == folder
+                                    select x).FirstOrDefault();
+
+                    if (targetFolder == null)
+                    {
+                        var _folder = new DriveItem
+                        {
+                            Name = folder,
+                            Folder = new Folder()
+                        };
+
+                        var createFolder = await auth
+                            .Sites["root"]
+                            .Drives[driveRoot.Id]
+                            .Root
+                            .Children
+                            .Request()
+                            .AddAsync(_folder);
+
+                        targetFolder = createFolder;
+
+                    }
+                }
+
+
+
+                if (stream.Length <= 4000 * 1024)
+                {
+                    uploadedFile = (
+                    auth
+                    .Sites["root"]
+                    .Drives[driveRoot.Id]
+                    .Items[targetFolder.Id]
+                    .ItemWithPath(fileName)
+                    .Content.Request()
+                    .PutAsync<DriveItem>(stream)).Result;
+
+                    return new UploadFileResponseModel() { id = uploadedFile.Id, fileName = fileName };
+                }
+                else
+                {
+                    var uploadSession = await auth
+                    .Sites["root"]
+                    .Drives[driveRoot.Id]
+                    .Items[targetFolder.Id]
+                    .ItemWithPath(fileName)
+                    .CreateUploadSession().Request().PostAsync();
+
+                    var maxChunkSize = 320 * 1024;
+                    var provider = new ChunkedUploadProvider(uploadSession, auth, stream, maxChunkSize);
+
+                    // Setup the chunk request necessities
+                    var chunkRequests = provider.GetUploadChunkRequests();
+                    var readBuffer = new byte[maxChunkSize];
+                    var trackedExceptions = new List<Exception>();
+                    DriveItem itemResult = null;
+
+                    //upload the chunks
+                    foreach (var request in chunkRequests)
+                    {
+                        // Do your updates here: update progress bar, etc.
+                        // ...
+                        // Send chunk request
+                        var result = await provider.GetChunkRequestResponseAsync(request, readBuffer, trackedExceptions);
+
+                        if (result.UploadSucceeded)
+                        {
+                            itemResult = result.ItemResponse;
+                        }
+                    }
+
+                    // Check that upload succeeded
+                    if (itemResult == null)
+                    {
+                        // Retry the upload
+                        // ...
+                        return null;
+                    }
+                    else
+                    {
+                        return new UploadFileResponseModel() { id = itemResult.Id, fileName = fileName,fileSize=stream.Length.ToString() };
+                    }
+                }
+
+
+                
+            }
+
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+
+        }
+
         public async Task<DriveItem> UploadImage(MemoryStream stream, string _mainFolder, string _targetFolder, string fileName)
         {
             fileName = fh.GenerateFileName(fileName);

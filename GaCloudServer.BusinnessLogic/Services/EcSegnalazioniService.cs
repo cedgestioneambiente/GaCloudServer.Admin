@@ -208,39 +208,39 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    return dtos;
         //}
 
-        public async Task<SegnalazioniAllegatiDto> GetEcSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId)
-        {
-            var entity = await ecSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
-            var dto = entity.ToDto<SegnalazioniAllegatiDto, PagedList<EcSegnalazioniAllegato>>();
-            return dto;
-        }
-
-        public async Task<long> AddEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
-        {
-            var entity = dto.ToEntity<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>();
-            await ecSegnalazioniAllegatiRepo.AddAsync(entity);
-            await SaveChanges();
-            return entity.Id;
-        }
-
-        //public async Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
+        //public async Task<SegnalazioniAllegatiDto> GetEcSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId)
         //{
-        //    var entity = dto.ToEntity<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>();
-        //    ecSegnalazioniAllegatiRepo.Update(entity);
-        //    await SaveChanges();
-
-        //    return entity.Id;
-
+        //    var entity = await ecSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
+        //    var dto = entity.ToDto<SegnalazioniAllegatiDto, PagedList<EcSegnalazioniAllegato>>();
+        //    return dto;
         //}
 
-        public async Task<bool> DeleteEcSegnalazioniAllegatoAsync(long id)
-        {
-            var entity = await ecSegnalazioniAllegatiRepo.GetByIdAsync(id);
-            ecSegnalazioniAllegatiRepo.Remove(entity);
-            await SaveChanges();
+        //public async Task<long> AddEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
+        //{
+        //    var entity = dto.ToEntity<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>();
+        //    await ecSegnalazioniAllegatiRepo.AddAsync(entity);
+        //    await SaveChanges();
+        //    return entity.Id;
+        //}
 
-            return true;
-        }
+        ////public async Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
+        ////{
+        ////    var entity = dto.ToEntity<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>();
+        ////    ecSegnalazioniAllegatiRepo.Update(entity);
+        ////    await SaveChanges();
+
+        ////    return entity.Id;
+
+        ////}
+
+        //public async Task<bool> DeleteEcSegnalazioniAllegatoAsync(long id)
+        //{
+        //    var entity = await ecSegnalazioniAllegatiRepo.GetByIdAsync(id);
+        //    ecSegnalazioniAllegatiRepo.Remove(entity);
+        //    await SaveChanges();
+
+        //    return true;
+        //}
 
         //#region Functions
         //public async Task<bool> ValidateEcSegnalazioniAllegatoAsync(long id, string descrizione)

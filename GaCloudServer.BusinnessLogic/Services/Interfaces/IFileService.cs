@@ -12,6 +12,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<DownloadFilesModel> DownloadById(string fileId);
         Task<DownloadFilesModel> DownloadByFolderFileName(string folder,string fileName);
         Task<UploadFileResponseModel> Upload(IFormFile file, string folder, string fileName);
+        Task<UploadFileResponseModel> UploadStream(MemoryStream stream, string folder, string fileName);
         Task<DriveItem> UploadImage(MemoryStream stream, string _mainFolder, string _targetFolder, string fileName);
         Task<bool> Remove(string fileId);
         Task<string> CreateSharedLink(string fileId);

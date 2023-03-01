@@ -148,12 +148,20 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaBackOfficeComuni> ViewGaBackOfficeComuni { get; set; }
         public DbSet<ViewGaBackOfficeCategorie> ViewGaBackOfficeCategorie { get; set; }
         public DbSet<ViewGaBackOfficeContenitoriLetture> ViewGaBackOfficeContenitoriLetture { get; set; }
+        public DbSet<ViewGaBackOfficeZone> ViewGaBackOfficeZone { get; set; }
+
+        public DbSet<ViewGaBackOfficeUtenze> ViewGaBackOfficeUtenze { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzePartite> ViewGaBackOfficeUtenzePartite { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
         #endregion
 
         #region Sp
         public DbSet<SpGaBackOfficeUtenzeContenitori> SpGaBackOfficeUtenzeContenitori { get; set; }
         public DbSet<SpGaBackOfficeLettureMezzi> SpGaBackOfficeLettureMezzi { get; set; }
         public DbSet<SpGaBackOfficeLettureEmz> SpGaBackOfficeLettureEmz { get; set; }
+        public DbSet<SpGaBackOfficeUtenze> SpGaBackOfficeUtenze { get; set; }
+        public DbSet<SpGaBackOfficeUtenzePartite> SpGaBackOfficeUtenzePartite { get; set; }
+        public DbSet<SpGaBackOfficeUtenzeDispositivi> SpGaBackOfficeUtenzeDispositivi { get; set; }
         #endregion
 
         #endregion
@@ -263,7 +271,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region GaSegnalazioni Tables
         public DbSet<SegnalazioniTipo> GaSegnalazioniTipi { get; set; }
         public DbSet<SegnalazioniStato> GaSegnalazioniStati { get; set; }
-        public DbSet<SegnalazioniAllegato> GaSegnalazioniAllegati { get; set; }
+        public DbSet<SegnalazioniDocumentoImmagine> GaSegnalazioniDocumentiImmagini { get; set; }
         public DbSet<SegnalazioniDocumento> GaSegnalazioniDocumenti { get; set; }
 
         #region Views
@@ -427,8 +435,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaCdrRichiesteViaggi))
-                    .HasNoKey()
-                    .Property(x => x.Id);
+                    .HasKey(x => x.Id);
             });
 
             builder.Entity<ViewGaCdrUtenti>(entity =>
@@ -551,6 +558,35 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .Property(x => x.Identi1);
             });
 
+            builder.Entity<ViewGaBackOfficeZone>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeZone))
+                .HasKey(x => x.Id);
+            });
+
+
+            builder.Entity<ViewGaBackOfficeUtenze>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenze))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzePartite>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzePartite))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzeDispositivi>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzeDispositivi))
+                .HasNoKey();
+            });
+
 
             builder.Entity<SpGaBackOfficeUtenzeContenitori>(entity =>
             {
@@ -567,6 +603,27 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             });
 
             builder.Entity<SpGaBackOfficeLettureEmz>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
+
+            builder.Entity<SpGaBackOfficeUtenze>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
+
+            builder.Entity<SpGaBackOfficeUtenzePartite>(entity =>
+            {
+                entity
+                .HasNoKey()
+                .ToView(null);
+            });
+
+            builder.Entity<SpGaBackOfficeUtenzeDispositivi>(entity =>
             {
                 entity
                 .HasNoKey()

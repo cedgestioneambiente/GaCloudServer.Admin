@@ -16,6 +16,7 @@ namespace GaCloudServer.BusinnessLogic.Models
     { 
         public string id { get; set; }
         public string fileName { get; set; }
+        public string? fileSize { get; set; }
 
     }
 

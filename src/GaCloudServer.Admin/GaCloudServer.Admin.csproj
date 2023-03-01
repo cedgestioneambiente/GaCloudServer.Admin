@@ -65,7 +65,13 @@
 	  <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\BackOffice\CREATE_SpGaBackOffice_V2.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\BackOffice\CREATE_SpGaBackOffice.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V3.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V2.sql">
@@ -74,7 +80,13 @@
 	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\BackOffice\DROP_SpGaBackOffice_V2.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\BackOffice\DROP_SpGaBackOffice.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V3.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V2.sql">

@@ -13,7 +13,7 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         protected readonly IGenericRepository<SegnalazioniTipo> gaSegnalazioniTipiRepo;
         protected readonly IGenericRepository<SegnalazioniStato> gaSegnalazioniStatiRepo;
-        protected readonly IGenericRepository<SegnalazioniAllegato> gaSegnalazioniAllegatiRepo;
+        protected readonly IGenericRepository<SegnalazioniDocumentoImmagine> gaSegnalazioniDocumentiImmaginiRepo;
         protected readonly IGenericRepository<SegnalazioniDocumento> gaSegnalazioniDocumentiRepo;
 
         protected readonly IGenericRepository<ViewGaSegnalazioniDocumenti> viewGaSegnalazioniDocumentiRepo;
@@ -23,7 +23,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public GaSegnalazioniService(
             IGenericRepository<SegnalazioniTipo> gaSegnalazioniTipiRepo,
             IGenericRepository<SegnalazioniStato> gaSegnalazioniStatiRepo,
-            IGenericRepository<SegnalazioniAllegato> gaSegnalazioniAllegatiRepo,
+            IGenericRepository<SegnalazioniDocumentoImmagine> gaSegnalazioniDocumentiImmaginiRepo,
             IGenericRepository<SegnalazioniDocumento> gaSegnalazioniDocumentiRepo,
 
             IGenericRepository<ViewGaSegnalazioniDocumenti> viewGaSegnalazioniDocumentiRepo,
@@ -32,7 +32,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             this.gaSegnalazioniTipiRepo = gaSegnalazioniTipiRepo;
             this.gaSegnalazioniStatiRepo = gaSegnalazioniStatiRepo;
-            this.gaSegnalazioniAllegatiRepo = gaSegnalazioniAllegatiRepo;
+            this.gaSegnalazioniDocumentiImmaginiRepo = gaSegnalazioniDocumentiImmaginiRepo;
             this.gaSegnalazioniDocumentiRepo = gaSegnalazioniDocumentiRepo;
 
             this.viewGaSegnalazioniDocumentiRepo = viewGaSegnalazioniDocumentiRepo;
@@ -200,7 +200,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-        #region SegnalazioniAllegati
+        #region SegnalazioniDocumentiImmagini
         //public async Task<SegnalazioniAllegatiDto> GetGaSegnalazioniAllegatiAsync(int page = 1, int pageSize = 0)
         //{
         //    var entities = await gaSegnalazioniAllegatiRepo.GetAllAsync(page, pageSize);
@@ -208,17 +208,17 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    return dtos;
         //}
 
-        public async Task<SegnalazioniAllegatiDto> GetGaSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId)
+        public async Task<SegnalazioniDocumentiImmaginiDto> GetGaSegnalazioniDocumentoImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId)
         {
-            var entity = await gaSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
-            var dto = entity.ToDto<SegnalazioniAllegatiDto, PagedList<SegnalazioniAllegato>>();
+            var entity = await gaSegnalazioniDocumentiImmaginiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
+            var dto = entity.ToDto<SegnalazioniDocumentiImmaginiDto, PagedList<SegnalazioniDocumentoImmagine>>();
             return dto;
         }
 
-        public async Task<long> AddGaSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
+        public async Task<long> AddGaSegnalazioniDocumentoImmagineAsync(SegnalazioniDocumentoImmagineDto dto)
         {
-            var entity = dto.ToEntity<SegnalazioniAllegato, SegnalazioniAllegatoDto>();
-            await gaSegnalazioniAllegatiRepo.AddAsync(entity);
+            var entity = dto.ToEntity<SegnalazioniDocumentoImmagine, SegnalazioniDocumentoImmagineDto>();
+            await gaSegnalazioniDocumentiImmaginiRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
         }
@@ -233,10 +233,10 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         //}
 
-        public async Task<bool> DeleteGaSegnalazioniAllegatoAsync(long id)
+        public async Task<bool> DeleteGaSegnalazioniDocumentoImmagineAsync(long id)
         {
-            var entity = await gaSegnalazioniAllegatiRepo.GetByIdAsync(id);
-            gaSegnalazioniAllegatiRepo.Remove(entity);
+            var entity = await gaSegnalazioniDocumentiImmaginiRepo.GetByIdAsync(id);
+            gaSegnalazioniDocumentiImmaginiRepo.Remove(entity);
             await SaveChanges();
 
             return true;

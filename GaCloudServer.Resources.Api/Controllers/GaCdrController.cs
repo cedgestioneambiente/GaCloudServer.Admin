@@ -4,12 +4,15 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr;
 using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Cdr;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Resources.Api.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static Duende.IdentityServer.Models.IdentityResources;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -22,16 +25,22 @@ namespace GaCloudServer.Resources.Api.Controllers
     public class GaCdrController : Controller
     {
         private readonly IGaCdrService _gaCdrService;
+        private readonly INotificationService _notificationService;
+        private readonly IMailService _mailService;
         private readonly IApiErrorResources _errorResources;
         private readonly ILogger<GaCdrController> _logger;
 
         public GaCdrController(
-            IGaCdrService gaCdrService
-            ,IApiErrorResources errorResources
+            IGaCdrService gaCdrService,
+            INotificationService notificationService
+            ,IMailService mailService
+            , IApiErrorResources errorResources
             ,ILogger<GaCdrController> logger)
         {
 
             _gaCdrService = gaCdrService;
+            _notificationService = notificationService;
+            _mailService= mailService;
             _errorResources= errorResources;
             _logger = logger;
         }
@@ -827,7 +836,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateGaCdrConferimentoAsync")]
+        [HttpPost("ValidateGaCdrConferimentoAsync")]
         public async Task<ActionResult<ApiResponse>> ValidateGaCdrConferimentoAsync(CdrConferimentoApiDto apiDto)
         {
             try
@@ -1172,6 +1181,79 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             var response = await _gaCdrService.CheckGaCdrCanUse(comune, centroId);
             return new ApiResponse(response);
+        }
+
+        [HttpGet("SendGaCdrRichiestaViaggio/{id}")]
+        public async Task<ApiResponse> SendGaCdrRichiestaViaggio(long id)
+        {
+            try
+            {
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Cdr);
+                var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+                var richiestaViaggio = await _gaCdrService.GetViewGaCdrRichiestaViaggio(id);
+
+                List<string> toMails = new List<string>();
+                List<string> ccMails = new List<string>();
+
+                if (richiestaViaggio.CentroId == 5 || richiestaViaggio.CentroId == 10 || richiestaViaggio.CentroId == 14)
+                {
+                    //toMails.Add("optortona@gestioneambiente.net");
+                }
+
+                ccMails.Add("ced@gestioneambiente.net");
+
+                string mailTo = string.Join(";",toMails);
+                string mailCC = string.Join(";", ccMails);
+
+
+
+                List<string> descriptors = new List<string>() {
+                        "Richiedente",
+                        "Materiale",
+                        "Stato",
+                        "Note"
+                    };
+
+                List<string> details = new List<string>() {
+                        richiestaViaggio.Richiedente,
+                        richiestaViaggio.Cer,
+                        richiestaViaggio.StatoRichiesta,
+                        richiestaViaggio.Note
+                    };
+
+
+
+
+                var response = await _mailService.AddMailJobAsync(new Admin.EntityFramework.Shared.Entities.Resources.Mail.MailJob
+                { 
+                    Id=0,
+                    Description = string.Format( "Richiesta Svuotamento - {0} - {1}",richiestaViaggio.Centro,richiestaViaggio.Numero),
+                    DateScheduled = DateTime.Now,
+                    Title = string.Format("Richiesta Svuotamento - {0} - {1}", richiestaViaggio.Centro, richiestaViaggio.Numero),
+                    MailingTo = mailTo,
+                    MailCc = mailCC,
+                    Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Cdr),
+                    Content = HtmlHelpers.GenerateList(descriptors, details),
+                    Template = "DefaultMailJob.html",
+                    UserId = richiestaViaggio.UserId,
+                    OkMessage = "La tua richiesta di svuotamento N°:"+ richiestaViaggio.Numero +" è stata inoltrata correttamente.",
+                    KoMessage = "Si è verificato un problema durante l'invio della tua richiesta N°: "+richiestaViaggio.Numero
+                });
+
+                return new ApiResponse(response);
+
+                
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
         }
         #endregion
 

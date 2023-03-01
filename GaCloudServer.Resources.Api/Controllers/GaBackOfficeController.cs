@@ -66,6 +66,104 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync/{codAzi}/{filter}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(string codAzi, string filter)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(codAzi, filter);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAsync/{codAzi}/{numCon}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAsync(string codAzi, string numCon)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAsync(codAzi, numCon);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaBackOfficeUtenzePartiteByCpAziAndNumConAsync/{codAzi}/{numCon}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeUtenzePartiteByCpAziAndNumConAsync(string codAzi, string numCon)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeUtenzePartiteByCpAziAndNumConAsync(codAzi, numCon);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Sp
+        [HttpGet("GetSpGaBackOfficeUtenzeAsync/{codAzi}/{filter}")]
+        public async Task<ActionResult<ApiResponse>> GetSpGaBackOfficeUtenzeAsync(string codAzi, string filter)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetSpGaBackOfficeUtenzeAsync(codAzi, filter);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetSpGaBackOfficeUtenzePartiteAsync/{codAzi}/{filter}")]
+        public async Task<ActionResult<ApiResponse>> GetSpGaBackOfficeUtenzePartiteAsync(string codAzi, string filter)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetSpGaBackOfficeUtenzePartiteAsync(codAzi, filter);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetSpGaBackOfficeUtenzeDispositiviAsync/{codAzi}/{filter}")]
+        public async Task<ActionResult<ApiResponse>> GetSpGaBackOfficeUtenzeDispositiviAsync(string codAzi, string filter)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetSpGaBackOfficeUtenzeDispositiviAsync(codAzi, filter);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #endregion
@@ -178,6 +276,72 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #endregion
+
+        #region BackOfficeZone
+        [HttpGet("GetGaBackOfficeZoneComuniAsync")]
+        public async Task<ActionResult<ApiResponse>> GetGaBackOfficeZoneComuniAsync()
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetGaBackOfficeZoneComuniAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaBackOfficeZoneVieByComuneAsync/{comune}")]
+        public async Task<ActionResult<ApiResponse>> GetGaBackOfficeZoneVieByComuneAsync(string comune)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetGaBackOfficeZoneVieByComuneAsync(comune);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaBackOfficeZoneCiviciByComuneAndViaAsync/{comune}/{via}")]
+        public async Task<ActionResult<ApiResponse>> GetGaBackOfficeZoneCiviciByComuneAndViaAsync(string comune,string via)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetGaBackOfficeZoneCiviciByComuneAndViaAsync(comune,via);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaBackOfficeZoneZonaAsync/{comune}/{via}/{civico}")]
+        public async Task<ActionResult<ApiResponse>> GetGaBackOfficeZoneZonaAsync(string comune, string via,string civico)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetGaBackOfficeZoneZonaAsync(comune, via,civico);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
     }

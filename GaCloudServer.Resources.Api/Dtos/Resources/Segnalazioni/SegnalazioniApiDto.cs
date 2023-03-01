@@ -24,13 +24,13 @@ namespace GaCloudServer.Resources.Api.Dtos.Segnalazioni
 
     #endregion
 
-    #region SegnalazioniAllegati
-    public class SegnalazioniAllegatoApiDto : GenericFileApiDto
+    #region SegnalazioniDocumentiImmagini
+    public class SegnalazioniDocumentoImmagineApiDto : GenericFileApiDto
     {
         public long SegnalazioniDocumentoId { get; set; }
     }
 
-    public class SegnalazioniAllegatiApiDto : GenericPagedListApiDto<SegnalazioniAllegatoApiDto>
+    public class SegnalazioniDocumentiImmaginiApiDto : GenericPagedListApiDto<SegnalazioniDocumentoImmagineApiDto>
     {
     }
 

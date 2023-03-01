@@ -29,13 +29,13 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Segnalazioni
 
     #endregion
 
-    #region SegnalazioniAllegati
-    public class SegnalazioniAllegatoDto : GenericFileDto
+    #region SegnalazioniDocumentiImmagini
+    public class SegnalazioniDocumentoImmagineDto : GenericFileDto
     {
         public long SegnalazioniDocumentoId { get; set; }
     }
 
-    public class SegnalazioniAllegatiDto : GenericPagedListDto<SegnalazioniAllegatoDto>
+    public class SegnalazioniDocumentiImmaginiDto : GenericPagedListDto<SegnalazioniDocumentoImmagineDto>
     {
     }
 
@@ -63,4 +63,5 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Segnalazioni
     }
 
     #endregion
+
 }

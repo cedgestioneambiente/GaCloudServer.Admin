@@ -142,12 +142,20 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaBackOfficeComuni> ViewGaBackOfficeComuni { get; set; }
         DbSet<ViewGaBackOfficeCategorie> ViewGaBackOfficeCategorie { get; set; }
         DbSet<ViewGaBackOfficeContenitoriLetture> ViewGaBackOfficeContenitoriLetture { get; set; }
+        DbSet<ViewGaBackOfficeZone> ViewGaBackOfficeZone { get; set; }
+
+        DbSet<ViewGaBackOfficeUtenze> ViewGaBackOfficeUtenze { get; set; }
+        DbSet<ViewGaBackOfficeUtenzePartite> ViewGaBackOfficeUtenzePartite { get; set; }
+        DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
         #endregion
 
         #region Sp
         DbSet<SpGaBackOfficeUtenzeContenitori> SpGaBackOfficeUtenzeContenitori { get; set; }
         DbSet<SpGaBackOfficeLettureMezzi> SpGaBackOfficeLettureMezzi { get; set; }
         DbSet<SpGaBackOfficeLettureEmz> SpGaBackOfficeLettureEmz { get; set; }
+        DbSet<SpGaBackOfficeUtenze> SpGaBackOfficeUtenze { get; set; }
+        DbSet<SpGaBackOfficeUtenzePartite> SpGaBackOfficeUtenzePartite { get; set; }
+        DbSet<SpGaBackOfficeUtenzeDispositivi> SpGaBackOfficeUtenzeDispositivi { get; set; }
         #endregion
         #endregion
 
@@ -256,7 +264,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region GaSegnalazioni Tables
         DbSet<SegnalazioniTipo> GaSegnalazioniTipi { get; set; }
         DbSet<SegnalazioniStato> GaSegnalazioniStati { get; set; }
-        DbSet<SegnalazioniAllegato> GaSegnalazioniAllegati { get; set; }
+        DbSet<SegnalazioniDocumentoImmagine> GaSegnalazioniDocumentiImmagini { get; set; }
         DbSet<SegnalazioniDocumento> GaSegnalazioniDocumenti { get; set; }
 
         #region Views

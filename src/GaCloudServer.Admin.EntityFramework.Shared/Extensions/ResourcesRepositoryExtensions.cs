@@ -3,6 +3,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazio
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
@@ -145,6 +146,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenze>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenzeGrouped>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeContenitoriLetture>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeContenitoriLetture>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeZone>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenze>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartite>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartite>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeDispositivi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeDispositivi>>();
+
+            //Sp
+            services.AddTransient<IProcedureManager<SpGaBackOfficeUtenze>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenze>>();
+            services.AddTransient<IProcedureManager<SpGaBackOfficeUtenzePartite>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenzePartite>>();
+            services.AddTransient<IProcedureManager<SpGaBackOfficeUtenzeDispositivi>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenzeDispositivi>>();
             #endregion
 
             //PrenotazioneAuto
@@ -248,7 +258,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Segnalazioni
             services.AddTransient<IGenericRepository<SegnalazioniTipo>, GenericRepository<TResourcesDbContext, SegnalazioniTipo>>();
             services.AddTransient<IGenericRepository<SegnalazioniStato>, GenericRepository<TResourcesDbContext, SegnalazioniStato>>();
-            services.AddTransient<IGenericRepository<SegnalazioniAllegato>, GenericRepository<TResourcesDbContext, SegnalazioniAllegato>>();
+            services.AddTransient<IGenericRepository<SegnalazioniDocumentoImmagine>, GenericRepository<TResourcesDbContext, SegnalazioniDocumentoImmagine>>();
             services.AddTransient<IGenericRepository<SegnalazioniDocumento>, GenericRepository<TResourcesDbContext, SegnalazioniDocumento>>();
 
             //Views
