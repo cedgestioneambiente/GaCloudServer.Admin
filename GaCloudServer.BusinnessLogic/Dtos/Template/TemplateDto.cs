@@ -90,4 +90,14 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public List<ReclamiRegistroItemTemplateDto> Items { get; set; }
     }
 
+    public class SegnalazioniDocumentoTemplateDto : GenericPrintDto
+    {
+        public string Numero { get; set; }
+        public string Data { get; set; }
+        public string Note { get; set; }
+        public string Allegato { get; set; }
+
+    }
+
+
 }

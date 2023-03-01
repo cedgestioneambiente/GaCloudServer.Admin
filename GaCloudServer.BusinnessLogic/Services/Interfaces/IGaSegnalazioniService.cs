@@ -68,7 +68,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Views
-        Task<ViewGaSegnalazioniDocumenti> GetViewGaSegnalazioniDocumentoByIdAsync(long id);
+        Task<PagedList<ViewGaSegnalazioniDocumenti>> GetViewGaSegnalazioniDocumentoByIdAsync(long id);
         Task<PagedList<ViewGaSegnalazioniDocumenti>> GetViewGaSegnalazioniDocumentiAsync(bool all = true);
         Task<PagedList<ViewGaSegnalazioniDocumenti>> GetViewGaSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ga-s-administrator");
         Task<PagedList<ViewGaSegnalazioniDocumenti>> GetViewGaSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ga-s-administrator", int page = 1, int pageSize = 100);

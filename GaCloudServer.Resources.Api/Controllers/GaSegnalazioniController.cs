@@ -1,4 +1,5 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Segnalazioni;
 using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -27,16 +28,19 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly IGaSegnalazioniService _gaSegnalazioniService;
         private readonly IFileService _fileService;
         private readonly ILogger<GaSegnalazioniController> _logger;
+        private readonly IPrintService _printService;
 
         public GaSegnalazioniController(
             IGaSegnalazioniService gaSegnalazioniService
             , IFileService fileService
-            , ILogger<GaSegnalazioniController> logger)
+            , ILogger<GaSegnalazioniController> logger
+            , IPrintService printService)
         {
 
             _gaSegnalazioniService = gaSegnalazioniService;
             _fileService = fileService;
             _logger = logger;
+            _printService = printService;
         }
 
 
@@ -415,68 +419,34 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        //#region Functions
-        //[HttpGet("PrintGaSegnalazioneById/{id}")]
-        //public async Task<ApiResponse> PrintGaSegnalazioneById(long id)
-        //{
-        //    try
-        //    {
-        //        var segnalazione = await _gaSegnalazioniService.GetViewGaSegnalazioniDocumentoByIdAsync(id);
-        //        var segnalazioneAllegato = await _gaSegnalazioniService.GetGaSegnalazioneAllegatoBySegnalazioneIdAsync(id);
+        #region Functions
+        [HttpGet("PrintGaSegnalazioneById/{id}")]
+        public async Task<ActionResult<ApiResponse>> PrintGaSegnalazioneById(long id)
+        {
+            try
+            {
+                var view = await _gaSegnalazioniService.GetViewGaSegnalazioniDocumentoByIdAsync(id);
+                SegnalazioniDocumentoTemplateDto dto = new SegnalazioniDocumentoTemplateDto();
+                dto.FileName = "SegnalazioniDocumento.pdf";
+                dto.FilePath = @"Print/Segnalazione";
+                dto.Title = "Segnalazione";
+                dto.Css = "SegnalazioniDocumento";
 
-        //        string path = @"Report/Segnalazioni";
-        //        string fileName = "segnalazione.pdf";
-        //        string htmlContent = "";
+                dto.Numero = view.Data.FirstOrDefault().Id.ToString();
+                dto.Data = view.Data.FirstOrDefault().DataOra.ToString("dd/MM/yyyy");
+                dto.Note = view.Data.FirstOrDefault().Note;
 
-        //        string header =
-        //            "<div id='details' class='clearfix'>" +
-        //            "<div id='client'>" +
-        //            "<div class='to'>DETTAGLI:</div>" +
-        //            "<h2 class='name'>" + segnalazione.Tipo + "</h2>" +
-        //            "<div class='address'>" + segnalazione.User + "</div>" +
-        //            "</div>" +
-        //            "<div id='invoice' >" +
-        //            "<h1> SEGNALAZIONE N°: " + segnalazione.Id + "</h1>" +
-        //            "<div class='date'>Data: " + segnalazione.DataOra.ToString("dd/MM/yyyy HH:mm") + "</div>" +
-        //            "</div>" +
-        //            "</div>" +
-        //            "<div id='notes' class='clearfix'>" +
-        //            "<div id='notices'>" +
-        //            "<div> NOTE:</div>" +
-        //            "<h2 class='name'>" + segnalazione.Note + "</div>" +
-        //            "</div>" +
-        //            "<div id='notes' class='clearfix'>" +
-        //            "<div id='notices'>" +
-        //            "<div> Allegato:</div>" +
-        //            "</div>" +
-        //            "</div>";
+                var response = await _printService.Print("SegnalazioniDocumento", dto);
+                return new ApiResponse(response);
 
-        //        string table = "<div id='photo'>";
-        //        int index = 1;
-        //        foreach (var itm in segnalazioneAllegato.Data)
-        //        {
-        //            table +=
-        //                "<div class='detail'>" +
-        //                "<img src='https://api-resources.gestioneambiente.net/api/Files/DownloadDirectByIdSharepoint?fileId=" + itm.FileId + "'>" +
-        //                "</div>";
-        //            index++;
-        //        }
-        //        table += "</div>";
-
-
-        //        htmlContent = SegnalazioniTemplateGenerator.GetHTMLString(header, table);
-
-        //        var response = _fileService.UploadOnServerReport(fileName, path, htmlContent, "Segnalazione N°: " + segnalazione.Id, "Segnalazioni");
-        //        return new ApiResponse(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
-
-        //}
-        //#endregion
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+        #endregion
 
         #region Views
         [HttpGet("GetViewGaSegnalazioniDocumentiAsync/{mode}/{userId}")]
