@@ -5,4 +5,9 @@
         public long id { get; set; }
         public string image { get; set; }
     }
+
+    public class DateRangeDto { 
+        public DateTime dateStart { get; set; }
+        public DateTime dateEnd { get; set; }
+    }
 }

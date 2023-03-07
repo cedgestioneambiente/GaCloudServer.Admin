@@ -106,6 +106,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             return new DownloadFilesModel() { stream = stream, fileName = fileItem.Name };
         }
 
+
+
         public async Task<bool> Remove(string fileId)
         {
             try

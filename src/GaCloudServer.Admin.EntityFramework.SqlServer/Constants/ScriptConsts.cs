@@ -110,5 +110,11 @@
         public const string OstMigration = @".\Scripts\Ost\";
         public const string CREATE_ViewOst = "CREATE_ViewOst.sql";
         public const string DROP_ViewOst = "DROP_ViewOst.sql";
+
+        //Previsio
+        public const string GaPrevisio = @".\Scripts\Previsio\";
+        public const string CREATE_ViewPrevisio = "CREATE_ViewGaPrevisio.sql";
+        public const string DROP_ViewPrevisio = "DROP_ViewGaPrevisio.sql";
+
     }
 }

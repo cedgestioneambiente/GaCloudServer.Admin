@@ -93,9 +93,12 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
     public class SegnalazioniDocumentoTemplateDto : GenericPrintDto
     {
         public string Numero { get; set; }
-        public string Data { get; set; }
+        public DateTime Data { get; set; }
         public string Note { get; set; }
         public string Allegato { get; set; }
+        public string User { get; set; }
+        public string Tipo { get; set; }
+        public List<string> Immagini { get; set; }
 
     }
 

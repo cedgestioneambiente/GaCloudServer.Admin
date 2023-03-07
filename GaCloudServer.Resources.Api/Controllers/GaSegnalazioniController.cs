@@ -426,6 +426,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var view = await _gaSegnalazioniService.GetViewGaSegnalazioniDocumentoByIdAsync(id);
+                var immagini = await _gaSegnalazioniService.GetGaSegnalazioniDocumentoImmaginiByDocumentoIdAsync(id);
                 SegnalazioniDocumentoTemplateDto dto = new SegnalazioniDocumentoTemplateDto();
                 dto.FileName = "SegnalazioniDocumento.pdf";
                 dto.FilePath = @"Print/Segnalazione";
@@ -433,8 +434,13 @@ namespace GaCloudServer.Resources.Api.Controllers
                 dto.Css = "SegnalazioniDocumento";
 
                 dto.Numero = view.Data.FirstOrDefault().Id.ToString();
-                dto.Data = view.Data.FirstOrDefault().DataOra.ToString("dd/MM/yyyy");
+                dto.Data = view.Data.FirstOrDefault().DataOra;
                 dto.Note = view.Data.FirstOrDefault().Note;
+                dto.User = view.Data.FirstOrDefault().User;
+                dto.Tipo = view.Data.FirstOrDefault().Tipo;
+
+                dto.Immagini=(from x in immagini.Data
+                                select x.FileId).ToList();
 
                 var response = await _printService.Print("SegnalazioniDocumento", dto);
                 return new ApiResponse(response);

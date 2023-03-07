@@ -308,5 +308,47 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             sb.AppendFormat(@fileContent, dto.Anno, table);
             return sb.ToString();
         }
+
+        public static string SegnalazioniDocumento(SegnalazioniDocumentoTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/SegnalazioniDocumento/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string header =
+                   "<div id='details' class='clearfix'>" +
+                   "<div id='client'>" +
+                   "<div class='to'>DETTAGLI:</div>" +
+                   "<h2 class='name'>" + dto.Tipo + "</h2>" +
+                   "<div class='address'>" + dto.User + "</div>" +
+                   "</div>" +
+                   "<div id='invoice' >" +
+                   "<h1> SEGNALAZIONE N°: " + dto.Numero + "</h1>" +
+                   "<div class='date'>Data: " + dto.Data.ToString("dd/MM/yyyy HH:mm") + "</div>" +
+                   "</div>" +
+                   "</div>" +
+                   "<div id='notes' class='clearfix'>" +
+                   "<div id='notices'>" +
+                   "<div> NOTE:</div>" +
+                   "<h2 class='name'>" + dto.Note + "</div>" +
+                   "</div>" +
+                   "<div id='notes' class='clearfix'>" +
+                   "<div id='notices'>" +
+                   "<div> FOTO:</div>" +
+                   "</div>" +
+                   "</div>";
+
+            string table = "<div id='photo'>";
+            foreach (var itm in dto.Immagini)
+            {
+                table +=
+                        "<div class='detail'>" +
+                        "<img src='https://api-res.gestioneambiente.net/api/CloudStorage/DownloadDirectByIdAsync/" + itm + "'>" +
+                        "</div>";
+            }
+
+            sb.AppendFormat(@fileContent, header, table);
+            return sb.ToString();
+        }
     }
 }

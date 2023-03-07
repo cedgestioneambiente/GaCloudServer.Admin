@@ -1,6 +1,7 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
@@ -18,6 +19,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region BackOfficeUtenze
+
+        #region Functions
+        Task<BackOfficeMaxContDto> CalcGaBackOfficeMassimali(List<ViewGaBackOfficeUtenzePartite> dtos);
+        #endregion
         Task<PagedList<ViewGaBackOfficeUtenzeGrouped>> GetViewGaBackOfficeUtenzeGroupedByCodAziAndRagCliCfAsync(string codAzi, string ragCliCf);
         Task<PagedList<ViewGaBackOfficeUtenze>> GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(string cpAzi, string filter);
         Task<PagedList<ViewGaBackOfficeUtenzePartite>> GetViewGaBackOfficeUtenzePartiteByCpAziAndNumConAsync(string cpAzi, string numCon);

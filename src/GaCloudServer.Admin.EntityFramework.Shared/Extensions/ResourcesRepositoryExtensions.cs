@@ -27,6 +27,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
@@ -140,6 +141,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //BackOffice
             #region BackOffice
             services.AddTransient<IGenericRepository<BackOfficeTicket>, GenericRepository<TResourcesDbContext, BackOfficeTicket>>();
+            services.AddTransient<IGenericRepository<BackOfficeParametroOnCategoria>, GenericRepository<TResourcesDbContext, BackOfficeParametroOnCategoria>>();
+            services.AddTransient<IGenericRepository<BackOfficeMargine>, GenericRepository<TResourcesDbContext, BackOfficeMargine>>();
+            services.AddTransient<IGenericRepository<BackOfficeZona>, GenericRepository<TResourcesDbContext, BackOfficeZona>>();
 
             services.AddTransient<IGenericRepository<ViewGaBackOfficeComuni>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeComuni>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeGrouped>>();
@@ -342,6 +346,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Ost
             #region Ost
             services.AddTransient<IGenericRepository<ViewOstTickets>, GenericRepository<TResourcesDbContext, ViewOstTickets>>();
+            #endregion
+
+            //Previsio
+            #region Previsio
+            services.AddTransient<IGenericRepository<ViewGaPrevisioOdsReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsReport>>();
             #endregion
 
 

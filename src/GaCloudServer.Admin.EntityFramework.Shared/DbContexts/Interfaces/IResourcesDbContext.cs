@@ -33,6 +33,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Vie
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -131,9 +132,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #region GaBackOffice
         DbSet<BackOfficeParametroOnCategoria> GaBackOfficeParametriOnCategorie { get; set; }
+        DbSet<BackOfficeMargine> GaBackOfficeMargini { get; set; }
+        DbSet<BackOfficeZona> GaBackOfficeZone { get; set; }
         DbSet<BackOfficeStatoTicket> GaBackOfficeStatiTickets { get; set; }
         DbSet<BackOfficeTipoTicket> GaBackOfficeTipiTickets { get; set; }
         DbSet<BackOfficeTicket> GaBackOfficeTickets { get; set; }
+
 
         #region Views
         DbSet<ViewGaBackOfficeNdUtenze> ViewGaBackOfficeNdUtenze { get; set; }
@@ -349,6 +353,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         DbSet<ViewOstTickets> ViewOstTickets { get; set; }
 
+        #endregion
+
+        #region GaPrevisio
+        DbSet<ViewGaPrevisioOdsReport> ViewGaPrevisioOdsReport { get; set; }
         #endregion
     }
 }

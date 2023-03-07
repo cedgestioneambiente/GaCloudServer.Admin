@@ -1,9 +1,12 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -49,6 +52,25 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region BackOfficeUtenze
+
+        #region Functions
+        [HttpPost("CalcGaBackOfficeMassimali")]
+        public async Task<ActionResult<ApiResponse>> CalcGaBackOfficeMassimali([FromBody] List<ViewGaBackOfficeUtenzePartite> dtos)
+        {
+            try
+            {
+
+                var view = await _gaBackOfficeService.CalcGaBackOfficeMassimali(dtos);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
 
         #region Views
         [HttpGet("GetViewGaBackOfficeUtenzeGroupedByCodAziAndRagCliCfAsync/{codAzi}/{ragCliCf}")]

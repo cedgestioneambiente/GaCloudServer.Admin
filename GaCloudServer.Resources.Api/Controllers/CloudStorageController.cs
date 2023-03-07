@@ -7,7 +7,9 @@ using GaCloudServer.Resources.Api.ExceptionHandling;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeTypes.Core;
+using System.Net.Mime;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
+using fh = GaCloudServer.BusinnessLogic.Helpers.FileHelper;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -38,6 +40,28 @@ namespace GaCloudServer.Resources.Api.Controllers
             var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(downloadFileModel.fileName));
 
             return File(downloadFileModel.stream, mimeType, downloadFileModel.fileName);
+
+        }
+
+        [AllowAnonymous]
+        [HttpGet("DownloadDirectByIdAsync/{fileId}")]
+        [AutoWrapIgnore]
+        public async Task<IActionResult> DownloadDirectByIdAsync(string fileId)
+        {
+            var downloadFileModel = await _fileService.DownloadById(fileId);
+
+            var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(downloadFileModel.fileName));
+
+            byte[] fileBytes = fh.ReadFully(downloadFileModel.stream);
+
+            var cd = new ContentDisposition
+            {
+                Inline = true,
+                FileName = downloadFileModel.fileName
+            };
+            Response.Headers.Add("Content-Disposition", cd.ToString());
+
+            return File(fileBytes, "application/octet-stream");
 
         }
 

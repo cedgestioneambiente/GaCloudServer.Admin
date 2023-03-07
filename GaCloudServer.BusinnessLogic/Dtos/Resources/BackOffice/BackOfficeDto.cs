@@ -1,4 +1,5 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+using GaCloudServer.BusinnessLogic.DTOs.Base;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice
 {
@@ -81,6 +82,9 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice
 
         public BackOfficeCategoriaOnUtenzaDto() { }
 
+    }
+
+    public class BackOfficeUtenzaPartiteDto : GenericPagedListDto<ViewGaBackOfficeUtenzePartite> { 
     }
     #endregion
 

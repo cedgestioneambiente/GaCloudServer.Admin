@@ -34,6 +34,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Vie
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -137,6 +138,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region GaBackOffice
 
         public DbSet<BackOfficeParametroOnCategoria> GaBackOfficeParametriOnCategorie { get; set; }
+        public DbSet<BackOfficeMargine> GaBackOfficeMargini { get; set; }
+        public DbSet<BackOfficeZona> GaBackOfficeZone { get; set; }
         public DbSet<BackOfficeStatoTicket> GaBackOfficeStatiTickets { get; set; }
         public DbSet<BackOfficeTipoTicket> GaBackOfficeTipiTickets { get; set; }
         public DbSet<BackOfficeTicket> GaBackOfficeTickets { get; set; }
@@ -352,6 +355,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region Ost Tables
         public DbSet<ViewOstTickets> ViewOstTickets { get; set; }
+        #endregion
+
+        #region GaPrevisio
+        public DbSet<ViewGaPrevisioOdsReport> ViewGaPrevisioOdsReport { get; set; }
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -970,6 +977,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .Property(x => x.Id);
             });
 
+            #endregion
+
+            #region Previsio
+            builder.Entity<ViewGaPrevisioOdsReport>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPrevisioOdsReport))
+                .HasNoKey()
+                .Property(x => x.IDservizio);
+            });
             #endregion
 
 

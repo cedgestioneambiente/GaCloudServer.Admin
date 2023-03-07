@@ -39,12 +39,14 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IGaPresenzeService, GaPresenzeService>();
             services.AddTransient<IGaRecapitiService, GaRecapitiService>();
             services.AddTransient<IOstService, OstService>();
+            services.AddTransient<IGaPrevisioService, GaPrevisioService>();
 
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IPrintService, PrintService>();
             services.AddTransient<ILocalFileService, LocalFileService>();
             services.AddTransient<IMailService,MailService>();
+            services.AddTransient<IEcoFinderService, EcoFinderService>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork<TResourcesDbContext>>();
 

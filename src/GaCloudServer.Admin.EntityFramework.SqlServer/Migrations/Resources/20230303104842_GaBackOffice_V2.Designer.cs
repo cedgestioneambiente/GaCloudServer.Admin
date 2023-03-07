@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230303104842_GaBackOffice_V2")]
+    partial class GaBackOffice_V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5994,149 +5996,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.ToView("ViewGaPresenzeRichiesteRisorse");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views.ViewGaPrevisioOdsReport", b =>
-                {
-                    b.Property<bool>("Annullato")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Autista")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Categoria")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodiceCer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Committente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Completo")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Confermato")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ContaServizi")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DataOraFineAutista")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataOraFineMezzo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataOraIniAutista")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataOraIniMezzo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DescrizioneDestinatario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescrizioneIntermediario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescrizioneIntermediario1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescrizioneProduttore")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescrizioneRifiuto")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("DtReg")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EffettivoMinAutista")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EffettivoMinMezzo")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("FaseAnnullata")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("IDservizio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("IdMov")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IndirizzoImpiantoDestinatario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IndirizzoImpiantoIntermediario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IndirizzoImpiantoIntermediario1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IndirizzoImpiantoProduttore")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("KmFine")
-                        .HasColumnType("float");
-
-                    b.Property<double>("KmPartenza")
-                        .HasColumnType("float");
-
-                    b.Property<string>("LocalitaImpiantoDestinatario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocalitaImpiantoIntermediario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocalitaImpiantoIntermediario1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocalitaImpiantoProduttore")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mezzo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MinutiAutista")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinutiMezzo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NomeCliente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NumMov")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Operatore")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Operazione")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Quaton")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Rimorchio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Servizio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Targa")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView("ViewGaPrevisioOdsReport");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views.ViewGaRecapitiContatti", b =>

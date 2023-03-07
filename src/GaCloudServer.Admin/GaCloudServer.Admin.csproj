@@ -191,6 +191,12 @@
 	  <None Update="Scripts\Presenze\DROP_ViewGaPresenze.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Previsio\CREATE_ViewGaPrevisio.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Previsio\DROP_ViewGaPrevisio.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Recapiti\CREATE_ViewGaRecapiti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

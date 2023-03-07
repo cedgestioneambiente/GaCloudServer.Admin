@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.S
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice;
 using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.Data.SqlClient;
@@ -16,6 +17,10 @@ namespace GaCloudServer.BusinnessLogic.Services
     public class GaBackOfficeService:IGaBackOfficeService
     {
         protected readonly IGenericRepository<BackOfficeTicket> gaBackOfficeTicketsRepo;
+        protected readonly IGenericRepository<BackOfficeParametroOnCategoria> gaBackOfficeParametroOnCategoriaRepo;
+        protected readonly IGenericRepository<BackOfficeMargine> gaBackOfficeMarginiRepo;
+        protected readonly IGenericRepository<BackOfficeZona> gaBackOfficeZoneRepo;
+
 
         protected readonly IGenericRepository<ViewGaBackOfficeComuni> viewGaBackOfficeComuniRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeGrouped> viewGaBackOfficeUtenzeGroupedRepo;
@@ -36,6 +41,9 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public GaBackOfficeService(
             IGenericRepository<BackOfficeTicket> gaBackOfficeTicketsRepo,
+            IGenericRepository<BackOfficeParametroOnCategoria> gaBackOfficeParametroOnCategoriaRepo,
+            IGenericRepository<BackOfficeMargine> gaBackOfficeMarginiRepo,
+            IGenericRepository<BackOfficeZona> gaBackOfficeZoneRepo,
 
             IGenericRepository<ViewGaBackOfficeComuni> viewGaBackOfficeComuniRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeGrouped> viewGaBackOfficeUtenzeGroupedRepo,
@@ -55,6 +63,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         IUnitOfWork unitOfWork)
         {
             this.gaBackOfficeTicketsRepo = gaBackOfficeTicketsRepo;
+            this.gaBackOfficeParametroOnCategoriaRepo = gaBackOfficeParametroOnCategoriaRepo;
+            this.gaBackOfficeMarginiRepo = gaBackOfficeMarginiRepo;
+            this.gaBackOfficeZoneRepo = gaBackOfficeZoneRepo;
+
             this.viewGaBackOfficeUtenzeGroupedRepo = viewGaBackOfficeUtenzeGroupedRepo;
             this.viewGaBackOfficeNdUtenzeRepo = viewGaBackOfficeNdUtenzeRepo;
             this.viewGaBackOfficeNdUtenzeGroupedRepo = viewGaBackOfficeNdUtenzeGroupedRepo;
@@ -90,6 +102,35 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region BackOfficeUtenze
+
+        #region Functions
+        public async Task<BackOfficeMaxContDto> CalcGaBackOfficeMassimali(List<ViewGaBackOfficeUtenzePartite> dtos)
+        {
+            var margini = await gaBackOfficeMarginiRepo.GetByIdAsync(1);
+            var categorie = await gaBackOfficeParametroOnCategoriaRepo.GetAllAsync();
+            var zone = await gaBackOfficeZoneRepo.GetAllAsync();
+
+            var entity = new BackOfficeMaxContDto();
+            entity.Secco = 0;
+            entity.Carta = 0;
+            entity.Plastica = 0;
+            entity.Umido = 0;
+            entity.Vetro = 0;
+            entity.Vegetale = 0;
+
+            foreach (var itm in dtos)
+            {
+                var valori = await SetValoriCategoriaOnUtenza(itm, zone, categorie, margini);
+                entity.Secco += (Math.Round(valori.KgMqSmaltimentoRsu * Convert.ToDouble(itm.Superfic), 4, MidpointRounding.ToEven)) / margini.PesoSpecificoRsu;
+                entity.Carta += (Math.Round(valori.KgMqRecuperoCarta * Convert.ToDouble(itm.Superfic), 4, MidpointRounding.ToEven)) / margini.PesoSpecificoCarta;
+                entity.Plastica += (Math.Round(valori.KgMqRecuperoPlastica * Convert.ToDouble(itm.Superfic), 4, MidpointRounding.ToEven)) / margini.PesoSpecificoPlastica;
+                entity.Umido += (Math.Round(valori.KgMqRecuperoUmido * Convert.ToDouble(itm.Superfic), 4, MidpointRounding.ToEven)) / margini.PesoSpecificoUmido;
+                entity.Vetro += (Math.Round(valori.KgMqRecuperoVetro * Convert.ToDouble(itm.Superfic), 4, MidpointRounding.ToEven)) / margini.PesoSpecificoVetro;
+            }
+
+            return entity;
+        }
+        #endregion
 
         #region Views
         public async Task<PagedList<ViewGaBackOfficeUtenzeGrouped>> GetViewGaBackOfficeUtenzeGroupedByCodAziAndRagCliCfAsync(string codAzi, string ragCliCf)
@@ -257,6 +298,33 @@ namespace GaCloudServer.BusinnessLogic.Services
             var result = await viewGaBackOfficeZoneRepo.GetWithFilterAsync(x => x.Comune == comune && x.Via == via && x.Civico == civico);
             return (from x in result.Data
                     select x.Zona).FirstOrDefault();
+        }
+        #endregion
+
+        #region Shared Functions
+        private async Task<BackOfficeCategoriaOnUtenzaDto> SetValoriCategoriaOnUtenza(ViewGaBackOfficeUtenzePartite utenza, PagedList<BackOfficeZona> zone, PagedList<BackOfficeParametroOnCategoria> categorie, BackOfficeMargine margine)
+        {
+            BackOfficeCategoriaOnUtenzaDto dto = new BackOfficeCategoriaOnUtenzaDto();
+            dto.CodCategoria = utenza.Categ;
+            dto.DescCategoria = utenza.DescriCat;
+
+            var zona = zone.Data.Where(x => x.Descrizione.Contains(utenza.Comune.Trim()) && x.Descrizione.Contains(utenza.DescriCat.Trim())).FirstOrDefault();
+            if (zona == null)
+            {
+                zona = zone.Data.Where(x => x.Descrizione == "ZONA STANDARD").FirstOrDefault();
+            }
+
+            var categoria = categorie.Data.Where(x => x.TipoId == utenza.Categ).FirstOrDefault();
+
+            dto.KgMqSmaltimentoRsu = (categoria.KgMqSmaltimentoGg * zona.CadenzaRsu) * margine.MargineRsu;
+            dto.KgMqRecuperoCarta = ((categoria.KgMqRecuperoGg * margine.MargineCarta) * zona.CadenzaCarta) * categoria.PercentualeCarta;
+            dto.KgMqRecuperoPlastica = ((categoria.KgMqRecuperoGg * margine.MarginePlastica) * zona.CadenzaPlastica) * categoria.PercentualePlastica;
+            dto.KgMqRecuperoUmido = ((categoria.KgMqRecuperoGg * margine.MargineUmido) * zona.CadenzaUmido) * categoria.PercentualeUmido;
+            dto.KgMqRecuperoVetro = ((categoria.KgMqRecuperoGg * margine.MargineVetro) * zona.CadenzaVetro) * categoria.PercentualeVetro;
+
+
+            return dto;
+
         }
         #endregion
 

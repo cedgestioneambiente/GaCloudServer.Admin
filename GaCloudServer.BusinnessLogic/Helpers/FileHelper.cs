@@ -30,5 +30,14 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             return string.Format("{0:n1}{1}", number, suffixes[counter]);
 
         }
+        public static byte[] ReadFully(Stream input)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                input.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
+
     }
 }
