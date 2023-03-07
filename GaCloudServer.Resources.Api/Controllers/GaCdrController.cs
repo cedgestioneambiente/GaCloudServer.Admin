@@ -1196,12 +1196,17 @@ namespace GaCloudServer.Resources.Api.Controllers
                 List<string> toMails = new List<string>();
                 List<string> ccMails = new List<string>();
 
+                toMails.Add("carlo.candia@gestioneambiente.net");
+                toMails.Add("roberto.fago@gestioneambiente.net");
+                toMails.Add("lorenzo.repetti@gestioneambiente.net");
+
                 if (richiestaViaggio.CentroId == 5 || richiestaViaggio.CentroId == 10 || richiestaViaggio.CentroId == 14)
                 {
-                    //toMails.Add("optortona@gestioneambiente.net");
+                    toMails.Add("optortona@gestioneambiente.net");
                 }
 
                 ccMails.Add("ced@gestioneambiente.net");
+                ccMails.Add("callcenter@gestioneambiente.net");
 
                 string mailTo = string.Join(";",toMails);
                 string mailCC = string.Join(";", ccMails);
