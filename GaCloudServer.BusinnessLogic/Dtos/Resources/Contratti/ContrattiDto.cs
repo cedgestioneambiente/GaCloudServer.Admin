@@ -101,6 +101,8 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
         public bool Preventivo { get; set; }
         public string? PreventivoNumero { get; set; }
         public long ContrattiTipologiaId { get; set; }
+        public int SogliaAvviso { get; set; }
+        public bool Comunicazione { get; set; }
     }
 
     public class ContrattiDocumentiDto : GenericPagedListDto<ContrattiDocumentoDto>

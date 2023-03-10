@@ -1,16 +1,16 @@
 ﻿CREATE VIEW [dbo].[ViewGaCdrConferimenti]
 AS
 SELECT        GaCdrConferimenti.Id, GaCdrConferimenti.Data, GaCdrCentri.Centro, GaCdrCers.Cer, GaCdrCersDettagli.Descrizione AS CerDettaglio, GaCdrConferimenti.Ditta, GaCdrConferimenti.Peso, GaCdrConferimenti.Quantita, 
-                         GaCdrCers.Imm, PrivateViewIdentityServerAdminUserList.FullName AS UtenteRegistrazione, GaCdrConferimenti.Targa, GaCdrConferimenti.Note, GaCdrConferimenti.Disabled, GaCdrConferimenti.CdrUtenteId, 
-                         ViewGaBackOfficeUtenzeGrouped.RagCli AS RagioneSociale, GaCdrConferimenti.NumCon, GaCdrConferimenti.Partita, ViewGaBackOfficeUtenzeGrouped.CodFis AS CfPiva, ViewGaBackOfficeComuni.Descrizione AS Comune
+                         GaCdrCers.Imm, CONCAT(AUTH.LastName,' ',AUTH.FirstName) AS UtenteRegistrazione, GaCdrConferimenti.Targa, GaCdrConferimenti.Note, GaCdrConferimenti.Disabled, GaCdrConferimenti.CdrUtenteId, 
+						 ViewGaBackOfficeComuni.Descrizione AS Comune,
+						 UTENZE.RagSo RagioneSociale,UTENZE.NumCon,GaCdrConferimenti.Partita Partita,UTENZE.CodFis CfPiva
 FROM            GaCdrConferimenti INNER JOIN
                          GaCdrCers ON GaCdrConferimenti.CdrCerId = GaCdrCers.Id INNER JOIN
                          GaCdrCersDettagli ON GaCdrConferimenti.CdrCerDettaglioId = GaCdrCersDettagli.Id INNER JOIN
-                         PrivateViewIdentityServerAdminUserList ON GaCdrConferimenti.UserId = PrivateViewIdentityServerAdminUserList.Id COLLATE DATABASE_DEFAULT INNER JOIN
+                         IdentityServerAdmin.dbo.Users AUTH ON GaCdrConferimenti.UserId = AUTH.Id COLLATE DATABASE_DEFAULT INNER JOIN
                          GaCdrCentri ON GaCdrConferimenti.CdrCentroId = GaCdrCentri.Id LEFT OUTER JOIN
-                         dbo.ViewGaBackOfficeComuni ON  CAST(dbo.GaCdrConferimenti.CdrComuneId AS VARCHAR) COLLATE DATABASE_DEFAULT = CAST(dbo.ViewGaBackOfficeComuni.Id AS VARCHAR) LEFT OUTER JOIN
-                         dbo.ViewGaBackOfficeUtenzeGrouped ON CAST(dbo.GaCdrConferimenti.NumCon AS VARCHAR) COLLATE DATABASE_DEFAULT= CAST(dbo.ViewGaBackOfficeUtenzeGrouped.NumCon AS VARCHAR)  AND 
-                         CAST(dbo.GaCdrConferimenti.Partita AS VARCHAR) COLLATE DATABASE_DEFAULT= CAST(dbo.ViewGaBackOfficeUtenzeGrouped.Partita AS VARCHAR) 
+                         dbo.ViewGaBackOfficeComuni ON  CAST(dbo.GaCdrConferimenti.CdrComuneId AS VARCHAR) COLLATE DATABASE_DEFAULT = CAST(dbo.ViewGaBackOfficeComuni.CodAzi AS VARCHAR) LEFT OUTER JOIN
+						 dbo.ViewGaBackOfficeUtenze UTENZE ON GaCdrConferimenti.NumCon collate database_default  = UTENZE.NumCon and GaCdrConferimenti.CdrComuneId collate database_default =UTENZE.CpAzi
 GO
 
 CREATE VIEW [dbo].[ViewGaCdrRichiesteViaggi]

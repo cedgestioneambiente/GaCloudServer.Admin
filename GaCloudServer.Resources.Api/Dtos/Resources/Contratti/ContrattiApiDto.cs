@@ -102,6 +102,9 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
         public bool Preventivo { get; set; }
         public string? PreventivoNumero { get; set; }
         public long ContrattiTipologiaId { get; set; }
+        public int SogliaAvviso { get; set; }
+        public bool Comunicazione { get; set; }
+
     }
 
     public class ContrattiDocumentiApiDto : GenericPagedListApiDto<ContrattiDocumentoApiDto>

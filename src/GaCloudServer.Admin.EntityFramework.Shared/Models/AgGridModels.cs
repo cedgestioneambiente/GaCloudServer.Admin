@@ -24,7 +24,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Models
         public string Operator { get; set; }
         
         public string type { get; set; }
-        public string filter { get; set; }
+        private string _filter { get; set; }
+        public object filter { get { return _filter; } set { _filter = value.ToString().Split(":")[0].ToString(); } }
         public string filterTo { get; set; }
         //public DateTime? dateFrom { get; set; }
         //public DateTime? dateTo { get; set; }

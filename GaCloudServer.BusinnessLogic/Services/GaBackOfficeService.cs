@@ -106,6 +106,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Functions
         public async Task<BackOfficeMaxContDto> CalcGaBackOfficeMassimali(List<ViewGaBackOfficeUtenzePartite> dtos)
         {
+
             var margini = await gaBackOfficeMarginiRepo.GetByIdAsync(1);
             var categorie = await gaBackOfficeParametroOnCategoriaRepo.GetAllAsync();
             var zone = await gaBackOfficeZoneRepo.GetAllAsync();
@@ -304,6 +305,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Shared Functions
         private async Task<BackOfficeCategoriaOnUtenzaDto> SetValoriCategoriaOnUtenza(ViewGaBackOfficeUtenzePartite utenza, PagedList<BackOfficeZona> zone, PagedList<BackOfficeParametroOnCategoria> categorie, BackOfficeMargine margine)
         {
+            
             BackOfficeCategoriaOnUtenzaDto dto = new BackOfficeCategoriaOnUtenzaDto();
             dto.CodCategoria = utenza.Categ;
             dto.DescCategoria = utenza.DescriCat;
@@ -316,14 +318,21 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             var categoria = categorie.Data.Where(x => x.TipoId == utenza.Categ).FirstOrDefault();
 
-            dto.KgMqSmaltimentoRsu = (categoria.KgMqSmaltimentoGg * zona.CadenzaRsu) * margine.MargineRsu;
-            dto.KgMqRecuperoCarta = ((categoria.KgMqRecuperoGg * margine.MargineCarta) * zona.CadenzaCarta) * categoria.PercentualeCarta;
-            dto.KgMqRecuperoPlastica = ((categoria.KgMqRecuperoGg * margine.MarginePlastica) * zona.CadenzaPlastica) * categoria.PercentualePlastica;
-            dto.KgMqRecuperoUmido = ((categoria.KgMqRecuperoGg * margine.MargineUmido) * zona.CadenzaUmido) * categoria.PercentualeUmido;
-            dto.KgMqRecuperoVetro = ((categoria.KgMqRecuperoGg * margine.MargineVetro) * zona.CadenzaVetro) * categoria.PercentualeVetro;
+            try
+            {
+                dto.KgMqSmaltimentoRsu = (categoria.KgMqSmaltimentoGg * zona.CadenzaRsu) * margine.MargineRsu;
+                dto.KgMqRecuperoCarta = ((categoria.KgMqRecuperoGg * margine.MargineCarta) * zona.CadenzaCarta) * categoria.PercentualeCarta;
+                dto.KgMqRecuperoPlastica = ((categoria.KgMqRecuperoGg * margine.MarginePlastica) * zona.CadenzaPlastica) * categoria.PercentualePlastica;
+                dto.KgMqRecuperoUmido = ((categoria.KgMqRecuperoGg * margine.MargineUmido) * zona.CadenzaUmido) * categoria.PercentualeUmido;
+                dto.KgMqRecuperoVetro = ((categoria.KgMqRecuperoGg * margine.MargineVetro) * zona.CadenzaVetro) * categoria.PercentualeVetro;
 
 
-            return dto;
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                return dto;
+            }
 
         }
         #endregion

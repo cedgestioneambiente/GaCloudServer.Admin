@@ -1,5 +1,4 @@
 ﻿
-using System.Collections.Specialized;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlClient.Server;
@@ -80,6 +79,22 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             param.Direction = ParameterDirection.Input;
 
             return param;
+        }
+
+        public class StringCollection : List<string>, IEnumerable<SqlDataRecord>
+        {
+            IEnumerator<SqlDataRecord> IEnumerable<SqlDataRecord>.GetEnumerator()
+            {
+                var sqlRow = new SqlDataRecord(
+                      new SqlMetaData("Valore", SqlDbType.NVarChar, SqlMetaData.Max));
+
+                foreach (var itm in this)
+                {
+                    sqlRow.SetString(0, itm);
+
+                    yield return sqlRow;
+                }
+            }
         }
     }
 
