@@ -35,6 +35,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaPresenzeRichiesteRisorse> viewGaPresenzeRichiesteRisorseRepo;
         protected readonly IGenericRepository<ViewGaPresenzeRichiesteEventi> viewGaPresenzeRichiesteEventiRepo;
 
+        protected readonly IGenericRepository<WidgetGaPresenzeSchedule> widgetGaPresenzeScheduleRepo;
+
         protected readonly IGenericRepository<GlobalSettore> globalSettoriRepo;
 
 
@@ -62,6 +64,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaPresenzeRichiesteRisorse> viewGaPresenzeRichiesteRisorseRepo,
             IGenericRepository<ViewGaPresenzeRichiesteEventi> viewGaPresenzeRichiesteEventiRepo,
 
+            IGenericRepository<WidgetGaPresenzeSchedule> widgetGaPresenzeScheduleRepo,
+
             IGenericRepository<GlobalSettore> globalSettoriRepo,
 
         IUnitOfWork unitOfWork)
@@ -86,6 +90,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaPresenzeRichiestaMailRepo = viewGaPresenzeRichiestaMailRepo;
             this.viewGaPresenzeRichiesteRisorseRepo = viewGaPresenzeRichiesteRisorseRepo;
             this.viewGaPresenzeRichiesteEventiRepo = viewGaPresenzeRichiesteEventiRepo;
+
+            this.widgetGaPresenzeScheduleRepo = widgetGaPresenzeScheduleRepo;
 
             this.globalSettoriRepo = globalSettoriRepo;
 
@@ -331,6 +337,15 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<PagedList<ViewGaPresenzeRichiesteEventi>> GetViewGaPresenzeRichiesteEventiBySettoreIdAsync(long globalSettoreId)
         {
             var view = await viewGaPresenzeRichiesteEventiRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId);
+            return view;
+        }
+        #endregion
+
+        #region Widgets
+        public async Task<PagedList<WidgetGaPresenzeSchedule>> GetWidgetGaPresenzeScheduleAsync(bool smartWorking)
+        {
+            var view = smartWorking==true? await widgetGaPresenzeScheduleRepo.GetWithFilterAsync(x => x.TipoOre == "SMART WORKING"):
+                await widgetGaPresenzeScheduleRepo.GetWithFilterAsync(x => x.TipoOre != "SMART WORKING");
             return view;
         }
         #endregion

@@ -964,6 +964,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("ChangeStatusArchiviatoGaContrattiDocumentoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusArchiviatoGaContrattiDocumentoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaContrattiService.ChangeStatusArchiviatoGaContrattiDocumentoAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #region Views
@@ -1028,9 +1044,17 @@ namespace GaCloudServer.Resources.Api.Controllers
         [HttpPost("GetSpGaContrattiPermessiAsync")]
         public async Task<ApiResponse> GetSpGaContrattiPermessiAsync([FromBody] ContrattiDocumentiRequestApiDto apiDto)
         {
-            var dto = apiDto.ToDto<ContrattiDocumentiRequestDto, ContrattiDocumentiRequestApiDto>();
-            var entities = await _gaContrattiService.GetSpGaContrattiPermessoAsync(dto);
-            return new ApiResponse(entities);
+            try
+            {
+                var dto = apiDto.ToDto<ContrattiDocumentiRequestDto, ContrattiDocumentiRequestApiDto>();
+                var entities = await _gaContrattiService.GetSpGaContrattiPermessoAsync(dto);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
         }
 
         [HttpPost("GetSpGaContrattiPermessiModeAsync")]

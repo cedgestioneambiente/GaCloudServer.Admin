@@ -320,7 +320,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PresenzeOrario> GaPresenzeOrari { get; set; }
         DbSet<PresenzeOrarioGiornata> GaPresenzeOrariGiornate { get; set; }
 
-
         #region Views
         DbSet<ViewGaPresenzeResponsabili> ViewGaPresenzeResponsabili { get; set; }
         DbSet<ViewGaPresenzeResponsabiliOnSettori> ViewGaPresenzeResponsabiliOnSettori { get; set; }
@@ -331,6 +330,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaPresenzeRichiesteRisorse> ViewGaPresenzeRichiesteRisorse { get; set; }
         DbSet<ViewGaPresenzeRichiesteEventi> ViewGaPresenzeRichiesteEventi { get; set; }
 
+        #endregion
+
+        #region Widget
+        DbSet<WidgetGaPresenzeSchedule> WidgetGaPresenzeSchedules { get; set; }
         #endregion
 
         #endregion

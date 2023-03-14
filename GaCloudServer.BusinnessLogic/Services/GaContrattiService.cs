@@ -614,6 +614,15 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<bool> ChangeStatusArchiviatoGaContrattiDocumentoAsync(long id)
+        {
+            var entity = await gaContrattiDocumentiRepo.GetByIdAsync(id);
+            entity.Archiviato = false;
+            gaContrattiDocumentiRepo.Update(entity);
+            await SaveChanges();
+            return true;
+        }
         #endregion
 
         #region Views

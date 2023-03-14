@@ -1,4 +1,5 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Global;
 using System.ComponentModel.DataAnnotations;
@@ -185,5 +186,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze
         public string UserId { get; set; }
         public bool IsAdmin { get; set; }
     }
+
+
 }
 

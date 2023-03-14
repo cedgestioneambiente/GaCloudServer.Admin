@@ -14,6 +14,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         Task<PagedList<ViewGaRecapitiContatti>> GetViewGaRecapitiContattiAsync();
+        Task<PagedList<ViewGaRecapitiContatti>> GetViewGaRecapitiContattiByFilterAsync(string filter);
         #endregion
         #endregion
     }

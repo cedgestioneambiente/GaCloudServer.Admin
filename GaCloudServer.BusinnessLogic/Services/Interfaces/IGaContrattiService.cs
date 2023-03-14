@@ -122,6 +122,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateGaContrattiDocumentoAsync(long id, string descrizione);
         Task<bool> ChangeStatusGaContrattiDocumentoAsync(long id);
+        Task<bool> ChangeStatusArchiviatoGaContrattiDocumentoAsync(long id);
 
         #endregion
 
