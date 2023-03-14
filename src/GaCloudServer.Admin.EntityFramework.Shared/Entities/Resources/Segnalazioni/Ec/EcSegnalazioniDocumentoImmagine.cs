@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec
 {
-    public class EcSegnalazioniAllegato : GenericFileEntity
+    public class EcSegnalazioniDocumentoImmagine : GenericFileEntity
     {
         public long SegnalazioniDocumentoId { get; set; }
 

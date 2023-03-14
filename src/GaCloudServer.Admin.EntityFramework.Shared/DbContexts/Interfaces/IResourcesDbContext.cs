@@ -280,7 +280,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region EcSegnalazioni Tables
         DbSet<EcSegnalazioniTipo> EcSegnalazioniTipi { get; set; }
         DbSet<EcSegnalazioniStato> EcSegnalazioniStati { get; set; }
-        DbSet<EcSegnalazioniAllegato> EcSegnalazioniAllegati { get; set; }
+        DbSet<EcSegnalazioniDocumentoImmagine> EcSegnalazioniDocumentiImmagini { get; set; }
         DbSet<EcSegnalazioniDocumento> EcSegnalazioniDocumenti { get; set; }
 
         #region Views

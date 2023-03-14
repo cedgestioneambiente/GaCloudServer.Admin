@@ -23,12 +23,12 @@ namespace GaCloudServer.BusinessLogic.Mappers.EcSegnalazioni
             CreateMap<PagedList<EcSegnalazioniStato>, SegnalazioniStatiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            //SegnalazioniAllegati
-            //CreateMap<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>(MemberList.Destination)
-            //    .ReverseMap();
+            //SegnalazioniDocumentiImmagini
+            CreateMap<EcSegnalazioniDocumentoImmagine, SegnalazioniDocumentoImmagineDto>(MemberList.Destination)
+                .ReverseMap();
 
-            //CreateMap<PagedList<EcSegnalazioniAllegato>, SegnalazioniAllegatiDto>(MemberList.Destination)
-            //    .ReverseMap();
+            CreateMap<PagedList<EcSegnalazioniDocumentoImmagine>, SegnalazioniDocumentiImmaginiDto>(MemberList.Destination)
+                .ReverseMap();
 
             //SegnalazioniDocumenti
             CreateMap<EcSegnalazioniDocumento, SegnalazioniDocumentoDto>(MemberList.Destination)

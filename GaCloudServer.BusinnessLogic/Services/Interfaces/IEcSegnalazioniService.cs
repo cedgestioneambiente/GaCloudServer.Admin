@@ -39,20 +39,20 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
-        //#region EcSegnalazioniAllegati
-        //Task<SegnalazioniAllegatiDto> GetEcSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId);
+        #region EcSegnalazioniDocumentiImmagini
+        Task<SegnalazioniDocumentiImmaginiDto> GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId);
 
-        //Task<long> AddEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
-        ////Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
+        Task<long> AddEcSegnalazioniDocumentoImmagineAsync(SegnalazioniDocumentoImmagineDto dto);
+        //Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
 
-        //Task<bool> DeleteEcSegnalazioniAllegatoAsync(long id);
+        Task<bool> DeleteEcSegnalazioniDocumentoImmagineAsync(long id);
 
-        //#region Functions
-        ////Task<bool> ValidateEcSegnalazioniAllegatoAsync(long id, string descrizione);
-        ////Task<bool> ChangeStatusEcSegnalazioniAllegatoAsync(long id);
-        //#endregion
+        #region Functions
+        //Task<bool> ValidateEcSegnalazioniAllegatoAsync(long id, string descrizione);
+        //Task<bool> ChangeStatusEcSegnalazioniAllegatoAsync(long id);
+        #endregion
 
-        //#endregion
+        #endregion
 
         #region EcSegnalazioniDocumenti
         Task<SegnalazioniDocumentiDto> GetEcSegnalazioniDocumentiAsync(int page = 1, int pageSize = 0);
@@ -69,6 +69,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         Task<ViewEcSegnalazioniDocumenti> GetViewEcSegnalazioniDocumentoByIdAsync(long id);
+        Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(bool all = true);
         Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "Ec-s-administrator");
         Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "Ec-s-administrator", int page = 1, int pageSize = 100);
         #endregion
