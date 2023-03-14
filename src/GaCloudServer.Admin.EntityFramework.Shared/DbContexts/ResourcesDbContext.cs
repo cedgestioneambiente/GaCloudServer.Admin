@@ -339,6 +339,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #endregion
 
+        #region Widget
+        public DbSet<WidgetGaPresenzeSchedule> WidgetGaPresenzeSchedules { get; set; }
+        #endregion
+
         #endregion
 
         #region GaRecapiti Tables
@@ -952,6 +956,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaPresenzeRichiesteEventi))
+                    .HasNoKey();
+            });
+
+            builder.Entity<WidgetGaPresenzeSchedule>(entity =>
+            {
+                entity
+                    .ToView(nameof(WidgetGaPresenzeSchedule))
                     .HasNoKey();
             });
 

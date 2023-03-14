@@ -46,6 +46,22 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetViewGaRecapitiContattiByFilterAsync/{filter}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaRecapitiContattiByFilterAsync(string filter)
+        {
+            try
+            {
+                var view = await _gaRecapitiService.GetViewGaRecapitiContattiByFilterAsync(filter);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #endregion

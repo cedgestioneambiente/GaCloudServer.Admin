@@ -326,6 +326,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaPresenzeRichiesteRisorse>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichiesteRisorse>>();
             services.AddTransient<IGenericRepository<ViewGaPresenzeRichiesteEventi>, GenericRepository<TResourcesDbContext, ViewGaPresenzeRichiesteEventi>>();
 
+            //Widget
+            services.AddTransient<IGenericRepository<WidgetGaPresenzeSchedule>, GenericRepository<TResourcesDbContext, WidgetGaPresenzeSchedule>>();
+
+
 
 
             #endregion

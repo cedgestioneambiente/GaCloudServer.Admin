@@ -466,6 +466,24 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #region Widgets
+        [HttpGet("GetWidgetGaPresenzeScheduleAsync/{smartWorking}")]
+        public async Task<ActionResult<ApiResponse>> GetWidgetGaPresenzeScheduleAsync(bool smartWorking)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetWidgetGaPresenzeScheduleAsync(smartWorking);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
         #endregion
 
         #region PresenzeTipiOre

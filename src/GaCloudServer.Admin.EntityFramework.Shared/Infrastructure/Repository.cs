@@ -397,7 +397,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         }
 
-
         #region Functions
         public async Task<bool> CheckIsUnique(Expression<Func<TEntity, bool>> predicate)
         {

@@ -1,7 +1,9 @@
 ﻿
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -33,6 +35,17 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<PagedList<ViewGaRecapitiContatti>> GetViewGaRecapitiContattiAsync()
         {
             var view = await viewGaRecapitiContattiRepo.GetWithFilterAsync(x => x.ShowInContacts == true);
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaRecapitiContatti>> GetViewGaRecapitiContattiByFilterAsync(string filter)
+        {
+            var view = await viewGaRecapitiContattiRepo.GetWithFilterAsync(x => x.ShowInContacts == true && 
+            (EF.Functions.Like(x.Nome,filter.toWildcardString()) ||
+            EF.Functions.Like(x.Cognome,filter.toWildcardString()) ||
+            EF.Functions.Like(x.Interno,filter.toWildcardString())||
+            EF.Functions.Like(x.Cellulare,filter.toWildcardString()) ||
+            EF.Functions.Like(x.Email,filter.toWildcardString())));
             return view;
         }
         #endregion

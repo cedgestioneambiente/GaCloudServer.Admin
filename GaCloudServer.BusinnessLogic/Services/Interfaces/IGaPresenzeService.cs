@@ -45,6 +45,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaPresenzeRichiesteEventi>> GetViewGaPresenzeRichiesteEventiBySettoreIdAsync(long globalSettoreId);
         #endregion
 
+        #region Widgets
+        Task<PagedList<WidgetGaPresenzeSchedule>> GetWidgetGaPresenzeScheduleAsync(bool smartWorking);
+        #endregion
+
         #endregion
 
         #region GaPresenzeTipiOre
