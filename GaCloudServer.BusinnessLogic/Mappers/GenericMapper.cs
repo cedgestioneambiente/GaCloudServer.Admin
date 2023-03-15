@@ -15,6 +15,7 @@ using GaCloudServer.BusinessLogic.Mappers.Segnalazioni;
 using GaCloudServer.BusinessLogic.Mappers.EcSegnalazioni;
 using GaCloudServer.BusinessLogic.Mappers.ContactCenter;
 using GaCloudServer.BusinessLogic.Mappers.Presenze;
+using GaCloudServer.BusinessLogic.Mappers.Shortcuts;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -40,6 +41,7 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new EcSegnalazioniMapperProfile(),
             new ContactCenterMapperProfile(),
             new PresenzeMapperProfile(),
+            new ShortcutsMapperProfile()
         };
 
         static GenericMapper() {

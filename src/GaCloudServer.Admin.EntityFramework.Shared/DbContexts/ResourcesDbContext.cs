@@ -35,6 +35,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Vie
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -363,6 +365,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region GaPrevisio
         public DbSet<ViewGaPrevisioOdsReport> ViewGaPrevisioOdsReport { get; set; }
+        #endregion
+
+        #region Shortcut
+        public DbSet<ShortcutLink> ShortcutLinks { get; set; }
+        public DbSet<ShortcutItem> ShortcutItems { get; set; }
+
+        #region Views
+        public DbSet<ViewShortcutItems> ViewShortcutItems { get; set; }
+        #endregion
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -997,6 +1008,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .ToView(nameof(ViewGaPrevisioOdsReport))
                 .HasNoKey()
                 .Property(x => x.IDservizio);
+            });
+            #endregion
+
+            #region Shortcut
+            builder.Entity<ViewShortcutItems>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewShortcutItems))
+                .HasKey(x=>x.Id);
             });
             #endregion
 

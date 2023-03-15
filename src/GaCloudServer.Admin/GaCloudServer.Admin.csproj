@@ -227,6 +227,12 @@
 	  <None Update="Scripts\Segnalazioni\DROP_ViewGaSegnalazioni.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Shortcuts\CREATE_ViewShortcuts.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Shortcuts\DROP_ViewShortcuts.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

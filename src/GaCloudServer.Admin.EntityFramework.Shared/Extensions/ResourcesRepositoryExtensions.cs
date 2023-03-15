@@ -34,6 +34,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.View
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -355,6 +357,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Previsio
             #region Previsio
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsReport>>();
+            #endregion
+
+            //Shortcuts
+            #region Shortcuts
+            services.AddTransient<IGenericRepository<ShortcutLink>, GenericRepository<TResourcesDbContext, ShortcutLink>>();
+            services.AddTransient<IGenericRepository<ShortcutItem>, GenericRepository<TResourcesDbContext, ShortcutItem>>();
+
+            services.AddTransient<IGenericRepository<ViewShortcutItems>, GenericRepository<TResourcesDbContext, ViewShortcutItems>>();
             #endregion
 
 

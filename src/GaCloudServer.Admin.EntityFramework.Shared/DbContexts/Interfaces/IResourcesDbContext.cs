@@ -34,6 +34,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Vie
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -360,6 +362,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #region GaPrevisio
         DbSet<ViewGaPrevisioOdsReport> ViewGaPrevisioOdsReport { get; set; }
+        #endregion
+
+        #region Shortcut
+        DbSet<ShortcutLink> ShortcutLinks { get; set; }
+        DbSet<ShortcutItem> ShortcutItems { get; set; }
+
+        #region Views
+        DbSet<ViewShortcutItems> ViewShortcutItems { get; set; }
+        #endregion
+
         #endregion
     }
 }
