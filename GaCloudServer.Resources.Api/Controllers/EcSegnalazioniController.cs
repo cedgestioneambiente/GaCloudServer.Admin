@@ -3,12 +3,15 @@ using GaCloudServer.BusinnessLogic.DTOs.Resources.Segnalazioni;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.BusinnessLogic.Shared;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Dtos.Custom;
 using GaCloudServer.Resources.Api.Dtos.Segnalazioni;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using fh = GaCloudServer.BusinnessLogic.Helpers.FileHelper;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
+using GaCloudServer.BusinnessLogic.Dtos.Template;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -22,16 +25,19 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly IEcSegnalazioniService _ecSegnalazioniService;
         private readonly IFileService _fileService;
         private readonly ILogger<EcSegnalazioniController> _logger;
+        private readonly IPrintService _printService;
 
         public EcSegnalazioniController(
             IEcSegnalazioniService ecSegnalazioniService
             , IFileService fileService
-            , ILogger<EcSegnalazioniController> logger)
+            , ILogger<EcSegnalazioniController> logger
+            , IPrintService printService)
         {
 
             _ecSegnalazioniService = ecSegnalazioniService;
             _fileService = fileService;
             _logger = logger;
+            _printService = printService;
         }
 
 
@@ -309,127 +315,81 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
-        #region SegnalazioniAllegati
+        #region SegnalazioniDocumentiImmagini
 
-        //[HttpGet("GetEcSegnalazioniAllegatiByDocumentoId/{segnalazioniDocumentoId}")]
-        //public async Task<ActionResult<ApiResponse>> GetEcSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId)
-        //{
-        //    try
-        //    {
-        //        var dto = await _ecSegnalazioniService.GetEcSegnalazioniAllegatiByDocumentoIdAsync(segnalazioniDocumentoId);
-        //        var apiDto = dto.ToApiDto<SegnalazioniAllegatiApiDto, SegnalazioniAllegatiDto>();
-        //        return new ApiResponse(apiDto);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
+        [HttpGet("GetEcSegnalazioniDocumentiImmaginiByDocumentoId/{segnalazioniDocumentoId}")]
+        public async Task<ActionResult<ApiResponse>> GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId)
+        {
+            try
+            {
+                var dto = await _ecSegnalazioniService.GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(segnalazioniDocumentoId);
+                var apiDto = dto.ToApiDto<SegnalazioniDocumentiImmaginiApiDto, SegnalazioniDocumentiImmaginiDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
 
-        //}
+        }
 
-        //[HttpPost("AddEcSegnalazioniAllegatoAsync")]
-        //public async Task<ActionResult<ApiResponse>> AddEcSegnalazioniAllegatoAsync([FromForm] SegnalazioniAllegatoApiDto apiDto)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new ApiProblemDetailsException(ModelState);
-        //        }
-        //        string fileFolder = "GaCloud/SegnalazioniEc";
-        //        var dto = apiDto.ToDto<SegnalazioniAllegatoDto, SegnalazioniAllegatoApiDto>();
-        //        var response = await _ecSegnalazioniService.AddEcSegnalazioniAllegatoAsync(dto);
-        //        if (apiDto.uploadFile)
-        //        {
-        //            var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-        //            dto.Id = response;
-        //            dto.FileFolder = fileFolder;
-        //            dto.FileName = fileUploadResponse.fileName;
-        //            dto.FileSize = apiDto.File.Length.ToString();
-        //            dto.FileType = apiDto.File.ContentType;
-        //            dto.FileId = fileUploadResponse.id;
-        //            //var updateFileResponse = await _ecSegnalazioniService.UpdateEcSegnalazioniAllegatoAsync(dto);
-        //            return new ApiResponse("CreatedWithFile", response, code.Status201Created);
-        //        }
+        [HttpPost("AddEcSegnalazioniDocumentoImmagineAsync")]
+        public async Task<ActionResult<ApiResponse>> AddEcSegnalazioniDocumentoImmagineAsync([FromBody] ImageItemApiDto apiDto)
+        {
 
-        //        return new ApiResponse(response);
-        //    }
-        //    catch (ApiProblemDetailsException ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw ex;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex);
-        //    }
+            byte[] bytes = Convert.FromBase64String(apiDto.image.Replace("data:image/jpeg;base64,", ""));
+            MemoryStream stream = new MemoryStream(bytes);
 
-        //}
+            string fileFolder = string.Format("GaCloud/EcSegnalazioni/{0}", apiDto.id);
+            string generatedFileName = fh.GenerateFileName("image.jpg");
+            var fileUploadResponse = await _fileService.UploadStream(stream, fileFolder, generatedFileName);
+            await _ecSegnalazioniService.UpdateEcSegnalazionePhotoAsync(apiDto.id, fileUploadResponse.id);
 
-        //[HttpDelete("DeleteEcSegnalazioniAllegatoAsync/{id}/{fileId}")]
-        //public async Task<ActionResult<ApiResponse>> DeleteEcSegnalazioniAllegatoAsync(long id, string fileId)
-        //{
-        //    try
-        //    {
-        //        var response = await _ecSegnalazioniService.DeleteEcSegnalazioniAllegatoAsync(id);
-        //        if (response && fileId != null && fileId != "null" && fileId != "")
-        //        {
-        //            var deleteResponse = await _fileService.Remove(fileId);
-        //            if (deleteResponse)
-        //            {
-        //                return new ApiResponse("DeletedWithFile", response, code.Status200OK);
-        //            }
-        //            else
-        //            {
-        //                return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
-        //            }
-        //        }
+            var dto = new SegnalazioniDocumentoImmagineDto();
+            dto.Id = 0;
+            dto.SegnalazioniDocumentoId = apiDto.id;
+            dto.FileFolder = fileFolder;
+            dto.FileId = fileUploadResponse.id;
+            dto.FileName = generatedFileName;
+            dto.FileSize = fileUploadResponse.fileSize;
+            dto.FileType = "";
 
-        //        return new ApiResponse(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
+            var response = await _ecSegnalazioniService.AddEcSegnalazioniDocumentoImmagineAsync(dto);
 
-        //}
+            return new ApiResponse("CreatedWithFile", response, code.Status201Created);
 
-        //#region Functions
-        ////[HttpGet("ValidateEcSegnalazioniAllegatoAsync/{id}/{descrizione}")]
-        ////public async Task<ActionResult<ApiResponse>> ValidateEcSegnalazioniAllegatoAsync(long id, string descrizione)
-        ////{
-        ////    try
-        ////    {
-        ////        var response = await _ecSegnalazioniService.ValidateEcSegnalazioniAllegatoAsync(id, descrizione);
-        ////        return new ApiResponse(response);
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        _logger.LogError(ex.Message, ex);
-        ////        throw new ApiException(ex.Message);
-        ////    }
+        }
 
-        ////}
+        [HttpDelete("DeleteEcSegnalazioniDocumentoImmagineAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteEcSegnalazioniDocumentoImmagineAsync(long id, string fileId)
+        {
+            try
+            {
+                var response = await _ecSegnalazioniService.DeleteEcSegnalazioniDocumentoImmagineAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
-        ////[HttpGet("ChangeStatusEcSegnalazioniAllegatoAsync/{id}")]
-        ////public async Task<ActionResult<ApiResponse>> ChangeStatusEcSegnalazioniAllegatoAsync(long id)
-        ////{
-        ////    try
-        ////    {
-        ////        var response = await _ecSegnalazioniService.ChangeStatusEcSegnalazioniAllegatoAsync(id);
-        ////        return new ApiResponse(response);
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        _logger.LogError(ex.Message, ex);
-        ////        throw new ApiException(ex.Message);
-        ////    }
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
 
-        ////}
-        //#endregion
+        }
+
 
         #endregion
 
@@ -534,84 +494,88 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        //#region Functions
-        //[HttpGet("PrintEcSegnalazioneById/{id}")]
-        //public async Task<ApiResponse> PrintEcSegnalazioneById(long id)
-        //{
-        //    try
-        //    {
-        //        var segnalazione = await _ecSegnalazioniService.GetViewEcSegnalazioniDocumentoByIdAsync(id);
-        //        var segnalazioneAllegato = await _ecSegnalazioniService.GetEcSegnalazioneAllegatoBySegnalazioneIdAsync(id);
+        #region Functions
+        [HttpGet("PrintEcSegnalazioneById/{id}")]
+        public async Task<ActionResult<ApiResponse>> PrintEcSegnalazioneById(long id)
+        {
+            try
+            {
+                var view = await _ecSegnalazioniService.GetViewEcSegnalazioniDocumentoByIdAsync(id);
+                var immagini = await _ecSegnalazioniService.GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(id);
+                SegnalazioniDocumentoTemplateDto dto = new SegnalazioniDocumentoTemplateDto();
+                dto.FileName = "SegnalazioniDocumento.pdf";
+                dto.FilePath = @"Print/Segnalazione";
+                dto.Title = "Segnalazione";
+                dto.Css = "SegnalazioniDocumento";
 
-        //        string path = @"Report/Segnalazioni";
-        //        string fileName = "segnalazione.pdf";
-        //        string htmlContent = "";
+                //dto.Numero = view.Data.FirstOrDefault().Id.ToString();
+                //dto.Data = view.Data.FirstOrDefault().DataOra;
+                //dto.Note = view.Data.FirstOrDefault().Note;
+                //dto.User = view.Data.FirstOrDefault().User;
+                //dto.Tipo = view.Data.FirstOrDefault().Tipo;
 
-        //        string header =
-        //            "<div id='details' class='clearfix'>" +
-        //            "<div id='client'>" +
-        //            "<div class='to'>DETTAGLI:</div>" +
-        //            "<h2 class='name'>" + segnalazione.Tipo + "</h2>" +
-        //            "<div class='address'>" + segnalazione.User + "</div>" +
-        //            "</div>" +
-        //            "<div id='invoice' >" +
-        //            "<h1> SEGNALAZIONE N°: " + segnalazione.Id + "</h1>" +
-        //            "<div class='date'>Data: " + segnalazione.DataOra.ToString("dd/MM/yyyy HH:mm") + "</div>" +
-        //            "</div>" +
-        //            "</div>" +
-        //            "<div id='notes' class='clearfix'>" +
-        //            "<div id='notices'>" +
-        //            "<div> NOTE:</div>" +
-        //            "<h2 class='name'>" + segnalazione.Note + "</div>" +
-        //            "</div>" +
-        //            "<div id='notes' class='clearfix'>" +
-        //            "<div id='notices'>" +
-        //            "<div> Allegato:</div>" +
-        //            "</div>" +
-        //            "</div>";
+                dto.Immagini = (from x in immagini.Data
+                                select x.FileId).ToList();
 
-        //        string table = "<div id='photo'>";
-        //        int index = 1;
-        //        foreach (var itm in segnalazioneAllegato.Data)
-        //        {
-        //            table +=
-        //                "<div class='detail'>" +
-        //                "<img src='https://api-resources.gestioneambiente.net/api/Files/DownloadDirectByIdSharepoint?fileId=" + itm.FileId + "'>" +
-        //                "</div>";
-        //            index++;
-        //        }
-        //        table += "</div>";
+                var response = await _printService.Print("SegnalazioniDocumento", dto);
+                return new ApiResponse(response);
 
-
-        //        htmlContent = SegnalazioniTemplateGenerator.GetHTMLString(header, table);
-
-        //        var response = _fileService.UploadOnServerReport(fileName, path, htmlContent, "Segnalazione N°: " + segnalazione.Id, "Segnalazioni");
-        //        return new ApiResponse(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
-
-        //}
-        //#endregion
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+        #endregion
 
         #region Views
         [HttpGet("GetViewEcSegnalazioniDocumentiAsync/{mode}/{userId}")]
-        public async Task<ApiResponse> GetViewEcSegnalazioniAsync(int mode = 1, string userId = "ga-s-administrator")
+        public async Task<ApiResponse> GetViewEcSegnalazioniDocumentiAsync(int mode = 1, string userId = "ec-s-administrator")
         {
 
             var response = await _ecSegnalazioniService.GetViewEcSegnalazioniDocumentiAsync((SegnalazioniDocumentiMode)mode, userId);
             return new ApiResponse("GetView", response);
         }
 
+        [HttpGet("GetViewEcSegnalazioniDocumentiAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewEcSegnalazioniDocumentiAsync(bool all = true)
+        {
+            try
+            {
+                var view = await _ecSegnalazioniService.GetViewEcSegnalazioniDocumentiAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetViewEcSegnalazioniDocumentiAsync/{mode}/{userId}/{page}/{pageSize}")]
-        public async Task<ApiResponse> GetViewEcSegnalazioniAsync(int mode = 1, string userId = "ga-s-administrator", int page = 1, int pageSize = 100)
+        public async Task<ApiResponse> GetViewEcSegnalazioniDocumentiAsync(int mode = 1, string userId = "ec-s-administrator", int page = 1, int pageSize = 100)
         {
 
             var response = await _ecSegnalazioniService.GetViewEcSegnalazioniDocumentiAsync((SegnalazioniDocumentiMode)mode, userId, page, pageSize);
             return new ApiResponse("GetView", response);
+        }
+
+        [HttpGet("GetViewEcSegnalazioniDocumentoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetViewEcSegnalazioniDocumentoByIdAsync(long id)
+        {
+            try
+            {
+                var view = await _ecSegnalazioniService.GetViewEcSegnalazioniDocumentoByIdAsync(id);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
         }
         #endregion
 

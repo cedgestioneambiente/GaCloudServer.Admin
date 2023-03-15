@@ -13,7 +13,7 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         protected readonly IGenericRepository<EcSegnalazioniTipo> ecSegnalazioniTipiRepo;
         protected readonly IGenericRepository<EcSegnalazioniStato> ecSegnalazioniStatiRepo;
-        protected readonly IGenericRepository<EcSegnalazioniAllegato> ecSegnalazioniAllegatiRepo;
+        protected readonly IGenericRepository<EcSegnalazioniDocumentoImmagine> ecSegnalazioniDocumentiImmaginiRepo;
         protected readonly IGenericRepository<EcSegnalazioniDocumento> ecSegnalazioniDocumentiRepo;
 
         protected readonly IGenericRepository<ViewEcSegnalazioniDocumenti> viewEcSegnalazioniDocumentiRepo;
@@ -23,7 +23,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public EcSegnalazioniService(
             IGenericRepository<EcSegnalazioniTipo> ecSegnalazioniTipiRepo,
             IGenericRepository<EcSegnalazioniStato> ecSegnalazioniStatiRepo,
-            IGenericRepository<EcSegnalazioniAllegato> ecSegnalazioniAllegatiRepo,
+            IGenericRepository<EcSegnalazioniDocumentoImmagine> ecSegnalazioniDocumentiImmaginiRepo,
             IGenericRepository<EcSegnalazioniDocumento> ecSegnalazioniDocumentiRepo,
 
             IGenericRepository<ViewEcSegnalazioniDocumenti> viewEcSegnalazioniDocumentiRepo,
@@ -32,7 +32,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             this.ecSegnalazioniTipiRepo = ecSegnalazioniTipiRepo;
             this.ecSegnalazioniStatiRepo = ecSegnalazioniStatiRepo;
-            this.ecSegnalazioniAllegatiRepo = ecSegnalazioniAllegatiRepo;
+            this.ecSegnalazioniDocumentiImmaginiRepo = ecSegnalazioniDocumentiImmaginiRepo;
             this.ecSegnalazioniDocumentiRepo = ecSegnalazioniDocumentiRepo;
 
             this.viewEcSegnalazioniDocumentiRepo = viewEcSegnalazioniDocumentiRepo;
@@ -200,52 +200,52 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-        #region SegnalazioniAllegati
-        //public async Task<EcSegnalazioniAllegatiDto> GetEcSegnalazioniAllegatiAsync(int page = 1, int pageSize = 0)
+        #region SegnalazioniDocumentiImmagini
+        //public async Task<SegnalazioniAllegatiDto> GetGaSegnalazioniAllegatiAsync(int page = 1, int pageSize = 0)
         //{
-        //    var entities = await ecSegnalazioniAllegatiRepo.GetAllAsync(page, pageSize);
+        //    var entities = await gaSegnalazioniAllegatiRepo.GetAllAsync(page, pageSize);
         //    var dtos = entities.ToDto<SegnalazioniAllegatiDto, PagedList<SegnalazioniAllegato>>();
         //    return dtos;
         //}
 
-        //public async Task<SegnalazioniAllegatiDto> GetEcSegnalazioniAllegatiByDocumentoIdAsync(long segnalazioniDocumentoId)
-        //{
-        //    var entity = await ecSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
-        //    var dto = entity.ToDto<SegnalazioniAllegatiDto, PagedList<EcSegnalazioniAllegato>>();
-        //    return dto;
-        //}
+        public async Task<SegnalazioniDocumentiImmaginiDto> GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId)
+        {
+            var entity = await ecSegnalazioniDocumentiImmaginiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
+            var dto = entity.ToDto<SegnalazioniDocumentiImmaginiDto, PagedList<EcSegnalazioniDocumentoImmagine>>();
+            return dto;
+        }
 
-        //public async Task<long> AddEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
+        public async Task<long> AddEcSegnalazioniDocumentoImmagineAsync(SegnalazioniDocumentoImmagineDto dto)
+        {
+            var entity = dto.ToEntity<EcSegnalazioniDocumentoImmagine, SegnalazioniDocumentoImmagineDto>();
+            await ecSegnalazioniDocumentiImmaginiRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        //public async Task<long> UpdateGaSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
         //{
-        //    var entity = dto.ToEntity<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>();
-        //    await ecSegnalazioniAllegatiRepo.AddAsync(entity);
+        //    var entity = dto.ToEntity<SegnalazioniAllegato, SegnalazioniAllegatoDto>();
+        //    gaSegnalazioniAllegatiRepo.Update(entity);
         //    await SaveChanges();
+
         //    return entity.Id;
+
         //}
 
-        ////public async Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto)
-        ////{
-        ////    var entity = dto.ToEntity<EcSegnalazioniAllegato, SegnalazioniAllegatoDto>();
-        ////    ecSegnalazioniAllegatiRepo.Update(entity);
-        ////    await SaveChanges();
+        public async Task<bool> DeleteEcSegnalazioniDocumentoImmagineAsync(long id)
+        {
+            var entity = await ecSegnalazioniDocumentiImmaginiRepo.GetByIdAsync(id);
+            ecSegnalazioniDocumentiImmaginiRepo.Remove(entity);
+            await SaveChanges();
 
-        ////    return entity.Id;
-
-        ////}
-
-        //public async Task<bool> DeleteEcSegnalazioniAllegatoAsync(long id)
-        //{
-        //    var entity = await ecSegnalazioniAllegatiRepo.GetByIdAsync(id);
-        //    ecSegnalazioniAllegatiRepo.Remove(entity);
-        //    await SaveChanges();
-
-        //    return true;
-        //}
+            return true;
+        }
 
         //#region Functions
-        //public async Task<bool> ValidateEcSegnalazioniAllegatoAsync(long id, string descrizione)
+        //public async Task<bool> ValidateGaSegnalazioniAllegatoAsync(long id, string descrizione)
         //{
-        //    var entity = await ecSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+        //    var entity = await gaSegnalazioniAllegatiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
 
         //    if (entity.Data.Count > 0)
         //    {
@@ -257,20 +257,20 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    }
         //}
 
-        //public async Task<bool> ChangeStatusEcSegnalazioniAllegatoAsync(long id)
+        //public async Task<bool> ChangeStatusGaSegnalazioniAllegatoAsync(long id)
         //{
-        //    var entity = await ecSegnalazioniAllegatiRepo.GetByIdAsync(id);
+        //    var entity = await gaSegnalazioniAllegatiRepo.GetByIdAsync(id);
         //    if (entity.Disabled)
         //    {
         //        entity.Disabled = false;
-        //        ecSegnalazioniAllegatiRepo.Update(entity);
+        //        gaSegnalazioniAllegatiRepo.Update(entity);
         //        await SaveChanges();
         //        return true;
         //    }
         //    else
         //    {
         //        entity.Disabled = true;
-        //        ecSegnalazioniAllegatiRepo.Update(entity);
+        //        gaSegnalazioniAllegatiRepo.Update(entity);
         //        await SaveChanges();
         //        return true;
         //    }
@@ -342,7 +342,14 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             return entity;
         }
-        public async Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ga-s-administrator")
+
+        public async Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(bool all = true)
+        {
+            var entities = all ? await viewEcSegnalazioniDocumentiRepo.GetAllAsync(1, 0) : await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Disabled == false);
+            return entities;
+        }
+
+        public async Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ec-s-administrator")
         {
             try
             {
@@ -350,25 +357,25 @@ namespace GaCloudServer.BusinnessLogic.Services
                 switch (mode)
                 {
                     case SegnalazioniDocumentiMode.All:
-                        entities = userId == "ga-s-administrator" ?
+                        entities = userId == "ec-s-administrator" ?
                          await viewEcSegnalazioniDocumentiRepo.GetAllAsync(1, 0, "DataOra", "OrderByDescending")
                         :
                         await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.UserId == userId, 1, 0, "DataOra", "OrderByDescending");
                         break;
                     case SegnalazioniDocumentiMode.OnlyEnabled:
-                        entities = userId == "ga-s-administrator" ?
+                        entities = userId == "ec-s-administrator" ?
                          await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Disabled == false, 1, 0, "DataOra", "OrderByDescending")
                         :
                         await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.UserId == userId && x.Disabled == false, 1, 0, "DataOra", "OrderByDescending");
                         break;
                     case SegnalazioniDocumentiMode.OnlyOpen:
-                        entities = userId == "ga-s-administrator" ?
+                        entities = userId == "ec-s-administrator" ?
                          await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Disabled == false && (x.StatoId == 1 || x.StatoId == 2), 1, 0, "DataOra", "OrderByDescending")
                         :
                         await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.UserId == userId && x.Disabled == false && (x.StatoId == 1 || x.StatoId == 2), 1, 0, "DataOra", "OrderByDescending");
                         break;
                     case SegnalazioniDocumentiMode.OnlyClosed:
-                        entities = userId == "ga-s-administrator" ?
+                        entities = userId == "ec-s-administrator" ?
                          await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Disabled == false && (x.StatoId == 3), 1, 0, "DataOra", "OrderByDescending")
                         :
                         await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.UserId == userId && x.Disabled == false && (x.StatoId == 3), 1, 0, "DataOra", "OrderByDescending");
@@ -385,7 +392,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 throw;
             }
         }
-        public async Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ga-s-administrator", int page = 1, int pageSize = 100)
+        public async Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ec-s-administrator", int page = 1, int pageSize = 100)
         {
             try
             {
@@ -393,25 +400,25 @@ namespace GaCloudServer.BusinnessLogic.Services
                 switch (mode)
                 {
                     case SegnalazioniDocumentiMode.All:
-                        entities = userId == "ga-s-administrator" ?
+                        entities = userId == "ec-s-administrator" ?
                          await viewEcSegnalazioniDocumentiRepo.GetAllAsync(page, pageSize, "DataOra", "OrderByDescending")
                         :
                         await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.UserId == userId, page, pageSize, "DataOra", "OrderByDescending");
                         break;
                     case SegnalazioniDocumentiMode.OnlyEnabled:
-                        entities = userId == "ga-s-administrator" ?
+                        entities = userId == "ec-s-administrator" ?
                          await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Disabled == false, page, pageSize, "DataOra", "OrderByDescending")
                         :
                         await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.UserId == userId && x.Disabled == false, page, pageSize, "DataOra", "OrderByDescending");
                         break;
                     case SegnalazioniDocumentiMode.OnlyOpen:
-                        entities = userId == "ga-s-administrator" ?
+                        entities = userId == "ec-s-administrator" ?
                          await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Disabled == false && (x.StatoId == 1 || x.StatoId == 2), page, pageSize, "DataOra", "OrderByDescending")
                         :
                         await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.UserId == userId && x.Disabled == false && (x.StatoId == 1 || x.StatoId == 2), page, pageSize, "DataOra", "OrderByDescending");
                         break;
                     case SegnalazioniDocumentiMode.OnlyClosed:
-                        entities = userId == "ga-s-administrator" ?
+                        entities = userId == "ec-s-administrator" ?
                          await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Disabled == false && (x.StatoId == 3), page, pageSize, "DataOra", "OrderByDescending")
                         :
                         await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.UserId == userId && x.Disabled == false && (x.StatoId == 3), page, pageSize, "DataOra", "OrderByDescending");

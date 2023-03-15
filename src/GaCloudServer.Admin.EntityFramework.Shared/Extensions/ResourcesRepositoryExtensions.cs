@@ -277,7 +277,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region EcSegnalazioni
             services.AddTransient<IGenericRepository<EcSegnalazioniTipo>, GenericRepository<TResourcesDbContext, EcSegnalazioniTipo>>();
             services.AddTransient<IGenericRepository<EcSegnalazioniStato>, GenericRepository<TResourcesDbContext, EcSegnalazioniStato>>();
-            services.AddTransient<IGenericRepository<EcSegnalazioniAllegato>, GenericRepository<TResourcesDbContext, EcSegnalazioniAllegato>>();
+            services.AddTransient<IGenericRepository<EcSegnalazioniDocumentoImmagine>, GenericRepository<TResourcesDbContext, EcSegnalazioniDocumentoImmagine>>();
             services.AddTransient<IGenericRepository<EcSegnalazioniDocumento>, GenericRepository<TResourcesDbContext, EcSegnalazioniDocumento>>();
 
             //Views
