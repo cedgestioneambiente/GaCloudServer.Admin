@@ -7,6 +7,7 @@ using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Models;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using static GaCloudServer.BusinnessLogic.Extensions.MiscExtensions;
 
@@ -330,13 +331,19 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<PagedList<ViewGaPresenzeRichiesteRisorse>> GetViewGaPresenzeRichiesteRisorseBySettoreIdAsync(long globalSettoreId)
         {
-            var view = await viewGaPresenzeRichiesteRisorseRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId);
+            var view = await viewGaPresenzeRichiesteRisorseRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId && x.Disabled==false);
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaPresenzeRichiesteRisorse>> GetViewGaPresenzeRichiesteRisorseBySettoreIdAndDipendenteAsync(long globalSettoreId,string dipendente)
+        {
+            var view = await viewGaPresenzeRichiesteRisorseRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId && x.Disabled == false && EF.Functions.Like(x.title,dipendente.toWildcardString()));
             return view;
         }
 
         public async Task<PagedList<ViewGaPresenzeRichiesteEventi>> GetViewGaPresenzeRichiesteEventiBySettoreIdAsync(long globalSettoreId)
         {
-            var view = await viewGaPresenzeRichiesteEventiRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId);
+            var view = await viewGaPresenzeRichiesteEventiRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId && x.Disabled==false);
             return view;
         }
         #endregion

@@ -45,7 +45,7 @@ GO
 CREATE VIEW [dbo].[ViewGaPresenzeRichieste]
 AS
 SELECT        dbo.GaPresenzeRichieste.Id, dbo.GaPresenzeRichieste.DataInizio AS Start, dbo.GaPresenzeRichieste.DataFine AS [End], dbo.ViewGaPresenzeDipendenti.CognomeNome AS Title, dbo.ViewGaPresenzeDipendenti.SettoreId, 
-                         dbo.ViewGaPresenzeDipendenti.Settore, CASE WHEN PresenzeStatoRichiestaId = '1' THEN '#4caf50' WHEN PresenzeStatoRichiestaId = '2' THEN '#ff9800' WHEN PresenzeStatoRichiestaId = '3' THEN '#f44336' END AS Color, 
+                         dbo.ViewGaPresenzeDipendenti.Settore, CASE WHEN PresenzeStatoRichiestaId = '1' THEN '#ff9800' WHEN PresenzeStatoRichiestaId = '2' THEN '#4caf50' WHEN PresenzeStatoRichiestaId = '3' THEN '#f44336' END AS Color, 
                          dbo.ViewGaPresenzeDipendenti.UserId, CAST(0 AS BIT) AS Disabled
 FROM            dbo.GaPresenzeRichieste INNER JOIN
                          dbo.ViewGaPresenzeDipendenti ON dbo.GaPresenzeRichieste.PresenzeDipendenteId = dbo.ViewGaPresenzeDipendenti.Id
