@@ -21,7 +21,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Shortcuts
         public class ShortcutItemApiDto : GenericDto
         {
             public string Label { get; set; }
-            public string Description { get; set; }
+            public string? Description { get; set; }
             public string Icon { get; set; }
             public long ShortcutLinkId { get; set; }
             public bool UseRouter { get; set; }

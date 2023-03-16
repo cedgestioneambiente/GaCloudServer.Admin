@@ -449,6 +449,24 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetViewGaPresenzeRichiesteRisorseBySettoreIdAndDipendenteAsync/{globalSettoreId}/{dipendente}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeRichiesteRisorseBySettoreIdAndDipendenteAsync(long globalSettoreId,string dipendente)
+        {
+            try
+            {
+                GetGaViewPresenzeRichiesteRisorseBySettoreIdAndDipendenteAsync
+                GetViewGaPresenzeRichiesteRisorseBySettoreIdAndDipendenteAsync
+                var view = await _gaPresenzeService.GetViewGaPresenzeRichiesteRisorseBySettoreIdAndDipendenteAsync(globalSettoreId,dipendente);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetViewGaPresenzeRichiesteEventiBySettoreIdAsync/{globalSettoreId}")]
         public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeRichiesteEventiBySettoreIdAsync(long globalSettoreId)
         {

@@ -46,8 +46,23 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<ShortcutLinksDto> GetShortcutLinksByRolesAsync(string roles)
         {
             var masterSet=new HashSet<string>(roles.Split(","));
-            var entities = await shortcutLinksRepo.GetWithFilterAsync(x => x.Roles.Split(',', StringSplitOptions.None).Intersect(roles.Split(',', StringSplitOptions.None)).Any());
-            var dtos = entities.ToDto<ShortcutLinksDto, PagedList<ShortcutLink>>();
+            string[] keyword = roles.Split(new char[] { ',' });
+
+            string[] rolesArray = roles.Split(",");
+            var links = await shortcutLinksRepo.GetWithFilterAsync(x => x.Disabled==false);
+
+            ShortcutLinksDto dtos = new ShortcutLinksDto();
+            List<ShortcutLinkDto> list = new List<ShortcutLinkDto>();
+            foreach (var itm in links.Data)
+            {
+                if (itm.Roles.Split(",").Any(x => keyword.Contains(x)))
+                {
+                    list.Add(itm.ToDto<ShortcutLinkDto,ShortcutLink>());
+                }
+            }
+            dtos.Data.AddRange(list);
+            dtos.TotalCount = list.Count;
+            dtos.PageSize = 0;
             return dtos;
         }
 
@@ -118,6 +133,58 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
             
+        }
+        #endregion
+
+        #endregion
+
+        #region ShortcutItems
+        public async Task<ShortcutItemsDto> GetShortcutItemsAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await shortcutItemsRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ShortcutItemsDto, PagedList<ShortcutItem>>();
+            return dtos;
+        }
+
+        public async Task<ShortcutItemDto> GetShortcutItemByIdAsync(long id)
+        {
+            var entity = await shortcutItemsRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ShortcutItemDto, ShortcutItem>();
+            return dto;
+        }
+
+        public async Task<long> AddShortcutItemAsync(ShortcutItemDto dto)
+        {
+            var entity = dto.ToEntity<ShortcutItem, ShortcutItemDto>();
+            await shortcutItemsRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateShortcutItemAsync(ShortcutItemDto dto)
+        {
+            var entity = dto.ToEntity<ShortcutItem, ShortcutItemDto>();
+            shortcutItemsRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteShortcutItemAsync(long id)
+        {
+            var entity = await shortcutItemsRepo.GetByIdAsync(id);
+            shortcutItemsRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Views
+        public async Task<PagedList<ViewShortcutItems>> GetViewShortcutByUserIdAsync(string userId)
+        {
+            var view = await viewShortcutItemsRepo.GetWithFilterAsync(x=>x.UserId==userId);
+            return view;
         }
         #endregion
 

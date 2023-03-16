@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.Shortcuts;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Shortcuts;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
@@ -17,6 +19,22 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateShortcutLinkAsync(long id, string link);
         Task<bool> ChangeStatusShortcutLinkAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region ShortcutItems
+        Task<ShortcutItemsDto> GetShortcutItemsAsync(int page = 1, int pageSize = 0);
+        Task<ShortcutItemDto> GetShortcutItemByIdAsync(long id);
+
+        Task<long> AddShortcutItemAsync(ShortcutItemDto dto);
+        Task<long> UpdateShortcutItemAsync(ShortcutItemDto dto);
+
+        Task<bool> DeleteShortcutItemAsync(long id);
+
+
+        #region Views
+        Task<PagedList<ViewShortcutItems>> GetViewShortcutByUserIdAsync(string userId);
         #endregion
 
         #endregion
