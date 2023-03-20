@@ -454,6 +454,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
+
                 var view = await _gaPresenzeService.GetViewGaPresenzeRichiesteRisorseBySettoreIdAndDipendenteAsync(globalSettoreId,dipendente);
                 return new ApiResponse(view);
             }
