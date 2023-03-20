@@ -28,6 +28,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
@@ -366,6 +368,20 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             services.AddTransient<IGenericRepository<ViewShortcutItems>, GenericRepository<TResourcesDbContext, ViewShortcutItems>>();
             #endregion
+
+            //QueryBuilder
+            #region QueryBuilder
+            services.AddTransient<IGenericRepository<QueryBuilderParamType>,GenericRepository<TResourcesDbContext,QueryBuilderParamType>>();
+            services.AddTransient<IGenericRepository<QueryBuilderSection>,GenericRepository<TResourcesDbContext,QueryBuilderSection>>();
+            services.AddTransient<IGenericRepository<QueryBuilderParamOnScript>,GenericRepository<TResourcesDbContext,QueryBuilderParamOnScript>>();
+            services.AddTransient<IGenericRepository<QueryBuilderScript>,GenericRepository<TResourcesDbContext,QueryBuilderScript>>();
+
+            services.AddTransient<IGenericRepository<ViewQueryBuilderParamOnScripts>, GenericRepository<TResourcesDbContext, ViewQueryBuilderParamOnScripts>>();
+            services.AddTransient<IGenericRepository<ViewQueryBuilderScripts>, GenericRepository<TResourcesDbContext, ViewQueryBuilderScripts>>();
+
+            services.AddTransient<IQueryManager, QueryManager<TResourcesDbContext>>();
+            #endregion
+
 
 
             return services; 

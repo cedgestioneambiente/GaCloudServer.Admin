@@ -123,5 +123,10 @@
         public const string CREATE_ViewShortcuts = "CREATE_ViewShortcuts.sql";
         public const string DROP_ViewShortcuts = "DROP_ViewShortcuts.sql";
 
+        //QueryBuilder
+        public const string QueryBuilder = @".\Scripts\QueryBuilder\";
+        public const string CREATE_ViewQueryBuilder = "CREATE_ViewQueryBuilder.sql";
+        public const string DROP_ViewQueryBuilder = "DROP_ViewQueryBuilder.sql";
+
     }
 }

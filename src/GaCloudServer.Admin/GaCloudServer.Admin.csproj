@@ -203,6 +203,12 @@
 	  <None Update="Scripts\Previsio\DROP_ViewGaPrevisio.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\QueryBuilder\CREATE_ViewQueryBuilder.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\QueryBuilder\DROP_ViewQueryBuilder.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Recapiti\CREATE_ViewGaRecapiti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

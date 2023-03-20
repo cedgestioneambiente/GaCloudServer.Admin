@@ -23,9 +23,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<AutorizzazioniDocumento> gaAutorizzazioniDocumentiRepo,
             IGenericRepository<AutorizzazioniAllegato> gaAutorizzazioniAllegatiRepo,
 
-            IGenericRepository<ViewGaAutorizzazioniDocumenti> viewGaAutorizzazioniDocumentiRepo,
+            IGenericRepository<ViewGaAutorizzazioniDocumenti> viewGaAutorizzazioniDocumentiRepo
 
-            IUnitOfWork unitOfWork)
+            )
         {
             this.gaAutorizzazioniTipiRepo = gaAutorizzazioniTipiRepo;
             this.gaAutorizzazioniDocumentiRepo = gaAutorizzazioniDocumentiRepo;

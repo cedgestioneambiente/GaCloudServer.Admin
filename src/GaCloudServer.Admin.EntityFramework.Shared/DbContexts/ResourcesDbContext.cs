@@ -37,6 +37,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -373,6 +375,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region Views
         public DbSet<ViewShortcutItems> ViewShortcutItems { get; set; }
+        #endregion
+        #endregion
+
+        #region QueryBuilder
+        public DbSet<QueryBuilderParamType> QueryBuilderParamTypes { get; set; }
+        public DbSet<QueryBuilderSection> QueryBuilderSections { get; set; }
+        public DbSet<QueryBuilderParamOnScript> QueryBuilderParamOnScripts { get; set; }
+        public DbSet<QueryBuilderScript> QueryBuilderScripts { get; set; }
+
+        #region Views
+        public DbSet<ViewQueryBuilderParamOnScripts> ViewQueryBuilderParamOnScripts { get; set; }
+        public DbSet<ViewQueryBuilderScripts> ViewQueryBuilderScripts { get; set; }
         #endregion
         #endregion
 
@@ -1017,6 +1031,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 entity
                 .ToView(nameof(ViewShortcutItems))
                 .HasKey(x=>x.Id);
+            });
+            #endregion
+
+            #region QueryBuilder
+            builder.Entity<ViewQueryBuilderParamOnScripts>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewQueryBuilderParamOnScripts))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewQueryBuilderScripts>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewQueryBuilderScripts))
+                .HasKey(x => x.Id);
             });
             #endregion
 

@@ -1,4 +1,6 @@
-﻿using OfficeOpenXml;
+﻿using AutoWrapper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
@@ -39,6 +41,35 @@ namespace GaCloudServer.Resources.Api.Helpers
                 dataTable.Rows.Add(values);
             }
             return dataTable;
+        }
+
+        public static DataTable ListObjectToDataTable(List<object> data)
+        {
+            // Create a new DataTable
+            DataTable dataTable = new DataTable();
+
+            // Get the properties of the first object in the list
+            var properties = ((IDictionary<string, object>)data.First()).Keys;
+
+            // Add columns to the DataTable for each property
+            foreach (var property in properties)
+            {
+                dataTable.Columns.Add(property);
+            }
+
+            // Add rows to the DataTable for each object in the list
+            foreach (var dynamicObject in data)
+            {
+                var row = dataTable.NewRow();
+                foreach (var property in properties)
+                {
+                    row[property] = ((IDictionary<string, object>)dynamicObject)[property];
+                }
+                dataTable.Rows.Add(row);
+            }
+
+            return dataTable;
+
         }
 
         public static byte[] ExportExcel(DataTable dataTable, string heading = "", string extra1 = "", string extra2 = "", string type = "", bool showSrNo = false, params string[] columnsToTake)
@@ -182,6 +213,11 @@ namespace GaCloudServer.Resources.Api.Helpers
         public static byte[] ExportExcel<T>(List<T> data, string Heading = "", string extra1 = "", string extra2 = "", string type = "", bool showSlno = false, params string[] ColumnsToTake)
         {
             return ExportExcel(ListToDataTable<T>(data), Heading, extra1, extra2, type, showSlno, ColumnsToTake);
+        }
+
+        public static byte[] ExportObjectExcel(List<object> data, string Heading = "", string extra1 = "", string extra2 = "", string type = "", bool showSlno = false, params string[] ColumnsToTake)
+        {
+            return ExportExcel(ListObjectToDataTable(data), Heading, extra1, extra2, type, showSlno, ColumnsToTake);
         }
 
     }
