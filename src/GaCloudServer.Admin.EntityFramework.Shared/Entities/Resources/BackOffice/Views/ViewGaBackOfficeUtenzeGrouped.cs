@@ -7,6 +7,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffi
         public string CodAzi { get; set; }
         public string CodFis { get; set; }
         public string NumCon { get; set; }
+        public string Prg { get; set; }
         public string CodCom { get; set; }
         public string Partita { get; set; }
         public string RagCli { get; set; }
