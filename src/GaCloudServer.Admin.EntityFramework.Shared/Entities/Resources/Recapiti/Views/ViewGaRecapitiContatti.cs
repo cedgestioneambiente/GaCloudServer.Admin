@@ -12,6 +12,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti
         public bool ShowEmailInContacts { get; set; }
         public bool ShowInContacts { get; set; }
         public string Email { get; set; }
+        public string UserId { get; set; }
 
     }
 }

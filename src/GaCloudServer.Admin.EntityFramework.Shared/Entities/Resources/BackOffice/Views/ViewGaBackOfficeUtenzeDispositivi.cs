@@ -10,7 +10,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffi
         public string TipCon { get; set; }
         public string DesCon { get; set; }
         public string TipMat { get; set; }
-        public double Lt { get; set; }
+        public double? Lt { get; set; }
         public string DtCon { get; set; }
         public string DtRit { get; set; }
         public string Partita { get; set; }
