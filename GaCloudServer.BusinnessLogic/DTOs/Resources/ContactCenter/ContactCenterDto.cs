@@ -125,6 +125,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
         public string Note2 { get; set; }
         public string Note3 { get; set; }
         public bool Reclamo { get; set; }
+        public string? Prg { get; set; }
     }
 
     public class ContactCenterTicketsDto : GenericPagedListDto<ContactCenterTicketDto>

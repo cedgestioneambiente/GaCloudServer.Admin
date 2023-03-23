@@ -1005,6 +1005,38 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
+        public PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsByCantiereQueryable(GridOperationsModel filterParams,long cantiereId)
+        {
+
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+                if (cantiereId == 0)
+                {
+                    var filterResult = viewGaContactCenterTicketsRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewGaContactCenterTicketsRepo.GetWithFilterQueryableV2WithQuickFilter(x=>x.CantiereId==cantiereId, filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+            }
+            else
+            {
+                if (cantiereId == 0)
+                {
+                    var filterResult = viewGaContactCenterTicketsRepo.GetAllQueryableV2(filterParams);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewGaContactCenterTicketsRepo.GetWithFilterQueryableV2(x=>x.CantiereId==cantiereId, filterParams);
+                    return filterResult;
+                }
+            }
+
+        }
+
         public List<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams)
         {
                 if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))

@@ -12,6 +12,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public string CfPiva { get; set; }
         public string Comune { get; set; }
         public string Cantiere { get; set; }
+        public long CantiereId { get; set; }
         public string Stato { get; set; }
         public string Provenienza { get; set; }
         public string TipoTicket { get; set; }

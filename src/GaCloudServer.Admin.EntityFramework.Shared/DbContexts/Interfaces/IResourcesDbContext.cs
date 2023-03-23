@@ -38,6 +38,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -385,6 +387,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Views
         DbSet<ViewQueryBuilderParamOnScripts> ViewQueryBuilderParamOnScripts { get; set; }
         DbSet<ViewQueryBuilderScripts> ViewQueryBuilderScripts { get; set; }
+        #endregion
+        #endregion
+
+        #region Dashboard
+        DbSet<DashboardType> DashboardTypes { get; set; }
+        DbSet<DashboardSection> DashboardSections { get; set; }
+        DbSet<DashboardItem> DashboardItems { get; set; }
+        DbSet<DashboardStore> DashboardStores { get; set; }
+
+        #region Views
+        DbSet<ViewDashboardItems> ViewDashboardItems { get; set; }
+        DbSet<ViewDashboardStores> ViewDashboardStores { get; set; }
         #endregion
         #endregion
     }

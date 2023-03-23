@@ -18,7 +18,7 @@ CREATE VIEW [dbo].[ViewGaContactCenterTickets]
 AS
 SELECT        GaContactCenterTickets.Id, PrivateViewIdentityServerAdminUserList.FullName AS Richiedente, 
                          CASE WHEN GaContactCenterComuni.CodAzi = 'C00' THEN GaContactCenterTickets.ComuneAltro ELSE GaContactCenterComuni.Descrizione END AS Comune, GaContactCenterTickets.Utente AS RagioneSociale, 
-                         GaContactCenterTickets.NumCon, GaContactCenterTickets.Partita, GaContactCenterTickets.CfPiva, GaAziendeListe.DescrizioneBreve AS Cantiere, GaContactCenterStatiRichieste.Descrizione AS Stato, 
+                         GaContactCenterTickets.NumCon, GaContactCenterTickets.Partita, GaContactCenterTickets.CfPiva, GaAziendeListe.DescrizioneBreve AS Cantiere,GaAziendeListe.Id AS CantiereId, GaContactCenterStatiRichieste.Descrizione AS Stato, 
                          GaContactCenterProvenienze.Descrizione AS Provenienza, GaContactCenterTipiRichieste.Descrizione AS TipoTicket, CONCAT(GaContactCenterTickets.Via, ', ', GaContactCenterTickets.NumCiv)  AS Indirizzo, 
                          GaContactCenterTickets.Zona, GaContactCenterTickets.DataTicket, GaContactCenterTickets.EseguitoIl, GaContactCenterTickets.DataEsecuzione, GaContactCenterTickets.Materiali, GaContactCenterTickets.Promemoria, 
                          GaContactCenterTickets.Inviato, GaContactCenterTickets.Note1, GaContactCenterTickets.Note2, GaContactCenterTickets.Reclamo, GaContactCenterTickets.Stampato, GaContactCenterTickets.DaFatturare, 

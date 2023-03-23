@@ -62,7 +62,7 @@ CREATE VIEW [dbo].[ViewGaBackOfficeUtenzeGrouped]
 
 AS
 
-SELECT        CAST(0 AS BIGINT) AS Id,CODAZI CodAzi, CODFIS CodFis, NUMCON NumCon, CODCOM CodCom,PARTITA Partita,CPROWNUM Prg, RAGCLI RagCli, COMUNE Comune, DESVIA DesVia, CIVICO Civico, CODZONA CodZona, DESCRI Descri,DOMEST Domest, Categ,Destar,CAST('false' AS bit) AS Disabled
+SELECT        CAST(0 AS BIGINT) AS Id,CODAZI CodAzi, CODFIS CodFis, NUMCON NumCon, CODCOM CodCom,PARTITA Partita,cast(CPROWNUM as varchar) Prg, RAGCLI RagCli, COMUNE Comune, DESVIA DesVia, CIVICO Civico, CODZONA CodZona, DESCRI Descri,DOMEST Domest, Categ,Destar,CAST('false' AS bit) AS Disabled
 FROM            [20.82.75.6].TARI.dbo.UTENTI_LIST
 group by CODAZI, CODFIS, NUMCON, CODCOM, PARTITA, CPROWNUM,RAGCLI, COMUNE, DESVIA, CIVICO, CODZONA, DESCRI,DOMEST,Categ,Destar
 GO

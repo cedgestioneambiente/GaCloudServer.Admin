@@ -6,6 +6,7 @@ using GaCloudServer.Resources.Api.Mappers.Comunicati;
 using GaCloudServer.Resources.Api.Mappers.ContactCenter;
 using GaCloudServer.Resources.Api.Mappers.Contratti;
 using GaCloudServer.Resources.Api.Mappers.Csr;
+using GaCloudServer.Resources.Api.Mappers.Dashboard;
 using GaCloudServer.Resources.Api.Mappers.Global;
 using GaCloudServer.Resources.Api.Mappers.Mezzi;
 using GaCloudServer.Resources.Api.Mappers.Notification;
@@ -42,7 +43,8 @@ namespace GaCloudServer.Resources.Api.Mappers
             new ContactCenterMapperProfile(),
             new PresenzeMapperProfile(),
             new ShortcutsMapperProfile(),
-            new QueryBuilderMapperProfile()
+            new QueryBuilderMapperProfile(),
+            new DashboardMapperProfile()
         };
 
         static GenericMapper() {

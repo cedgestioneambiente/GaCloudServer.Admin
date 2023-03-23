@@ -34,7 +34,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces
 
         PagedList<TEntity> GetAllQueryable(GridOperationsModel filterParams);
         PagedList<TEntity> GetAllQueryableV2(GridOperationsModel filterParams);
+        PagedList<TEntity> GetWithFilterQueryableV2(Expression<Func<TEntity, bool>> predicate, GridOperationsModel filterParams);
         PagedList<TEntity> GetAllQueryableV2WithQuickFilter(GridOperationsModel filterParams, string quickFilter);
+        PagedList<TEntity> GetWithFilterQueryableV2WithQuickFilter(Expression<Func<TEntity, bool>> predicate, GridOperationsModel filterParams, string quickFilter);
 
         PagedList<TEntity> GetAllQueryableV2NoSkip(GridOperationsModel filterParams);
         PagedList<TEntity> GetAllQueryableV2WithQuickFilterNoSkip(GridOperationsModel filterParams, string quickFilter);

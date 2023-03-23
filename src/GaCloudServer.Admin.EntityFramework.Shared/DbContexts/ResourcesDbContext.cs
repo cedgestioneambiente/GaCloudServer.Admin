@@ -39,6 +39,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -387,6 +389,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Views
         public DbSet<ViewQueryBuilderParamOnScripts> ViewQueryBuilderParamOnScripts { get; set; }
         public DbSet<ViewQueryBuilderScripts> ViewQueryBuilderScripts { get; set; }
+        #endregion
+        #endregion
+
+        #region Dashboard
+        public DbSet<DashboardType> DashboardTypes { get; set; }
+        public DbSet<DashboardSection> DashboardSections { get; set; }
+        public DbSet<DashboardItem> DashboardItems { get; set; }
+        public DbSet<DashboardStore> DashboardStores { get; set; }
+
+        #region Views
+        public DbSet<ViewDashboardItems> ViewDashboardItems { get; set; }
+        public DbSet<ViewDashboardStores> ViewDashboardStores { get; set; }
         #endregion
         #endregion
 
@@ -1046,6 +1060,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewQueryBuilderScripts))
+                .HasKey(x => x.Id);
+            });
+            #endregion
+
+            #region Dashboard
+            builder.Entity<ViewDashboardItems>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewDashboardItems))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewDashboardStores>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewDashboardStores))
                 .HasKey(x => x.Id);
             });
             #endregion

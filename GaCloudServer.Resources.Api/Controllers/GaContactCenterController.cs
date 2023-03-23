@@ -1592,6 +1592,20 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpPost("GetViewGaContactCenterTicketsQueryableFilterSingleParam/{cantiereId}")]
+        public ApiResponse GetViewGaContactCenterTicketsQueryableFilterSingleParam(GridOperationsModel filter,long? cantiereId)
+        {
+            try
+            {
+                var entities = _gaContactCenterService.GetViewGaContactCenterTicketsByCantiereQueryable(filter, cantiereId.GetValueOrDefault(-1));
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
+
         [HttpPost("GetViewFoContactCenterTicketsQueryable")]
         public ApiResponse GetViewFoContactCenterTicketsQueryable(GridOperationsModel filter)
         {

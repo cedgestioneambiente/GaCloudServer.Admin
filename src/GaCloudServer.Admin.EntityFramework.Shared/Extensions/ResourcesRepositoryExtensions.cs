@@ -14,6 +14,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
@@ -380,6 +382,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewQueryBuilderScripts>, GenericRepository<TResourcesDbContext, ViewQueryBuilderScripts>>();
 
             services.AddTransient<IQueryManager, QueryManager<TResourcesDbContext>>();
+            #endregion
+
+            //Dashboard
+            #region QueryBuilder
+            services.AddTransient<IGenericRepository<DashboardType>, GenericRepository<TResourcesDbContext, DashboardType>>();
+            services.AddTransient<IGenericRepository<DashboardSection>, GenericRepository<TResourcesDbContext, DashboardSection>>();
+            services.AddTransient<IGenericRepository<DashboardItem>, GenericRepository<TResourcesDbContext, DashboardItem>>();
+            services.AddTransient<IGenericRepository<DashboardStore>, GenericRepository<TResourcesDbContext, DashboardStore>>();
+
+            services.AddTransient<IGenericRepository<ViewDashboardItems>, GenericRepository<TResourcesDbContext, ViewDashboardItems>>();
+            services.AddTransient<IGenericRepository<ViewDashboardStores>, GenericRepository<TResourcesDbContext, ViewDashboardStores>>();
             #endregion
 
 

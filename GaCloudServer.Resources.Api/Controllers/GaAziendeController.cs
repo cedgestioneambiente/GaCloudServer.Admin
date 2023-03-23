@@ -49,6 +49,23 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetGaAziendeListeByRoleAsync/{roleAdmin}/{roleFormula}")]
+        public async Task<ActionResult<ApiResponse>> GetGaAziendeListeByRoleAsync(bool roleAdmin,bool roleFormula)
+        {
+            try
+            {
+                var dtos = await _gaAziendeService.GetGaAziendeListeByRoleAsync(roleAdmin,roleFormula);
+                var apiDtos = dtos.ToApiDto<AziendeListeApiDto, AziendeListeDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetGaAziendeListaByIdAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetGaAziendeListaByIdAsync(long id)
         {

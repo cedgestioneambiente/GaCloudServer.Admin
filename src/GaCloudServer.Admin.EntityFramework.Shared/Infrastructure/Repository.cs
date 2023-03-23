@@ -280,12 +280,104 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             }
 
         }
+        public virtual PagedList<TEntity> GetWithFilterQueryableV2(Expression<Func<TEntity, bool>> predicate,GridOperationsModel filterParams)
+        {
+            var pagedList = new PagedList<TEntity>();
+
+            if (filterParams.sortModel.Count() == 0)
+            {
+
+                var parameter = Expression.Parameter(typeof(TEntity), "x");
+                var selector = Expression.PropertyOrField(parameter, "Id");
+                var method = "OrderByDescending";
+
+                var data = _entities.Where(predicate).AsQueryable();
+                Expression expression = data.Expression;
+
+                expression = Expression.Call(typeof(Queryable), method,
+                    new Type[] { data.ElementType, selector.Type },
+                    expression, Expression.Quote(Expression.Lambda(selector, parameter)));
+                data = data.Provider.CreateQuery<TEntity>(expression);
+
+                data = data
+                    .FilterByV2(filterParams);
+
+                pagedList.TotalCount = data.Count();
+
+                var pageData = data
+                    .Skip(filterParams.startRow)
+                    .Take(filterParams.endRow)
+                    .OrderBy(filterParams.sortModel)
+                    .AsNoTracking()
+                    .ToList();
+
+                pagedList.Data.AddRange(pageData);
+
+                return pagedList;
+            }
+            else
+            {
+
+                var parameter = Expression.Parameter(typeof(TEntity), "x");
+                var selector = Expression.PropertyOrField(parameter, filterParams.sortModel[0].colId);
+                var method = filterParams.sortModel[0].sort == "desc" ? "OrderByDescending" : "OrderBy";
+
+                var data = _entities.Where(predicate).AsQueryable();
+                Expression expression = data.Expression;
+
+                expression = Expression.Call(typeof(Queryable), method,
+                    new Type[] { data.ElementType, selector.Type },
+                    expression, Expression.Quote(Expression.Lambda(selector, parameter)));
+                data = data.Provider.CreateQuery<TEntity>(expression);
+
+                data = data.AsQueryable()
+                .FilterByV2(filterParams);
+
+                pagedList.TotalCount = data.Count();
+
+                var pageData = data
+                    .Skip(filterParams.startRow)
+                    .Take(filterParams.endRow)
+                    .OrderBy(filterParams.sortModel)
+                    .AsNoTracking()
+                    .ToList();
+
+                pagedList.Data.AddRange(pageData);
+
+                return pagedList;
+            }
+
+        }
 
         public virtual PagedList<TEntity> GetAllQueryableV2WithQuickFilter(GridOperationsModel filterParams, string quickFilter)
         {
             var pagedList = new PagedList<TEntity>();
 
             var data = _entities.AsQueryable()
+            .FilterByV2(filterParams)
+            .QuickFilterBy(quickFilter);
+
+            pagedList.TotalCount = data.Count();
+
+            var pageData = data
+                .Skip(filterParams.startRow)
+                .Take(filterParams.endRow)
+                .OrderBy(filterParams.sortModel)
+                .AsNoTracking()
+                .ToList();
+
+            pagedList.Data.AddRange(pageData);
+
+            return pagedList;
+
+        }
+
+
+        public virtual PagedList<TEntity> GetWithFilterQueryableV2WithQuickFilter(Expression<Func<TEntity, bool>> predicate,GridOperationsModel filterParams, string quickFilter)
+        {
+            var pagedList = new PagedList<TEntity>();
+
+            var data = _entities.Where(predicate).AsQueryable()
             .FilterByV2(filterParams)
             .QuickFilterBy(quickFilter);
 
