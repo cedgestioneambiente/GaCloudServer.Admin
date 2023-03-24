@@ -9,5 +9,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBui
         public string ParamDesc { get; set; }
         public string Descrizione { get; set; }
         public string Nome { get; set; }
+        public string ApiUrl { get; set; }
     }
 }

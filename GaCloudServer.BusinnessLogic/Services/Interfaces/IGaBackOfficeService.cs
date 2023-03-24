@@ -16,6 +16,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
     {
         #region BackOfficeComuni
         Task<PagedList<ViewGaBackOfficeComuni>> GetViewGaBackOfficeComuniAsync();
+        Task<BackOfficeComuniCustomDto> GetViewGaBackOfficeComuniCustomAsync();
         #endregion
 
         #region BackOfficeUtenze

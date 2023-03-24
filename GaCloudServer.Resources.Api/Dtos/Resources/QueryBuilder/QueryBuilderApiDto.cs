@@ -35,6 +35,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.QueryBuilder
     {
         public string Descrizione { get; set; }
         public string Nome { get; set; }
+        public string? ApiUrl { get; set; }
         public long QueryBuilderScriptId { get; set; }
         public long QueryBuilderParamTypeId { get; set; }
 

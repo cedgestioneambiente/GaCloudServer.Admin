@@ -10,6 +10,7 @@ using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -96,6 +97,18 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var view = await viewGaBackOfficeComuniRepo.GetAllAsync(1, 0, "Descrizione");
             return view;
+        }
+
+        public async Task<BackOfficeComuniCustomDto> GetViewGaBackOfficeComuniCustomAsync()
+        {
+            string filter = "C";
+            var view = await viewGaBackOfficeComuniRepo.GetWithFilterAsync(x => EF.Functions.Like(x.CodAzi, filter.toWildcardString()));
+            var items = (from x in view.Data
+                        select new BackOfficeComuneCustomDto() { Id = x.CodAzi.Trim(), Descrizione = x.Descrizione.Trim(), Disabled = false }).ToList();
+            BackOfficeComuniCustomDto dtos = new BackOfficeComuniCustomDto();
+            dtos.Data.AddRange(items);
+            dtos.PageSize = items.Count();
+            return dtos;
         }
         #endregion
 

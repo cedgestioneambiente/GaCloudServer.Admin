@@ -1,6 +1,6 @@
 ﻿CREATE VIEW [dbo].[ViewQueryBuilderParamOnScripts]
 AS
-SELECT A.Id,A.Descrizione,A.QueryBuilderScriptId,A.Nome,B.Type ParamType,B.Descrizione ParamDesc,A.Disabled
+SELECT A.Id,A.Descrizione,A.QueryBuilderScriptId,A.Nome,B.Type ParamType,B.Descrizione ParamDesc,A.ApiUrl,A.Disabled
 FROM QueryBuilderParamOnScripts A
 LEFT JOIN QueryBuilderParamTypes B ON A.QueryBuilderParamTypeId= B.Id
 GO

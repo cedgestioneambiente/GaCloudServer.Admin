@@ -47,6 +47,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("GetViewGaBackOfficeComuniCustomAsync")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeComuniCustomAsync()
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeComuniCustomAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #endregion

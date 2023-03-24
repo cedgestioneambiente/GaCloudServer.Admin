@@ -86,6 +86,18 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice
 
     public class BackOfficeUtenzaPartiteDto : GenericPagedListDto<ViewGaBackOfficeUtenzePartite> { 
     }
+
+    public class BackOfficeComuneCustomDto
+    { 
+        public string Id { get; set; }
+        public string Descrizione { get; set; }
+        public bool Disabled { get; set; }
+
+    }
+
+    public class BackOfficeComuniCustomDto : GenericPagedListDto<BackOfficeComuneCustomDto>
+    {
+    }
     #endregion
 
 }

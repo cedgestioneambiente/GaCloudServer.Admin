@@ -8,6 +8,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBui
         public long QueryBuilderParamTypeId { get; set; }
         public string Descrizione { get; set; }
         public string Nome { get; set; }
+        public string ApiUrl { get; set; }
 
         public QueryBuilderScript QueryBuilderScript { get; set; }
         public QueryBuilderParamType QueryBuilderParamType { get; set; }
