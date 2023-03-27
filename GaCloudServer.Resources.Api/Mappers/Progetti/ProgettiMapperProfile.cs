@@ -1,0 +1,29 @@
+﻿using AutoMapper;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti;
+using GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti;
+
+namespace GaCloudServer.Resources.Api.Mappers.Progetti
+{
+    public class ProgettiMapperProfile : Profile
+    {
+        public ProgettiMapperProfile()
+        {
+            //ProgettiWork
+            CreateMap<ProgettiWorkDto, ProgettiWorkApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ProgettiWorksDto, ProgettiWorksApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //ProgettiJobs
+            CreateMap<ProgettiJobDto, ProgettiJobApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ProgettiJobsDto, ProgettiJobsApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+
+        }
+    }
+}
+

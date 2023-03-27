@@ -13,6 +13,7 @@ using GaCloudServer.Resources.Api.Mappers.Notification;
 using GaCloudServer.Resources.Api.Mappers.Personale;
 using GaCloudServer.Resources.Api.Mappers.PrenotazioneAuto;
 using GaCloudServer.Resources.Api.Mappers.Presenze;
+using GaCloudServer.Resources.Api.Mappers.Progetti;
 using GaCloudServer.Resources.Api.Mappers.QueryBuilder;
 using GaCloudServer.Resources.Api.Mappers.Reclami;
 using GaCloudServer.Resources.Api.Mappers.Segnalazioni;
@@ -44,7 +45,8 @@ namespace GaCloudServer.Resources.Api.Mappers
             new PresenzeMapperProfile(),
             new ShortcutsMapperProfile(),
             new QueryBuilderMapperProfile(),
-            new DashboardMapperProfile()
+            new DashboardMapperProfile(),
+            new ProgettiMapperProfile()
         };
 
         static GenericMapper() {

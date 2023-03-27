@@ -30,6 +30,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
@@ -385,7 +386,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #endregion
 
             //Dashboard
-            #region QueryBuilder
+            #region Dashboard
             services.AddTransient<IGenericRepository<DashboardType>, GenericRepository<TResourcesDbContext, DashboardType>>();
             services.AddTransient<IGenericRepository<DashboardSection>, GenericRepository<TResourcesDbContext, DashboardSection>>();
             services.AddTransient<IGenericRepository<DashboardItem>, GenericRepository<TResourcesDbContext, DashboardItem>>();
@@ -393,6 +394,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             services.AddTransient<IGenericRepository<ViewDashboardItems>, GenericRepository<TResourcesDbContext, ViewDashboardItems>>();
             services.AddTransient<IGenericRepository<ViewDashboardStores>, GenericRepository<TResourcesDbContext, ViewDashboardStores>>();
+            # endregion
+
+            //Progetti
+            #region Progetti
+            services.AddTransient<IGenericRepository<ProgettiWork>, GenericRepository<TResourcesDbContext, ProgettiWork>>();
+            services.AddTransient<IGenericRepository<ProgettiJob>, GenericRepository<TResourcesDbContext, ProgettiJob>>();
             #endregion
 
 

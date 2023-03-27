@@ -18,6 +18,7 @@ using GaCloudServer.BusinessLogic.Mappers.Presenze;
 using GaCloudServer.BusinessLogic.Mappers.Shortcuts;
 using GaCloudServer.BusinessLogic.Mappers.QueryBuilder;
 using GaCloudServer.BusinessLogic.Mappers.Dashboard;
+using GaCloudServer.BusinessLogic.Mappers.Progetti;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -45,7 +46,8 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new PresenzeMapperProfile(),
             new ShortcutsMapperProfile(),
             new QueryBuilderMapperProfile(),
-            new DashboardMapperProfile()
+            new DashboardMapperProfile(),
+            new ProgettiMapperProfile()
         };
 
         static GenericMapper() {
