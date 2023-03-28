@@ -41,6 +41,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -382,6 +383,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Progetti
         DbSet<ProgettiWork> GaProgettiWorks { get; set; }
         DbSet<ProgettiJob> GaProgettiJobs { get; set; }
+
+        #region Views
+        DbSet<ViewGaProgettiJobs> ViewGaProgettiJobs { get; set; }
+        #endregion
         #endregion
 
         #region QueryBuilder

@@ -128,5 +128,10 @@
         public const string CREATE_ViewQueryBuilder = "CREATE_ViewQueryBuilder.sql";
         public const string DROP_ViewQueryBuilder = "DROP_ViewQueryBuilder.sql";
 
+        //Progetti
+        public const string Progetti = @".\Scripts\Progetti\";
+        public const string CREATE_ViewProgetti = "CREATE_ViewGaProgetti.sql";
+        public const string DROP_ViewProgetti = "DROP_ViewGaProgetti.sql";
+
     }
 }

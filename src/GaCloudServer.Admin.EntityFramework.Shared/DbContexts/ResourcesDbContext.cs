@@ -42,6 +42,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -384,6 +385,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Progetti
         public DbSet<ProgettiWork> GaProgettiWorks { get; set; }
         public DbSet<ProgettiJob> GaProgettiJobs { get; set; }
+
+        #region Views
+        public DbSet<ViewGaProgettiJobs> ViewGaProgettiJobs { get; set; }
+        #endregion
         #endregion
 
         #region QueryBuilder
@@ -1084,6 +1089,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .ToView(nameof(ViewDashboardStores))
                 .HasKey(x => x.Id);
             });
+            #endregion
+
+
+            #region Progetti
+            builder.Entity<ViewGaProgettiJobs>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaProgettiJobs))
+                .HasKey(x => x.Id);
+            });
+
+            
             #endregion
 
 

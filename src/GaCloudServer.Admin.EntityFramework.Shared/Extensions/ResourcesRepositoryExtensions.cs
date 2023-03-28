@@ -31,6 +31,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
@@ -400,6 +401,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Progetti
             services.AddTransient<IGenericRepository<ProgettiWork>, GenericRepository<TResourcesDbContext, ProgettiWork>>();
             services.AddTransient<IGenericRepository<ProgettiJob>, GenericRepository<TResourcesDbContext, ProgettiJob>>();
+
+            services.AddTransient<IGenericRepository<ViewGaProgettiJobs>, GenericRepository<TResourcesDbContext, ViewGaProgettiJobs>>();
+
             #endregion
 
 

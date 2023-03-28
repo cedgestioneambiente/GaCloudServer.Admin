@@ -70,6 +70,23 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetGaProgettiWorksByUserAsync/{userId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiWorksByUserAsync(string userId)
+        {
+            try
+            {
+                var dtos = await _gaProgettiService.GetGaProgettiWorksByUserAsync(userId);
+                var apiDtos = dtos.ToApiDto<ProgettiWorksApiDto, ProgettiWorksDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpPost("AddGaProgettiWorkAsync")]
         public async Task<ActionResult<ApiResponse>> AddGaProgettiWorkAsync([FromBody] ProgettiWorkApiDto apiDto)
         {
@@ -171,11 +188,184 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        
-        #endregion
 
         #endregion
 
-       
+        #endregion
+
+        #region ProgettiJobs
+        [HttpGet("GetGaProgettiJobsAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiJobsAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaProgettiService.GetGaProgettiJobsAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ProgettiJobsApiDto, ProgettiJobsDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaProgettiJobByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiJobByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaProgettiService.GetGaProgettiJobByIdAsync(id);
+                var apiDto = dto.ToApiDto<ProgettiJobApiDto, ProgettiJobDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaProgettiJobsByWorkIdAsync/{workId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiJobsByWorkIdAsync(long workId)
+        {
+            try
+            {
+                var dtos = await _gaProgettiService.GetGaProgettiJobsByWorkIdAsync(workId);
+                var apiDtos = dtos.ToApiDto<ProgettiJobsApiDto, ProgettiJobsDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaProgettiJobAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaProgettiJobAsync([FromBody] ProgettiJobApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ProgettiJobDto, ProgettiJobApiDto>();
+                var response = await _gaProgettiService.AddGaProgettiJobAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaProgettiJobAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaProgettiJobAsync([FromBody] ProgettiJobApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ProgettiJobDto, ProgettiJobApiDto>();
+                var response = await _gaProgettiService.UpdateGaProgettiJobAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaProgettiJobAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaProgettiJobAsync(long id)
+        {
+            try
+            {
+                var response = await _gaProgettiService.DeleteGaProgettiJobAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaProgettiJobAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaProgettiJobAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _gaProgettiService.ValidateGaProgettiJobAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGaProgettiJobAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaProgettiJobAsync(long id)
+        {
+            try
+            {
+                var response = await _gaProgettiService.ChangeStatusGaProgettiJobAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Views
+        [HttpGet("GetViewGaProgettiJobsByWorkIdAsync/{workId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaProgettiJobsByWorkIdAsync(long workId)
+        {
+            try
+            {
+                var view = await _gaProgettiService.GetViewGaProgettiJobsByWorkIdAsync(workId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #endregion
+
+        #endregion
+
+
     }
 }

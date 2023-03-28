@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti
+namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views
 {
-    public class ProgettiJob:GenericEntity
+    public class ViewGaProgettiJobs:GenericEntity
     {
         public string Title { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public string Group_id { get; set; }   
+        public int Start { get; set; }
+        public int End { get; set; }
+        public string Group_id { get; set; }
         public string Links { get; set; }
         public bool Draggable { get; set; }
         public bool Linkable { get; set; }
@@ -23,8 +23,5 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti
         public int? Progress { get; set; }
         public long ProgettiWorkId { get; set; }
         public string Resources { get; set; }
-
-        public ProgettiWork ProgettiWork { get; set; }
-
     }
 }
