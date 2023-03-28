@@ -459,14 +459,14 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         //[HttpGet("SendGaPresenzeRichiestaAsync/{id}/{direction}")]
-        //public async Task<ApiResponse> SendGaPresenzeRichiestaAsync(long id, long direction)
+        //public async Task<ApiResponse> SendGaPrenotazioneAutoRichiestaAsync(long id, long direction)
         //{
         //    try
         //    {
-        //        var richiestaMail = await _gaPrenotazioneAutoService.GetViewGaPresenzeRichiestaMailByIdAsync(id);
-        //        var respList = await _gaPrenotazioneAutoService.GetViewGaPresenzeResponsabiliOnSettoreMailBySettoreId(richiestaMail.SettoreId);
+        //        var richiestaMail = await _gaPrenotazioneAutoService.GetViewGaPrenotazioneAutoRegistrazioniByIdAsync(id);
         //        var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.PrenotazioneAuto);
         //        var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+        //        var respMails = "ced@gestioneambiente.net";
 
         //        List<string> userMails = new List<string>();
         //        List<string> respMails = new List<string>();
@@ -481,7 +481,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         //        foreach (var user in notifications.Data)
         //        {
-        //            if (user.UserId == richiestaMail.UserId) { userMails.Add(richiestaMail.RichiedenteEmail); }
+        //            if (user.UserId == richiestaMail.UserId) { userMails.Add(richiestaMail.UserId); }
         //        }
 
         //        if (userMails.Count > 0 || respMails.Count > 0)
@@ -506,26 +506,25 @@ namespace GaCloudServer.Resources.Api.Controllers
         //                "Data Iniziale",
         //                "Data Finale",
         //                "Tipo Richiesta",
-        //                "Stato"
         //            };
 
         //            List<string> details = new List<string>() {
-        //                richiestaMail.Richiedente,
-        //                richiestaMail.DataInizio.ToString("dd/MM/yyyy HH:mm"),
-        //                richiestaMail.DataFine.ToString("dd/MM/yyyy HH:mm"),
-        //                richiestaMail.Tipo,
-        //                richiestaMail.Stato
+        //                richiestaMail.UserId,
+        //                richiestaMail.Start.ToString("dd/MM/yyyy HH:mm"),
+        //                richiestaMail.End.ToString("dd/MM/yyyy HH:mm"),
+        //                richiestaMail.Title,
+
         //            };
 
         //            var response = await _mailService.AddMailJobAsync(new MailJob()
         //            {
         //                Id = 0,
-        //                Description = "Richiesta Assenza",
+        //                Description = "Prenotazione Auto",
         //                DateScheduled = DateTime.Now,
-        //                Title = "Richiesta Assenza",
+        //                Title = "Prenotazione Auto",
         //                MailingTo = mailTo,
         //                MailCc = mailCC,
-        //                Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Presenze),
+        //                Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.PrenotazioneAuto),
         //                Content = HtmlHelpers.GenerateList(descriptors, details),
         //                Template = "DefaultMailJob.html",
         //                UserId = richiestaMail.UserId,

@@ -49,6 +49,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         Task<PagedList<ViewGaPrenotazioneAutoRegistrazioni>> GetViewGaPrenotazioneAutoRegistrazioniAsync(bool all = false);
+        Task<ViewGaPrenotazioneAutoRegistrazioni> GetViewGaPrenotazioneAutoRegistrazioniByIdAsync(long id);
         #endregion
         #endregion
     }

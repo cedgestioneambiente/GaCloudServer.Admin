@@ -299,6 +299,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<ViewGaPrenotazioneAutoRegistrazioni> GetViewGaPrenotazioneAutoRegistrazioniByIdAsync(long id)
+        {
+            var view = await viewGaPrenotazioneAutoRegistrazioniRepo.GetSingleWithFilter(x => x.Id == id);
+            return view;
+        }
         #endregion
 
         #region Views
