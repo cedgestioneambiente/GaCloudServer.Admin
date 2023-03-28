@@ -12,5 +12,6 @@ namespace GaCloudServer.Resources.Api.Constants
         public const string Presenze = "Presenze";
         public const string ContactCenter = "ContactCenter";
         public const string Cdr = "Cdr";
+        public const string PrenotazioneAuto = "PrenotazioneAuto";
     }
 }

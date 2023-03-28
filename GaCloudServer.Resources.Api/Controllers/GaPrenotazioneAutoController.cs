@@ -1,9 +1,12 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.PrenotazioneAuto;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.PrenotazioneAuto;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,15 +22,21 @@ namespace GaCloudServer.Resources.Api.Controllers
     public class GaPrenotazioneAutoController : Controller
     {
         private readonly IGaPrenotazioneAutoService _gaPrenotazioneAutoService;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<GaPrenotazioneAutoController> _logger;
+        private readonly IMailService _mailService;
         private readonly TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
 
         public GaPrenotazioneAutoController(
             IGaPrenotazioneAutoService gaPrenotazioneAutoService
-            ,ILogger<GaPrenotazioneAutoController> logger)
+            , INotificationService notificationService
+            , IMailService mailService
+            , ILogger<GaPrenotazioneAutoController> logger)
         {
 
             _gaPrenotazioneAutoService = gaPrenotazioneAutoService;
+            _notificationService = notificationService;
+            _mailService = mailService;
             _logger = logger;
         }
 
@@ -448,6 +457,96 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        //[HttpGet("SendGaPresenzeRichiestaAsync/{id}/{direction}")]
+        //public async Task<ApiResponse> SendGaPresenzeRichiestaAsync(long id, long direction)
+        //{
+        //    try
+        //    {
+        //        var richiestaMail = await _gaPrenotazioneAutoService.GetViewGaPresenzeRichiestaMailByIdAsync(id);
+        //        var respList = await _gaPrenotazioneAutoService.GetViewGaPresenzeResponsabiliOnSettoreMailBySettoreId(richiestaMail.SettoreId);
+        //        var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.PrenotazioneAuto);
+        //        var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+        //        List<string> userMails = new List<string>();
+        //        List<string> respMails = new List<string>();
+
+        //        foreach (var itm in respList.Data)
+        //        {
+        //            foreach (var user in notifications.Data)
+        //            {
+        //                if (user.UserId == itm.UserId) { respMails.Add(itm.Email); }
+        //            }
+        //        }
+
+        //        foreach (var user in notifications.Data)
+        //        {
+        //            if (user.UserId == richiestaMail.UserId) { userMails.Add(richiestaMail.RichiedenteEmail); }
+        //        }
+
+        //        if (userMails.Count > 0 || respMails.Count > 0)
+        //        {
+        //            string mailTo = "";
+        //            string mailCC = "";
+
+        //            switch (direction)
+        //            {
+        //                case 1:
+        //                    mailTo = string.Join(";", respMails);
+        //                    mailCC = string.Join(";", userMails);
+        //                    break;
+        //                case 2:
+        //                    mailTo = string.Join(";", userMails);
+        //                    mailCC = string.Join(";", respMails);
+        //                    break;
+        //            }
+
+        //            List<string> descriptors = new List<string>() {
+        //                "Richiedente",
+        //                "Data Iniziale",
+        //                "Data Finale",
+        //                "Tipo Richiesta",
+        //                "Stato"
+        //            };
+
+        //            List<string> details = new List<string>() {
+        //                richiestaMail.Richiedente,
+        //                richiestaMail.DataInizio.ToString("dd/MM/yyyy HH:mm"),
+        //                richiestaMail.DataFine.ToString("dd/MM/yyyy HH:mm"),
+        //                richiestaMail.Tipo,
+        //                richiestaMail.Stato
+        //            };
+
+        //            var response = await _mailService.AddMailJobAsync(new MailJob()
+        //            {
+        //                Id = 0,
+        //                Description = "Richiesta Assenza",
+        //                DateScheduled = DateTime.Now,
+        //                Title = "Richiesta Assenza",
+        //                MailingTo = mailTo,
+        //                MailCc = mailCC,
+        //                Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Presenze),
+        //                Content = HtmlHelpers.GenerateList(descriptors, details),
+        //                Template = "DefaultMailJob.html",
+        //                UserId = richiestaMail.UserId,
+        //                OkMessage = "La tua richiesta è stata inoltrata correttamente.",
+        //                KoMessage = "Si è verificato un problema durante l'invio della tua richiesta."
+
+        //            });
+        //            return new ApiResponse(response);
+
+        //        }
+
+
+
+        //        return new ApiResponse(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+        //}
         #endregion
 
         #region Views

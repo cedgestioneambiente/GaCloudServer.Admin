@@ -360,6 +360,7 @@ namespace GaCloudServer.Jobs.Jobs
             }
         }
 
+
         [PersistJobDataAfterExecution]
         [DisallowConcurrentExecution]
         public class GaReclamiScadenziarioJob : IJob
