@@ -512,5 +512,23 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region DashboardStores
+        [HttpGet("GetViewDashboardStoresByUserIdAsync/{userId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewDashboardStoresByUserIdAsync(string userId)
+        {
+            try
+            {
+                var view = await _DashboardService.GetViewDashboardStoresByUserIdAsync(userId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
     }
 }

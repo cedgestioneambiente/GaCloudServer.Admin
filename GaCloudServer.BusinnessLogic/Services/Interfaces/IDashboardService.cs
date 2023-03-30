@@ -59,7 +59,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region DashboardStores
 
         #region Views
-        Task<PagedList<ViewDashboardStores>> GetViewDashboardStoresByUserId(string userId);
+        Task<PagedList<ViewDashboardStores>> GetViewDashboardStoresByUserIdAsync(string userId);
         #endregion
 
         #endregion
