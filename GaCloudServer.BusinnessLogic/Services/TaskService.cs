@@ -89,16 +89,16 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<bool> ChangeStatusTasksItemAsync(long id)
         {
             var entity = await tasksItemsRepo.GetByIdAsync(id);
-            if (entity.Disabled)
+            if (entity.Completed)
             {
-                entity.Disabled = false;
+                entity.Completed = false;
                 tasksItemsRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
             else
             {
-                entity.Disabled = true;
+                entity.Completed = true;
                 tasksItemsRepo.Update(entity);
                 await SaveChanges();
                 return true;
