@@ -1,7 +1,7 @@
 ﻿CREATE VIEW ViewDashboardUserRoles
 AS
 SELECT A.*,
-C.RolesId,C.RoleNamesId
+C.RolesId,C.RoleNames
 FROM(
 SELECT 
 A.Id,A.FirstName,A.LastName,A.FullName,
@@ -12,7 +12,7 @@ SELECT A.Id DashId,A.Title,A.Descrizione DashDescrizione,A.DashboardSectionId Da
 FROM DashBoardItems A
 INNER JOIN DashboardSections B ON A.DashboardSectionId=B.Id
 INNER JOIN DashboardTypes C ON A.DashboardTypeId=C.Id) B) B)A
-LEFT JOIN (SELECT UserId,STRING_AGG(RoleId,',') RolesId,STRING_AGG(Name,',') RoleNamesId
+LEFT JOIN (SELECT UserId,STRING_AGG(RoleId,',') RolesId,STRING_AGG(Name,',') RoleNames
 FROM(
 SELECT A.*,B.Name
   FROM [IdentityServerAdmin].[dbo].[UserRoles] A
