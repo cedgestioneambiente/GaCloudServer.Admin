@@ -20,6 +20,7 @@ using GaCloudServer.BusinessLogic.Mappers.QueryBuilder;
 using GaCloudServer.BusinessLogic.Mappers.Dashboard;
 using GaCloudServer.BusinessLogic.Mappers.Progetti;
 using GaCloudServer.BusinnessLogic.Mappers.Tasks;
+using GaCloudServer.BusinessLogic.Mappers.System;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -49,7 +50,8 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new QueryBuilderMapperProfile(),
             new DashboardMapperProfile(),
             new ProgettiMapperProfile(),
-            new TasksMapperProfile()
+            new TasksMapperProfile(),
+            new SystemMapperProfile(),
         };
 
         static GenericMapper() {

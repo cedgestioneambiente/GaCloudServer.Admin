@@ -51,6 +51,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IShortcutsService, ShortcutsService>();
             services.AddTransient<IDashboardService,DashboardService>();
             services.AddTransient<ITasksService, TasksService>();
+            services.AddTransient<ISystemService, SystemService>();
 
             services.AddTransient<IQueryBuilderService, QueryBuilderService>();
 

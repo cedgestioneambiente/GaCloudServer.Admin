@@ -42,6 +42,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
@@ -411,6 +412,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Tasks
             services.AddTransient<IGenericRepository<TasksTag>, GenericRepository<TResourcesDbContext, TasksTag>>();
             services.AddTransient<IGenericRepository<TasksItem>, GenericRepository<TResourcesDbContext, TasksItem>>();
+            #endregion
+
+            //System
+            #region System
+            services.AddTransient<IGenericRepository<SystemVersion>, GenericRepository<TResourcesDbContext, SystemVersion>>();
             #endregion
 
             return services; 
