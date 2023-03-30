@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230329100546_System")]
+    partial class System
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -6378,14 +6380,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<bool?>("Approved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Completed")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
@@ -6393,16 +6389,13 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Draggable")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("End")
+                    b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Expandable")
                         .HasColumnType("bit");
 
                     b.Property<string>("Group_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Linkable")
@@ -6414,9 +6407,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("Priority")
-                        .HasColumnType("int");
-
                     b.Property<long>("ProgettiWorkId")
                         .HasColumnType("bigint");
 
@@ -6426,7 +6416,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Resources")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Start")
+                    b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
@@ -6474,34 +6464,25 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<bool?>("Approved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Completed")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("Draggable")
+                    b.Property<bool>("Draggable")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("End")
+                    b.Property<int>("End")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("Expandable")
+                    b.Property<bool>("Expandable")
                         .HasColumnType("bit");
 
                     b.Property<string>("Group_id")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Info")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Linkable")
+                    b.Property<bool>("Linkable")
                         .HasColumnType("bit");
 
                     b.Property<string>("Links")
@@ -6509,9 +6490,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
-
-                    b.Property<int?>("Priority")
-                        .HasColumnType("int");
 
                     b.Property<long>("ProgettiWorkId")
                         .HasColumnType("bigint");
@@ -6522,7 +6500,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Resources")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Start")
+                    b.Property<int>("Start")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")

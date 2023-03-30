@@ -42,6 +42,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -411,6 +413,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewDashboardItems> ViewDashboardItems { get; set; }
         DbSet<ViewDashboardStores> ViewDashboardStores { get; set; }
         #endregion
+        #endregion
+
+        #region Tasks
+        DbSet<TasksTag> TasksTags{ get; set; }
+        DbSet<TasksItem> TasksItems { get; set; }
+        #endregion
+
+        #region System
+        DbSet<SystemVersion> SystemVersions { get; set; }
         #endregion
     }
 }
