@@ -1,5 +1,6 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Dashboard;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.ApiDtos.Resources.Dashboard;
@@ -513,6 +514,24 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region DashboardStores
+        [HttpPost("UpdateDashboardStoresAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateDashboardStoresAsync([FromBody] List<ViewDashboardStores> stores)
+        {
+            try
+            {
+                
+                var response = await _DashboardService.UpdateDashboardStoresAsync(stores);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetViewDashboardStoresByUserIdAsync/{userId}")]
         public async Task<ActionResult<ApiResponse>> GetViewDashboardStoresByUserIdAsync(string userId)
         {
