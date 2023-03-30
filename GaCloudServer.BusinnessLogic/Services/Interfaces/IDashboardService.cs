@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.Dashboard;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Dashboard;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
@@ -50,6 +52,14 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateDashboardItemAsync(long id, string descrizione);
         Task<bool> ChangeStatusDashboardItemAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region DashboardStores
+
+        #region Views
+        Task<PagedList<ViewDashboardStores>> GetViewDashboardStoresByUserId(string userId);
         #endregion
 
         #endregion

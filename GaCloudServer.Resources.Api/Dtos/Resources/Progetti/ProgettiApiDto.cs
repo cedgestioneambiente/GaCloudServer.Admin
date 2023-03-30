@@ -20,8 +20,8 @@ namespace GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti
     public class ProgettiJobApiDto : GenericApiDto
     {
         public string Title { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
         public string? Group_id { get; set; }
         public string? Links { get; set; }
         public bool Draggable { get; set; }
@@ -33,6 +33,10 @@ namespace GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti
         public int? Progress { get; set; }
         public long ProgettiWorkId { get; set; }
         public string? Resources { get; set; }
+        public int? Priority { get; set; }
+        public bool? Completed { get; set; }
+        public bool? Approved { get; set; }
+        public string? Info { get; set; }
     }
 
     public class ProgettiJobsApiDto : GenericPagedListApiDto<ProgettiJobApiDto>

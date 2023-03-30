@@ -1592,13 +1592,15 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpPost("GetViewGaContactCenterTicketsQueryableFilterSingleParam/{cantiereId}")]
-        public ApiResponse GetViewGaContactCenterTicketsQueryableFilterSingleParam(GridOperationsModel filter,long? cantiereId)
+        [HttpPost("GetViewGaContactCenterTicketsQueryableFilterSingleParam/{cantieriId}")]
+        public ApiResponse GetViewGaContactCenterTicketsQueryableFilterSingleParam(GridOperationsModel filter, string? cantieriId="0")
         {
             try
             {
-                var entities = _gaContactCenterService.GetViewGaContactCenterTicketsByCantiereQueryable(filter, cantiereId.GetValueOrDefault(-1));
+                cantieriId = cantieriId == "NaN" ? "0" : cantieriId;
+                var entities = _gaContactCenterService.GetViewGaContactCenterTicketsByCantiereQueryable(filter, cantieriId.Split(",").Select(long.Parse).ToArray());
                 return new ApiResponse(entities);
+                
             }
             catch (Exception ex)
             {

@@ -150,7 +150,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
         Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
         PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryable(GridOperationsModel filterParams);
-        PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsByCantiereQueryable(GridOperationsModel filterParams, long cantiereId);
+        PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsByCantiereQueryable(GridOperationsModel filterParams, long[]? cantieriId);
         PagedList<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryable(GridOperationsModel filterParams);
         List<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams);
         List<ViewFoContactCenterTickets> GetViewFoContactCenterTicketsQueryableNoSkip(GridOperationsModel filterParams);

@@ -91,6 +91,20 @@ namespace GaCloudServer.Admin.Api.Controllers
             return Ok(usersDto);
         }
 
+        [HttpPost("GetUsersById")]
+        public async Task<ActionResult<TUserDto>> GetUsersById([FromBody] List<string> users)
+        {
+           
+            List<TUserDto> usersDto = new List<TUserDto>();
+            foreach (var userId in users)
+            {
+                var userDto = await _identityService.GetUserAsync(userId);
+                usersDto.Add(userDto);
+            }
+
+            return Ok(usersDto);
+        }
+
 
         [HttpPost]
         [ProducesResponseType(201)]

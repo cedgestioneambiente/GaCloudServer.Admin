@@ -1,9 +1,12 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti;
+using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Http.Metadata;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -139,6 +142,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dtos;
 
         }
+        public async Task<ProgettiJobsDto> GetGaProgettiJobsByWorkIdAndParentIdAsync(long workId,long parentId)
+        {
+            var entities = await gaProgettiJobsRepo.GetWithFilterAsync(x => x.Disabled == false && x.ProgettiWorkId == workId && x.ParentId==parentId);
+            var dtos = entities.ToDto<ProgettiJobsDto, PagedList<ProgettiJob>>();
+            return dtos;
+
+        }
 
         public async Task<ProgettiJobDto> GetGaProgettiJobByIdAsync(long id)
         {
@@ -208,12 +218,139 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<bool> AddGaProgettiJobLinkAsync(long sourceId, long targetId)
+        {
+            var entity = await gaProgettiJobsRepo.GetByIdAsync(sourceId);
+
+            if (entity.Links!=null && entity.Links.Contains(targetId.ToString()))
+            {
+                return true;
+            }
+            else
+            {
+                var links = new List<string>(entity.Links != null?entity.Links.Split(","):new List<string>());
+                links.Add(targetId.ToString());
+
+                entity.Links = string.Join(",", links);
+                gaProgettiJobsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+            
+        }
         #endregion
 
         #region Views
         public async Task<PagedList<ViewGaProgettiJobs>> GetViewGaProgettiJobsByWorkIdAsync(long workId)
         {
             var view = await viewGaProgettiJobsRepo.GetWithFilterAsync(x => x.Disabled == false && x.ProgettiWorkId == workId);
+            return view;
+
+        }
+
+        public async Task<List<GanttItemDto>> GetViewGaProgettiJobsByWorkIdWithChildrenAsync(long workId)
+        {
+            var view = await viewGaProgettiJobsRepo.GetWithFilterAsync(x => x.Disabled == false && x.ProgettiWorkId == workId);
+            List<GanttItemDto> nestedObjects = new List<GanttItemDto>();
+
+            foreach (var itm in view.Data.OrderBy(x=>x.Start))
+            { 
+                var obj= new GanttItemDto();
+                obj.Id = itm.Id;
+                obj.Title = itm.Title;
+                obj.Start = itm.Start;
+                obj.End = itm.End;
+                obj.Group_id = itm.Group_id;
+                obj.Links = itm.Links;
+                obj.Linkable = itm.Linkable;
+                obj.Draggable = itm.Draggable;
+                obj.ItemDraggable = itm.Draggable;
+                obj.Expandable = itm.Expandable;
+                obj.ParentId = itm.ParentId;
+                obj.Color = itm.Color;
+                obj.Type = itm.Type;
+                obj.Progress = Convert.ToDouble(itm.Progress)/100;
+                obj.ProgettiWorkId = itm.ProgettiWorkId;
+                obj.Resources = itm.Resources;
+                obj.Priority = itm.Priority;
+                obj.Completed = itm.Completed;
+                obj.Approved = itm.Approved;
+                obj.Info = itm.Info;
+
+                nestedObjects.Add(obj);
+            }
+
+            var nestedMap = nestedObjects.ToDictionary(obj => obj.Id);
+
+            List<GanttItemDto> nestedStructure = new List<GanttItemDto>();
+            foreach (var obj in nestedObjects)
+            {
+                if (obj.ParentId == 0)
+                {
+                    nestedStructure.Add(obj);
+                    NestedHelper.BuildNestedStructure(obj, nestedMap);
+                }
+            }
+
+            return nestedStructure;
+
+        }
+
+        public async Task<List<GanttItemDto>> GetViewGaProgettiJobsByWorkIdWithChildrenAndStatusAsync(long workId,bool all=true)
+        {
+            var view = all==true? await viewGaProgettiJobsRepo.GetWithFilterAsync(x => x.Disabled == false && x.ProgettiWorkId == workId):
+                await viewGaProgettiJobsRepo.GetWithFilterAsync(x => x.Disabled == false && x.ProgettiWorkId == workId && x.Completed==false);
+
+
+            List<GanttItemDto> nestedObjects = new List<GanttItemDto>();
+
+            foreach (var itm in view.Data.OrderBy(x => x.Start))
+            {
+                var obj = new GanttItemDto();
+                obj.Id = itm.Id;
+                obj.Title = itm.Title;
+                obj.Start = itm.Start;
+                obj.End = itm.End;
+                obj.Group_id = itm.Group_id;
+                obj.Links = itm.Links;
+                obj.Linkable = itm.Linkable;
+                obj.Draggable = itm.Draggable;
+                obj.ItemDraggable = itm.Draggable;
+                obj.Expandable = itm.Expandable;
+                obj.ParentId = itm.ParentId;
+                obj.Color = itm.Color;
+                obj.Type = itm.Type;
+                obj.Progress = Convert.ToDouble(itm.Progress) / 100;
+                obj.ProgettiWorkId = itm.ProgettiWorkId;
+                obj.Resources = itm.Resources;
+                obj.Priority = itm.Priority;
+                obj.Completed = itm.Completed;
+                obj.Approved = itm.Approved;
+                obj.Info = itm.Info;
+
+                nestedObjects.Add(obj);
+            }
+
+            var nestedMap = nestedObjects.ToDictionary(obj => obj.Id);
+
+            List<GanttItemDto> nestedStructure = new List<GanttItemDto>();
+            foreach (var obj in nestedObjects)
+            {
+                if (obj.ParentId == 0)
+                {
+                    nestedStructure.Add(obj);
+                    NestedHelper.BuildNestedStructure(obj, nestedMap);
+                }
+            }
+
+            return nestedStructure;
+
+        }
+        public async Task<PagedList<ViewGaProgettiJobs>> GetViewGaProgettiJobsByWorkIdAndParentIdAsync(long workId,long parentId)
+        {
+            var view = await viewGaProgettiJobsRepo.GetWithFilterAsync(x => x.Disabled == false && x.ProgettiWorkId == workId && x.ParentId==parentId);
             return view;
 
         }

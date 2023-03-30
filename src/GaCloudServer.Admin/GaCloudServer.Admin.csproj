@@ -131,6 +131,12 @@
 	  <None Update="Scripts\Csr\DROP_ViewGaCsr.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Dashboard\CREATE_ViewDashboard.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Dashboard\DROP_ViewDashboard.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Global\CREATE_ObjectGlobal.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

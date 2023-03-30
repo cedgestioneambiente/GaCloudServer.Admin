@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20230327153158_App_Views_V10")]
-    partial class App_Views_V10
+    [Migration("20230330082254_App_Views_V11")]
+    partial class App_Views_V11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -6380,8 +6380,14 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<bool?>("Approved")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Completed")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
@@ -6389,13 +6395,16 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Draggable")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("End")
+                    b.Property<DateTime?>("End")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Expandable")
                         .HasColumnType("bit");
 
                     b.Property<string>("Group_id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Linkable")
@@ -6407,6 +6416,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("Priority")
+                        .HasColumnType("int");
+
                     b.Property<long>("ProgettiWorkId")
                         .HasColumnType("bigint");
 
@@ -6416,7 +6428,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Resources")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Start")
+                    b.Property<DateTime?>("Start")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
@@ -6455,6 +6467,75 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasKey("Id");
 
                     b.ToTable("GaProgettiWorks");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views.ViewGaProgettiJobs", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<bool?>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Completed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Draggable")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("End")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Expandable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Group_id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Info")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Linkable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Links")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ProgettiWorkId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Progress")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Resources")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Start")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaProgettiJobs");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.QueryBuilderParamOnScript", b =>

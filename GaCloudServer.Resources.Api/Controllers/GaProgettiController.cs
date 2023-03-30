@@ -245,6 +245,23 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetGaProgettiJobsByWorkIdAndParentIdAsync/{workId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiJobsByWorkIdAndParentIdAsync(long workId,long parentId)
+        {
+            try
+            {
+                var dtos = await _gaProgettiService.GetGaProgettiJobsByWorkIdAndParentIdAsync(workId,parentId);
+                var apiDtos = dtos.ToApiDto<ProgettiJobsApiDto, ProgettiJobsDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpPost("AddGaProgettiJobAsync")]
         public async Task<ActionResult<ApiResponse>> AddGaProgettiJobAsync([FromBody] ProgettiJobApiDto apiDto)
         {
@@ -343,6 +360,23 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+
+        [HttpGet("AddGaProgettiJobLinkAsync/{targetId}/{sourceId}")]
+        public async Task<ActionResult<ApiResponse>> AddGaProgettiJobLinkAsync(long targetId,long sourceId)
+        {
+            try
+            {
+                var response = await _gaProgettiService.AddGaProgettiJobLinkAsync(targetId,sourceId);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #region Views
@@ -352,6 +386,55 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var view = await _gaProgettiService.GetViewGaProgettiJobsByWorkIdAsync(workId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+
+        [HttpGet("GetViewGaProgettiJobsByWorkIdWithChildrenAsync/{workId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaProgettiJobsByWorkIdWithChildrenAsync(long workId)
+        {
+            try
+            {
+                var view = await _gaProgettiService.GetViewGaProgettiJobsByWorkIdWithChildrenAsync(workId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaProgettiJobsByWorkIdWithChildrenAndStatusAsync/{workId}/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaProgettiJobsByWorkIdWithChildrenAndStatusAsync(long workId,bool all=true)
+        {
+            try
+            {
+                var view = await _gaProgettiService.GetViewGaProgettiJobsByWorkIdWithChildrenAndStatusAsync(workId,all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaProgettiJobsByWorkIdAndParentIdAsync/{workId}/{parentId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaProgettiJobsByWorkIdAndParentIdAsync(long workId,long parentId)
+        {
+            try
+            {
+                var view = await _gaProgettiService.GetViewGaProgettiJobsByWorkIdAndParentIdAsync(workId,parentId);
                 return new ApiResponse(view);
             }
             catch (Exception ex)

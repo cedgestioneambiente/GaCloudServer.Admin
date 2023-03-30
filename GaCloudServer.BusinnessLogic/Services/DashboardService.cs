@@ -17,6 +17,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<DashboardItem> _DashboardItemsRepo;
 
         protected readonly IGenericRepository<ViewDashboardItems> _viewDashboardItems;
+        protected readonly IGenericRepository<ViewDashboardStores> _viewDashboardStores;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -28,6 +29,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<DashboardItem> DashboardItemsRepo,
 
             IGenericRepository<ViewDashboardItems> viewDashboardItems,
+            IGenericRepository<ViewDashboardStores> viewDashboardStores,
 
         IUnitOfWork unitOfWork)
         {
@@ -38,6 +40,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this._DashboardItemsRepo = DashboardItemsRepo;
 
             this._viewDashboardItems = viewDashboardItems;
+            this._viewDashboardStores = viewDashboardStores;
 
             this.unitOfWork = unitOfWork;
         }
@@ -283,6 +286,18 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+        #endregion
+
+        #endregion
+
+        #region DashboardStores
+
+        #region Views
+        public async Task<PagedList<ViewDashboardStores>> GetViewDashboardStoresByUserIdAsync(string userId)
+        {
+            var view = await _viewDashboardStores.GetWithFilterAsync(X=>X.UserId==userId);
+            return view;
         }
         #endregion
 

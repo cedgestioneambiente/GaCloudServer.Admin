@@ -1091,7 +1091,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             });
             #endregion
 
-
             #region Progetti
             builder.Entity<ViewGaProgettiJobs>(entity =>
             {
@@ -1102,7 +1101,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
             
             #endregion
-
 
             base.OnModelCreating(builder);
 
