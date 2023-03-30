@@ -1098,7 +1098,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewDashboardStores))
-                .HasKey(x => x.Id);
+                .HasNoKey();
             });
             #endregion
 

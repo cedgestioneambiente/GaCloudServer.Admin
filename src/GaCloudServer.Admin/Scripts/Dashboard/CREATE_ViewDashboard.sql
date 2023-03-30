@@ -25,7 +25,8 @@ AS
 SELECT CASE WHEN B.Id IS NULL THEN CAST(0 as bigint) ELSE B.Id END  Id,A.DashId,A.UserId,A.DashRoles,C.Title DashTitle,C.Descrizione DashDesc, 
 C.DashboardTypeId DashTypeId,D.[Type] DashType,D.Descrizione DashTypeDesc ,
 C.DashboardSectionId DashSectionId,E.Descrizione DashSection,
-CASE when B.[Order] IS NULL THEN 0 ELSE B.[Order] END [Order],
+C.Script DashScript,
+CASE when B.[Order] IS NULL THEN 999 ELSE B.[Order] END [Order],
 CASE WHEN B.Id IS NULL THEN CAST(0 as BIT) ELSE CAST(1 as BIT) END [Enabled],
 CAST(0 AS BIT) [Disabled]
 FROM(

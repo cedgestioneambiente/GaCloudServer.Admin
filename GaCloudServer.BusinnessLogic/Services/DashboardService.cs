@@ -15,6 +15,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<DashboardType> _DashboardTypesRepo;
         protected readonly IGenericRepository<DashboardSection> _DashboardSectionsRepo;
         protected readonly IGenericRepository<DashboardItem> _DashboardItemsRepo;
+        protected readonly IGenericRepository<DashboardStore> _dashboardStoresRepo;
 
         protected readonly IGenericRepository<ViewDashboardItems> _viewDashboardItems;
         protected readonly IGenericRepository<ViewDashboardStores> _viewDashboardStores;
@@ -27,6 +28,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<DashboardType> DashboardTypesRepo,
             IGenericRepository<DashboardSection> DashboardSectionsRepo,
             IGenericRepository<DashboardItem> DashboardItemsRepo,
+            IGenericRepository<DashboardStore> _dashboardStoresRepo,
 
             IGenericRepository<ViewDashboardItems> viewDashboardItems,
             IGenericRepository<ViewDashboardStores> viewDashboardStores,
@@ -38,6 +40,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this._DashboardTypesRepo = DashboardTypesRepo;
             this._DashboardSectionsRepo = DashboardSectionsRepo;
             this._DashboardItemsRepo = DashboardItemsRepo;
+            this._dashboardStoresRepo = _dashboardStoresRepo;
 
             this._viewDashboardItems = viewDashboardItems;
             this._viewDashboardStores = viewDashboardStores;
@@ -292,6 +295,36 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region DashboardStores
+        public async Task<bool> UpdateDashboardStoresAsync(List<ViewDashboardStores> stores)
+        {
+            if (stores.Count > 0)
+            {
+                var presentStores = await _dashboardStoresRepo.GetWithFilterAsync(x => x.UserId == stores.FirstOrDefault().UserId);
+                _dashboardStoresRepo.RemoveRange(presentStores.Data);
+                await SaveChanges();
+                int index = 1;
+                foreach (var dashboard in stores)
+                {
+                    if (dashboard.Enabled == true)
+                    {
+                        var store = new DashboardStore();
+                        store.DashboardItemId = dashboard.DashId;
+                        store.UserId = dashboard.UserId;
+                        store.Order = index;
+                        await _dashboardStoresRepo.AddAsync(store);
+                        await SaveChanges();
+                        index++;
+                    }
+                   
+
+                }
+
+                return true;
+            }
+            else
+            { return true; }
+
+        }
 
         #region Views
         public async Task<PagedList<ViewDashboardStores>> GetViewDashboardStoresByUserIdAsync(string userId)

@@ -14,6 +14,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboar
         public string DashTypeDesc { get; set; }
         public long DashSectionId { get; set; }
         public string DashSection { get; set; }
+        public string DashScript { get; set; }
         public int Order { get; set; }
         public bool Enabled { get; set; }
     }
