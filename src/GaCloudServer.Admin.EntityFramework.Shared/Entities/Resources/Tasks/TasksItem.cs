@@ -15,5 +15,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks
         public long Priority { get; set; }
         public string Tags { get; set; }
         public long Order { get; set; }
+        public int Warning { get; set; }
     }
 }

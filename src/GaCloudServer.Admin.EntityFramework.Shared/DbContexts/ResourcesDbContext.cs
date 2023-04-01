@@ -45,6 +45,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -420,6 +421,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Tasks
         public DbSet<TasksTag> TasksTags { get; set; }
         public DbSet<TasksItem> TasksItems { get; set; }
+
+        #region Views
+        public DbSet<ViewTasks> ViewTasks { get; set; }
+        #endregion
         #endregion
 
         #region System
@@ -1062,7 +1067,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             #endregion
 
             #region Shortcut
-            builder.Entity<ViewShortcutItems>(entity =>
+            builder.Entity<ViewTasks>(entity =>
             {
                 entity
                 .ToView(nameof(ViewShortcutItems))
@@ -1110,7 +1115,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasKey(x => x.Id);
             });
 
-            
+
+            #endregion
+
+            #region Tasks
+            builder.Entity<ViewTasks>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewTasks))
+                .HasKey(x => x.Id);
+            });
+
+
             #endregion
 
             base.OnModelCreating(builder);

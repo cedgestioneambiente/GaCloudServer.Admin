@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
@@ -16,6 +18,11 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateTasksTagAsync(long id, string descrizione);
         Task<bool> ChangeStatusTasksTagAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewTasks>> GetViewTasksAsync(bool all = true);
+        Task<PagedList<ViewTasks>> GetViewTasksByUserIdAsync(string userId);
         #endregion
 
         #endregion
