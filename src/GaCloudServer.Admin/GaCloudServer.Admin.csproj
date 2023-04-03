@@ -251,6 +251,12 @@
 	  <None Update="Scripts\Shortcuts\DROP_ViewShortcuts.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Tasks\CREATE_ViewTasks.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Tasks\DROP_ViewTasks.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks;
 using GaCloudServer.BusinnessLogic.Mappers;
@@ -13,6 +14,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<TasksItem> tasksItemsRepo;
         protected readonly IGenericRepository<TasksTag> tasksTagsRepo;
 
+        protected readonly IGenericRepository<ViewTasks> viewTasksRepo;
+
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -20,10 +23,14 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<TasksItem> tasksItemsRepo,
             IGenericRepository<TasksTag> tasksTagsRepo,
 
+            IGenericRepository<ViewTasks> viewTasksRepo,
+
             IUnitOfWork unitOfWork)
         {
             this.tasksItemsRepo = tasksItemsRepo;
             this.tasksTagsRepo = tasksTagsRepo;
+
+            this.viewTasksRepo = viewTasksRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -89,21 +96,35 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<bool> ChangeStatusTasksItemAsync(long id)
         {
             var entity = await tasksItemsRepo.GetByIdAsync(id);
-            if (entity.Disabled)
+            if (entity.Completed)
             {
-                entity.Disabled = false;
+                entity.Completed = false;
                 tasksItemsRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
             else
             {
-                entity.Disabled = true;
+                entity.Completed = true;
                 tasksItemsRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
 
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewTasks>> GetViewTasksAsync(bool all = true)
+        {
+            var entities = all ? await viewTasksRepo.GetAllAsync(1, 0) : await viewTasksRepo.GetWithFilterAsync(x => x.Disabled == false);
+            return entities;
+        }
+
+        public async Task<PagedList<ViewTasks>> GetViewTasksByUserIdAsync(string userId)
+        {
+            var entities = await viewTasksRepo.GetWithFilterAsync(x => x.UserId == userId);
+            return entities;
         }
         #endregion
 

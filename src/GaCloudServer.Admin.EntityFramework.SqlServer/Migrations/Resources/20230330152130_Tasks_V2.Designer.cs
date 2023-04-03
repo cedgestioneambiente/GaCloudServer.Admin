@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230330152130_Tasks_V2")]
+    partial class Tasks_V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2523,9 +2525,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
-
-                    b.Property<string>("Permissions")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Personale")
                         .HasColumnType("bit");
@@ -7552,64 +7551,37 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToTable("ShortcutLinks");
                 });
 
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views.ViewTasks", b =>
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views.ViewShortcutItems", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CompletionStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeadlineStatus")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Notes")
+                    b.Property<string>("Icon")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Order")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Owner")
+                    b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Priority")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Shared")
+                    b.Property<string>("ShortcutLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SharedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tags")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("UseRouter")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Warning")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToView("ViewTasks");
+                    b.ToView("ViewShortcutItems");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System.SystemVersion", b =>

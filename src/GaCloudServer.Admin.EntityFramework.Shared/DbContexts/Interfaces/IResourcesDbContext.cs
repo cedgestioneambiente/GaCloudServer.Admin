@@ -44,6 +44,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -418,6 +419,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Tasks
         DbSet<TasksTag> TasksTags{ get; set; }
         DbSet<TasksItem> TasksItems { get; set; }
+
+        #region Views
+        DbSet<ViewTasks> ViewTasks { get; set; }
+        #endregion
         #endregion
 
         #region System

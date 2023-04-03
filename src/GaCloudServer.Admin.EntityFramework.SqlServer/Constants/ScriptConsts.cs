@@ -133,11 +133,15 @@
         public const string CREATE_ViewProgetti = "CREATE_ViewGaProgetti.sql";
         public const string DROP_ViewProgetti = "DROP_ViewGaProgetti.sql";
 
-
         //Dashboard
         public const string Dashboard = @".\Scripts\Dashboard\";
         public const string CREATE_ViewDashboard = "CREATE_ViewDashboard.sql";
         public const string DROP_ViewDashboard = "DROP_ViewDashboard.sql";
+
+        //Tasks
+        public const string Tasks = @".\Scripts\Tasks\";
+        public const string CREATE_ViewTasks = "CREATE_ViewTasks.sql";
+        public const string DROP_ViewTasks = "DROP_ViewTasks.sql";
 
     }
 }
