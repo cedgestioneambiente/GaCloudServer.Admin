@@ -322,7 +322,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetViewTasksByVeicoloIdAsync/{userId}")]
+        [HttpGet("GetViewTasksByUserIdAsync/{userId}")]
         public async Task<ActionResult<ApiResponse>> GetViewTasksByUserIdAsync(string userId)
         {
             try

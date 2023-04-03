@@ -20,11 +20,6 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusTasksTagAsync(long id);
         #endregion
 
-        #region Views
-        Task<PagedList<ViewTasks>> GetViewTasksAsync(bool all = true);
-        Task<PagedList<ViewTasks>> GetViewTasksByUserIdAsync(string userId);
-        #endregion
-
         #endregion
 
         #region TasksItems
@@ -39,6 +34,11 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateTasksItemAsync(long id, string descrizione);
         Task<bool> ChangeStatusTasksItemAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewTasks>> GetViewTasksAsync(bool all = true);
+        Task<PagedList<ViewTasks>> GetViewTasksByUserIdAsync(string userId);
         #endregion
 
         #endregion
