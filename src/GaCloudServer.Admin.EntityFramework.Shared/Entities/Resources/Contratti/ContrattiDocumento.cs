@@ -21,6 +21,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratt
         public bool Commerciale { get; set; }
         public bool AffariGenerali { get; set; }
         public bool Archiviato { get; set; }
+        public string Permissions { get; set; }
         public long ContrattiServizioId { get; set; }
         public bool Preventivo { get; set; }
         public string PreventivoNumero { get; set; }
