@@ -173,7 +173,7 @@ CREATE PROCEDURE [dbo].[SP_GetGaContrattiPermessi]
 	                DECLARE load_cursor CURSOR LOCAL STATIC READ_ONLY FORWARD_ONLY FOR 
 		                SELECT id,Direzione,Contabilita,Personale,Informatica,Tecnico,QualitaSicurezza,Commerciale,AffariGenerali,Comunicazione
 		                FROM GaContrattiDocumenti
-		                where ContrattiFornitoreId=@fornitoreId
+		                where ContrattiSoggettoId=@soggettoId
 
 
 	                -- SET NOCOUNT ON added to prevent extra result sets from
@@ -183,7 +183,7 @@ CREATE PROCEDURE [dbo].[SP_GetGaContrattiPermessi]
 
 	                IF(@isAdministrative>'0')
 	                BEGIN
-	                select * from ViewGaContrattiDocumenti where ContrattiFornitoreId=@fornitoreId and Archiviato=@archiviato
+	                select * from ViewGaContrattiDocumenti where ContrattiSoggettoId=@soggettoId and Archiviato=@archiviato
 	                END
 
 	                ELSE

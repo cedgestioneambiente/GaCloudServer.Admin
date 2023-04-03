@@ -15,7 +15,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 table: "QueryBuilderParamOnScripts",
                 type: "nvarchar(max)",
                 nullable: true);
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.QueryBuilder, ScriptConsts.CREATE_ViewQueryBuilder));
+            //migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.QueryBuilder, ScriptConsts.CREATE_ViewQueryBuilder));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -23,7 +23,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
             migrationBuilder.DropColumn(
                 name: "Nome",
                 table: "QueryBuilderParamOnScripts");
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.QueryBuilder, ScriptConsts.DROP_ViewQueryBuilder));
+            //migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.QueryBuilder, ScriptConsts.DROP_ViewQueryBuilder));
         }
     }
 }

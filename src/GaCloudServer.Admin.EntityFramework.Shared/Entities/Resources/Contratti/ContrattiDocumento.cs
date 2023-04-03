@@ -5,12 +5,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratt
 {
     public class ContrattiDocumento : GenericFileEntity
     {
-        public long ContrattiFornitoreId { get; set; }
+        public long ContrattiSoggettoId { get; set; }
         public int Numero { get; set; }
         public string Descrizione { get; set; }
         public string CodiceCig { get; set; }
         public string Faldone { get; set; }
-        public DateTime? DataScadenza { get; set; }
+        public DateTime DataScadenza { get; set; }
         public long ContrattiModalitaId { get; set; }
         public bool Direzione { get; set; }
         public bool Contabilita { get; set; }
@@ -22,17 +22,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratt
         public bool AffariGenerali { get; set; }
         public bool Archiviato { get; set; }
         public string Permissions { get; set; }
-        public long ContrattiServizioId { get; set; }
-        public bool Preventivo { get; set; }
+        public long? ContrattiPreventivoId { get; set; }
         public string PreventivoNumero { get; set; }
         public long ContrattiTipologiaId { get; set; }
-
         public int SogliaAvviso { get; set; }
         public bool Comunicazione { get; set; }
 
-        public ContrattiFornitore ContrattiFornitore { get; set; }
+        public ContrattiSoggetto ContrattiSoggetto { get; set; }
         public ContrattiModalita ContrattiModalita { get; set; }
-        public ContrattiServizio ContrattiServizio { get; set; }
         public ContrattiTipologia ContrattiTipologia { get; set; }
     }
 }

@@ -60,8 +60,8 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
 
     #endregion
 
-    #region Contratti Fornitori
-    public class ContrattiFornitoreApiDto : GenericApiDto
+    #region Contratti Soggetti
+    public class ContrattiSoggettoApiDto : GenericApiDto
     {
         public string RagioneSociale { get; set; }
         public string CodiceFiscale { get; set; }
@@ -71,9 +71,11 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
         public string? Telefono { get; set; }
         public string? Fax { get; set; }
         public string? Email { get; set; }
+        public bool Fornitore { get; set; }
+        public bool Cliente { get; set; }
     }
 
-    public class ContrattiFornitoriApiDto : GenericPagedListApiDto<ContrattiFornitoreApiDto>
+    public class ContrattiSoggettiApiDto : GenericPagedListApiDto<ContrattiSoggettoApiDto>
     {
     }
 
@@ -82,12 +84,12 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
     #region Contratti Documenti
     public class ContrattiDocumentoApiDto : GenericFileApiDto
     {
-        public long ContrattiFornitoreId { get; set; }
+        public long ContrattiSoggettoId { get; set; }
         public int Numero { get; set; }
-        public string? Descrizione { get; set; }
+        public string Descrizione { get; set; }
         public string? CodiceCig { get; set; }
         public string? Faldone { get; set; }
-        public DateTime? DataScadenza { get; set; }
+        public DateTime DataScadenza { get; set; }
         public long ContrattiModalitaId { get; set; }
         public bool Direzione { get; set; }
         public bool Contabilita { get; set; }
@@ -99,8 +101,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
         public bool AffariGenerali { get; set; }
         public string Permissions { get; set; }
         public bool Archiviato { get; set; }
-        public long ContrattiServizioId { get; set; }
-        public bool Preventivo { get; set; }
+        public long? ContrattiPreventivoId { get; set; }
         public string? PreventivoNumero { get; set; }
         public long ContrattiTipologiaId { get; set; }
         public int SogliaAvviso { get; set; }

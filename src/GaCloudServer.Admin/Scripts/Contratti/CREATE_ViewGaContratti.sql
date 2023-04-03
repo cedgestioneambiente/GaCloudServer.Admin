@@ -1,27 +1,25 @@
 ﻿CREATE VIEW [dbo].[ViewGaContrattiDocumenti]
 AS
-SELECT   dbo.GaContrattiDocumenti.Id, dbo.GaContrattiDocumenti.ContrattiFornitoreId, dbo.GaContrattiDocumenti.Numero, dbo.GaContrattiDocumenti.Descrizione, 
-                         dbo.GaContrattiDocumenti.Faldone, dbo.GaContrattiDocumenti.DataScadenza, dbo.GaContrattiModalitas.Descrizione AS Modalita, dbo.GaContrattiServizi.Descrizione AS Servizio, 
+SELECT   dbo.GaContrattiDocumenti.Id, dbo.GaContrattiDocumenti.ContrattiSoggettoId, dbo.GaContrattiDocumenti.Numero, dbo.GaContrattiDocumenti.Descrizione, 
+                         dbo.GaContrattiDocumenti.Faldone, dbo.GaContrattiDocumenti.DataScadenza, dbo.GaContrattiModalitas.Descrizione AS Modalita,
                          dbo.GaContrattiTipologie.Descrizione AS Tipologia, dbo.GaContrattiDocumenti.FileId, dbo.GaContrattiDocumenti.FileName, CASE WHEN DATEDIFF(day, GETDATE(), DataScadenza) 
                          < 0 THEN 'R' WHEN DATEDIFF(day, GETDATE(), DataScadenza) < SogliaAvviso THEN 'G' ELSE 'V' END AS Stato, dbo.GaContrattiDocumenti.Archiviato, 
                          dbo.GaContrattiDocumenti.Disabled
 FROM         dbo.GaContrattiDocumenti INNER JOIN
-                         dbo.GaContrattiModalitas ON dbo.GaContrattiDocumenti.ContrattiModalitaId = dbo.GaContrattiModalitas.Id INNER JOIN
-                         dbo.GaContrattiServizi ON dbo.GaContrattiDocumenti.ContrattiServizioId = dbo.GaContrattiServizi.Id INNER JOIN
+                         dbo.GaContrattiModalitas ON dbo.GaContrattiDocumenti.ContrattiModalitaId = dbo.GaContrattiModalitas.Id  INNER JOIN
                          dbo.GaContrattiTipologie ON dbo.GaContrattiDocumenti.ContrattiTipologiaId = dbo.GaContrattiTipologie.Id
 GO
 
 CREATE VIEW [dbo].[ViewGaContrattiDocumentiList]
 AS
-SELECT   dbo.GaContrattiDocumenti.Id, dbo.GaContrattiDocumenti.ContrattiFornitoreId, dbo.GaContrattiDocumenti.Numero, dbo.GaContrattiDocumenti.Faldone, 
-                         dbo.GaContrattiFornitori.RagioneSociale, dbo.GaContrattiDocumenti.Descrizione, dbo.GaContrattiDocumenti.CodiceCig, dbo.GaContrattiTipologie.Descrizione AS Tipologia, 
+SELECT   dbo.GaContrattiDocumenti.Id, dbo.GaContrattiDocumenti.ContrattiSoggettoId, dbo.GaContrattiDocumenti.Numero, dbo.GaContrattiDocumenti.Faldone, 
+                         dbo.GaContrattiSoggetti.RagioneSociale, dbo.GaContrattiDocumenti.Descrizione, dbo.GaContrattiDocumenti.CodiceCig, dbo.GaContrattiTipologie.Descrizione AS Tipologia, 
                          dbo.GaContrattiDocumenti.DataScadenza, dbo.GaContrattiModalitas.Descrizione AS Modalita, dbo.GaContrattiDocumenti.FileId, dbo.GaContrattiDocumenti.FileName, 
                          CASE WHEN DATEDIFF(day, GETDATE(), DataScadenza) < 0 THEN 'R' WHEN DATEDIFF(day, GETDATE(), DataScadenza) < SogliaAvviso THEN 'G' ELSE 'V' END AS Stato, 
                          dbo.GaContrattiTipologie.Id AS TipologiaId, dbo.GaContrattiDocumenti.Archiviato, dbo.GaContrattiDocumenti.Disabled
 FROM         dbo.GaContrattiDocumenti INNER JOIN
-                         dbo.GaContrattiFornitori ON dbo.GaContrattiDocumenti.ContrattiFornitoreId = dbo.GaContrattiFornitori.Id INNER JOIN
+                         dbo.GaContrattiSoggetti ON dbo.GaContrattiDocumenti.ContrattiSoggettoId = dbo.GaContrattiSoggetti.Id INNER JOIN
                          dbo.GaContrattiModalitas ON dbo.GaContrattiDocumenti.ContrattiModalitaId = dbo.GaContrattiModalitas.Id INNER JOIN
-                         dbo.GaContrattiServizi ON dbo.GaContrattiDocumenti.ContrattiServizioId = dbo.GaContrattiServizi.Id INNER JOIN
                          dbo.GaContrattiTipologie ON dbo.GaContrattiDocumenti.ContrattiTipologiaId = dbo.GaContrattiTipologie.Id
 GO
 

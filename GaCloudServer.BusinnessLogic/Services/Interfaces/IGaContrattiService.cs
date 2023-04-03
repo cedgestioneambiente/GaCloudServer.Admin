@@ -93,25 +93,25 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
-        #region GaContrattiFornitori
-        Task<ContrattiFornitoriDto> GetGaContrattiFornitoriAsync(int page = 1, int pageSize = 0);
-        Task<ContrattiFornitoreDto> GetGaContrattiFornitoreByIdAsync(long id);
+        #region GaContrattiSoggetti
+        Task<ContrattiSoggettiDto> GetGaContrattiSoggettiAsync(int page = 1, int pageSize = 0);
+        Task<ContrattiSoggettoDto> GetGaContrattiSoggettoByIdAsync(long id);
 
-        Task<long> AddGaContrattiFornitoreAsync(ContrattiFornitoreDto dto);
-        Task<long> UpdateGaContrattiFornitoreAsync(ContrattiFornitoreDto dto);
+        Task<long> AddGaContrattiSoggettoAsync(ContrattiSoggettoDto dto);
+        Task<long> UpdateGaContrattiSoggettoAsync(ContrattiSoggettoDto dto);
 
-        Task<bool> DeleteGaContrattiFornitoreAsync(long id);
+        Task<bool> DeleteGaContrattiSoggettoAsync(long id);
 
         #region Functions
-        Task<bool> ValidateGaContrattiFornitoreAsync(long id, string partitaIva);
-        Task<bool> ChangeStatusGaContrattiFornitoreAsync(long id);
+        Task<bool> ValidateGaContrattiSoggettoAsync(long id, string partitaIva);
+        Task<bool> ChangeStatusGaContrattiSoggettoAsync(long id);
 
         #endregion
 
         #endregion
 
         #region GaContrattiDocumenti
-        Task<ContrattiDocumentiDto> GetGaContrattiDocumentiByIdAsync(long fornitoreId);
+        Task<ContrattiDocumentiDto> GetGaContrattiDocumentiByIdAsync(long soggettoId);
         Task<ContrattiDocumentoDto> GetGaContrattiDocumentoByIdAsync(long id);
 
         Task<long> AddGaContrattiDocumentoAsync(ContrattiDocumentoDto dto);

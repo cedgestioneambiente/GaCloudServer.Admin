@@ -5,7 +5,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratt
 {
     public class SpGaContrattiPermessoMode : GenericEntity
     {
-        public long ContrattiFornitoreId { get; set; }
+        public long ContrattiSoggettoId { get; set; }
         public int Numero { get; set; }
         public string Faldone { get; set; }
         public string RagioneSociale { get; set; }

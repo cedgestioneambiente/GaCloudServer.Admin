@@ -97,7 +97,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ContrattiTipologia> GaContrattiTipologie { get; set; }
         public DbSet<ContrattiUtenteOnPermesso> GaContrattiUtentiOnPermessi { get; set; }
         public DbSet<ContrattiModalita> GaContrattiModalitas { get; set; }
-        public DbSet<ContrattiFornitore> GaContrattiFornitori { get; set; }
+        public DbSet<ContrattiSoggetto> GaContrattiSoggetti { get; set; }
         public DbSet<ContrattiDocumento> GaContrattiDocumenti { get; set; }
 
 
@@ -424,6 +424,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region Views
         public DbSet<ViewTasks> ViewTasks { get; set; }
+        public DbSet<ViewTasksTags> ViewTasksTags { get; set; }
         #endregion
         #endregion
 
@@ -1067,7 +1068,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             #endregion
 
             #region Shortcut
-            builder.Entity<ViewTasks>(entity =>
+            builder.Entity<ViewShortcutItems>(entity =>
             {
                 entity
                 .ToView(nameof(ViewShortcutItems))
@@ -1123,6 +1124,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewTasks))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewTasksTags>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewTasksTags))
                 .HasKey(x => x.Id);
             });
 

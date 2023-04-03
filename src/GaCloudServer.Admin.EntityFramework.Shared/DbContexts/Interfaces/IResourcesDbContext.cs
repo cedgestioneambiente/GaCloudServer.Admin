@@ -94,7 +94,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ContrattiTipologia> GaContrattiTipologie { get; set; }
         DbSet<ContrattiUtenteOnPermesso> GaContrattiUtentiOnPermessi { get; set; }
         DbSet<ContrattiModalita> GaContrattiModalitas { get; set; }
-        DbSet<ContrattiFornitore> GaContrattiFornitori { get; set; }
+        DbSet<ContrattiSoggetto> GaContrattiSoggetti { get; set; }
         DbSet<ContrattiDocumento> GaContrattiDocumenti { get; set; }
 
         #region Views
@@ -422,6 +422,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #region Views
         DbSet<ViewTasks> ViewTasks { get; set; }
+        DbSet<ViewTasksTags> ViewTasksTags { get; set; }
         #endregion
         #endregion
 

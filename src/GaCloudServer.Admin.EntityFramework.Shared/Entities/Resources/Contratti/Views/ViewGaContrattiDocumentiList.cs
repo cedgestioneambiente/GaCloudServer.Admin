@@ -9,7 +9,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratt
 {
     public class ViewGaContrattiDocumentiList : GenericEntity
     {
-        public long ContrattoFornitoreId { get; set; }
+        public long ContrattoSoggettoId { get; set; }
         public int Numero { get; set; }
         public string Faldone { get; set; }
         public string RagioneSociale { get; set; }

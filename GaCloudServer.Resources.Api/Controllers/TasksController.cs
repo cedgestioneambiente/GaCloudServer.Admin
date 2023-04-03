@@ -337,6 +337,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("GetViewTasksTagsAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewTasksTagsAsync(bool all = true)
+        {
+            try
+            {
+                var view = await _tasksService.GetViewTasksTagsAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #endregion

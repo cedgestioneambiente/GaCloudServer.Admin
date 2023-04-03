@@ -39,6 +39,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Views
         Task<PagedList<ViewTasks>> GetViewTasksAsync(bool all = true);
         Task<PagedList<ViewTasks>> GetViewTasksByUserIdAsync(string userId);
+        Task<PagedList<ViewTasksTags>> GetViewTasksTagsAsync(bool all = true);
         #endregion
 
         #endregion

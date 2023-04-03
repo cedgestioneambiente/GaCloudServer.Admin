@@ -619,14 +619,14 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
         #endregion
 
-        #region GaContrattiFornitori
-        [HttpGet("GetGaContrattiFornitoriAsync/{page}/{pageSize}")]
-        public async Task<ActionResult<ApiResponse>> GetGaContrattiFornitoriAsync(int page = 1, int pageSize = 0)
+        #region GaContrattiSoggetti
+        [HttpGet("GetGaContrattiSoggettiAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContrattiSoggettiAsync(int page = 1, int pageSize = 0)
         {
             try
             {
-                var dtos = await _gaContrattiService.GetGaContrattiFornitoriAsync(page, pageSize);
-                var apiDtos = dtos.ToApiDto<ContrattiFornitoriApiDto, ContrattiFornitoriDto>();
+                var dtos = await _gaContrattiService.GetGaContrattiSoggettiAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ContrattiSoggettiApiDto, ContrattiSoggettiDto>();
                 return new ApiResponse(apiDtos);
             }
             catch (Exception ex)
@@ -637,13 +637,13 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetGaContrattiFornitoreByIdAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> GetGaContrattiFornitoreByIdAsync(long id)
+        [HttpGet("GetGaContrattiSoggettoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContrattiSoggettoByIdAsync(long id)
         {
             try
             {
-                var dto = await _gaContrattiService.GetGaContrattiFornitoreByIdAsync(id);
-                var apiDto = dto.ToApiDto<ContrattiFornitoreApiDto, ContrattiFornitoreDto>();
+                var dto = await _gaContrattiService.GetGaContrattiSoggettoByIdAsync(id);
+                var apiDto = dto.ToApiDto<ContrattiSoggettoApiDto, ContrattiSoggettoDto>();
                 return new ApiResponse(apiDto);
             }
             catch (Exception ex)
@@ -654,8 +654,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("AddGaContrattiFornitoreAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaContrattiFornitoreAsync([FromBody] ContrattiFornitoreApiDto apiDto)
+        [HttpPost("AddGaContrattiSoggettoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaContrattiSoggettoAsync([FromBody] ContrattiSoggettoApiDto apiDto)
         {
             try
             {
@@ -663,8 +663,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                var dto = apiDto.ToDto<ContrattiFornitoreDto, ContrattiFornitoreApiDto>();
-                var response = await _gaContrattiService.AddGaContrattiFornitoreAsync(dto);
+                var dto = apiDto.ToDto<ContrattiSoggettoDto, ContrattiSoggettoApiDto>();
+                var response = await _gaContrattiService.AddGaContrattiSoggettoAsync(dto);
 
                 return new ApiResponse(response);
             }
@@ -681,8 +681,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("UpdateGaContrattiFornitoreAsync")]
-        public async Task<ActionResult<ApiResponse>> UpdateGaContrattiFornitoreAsync([FromBody] ContrattiFornitoreApiDto apiDto)
+        [HttpPost("UpdateGaContrattiSoggettoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaContrattiSoggettoAsync([FromBody] ContrattiSoggettoApiDto apiDto)
         {
             try
             {
@@ -690,8 +690,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                var dto = apiDto.ToDto<ContrattiFornitoreDto, ContrattiFornitoreApiDto>();
-                var response = await _gaContrattiService.UpdateGaContrattiFornitoreAsync(dto);
+                var dto = apiDto.ToDto<ContrattiSoggettoDto, ContrattiSoggettoApiDto>();
+                var response = await _gaContrattiService.UpdateGaContrattiSoggettoAsync(dto);
 
                 return new ApiResponse(response);
             }
@@ -703,12 +703,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaContrattiFornitoreAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaContrattiFornitoreAsync(long id)
+        [HttpDelete("DeleteGaContrattiSoggettoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaContrattiSoggettoAsync(long id)
         {
             try
             {
-                var response = await _gaContrattiService.DeleteGaContrattiFornitoreAsync(id);
+                var response = await _gaContrattiService.DeleteGaContrattiSoggettoAsync(id);
 
                 return new ApiResponse(response);
             }
@@ -721,12 +721,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateGaContrattiFornitoreAsync/{id}/{partitaIva}")]
-        public async Task<ActionResult<ApiResponse>> ValidateGaContrattiFornitoreAsync(long id, string partitaIva)
+        [HttpGet("ValidateGaContrattiSoggettoAsync/{id}/{partitaIva}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaContrattiSoggettoAsync(long id, string partitaIva)
         {
             try
             {
-                var response = await _gaContrattiService.ValidateGaContrattiFornitoreAsync(id, partitaIva);
+                var response = await _gaContrattiService.ValidateGaContrattiSoggettoAsync(id, partitaIva);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -737,12 +737,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ChangeStatusGaContrattiFornitoreAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> ChangeStatusGaContrattiFornitoreAsync(long id)
+        [HttpGet("ChangeStatusGaContrattiSoggettoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaContrattiSoggettoAsync(long id)
         {
             try
             {
-                var response = await _gaContrattiService.ChangeStatusGaContrattiFornitoreAsync(id);
+                var response = await _gaContrattiService.ChangeStatusGaContrattiSoggettoAsync(id);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -1000,7 +1000,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetViewGaContrattiDocumentiByIdAsync")]//GetViewGaContrattiDocumentiByFornitoreId/{contrattiFornitoreId}
+        [HttpGet("GetViewGaContrattiDocumentiByIdAsync")]//GetViewGaContrattiDocumentiBySoggettoId/{contrattiSoggettoId}
         public async Task<ApiResponse> GetViewGaContrattiByIdAsync([FromBody] ContrattiDocumentiRequestApiDto apiDto)
         {
             try

@@ -127,7 +127,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ContrattiTipologia>, GenericRepository<TResourcesDbContext, ContrattiTipologia>>();
             services.AddTransient<IGenericRepository<ContrattiUtenteOnPermesso>, GenericRepository<TResourcesDbContext, ContrattiUtenteOnPermesso>>();
             services.AddTransient<IGenericRepository<ContrattiModalita>, GenericRepository<TResourcesDbContext, ContrattiModalita>>();
-            services.AddTransient<IGenericRepository<ContrattiFornitore>, GenericRepository<TResourcesDbContext, ContrattiFornitore>>();
+            services.AddTransient<IGenericRepository<ContrattiSoggetto>, GenericRepository<TResourcesDbContext, ContrattiSoggetto>>();
             services.AddTransient<IGenericRepository<ContrattiDocumento>, GenericRepository<TResourcesDbContext, ContrattiDocumento>>();
 
             //Views
@@ -415,6 +415,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<TasksItem>, GenericRepository<TResourcesDbContext, TasksItem>>();
 
             services.AddTransient<IGenericRepository<ViewTasks>, GenericRepository<TResourcesDbContext, ViewTasks>>();
+            services.AddTransient<IGenericRepository<ViewTasksTags>, GenericRepository<TResourcesDbContext, ViewTasksTags>>();
             #endregion
 
             //System
@@ -464,7 +465,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ContrattiTipologia>, GenericRepository<TResourcesDbContext, ContrattiTipologia>>();
             services.AddTransient<IGenericRepository<ContrattiUtenteOnPermesso>, GenericRepository<TResourcesDbContext, ContrattiUtenteOnPermesso>>();
             services.AddTransient<IGenericRepository<ContrattiModalita>, GenericRepository<TResourcesDbContext, ContrattiModalita>>();
-            services.AddTransient<IGenericRepository<ContrattiFornitore>, GenericRepository<TResourcesDbContext, ContrattiFornitore>>();
+            services.AddTransient<IGenericRepository<ContrattiSoggetto>, GenericRepository<TResourcesDbContext, ContrattiSoggetto>>();
             services.AddTransient<IGenericRepository<ContrattiDocumento>, GenericRepository<TResourcesDbContext, ContrattiDocumento>>();
 
             //Views

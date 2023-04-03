@@ -16,8 +16,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.NotificationMigration, ScriptConsts.CREATE_ViewNotification));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaAutorizzazioniMigration, ScriptConsts.CREATE_ViewGaAutorizzazioniDocumenti));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaBackOfficeMigration, ScriptConsts.CREATE_ViewGaBackOffice));
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCdrMigration, ScriptConsts.CREATE_ViewGaCdr));
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContrattiMigration, ScriptConsts.CREATE_ViewGaContratti));
+            //migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCdrMigration, ScriptConsts.CREATE_ViewGaCdr));
+            //migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContrattiMigration, ScriptConsts.CREATE_ViewGaContratti));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaMezziMigration, ScriptConsts.CREATE_ViewGaMezzi));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaPrenotazioneAutoMigration, ScriptConsts.CREATE_ViewGaPrenotazioneAuto));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCsrMigration, ScriptConsts.CREATE_ViewGaCsr));
@@ -39,8 +39,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.NotificationMigration, ScriptConsts.DROP_ViewNotification));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaAutorizzazioniMigration, ScriptConsts.DROP_ViewGaAutorizzazioniDocumenti));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaBackOfficeMigration, ScriptConsts.DROP_ViewGaBackOffice));
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCdrMigration, ScriptConsts.DROP_ViewGaCdr));
-            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContrattiMigration, ScriptConsts.DROP_ViewGaContratti));
+            //migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCdrMigration, ScriptConsts.DROP_ViewGaCdr));
+            //migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaContrattiMigration, ScriptConsts.DROP_ViewGaContratti));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaMezziMigration, ScriptConsts.DROP_ViewGaMezzi));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaPrenotazioneAutoMigration, ScriptConsts.DROP_ViewGaPrenotazioneAuto));
             migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCsrMigration, ScriptConsts.DROP_ViewGaCsr));

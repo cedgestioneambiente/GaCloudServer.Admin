@@ -59,8 +59,8 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
 
     #endregion
 
-    #region Contratti Fornitori
-    public class ContrattiFornitoreDto : GenericDto
+    #region Contratti Soggetti
+    public class ContrattiSoggettoDto : GenericDto
     {
         public string RagioneSociale { get; set; }
         public string CodiceFiscale { get; set; }
@@ -70,9 +70,11 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
         public string Telefono { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
+        public bool Fornitore { get; set; }
+        public bool Cliente { get; set; }
     }
 
-    public class ContrattiFornitoriDto : GenericPagedListDto<ContrattiFornitoreDto>
+    public class ContrattiSoggettiDto : GenericPagedListDto<ContrattiSoggettoDto>
     {
     }
 
@@ -81,12 +83,12 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
     #region Contratti Documenti
     public class ContrattiDocumentoDto : GenericFileDto
     {
-        public long ContrattiFornitoreId { get; set; }
+        public long ContrattiSoggettoId { get; set; }
         public int Numero { get; set; }
-        public string? Descrizione { get; set; }
+        public string Descrizione { get; set; }
         public string? CodiceCig { get; set; }
         public string? Faldone { get; set; }
-        public DateTime? DataScadenza { get; set; }
+        public DateTime DataScadenza { get; set; }
         public long ContrattiModalitaId { get; set; }
         public bool Direzione { get; set; }
         public bool Contabilita { get; set; }
@@ -98,8 +100,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
         public bool AffariGenerali { get; set; }
         public string Permissions { get; set; }
         public bool Archiviato { get; set; }
-        public long ContrattiServizioId { get; set; }
-        public bool Preventivo { get; set; }
+        public long? ContrattiPreventivoId { get; set; }
         public string? PreventivoNumero { get; set; }
         public long ContrattiTipologiaId { get; set; }
         public int SogliaAvviso { get; set; }
@@ -117,7 +118,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
     {
         public string userId { get; set; }
         public List<string> userRoles { get; set; }
-        public long fornitoreId { get; set; }
+        public long soggettoId { get; set; }
         public bool archiviato { get; set; }
     }
     #endregion

@@ -15,6 +15,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<TasksTag> tasksTagsRepo;
 
         protected readonly IGenericRepository<ViewTasks> viewTasksRepo;
+        protected readonly IGenericRepository<ViewTasksTags> viewTasksTagsRepo;
 
 
         protected readonly IUnitOfWork unitOfWork;
@@ -24,6 +25,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<TasksTag> tasksTagsRepo,
 
             IGenericRepository<ViewTasks> viewTasksRepo,
+            IGenericRepository<ViewTasksTags> viewTasksTagsRepo,
 
             IUnitOfWork unitOfWork)
         {
@@ -31,6 +33,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.tasksTagsRepo = tasksTagsRepo;
 
             this.viewTasksRepo = viewTasksRepo;
+            this.viewTasksTagsRepo = viewTasksTagsRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -124,6 +127,11 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<PagedList<ViewTasks>> GetViewTasksByUserIdAsync(string userId)
         {
             var entities = await viewTasksRepo.GetWithFilterAsync(x => x.UserId == userId);
+            return entities;
+        }
+        public async Task<PagedList<ViewTasksTags>> GetViewTasksTagsAsync(bool all = true)
+        {
+            var entities = all ? await viewTasksTagsRepo.GetAllAsync(1, 0) : await viewTasksTagsRepo.GetWithFilterAsync(x => x.Disabled == false);
             return entities;
         }
         #endregion

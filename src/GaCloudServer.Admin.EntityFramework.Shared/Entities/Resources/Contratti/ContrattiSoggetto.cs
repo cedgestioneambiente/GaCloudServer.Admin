@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti
 {
-    public class ContrattiFornitore : GenericEntity
+    public class ContrattiSoggetto : GenericEntity
     {
         public string RagioneSociale { get; set; }
         public string CodiceFiscale { get; set; }
@@ -12,5 +12,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratt
         public string Telefono { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
+        public bool Fornitore { get; set; }
+        public bool Cliente { get; set; }
     }
 }

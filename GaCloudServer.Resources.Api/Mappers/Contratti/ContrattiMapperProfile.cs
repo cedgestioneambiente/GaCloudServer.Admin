@@ -43,11 +43,11 @@ namespace GaCloudServer.Resources.Api.Mappers.Contratti
             CreateMap<ContrattiModalitasDto, ContrattiModalitasApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            //GaContrattiFornitori Map
-            CreateMap<ContrattiFornitoreDto, ContrattiFornitoreApiDto>(MemberList.Destination)
+            //GaContrattiSoggetti Map
+            CreateMap<ContrattiSoggettoDto, ContrattiSoggettoApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<ContrattiFornitoriDto, ContrattiFornitoriApiDto>(MemberList.Destination)
+            CreateMap<ContrattiSoggettiDto, ContrattiSoggettiApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //GaContrattiDocumenti Map

@@ -44,11 +44,11 @@ namespace GaCloudServer.BusinessLogic.Mappers.Contratti
             CreateMap<PagedList<ContrattiModalita>, ContrattiModalitasDto>(MemberList.Destination)
                 .ReverseMap();
 
-            //GaContrattiFornitori Map
-            CreateMap<ContrattiFornitore, ContrattiFornitoreDto>(MemberList.Destination)
+            //GaContrattiSoggetti Map
+            CreateMap<ContrattiSoggetto, ContrattiSoggettoDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PagedList<ContrattiFornitore>, ContrattiFornitoriDto>(MemberList.Destination)
+            CreateMap<PagedList<ContrattiSoggetto>, ContrattiSoggettiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //GaContrattiDocumenti Map
