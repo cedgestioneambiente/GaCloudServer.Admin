@@ -10,7 +10,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Vi
         public string Title { get; set; }
         public string Notes { get; set; }
         public bool Completed { get; set; }
-        public DateTime DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
         public long Priority { get; set; }
         public string Type { get; set; }
         public string Tags { get; set; }
