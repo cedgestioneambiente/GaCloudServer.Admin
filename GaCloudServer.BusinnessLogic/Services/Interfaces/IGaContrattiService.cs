@@ -133,25 +133,25 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Sp
-        Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync();
-        Task<PagedList<SpGaContrattiPermesso>> GetSpGaContrattiPermessoAsync(ContrattiDocumentiRequestDto dto);
-        Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto);
+        //Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync();
+        //Task<PagedList<SpGaContrattiPermesso>> GetSpGaContrattiPermessoAsync(ContrattiDocumentiRequestDto dto);
+        //Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto);
         #endregion
         #endregion
 
-        #region GaContrattiDocumenti
-        Task<ContrattiDocumentiAllegatiDto> GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(long allegatiDocumentoId);
-        Task<ContrattiDocumentoAllegatoDto> GetGaContrattiDocumentoAllegatoByIdAsync(long id);
+        //#region GaContrattiDocumentiAllegati
+        //Task<ContrattiDocumentiAllegatiDto> GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(long contrattiDocumentoId);
+        //Task<ContrattiDocumentoAllegatoDto> GetGaContrattiDocumentoAllegatoByIdAsync(long id);
 
-        Task<long> AddGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
-        Task<long> UpdateGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
+        //Task<long> AddGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
+        //Task<long> UpdateGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
 
-        Task<bool> DeleteGaContrattiDocumentoAllegatoAsync(long id);
+        //Task<bool> DeleteGaContrattiDocumentoAllegatoAsync(long id);
 
-        #region Functions
-        Task<bool> ChangeStatusGaContrattiDocumentoAllegatoAsync(long id);
+        //#region Functions
+        //Task<bool> ChangeStatusGaContrattiDocumentoAllegatoAsync(long id);
 
-        #endregion
-        #endregion
+        //#endregion
+        //#endregion
     }
 }
