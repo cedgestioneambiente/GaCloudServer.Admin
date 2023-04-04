@@ -138,5 +138,20 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<SpGaContrattiPermessoMode>> GetSpGaContrattiPermessoModeAsync(ContrattiDocumentiListRequestDto dto);
         #endregion
         #endregion
+
+        #region GaContrattiDocumenti
+        Task<ContrattiDocumentiAllegatiDto> GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(long allegatiDocumentoId);
+        Task<ContrattiDocumentoAllegatoDto> GetGaContrattiDocumentoAllegatoByIdAsync(long id);
+
+        Task<long> AddGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
+        Task<long> UpdateGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
+
+        Task<bool> DeleteGaContrattiDocumentoAllegatoAsync(long id);
+
+        #region Functions
+        Task<bool> ChangeStatusGaContrattiDocumentoAllegatoAsync(long id);
+
+        #endregion
+        #endregion
     }
 }

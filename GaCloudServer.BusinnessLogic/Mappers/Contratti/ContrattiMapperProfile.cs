@@ -57,6 +57,13 @@ namespace GaCloudServer.BusinessLogic.Mappers.Contratti
 
             CreateMap<PagedList<ContrattiDocumento>, ContrattiDocumentiDto>(MemberList.Destination)
                 .ReverseMap();
+
+            //GaContrattiDocumentiAllegati Map
+            CreateMap<ContrattiDocumentoAllegato, ContrattiDocumentoAllegatoDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<ContrattiDocumentoAllegato>, ContrattiDocumentiAllegatiDto>(MemberList.Destination)
+                .ReverseMap();
         }
     }
 }

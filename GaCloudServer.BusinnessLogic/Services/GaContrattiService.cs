@@ -19,6 +19,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ContrattiModalita> gaContrattiModalitasRepo;
         protected readonly IGenericRepository<ContrattiSoggetto> gaContrattiSoggettiRepo;
         protected readonly IGenericRepository<ContrattiDocumento> gaContrattiDocumentiRepo;
+        protected readonly IGenericRepository<ContrattiDocumentoAllegato> gaContrattiDocumentiAllegatiRepo;
 
         protected readonly IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo;
         protected readonly IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo;
@@ -40,6 +41,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ContrattiModalita> gaContrattiModalitasRepo,
             IGenericRepository<ContrattiSoggetto> gaContrattiSoggettiRepo,
             IGenericRepository<ContrattiDocumento> gaContrattiDocumentiRepo,
+            IGenericRepository<ContrattiDocumentoAllegato> gaContrattiDocumentiAllegatiRepo,
 
             IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo,
             IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo,
@@ -61,6 +63,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaContrattiModalitasRepo = gaContrattiModalitasRepo;
             this.gaContrattiSoggettiRepo = gaContrattiSoggettiRepo;
             this.gaContrattiDocumentiRepo = gaContrattiDocumentiRepo;
+            this.gaContrattiDocumentiAllegatiRepo = gaContrattiDocumentiAllegatiRepo;
 
             this.viewGaContrattiUtentiRepo = viewGaContrattiUtentiRepo;
             this.viewGaContrattiUtentiOnPermessiRepo = viewGaContrattiUtentiOnPermessiRepo;
@@ -809,6 +812,76 @@ namespace GaCloudServer.BusinnessLogic.Services
 
 
             }
+        }
+        #endregion
+
+        #endregion
+
+        #region ContrattiDocumentiAllegati
+        public async Task<ContrattiDocumentiAllegatiDto> GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(long contrattiDocumentoId)
+        {
+            var entities = await gaContrattiDocumentiAllegatiRepo.GetWithFilterAsync(x => x.ContrattiDocumentoId == contrattiDocumentoId);
+            var dtos = entities.ToDto<ContrattiDocumentiAllegatiDto, PagedList<ContrattiDocumentoAllegato>>();
+            return dtos;
+        }
+
+        public async Task<ContrattiDocumentoAllegatoDto> GetGaContrattiDocumentoAllegatoByIdAsync(long id)
+        {
+            var entity = await gaContrattiDocumentiAllegatiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ContrattiDocumentoAllegatoDto, ContrattiDocumentoAllegato>();
+            return dto;
+        }
+
+        public async Task<long> AddGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto)
+        {
+            var entity = dto.ToEntity<ContrattiDocumentoAllegato, ContrattiDocumentoAllegatoDto>();
+            await gaContrattiDocumentiAllegatiRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto)
+        {
+            var entity = dto.ToEntity<ContrattiDocumentoAllegato, ContrattiDocumentoAllegatoDto>();
+            gaContrattiDocumentiAllegatiRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaContrattiDocumentoAllegatoAsync(long id)
+        {
+            var entity = await gaContrattiDocumentiAllegatiRepo.GetByIdAsync(id);
+            gaContrattiDocumentiAllegatiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+
+        public async Task<bool> ChangeStatusGaContrattiDocumentoAllegatoAsync(long id)
+        {
+            var entity = await gaContrattiDocumentiAllegatiRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaContrattiDocumentiAllegatiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaContrattiDocumentiAllegatiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
         }
         #endregion
 
