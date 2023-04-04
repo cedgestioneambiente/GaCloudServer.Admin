@@ -1,4 +1,6 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
+﻿
+
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
@@ -34,6 +36,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateTasksItemAsync(long id, string descrizione);
         Task<bool> ChangeStatusTasksItemAsync(long id);
+        Task<bool> ChangeOrderTasksItemAsync(List<ViewTasks> tasks);
         #endregion
 
         #region Views
