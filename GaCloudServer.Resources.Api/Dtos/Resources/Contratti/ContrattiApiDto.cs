@@ -115,6 +115,19 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
 
     #endregion
 
+    #region Contratti DocumentiAllegati
+    public class ContrattiDocumentoAllegatoApiDto : GenericFileApiDto
+    {
+        public long ContrattiDocumentoId { get; set; }
+        public string Descrizione { get; set; }
+
+    }
+
+    public class ContrattiDocumentiAllegatiApiDto : GenericPagedListApiDto<ContrattiDocumentoAllegatoApiDto>
+    {
+    }
+    #endregion
+
     #region ContrattiDocumentiRequest
     public class ContrattiDocumentiRequestApiDto
     {

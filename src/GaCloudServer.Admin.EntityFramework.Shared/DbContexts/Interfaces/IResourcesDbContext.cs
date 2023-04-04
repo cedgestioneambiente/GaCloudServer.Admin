@@ -96,6 +96,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ContrattiModalita> GaContrattiModalitas { get; set; }
         DbSet<ContrattiSoggetto> GaContrattiSoggetti { get; set; }
         DbSet<ContrattiDocumento> GaContrattiDocumenti { get; set; }
+        DbSet<ContrattiDocumentoAllegato> GaContrattiDocumentiAllegati { get; set; }
 
         #region Views
         DbSet<ViewGaContrattiUtenti> ViewGaContrattiUtenti { get; set; }
