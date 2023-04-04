@@ -1,4 +1,5 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Global;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -303,6 +304,24 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+
+        [HttpPost("ChangeOrderTasksItemAsync")]
+        public async Task<ActionResult<ApiResponse>> ChangeOrderTasksItemAsync([FromBody] List<ViewTasks> tasks)
+        {
+            try
+            {
+                var response = await _tasksService.ChangeOrderTasksItemAsync(tasks);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #region Views

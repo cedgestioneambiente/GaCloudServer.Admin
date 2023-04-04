@@ -17,7 +17,9 @@ LEFT OUTER JOIN IdentityServerAdmin.DBO.USERS B ON A.VALUE=B.Id) a
 group by id) b on a.id=b.Id
 GO
 
-
+CREATE VIEW [dbo].[ViewTasksTags]
+AS
 SELECT distinct(value) Tags, CAST(0 AS BIT) [Disabled], CAST(0 AS BIGINT) [Id]
 FROM TasksItems
 cross apply STRING_SPLIT(Tags,',') Tag
+GO

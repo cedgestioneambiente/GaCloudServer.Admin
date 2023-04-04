@@ -115,6 +115,33 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+
+        public async Task<bool> ChangeOrderTasksItemAsync(List<ViewTasks> tasks)
+        {
+            if (tasks.Count > 0)
+            {
+                int index = 0;
+                foreach (var task in tasks)
+                {
+                    var entity = await tasksItemsRepo.GetByIdAsync(task.Id);
+                    entity.Order = index;
+                    tasksItemsRepo.Update(entity);
+                    await SaveChanges();
+                    index++;
+
+                }
+
+                return true;
+
+            }
+            else
+            {
+                return true;
+            }
+            
+
+        }
         #endregion
 
         #region Views

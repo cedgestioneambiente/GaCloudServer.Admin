@@ -1131,7 +1131,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewTasksTags))
-                .HasKey(x => x.Id);
+                .HasNoKey();
             });
 
 

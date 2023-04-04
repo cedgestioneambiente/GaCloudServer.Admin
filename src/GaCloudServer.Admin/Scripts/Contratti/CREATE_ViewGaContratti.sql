@@ -1,4 +1,18 @@
-﻿CREATE VIEW [dbo].[ViewGaContrattiDocumenti]
+﻿DROP VIEW IF EXISTS [dbo].[ViewGaContrattiDocumenti]
+
+DROP VIEW IF EXISTS [dbo].[ViewGaContrattiDocumentiList]
+
+DROP VIEW IF EXISTS [dbo].[ViewGaContrattiNumeratori]
+
+DROP VIEW IF EXISTS [dbo].[PrivateViewGaContrattiPermessiList]
+
+DROP VIEW IF EXISTS [dbo].[ViewGaContrattiUtenti]
+
+DROP VIEW IF EXISTS [dbo].[ViewGaContrattiUtentiOnPermessi]
+
+GO
+
+CREATE VIEW [dbo].[ViewGaContrattiDocumenti]
 AS
 SELECT   dbo.GaContrattiDocumenti.Id, dbo.GaContrattiDocumenti.ContrattiSoggettoId, dbo.GaContrattiDocumenti.Numero, dbo.GaContrattiDocumenti.Descrizione, 
                          dbo.GaContrattiDocumenti.Faldone, dbo.GaContrattiDocumenti.DataScadenza, dbo.GaContrattiModalitas.Descrizione AS Modalita,
