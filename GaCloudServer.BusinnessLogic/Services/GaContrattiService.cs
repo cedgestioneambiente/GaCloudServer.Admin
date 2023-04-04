@@ -46,7 +46,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ContrattiModalita> gaContrattiModalitasRepo,
             IGenericRepository<ContrattiSoggetto> gaContrattiSoggettiRepo,
             IGenericRepository<ContrattiDocumento> gaContrattiDocumentiRepo,
-            //IGenericRepository<ContrattiDocumentoAllegato> gaContrattiDocumentiAllegatiRepo,
+            IGenericRepository<ContrattiDocumentoAllegato> gaContrattiDocumentiAllegatiRepo,
 
             IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo,
             IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo,
@@ -68,7 +68,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaContrattiModalitasRepo = gaContrattiModalitasRepo;
             this.gaContrattiSoggettiRepo = gaContrattiSoggettiRepo;
             this.gaContrattiDocumentiRepo = gaContrattiDocumentiRepo;
-            //this.gaContrattiDocumentiAllegatiRepo = gaContrattiDocumentiAllegatiRepo;
+            this.gaContrattiDocumentiAllegatiRepo = gaContrattiDocumentiAllegatiRepo;
 
             this.viewGaContrattiUtentiRepo = viewGaContrattiUtentiRepo;
             this.viewGaContrattiUtentiOnPermessiRepo = viewGaContrattiUtentiOnPermessiRepo;
