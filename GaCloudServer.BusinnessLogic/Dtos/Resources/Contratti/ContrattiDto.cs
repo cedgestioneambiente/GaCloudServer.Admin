@@ -102,7 +102,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
         public bool Archiviato { get; set; }
         public long? ContrattiPreventivoId { get; set; }
         public string? PreventivoNumero { get; set; }
-        public long ContrattiTipologiaId { get; set; }
+        public string ContrattiTipologia { get; set; }
         public int SogliaAvviso { get; set; }
         public bool Comunicazione { get; set; }
     }

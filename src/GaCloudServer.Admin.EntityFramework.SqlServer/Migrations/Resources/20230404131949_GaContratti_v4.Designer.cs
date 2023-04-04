@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20230404075517_GaContratti_V4")]
-    partial class GaContratti_V4
+    [Migration("20230404131949_GaContratti_v4")]
+    partial class GaContratti_v4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2487,8 +2487,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("ContrattiSoggettoId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ContrattiTipologiaId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("ContrattiTipologia")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataScadenza")
                         .HasColumnType("datetime2");
@@ -2549,8 +2549,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasIndex("ContrattiModalitaId");
 
                     b.HasIndex("ContrattiSoggettoId");
-
-                    b.HasIndex("ContrattiTipologiaId");
 
                     b.ToTable("GaContrattiDocumenti");
                 });
@@ -8024,17 +8022,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiTipologia", "ContrattiTipologia")
-                        .WithMany()
-                        .HasForeignKey("ContrattiTipologiaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ContrattiModalita");
 
                     b.Navigation("ContrattiSoggetto");
-
-                    b.Navigation("ContrattiTipologia");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiDocumentoAllegato", b =>

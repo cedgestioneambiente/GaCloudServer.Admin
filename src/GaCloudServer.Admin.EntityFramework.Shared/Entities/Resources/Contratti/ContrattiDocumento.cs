@@ -24,12 +24,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratt
         public string Permissions { get; set; }
         public long? ContrattiPreventivoId { get; set; }
         public string PreventivoNumero { get; set; }
-        public long ContrattiTipologiaId { get; set; }
+        public string ContrattiTipologia { get; set; }
         public int SogliaAvviso { get; set; }
         public bool Comunicazione { get; set; }
 
         public ContrattiSoggetto ContrattiSoggetto { get; set; }
         public ContrattiModalita ContrattiModalita { get; set; }
-        public ContrattiTipologia ContrattiTipologia { get; set; }
     }
 }

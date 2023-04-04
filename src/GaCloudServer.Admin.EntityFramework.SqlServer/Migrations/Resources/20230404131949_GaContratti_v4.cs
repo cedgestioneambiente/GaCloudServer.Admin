@@ -4,10 +4,28 @@
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class GaContratti_V4 : Migration
+    public partial class GaContratti_v4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_GaContrattiDocumenti_GaContrattiTipologie_ContrattiTipologiaId",
+                table: "GaContrattiDocumenti");
+
+            migrationBuilder.DropIndex(
+                name: "IX_GaContrattiDocumenti_ContrattiTipologiaId",
+                table: "GaContrattiDocumenti");
+
+            migrationBuilder.DropColumn(
+                name: "ContrattiTipologiaId",
+                table: "GaContrattiDocumenti");
+
+            migrationBuilder.AddColumn<string>(
+                name: "ContrattiTipologia",
+                table: "GaContrattiDocumenti",
+                type: "nvarchar(max)",
+                nullable: true);
+
             migrationBuilder.CreateTable(
                 name: "GaContrattiDocumentiAllegati",
                 columns: table => new
@@ -44,6 +62,30 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
         {
             migrationBuilder.DropTable(
                 name: "GaContrattiDocumentiAllegati");
+
+            migrationBuilder.DropColumn(
+                name: "ContrattiTipologia",
+                table: "GaContrattiDocumenti");
+
+            migrationBuilder.AddColumn<long>(
+                name: "ContrattiTipologiaId",
+                table: "GaContrattiDocumenti",
+                type: "bigint",
+                nullable: false,
+                defaultValue: 0L);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GaContrattiDocumenti_ContrattiTipologiaId",
+                table: "GaContrattiDocumenti",
+                column: "ContrattiTipologiaId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_GaContrattiDocumenti_GaContrattiTipologie_ContrattiTipologiaId",
+                table: "GaContrattiDocumenti",
+                column: "ContrattiTipologiaId",
+                principalTable: "GaContrattiTipologie",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }
