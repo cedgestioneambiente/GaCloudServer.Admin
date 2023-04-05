@@ -468,6 +468,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ContrattiModalita>, GenericRepository<TResourcesDbContext, ContrattiModalita>>();
             services.AddTransient<IGenericRepository<ContrattiSoggetto>, GenericRepository<TResourcesDbContext, ContrattiSoggetto>>();
             services.AddTransient<IGenericRepository<ContrattiDocumento>, GenericRepository<TResourcesDbContext, ContrattiDocumento>>();
+            services.AddTransient<IGenericRepository<ContrattiDocumentoAllegato>, GenericRepository<TResourcesDbContext, ContrattiDocumentoAllegato>>();
 
             //Views
             services.AddTransient<IGenericRepository<ViewGaContrattiUtenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtenti>>();
@@ -482,6 +483,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IProcedureManager<SpGaContrattiPermessoMode>, ProcedureManager<TResourcesDbContext, SpGaContrattiPermessoMode>>();
 
             #endregion
+
 
             //Personale
             #region Personale

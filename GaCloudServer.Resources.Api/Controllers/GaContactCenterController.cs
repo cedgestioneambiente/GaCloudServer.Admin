@@ -17,7 +17,6 @@ using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
-using static GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter.ContactCenterAllegatoApiDto;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers

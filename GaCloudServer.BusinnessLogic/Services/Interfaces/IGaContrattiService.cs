@@ -139,19 +139,19 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
         #endregion
 
-        //#region GaContrattiDocumentiAllegati
-        //Task<ContrattiDocumentiAllegatiDto> GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(long contrattiDocumentoId);
-        //Task<ContrattiDocumentoAllegatoDto> GetGaContrattiDocumentoAllegatoByIdAsync(long id);
+        #region GaContrattiDocumentiAllegati
+        Task<ContrattiDocumentiAllegatiDto> GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(long contrattiDocumentoId);
+        Task<ContrattiDocumentoAllegatoDto> GetGaContrattiDocumentoAllegatoByIdAsync(long id);
 
-        //Task<long> AddGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
-        //Task<long> UpdateGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
+        Task<long> AddGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
+        Task<long> UpdateGaContrattiDocumentoAllegatoAsync(ContrattiDocumentoAllegatoDto dto);
 
-        //Task<bool> DeleteGaContrattiDocumentoAllegatoAsync(long id);
+        Task<bool> DeleteGaContrattiDocumentoAllegatoAsync(long id);
 
-        //#region Functions
-        //Task<bool> ChangeStatusGaContrattiDocumentoAllegatoAsync(long id);
+        #region Functions
+        Task<bool> ChangeStatusGaContrattiDocumentoAllegatoAsync(long id);
 
-        //#endregion
-        //#endregion
+        #endregion
+        #endregion
     }
 }
