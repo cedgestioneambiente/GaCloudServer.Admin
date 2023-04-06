@@ -1076,202 +1076,202 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
-        //#region ContrattiDocumentiAllegati
-        //[HttpGet("GetGaContrattiDocumentiAllegatiByDocumentoIdAsync/{contrattiDocumentoId}")]
-        //public async Task<ActionResult<ApiResponse>> GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(long contrattiDocumentoId)
-        //{
-        //    try
-        //    {
-        //        var dtos = await _gaContrattiService.GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(contrattiDocumentoId);
-        //        var apiDtos = dtos.ToApiDto<ContrattiDocumentiAllegatiApiDto, ContrattiDocumentiAllegatiDto>();
-        //        return new ApiResponse(apiDtos);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
+        #region ContrattiDocumentiAllegati
+        [HttpGet("GetGaContrattiDocumentiAllegatiByDocumentoIdAsync/{contrattiDocumentoId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(long contrattiDocumentoId)
+        {
+            try
+            {
+                var dtos = await _gaContrattiService.GetGaContrattiDocumentiAllegatiByDocumentoIdAsync(contrattiDocumentoId);
+                var apiDtos = dtos.ToApiDto<ContrattiDocumentiAllegatiApiDto, ContrattiDocumentiAllegatiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
 
-        //}
+        }
 
-        //[HttpGet("GetGaContrattiDocumentoAllegatoByIdAsync/{id}")]
-        //public async Task<ActionResult<ApiResponse>> GetGaContrattiDocumentoAllegatoByIdAsync(long id)
-        //{
-        //    try
-        //    {
-        //        var dto = await _gaContrattiService.GetGaContrattiDocumentoAllegatoByIdAsync(id);
-        //        var apiDto = dto.ToApiDto<ContrattiDocumentoAllegatoApiDto, ContrattiDocumentoAllegatoDto>();
-        //        return new ApiResponse(apiDto);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
+        [HttpGet("GetGaContrattiDocumentoAllegatoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContrattiDocumentoAllegatoByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaContrattiService.GetGaContrattiDocumentoAllegatoByIdAsync(id);
+                var apiDto = dto.ToApiDto<ContrattiDocumentoAllegatoApiDto, ContrattiDocumentoAllegatoDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
 
-        //}
+        }
 
-        //[HttpPost("AddGaContrattiDocumentoAllegatoAsync")]
-        //public async Task<ActionResult<ApiResponse>> AddGaContrattiDocumentoAllegatoAsync([FromForm] ContrattiDocumentoAllegatoApiDto apiDto)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new ApiProblemDetailsException(ModelState);
-        //        }
-        //        string fileFolder = "GaCloud/Contratti";
-        //        var dto = apiDto.ToDto<ContrattiDocumentoAllegatoDto, ContrattiDocumentoAllegatoApiDto>();
-        //        var response = await _gaContrattiService.AddGaContrattiDocumentoAllegatoAsync(dto);
-        //        if (apiDto.uploadFile)
-        //        {
-        //            var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-        //            dto.Id = response;
-        //            dto.FileFolder = fileFolder;
-        //            dto.FileName = fileUploadResponse.fileName;
-        //            dto.FileSize = apiDto.File.Length.ToString();
-        //            dto.FileType = apiDto.File.ContentType;
-        //            dto.FileId = fileUploadResponse.id;
-        //            var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAllegatoAsync(dto);
-        //            return new ApiResponse("CreatedWithFile", response, code.Status201Created);
-        //        }
+        [HttpPost("AddGaContrattiDocumentoAllegatoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaContrattiDocumentoAllegatoAsync([FromForm] ContrattiDocumentoAllegatoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "GaCloud/Contratti";
+                var dto = apiDto.ToDto<ContrattiDocumentoAllegatoDto, ContrattiDocumentoAllegatoApiDto>();
+                var response = await _gaContrattiService.AddGaContrattiDocumentoAllegatoAsync(dto);
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAllegatoAsync(dto);
+                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
+                }
 
-        //        return new ApiResponse(response);
-        //    }
-        //    catch (ApiProblemDetailsException ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw ex;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex);
-        //    }
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
 
-        //}
+        }
 
-        //[HttpPost("UpdateGaContrattiDocumentoAllegatoAsync")]
-        //public async Task<ActionResult<ApiResponse>> UpdateGaContrattiDocumentoAllegatoAsync([FromForm] ContrattiDocumentoAllegatoApiDto apiDto)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new ApiProblemDetailsException(ModelState);
-        //        }
-        //        string fileFolder = "GaCloud/Contratti";
-        //        var dto = apiDto.ToDto<ContrattiDocumentoAllegatoDto, ContrattiDocumentoAllegatoApiDto>();
-        //        var response = await _gaContrattiService.UpdateGaContrattiDocumentoAllegatoAsync(dto);
-        //        bool failureDelete = false;
-        //        if (apiDto.deleteFile)
-        //        {
-        //            var deleteResponse = await _fileService.Remove(apiDto.FileId);
-        //            if (!deleteResponse)
-        //            {
-        //                failureDelete = true;
+        [HttpPost("UpdateGaContrattiDocumentoAllegatoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaContrattiDocumentoAllegatoAsync([FromForm] ContrattiDocumentoAllegatoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "GaCloud/Contratti";
+                var dto = apiDto.ToDto<ContrattiDocumentoAllegatoDto, ContrattiDocumentoAllegatoApiDto>();
+                var response = await _gaContrattiService.UpdateGaContrattiDocumentoAllegatoAsync(dto);
+                bool failureDelete = false;
+                if (apiDto.deleteFile)
+                {
+                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
+                    if (!deleteResponse)
+                    {
+                        failureDelete = true;
 
-        //            }
-        //            else
-        //            {
-        //                dto.Id = response;
-        //                dto.FileFolder = null;
-        //                dto.FileName = null;
-        //                dto.FileSize = null;
-        //                dto.FileType = null;
-        //                dto.FileId = null;
-        //                var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAllegatoAsync(dto);
-        //            }
-        //        }
+                    }
+                    else
+                    {
+                        dto.Id = response;
+                        dto.FileFolder = null;
+                        dto.FileName = null;
+                        dto.FileSize = null;
+                        dto.FileType = null;
+                        dto.FileId = null;
+                        var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAllegatoAsync(dto);
+                    }
+                }
 
-        //        if (apiDto.uploadFile)
-        //        {
-        //            var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-        //            dto.Id = response;
-        //            dto.FileFolder = fileFolder;
-        //            dto.FileName = fileUploadResponse.fileName;
-        //            dto.FileSize = apiDto.File.Length.ToString();
-        //            dto.FileType = apiDto.File.ContentType;
-        //            dto.FileId = fileUploadResponse.id;
-        //            var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAllegatoAsync(dto);
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAllegatoAsync(dto);
 
-        //            if (!failureDelete)
-        //            {
-        //                return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
-        //            }
-        //            else
-        //            {
-        //                return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
-        //            }
+                    if (!failureDelete)
+                    {
+                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
+                    }
 
-        //        }
+                }
 
-        //        if (!failureDelete)
-        //        {
-        //            return new ApiResponse("Updated", response, code.Status200OK);
-        //        }
-        //        else
-        //        {
-        //            return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
-        //        }
+                if (!failureDelete)
+                {
+                    return new ApiResponse("Updated", response, code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
+                }
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
 
-        //}
+        }
 
-        //[HttpDelete("DeleteGaContrattiDocumentoAllegatoAsync/{id}/{fileId}")]
-        //public async Task<ActionResult<ApiResponse>> DeleteGaContrattiDocumentoAllegatoAsync(long id, string fileId)
-        //{
-        //    try
-        //    {
-        //        var response = await _gaContrattiService.DeleteGaContrattiDocumentoAllegatoAsync(id);
-        //        if (response && fileId != null && fileId != "null" && fileId != "")
-        //        {
-        //            var deleteResponse = await _fileService.Remove(fileId);
-        //            if (deleteResponse)
-        //            {
-        //                return new ApiResponse("DeletedWithFile", response, code.Status200OK);
-        //            }
-        //            else
-        //            {
-        //                return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
-        //            }
-        //        }
+        [HttpDelete("DeleteGaContrattiDocumentoAllegatoAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaContrattiDocumentoAllegatoAsync(long id, string fileId)
+        {
+            try
+            {
+                var response = await _gaContrattiService.DeleteGaContrattiDocumentoAllegatoAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
 
-        //        return new ApiResponse(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
 
-        //}
+        }
 
-        //#region Functions
+        #region Functions
 
-        //[HttpGet("ChangeStatusGaContrattiDocumentoAllegatoAsync/{id}")]
-        //public async Task<ActionResult<ApiResponse>> ChangeStatusGaContrattiDocumentoAllegatoAsync(long id)
-        //{
-        //    try
-        //    {
-        //        var response = await _gaContrattiService.ChangeStatusGaContrattiDocumentoAllegatoAsync(id);
-        //        return new ApiResponse(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        throw new ApiException(ex.Message);
-        //    }
+        [HttpGet("ChangeStatusGaContrattiDocumentoAllegatoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaContrattiDocumentoAllegatoAsync(long id)
+        {
+            try
+            {
+                var response = await _gaContrattiService.ChangeStatusGaContrattiDocumentoAllegatoAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
 
-        //}
-        //#endregion
+        }
+        #endregion
 
-        //#endregion
+        #endregion
     }
 }

@@ -484,6 +484,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             #endregion
 
+
             //Personale
             #region Personale
             services.AddTransient<IGenericRepository<PersonaleDipendente>, GenericRepository<TResourcesDbContext, PersonaleDipendente>>();
