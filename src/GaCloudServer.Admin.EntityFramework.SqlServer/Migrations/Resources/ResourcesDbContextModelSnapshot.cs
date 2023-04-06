@@ -7781,18 +7781,14 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views.ViewTasksTags", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
 
                     b.ToView("ViewTasksTags");
                 });

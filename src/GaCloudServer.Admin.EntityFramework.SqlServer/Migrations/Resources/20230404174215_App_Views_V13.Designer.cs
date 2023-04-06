@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20230403124239_App_Views_V13")]
+    [Migration("20230404174215_App_Views_V13")]
     partial class App_Views_V13
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2487,8 +2487,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("ContrattiSoggettoId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ContrattiTipologiaId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("ContrattiTipologia")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataScadenza")
                         .HasColumnType("datetime2");
@@ -2550,9 +2550,46 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ContrattiSoggettoId");
 
-                    b.HasIndex("ContrattiTipologiaId");
-
                     b.ToTable("GaContrattiDocumenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiDocumentoAllegato", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ContrattiDocumentoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContrattiDocumentoId");
+
+                    b.ToTable("GaContrattiDocumentiAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiModalita", b =>
@@ -7703,7 +7740,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime?>("DueDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
@@ -7746,18 +7783,14 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views.ViewTasksTags", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
 
                     b.ToView("ViewTasksTags");
                 });
@@ -7985,17 +8018,20 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiTipologia", "ContrattiTipologia")
-                        .WithMany()
-                        .HasForeignKey("ContrattiTipologiaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ContrattiModalita");
 
                     b.Navigation("ContrattiSoggetto");
+                });
 
-                    b.Navigation("ContrattiTipologia");
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiDocumentoAllegato", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiDocumento", "ContrattiDocumento")
+                        .WithMany()
+                        .HasForeignKey("ContrattiDocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContrattiDocumento");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiUtenteOnPermesso", b =>

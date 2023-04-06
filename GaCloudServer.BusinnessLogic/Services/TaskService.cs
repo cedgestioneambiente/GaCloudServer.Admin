@@ -153,7 +153,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<PagedList<ViewTasks>> GetViewTasksByUserIdAsync(string userId)
         {
-            var entities = await viewTasksRepo.GetWithFilterAsync(x => x.UserId == userId);
+            var entities = await viewTasksRepo.GetWithFilterAsync(x => x.UserId == userId || x.Shared.Contains(userId));
             return entities;
         }
         public async Task<PagedList<ViewTasksTags>> GetViewTasksTagsAsync(bool all = true)

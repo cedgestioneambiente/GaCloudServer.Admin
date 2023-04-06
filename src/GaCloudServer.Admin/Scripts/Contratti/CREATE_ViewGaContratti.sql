@@ -16,25 +16,23 @@ CREATE VIEW [dbo].[ViewGaContrattiDocumenti]
 AS
 SELECT   dbo.GaContrattiDocumenti.Id, dbo.GaContrattiDocumenti.ContrattiSoggettoId, dbo.GaContrattiDocumenti.Numero, dbo.GaContrattiDocumenti.Descrizione, 
                          dbo.GaContrattiDocumenti.Faldone, dbo.GaContrattiDocumenti.DataScadenza, dbo.GaContrattiModalitas.Descrizione AS Modalita,
-                         dbo.GaContrattiTipologie.Descrizione AS Tipologia, dbo.GaContrattiDocumenti.FileId, dbo.GaContrattiDocumenti.FileName, CASE WHEN DATEDIFF(day, GETDATE(), DataScadenza) 
+                         '' AS Tipologia, dbo.GaContrattiDocumenti.FileId, dbo.GaContrattiDocumenti.FileName, CASE WHEN DATEDIFF(day, GETDATE(), DataScadenza) 
                          < 0 THEN 'R' WHEN DATEDIFF(day, GETDATE(), DataScadenza) < SogliaAvviso THEN 'G' ELSE 'V' END AS Stato, dbo.GaContrattiDocumenti.Archiviato, 
                          dbo.GaContrattiDocumenti.Disabled
 FROM         dbo.GaContrattiDocumenti INNER JOIN
-                         dbo.GaContrattiModalitas ON dbo.GaContrattiDocumenti.ContrattiModalitaId = dbo.GaContrattiModalitas.Id  INNER JOIN
-                         dbo.GaContrattiTipologie ON dbo.GaContrattiDocumenti.ContrattiTipologiaId = dbo.GaContrattiTipologie.Id
+                         dbo.GaContrattiModalitas ON dbo.GaContrattiDocumenti.ContrattiModalitaId = dbo.GaContrattiModalitas.Id 
 GO
 
 CREATE VIEW [dbo].[ViewGaContrattiDocumentiList]
 AS
 SELECT   dbo.GaContrattiDocumenti.Id, dbo.GaContrattiDocumenti.ContrattiSoggettoId, dbo.GaContrattiDocumenti.Numero, dbo.GaContrattiDocumenti.Faldone, 
-                         dbo.GaContrattiSoggetti.RagioneSociale, dbo.GaContrattiDocumenti.Descrizione, dbo.GaContrattiDocumenti.CodiceCig, dbo.GaContrattiTipologie.Descrizione AS Tipologia, 
+                         dbo.GaContrattiSoggetti.RagioneSociale, dbo.GaContrattiDocumenti.Descrizione, dbo.GaContrattiDocumenti.CodiceCig, '' AS Tipologia, 
                          dbo.GaContrattiDocumenti.DataScadenza, dbo.GaContrattiModalitas.Descrizione AS Modalita, dbo.GaContrattiDocumenti.FileId, dbo.GaContrattiDocumenti.FileName, 
                          CASE WHEN DATEDIFF(day, GETDATE(), DataScadenza) < 0 THEN 'R' WHEN DATEDIFF(day, GETDATE(), DataScadenza) < SogliaAvviso THEN 'G' ELSE 'V' END AS Stato, 
-                         dbo.GaContrattiTipologie.Id AS TipologiaId, dbo.GaContrattiDocumenti.Archiviato, dbo.GaContrattiDocumenti.Disabled
+                          dbo.GaContrattiDocumenti.Archiviato, dbo.GaContrattiDocumenti.Disabled
 FROM         dbo.GaContrattiDocumenti INNER JOIN
                          dbo.GaContrattiSoggetti ON dbo.GaContrattiDocumenti.ContrattiSoggettoId = dbo.GaContrattiSoggetti.Id INNER JOIN
-                         dbo.GaContrattiModalitas ON dbo.GaContrattiDocumenti.ContrattiModalitaId = dbo.GaContrattiModalitas.Id INNER JOIN
-                         dbo.GaContrattiTipologie ON dbo.GaContrattiDocumenti.ContrattiTipologiaId = dbo.GaContrattiTipologie.Id
+                         dbo.GaContrattiModalitas ON dbo.GaContrattiDocumenti.ContrattiModalitaId = dbo.GaContrattiModalitas.Id 
 GO
 
 CREATE VIEW [dbo].[ViewGaContrattiNumeratori]
