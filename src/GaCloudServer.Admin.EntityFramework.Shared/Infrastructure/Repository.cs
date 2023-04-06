@@ -110,7 +110,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         //Async
         public virtual async Task<TEntity> GetByIdAsync(long id)
         {
-            await auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET BY ID - {0}",_entities.EntityType)) { });
+            auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET BY ID - {0}",_entities.EntityType)) { });
             return await _entities.FindAsync(id);
         }
 
@@ -144,7 +144,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             pagedList.PageSize = pageSize;
             pagedList.TotalCount = _entities.Count();
 
-            await auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET ALL - {0}", _entities.EntityType)) { });
+            auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET ALL - {0}", _entities.EntityType)) { });
             return pagedList;
         }
 
@@ -178,7 +178,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             pagedList.PageSize = pageSize;
             pagedList.TotalCount = entities.Count();
 
-            await auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET WITH FILTER - {0}", _entities.EntityType)) { });
+            auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET WITH FILTER - {0}", _entities.EntityType)) { });
 
             return pagedList;
 
@@ -186,7 +186,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         public virtual async Task<TEntity> GetSingleWithFilter(Expression<Func<TEntity, bool>> predicate)
         {
-            await auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET SINGLE - {0}", _entities.EntityType)) { });
+            auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET SINGLE - {0}", _entities.EntityType)) { });
             return await _entities.Where(predicate).FirstOrDefaultAsync();
         }
         #endregion
