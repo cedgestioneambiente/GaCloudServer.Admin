@@ -26,14 +26,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         {
             _context = context;
             _entities = context.Set<TEntity>();
-            this.auditEventLogger = auditEventLogger;
+            //this.auditEventLogger = auditEventLogger;
 
         }
 
         #region CRUD
         public virtual void Add(TEntity entity)
         {
-            auditEventLogger.LogEventAsync(new AddEventModel(string.Format("ADD - {0}", _entities.EntityType)) { });
+            //auditEventLogger.LogEventAsync(new AddEventModel(string.Format("ADD - {0}", _entities.EntityType)) { });
             _entities.Add(entity);
         }
 
@@ -44,7 +44,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         public virtual void Update(TEntity entity)
         {
-            auditEventLogger.LogEventAsync(new UpdateEventModel(string.Format("UPDATE - {0}", _entities.EntityType)) { });
+            //auditEventLogger.LogEventAsync(new UpdateEventModel(string.Format("UPDATE - {0}", _entities.EntityType)) { });
             _entities.Update(entity);
         }
 
@@ -55,7 +55,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         public virtual void Remove(TEntity entity)
         {
-            auditEventLogger.LogEventAsync(new DeleteEventModel(string.Format("REMOVE - {0}", _entities.EntityType)) { });
+            //auditEventLogger.LogEventAsync(new DeleteEventModel(string.Format("REMOVE - {0}", _entities.EntityType)) { });
             _entities.Remove(entity);
         }
 
@@ -67,7 +67,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         //Async
         public virtual async Task AddAsync(TEntity entity)
         {
-            await auditEventLogger.LogEventAsync(new AddEventModel(string.Format("ADD - {0}", _entities.EntityType)) { });
+            //await auditEventLogger.LogEventAsync(new AddEventModel(string.Format("ADD - {0}", _entities.EntityType)) { });
             await _entities.AddAsync(entity);
         }
         public virtual async Task<bool> CanInsertAsync(TEntity entity, bool isCloned = false)
@@ -110,7 +110,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         //Async
         public virtual async Task<TEntity> GetByIdAsync(long id)
         {
-            auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET BY ID - {0}",_entities.EntityType)) { });
+            //auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET BY ID - {0}",_entities.EntityType)) { });
             return await _entities.FindAsync(id);
         }
 
@@ -144,7 +144,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             pagedList.PageSize = pageSize;
             pagedList.TotalCount = _entities.Count();
 
-            auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET ALL - {0}", _entities.EntityType)) { });
+            //auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET ALL - {0}", _entities.EntityType)) { });
             return pagedList;
         }
 
@@ -178,7 +178,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             pagedList.PageSize = pageSize;
             pagedList.TotalCount = entities.Count();
 
-            auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET WITH FILTER - {0}", _entities.EntityType)) { });
+            //auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET WITH FILTER - {0}", _entities.EntityType)) { });
 
             return pagedList;
 
@@ -186,7 +186,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         public virtual async Task<TEntity> GetSingleWithFilter(Expression<Func<TEntity, bool>> predicate)
         {
-            auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET SINGLE - {0}", _entities.EntityType)) { });
+            //auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET SINGLE - {0}", _entities.EntityType)) { });
             return await _entities.Where(predicate).FirstOrDefaultAsync();
         }
         #endregion
