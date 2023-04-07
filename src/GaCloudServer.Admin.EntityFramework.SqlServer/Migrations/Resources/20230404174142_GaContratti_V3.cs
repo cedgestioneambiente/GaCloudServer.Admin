@@ -106,7 +106,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.ContrattiPermessoId,
                         principalTable: "GaContrattiPermessi",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,13 +152,13 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.ContrattiModalitaId,
                         principalTable: "GaContrattiModalitas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaContrattiDocumenti_GaContrattiSoggetti_ContrattiSoggettoId",
                         column: x => x.ContrattiSoggettoId,
                         principalTable: "GaContrattiSoggetti",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,7 +184,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.ContrattiDocumentoId,
                         principalTable: "GaContrattiDocumenti",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

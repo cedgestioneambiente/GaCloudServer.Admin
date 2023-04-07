@@ -128,7 +128,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.ContrattiPermessoId,
                         principalTable: "GaContrattiPermessi",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,25 +174,25 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.ContrattiFornitoreId,
                         principalTable: "GaContrattiFornitori",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaContrattiDocumenti_GaContrattiModalitas_ContrattiModalitaId",
                         column: x => x.ContrattiModalitaId,
                         principalTable: "GaContrattiModalitas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaContrattiDocumenti_GaContrattiServizi_ContrattiServizioId",
                         column: x => x.ContrattiServizioId,
                         principalTable: "GaContrattiServizi",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaContrattiDocumenti_GaContrattiTipologie_ContrattiTipologiaId",
                         column: x => x.ContrattiTipologiaId,
                         principalTable: "GaContrattiTipologie",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
