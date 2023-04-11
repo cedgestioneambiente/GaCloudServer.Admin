@@ -1015,6 +1015,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<PersonaleAbilitazione, PersonaleAbilitazioneDto>();
             await gaPersonaleAbilitazioniRepo.AddAsync(entity);
             await SaveChanges();
+            DetachEntity(entity);
             return entity.Id;
         }
 
@@ -1022,6 +1023,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entity = dto.ToEntity<PersonaleAbilitazione, PersonaleAbilitazioneDto>();
             gaPersonaleAbilitazioniRepo.Update(entity);
+            DetachEntity(entity);
             await SaveChanges();
 
             return entity.Id;
@@ -1203,6 +1205,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<PersonaleRetributivo, PersonaleRetributivoDto>();
             await gaPersonaleRetributiviRepo.AddAsync(entity);
             await SaveChanges();
+            DetachEntity(entity);
+
             return entity.Id;
         }
 
@@ -1210,6 +1214,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entity = dto.ToEntity<PersonaleRetributivo, PersonaleRetributivoDto>();
             gaPersonaleRetributiviRepo.Update(entity);
+            DetachEntity(entity);
+
             await SaveChanges();
 
             return entity.Id;
