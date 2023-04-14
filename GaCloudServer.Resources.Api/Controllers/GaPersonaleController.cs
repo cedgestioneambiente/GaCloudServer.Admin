@@ -2240,7 +2240,6 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
                 }
-
             }
             catch (Exception ex)
             {

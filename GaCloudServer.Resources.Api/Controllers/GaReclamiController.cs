@@ -955,24 +955,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaReclamiDocumentoAsync/{id}/{fileId}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaReclamiDocumentoAsync(long id, string fileId)
+        [HttpDelete("DeleteGaReclamiDocumentoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaReclamiDocumentoAsync(long id)
         {
             try
             {
                 var response = await _gaReclamiService.DeleteGaReclamiDocumentoAsync(id);
-                if (response && fileId != null && fileId != "null" && fileId != "")
-                {
-                    var deleteResponse = await _fileService.Remove(fileId);
-                    if (deleteResponse)
-                    {
-                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
-                    }
-                    else
-                    {
-                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
-                    }
-                }
 
                 return new ApiResponse(response);
             }

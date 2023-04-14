@@ -90,7 +90,8 @@ namespace GaCloudServer.Jobs
             services.AddScoped<ScadJobs.GaAutorizzazioniScadenziarioJob>();
             services.AddScoped<ScadJobs.GaMezziScadenziarioJob>();
             services.AddScoped<ScadJobs.GaContrattiScadenziarioJob>();
-            services.AddScoped<ScadJobs.GaDipendentiScadenziarioJob>();
+            services.AddScoped<ScadJobs.GaDipendentiNoviScadenziarioJob>();
+            services.AddScoped<ScadJobs.GaDipendentiTortonaScadenziarioJob>();
             services.AddScoped<ScadJobs.GaReclamiScadenziarioJob>();
 
 
@@ -166,7 +167,8 @@ namespace GaCloudServer.Jobs
                         typeof(MailJobs),
                         typeof(ScadJobs.GaAutorizzazioniScadenziarioJob),
                         typeof(ScadJobs.GaMezziScadenziarioJob),
-                        typeof(ScadJobs.GaDipendentiScadenziarioJob),
+                        typeof(ScadJobs.GaDipendentiNoviScadenziarioJob),
+                        typeof(ScadJobs.GaDipendentiTortonaScadenziarioJob),
                         typeof(ScadJobs.GaContrattiScadenziarioJob),
                         typeof(ScadJobs.GaReclamiScadenziarioJob)
                     }

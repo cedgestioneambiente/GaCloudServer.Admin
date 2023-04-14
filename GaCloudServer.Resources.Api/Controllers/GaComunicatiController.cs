@@ -25,7 +25,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         public GaComunicatiController(
             IGaComunicatiService gaComunicatiService
             , IFileService fileService
-            ,ILogger<GaComunicatiController> logger)
+            , ILogger<GaComunicatiController> logger)
         {
 
             _gaComunicatiService = gaComunicatiService;
@@ -35,11 +35,11 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #region ComunicatiDocumenti
         [HttpGet("GetGaComunicatiDocumentiAsync/{page}/{pageSize}")]
-        public async Task<ActionResult<ApiResponse>> GetGaComunicatiDocumentiByDocumentoIdAsync(int page,int pageSize)
+        public async Task<ActionResult<ApiResponse>> GetGaComunicatiDocumentiByDocumentoIdAsync(int page, int pageSize)
         {
             try
             {
-                var dtos = await _gaComunicatiService.GetGaComunicatiDocumentiAsync(page,pageSize);
+                var dtos = await _gaComunicatiService.GetGaComunicatiDocumentiAsync(page, pageSize);
                 var apiDtos = dtos.ToApiDto<ComunicatiDocumentiApiDto, ComunicatiDocumentiDto>();
                 return new ApiResponse(apiDtos);
             }
@@ -77,7 +77,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "GaCloud/Comunicati";
+                string fileFolder = "Comunicati";
                 var dto = apiDto.ToDto<ComunicatiDocumentoDto, ComunicatiDocumentoApiDto>();
                 var response = await _gaComunicatiService.AddGaComunicatiDocumentoAsync(dto);
                 if (apiDto.uploadFile)
@@ -117,7 +117,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "GaCloud/Comunicati";
+                string fileFolder = "Comunicati";
                 var dto = apiDto.ToDto<ComunicatiDocumentoDto, ComunicatiDocumentoApiDto>();
                 var response = await _gaComunicatiService.UpdateGaComunicatiDocumentoAsync(dto);
                 bool failureDelete = false;
@@ -181,24 +181,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaComunicatiDocumentoAsync/{id}/{fileId}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaComunicatiDocumentoAsync(long id, string fileId)
+        [HttpDelete("DeleteGaComunicatiDocumentoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaComunicatiDocumentoAsync(long id)
         {
             try
             {
                 var response = await _gaComunicatiService.DeleteGaComunicatiDocumentoAsync(id);
-                if (response && fileId != null && fileId != "null" && fileId != "")
-                {
-                    var deleteResponse = await _fileService.Remove(fileId);
-                    if (deleteResponse)
-                    {
-                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
-                    }
-                    else
-                    {
-                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
-                    }
-                }
 
                 return new ApiResponse(response);
             }
