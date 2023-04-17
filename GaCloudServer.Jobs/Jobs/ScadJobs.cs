@@ -275,10 +275,10 @@ namespace GaCloudServer.Jobs.Jobs
 
         [PersistJobDataAfterExecution]
         [DisallowConcurrentExecution]
-        public class GaDipendentiScadenziarioJob : IJob
+        public class GaDipendentiNoviScadenziarioJob : IJob
         {
             public readonly IServiceProvider _provider;
-            public GaDipendentiScadenziarioJob(IServiceProvider provider)
+            public GaDipendentiNoviScadenziarioJob(IServiceProvider provider)
             {
                 _provider = provider;
             }
@@ -293,7 +293,7 @@ namespace GaCloudServer.Jobs.Jobs
                     var notificationService = scope.ServiceProvider.GetService<INotificationService>();
                     var list = personaleService.GetViewGaPersonaleScadenziarioAsync(true).Result;
                     var scadenziario = (from x in list.Data
-                                        where (x.Stato == "R" || x.Stato == "G") && x.Disabled == false
+                                        where (x.Stato == "R" || x.Stato == "G") && x.Disabled == false && x.Sede == "NOVI LIGURE"
                                         select x).OrderBy(x => x.DataScadenza).ToList();
 
                     var columnHeaders = new List<string>() { "Dipendente", "Tipo Scadenza", "Dettaglio Scadenza", "Data Scadenza" };
@@ -337,9 +337,96 @@ namespace GaCloudServer.Jobs.Jobs
                             mailService.AddMailJobAsync(new MailJob()
                             {
                                 Id = 0,
-                                Description = "Scadenziario Dipendenti",
+                                Description = "Scadenziario Dipendenti Novi Ligure",
                                 DateScheduled = DateTime.Now,
-                                Title = "Scadenziario Dipendenti",
+                                Title = "Scadenziario Dipendenti Novi Ligure",
+                                MailingTo = mailTo,
+                                MailCc = mailCc,
+                                Application = string.Format("1|{0}.{1}.{2}", context.JobDetail.Key.Group, context.JobDetail.Key.Name, context.Trigger.Key.Name),
+                                Content = content,
+                                Template = "DefaultMailJob.html",
+                                OkMessage = "Scadenziario Dipendenti inoltrato correttamente.",
+                                KoMessage = "Si è verificato un problema durante l'invio dello Scadenziario Dipendenti",
+                                UserId = string.Join(";", usersId)
+
+
+                            })
+                            .Result;
+                    }
+
+                }
+
+                return Task.CompletedTask;
+            }
+        }
+
+        [PersistJobDataAfterExecution]
+        [DisallowConcurrentExecution]
+        public class GaDipendentiTortonaScadenziarioJob : IJob
+        {
+            public readonly IServiceProvider _provider;
+            public GaDipendentiTortonaScadenziarioJob(IServiceProvider provider)
+            {
+                _provider = provider;
+            }
+
+            public Task Execute(IJobExecutionContext context)
+            {
+                using (var scope = _provider.CreateScope())
+                {
+
+                    var mailService = scope.ServiceProvider.GetService<IMailService>();
+                    var personaleService = scope.ServiceProvider.GetService<IGaPersonaleService>();
+                    var notificationService = scope.ServiceProvider.GetService<INotificationService>();
+                    var list = personaleService.GetViewGaPersonaleScadenziarioAsync(true).Result;
+                    var scadenziario = (from x in list.Data
+                                        where (x.Stato == "R" || x.Stato == "G") && x.Disabled == false && x.Sede == "TORTONA"
+                                        select x).OrderBy(x => x.DataScadenza).ToList();
+
+                    var columnHeaders = new List<string>() { "Dipendente", "Tipo Scadenza", "Dettaglio Scadenza", "Data Scadenza" };
+
+                    var rows = new List<List<string>>();
+                    List<string> row;
+                    foreach (var itm in scadenziario)
+                    {
+                        row = new List<string>();
+                        row.Add(itm.Dipendente);
+                        row.Add(itm.ScadenzaTipo);
+                        row.Add(itm.ScadenzaDettaglio);
+                        row.Add(itm.DataScadenza.ToString("dd/MM/yyyy"));
+
+                        rows.Add(row);
+                    }
+
+                    var content = HtmlHelpers.GenerateTable(columnHeaders, rows);
+
+                    string mailTo = "";
+                    string mailCc = "";
+
+                    foreach (var itm in context.MergedJobDataMap)
+                    {
+                        if (itm.Key == "to")
+                        {
+                            mailTo = itm.Value.ToString();
+                        }
+                        else if (itm.Key == "cc")
+                        {
+                            mailCc = itm.Value.ToString();
+                        }
+                    }
+
+                    if (mailTo.Length > 0 || mailCc.Length > 0)
+                    {
+                        var notificationUsers = notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(1).Result;
+                        var usersId = (from x in notificationUsers.Data select x.UserId).ToList();
+
+                        var response =
+                            mailService.AddMailJobAsync(new MailJob()
+                            {
+                                Id = 0,
+                                Description = "Scadenziario Dipendenti Tortona",
+                                DateScheduled = DateTime.Now,
+                                Title = "Scadenziario Dipendenti Tortona",
                                 MailingTo = mailTo,
                                 MailCc = mailCc,
                                 Application = string.Format("1|{0}.{1}.{2}", context.JobDetail.Key.Group, context.JobDetail.Key.Name, context.Trigger.Key.Name),
