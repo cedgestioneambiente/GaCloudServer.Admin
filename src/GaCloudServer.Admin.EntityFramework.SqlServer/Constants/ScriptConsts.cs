@@ -17,7 +17,9 @@
         //Cdr
         public const string GaCdrMigration = @".\Scripts\Cdr\";
         public const string CREATE_ViewGaCdr = "CREATE_ViewGaCdr.sql";
+        public const string CREATE_ViewGaCdr_V1 = "CREATE_ViewGaCdr_V1.sql";
         public const string DROP_ViewGaCdr = "DROP_ViewGaCdr.sql";
+        public const string DROP_ViewGaCdr_V1 = "DROP_ViewGaCdr_V1.sql";
 
         //Contratti
         public const string GaContrattiMigration = @".\Scripts\Contratti\";

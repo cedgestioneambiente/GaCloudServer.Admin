@@ -148,6 +148,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa);
         Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIngPrintAsync(string comune, DateTime? dataEsecuzione, int tipoStampa);
         Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
+        Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIntPrintSelectionAsync(long[] ids);
         Task<List<ViewFoContactCenterTickets>> GetFoContactCenterTicketsIntPrintAsync(long? fromId, long? toId, DateTime? fromData, DateTime? toData);
         PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsQueryable(GridOperationsModel filterParams);
         PagedList<ViewGaContactCenterTickets> GetViewGaContactCenterTicketsByCantiereQueryable(GridOperationsModel filterParams, long[]? cantieriId);

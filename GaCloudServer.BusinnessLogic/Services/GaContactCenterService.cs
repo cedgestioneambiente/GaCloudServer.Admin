@@ -5,6 +5,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -975,6 +976,23 @@ namespace GaCloudServer.BusinnessLogic.Services
                         return viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => x.TipoTicket != "RACCOLTA INGOMBRANTI" && x.TipoTicket != "RACCOLTA INGOMBRANTI RAEE").Result.Data.OrderByDescending(x => x.Id).ToList();
                     }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+        public async Task<List<ViewGaContactCenterTickets>> GetGaContactCenterTicketsIntPrintSelectionAsync(long[] ids)
+        {
+
+            try
+            {
+                var view=await viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => ids.Contains(x.Id));
+                return view.Data.ToList();
+
+                
 
             }
             catch (Exception ex)

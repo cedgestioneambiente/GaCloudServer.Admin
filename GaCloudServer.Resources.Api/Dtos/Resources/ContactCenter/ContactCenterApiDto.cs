@@ -182,4 +182,9 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         public DateTime? toDate { get; set; }
         public bool all { get; set; }
     }
+
+    public class ContactCenterIntPrintSelectedApiDto
+    { 
+        public long[] ids { get; set; }
+    }
 }
