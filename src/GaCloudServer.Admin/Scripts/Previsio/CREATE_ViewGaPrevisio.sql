@@ -13,7 +13,7 @@ GO
 
 CREATE VIEW [dbo].[ViewGaPrevisioOdsReport]
     AS
-SELECT CAST(0 as bigint) Id
+SELECT CAST(IDServizio as bigint) Id
       ,[IDservizio]
 	  ,ContaServizi
       ,DataOraIniMezzo

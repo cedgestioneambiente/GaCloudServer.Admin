@@ -68,7 +68,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var token = await _ecoFinderService.GetTokenAsync();
                 var devices = await _ecoFinderService.GetDevices(token.token);
                 var deviceId = (from x in devices where x.description == apiDto.targa.Trim() select x.id).FirstOrDefault();
-                var deviceData = await _ecoFinderService.GetDeviceData(token.token, deviceId.ToString(), 
+                var deviceData =                  
+                    await _ecoFinderService.GetDeviceData(token.token, deviceId.ToString(), 
                     apiDto.dateStart.ToString("yyyy-MM-ddTHH:mm:ss"), 
                     apiDto.dateEnd.ToString("yyyy-MM-ddTHH:mm:ss"));
 
