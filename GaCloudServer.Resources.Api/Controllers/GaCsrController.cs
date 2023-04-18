@@ -888,6 +888,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
+
         [HttpGet("GetGaCsrRegistrazioniAnniAsync")]
         public async Task<ActionResult<ApiResponse>> GetGaCsrRegistrazioniAnniAsync()
         {

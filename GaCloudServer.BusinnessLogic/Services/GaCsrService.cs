@@ -578,6 +578,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
+
         public async Task<List<ViewGaCsrExports>> GetGaCsrExport(int anno, List<int> comuni)
         {
             try

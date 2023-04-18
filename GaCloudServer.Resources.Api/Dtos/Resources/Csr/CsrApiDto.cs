@@ -62,7 +62,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Csr
         public long CsrDestinatarioId { get; set; }
         public long CsrTrasportatoreId { get; set; }
         public int PesoTotale { get; set; }
-        public string Operazione { get; set; }
+        public string? Operazione { get; set; }
     }
 
     public class CsrRegistrazioniApiDto : GenericPagedListApiDto<CsrRegistrazioneApiDto>
