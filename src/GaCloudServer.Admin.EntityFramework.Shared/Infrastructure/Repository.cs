@@ -234,14 +234,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
                 data = data
                     .FilterByV2(filterParams);
 
-                pagedList.TotalCount = data.Count();
+                var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-                var pageData = data
+                pagedList.TotalCount = filteredData.Count();
+
+                var pageData = filteredData
                     .Skip(filterParams.startRow)
-                    .Take(filterParams.endRow)
-                    .OrderBy(filterParams.sortModel)
-                    .AsNoTracking()
-                    .ToList();
+                    .Take(filterParams.endRow);
 
                 pagedList.Data.AddRange(pageData);
 
@@ -265,18 +264,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
                 data = data.AsQueryable()
                 .FilterByV2(filterParams);
 
-                pagedList.TotalCount = data.Count();
+                var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-                var pageData = data
+                pagedList.TotalCount = filteredData.Count();
+
+                var pageData = filteredData
                     .Skip(filterParams.startRow)
-                    .Take(filterParams.endRow)
-                    .OrderBy(filterParams.sortModel)
-                    .AsNoTracking()
-                    .ToList();
+                    .Take(filterParams.endRow);
 
                 pagedList.Data.AddRange(pageData);
 
                 return pagedList;
+
             }
 
         }
@@ -302,14 +301,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
                 data = data
                     .FilterByV2(filterParams);
 
-                pagedList.TotalCount = data.Count();
+                var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-                var pageData = data
+                pagedList.TotalCount = filteredData.Count();
+
+                var pageData = filteredData
                     .Skip(filterParams.startRow)
-                    .Take(filterParams.endRow)
-                    .OrderBy(filterParams.sortModel)
-                    .AsNoTracking()
-                    .ToList();
+                    .Take(filterParams.endRow);
 
                 pagedList.Data.AddRange(pageData);
 
@@ -333,14 +331,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
                 data = data.AsQueryable()
                 .FilterByV2(filterParams);
 
-                pagedList.TotalCount = data.Count();
+                var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-                var pageData = data
+                pagedList.TotalCount = filteredData.Count();
+
+                var pageData = filteredData
                     .Skip(filterParams.startRow)
-                    .Take(filterParams.endRow)
-                    .OrderBy(filterParams.sortModel)
-                    .AsNoTracking()
-                    .ToList();
+                    .Take(filterParams.endRow);
 
                 pagedList.Data.AddRange(pageData);
 
@@ -357,18 +354,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             .FilterByV2(filterParams)
             .QuickFilterBy(quickFilter);
 
-            pagedList.TotalCount = data.Count();
+            var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-            var pageData = data
+            pagedList.TotalCount = filteredData.Count();
+
+            var pageData = filteredData
                 .Skip(filterParams.startRow)
-                .Take(filterParams.endRow)
-                .OrderBy(filterParams.sortModel)
-                .AsNoTracking()
-                .ToList();
+                .Take(filterParams.endRow);
 
             pagedList.Data.AddRange(pageData);
 
             return pagedList;
+
+           
 
         }
 
@@ -381,18 +379,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             .FilterByV2(filterParams)
             .QuickFilterBy(quickFilter);
 
-            pagedList.TotalCount = data.Count();
+            var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-            var pageData = data
+            pagedList.TotalCount = filteredData.Count();
+
+            var pageData = filteredData
                 .Skip(filterParams.startRow)
-                .Take(filterParams.endRow)
-                .OrderBy(filterParams.sortModel)
-                .AsNoTracking()
-                .ToList();
+                .Take(filterParams.endRow);
 
             pagedList.Data.AddRange(pageData);
 
             return pagedList;
+
+            
 
         }
 
@@ -418,12 +417,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
                 data = data
                     .FilterByV2(filterParams);
 
-                pagedList.TotalCount = data.Count();
+                var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-                var pageData = data
-                    .OrderBy(filterParams.sortModel)
-                    .AsNoTracking()
-                    .ToList();
+                pagedList.TotalCount = filteredData.Count();
+
+                var pageData = filteredData
+                    .Skip(filterParams.startRow)
+                    .Take(filterParams.endRow);
 
                 pagedList.Data.AddRange(pageData);
 
@@ -434,12 +434,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
                 var data = _entities.AsQueryable()
                 .FilterByV2(filterParams);
 
-                pagedList.TotalCount = data.Count();
+                var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-                var pageData = data
-                    .OrderBy(filterParams.sortModel)
-                    .AsNoTracking()
-                    .ToList();
+                pagedList.TotalCount = filteredData.Count();
+
+                var pageData = filteredData
+                    .Skip(filterParams.startRow)
+                    .Take(filterParams.endRow);
 
                 pagedList.Data.AddRange(pageData);
 
@@ -458,12 +459,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             .FilterByV2(filterParams)
             .QuickFilterBy(quickFilter);
 
-            pagedList.TotalCount = data.Count();
+            var filteredData = data.OrderBy(filterParams.sortModel).ToList();
 
-            var pageData = data
-                .OrderBy(filterParams.sortModel)
-                .AsNoTracking()
-                .ToList();
+            pagedList.TotalCount = filteredData.Count();
+
+            var pageData = filteredData
+                .Skip(filterParams.startRow)
+                .Take(filterParams.endRow);
 
             pagedList.Data.AddRange(pageData);
 

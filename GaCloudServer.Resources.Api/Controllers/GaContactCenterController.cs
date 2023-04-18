@@ -1432,6 +1432,33 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpPost("PrintGaContactCenterIntBySelectionAsync")]
+        public async Task<ApiResponse> PrintGaContactCenterIntBySelectionAsync([FromBody] ContactCenterIntPrintSelectedApiDto apiDto)
+        {
+            try
+            {
+
+                var list = await _gaContactCenterService.GetGaContactCenterTicketsIntPrintSelectionAsync(apiDto.ids);
+
+                if (list == null)
+                {
+                    return new ApiResponse("NoData", null, code.Status200OK);
+                }
+
+                var dto = GenerateContactCenterTicketsIntTemplate(list);
+                var response = await _printService.Print("ContactCenterTicketsInt", dto);
+
+                await _gaContactCenterService.SetPrintedGaContactCenterTicketsAsync(apiDto.ids);
+
+                return new ApiResponse(response);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
 
         //[HttpGet("ValidateGaContactCenterTicketAsync/{id}/{descrizione}")]
         //public async Task<ActionResult<ApiResponse>> ValidateGaContactCenterTicketAsync(long id, string descrizione)

@@ -36,7 +36,7 @@ namespace GaCloudServer.Jobs.Jobs
                             foreach (var itm in mail.UserId.Split(";"))
                             {
                                 var userNotification = notificationService.GetViewViewNotificationUsersOnAppsByUserIdAsync(itm).Result;
-                                if ((from x in userNotification.Data where x.AppId== TextHelpers.AppSplit(mail.Application) select x).ToList().Count>0)
+                                if ((from x in userNotification.Data where x.AppId== TextHelpers.AppSplit(mail.Application) && x.Enabled select x).ToList().Count>0)
                                 {
                                     var notification = notificationService.AddNotificationEventAsync(new NotificationEventDto()
                                     {
@@ -61,7 +61,7 @@ namespace GaCloudServer.Jobs.Jobs
                             foreach (var itm in mail.UserId.Split(";"))
                             {
                                 var userNotification = notificationService.GetViewViewNotificationUsersOnAppsByUserIdAsync(itm).Result;
-                                if ((from x in userNotification.Data where x.AppId == TextHelpers.AppSplit(mail.Application) select x).ToList().Count > 0)
+                                if ((from x in userNotification.Data where x.AppId == TextHelpers.AppSplit(mail.Application) && x.Enabled select x).ToList().Count > 0)
                                 {
                                     var notification = notificationService.AddNotificationEventAsync(new NotificationEventDto()
                                     {

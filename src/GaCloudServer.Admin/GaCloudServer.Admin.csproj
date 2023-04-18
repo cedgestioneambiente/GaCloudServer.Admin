@@ -95,7 +95,13 @@
 	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Cdr\CREATE_ViewGaCdr_V1.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Cdr\CREATE_ViewGaCdr.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Cdr\DROP_ViewGaCdr_V1.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Cdr\DROP_ViewGaCdr.sql">

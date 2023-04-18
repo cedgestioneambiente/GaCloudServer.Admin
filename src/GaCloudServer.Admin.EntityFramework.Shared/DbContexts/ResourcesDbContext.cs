@@ -506,8 +506,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaCdrConferimenti))
-                    .HasNoKey()
-                    .Property(x => x.Id);
+                    .HasKey(x => x.Id);
             });
 
             builder.Entity<ViewGaCdrRichiesteViaggi>(entity =>
