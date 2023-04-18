@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
@@ -10,12 +11,14 @@ namespace GaCloudServer.Jobs.Services
         private readonly IWebHostEnvironment _env;
         private readonly string sender;
         private readonly string senderPassword;
+        public readonly IMailService _mailService;
 
-        public MailJobService(IWebHostEnvironment env)
+        public MailJobService(IWebHostEnvironment env,IMailService mailService)
         {
             sender = "helpdesk@gestioneambiente.net";
             senderPassword = "Husa9919";
             _env = env;
+            _mailService = mailService;
         }
 
 
@@ -67,7 +70,16 @@ namespace GaCloudServer.Jobs.Services
                 else
                 {
                     string projectDirectory = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-                    string wwwrootPath = Path.Combine(projectDirectory, "GaCloudServer\\GaCloudServer.Resources.Api", "wwwroot");
+                    string wwwrootPath = "";
+                    if (_env.IsDevelopment())
+                    {
+                        wwwrootPath = Path.Combine(projectDirectory, "GaCloudServer\\GaCloudServer.Resources.Api", "wwwroot");
+                    }
+                    else
+                    { 
+                        wwwrootPath= Path.Combine(projectDirectory, "wwwroot\\gacloud.api.res", "wwwroot");
+                    }
+                    
 
 
                     var builder = new BodyBuilder();
@@ -90,7 +102,8 @@ namespace GaCloudServer.Jobs.Services
             }
             catch (Exception ex)
             {
-
+                mailJob.KoMessage = ex.Message;
+                await _mailService.UpdateMailJobAsync(mailJob);
                 return false;
             }
         }
