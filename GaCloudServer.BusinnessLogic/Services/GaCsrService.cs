@@ -830,7 +830,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
-        public async Task<CsrRipartizioniPercentualiDto> GetGaCsrRipartizioniPercentualiByComuneIdAsync(long comuneId)
+        public async Task<CsrRipartizioniPercentualiDto> GetGaCsrRipartizionePercentualeByComuneIdAsync(long comuneId)
         {
             var entity = await gaCsrRipartizioniPercentualiRepo.GetWithFilterAsync(x => x.CsrComuneId == comuneId);
             var dto = entity.ToDto<CsrRipartizioniPercentualiDto, PagedList<CsrRipartizionePercentuale>>();

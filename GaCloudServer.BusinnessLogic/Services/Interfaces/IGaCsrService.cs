@@ -121,7 +121,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region GaCsrRipartizioniPercentuali
         Task<CsrRipartizioniPercentualiDto> GetGaCsrRipartizioniPercentualiAsync(int page = 1, int pageSize = 0);
         Task<CsrRipartizionePercentualeDto> GetGaCsrRipartizionePercentualeByIdAsync(long id);
-        Task<CsrRipartizioniPercentualiDto> GetGaCsrRipartizioniPercentualiByComuneIdAsync(long comuneId);
+        Task<CsrRipartizioniPercentualiDto> GetGaCsrRipartizionePercentualeByComuneIdAsync(long comuneId);
 
         Task<long> AddGaCsrRipartizionePercentualeAsync(CsrRipartizionePercentualeDto dto);
         Task<long> UpdateGaCsrRipartizionePercentualeAsync(CsrRipartizionePercentualeDto dto);

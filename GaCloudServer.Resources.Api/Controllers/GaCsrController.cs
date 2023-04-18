@@ -1066,13 +1066,13 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpGet("GetGaCsrRipartizionePercentualeByComuneIdAsync/{comuneId}")]
-        public async Task<ActionResult<ApiResponse>> GetGaCsrRipartizioniPercentualiByComuneIdAsync(long comuneId)
+        public async Task<ActionResult<ApiResponse>> GetGaCsrRipartizionePercentualeByComuneIdAsync(long comuneId)
         {
             try
             {
-                var dto = await _gaCsrService.GetGaCsrRipartizionePercentualeByIdAsync(comuneId);
-                var apiDto = dto.ToApiDto<CsrRipartizionePercentualeApiDto, CsrRipartizionePercentualeDto>();
-                return new ApiResponse(apiDto);
+                var dtos = await _gaCsrService.GetGaCsrRipartizionePercentualeByComuneIdAsync(comuneId);
+                var apiDtos = dtos.ToApiDto<CsrRipartizioniPercentualiApiDto, CsrRipartizioniPercentualiDto>();
+                return new ApiResponse(apiDtos);
             }
             catch (Exception ex)
             {
