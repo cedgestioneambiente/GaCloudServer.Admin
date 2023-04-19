@@ -42,8 +42,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Note", "Note", "{EA4133D4-A
 		Script_Migration.txt = Script_Migration.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaCloudServer.NotificationHub.API", "GaCloudServer.NotificationHub.API\GaCloudServer.NotificationHub.API.csproj", "{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -198,18 +196,6 @@ Global
 		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|x64.Build.0 = Release|Any CPU
 		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|x86.ActiveCfg = Release|Any CPU
 		{3494B613-8E85-487C-ADBC-8FE775403148}.Release|x86.Build.0 = Release|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Debug|x64.Build.0 = Debug|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Debug|x86.Build.0 = Debug|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Release|x64.ActiveCfg = Release|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Release|x64.Build.0 = Release|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Release|x86.ActiveCfg = Release|Any CPU
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,7 +214,6 @@ Global
 		{218AACFE-16CB-4114-A6EF-9B4CE7B3CE5B} = {14C37872-1BB6-42B7-A8EC-BC7907F12D3F}
 		{3494B613-8E85-487C-ADBC-8FE775403148} = {14C37872-1BB6-42B7-A8EC-BC7907F12D3F}
 		{EA4133D4-A5DB-4E3E-B6FA-C86AF5FC4D4B} = {14C37872-1BB6-42B7-A8EC-BC7907F12D3F}
-		{8CDD2D0E-7D30-4483-97BC-C4FDD466A09E} = {14C37872-1BB6-42B7-A8EC-BC7907F12D3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C5574385-586F-49AE-BBF7-DC83BE30A069}
