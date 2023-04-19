@@ -43,7 +43,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IGaProgettiService, GaProgettiService>();
 
             services.AddTransient<IFileService, FileService>();
-            services.AddTransient<INotificationService, NotificationService>();
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddTransient<IPrintService, PrintService>();
             services.AddTransient<ILocalFileService, LocalFileService>();
             services.AddTransient<IMailService,MailService>();
@@ -54,6 +54,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<ISystemService, SystemService>();
 
             services.AddTransient<IQueryBuilderService, QueryBuilderService>();
+
 
 
             services.AddTransient<IUnitOfWork, UnitOfWork<TResourcesDbContext>>();
@@ -73,7 +74,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IGaReclamiService, GaReclamiService>();
 
             services.AddTransient<IMailService, MailService>();
-            services.AddTransient<INotificationService, NotificationService>();
+            services.AddScoped<INotificationService, NotificationService>();
            
 
             services.AddTransient<IUnitOfWork, UnitOfWork<TResourcesDbContext>>();

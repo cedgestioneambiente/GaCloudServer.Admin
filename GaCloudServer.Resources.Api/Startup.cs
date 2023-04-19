@@ -20,6 +20,11 @@ using HealthChecks.UI.Client;
 using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Extensions;
 using AutoWrapper;
 using Microsoft.AspNetCore.Mvc;
+using GaCloudServer.BusinnessLogic.Hub;
+using Microsoft.AspNetCore.SignalR;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
+using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using GaCloudServer.BusinnessLogic.Services;
 
 namespace GaCloudServer.Resources.Api
 {
@@ -38,6 +43,14 @@ namespace GaCloudServer.Resources.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddSignalR().AddHubOptions<NotificationHub>(options =>
+            //{
+            //    options.EnableDetailedErrors = true;
+            //});
+
+            services.AddSignalR();
+
+
             var resourcesApiConfiguration = Configuration.GetSection(nameof(ResourcesApiConfiguration)).Get<ResourcesApiConfiguration>();
             services.AddSingleton(resourcesApiConfiguration);
 
@@ -78,7 +91,6 @@ namespace GaCloudServer.Resources.Api
             services.AddAdminServices<IdentityServerConfigurationDbContext, IdentityServerPersistedGrantDbContext, AdminLogDbContext>();
             services.AddResourcesRepository<ResourcesDbContext>();
             services.AddResourcesServices<ResourcesDbContext>();
-
 
             services.AddAdminApiCors(resourcesApiConfiguration);
 
@@ -161,7 +173,8 @@ namespace GaCloudServer.Resources.Api
             .AllowAnyHeader()
             .AllowAnyOrigin()
             .AllowAnyMethod()
-            .SetIsOriginAllowed(origin => true));
+            //.AllowCredentials()//mod
+            .SetIsOriginAllowed((host) => true));
 
             app.UseAuthorization();
 
@@ -170,6 +183,9 @@ namespace GaCloudServer.Resources.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapHub<NotificationHub>("/resourcesHub");
+                endpoints.MapHub<BackgroundServicesHub>("/backgroundServicesHub");
                 
 
                 endpoints.MapHealthChecks("/health", new HealthCheckOptions

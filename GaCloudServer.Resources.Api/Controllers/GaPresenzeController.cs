@@ -1,6 +1,8 @@
 ﻿using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Presenze;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
+using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Constants;
@@ -11,6 +13,7 @@ using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Resources.Api.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -26,18 +29,22 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly INotificationService _notificationService;
         private readonly IMailService _mailService;
         private readonly ILogger<GaPresenzeController> _logger;
+        private readonly IHubContext<BackgroundServicesHub, IBackgroundServicesHub> _backgroundServicesHub;
 
         public GaPresenzeController(
             IGaPresenzeService gaPresenzeService,
             INotificationService notificationService,
             IMailService mailService
-            ,ILogger<GaPresenzeController> logger)
+            ,ILogger<GaPresenzeController> logger
+            , IHubContext<BackgroundServicesHub, IBackgroundServicesHub> backgroundServicesHub)
         {
 
             _gaPresenzeService = gaPresenzeService;
             _notificationService = notificationService;
             _mailService = mailService;
             _logger = logger;
+            _backgroundServicesHub = backgroundServicesHub;
+
         }
 
         #region PresenzeStatiRichieste
@@ -233,6 +240,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var dto = apiDto.ToDto<PresenzeRichiestaDto, PresenzeRichiestaApiDto>();
                 var response = await _gaPresenzeService.AddGaPresenzeRichiestaAsync(dto);
 
+                await this._backgroundServicesHub.Clients.Groups(new List<string>() { "Administrator", "Users" }).PresenzeRefresh(true);
+
                 return new ApiResponse(response);
             }
             catch (ApiProblemDetailsException ex)
@@ -264,6 +273,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 var dto = apiDto.ToDto<PresenzeRichiestaDto, PresenzeRichiestaApiDto>();
                 var response = await _gaPresenzeService.UpdateGaPresenzeRichiestaAsync(dto);
+
+                await this._backgroundServicesHub.Clients.Groups(new List<string>() { "Administrator", "User" }).PresenzeRefresh(true);
 
                 return new ApiResponse(response);
             }

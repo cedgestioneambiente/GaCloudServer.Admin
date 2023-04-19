@@ -1,6 +1,8 @@
 ﻿using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
+using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.ExceptionHandling;
@@ -8,6 +10,7 @@ using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Resources.Dtos.Resources.Notification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -21,16 +24,22 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly INotificationService _notificationService;
         private readonly IFileService _fileService;
         private readonly ILogger<NotificationController> _logger;
+        private readonly IHubContext<NotificationHub, INotificationHub> _notification;
+        private readonly IHubContext<BackgroundServicesHub, IBackgroundServicesHub> _backgroundServicesHub;
 
         public NotificationController(
             INotificationService notificationService
             ,IFileService fileService
-            ,ILogger<NotificationController> logger)
+            ,ILogger<NotificationController> logger
+            , IHubContext<NotificationHub, INotificationHub> notification
+            , IHubContext<BackgroundServicesHub, IBackgroundServicesHub> backgroundServicesHub)
         {
 
             _notificationService = notificationService;
             _fileService = fileService;
             _logger = logger;
+            _notification = notification;
+            _backgroundServicesHub = backgroundServicesHub;
         }
 
 
@@ -290,6 +299,39 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region NotificationEvents
+        [HttpGet("TestNotificationEventAsync")]
+        public async Task<ActionResult<ApiResponse>> TestNotificationEventAsync()
+        {
+            try
+            {
+                _notification.Clients.All.SendNotification(null);
+
+                return new ApiResponse(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("TestBackgroundServicesAsync")]
+        public async Task<ActionResult<ApiResponse>> TestBackgroundServicesAsync()
+        {
+            try
+            {
+                await this._backgroundServicesHub.Clients.All.PresenzeRefresh(true);
+
+                return new ApiResponse(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
 
         [HttpDelete("DeleteNotificationEventAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> DeleteNotificationEventAsync(long id)

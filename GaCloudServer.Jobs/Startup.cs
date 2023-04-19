@@ -17,6 +17,7 @@ using System.Text;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.BusinnessLogic.Services;
+using GaCloudServer.BusinnessLogic.Hub;
 
 namespace GaCloudServer.Jobs
 {
@@ -36,6 +37,8 @@ namespace GaCloudServer.Jobs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+
             services.AddMvc(options =>
                             options.EnableEndpointRouting = false
                         );
@@ -115,6 +118,12 @@ namespace GaCloudServer.Jobs
             loggerFactory.AddFile("Logs/mylog-{Date}.txt");
 
             app.UseStaticFiles();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<NotificationHub>("/jobsHub");
+            });
 
             // app is IAppBuilder
             // Note: this code should come before app.UseCrystalQuartz

@@ -2,8 +2,12 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
+using GaCloudServer.BusinnessLogic.Hub;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNetCore.SignalR;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -22,6 +26,9 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         protected readonly IUnitOfWork unitOfWork;
 
+        private readonly IHubContext<NotificationHub, INotificationHub> hub;
+
+
         public NotificationService(
         IGenericRepository<NotificationApp> notificationAppsRepo,
         IGenericRepository<NotificationRoleOnApp> notificationRolesOnAppsRepo,
@@ -32,7 +39,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         IGenericRepository<ViewNotificationUsersOnApps> viewNotificationUsersOnAppsRepo,
         IGenericRepository<ViewNotificationEvents> viewNotificationEventsRepo,
 
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IHubContext<NotificationHub, INotificationHub> hub
+        )
         {
             this.notificationAppsRepo = notificationAppsRepo;
             this.notificationRolesOnAppsRepo = notificationRolesOnAppsRepo;
@@ -44,8 +53,11 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewNotificationEventsRepo = viewNotificationEventsRepo;
 
             this.unitOfWork = unitOfWork;
+            this.hub = hub;
+
 
         }
+
 
         #region NotificationApps
         public async Task<NotificationAppsDto> GetNotificationAppsAsync(int page = 1, int pageSize = 0)
@@ -73,6 +85,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<NotificationApp, NotificationAppDto>();
             await notificationAppsRepo.AddAsync(entity);
             await SaveChanges();
+
             return entity.Id;
         }
 
@@ -231,6 +244,11 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<NotificationEvent, NotificationEventDto>();
             await notificationEventsRepo.AddAsync(entity);
             await SaveChanges();
+
+            //await hub.Clients.All.SendNotification(dto);
+
+            await hub.Clients.Groups(dto.UserId).SendNotification(dto);
+
             return entity.Id;
         }
 

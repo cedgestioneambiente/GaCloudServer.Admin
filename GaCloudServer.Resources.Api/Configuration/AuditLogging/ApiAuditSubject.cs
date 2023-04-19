@@ -16,8 +16,8 @@ namespace GaCloudServer.Resources.Api.Configuration.AuditLogging
             var nameClaim = accessor.HttpContext.User.FindFirst(auditLoggingConfiguration.SubjectNameClaim);
             var clientIdClaim = accessor.HttpContext.User.FindFirst(auditLoggingConfiguration.ClientIdClaim);
 
-            SubjectIdentifier = subClaim == null ? clientIdClaim.Value : subClaim.Value;
-            SubjectName = subClaim == null ? clientIdClaim.Value : nameClaim?.Value;
+            SubjectIdentifier = subClaim == null ? clientIdClaim?.Value : subClaim?.Value;
+            SubjectName = subClaim == null ? clientIdClaim?.Value : nameClaim?.Value;
             SubjectType = subClaim == null ? AuditSubjectTypes.Machine : AuditSubjectTypes.User;
 
             SubjectAdditionalData = new

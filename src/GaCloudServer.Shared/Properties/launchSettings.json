@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "GaCloudServer.Shared": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:52549;http://localhost:52551"
+    }
+  }
+}
