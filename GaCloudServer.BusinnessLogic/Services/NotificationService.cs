@@ -5,9 +5,11 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Hub.Interfaces;
 using GaCloudServer.BusinnessLogic.Mappers;
+using GaCloudServer.BusinnessLogic.Providers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -27,6 +29,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IUnitOfWork unitOfWork;
 
         private readonly IHubContext<NotificationHub, INotificationHub> hub;
+
+        private readonly ILogger _logger;
 
 
         public NotificationService(
@@ -54,6 +58,16 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.unitOfWork = unitOfWork;
             this.hub = hub;
+
+            string projectDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
+            string logPath = Path.Combine(projectDirectory, "logs", "NotificationService.txt");
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddProvider(new FileLoggerProvider(logPath));
+            });
+
+            _logger = loggerFactory.CreateLogger<NotificationService>();
 
 
         }
@@ -245,8 +259,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             await notificationEventsRepo.AddAsync(entity);
             await SaveChanges();
 
-            //await hub.Clients.All.SendNotification(dto);
-
             await hub.Clients.Groups(dto.UserId).SendNotification(dto);
 
             return entity.Id;
@@ -290,6 +302,67 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
         #endregion
+
+        #endregion
+
+        #region Creation
+        public async Task<bool> CreateNotificationAsync(string title, string message, string[] groups,string userId, string appName,string? link,bool? routing)
+        {
+            var appId = await CheckNotificationSubscriptionAsync(userId, appName);
+            if (appId!=-1)
+            {
+                NotificationEventDto notification = new NotificationEventDto()
+                {
+                    Id = 0,
+                    DateEvent = DateTime.Now,
+                    UserId = userId,
+                    NotificationAppId = appId,
+                    Title = title,
+                    Message = message,
+                    Read = false,
+                    Link=link,
+                    Routing=routing.GetValueOrDefault(false)
+                };
+
+                await AddNotificationEventAsync(notification);
+
+                return true;
+
+                
+            }
+            else
+            {
+                return true;
+            }
+            
+        }
+
+        private async Task<long> CheckNotificationSubscriptionAsync(string userId, string appName)
+        {
+            try
+            {
+                var app = await notificationAppsRepo.GetWithFilterAsync(x => x.Descrizione == appName);
+                if (app.Data.Count>0)
+                {
+                    var count = viewNotificationUsersOnAppsRepo.GetWithFilterAsync(x => x.UserId == userId && x.AppId == app.Data.FirstOrDefault().Id && x.Enabled == true).Result.TotalCount;
+
+                    return count > 0 ? app.Data.FirstOrDefault().Id : -1;
+                }
+                else
+                {
+                    _logger.LogInformation(appName + " non configurata per ricevere notifiche.");
+                    return -1;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return -1;
+                
+                
+            }
+        }
 
         #endregion
 

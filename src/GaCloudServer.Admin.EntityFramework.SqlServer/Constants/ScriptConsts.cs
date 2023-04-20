@@ -59,7 +59,9 @@
         //Notification
         public const string NotificationMigration = @".\Scripts\Notification\";
         public const string CREATE_ViewNotification = "CREATE_ViewNotification.sql";
+        public const string CREATE_ViewNotification_V2 = "CREATE_ViewNotification_V2.sql";
         public const string DROP_ViewNotification = "DROP_ViewNotification.sql";
+        public const string DROP_ViewNotification_V2 = "DROP_ViewNotification_V2.sql";
 
         //Csr
         public const string GaCsrMigration = @".\Scripts\Csr\";

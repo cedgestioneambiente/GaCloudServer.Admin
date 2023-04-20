@@ -17,5 +17,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notifica
         public string Title { get; set; }
         public string Message { get; set; }
         public bool Read { get; set; }
+        public string Link { get; set; }
+        public bool Routing { get; set; }
     }
 }

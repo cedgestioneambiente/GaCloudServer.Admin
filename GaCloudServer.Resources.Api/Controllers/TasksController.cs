@@ -2,6 +2,8 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Global;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
+using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.Global;
@@ -10,6 +12,7 @@ using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -23,14 +26,17 @@ namespace GaCloudServer.Resources.Api.Controllers
     {
         private readonly ITasksService _tasksService;
         private readonly ILogger<TasksController> _logger;
+        private readonly INotificationService _notificationService;
 
         public TasksController(
             ITasksService tasksService
-            ,ILogger<TasksController> logger)
+            ,ILogger<TasksController> logger,
+            INotificationService notificationService)
         {
 
             _tasksService = tasksService;
             _logger = logger;
+            _notificationService=notificationService;
         }
 
 
@@ -217,6 +223,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
                 var dto = apiDto.ToDto<TasksItemDto, TasksItemApiDto>();
                 var response = await _tasksService.AddTasksItemAsync(dto);
+
+                var link = "/tasks/list/" + response;
+                await _notificationService.CreateNotificationAsync("Nuovo task", string.Format("E' stato aggiunto un nuovo Task: {0}", apiDto.Title),null,apiDto.UserId, "Task",link,true);
 
                 return new ApiResponse(response);
             }

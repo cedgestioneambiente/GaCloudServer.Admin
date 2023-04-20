@@ -60,6 +60,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        Task<bool> CreateNotificationAsync(string title,string message, string[] groups,string userId,string appName,string? link,bool? routing);
+
 
 
 

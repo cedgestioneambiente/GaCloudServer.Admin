@@ -41,6 +41,8 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Notification
         public long NotificationAppId { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }
+        public string Link { get; set; }
+        public bool Routing { get; set; }
         public bool Read { get; set; }
     }
 
