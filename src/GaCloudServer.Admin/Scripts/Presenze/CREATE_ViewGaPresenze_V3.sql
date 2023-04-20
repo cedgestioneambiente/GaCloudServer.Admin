@@ -1,11 +1,11 @@
 ﻿CREATE VIEW [dbo].[WidgetGaPresenzeSchedule]
 AS
-SELECT CAST(0 AS bigint) Id,Cast(0 as Bit) Disabled,Personale,MIN(Datainizio) DataInizio,MAX(DataFine) DataFine, MAX(Oggi) AS Oggi, MAX(Domani) AS Domani, Settore, PresenzeTipoOraId AS TipoOreId,TipoOre
+SELECT CAST(0 AS bigint) Id,Cast(0 as Bit) Disabled,Personale,MIN(Datainizio) DataInizio,MAX(DataFine) DataFine, case when MAX(Oggi)='1' then cast(1 as bit) else cast(0 as bit) end AS Oggi, case when MAX(Domani)='1' then cast(1 as bit) else cast(0 as bit) end AS Domani, Settore, PresenzeTipoOraId AS TipoOreId,TipoOre
 FROM(
 SELECT A.Id,D.FullName Personale,a.DataInizio,A.DataFine, E.Descrizione Settore,A.PresenzeStatoRichiestaId,A.PresenzeTipoOraId,F.Descrizione TipoOre,
 CASE WHEN CAST(getdate() AS DATE) >= CAST(A.DataInizio AS DATE) AND CAST(getdate() AS DATE) <= CAST(A.DataFine AS DATE) THEN '1' ELSE '0' END AS Oggi,
 CASE WHEN dateadd(dd, 1, CAST(getdate() AS DATE)) >= CAST(DataInizio AS DATE) AND dateadd(dd, 
-                         1, CAST(getdate() AS DATE)) <= CAST(DataFine AS DATE) THEN '1' ELSE '0' END AS Domani
+                         1, CAST(getdate() AS DATE)) <= CAST(DataFine AS DATE) THEN '1' else '0' END AS Domani
 FROM GaPresenzeRichieste A
 INNER JOIN GaPresenzeDipendenti B ON A.PresenzeDipendenteId=B.Id
 INNER JOIN GaPersonaleDipendenti C ON B.PersonaleDipendenteId=C.Id
