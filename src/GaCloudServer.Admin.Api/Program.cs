@@ -23,7 +23,6 @@ namespace GaCloudServer.Admin.Api
             try
             {
                 DockerHelpers.ApplyDockerConfiguration(configuration);
-
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)

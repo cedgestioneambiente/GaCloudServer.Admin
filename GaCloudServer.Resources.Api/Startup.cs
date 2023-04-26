@@ -21,10 +21,9 @@ using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Extensions;
 using AutoWrapper;
 using Microsoft.AspNetCore.Mvc;
 using GaCloudServer.BusinnessLogic.Hub;
-using Microsoft.AspNetCore.SignalR;
-using GaCloudServer.BusinnessLogic.Hub.Interfaces;
-using GaCloudServer.BusinnessLogic.Services.Interfaces;
-using GaCloudServer.BusinnessLogic.Services;
+using Serilog;
+using Serilog.Extensions.Logging;
+using Serilog.Formatting.Compact;
 
 namespace GaCloudServer.Resources.Api
 {
@@ -69,6 +68,11 @@ namespace GaCloudServer.Resources.Api
 
             services.AddScoped<ControllerExceptionFilterAttribute>();
             services.AddScoped<IApiErrorResources, ApiErrorResources>();
+
+            services.AddLogging(options =>
+            {
+                options.AddSerilog(Log.Logger);
+            });
 
             // Add authentication services
             RegisterAuthentication(services);
@@ -147,7 +151,7 @@ namespace GaCloudServer.Resources.Api
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ResourcesApiConfiguration resourcesApiConfiguration)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ResourcesApiConfiguration resourcesApiConfiguration, ILoggerFactory loggerFactory)
         {
             app.AddForwardHeaders();
 
@@ -165,6 +169,7 @@ namespace GaCloudServer.Resources.Api
                 c.OAuthAppName(resourcesApiConfiguration.ApiName);
                 c.OAuthUsePkce();
             });
+
 
             app.UseRouting();
             UseAuthentication(app);

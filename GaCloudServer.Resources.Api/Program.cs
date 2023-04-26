@@ -21,7 +21,7 @@ namespace GaCloudServer.Resources.Api
             try
             {
                 DockerHelpers.ApplyDockerConfiguration(configuration);
-
+                //Log.Information("Starting Host...");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
@@ -91,8 +91,8 @@ namespace GaCloudServer.Resources.Api
                 .UseSerilog((hostContext, loggerConfig) =>
                 {
                     loggerConfig
-                        .ReadFrom.Configuration(hostContext.Configuration)
-                        .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
+                    .ReadFrom.Configuration(hostContext.Configuration)
+                    .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
                 });
     }
 }

@@ -5,11 +5,11 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Hub.Interfaces;
 using GaCloudServer.BusinnessLogic.Mappers;
-using GaCloudServer.BusinnessLogic.Providers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
-using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using Skoruba.AuditLogging.Events;
+using Skoruba.AuditLogging.Services;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -30,7 +30,9 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         private readonly IHubContext<NotificationHub, INotificationHub> hub;
 
-        private readonly ILogger _logger;
+        private readonly ILogger<NotificationService> _logger;
+
+
 
 
         public NotificationService(
@@ -44,7 +46,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         IGenericRepository<ViewNotificationEvents> viewNotificationEventsRepo,
 
         IUnitOfWork unitOfWork,
-        IHubContext<NotificationHub, INotificationHub> hub
+        IHubContext<NotificationHub, INotificationHub> hub,
+        ILogger<NotificationService> logger
         )
         {
             this.notificationAppsRepo = notificationAppsRepo;
@@ -59,16 +62,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.unitOfWork = unitOfWork;
             this.hub = hub;
 
-            string projectDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
-            string logPath = Path.Combine(projectDirectory, "logs", "NotificationService.txt");
-
-            var loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddProvider(new FileLoggerProvider(logPath));
-            });
-
-            _logger = loggerFactory.CreateLogger<NotificationService>();
-
+            this._logger=logger;
 
         }
 
@@ -297,7 +291,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #region Views
         public async Task<PagedList<ViewNotificationEvents>> GetViewViewNotificationEventsByUserIdAsync(string userId, bool all = true)
-        {
+        {   
             var view = all ? await viewNotificationEventsRepo.GetWithFilterAsync(x => x.UserId == userId,1,0,"DateEvent","OrderByDescending") : await viewNotificationEventsRepo.GetWithFilterAsync(x => x.UserId == userId && x.Read == false, 1, 0, "DateEvent", "OrderByDescending");
             return view;
         }
@@ -350,7 +344,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 }
                 else
                 {
-                    _logger.LogInformation(appName + " non configurata per ricevere notifiche.");
+                    _logger.LogError("App "+appName + " non configurata per ricevere notifiche.");
                     return -1;
                 }
 

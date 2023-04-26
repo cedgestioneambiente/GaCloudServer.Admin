@@ -40,7 +40,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             { 
                 command.CommandText = query;
                 command.CommandType=System.Data.CommandType.Text;
+                command.CommandTimeout = 0;
 
+                _context.Database.SetCommandTimeout(480);
                 _context.Database.OpenConnection();
                 using (var result = await command.ExecuteReaderAsync())
                 { 

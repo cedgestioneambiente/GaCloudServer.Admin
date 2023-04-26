@@ -240,7 +240,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var dto = apiDto.ToDto<PresenzeRichiestaDto, PresenzeRichiestaApiDto>();
                 var response = await _gaPresenzeService.AddGaPresenzeRichiestaAsync(dto);
 
-                await this._backgroundServicesHub.Clients.Groups(new List<string>() { "Administrator", "Users" }).PresenzeRefresh(true);
+                await _backgroundServicesHub.Clients.Groups(new List<string>() { "Administrator", "Users" }).PresenzeRefresh(true);
 
                 return new ApiResponse(response);
             }
@@ -344,23 +344,27 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var richiestaMail = await _gaPresenzeService.GetViewGaPresenzeRichiestaMailByIdAsync(id);
                 var respList = await _gaPresenzeService.GetViewGaPresenzeResponsabiliOnSettoreMailBySettoreId(richiestaMail.SettoreId);
                 var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Presenze);
-                var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+                //var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
 
                 List<string> userMails = new List<string>();
                 List<string> respMails = new List<string>();
 
                 foreach (var itm in respList.Data)
                 {
-                    foreach (var user in notifications.Data)
-                    {
-                        if (user.UserId == itm.UserId) { respMails.Add(itm.Email); }
-                    }
+                    respMails.Add(itm.Email);
+
+                    //foreach (var user in notifications.Data)
+                    //{
+                    //    if (user.UserId == itm.UserId) { respMails.Add(itm.Email); }
+                    //}
                 }
 
-                foreach (var user in notifications.Data)
-                {
-                    if (user.UserId == richiestaMail.UserId) { userMails.Add(richiestaMail.RichiedenteEmail); }
-                }
+                userMails.Add(richiestaMail.RichiedenteEmail);
+
+                //foreach (var user in notifications.Data)
+                //{
+                //    if (user.UserId == richiestaMail.UserId) { userMails.Add(richiestaMail.RichiedenteEmail); }
+                //}
 
                 if (userMails.Count > 0 || respMails.Count > 0)
                 {

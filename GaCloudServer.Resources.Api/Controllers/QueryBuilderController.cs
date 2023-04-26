@@ -98,6 +98,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
