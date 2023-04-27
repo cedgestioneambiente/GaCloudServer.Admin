@@ -661,7 +661,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             try
             {
-                return await viewGaCsrRegistrazioniRepo.GetAllAsync(1, 0);
+                return await viewGaCsrRegistrazioniRepo.GetAllAsync(1, 0,"Data","OrderByDescending");
             }
             catch (Exception ex)
             {

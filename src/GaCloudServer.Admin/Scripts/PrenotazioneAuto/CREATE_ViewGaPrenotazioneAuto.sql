@@ -23,9 +23,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-    CREATE VIEW [dbo].ViewGaPrenotazioneAutoVeicoli
+
+CREATE VIEW [dbo].[ViewGaPrenotazioneAutoVeicoli]
     AS
-    SELECT        dbo.GaPrenotazioneAutoVeicoli.Id, dbo.GaPrenotazioneAutoVeicoli.Targa,CONCAT(dbo.GaPrenotazioneAutoVeicoli.Targa,' - ',GaPrenotazioneAutoSedi.Descrizione) Descrizione, dbo.GaPrenotazioneAutoVeicoli.Colore
+    SELECT        dbo.GaPrenotazioneAutoVeicoli.Id, dbo.GaPrenotazioneAutoVeicoli.Targa,CONCAT(dbo.GaPrenotazioneAutoVeicoli.Targa,' - ',dbo.GaPrenotazioneAutoVeicoli.Descrizione,' - ',GaPrenotazioneAutoSedi.Descrizione) Descrizione, dbo.GaPrenotazioneAutoVeicoli.Colore
                 , dbo.GaPrenotazioneAutoVeicoli.Weekend, GaPrenotazioneAutoSedi.Descrizione Sede, dbo.GaPrenotazioneAutoVeicoli.Disabled
     FROM            dbo.GaPrenotazioneAutoVeicoli LEFT JOIN
                                 dbo.GaPrenotazioneAutoSedi ON dbo.GaPrenotazioneAutoVeicoli.PrenotazioneAutoSedeId = dbo.GaPrenotazioneAutoSedi.Id
