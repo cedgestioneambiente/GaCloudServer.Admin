@@ -945,7 +945,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                var view = await _gaContrattiService.GetViewGaContrattiDocumentiScadenziarioByFilterAsync(apiDto.id, apiDto.roles,apiDto.tipologie, apiDto.archiviato);
+                var view = await _gaContrattiService.GetViewGaContrattiDocumentiScadenziarioByFilterAsync(apiDto.id, apiDto.roles,apiDto.tipologie, apiDto.archiviato,apiDto.quickFilter);
                 return new ApiResponse(view);
             }
             catch (Exception ex)

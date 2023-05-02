@@ -130,7 +130,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaContrattiNumeratori>> GetViewGaContrattiNumeratoriAsync();
         Task<PagedList<ViewGaContrattiDocumenti>> GetViewGaContrattiDocumentiByIdAsync(ContrattiDocumentiRequestDto dto);
         Task<PagedList<ViewGaContrattiDocumenti>> GetViewGaContrattiDocumentiByFilterAsync(long id,string roles,bool archiviato);
-        Task<PagedList<ViewGaContrattiDocumentiScadenziario>> GetViewGaContrattiDocumentiScadenziarioByFilterAsync(long id,string roles,string tipologie,bool archiviato);
+        Task<PagedList<ViewGaContrattiDocumentiScadenziario>> GetViewGaContrattiDocumentiScadenziarioByFilterAsync(long id,string roles,string tipologie,bool archiviato, string quickFilter = "");
         Task<PagedList<ViewGaContrattiDocumentiList>> GetViewGaContrattiDocumentiListByModeAsync(ContrattiDocumentiListRequestDto dto);
         #endregion
 

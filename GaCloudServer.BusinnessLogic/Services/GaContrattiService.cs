@@ -727,7 +727,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 throw;
             }
         }
-        public async Task<PagedList<ViewGaContrattiDocumentiScadenziario>> GetViewGaContrattiDocumentiScadenziarioByFilterAsync(long id, string roles,string tipologie, bool archiviato)
+        public async Task<PagedList<ViewGaContrattiDocumentiScadenziario>> GetViewGaContrattiDocumentiScadenziarioByFilterAsync(long id, string roles,string tipologie, bool archiviato,string quickFilter="")
         {
             try
             {
@@ -738,7 +738,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
                 if (roles.Contains("Administrator") || roles.Contains("GaContrattiAdmin"))
                 {
-                    var data = viewGaContrattiDocumentiScadenziarioRepo.GetWithFilterAsync(x => archiviato==false?x.Archiviato==false:true && x.SoggettoDisabled==false)
+                    var data = viewGaContrattiDocumentiScadenziarioRepo.GetWithFilterAsync(x => archiviato==false?x.Archiviato==false:true && x.SoggettoDisabled==false && (EF.Functions.Like(x.RagioneSociale,quickFilter.toWildcardString()) || EF.Functions.Like(x.Descrizione,quickFilter.toWildcardString())))
                         .Result
                         .Data
                         .AsEnumerable()
@@ -752,7 +752,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 }
                 else
                 {
-                    var data = viewGaContrattiDocumentiScadenziarioRepo.GetWithFilterAsync(x => archiviato == false ? x.Archiviato == false:true && x.SoggettoDisabled==false)
+                    var data = viewGaContrattiDocumentiScadenziarioRepo.GetWithFilterAsync(x => archiviato == false ? x.Archiviato == false:true && x.SoggettoDisabled==false && (EF.Functions.Like(x.RagioneSociale, quickFilter.toWildcardString()) || EF.Functions.Like(x.Descrizione, quickFilter.toWildcardString())))
                         .Result
                         .Data
                         .AsEnumerable()
@@ -766,9 +766,6 @@ namespace GaCloudServer.BusinnessLogic.Services
 
                 }
 
-
-
-                return entities;
             }
             catch (Exception ex)
             {

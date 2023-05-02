@@ -123,6 +123,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
         public long id { get; set; }
         public string roles { get; set; }
         public string tipologie { get; set; }
+        public string quickFilter { get; set; }
         public bool archiviato { get; set; }
     }
 
