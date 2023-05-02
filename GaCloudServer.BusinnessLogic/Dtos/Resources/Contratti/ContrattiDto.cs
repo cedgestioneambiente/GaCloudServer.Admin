@@ -81,30 +81,19 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti
     #endregion
 
     #region Contratti Documenti
-    public class ContrattiDocumentoDto : GenericFileDto
+    public class ContrattiDocumentoDto : GenericDto
     {
         public long ContrattiSoggettoId { get; set; }
         public int Numero { get; set; }
         public string Descrizione { get; set; }
-        public string? CodiceCig { get; set; }
-        public string? Faldone { get; set; }
+        public string CodiceCig { get; set; }
+        public string Faldone { get; set; }
         public DateTime DataScadenza { get; set; }
-        public long ContrattiModalitaId { get; set; }
-        public bool Direzione { get; set; }
-        public bool Contabilita { get; set; }
-        public bool Personale { get; set; }
-        public bool Informatica { get; set; }
-        public bool Tecnico { get; set; }
-        public bool QualitaSicurezza { get; set; }
-        public bool Commerciale { get; set; }
-        public bool AffariGenerali { get; set; }
+        public string ContrattiModalita { get; set; }
+        public string ContrattiTipologia { get; set; }
         public string Permissions { get; set; }
         public bool Archiviato { get; set; }
-        public long? ContrattiPreventivoId { get; set; }
-        public string? PreventivoNumero { get; set; }
-        public string ContrattiTipologia { get; set; }
         public int SogliaAvviso { get; set; }
-        public bool Comunicazione { get; set; }
     }
 
     public class ContrattiDocumentiDto : GenericPagedListDto<ContrattiDocumentoDto>

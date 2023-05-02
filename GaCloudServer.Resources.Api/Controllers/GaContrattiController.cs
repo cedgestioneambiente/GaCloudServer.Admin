@@ -18,7 +18,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdministrationPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
     public class GaContrattiController : Controller
     {
         private readonly IGaContrattiService _gaContrattiService;
@@ -791,7 +791,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpPost("AddGaContrattiDocumentoAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaContrattiDocumentoAsync([FromForm] ContrattiDocumentoApiDto apiDto)
+        public async Task<ActionResult<ApiResponse>> AddGaContrattiDocumentoAsync([FromBody] ContrattiDocumentoApiDto apiDto)
         {
             try
             {
@@ -799,21 +799,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "GaCloud/Contratti";
                 var dto = apiDto.ToDto<ContrattiDocumentoDto, ContrattiDocumentoApiDto>();
                 var response = await _gaContrattiService.AddGaContrattiDocumentoAsync(dto);
-                if (apiDto.uploadFile)
-                {
-                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-                    dto.Id = response;
-                    dto.FileFolder = fileFolder;
-                    dto.FileName = fileUploadResponse.fileName;
-                    dto.FileSize = apiDto.File.Length.ToString();
-                    dto.FileType = apiDto.File.ContentType;
-                    dto.FileId = fileUploadResponse.id;
-                    var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAsync(dto);
-                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
-                }
 
                 return new ApiResponse(response);
             }
@@ -831,7 +818,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpPost("UpdateGaContrattiDocumentoAsync")]
-        public async Task<ActionResult<ApiResponse>> UpdateGaContrattiDocumentoAsync([FromForm] ContrattiDocumentoApiDto apiDto)
+        public async Task<ActionResult<ApiResponse>> UpdateGaContrattiDocumentoAsync([FromBody] ContrattiDocumentoApiDto apiDto)
         {
             try
             {
@@ -839,60 +826,10 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "GaCloud/Contratti";
                 var dto = apiDto.ToDto<ContrattiDocumentoDto, ContrattiDocumentoApiDto>();
                 var response = await _gaContrattiService.UpdateGaContrattiDocumentoAsync(dto);
-                bool failureDelete = false;
-                if (apiDto.deleteFile)
-                {
-                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
-                    if (!deleteResponse)
-                    {
-                        failureDelete = true;
 
-                    }
-                    else
-                    {
-                        dto.Id = response;
-                        dto.FileFolder = null;
-                        dto.FileName = null;
-                        dto.FileSize = null;
-                        dto.FileType = null;
-                        dto.FileId = null;
-                        var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAsync(dto);
-                    }
-                }
-
-                if (apiDto.uploadFile)
-                {
-                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-                    dto.Id = response;
-                    dto.FileFolder = fileFolder;
-                    dto.FileName = fileUploadResponse.fileName;
-                    dto.FileSize = apiDto.File.Length.ToString();
-                    dto.FileType = apiDto.File.ContentType;
-                    dto.FileId = fileUploadResponse.id;
-                    var updateFileResponse = await _gaContrattiService.UpdateGaContrattiDocumentoAsync(dto);
-
-                    if (!failureDelete)
-                    {
-                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
-                    }
-                    else
-                    {
-                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
-                    }
-
-                }
-
-                if (!failureDelete)
-                {
-                    return new ApiResponse("Updated", response, code.Status200OK);
-                }
-                else
-                {
-                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
-                }
+                return new ApiResponse(response);
 
             }
             catch (Exception ex)
@@ -903,24 +840,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteGaContrattiDocumentoAsync/{id}/{fileId}")]
+        [HttpDelete("DeleteGaContrattiDocumentoAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> DeleteGaContrattiDocumentoAsync(long id, string fileId)
         {
             try
             {
                 var response = await _gaContrattiService.DeleteGaContrattiDocumentoAsync(id);
-                if (response && fileId != null && fileId != "null" && fileId != "")
-                {
-                    var deleteResponse = await _fileService.Remove(fileId);
-                    if (deleteResponse)
-                    {
-                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
-                    }
-                    else
-                    {
-                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
-                    }
-                }
 
                 return new ApiResponse(response);
             }
@@ -998,6 +923,36 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
 
+        }
+
+        [HttpPost("GetViewGaContrattiDocumentiByFilterAsync")]//GetViewGaContrattiDocumentiBySoggettoId/{contrattiSoggettoId}
+        public async Task<ApiResponse> GetViewGaContrattiDocumentiByFilterAsync([FromBody] ContrattiFilterApiDto apiDto)
+        {
+            try
+            {
+                var view = await _gaContrattiService.GetViewGaContrattiDocumentiByFilterAsync(apiDto.id,apiDto.roles,apiDto.archiviato);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpPost("GetViewGaContrattiDocumentiScadenziarioByFilterAsync")]//GetViewGaContrattiDocumentiBySoggettoId/{contrattiSoggettoId}
+        public async Task<ApiResponse> GetViewGaContrattiDocumentiScadenziarioByFilterAsync([FromBody] ContrattiFilterApiDto apiDto)
+        {
+            try
+            {
+                var view = await _gaContrattiService.GetViewGaContrattiDocumentiScadenziarioByFilterAsync(apiDto.id, apiDto.roles,apiDto.tipologie, apiDto.archiviato);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
         }
 
         [HttpGet("GetViewGaContrattiDocumentiByIdAsync")]//GetViewGaContrattiDocumentiBySoggettoId/{contrattiSoggettoId}

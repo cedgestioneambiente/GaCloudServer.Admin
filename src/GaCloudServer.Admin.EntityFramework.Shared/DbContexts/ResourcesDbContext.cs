@@ -106,6 +106,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaContrattiUtenti> ViewGaContrattiUtenti { get; set; }
         public DbSet<ViewGaContrattiUtentiOnPermessi> ViewGaContrattiUtentiOnPermessi { get; set; }
         public DbSet<ViewGaContrattiDocumenti> ViewGaContrattiDocumenti { get; set; }
+        public DbSet<ViewGaContrattiDocumentiScadenziario> ViewGaContrattiDocumentiScadenziario { get; set; }
         public DbSet<ViewGaContrattiDocumentiList> ViewGaContrattiDocumentiList { get; set; }
         public DbSet<ViewGaContrattiNumeratori> ViewGaContrattiNumeratori { get; set; }
 
@@ -547,6 +548,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                     .ToView(nameof(ViewGaContrattiDocumenti))
+                    .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaContrattiDocumentiScadenziario>(entity =>
+            {
+                entity
+                    .ToView(nameof(ViewGaContrattiDocumentiScadenziario))
                     .HasKey(x => x.Id);
             });
 

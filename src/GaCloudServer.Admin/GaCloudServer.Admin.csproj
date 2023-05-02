@@ -122,10 +122,16 @@
 	  <None Update="Scripts\Contratti\CREATE_SpGaContratti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Contratti\CREATE_ViewGaContratti_V2.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Contratti\CREATE_ViewGaContratti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Contratti\DROP_SpGaContratti.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Contratti\DROP_ViewGaContratti_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Contratti\DROP_ViewGaContratti.sql">

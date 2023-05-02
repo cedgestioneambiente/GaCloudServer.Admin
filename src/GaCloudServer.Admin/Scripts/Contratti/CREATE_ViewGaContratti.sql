@@ -12,16 +12,35 @@ DROP VIEW IF EXISTS [dbo].[ViewGaContrattiUtentiOnPermessi]
 
 GO
 
+USE [GaCloud]
+GO
+
+/****** Object:  View [dbo].[ViewGaContrattiDocumenti]    Script Date: 27/04/2023 14:45:56 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
 CREATE VIEW [dbo].[ViewGaContrattiDocumenti]
 AS
-SELECT   dbo.GaContrattiDocumenti.Id, dbo.GaContrattiDocumenti.ContrattiSoggettoId, dbo.GaContrattiDocumenti.Numero, dbo.GaContrattiDocumenti.Descrizione, 
-                         dbo.GaContrattiDocumenti.Faldone, dbo.GaContrattiDocumenti.DataScadenza, dbo.GaContrattiModalitas.Descrizione AS Modalita,
-                         '' AS Tipologia, dbo.GaContrattiDocumenti.FileId, dbo.GaContrattiDocumenti.FileName, CASE WHEN DATEDIFF(day, GETDATE(), DataScadenza) 
-                         < 0 THEN 'R' WHEN DATEDIFF(day, GETDATE(), DataScadenza) < SogliaAvviso THEN 'G' ELSE 'V' END AS Stato, dbo.GaContrattiDocumenti.Archiviato, 
-                         dbo.GaContrattiDocumenti.Disabled
-FROM         dbo.GaContrattiDocumenti INNER JOIN
-                         dbo.GaContrattiModalitas ON dbo.GaContrattiDocumenti.ContrattiModalitaId = dbo.GaContrattiModalitas.Id 
+SELECT A.Id,a.ContrattiSoggettoId, A.Numero, A.Descrizione,A.Faldone,A.DataScadenza,B.Tipologie Tipologia,C.Modalita,A.FileId,A.FileName,
+CASE WHEN DATEDIFF(day, GETDATE(), DataScadenza) 
+                         < 0 THEN 'R' WHEN DATEDIFF(day, GETDATE(), DataScadenza) < SogliaAvviso THEN 'G' ELSE 'V' END AS Stato,a.Archiviato,A.Disabled
+FROM GaContrattiDocumenti A
+INNER JOIN
+(SELECT A.Id,STRING_AGG(b.Descrizione,',') as Tipologie
+FROM GaContrattiDocumenti A
+INNER JOIN [dbo].[GaContrattiTipologie] B ON CHARINDEX(','+CAST (B.Id as varchar)+',',','+A.ContrattiTipologia+',')>0
+GROUP BY A.Id) B ON A.Id=B.Id
+INNER JOIN
+(SELECT A.Id,STRING_AGG(c.Descrizione,',') as Modalita
+FROM GaContrattiDocumenti A
+INNER JOIN GaContrattiModalitas C ON CHARINDEX(','+CAST (c.Id as varchar)+',',','+A.ContrattiModalita+',')>0
+GROUP BY A.Id) C ON A.Id=C.Id
 GO
+
 
 CREATE VIEW [dbo].[ViewGaContrattiDocumentiList]
 AS

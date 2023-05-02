@@ -25,6 +25,8 @@
         public const string GaContrattiMigration = @".\Scripts\Contratti\";
         public const string CREATE_ViewGaContratti = "CREATE_ViewGaContratti.sql";
         public const string DROP_ViewGaContratti = "DROP_ViewGaContratti.sql";
+        public const string CREATE_ViewGaContratti_V2 = "CREATE_ViewGaContratti_V2.sql";
+        public const string DROP_ViewGaContratti_V2 = "DROP_ViewGaContratti_V2.sql";
         public const string CREATE_SpGaContratti = "CREATE_SpGaContratti.sql";
         public const string DROP_SpGaContratti = "DROP_SpGaContratti.sql";
 

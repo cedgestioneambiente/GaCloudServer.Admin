@@ -6,6 +6,7 @@ using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo;
         protected readonly IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo;
         protected readonly IGenericRepository<ViewGaContrattiDocumenti> viewGaContrattiDocumentiRepo;
+        protected readonly IGenericRepository<ViewGaContrattiDocumentiScadenziario> viewGaContrattiDocumentiScadenziarioRepo;
         protected readonly IGenericRepository<ViewGaContrattiDocumentiList> viewGaContrattiDocumentiListRepo;
         protected readonly IGenericRepository<ViewGaContrattiNumeratori> viewGaContrattiNumeratoriRepo;
 
@@ -51,6 +53,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaContrattiUtenti> viewGaContrattiUtentiRepo,
             IGenericRepository<ViewGaContrattiUtentiOnPermessi> viewGaContrattiUtentiOnPermessiRepo,
             IGenericRepository<ViewGaContrattiDocumenti> viewGaContrattiDocumentiRepo,
+            IGenericRepository<ViewGaContrattiDocumentiScadenziario> viewGaContrattiDocumentiScadenziarioRepo,
             IGenericRepository<ViewGaContrattiDocumentiList> viewGaContrattiDocumentiListRepo,
             IGenericRepository<ViewGaContrattiNumeratori> viewGaContrattiNumeratoriRepo,
 
@@ -73,6 +76,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaContrattiUtentiRepo = viewGaContrattiUtentiRepo;
             this.viewGaContrattiUtentiOnPermessiRepo = viewGaContrattiUtentiOnPermessiRepo;
             this.viewGaContrattiDocumentiRepo = viewGaContrattiDocumentiRepo;
+            this.viewGaContrattiDocumentiScadenziarioRepo = viewGaContrattiDocumentiScadenziarioRepo;
             this.viewGaContrattiDocumentiListRepo = viewGaContrattiDocumentiListRepo;
             this.viewGaContrattiNumeratoriRepo = viewGaContrattiNumeratoriRepo;
 
@@ -638,43 +642,133 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             try
             {
-            PagedList<ViewGaContrattiDocumenti> entities = new PagedList<ViewGaContrattiDocumenti>();
-            entities = await viewGaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiSoggettoId == dto.soggettoId && x.Archiviato == dto.archiviato, 1, 0);
-            if (dto.userRoles.Contains("Administrator") || dto.userRoles.Contains("GaContrattiAdmin"))
+                PagedList<ViewGaContrattiDocumenti> entities = new PagedList<ViewGaContrattiDocumenti>();
+                entities = await viewGaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiSoggettoId == dto.soggettoId && x.Archiviato == dto.archiviato, 1, 0);
+                if (dto.userRoles.Contains("Administrator") || dto.userRoles.Contains("GaContrattiAdmin"))
+                {
+                    return entities;
+                }
+                else
+                {
+                    return entities;
+                    //PagedList<ViewGaContrattiDocumenti> entitiesPermitted = new PagedList<ViewGaContrattiDocumenti>();
+
+                    //var permessi = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == dto.userId && x.Abilitato == true);
+                    //List<string> permessiList = new List<string>();
+                    //foreach (var p in permessi.Data) { permessiList.Add(p.Permesso); }
+
+                    //var contratti = await gaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiSoggettoId == dto.soggettoId);
+                    //foreach (var itm in contratti.Data)
+                    //{
+                    //    List<string> permessiContratto = new List<string>();
+                    //    if (itm.Direzione) permessiContratto.Add("DIREZIONE");
+                    //    if (itm.Contabilita) permessiContratto.Add("CONTABILITA");
+                    //    if (itm.Personale) permessiContratto.Add("PERSONALE");
+                    //    if (itm.Informatica) permessiContratto.Add("INFORMATICA");
+                    //    if (itm.Tecnico) permessiContratto.Add("TECNICO");
+                    //    if (itm.QualitaSicurezza) permessiContratto.Add("QUALITASICUREZZA");
+                    //    if (itm.Commerciale) permessiContratto.Add("COMMERCIALE");
+                    //    if (itm.AffariGenerali) permessiContratto.Add("AFFARIGENERALI");
+                    //    if (itm.Comunicazione) permessiContratto.Add("COMUNICAZIONE");
+
+                    //    var check = permessiContratto.Intersect(permessiList, StringComparer.OrdinalIgnoreCase).Any();
+                    //    if (check)
+                    //    {
+                    //        entitiesPermitted.Data.Add(entities.Data.Where(x => x.Id == itm.Id).FirstOrDefault());
+                    //    }
+                    //}
+                    //    await SaveChanges();
+                    //    return entitiesPermitted;
+                    //}
+                }
+            }
+            catch (Exception ex)
             {
+                await SaveChanges();
+                throw;
+            }
+        }
+
+        public async Task<PagedList<ViewGaContrattiDocumenti>> GetViewGaContrattiDocumentiByFilterAsync(long id,string roles,bool archiviato)
+        {
+            try
+            {
+                PagedList<ViewGaContrattiDocumenti> entities = new PagedList<ViewGaContrattiDocumenti>();
+
+                string[] rolesToCheck=roles.Split(',');
+
+                if (roles.Contains("Administrator") || roles.Contains("GaContrattiAdmin"))
+                {
+                    return await viewGaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiSoggettoId == id && x.Archiviato == archiviato);
+                }
+                else
+                {
+                    var data = viewGaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiSoggettoId == id && x.Archiviato == archiviato)
+                        .Result
+                        .Data
+                        .AsEnumerable()
+                        .Where(t => rolesToCheck.Any(p => t.Permission.Contains(p)));
+
+                    entities.Data.AddRange(data);
+                    entities.TotalCount = data.Count();
+                    entities.PageSize = 0;
+
+                    return entities;
+
+                }
+                    
+
+
                 return entities;
             }
-            else
+            catch (Exception ex)
             {
-                PagedList<ViewGaContrattiDocumenti> entitiesPermitted = new PagedList<ViewGaContrattiDocumenti>();
+                await SaveChanges();
+                throw;
+            }
+        }
+        public async Task<PagedList<ViewGaContrattiDocumentiScadenziario>> GetViewGaContrattiDocumentiScadenziarioByFilterAsync(long id, string roles,string tipologie, bool archiviato)
+        {
+            try
+            {
+                PagedList<ViewGaContrattiDocumentiScadenziario> entities = new PagedList<ViewGaContrattiDocumentiScadenziario>();
 
-                var permessi = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == dto.userId && x.Abilitato == true);
-                List<string> permessiList = new List<string>();
-                foreach (var p in permessi.Data) { permessiList.Add(p.Permesso); }
+                string[] rolesToCheck = roles.Split(',');
+                string[] tipologieToCheck = tipologie.Split(',');
 
-                var contratti = await gaContrattiDocumentiRepo.GetWithFilterAsync(x => x.ContrattiSoggettoId == dto.soggettoId);
-                foreach (var itm in contratti.Data)
+                if (roles.Contains("Administrator") || roles.Contains("GaContrattiAdmin"))
                 {
-                    List<string> permessiContratto = new List<string>();
-                    if (itm.Direzione) permessiContratto.Add("DIREZIONE");
-                    if (itm.Contabilita) permessiContratto.Add("CONTABILITA");
-                    if (itm.Personale) permessiContratto.Add("PERSONALE");
-                    if (itm.Informatica) permessiContratto.Add("INFORMATICA");
-                    if (itm.Tecnico) permessiContratto.Add("TECNICO");
-                    if (itm.QualitaSicurezza) permessiContratto.Add("QUALITASICUREZZA");
-                    if (itm.Commerciale) permessiContratto.Add("COMMERCIALE");
-                    if (itm.AffariGenerali) permessiContratto.Add("AFFARIGENERALI");
-                    if (itm.Comunicazione) permessiContratto.Add("COMUNICAZIONE");
+                    var data = viewGaContrattiDocumentiScadenziarioRepo.GetWithFilterAsync(x => archiviato==false?x.Archiviato==false:true && x.SoggettoDisabled==false)
+                        .Result
+                        .Data
+                        .AsEnumerable()
+                        .Where(x => tipologieToCheck.Any(p => x.TipologiaId.Contains(p)));
 
-                    var check = permessiContratto.Intersect(permessiList, StringComparer.OrdinalIgnoreCase).Any();
-                    if (check)
-                    {
-                        entitiesPermitted.Data.Add(entities.Data.Where(x => x.Id == itm.Id).FirstOrDefault());
-                    }
+                    entities.Data.AddRange(data);
+                    entities.TotalCount = data.Count();
+                    entities.PageSize = 0;
+
+                    return entities;
                 }
-                    await SaveChanges();
-                    return entitiesPermitted;
+                else
+                {
+                    var data = viewGaContrattiDocumentiScadenziarioRepo.GetWithFilterAsync(x => archiviato == false ? x.Archiviato == false:true && x.SoggettoDisabled==false)
+                        .Result
+                        .Data
+                        .AsEnumerable()
+                        .Where(x => tipologieToCheck.Any(p => x.TipologiaId.Contains(p)) && rolesToCheck.Any(p => x.Permission.Contains(p)));
+
+                    entities.Data.AddRange(data);
+                    entities.TotalCount = data.Count();
+                    entities.PageSize = 0;
+
+                    return entities;
+
                 }
+
+
+
+                return entities;
             }
             catch (Exception ex)
             {
@@ -723,32 +817,33 @@ namespace GaCloudServer.BusinnessLogic.Services
                 }
                 else
                 {
-                    PagedList<ViewGaContrattiDocumentiList> entitiesPermitted = new PagedList<ViewGaContrattiDocumentiList>();
+                    return entities;
+                    //PagedList<ViewGaContrattiDocumentiList> entitiesPermitted = new PagedList<ViewGaContrattiDocumentiList>();
 
-                    var permessi = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == dto.userId && x.Abilitato == true);
-                    List<string> permessiList = new List<string>();
-                    foreach (var p in permessi.Data) { permessiList.Add(p.Permesso); }
+                    //var permessi = await viewGaContrattiUtentiOnPermessiRepo.GetWithFilterAsync(x => x.UtenteId == dto.userId && x.Abilitato == true);
+                    //List<string> permessiList = new List<string>();
+                    //foreach (var p in permessi.Data) { permessiList.Add(p.Permesso); }
 
-                    foreach (var itm in contratti.Data)
-                    {
-                        List<string> permessiContratto = new List<string>();
-                        if (itm.Direzione) permessiContratto.Add("DIREZIONE");
-                        if (itm.Contabilita) permessiContratto.Add("CONTABILITA");
-                        if (itm.Personale) permessiContratto.Add("PERSONALE");
-                        if (itm.Informatica) permessiContratto.Add("INFORMATICA");
-                        if (itm.Tecnico) permessiContratto.Add("TECNICO");
-                        if (itm.QualitaSicurezza) permessiContratto.Add("QUALITASICUREZZA");
-                        if (itm.Commerciale) permessiContratto.Add("COMMERCIALE");
-                        if (itm.AffariGenerali) permessiContratto.Add("AFFARIGENERALI");
-                        if (itm.Comunicazione) permessiContratto.Add("COMUNICAZIONE");
+                    //foreach (var itm in contratti.Data)
+                    //{
+                    //    List<string> permessiContratto = new List<string>();
+                    //    if (itm.Direzione) permessiContratto.Add("DIREZIONE");
+                    //    if (itm.Contabilita) permessiContratto.Add("CONTABILITA");
+                    //    if (itm.Personale) permessiContratto.Add("PERSONALE");
+                    //    if (itm.Informatica) permessiContratto.Add("INFORMATICA");
+                    //    if (itm.Tecnico) permessiContratto.Add("TECNICO");
+                    //    if (itm.QualitaSicurezza) permessiContratto.Add("QUALITASICUREZZA");
+                    //    if (itm.Commerciale) permessiContratto.Add("COMMERCIALE");
+                    //    if (itm.AffariGenerali) permessiContratto.Add("AFFARIGENERALI");
+                    //    if (itm.Comunicazione) permessiContratto.Add("COMUNICAZIONE");
 
-                        var check = permessiContratto.Intersect(permessiList, StringComparer.OrdinalIgnoreCase).Any();
-                        if (check)
-                        {
-                            entitiesPermitted.Data.Add(entities.Data.Where(x => x.Id == itm.Id).FirstOrDefault());
-                        }
-                    }
-                    return entitiesPermitted;
+                    //    var check = permessiContratto.Intersect(permessiList, StringComparer.OrdinalIgnoreCase).Any();
+                    //    if (check)
+                    //    {
+                    //        entitiesPermitted.Data.Add(entities.Data.Where(x => x.Id == itm.Id).FirstOrDefault());
+                    //    }
+                    //}
+                    //return entitiesPermitted;
                 }
             }
 

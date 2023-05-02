@@ -102,6 +102,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaContrattiUtenti> ViewGaContrattiUtenti { get; set; }
         DbSet<ViewGaContrattiUtentiOnPermessi> ViewGaContrattiUtentiOnPermessi { get; set; }
         DbSet<ViewGaContrattiDocumenti> ViewGaContrattiDocumenti { get; set; }
+        DbSet<ViewGaContrattiDocumentiScadenziario> ViewGaContrattiDocumentiScadenziario { get; set; }
         DbSet<ViewGaContrattiDocumentiList> ViewGaContrattiDocumentiList { get; set; }
         DbSet<ViewGaContrattiNumeratori> ViewGaContrattiNumeratori { get; set; }
         #endregion

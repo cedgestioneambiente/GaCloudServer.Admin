@@ -135,6 +135,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaContrattiUtenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtenti>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiUtentiOnPermessi>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtentiOnPermessi>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiDocumenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumenti>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiDocumentiScadenziario>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumentiScadenziario>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiDocumentiList>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumentiList>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiNumeratori>, GenericRepository<TResourcesDbContext, ViewGaContrattiNumeratori>>();
 
@@ -474,6 +475,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaContrattiUtenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtenti>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiUtentiOnPermessi>, GenericRepository<TResourcesDbContext, ViewGaContrattiUtentiOnPermessi>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiDocumenti>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumenti>>();
+            services.AddTransient<IGenericRepository<ViewGaContrattiDocumentiScadenziario>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumentiScadenziario>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiDocumentiList>, GenericRepository<TResourcesDbContext, ViewGaContrattiDocumentiList>>();
             services.AddTransient<IGenericRepository<ViewGaContrattiNumeratori>, GenericRepository<TResourcesDbContext, ViewGaContrattiNumeratori>>();
 

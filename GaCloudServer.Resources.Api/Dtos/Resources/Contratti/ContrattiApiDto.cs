@@ -64,7 +64,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
     public class ContrattiSoggettoApiDto : GenericApiDto
     {
         public string RagioneSociale { get; set; }
-        public string CodiceFiscale { get; set; }
+        public string? CodiceFiscale { get; set; }
         public string PartitaIva { get; set; }
         public string? SedeLegale { get; set; }
         public string? RecapitoFatture { get; set; }
@@ -82,7 +82,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
     #endregion
 
     #region Contratti Documenti
-    public class ContrattiDocumentoApiDto : GenericFileApiDto
+    public class ContrattiDocumentoApiDto : GenericApiDto
     {
         public long ContrattiSoggettoId { get; set; }
         public int Numero { get; set; }
@@ -90,22 +90,11 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
         public string? CodiceCig { get; set; }
         public string? Faldone { get; set; }
         public DateTime DataScadenza { get; set; }
-        public long ContrattiModalitaId { get; set; }
-        public bool Direzione { get; set; }
-        public bool Contabilita { get; set; }
-        public bool Personale { get; set; }
-        public bool Informatica { get; set; }
-        public bool Tecnico { get; set; }
-        public bool QualitaSicurezza { get; set; }
-        public bool Commerciale { get; set; }
-        public bool AffariGenerali { get; set; }
+        public string ContrattiModalita { get; set; }
+        public string ContrattiTipologia { get; set; }
         public string Permissions { get; set; }
         public bool Archiviato { get; set; }
-        public long? ContrattiPreventivoId { get; set; }
-        public string? PreventivoNumero { get; set; }
-        public string ContrattiTipologia { get; set; }
         public int SogliaAvviso { get; set; }
-        public bool Comunicazione { get; set; }
 
     }
 
@@ -127,6 +116,16 @@ namespace GaCloudServer.Resources.Api.Dtos.Contratti
     {
     }
     #endregion
+
+    //Internal
+    public class ContrattiFilterApiDto
+    { 
+        public long id { get; set; }
+        public string roles { get; set; }
+        public string tipologie { get; set; }
+        public bool archiviato { get; set; }
+    }
+
 
     #region ContrattiDocumentiRequest
     public class ContrattiDocumentiRequestApiDto
