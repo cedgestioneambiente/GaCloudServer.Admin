@@ -1,14 +1,19 @@
-﻿using AutoWrapper.Wrappers;
+﻿using AutoWrapper.Filters;
+using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
+using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Contratti;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Resources.Api.Models;
 using GaCloudServer.Resources.Api.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System.Diagnostics;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -904,6 +909,33 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
 
+        }
+
+        [HttpPost("ExportGaContrattiDocumentiAsync")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaContrattiDocumentiAsync([FromBody] long[] ids)
+        {
+
+            try
+            {
+                var entities = _gaContrattiService.ExportGaContrattiDocumentiByIdsAsync(ids).Result.Data;
+                string title = "Lista Contratti";
+                string[] columns = { "Id", "Numero", "Faldone", "RagioneSociale", "Descrizione", "CodiceCig","Tipologia",
+                    "DataScadenza","NumAllegati","Stato" };
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "LISTA_Contratti", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Lista_Contratti.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
         }
         #endregion
 

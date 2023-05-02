@@ -635,6 +635,21 @@ namespace GaCloudServer.BusinnessLogic.Services
             await SaveChanges();
             return true;
         }
+
+        public async Task<PagedList<ViewGaContrattiDocumentiScadenziario>> ExportGaContrattiDocumentiByIdsAsync(long[] ids)
+        {
+            try
+            {
+                return await viewGaContrattiDocumentiScadenziarioRepo.GetWithFilterAsync(x => ids.ToList().Contains(x.Id));
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
         #endregion
 
         #region Views

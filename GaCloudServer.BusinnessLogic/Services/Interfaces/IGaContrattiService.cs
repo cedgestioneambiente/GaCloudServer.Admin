@@ -124,6 +124,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusGaContrattiDocumentoAsync(long id);
         Task<bool> ChangeStatusArchiviatoGaContrattiDocumentoAsync(long id);
 
+        Task<PagedList<ViewGaContrattiDocumentiScadenziario>> ExportGaContrattiDocumentiByIdsAsync(long[] ids);
+
         #endregion
 
         #region Views
