@@ -45,6 +45,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Vie
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -430,6 +432,25 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #region System
         DbSet<SystemVersion> SystemVersions { get; set; }
+        #endregion
+
+        #region Consorzio
+        DbSet<ConsorzioCer> ConsorzioCers { get; set; }
+        DbSet<ConsorzioCerSmaltimento> ConsorzioCersSmaltimenti { get; set; }
+        DbSet<ConsorzioComune> ConsorzioComuni { get; set; }
+        DbSet<ConsorzioProduttore> ConsorzioProduttori { get; set; }
+        DbSet<ConsorzioDestinatario> ConsorzioDestinatari { get; set; }
+        DbSet<ConsorzioTrasportatore> ConsorzioTrasportatori { get; set; }
+        DbSet<ConsorzioRegistrazione> ConsorzioRegistrazioni { get; set; }
+        DbSet<ConsorzioRegistrazioneAllegato> ConsorzioRegistrazioniAllegati { get; set; }
+
+        #region Views
+        DbSet<ViewConsorzioCers> ViewConsorzioCers { get; set; }
+        DbSet<ViewConsorzioProduttori> ViewConsorzioProduttori { get; set; }
+        DbSet<ViewConsorzioDestinatari> ViewConsorzioDestinatari { get; set; }
+        DbSet<ViewConsorzioTrasportatori> ViewConsorzioTrasportatori { get; set; }
+        DbSet<ViewConsorzioRegistrazioni> ViewConsorzioRegistrazioni { get; set; }
+        #endregion
         #endregion
     }
 }

@@ -46,6 +46,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Vie
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -432,6 +434,25 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region System
         public DbSet<SystemVersion> SystemVersions { get; set; }
+        #endregion
+
+        #region Consorzio
+        public DbSet<ConsorzioCer> ConsorzioCers { get; set; }
+        public DbSet<ConsorzioCerSmaltimento> ConsorzioCersSmaltimenti { get; set; }
+        public DbSet<ConsorzioComune> ConsorzioComuni { get; set; }
+        public DbSet<ConsorzioProduttore> ConsorzioProduttori { get; set; }
+        public DbSet<ConsorzioDestinatario> ConsorzioDestinatari { get; set; }
+        public DbSet<ConsorzioTrasportatore> ConsorzioTrasportatori { get; set; }
+        public DbSet<ConsorzioRegistrazione> ConsorzioRegistrazioni { get; set; }
+        public DbSet<ConsorzioRegistrazioneAllegato> ConsorzioRegistrazioniAllegati { get; set; }
+
+        #region Views
+        public DbSet<ViewConsorzioCers> ViewConsorzioCers { get; set; }
+        public DbSet<ViewConsorzioProduttori> ViewConsorzioProduttori { get; set; }
+        public DbSet<ViewConsorzioDestinatari> ViewConsorzioDestinatari { get; set; }
+        public DbSet<ViewConsorzioTrasportatori> ViewConsorzioTrasportatori { get; set; }
+        public DbSet<ViewConsorzioRegistrazioni> ViewConsorzioRegistrazioni { get; set; }
+        #endregion
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -1144,6 +1165,45 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
 
             #endregion
+
+            #region Consorzio
+
+            builder.Entity<ViewConsorzioCers>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewConsorzioCers))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewConsorzioProduttori>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewConsorzioProduttori))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewConsorzioDestinatari>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewConsorzioDestinatari))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewConsorzioTrasportatori>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewConsorzioTrasportatori))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewConsorzioRegistrazioni>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewConsorzioRegistrazioni))
+                .HasKey(x => x.Id);
+            });
+            #endregion
+
 
             base.OnModelCreating(builder);
 
