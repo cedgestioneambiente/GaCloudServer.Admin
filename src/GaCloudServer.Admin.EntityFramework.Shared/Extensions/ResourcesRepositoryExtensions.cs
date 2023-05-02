@@ -8,6 +8,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.V
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
@@ -422,6 +424,24 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //System
             #region System
             services.AddTransient<IGenericRepository<SystemVersion>, GenericRepository<TResourcesDbContext, SystemVersion>>();
+            #endregion
+
+            //Consorzio
+            #region Consorzio
+            services.AddTransient<IGenericRepository<ConsorzioCer>, GenericRepository<TResourcesDbContext, ConsorzioCer>>();
+            services.AddTransient<IGenericRepository<ConsorzioCerSmaltimento>, GenericRepository<TResourcesDbContext, ConsorzioCerSmaltimento>>();
+            services.AddTransient<IGenericRepository<ConsorzioComune>, GenericRepository<TResourcesDbContext, ConsorzioComune>>();
+            services.AddTransient<IGenericRepository<ConsorzioDestinatario>, GenericRepository<TResourcesDbContext, ConsorzioDestinatario>>();
+            services.AddTransient<IGenericRepository<ConsorzioProduttore>, GenericRepository<TResourcesDbContext, ConsorzioProduttore>>();
+            services.AddTransient<IGenericRepository<ConsorzioTrasportatore>, GenericRepository<TResourcesDbContext, ConsorzioTrasportatore>>();
+            services.AddTransient<IGenericRepository<ConsorzioRegistrazione>, GenericRepository<TResourcesDbContext, ConsorzioRegistrazione>>();
+            services.AddTransient<IGenericRepository<ConsorzioRegistrazioneAllegato>, GenericRepository<TResourcesDbContext, ConsorzioRegistrazioneAllegato>>();
+
+            services.AddTransient<IGenericRepository<ViewConsorzioCers>, GenericRepository<TResourcesDbContext, ViewConsorzioCers>>();
+            services.AddTransient<IGenericRepository<ViewConsorzioDestinatari>, GenericRepository<TResourcesDbContext, ViewConsorzioDestinatari>>();
+            services.AddTransient<IGenericRepository<ViewConsorzioProduttori>, GenericRepository<TResourcesDbContext, ViewConsorzioProduttori>>();
+            services.AddTransient<IGenericRepository<ViewConsorzioTrasportatori>, GenericRepository<TResourcesDbContext, ViewConsorzioTrasportatori>>();
+            services.AddTransient<IGenericRepository<ViewConsorzioRegistrazioni>, GenericRepository<TResourcesDbContext, ViewConsorzioRegistrazioni>>();
             #endregion
 
             return services; 

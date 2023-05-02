@@ -149,5 +149,10 @@
         public const string CREATE_ViewTasks = "CREATE_ViewTasks.sql";
         public const string DROP_ViewTasks = "DROP_ViewTasks.sql";
 
+        //Consorzio
+        public const string Consorzio = @".\Scripts\Consorzio\";
+        public const string CREATE_ViewConsorzio = "CREATE_ViewConsorzio.sql";
+        public const string DROP_ViewConsorzio = "DROP_ViewConsorzio.sql";
+
     }
 }
