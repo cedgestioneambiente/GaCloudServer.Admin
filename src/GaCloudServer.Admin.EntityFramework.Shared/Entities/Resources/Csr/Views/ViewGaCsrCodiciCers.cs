@@ -4,5 +4,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.View
 {
     public class ViewGaCsrCodiciCers : GenericListEntity
     {
+        public string Modalita { get; set; }
     }
 }

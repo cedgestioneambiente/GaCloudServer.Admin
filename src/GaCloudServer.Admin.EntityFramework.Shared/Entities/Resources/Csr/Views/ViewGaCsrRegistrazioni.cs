@@ -11,5 +11,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.View
         public string Trasportatore { get; set; }
         public int PesoTotale { get; set; }
         public string Destinatario { get; set; }
+        public string Modalita { get; set; }
     }
 }

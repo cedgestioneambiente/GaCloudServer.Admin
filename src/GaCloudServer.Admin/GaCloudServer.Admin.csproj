@@ -143,10 +143,16 @@
 	  <None Update="Scripts\Contratti\DROP_ViewGaContratti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Csr\CREATE_ViewGaCsr_V2.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Csr\CREATE_ViewGaCsr_V1.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Csr\CREATE_ViewGaCsr.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Csr\DROP_ViewGaCsr_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Csr\DROP_ViewGaCsr_V1.sql">
