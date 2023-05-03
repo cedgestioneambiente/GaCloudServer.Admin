@@ -47,6 +47,7 @@ namespace GaCloudServer.Jobs.Jobs
                                         Title = mail.Title,
                                         Message = mail.KoMessage,
                                         Read = false,
+                                        Routing=false,
                                         Disabled = false
                                     }).Result;
                                 }
@@ -72,6 +73,7 @@ namespace GaCloudServer.Jobs.Jobs
                                         Title = mail.Title,
                                         Message = mail.OkMessage,
                                         Read = false,
+                                        Routing=false,
                                         Disabled = false
                                     }).Result;
                                 }

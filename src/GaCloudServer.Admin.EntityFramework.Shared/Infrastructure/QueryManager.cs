@@ -60,6 +60,33 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
                
         }
 
+        public async Task<List<object>> ExecCSQueryAsync(string query)
+        {
+            string connectionString = "Server=20.82.75.6;Database=TARI;Persist Security Info=True;User ID=csgroup;Password=QDS6bNPq*gH5^mZW;Connection Timeout=60;MultipleActiveResultSets=True";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+
+                using (var result = await command.ExecuteReaderAsync())
+                {
+                    var entities = new List<object>();
+
+                    while (await result.ReadAsync())
+                    {
+
+                        entities.Add(ToExpando(result));
+                    }
+
+                    return entities;
+                }
+            }
+
+            
+
+        }
+
         private static object ToExpando(IDataRecord record)
         {
             var expandoObject = new ExpandoObject() as IDictionary<string, object>;

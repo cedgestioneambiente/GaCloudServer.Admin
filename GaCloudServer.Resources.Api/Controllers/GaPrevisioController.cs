@@ -107,6 +107,33 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
+
+        [HttpPost("ExportEventsWithDetailsByOdsAsync")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportEventsWithDetailsByOdsAsync(DeviceDataResponse apiDto)
+        {
+
+            try
+            {
+                var entities = _gaPrevisioService.GetDetailedEventsTypeAsync(apiDto.events).Result.Data;
+                string title = "Lista Eventi Ods Dettagli";
+                string[] columns = { "id","description", "idDevice","idEvent","dateTime","info","km",
+                "xcoord","ycoord","utenza","comune","indirizzo","numCon","partita"};
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "PrevisioEventiDettagliOds", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Previsio_Eventi_Dettagli_Ods.xlsx"
+                };
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
         #endregion
 
         #endregion
