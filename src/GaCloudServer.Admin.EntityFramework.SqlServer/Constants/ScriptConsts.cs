@@ -71,6 +71,8 @@
         public const string DROP_ViewGaCsr = "DROP_ViewGaCsr.sql";
         public const string CREATE_ViewGaCsr_V1 = "CREATE_ViewGaCsr_V1.sql";
         public const string DROP_ViewGaCsr_V1 = "DROP_ViewGaCsr_V1.sql";
+        public const string CREATE_ViewGaCsr_V2 = "CREATE_ViewGaCsr_V2.sql";
+        public const string DROP_ViewGaCsr_V2 = "DROP_ViewGaCsr_V2.sql";
 
         //Reclami
         public const string GaReclamiMigration = @".\Scripts\Reclami\";
