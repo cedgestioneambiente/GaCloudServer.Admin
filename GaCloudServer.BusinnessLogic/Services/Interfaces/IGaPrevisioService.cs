@@ -14,7 +14,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
 
         #region DetailedEventReport
-        Task<PagedList<DetailedEventsType>> GetDetailedEventsTypeAsync(List<EventsType> events);
+        Task<PagedList<DetailedEventsType>> GetDetailedEventsTypeAsync(string userId,List<EventsType> events);
         #endregion
 
 

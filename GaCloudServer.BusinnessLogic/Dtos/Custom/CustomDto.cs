@@ -30,4 +30,11 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Custom
         public bool? Approved { get; set; }
         public string? Info { get; set; }
     }
+
+    public class DownloadProgressDto
+    { 
+        public string message { get; set; }
+        public int progress { get; set; }
+        public string? timer { get; set; }
+    }
 }

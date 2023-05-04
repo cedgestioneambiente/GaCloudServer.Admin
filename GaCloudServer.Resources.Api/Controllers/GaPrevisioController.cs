@@ -108,19 +108,19 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpPost("ExportEventsWithDetailsByOdsAsync")]
+        [HttpPut("ExportEventsWithDetailsByOdsAsync/{userId}")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
         [AutoWrapIgnore]
-        public IActionResult ExportEventsWithDetailsByOdsAsync(DeviceDataResponse apiDto)
+        public IActionResult ExportEventsWithDetailsByOdsAsync(string userId,[FromBody] DeviceDataResponse apiDto)
         {
 
             try
             {
-                var entities = _gaPrevisioService.GetDetailedEventsTypeAsync(apiDto.events).Result.Data;
+                var entities = _gaPrevisioService.GetDetailedEventsTypeAsync(userId,apiDto.events).Result.Data;
                 string title = "Lista Eventi Ods Dettagli";
                 string[] columns = { "id","description", "idDevice","idEvent","dateTime","info","km",
-                "xcoord","ycoord","utenza","comune","indirizzo","numCon","partita"};
+                "xcoord","ycoord","utenza","comune","indirizzo","numCon","partita","tipoContenitore"};
                 byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "PrevisioEventiDettagliOds", true, columns);
 
                 return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)

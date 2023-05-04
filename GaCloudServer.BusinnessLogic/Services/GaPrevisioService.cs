@@ -4,10 +4,15 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Vie
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Constants;
 using GaCloudServer.BusinnessLogic.Dtos.Extras.EcoFinder;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
+using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore.Storage;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using static GaCloudServer.BusinnessLogic.Dtos.Extras.EcoFinder.CustomEcoFinderDto;
+using Microsoft.Extensions.Logging;
+using GaCloudServer.BusinnessLogic.Dtos.Custom;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -22,6 +27,9 @@ namespace GaCloudServer.BusinnessLogic.Services
 
 
         protected readonly IUnitOfWork unitOfWork;
+        private readonly IHubContext<BackgroundServicesHub, IBackgroundServicesHub> hub;
+
+        private readonly ILogger<GaPrevisioService> logger;
 
         public GaPrevisioService(
             IQueryManager queryManager,
@@ -31,7 +39,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeUtenzePartite> viewBackOfficeUtenzePartiteRepo,
             IGenericRepository<ViewGaBackOfficeUtenze> viewBackOfficeUtenzeRepo,
 
-        IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IHubContext<BackgroundServicesHub, IBackgroundServicesHub> hub,
+            ILogger<GaPrevisioService> logger)
         {
             this._queryManager = queryManager;
 
@@ -41,6 +51,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewBackOfficeUtenzeRepo = viewBackOfficeUtenzeRepo;
 
             this.unitOfWork = unitOfWork;
+
+            this.hub = hub;
+            this.logger = logger;
 
         }
 
@@ -58,7 +71,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region DetailedEventReport
-        public async Task<PagedList<DetailedEventsType>> GetDetailedEventsTypeAsync(List<EventsType> events)
+        public async Task<PagedList<DetailedEventsType>> GetDetailedEventsTypeAsync(string userId, List<EventsType> events)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<EventsType, DetailedEventsType>());
             var mapper = new Mapper(config);
@@ -66,60 +79,145 @@ namespace GaCloudServer.BusinnessLogic.Services
             var list = new List<DetailedEventsType>();
             var returnList= new PagedList<DetailedEventsType>();
 
+            int index = 0;
+            DownloadProgressDto progress = new DownloadProgressDto();
+
+
             foreach (var item in events)
             {
+                index++;
+                progress.message = string.Format("Elaborazione Eventi {0}/{1}", index, events.Count());
+                progress.progress = (Int32)(((Double)index / (Double)events.Count()) * 100);
+
+                await hub.Clients.Groups(userId).DownloadProgress(progress);
                 if (item.description == "Lettura UHF EPC" && item.info.Contains("Code:3"))
                 {
                     var listItem = mapper.Map<DetailedEventsType>(item);
-                    var script = SqlContants.scriptDecodeEvent.Replace("@dtEvent", item.dateTime.ToString("yyyyMMdd"));
-                    script=script.Replace("@identi1", item.info.Replace("Code:", ""));
+                    var cpAzi = "";
+                    
+                    var script = SqlContants.scriptGetDevice.Replace("@DTEVENT", item.dateTime.ToString("yyyyMMdd"));
+                    script=script.Replace("@IDENTI1", item.info.Replace("Code:", ""));
 
+                    var device = await _queryManager.ExecCSQueryAsync(script);
 
-                    var entities=await _queryManager.ExecCSQueryAsync(string.Format("SELECT * FROM ViewBackOfficeLetture WHERE TRIM(Identi1)='{0}' AND '{1}' BETWEEN DTCON AND DTRIT", item.info.Replace("Code:", ""), item.dateTime.ToString("yyyyMMdd")));
-
-                    if (entities != null && entities.Count > 0)
+                    if (device != null && device.Count() > 0)
                     {
-                        dynamic objProp = entities[0];
+                        dynamic objProp = device[0];
                         foreach (KeyValuePair<string, object> property in objProp)
                         {
-
-                            switch (property.Key)
+                            if (property.Key == "AZIENDA") { cpAzi = property.Value.ToString(); }
+                        }
+                        var utenza = await _queryManager.ExecCSQueryAsync("" +
+                            "SELECT TOP 1 '"+cpAzi+"' AS AZIENDA, RTRIM(C.IDENTI1) AS IDENTI1, " +
+                            "RTRIM(T.INDENTI1) AS ID1, RTRIM(T.INDENTI2) AS ID2, RTRIM(T.STATO) AS STATO, RTRIM(T.TIPCON) AS TIPCON, TIP.DESCON," +
+                            "C.DTRIT,C.DTCON," +
+                            "CONCAT(TRIM(F.RAGSO1),' ',TRIM(F.RAGSO2)) RAGSO," +
+                            "A.COMUNE," +
+                            "CONCAT(TRIM(A.DESVIA),' - ',TRIM(A.NUMCIV)) INDIRIZZO," +
+                            "A.PARTITA,A.NUMCON " +
+                            "FROM "+cpAzi+"M_DTTIC C " +
+                            "LEFT JOIN FCTABARCCONT T ON C.IDENTI1 = T.INDENTI1 " +
+                            "INNER JOIN " + cpAzi + "M_DTTIA A ON A.NUMCON=C.NUMCON AND C.PRGCON=A.CPROWNUM " +
+                            "INNER JOIN FCTIPCOT TIP ON TIP.TIPCON=T.TIPCON " +
+                            "INNER JOIN " + cpAzi + "M_TSCON CON ON CON.NUMCON=A.NUMCON " +
+                            "INNER JOIN " + cpAzi + "FCCLIFAT F ON F.CODCLI=CON.CODCOM");
+                        if (utenza != null && utenza.Count() > 0)
+                        {
+                            dynamic objProp2 = utenza[0];
+                            foreach (KeyValuePair<string, object> property in objProp2)
                             {
-                                case "IDENTI1":
-                                    listItem.tag = property.Value.ToString();
-                                    break;
-                                case "ID2":
-                                    listItem.matricola = property.Value.ToString();
-                                    break;
-                                case "RAGSO":
-                                    listItem.utenza = property.Value.ToString();
-                                    break;
-                                case "COMUNE":
-                                    listItem.comune = property.Value.ToString();
-                                    break;
-                                case "INDIRIZZO":
-                                    listItem.indirizzo = property.Value.ToString();
-                                    break;
-                                case "NUMCON":
-                                    listItem.numCon = property.Value.ToString();
-                                    break;
-                                case "PARTITA":
-                                    listItem.partita = property.Value.ToString();
-                                    break;
-                                case "DESCON":
-                                    listItem.tipoContenitore = property.Value.ToString();
-                                    break;
+
+                                switch (property.Key)
+                                {
+                                    case "IDENTI1":
+                                        listItem.tag = property.Value.ToString();
+                                        break;
+                                    case "ID2":
+                                        listItem.matricola = property.Value.ToString();
+                                        break;
+                                    case "RAGSO":
+                                        listItem.utenza = property.Value.ToString();
+                                        break;
+                                    case "COMUNE":
+                                        listItem.comune = property.Value.ToString();
+                                        break;
+                                    case "INDIRIZZO":
+                                        listItem.indirizzo = property.Value.ToString();
+                                        break;
+                                    case "NUMCON":
+                                        listItem.numCon = property.Value.ToString();
+                                        break;
+                                    case "PARTITA":
+                                        listItem.partita = property.Value.ToString();
+                                        break;
+                                    case "DESCON":
+                                        listItem.tipoContenitore = property.Value.ToString();
+                                        break;
+                                }
+
                             }
 
+                            returnList.Data.Add(listItem);
+                        }
+                        else
+                        {
+                            listItem.tag = "Nessuna utenza associata";
+                            returnList.Data.Add(listItem);
                         }
 
-                        returnList.Data.Add(listItem);
                     }
                     else
                     {
-                        listItem.tag = "Nessuna utenza associata";
+                        listItem.tag = "Non esiste nessun contenitore con questo TAG.";
                         returnList.Data.Add(listItem);
                     }
+
+
+                    //var entities=await _queryManager.ExecCSQueryAsync(string.Format("SELECT TOP 1 * FROM ViewBackOfficeLetture WHERE TRIM(Identi1)='{0}' AND '{1}' BETWEEN DTCON AND DTRIT", item.info.Replace("Code:", ""), item.dateTime.ToString("yyyyMMdd")));
+
+                    //if (entities != null && entities.Count > 0)
+                    //{
+                    //    dynamic objProp = entities[0];
+                    //    foreach (KeyValuePair<string, object> property in objProp)
+                    //    {
+
+                    //        switch (property.Key)
+                    //        {
+                    //            case "IDENTI1":
+                    //                listItem.tag = property.Value.ToString();
+                    //                break;
+                    //            case "ID2":
+                    //                listItem.matricola = property.Value.ToString();
+                    //                break;
+                    //            case "RAGSO":
+                    //                listItem.utenza = property.Value.ToString();
+                    //                break;
+                    //            case "COMUNE":
+                    //                listItem.comune = property.Value.ToString();
+                    //                break;
+                    //            case "INDIRIZZO":
+                    //                listItem.indirizzo = property.Value.ToString();
+                    //                break;
+                    //            case "NUMCON":
+                    //                listItem.numCon = property.Value.ToString();
+                    //                break;
+                    //            case "PARTITA":
+                    //                listItem.partita = property.Value.ToString();
+                    //                break;
+                    //            case "DESCON":
+                    //                listItem.tipoContenitore = property.Value.ToString();
+                    //                break;
+                    //        }
+
+                    //    }
+
+                    //    returnList.Data.Add(listItem);
+                    //}
+                    //else
+                    //{
+                    //    listItem.tag = "Nessuna utenza associata";
+                    //    returnList.Data.Add(listItem);
+                    //}
                     
 
 

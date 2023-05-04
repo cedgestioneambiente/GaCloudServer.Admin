@@ -1,4 +1,5 @@
-﻿using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
+﻿using GaCloudServer.BusinnessLogic.Dtos.Custom;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace GaCloudServer.BusinnessLogic.Hub.Interfaces
     public interface IBackgroundServicesHub
     {
         Task PresenzeRefresh(bool refresh);
+        Task DownloadProgress(DownloadProgressDto progress);
         Task JoinGroup(string groupName);
         Task Subscribe(IEnumerable<string> groups);
         Task LeaveGroup(string groupName);
