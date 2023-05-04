@@ -120,7 +120,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var entities = _gaPrevisioService.GetDetailedEventsTypeAsync(userId,apiDto.events).Result.Data;
                 string title = "Lista Eventi Ods Dettagli";
                 string[] columns = { "id","description", "idDevice","idEvent","dateTime","info","km",
-                "xcoord","ycoord","utenza","comune","indirizzo","numCon","partita","tipoContenitore"};
+                "xcoord","ycoord","utenza","comune","indirizzo","numCon","partita","tipoContenitore","tag","matricola"};
                 byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "PrevisioEventiDettagliOds", true, columns);
 
                 return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)

@@ -115,7 +115,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                             "A.COMUNE," +
                             "CONCAT(TRIM(A.DESVIA),' - ',TRIM(A.NUMCIV)) INDIRIZZO," +
                             "A.PARTITA,A.NUMCON " +
-                            "FROM "+cpAzi+"M_DTTIC C " +
+                            "FROM (SELECT TOP 1 * FROM "+cpAzi+"M_DTTIC WHERE TRIM(IDENTI1)='"+ item.info.Replace("Code:", "") + "') C " +
                             "LEFT JOIN FCTABARCCONT T ON C.IDENTI1 = T.INDENTI1 " +
                             "INNER JOIN " + cpAzi + "M_DTTIA A ON A.NUMCON=C.NUMCON AND C.PRGCON=A.CPROWNUM " +
                             "INNER JOIN FCTIPCOT TIP ON TIP.TIPCON=T.TIPCON " +
@@ -152,6 +152,12 @@ namespace GaCloudServer.BusinnessLogic.Services
                                         break;
                                     case "DESCON":
                                         listItem.tipoContenitore = property.Value.ToString();
+                                        break;
+                                    case "TAG":
+                                        listItem.tag = property.Value.ToString();
+                                        break;
+                                    case "MATRICOLA":
+                                        listItem.matricola = property.Value.ToString();
                                         break;
                                 }
 
