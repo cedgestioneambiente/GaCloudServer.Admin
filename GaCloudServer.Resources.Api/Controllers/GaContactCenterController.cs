@@ -1552,16 +1552,18 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpGet("ExportGaContactCenterTicketsQueryable")]
+        [HttpPost("ExportGaContactCenterTicketsAsync")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
         [AutoWrapIgnore]
-        public IActionResult ExportGaContactCenterTicketsQueryable(GridOperationsModel filter)
+        public IActionResult ExportGaContactCenterTicketsAsync([FromBody] long[] ids)
         {
 
             try
             {
-                var entities = _gaContactCenterService.GetViewGaContactCenterTicketsQueryableNoSkip(filter);
+                var entities = _gaContactCenterService.ExportGaContactCenterTicketsAsync(ids).Result.Data.ToList();
+
+
                 string title = "Lista Ticket";
                 string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Utente","TelefonoMail","TipoTicket","Materiali",
                                 "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl"};

@@ -1,5 +1,6 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
@@ -827,6 +828,20 @@ namespace GaCloudServer.BusinnessLogic.Services
 
                 await SaveChanges();
                 return true;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
+        public async Task<PagedList<ViewGaContactCenterTickets>> ExportGaContactCenterTicketsAsync(long[] ids)
+        {
+            try
+            {
+                return await viewGaContactCenterTicketsRepo.GetWithFilterAsync(x => ids.ToList().Contains(x.Id));
+
             }
             catch (Exception ex)
             {

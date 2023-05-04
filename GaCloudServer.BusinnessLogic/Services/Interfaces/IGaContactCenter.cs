@@ -142,6 +142,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> SetDoneGaContactCenterTicketAsync(long[] ticketsId);
         Task<bool> SetUndoneGaContactCenterTicketAsync(long[] ticketsId);
         Task<bool> SetPrintedGaContactCenterTicketsAsync(long[] ticketsId);
+
+        Task<PagedList<ViewGaContactCenterTickets>> ExportGaContactCenterTicketsAsync(long[] ids);
         #endregion
 
         #region Views

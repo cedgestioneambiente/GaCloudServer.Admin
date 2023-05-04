@@ -202,7 +202,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var approvazioneAutomatica = gaPresenzeTipiOreRepo.GetByIdAsync(entity.PresenzeTipoOraId).Result.ApprovazioneAutomatica;
             if (approvazioneAutomatica && entity.PresenzeStatoRichiestaId != 3)
             {
-                entity.PresenzeStatoRichiestaId = 1;
+                entity.PresenzeStatoRichiestaId = 2;
             }
             await gaPresenzeRichiesteRepo.AddAsync(entity);
             await SaveChanges();
@@ -279,7 +279,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             if (!dto.IsAdmin && !dto.profiloUtente.SuperUser)
             {
 
-                if (dto.richiesta.PresenzeDipendenteId == dipendente.Id && dto.richiesta.PresenzeStatoRichiestaId != 2 && !dto.profiloUtente.AutoApprova)
+                if (dto.richiesta.PresenzeDipendenteId == dipendente.Id && dto.richiesta.PresenzeStatoRichiestaId != 1 && !dto.profiloUtente.AutoApprova)
                 {
                     return -3;
                 }

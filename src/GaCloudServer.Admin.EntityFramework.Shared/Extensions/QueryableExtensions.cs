@@ -324,7 +324,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
                     }
                     else
                     {
-                        if (f.Value.filterType == "boolean" && f.Value.filter == "All")
+                        if (f.Value.filterType == "boolean" && f.Value.filter.Equals("All"))
                         {
                             continue;
                         }
