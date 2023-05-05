@@ -57,6 +57,22 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpPost("GetViewGaPrevisioOdsServiziReportByDateAsync")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPrevisioOdsServiziReportByDateAsync(DateRangeDto dto)
+        {
+            try
+            {
+                var view = await _gaPrevisioService.GetViewGaPrevisioOdsServiziReportByDateAsync(dto.dateStart, dto.dateEnd.SetTime(23, 59, 59));
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #region Functions

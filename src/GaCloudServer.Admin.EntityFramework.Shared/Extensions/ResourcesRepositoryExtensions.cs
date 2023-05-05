@@ -370,6 +370,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Previsio
             #region Previsio
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsReport>>();
+            services.AddTransient<IGenericRepository<ViewGaPrevisioOdsServiziReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsServiziReport>>();
             #endregion
 
             //Shortcuts

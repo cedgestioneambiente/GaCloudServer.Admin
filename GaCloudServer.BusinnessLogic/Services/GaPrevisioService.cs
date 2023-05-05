@@ -21,6 +21,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IQueryManager _queryManager;
 
         protected readonly IGenericRepository<ViewGaPrevisioOdsReport> viewPrevisioOdsReportRepo;
+        protected readonly IGenericRepository<ViewGaPrevisioOdsServiziReport> viewPrevisioOdsServiziReportRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewBackOfficeUtenzeDispositiviRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartite> viewBackOfficeUtenzePartiteRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenze> viewBackOfficeUtenzeRepo;
@@ -35,6 +36,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IQueryManager queryManager,
 
             IGenericRepository<ViewGaPrevisioOdsReport> viewPrevisioOdsReportRepo,
+            IGenericRepository<ViewGaPrevisioOdsServiziReport> viewPrevisioOdsServiziReportRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewBackOfficeUtenzeDispositiviRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartite> viewBackOfficeUtenzePartiteRepo,
             IGenericRepository<ViewGaBackOfficeUtenze> viewBackOfficeUtenzeRepo,
@@ -46,6 +48,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this._queryManager = queryManager;
 
             this.viewPrevisioOdsReportRepo = viewPrevisioOdsReportRepo;
+            this.viewPrevisioOdsServiziReportRepo = viewPrevisioOdsServiziReportRepo;
             this.viewBackOfficeUtenzeDispositiviRepo = viewBackOfficeUtenzeDispositiviRepo;
             this.viewBackOfficeUtenzePartiteRepo = viewBackOfficeUtenzePartiteRepo;
             this.viewBackOfficeUtenzeRepo = viewBackOfficeUtenzeRepo;
@@ -60,10 +63,17 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Previsio
 
         #region Views
-        public async Task<PagedList<ViewGaPrevisioOdsReport>> GetViewGaPrevisioOdsReportByDateAsync(DateTime dateStart,DateTime dateEnd)
+        public async Task<PagedList<ViewGaPrevisioOdsReport>> GetViewGaPrevisioOdsReportByDateAsync(DateTime dateStart, DateTime dateEnd)
         {
             var view = await viewPrevisioOdsReportRepo
-            .GetWithFilterAsync(x=>x.DataOraIniMezzo>=dateStart && x.DataOraFineMezzo<=dateEnd,1,0,"IDServizio");
+            .GetWithFilterAsync(x => x.DataOraIniMezzo >= dateStart && x.DataOraFineMezzo <= dateEnd, 1, 0, "DataOraIniMezzo", "OrderByDescending");
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaPrevisioOdsServiziReport>> GetViewGaPrevisioOdsServiziReportByDateAsync(DateTime dateStart, DateTime dateEnd)
+        {
+            var view = await viewPrevisioOdsServiziReportRepo
+            .GetWithFilterAsync(x => x.DataOraIniMezzo >= dateStart && x.DataOraFineMezzo <= dateEnd, 1, 0, "DataOraIniMezzo","OrderByDescending");
             return view;
         }
 
