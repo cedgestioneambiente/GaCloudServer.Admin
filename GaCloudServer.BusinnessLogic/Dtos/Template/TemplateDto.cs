@@ -24,6 +24,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public string DataTicket { get; set; }
         public string Comune { get; set; }
         public string Indirizzo { get; set; }
+        public string Zona { get; set; }
         public string Utente { get; set; }
         public string TelefonoMail { get; set; }
         public string TipoTicket { get; set; }
@@ -44,6 +45,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public string DataTicket { get; set; }
         public string Comune { get; set; }
         public string Indirizzo { get; set; }
+        public string Zona { get; set; }
         public string Utente { get; set; }
         public string TelefonoMail { get; set; }
         public string TipoTicket { get; set; }
