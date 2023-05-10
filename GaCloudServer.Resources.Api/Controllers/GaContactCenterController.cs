@@ -1565,8 +1565,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
 
                 string title = "Lista Ticket";
-                string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Utente","TelefonoMail","TipoTicket","Materiali",
-                                "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl"};
+                string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Zona","RagioneSociale","TelefonoMail","TipoTicket","Materiali",
+                                "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl","DaFatturare"};
                 byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "TICKET_CONTACT_CENTER", true, columns);
 
                 return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
@@ -1688,6 +1688,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             dto.DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy");
             dto.Comune = ticket.Comune;
             dto.Indirizzo = ticket.Indirizzo;
+            dto.Zona = ticket.Zona;
             dto.Utente = ticket.RagioneSociale;
             dto.TelefonoMail = ticket.TelefonoMail;
             dto.TipoTicket = ticket.TipoTicket;
@@ -1719,6 +1720,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             dto.DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy");
             dto.Comune = ticket.Comune;
             dto.Indirizzo = ticket.Indirizzo;
+            dto.Zona = ticket.Zona;
             dto.Utente = ticket.RagioneSociale;
             dto.TelefonoMail = ticket.TelefonoMail;
             dto.TipoTicket = ticket.TipoTicket;
@@ -1769,6 +1771,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     DataTicket = itm.DataTicket.ToString("dd-MM-yyyy"),
                     Comune = itm.Comune,
                     Indirizzo = itm.Indirizzo,
+                    Zona=itm.Zona,
                     Utente = itm.RagioneSociale,
                     TelefonoMail = itm.TelefonoMail,
                     TipoTicket = itm.TipoTicket,
@@ -1809,6 +1812,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     DataTicket = ticket.DataTicket.ToString("dd-MM-yyyy"),
                     Comune = ticket.Comune,
                     Indirizzo = ticket.Indirizzo,
+                    Zona = ticket.Zona,
                     Utente = ticket.RagioneSociale,
                     TelefonoMail = ticket.TelefonoMail,
                     TipoTicket = ticket.TipoTicket,
@@ -1821,7 +1825,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     Promemoria = ticket.Promemoria == true ? "&#9745;" : "&#9744;",
                     Reclamo = ticket.Reclamo == true ? "&#9745;" : "&#9744;",
                     DaFatturare = ticket.DaFatturare == true ? "&#9745;" : "&#9744;",
-            });
+                }) ;
 
             }
 

@@ -344,6 +344,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaPresenzeRichiestaMail> ViewGaPresenzeRichiestaMail { get; set; }
         DbSet<ViewGaPresenzeRichiesteRisorse> ViewGaPresenzeRichiesteRisorse { get; set; }
         DbSet<ViewGaPresenzeRichiesteEventi> ViewGaPresenzeRichiesteEventi { get; set; }
+        DbSet<ViewGaPresenzeRichiesteQualificheRisorse> ViewGaPresenzeRichiesteQualificheRisorse { get; set; }
+        DbSet<ViewGaPresenzeRichiesteQualificheEventi> ViewGaPresenzeRichiesteQualificheEventi { get; set; }
 
         #endregion
 

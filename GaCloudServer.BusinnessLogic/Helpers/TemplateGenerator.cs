@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.BusinnessLogic.Dtos.Template;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System.Text;
 
 namespace GaCloudServer.BusinnessLogic.Helpers
@@ -32,7 +33,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             var sb = new StringBuilder();
 
             sb.AppendFormat(@fileContent, dto.Id, dto.DataTicket,dto.Comune,dto.Indirizzo,dto.Utente,dto.TelefonoMail,dto.TipoTicket,dto.DataStampa,dto.Richiedente,dto.Note1,dto.Note2,dto.Provenienza,
-                dto.EseguitoIl,dto.Promemoria,dto.Reclamo,dto.DaFatturare);
+                dto.EseguitoIl,dto.Promemoria,dto.Reclamo,dto.DaFatturare,dto.Zona);
             return sb.ToString();
 
 
@@ -45,7 +46,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             var sb = new StringBuilder();
 
             sb.AppendFormat(@fileContent, dto.Id, dto.DataTicket, dto.Comune, dto.Indirizzo, dto.Utente, dto.TelefonoMail, dto.TipoTicket, dto.DataStampa, dto.Richiedente,
-                dto.Note1, dto.Note2, dto.Materiali);
+                dto.Note1, dto.Note2, dto.Materiali,dto.Zona);
             return sb.ToString();
 
 
@@ -81,13 +82,13 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     "<tbody" +
                     "<tr>" +
                     "<td style='border: 1px solid #000;padding:5px;'>{0}</td>" +
-                    "<td style='border: 1px solid #000;padding:5px;'>Richiedente: {1}<br />Telefono: {2}<br />Indirizzo: {3}</td>" +
+                    "<td style='border: 1px solid #000;padding:5px;'>Richiedente: {1}<br />Telefono: {2}<br />Indirizzo: {3}<br />Zona: {6}</td>" +
                     "<td style='border: 1px solid #000;padding:5px;'>{4}</td>" +
                     "<td style='border: 1px solid #000;padding:5px;'>{5}</td>" +
                     "</tr>" +
                     "</tbody>" +
                     "</table>",
-                    itm.Id.ToString(), itm.Utente, itm.TelefonoMail, itm.Indirizzo, itm.Materiali, itm.Note1);
+                    itm.Id.ToString(), itm.Utente, itm.TelefonoMail, itm.Indirizzo, itm.Materiali, itm.Note1,itm.Zona);
             }
 
 
@@ -180,6 +181,12 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                                                   "</td>" +
                                                   "<td style='border:1px solid #000;padding-left:5px;'>{3}</td>" +
                                               "</tr>" +
+                                              "<tr>" +
+                                                  "<td style='border:1px solid #000;width:40%; text-align:left;padding-left:5px;'>" +
+                                                      "Zona:" +
+                                                  "</td>" +
+                                                  "<td style='border:1px solid #000;padding-left:5px;'>{16}</td>" +
+                                              "</tr>" +
                                           "</tbody>" +
                                       "</table>" +
                                   "</div>" +
@@ -264,7 +271,8 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                         itm.TipoTicket, itm.DataStampa, itm.Richiedente, itm.Note1, itm.Note2, itm.Provenienza, itm.EseguitoIl,
                         itm.Promemoria ,
                         itm.Reclamo ,
-                        itm.DaFatturare
+                        itm.DaFatturare,
+                        itm.Zona
                         );
             }
 

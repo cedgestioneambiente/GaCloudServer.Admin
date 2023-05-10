@@ -221,6 +221,12 @@
 	  <None Update="Scripts\PrenotazioneAuto\DROP_ViewGaPrenotazioneAuto.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Presenze\CREATE_ViewGaPresenze_V4.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Presenze\DROP_ViewGaPresenz_V4.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Previsio\CREATE_ViewGaPrevisio_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
