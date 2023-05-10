@@ -224,7 +224,7 @@
 	  <None Update="Scripts\Presenze\CREATE_ViewGaPresenze_V4.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Scripts\Presenze\DROP_ViewGaPresenz_V4.sql">
+	  <None Update="Scripts\Presenze\DROP_ViewGaPresenze_V4.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Previsio\CREATE_ViewGaPrevisio_V2.sql">
@@ -248,10 +248,10 @@
 	  <None Update="Scripts\Presenze\CREATE_ViewGaPresenze.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Scripts\Presenze\DROP_ViewGaPresenz_V3.sql">
+	  <None Update="Scripts\Presenze\DROP_ViewGaPresenze_V3.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Scripts\Presenze\DROP_ViewGaPresenz_V2.sql">
+	  <None Update="Scripts\Presenze\DROP_ViewGaPresenze_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Presenze\DROP_ViewGaPresenze.sql">
