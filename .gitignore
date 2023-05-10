@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /src/GaCloudServer.Admin.EntityFramework.Shared/MigrationHelpers/.config/dotnet-tools.json
+/src/GaCloudServer.Admin.EntityFramework.Shared/Entities/Resources/PrenotazioneLocali

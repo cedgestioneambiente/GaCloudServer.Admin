@@ -870,6 +870,13 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+
+        public async Task<PagedList<ViewGaContrattiDocumentiScadenziario>> GetViewGaContrattiDocumentiScadenziarioAsync(bool all = false)
+        {
+            var entities = all ? await viewGaContrattiDocumentiScadenziarioRepo.GetAllAsync() : await viewGaContrattiDocumentiScadenziarioRepo.GetWithFilterAsync(x => x.Disabled == false);
+            return entities;
+        }
+
         #region Sp
         //public async Task<PagedList<SpGaContrattiNumeratore>> GetSpGaContrattiNumeratoreAsync()
         //{

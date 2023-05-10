@@ -183,7 +183,6 @@ namespace GaCloudServer.Jobs.Jobs
             }
         }
 
-
         [PersistJobDataAfterExecution]
         [DisallowConcurrentExecution]
         public class GaContrattiScadenziarioJob : IJob
@@ -202,13 +201,12 @@ namespace GaCloudServer.Jobs.Jobs
                     var mailService = scope.ServiceProvider.GetService<IMailService>();
                     var contrattiService = scope.ServiceProvider.GetService<IGaContrattiService>();
                     var notificationService = scope.ServiceProvider.GetService<INotificationService>();
-                    var dto = new ContrattiDocumentiListRequestDto() { mode = 2, userId = "", userRoles = new List<string>() { "GaContrattiAdmin" } };
-                    var list = contrattiService.GetViewGaContrattiDocumentiListByModeAsync(dto).Result;
+                    var list = contrattiService.GetViewGaContrattiDocumentiScadenziarioAsync(true).Result;
                     var scadenziario = (from x in list.Data
-                                        where (x.Stato == "R" || x.Stato == "G") && x.Archiviato == false
-                                        select x).OrderBy(x => x.DataScadenza).ToList();
+                                        where x.Archiviato == false && (x.Stato == "R" || x.Stato == "G") && x.SoggettoDisabled == false
+                                        select x).ToList();
 
-                    var columnHeaders = new List<string>() { "Dipendente", "Tipologia", "Descrizione", "Data Scadenza" };
+                    var columnHeaders = new List<string>() { "Ragione Sociale", "Tipologia", "Descrizione", "Data Scadenza" };
 
                     var rows = new List<List<string>>();
                     List<string> row;
@@ -263,7 +261,7 @@ namespace GaCloudServer.Jobs.Jobs
 
 
                             })
-                            .Result;
+                                                    .Result;
                     }
 
                 }
@@ -535,5 +533,7 @@ namespace GaCloudServer.Jobs.Jobs
                 return Task.CompletedTask;
             }
         }
+
+
     }
 }

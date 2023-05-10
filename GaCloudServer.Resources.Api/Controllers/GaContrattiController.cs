@@ -987,6 +987,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpGet("GetViewGaContrattiDocumentiScadenziarioAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaContrattiDocumentiScadenziarioAsync(bool all = false)
+        {
+            try
+            {
+                var view = await _gaContrattiService.GetViewGaContrattiDocumentiScadenziarioAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetViewGaContrattiDocumentiByIdAsync")]//GetViewGaContrattiDocumentiBySoggettoId/{contrattiSoggettoId}
         public async Task<ApiResponse> GetViewGaContrattiByIdAsync([FromBody] ContrattiDocumentiRequestApiDto apiDto)
         {

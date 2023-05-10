@@ -163,33 +163,5 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> CheckGaCdrCanUse(string comune, long centroId);
         #endregion
 
-        //#region CdrUtente
-        //Task<CdrUtentiDto> GetGaCdrUtentiAsync(int page = 1, int pageSize = 0);
-        //Task<CdrUtenteDto> GetGaCdrUtenteByIdAsync(long id);
-
-        //Task<long> AddGaCdrUtenteAsync(CdrUtenteDto dto);
-        //Task<long> UpdateGaCdrUtenteAsync(CdrUtenteDto dto);
-
-        //Task<bool> DeleteGaCdrUtenteAsync(long id);
-
-        //#region Functions
-        //Task<bool> CheckGaCdrAccessoUtente(string comune, long centroId);
-        //Task<bool> CheckIsUniqueGaCdrUtenteAsync(long id, long comuneId, string cfPiva);
-        //#endregion
-
-        //#region Views
-        //Task<PagedList<ViewGaCdrUtenti>> GetViewGaCdrUtentiAsync(int page = 1, int pageSize = 0);
-        //Task<PagedList<ViewGaCdrUtenti>> GetViewGaCdrUtentiAsync(string filter);
-
-        //PagedList<ViewGaCdrUtenti> GetViewGaCdrUtenti(GridOperationsModel filterParams);
-        //PagedList<ViewGaCdrUtenti> GetViewGaCdrUtentiQuickFilter(string filter);
-
-        //PagedList<ViewGaCdrUtenti> GetViewGaCdrUtentiQueryable(GridOperationsModel filterParams);
-
-        //#endregion
-
-
-
-        //#endregion
     }
 }
