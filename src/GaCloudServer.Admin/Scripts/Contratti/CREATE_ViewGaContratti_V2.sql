@@ -32,7 +32,7 @@ FROM GaContrattiDocumenti A
 INNER JOIN GaContrattiModalitas C ON CHARINDEX(','+CAST (c.Id as varchar)+',',','+A.ContrattiModalita+',')>0
 GROUP BY A.Id) C ON A.Id=C.Id
 INNER JOIN
-(SELECT A.Id,STRING_AGG(B.[Name],',') as Permission,STRING_AGG(SUBSTRING(B.[Name],13,LEN(B.[Name])-12),',') as PermissionFriendlyName
+(SELECT A.Id,STRING_AGG(B.[Name],',') as Permission,REPLACE(STRING_AGG(B.[Name],','),'AppContratti','') as PermissionFriendlyName
 FROM GaContrattiDocumenti A
 INNER JOIN IdentityServerAdmin.dbo.Roles B ON CHARINDEX(B.Id,A.Permissions,0)>0
 GROUP BY A.Id) R ON A.Id=R.Id

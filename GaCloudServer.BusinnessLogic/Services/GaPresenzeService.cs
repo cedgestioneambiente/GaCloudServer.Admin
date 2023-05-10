@@ -35,6 +35,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaPresenzeRichiestaMail> viewGaPresenzeRichiestaMailRepo;
         protected readonly IGenericRepository<ViewGaPresenzeRichiesteRisorse> viewGaPresenzeRichiesteRisorseRepo;
         protected readonly IGenericRepository<ViewGaPresenzeRichiesteEventi> viewGaPresenzeRichiesteEventiRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeRichiesteQualificheRisorse> viewGaPresenzeRichiesteQualificheRisorseRepo;
+        protected readonly IGenericRepository<ViewGaPresenzeRichiesteQualificheEventi> viewGaPresenzeRichiesteQualificheEventiRepo;
 
         protected readonly IGenericRepository<WidgetGaPresenzeSchedule> widgetGaPresenzeScheduleRepo;
 
@@ -64,6 +66,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaPresenzeRichiestaMail> viewGaPresenzeRichiestaMailRepo,
             IGenericRepository<ViewGaPresenzeRichiesteRisorse> viewGaPresenzeRichiesteRisorseRepo,
             IGenericRepository<ViewGaPresenzeRichiesteEventi> viewGaPresenzeRichiesteEventiRepo,
+            IGenericRepository<ViewGaPresenzeRichiesteQualificheRisorse> viewGaPresenzeRichiesteQualificheRisorseRepo,
+            IGenericRepository<ViewGaPresenzeRichiesteQualificheEventi> viewGaPresenzeRichiesteQualificheEventiRepo,
 
             IGenericRepository<WidgetGaPresenzeSchedule> widgetGaPresenzeScheduleRepo,
 
@@ -91,6 +95,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaPresenzeRichiestaMailRepo = viewGaPresenzeRichiestaMailRepo;
             this.viewGaPresenzeRichiesteRisorseRepo = viewGaPresenzeRichiesteRisorseRepo;
             this.viewGaPresenzeRichiesteEventiRepo = viewGaPresenzeRichiesteEventiRepo;
+            this.viewGaPresenzeRichiesteQualificheRisorseRepo = viewGaPresenzeRichiesteQualificheRisorseRepo;
+            this.viewGaPresenzeRichiesteQualificheEventiRepo = viewGaPresenzeRichiesteQualificheEventiRepo;
 
             this.widgetGaPresenzeScheduleRepo = widgetGaPresenzeScheduleRepo;
 
@@ -341,11 +347,31 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
+        public async Task<PagedList<ViewGaPresenzeRichiesteQualificheRisorse>> GetViewGaPresenzeRichiesteQualificheRisorseByQualificaIdAsync(long qualificaId)
+        {
+            var view = await viewGaPresenzeRichiesteQualificheRisorseRepo.GetWithFilterAsync(x => x.qualificaId==qualificaId && x.Disabled == false);
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaPresenzeRichiesteQualificheRisorse>> GetViewGaPresenzeRichiesteQualificheRisorseByQualificaIdAndDipendenteAsync(long qualificaId,string dipendente)
+        {
+            var view = await viewGaPresenzeRichiesteQualificheRisorseRepo.GetWithFilterAsync(x => x.qualificaId == qualificaId && x.Disabled == false && EF.Functions.Like(x.title, dipendente.toWildcardString()));
+            return view;
+        }
+
         public async Task<PagedList<ViewGaPresenzeRichiesteEventi>> GetViewGaPresenzeRichiesteEventiBySettoreIdAsync(long globalSettoreId)
         {
             var view = await viewGaPresenzeRichiesteEventiRepo.GetWithFilterAsync(x => x.settoreId == globalSettoreId && x.Disabled==false);
             return view;
         }
+
+        public async Task<PagedList<ViewGaPresenzeRichiesteQualificheEventi>> GetViewGaPresenzeRichiesteQualificheEventiByQualificaIdAsync(long qualificaId)
+        {
+            var view = await viewGaPresenzeRichiesteQualificheEventiRepo.GetWithFilterAsync(x => x.qualificaId == qualificaId && x.Disabled == false);
+            return view;
+        }
+
+
         #endregion
 
         #region Widgets

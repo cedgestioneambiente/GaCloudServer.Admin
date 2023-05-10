@@ -496,6 +496,56 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("GetViewGaPresenzeRichiesteQualificheRisorseByQualificaIdAsync/{qualificaId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeRichiesteQualificheRisorseByQualificaIdAsync(long qualificaId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeRichiesteQualificheRisorseByQualificaIdAsync(qualificaId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaPresenzeRichiesteQualificheRisorseByQualificaIdAndDipendenteAsync/{qualificaId}/{dipendente}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeRichiesteQualificheRisorseByQualificaIdAndDipendenteAsync(long qualificaId, string dipendente)
+        {
+            try
+            {
+
+                var view = await _gaPresenzeService.GetViewGaPresenzeRichiesteQualificheRisorseByQualificaIdAndDipendenteAsync(qualificaId, dipendente);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetViewGaPresenzeRichiesteQualificheEventiByQualificaIdAsync/{qualificaId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPresenzeRichiesteQualificheEventiByQualificaIdAsync(long qualificaId)
+        {
+            try
+            {
+                var view = await _gaPresenzeService.GetViewGaPresenzeRichiesteQualificheEventiByQualificaIdAsync(qualificaId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #region Widgets

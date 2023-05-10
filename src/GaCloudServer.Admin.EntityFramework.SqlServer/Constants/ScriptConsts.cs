@@ -107,6 +107,8 @@
         public const string DROP_ViewGaPresenze_V2 = "DROP_ViewGaPresenze_V2.sql";
         public const string CREATE_ViewGaPresenze_V3 = "CREATE_ViewGaPresenze_V3.sql";
         public const string DROP_ViewGaPresenze_V3 = "DROP_ViewGaPresenze_V3.sql";
+        public const string CREATE_ViewGaPresenze_V4 = "CREATE_ViewGaPresenze_V4.sql";
+        public const string DROP_ViewGaPresenze_V4 = "DROP_ViewGaPresenze_V4.sql";
 
         //Recapiti
         public const string GaRecapitiMigration = @".\Scripts\Recapiti\";

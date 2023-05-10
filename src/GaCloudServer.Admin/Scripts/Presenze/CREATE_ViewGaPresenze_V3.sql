@@ -24,5 +24,6 @@ INNER JOIN IdentityServerAdmin.dbo.Users D ON C.UserId=D.Id
 INNER JOIN GlobalSettori E ON E.Id=C.GlobalSettoreId
 INNER JOIN GaPresenzeTipiOre F ON F.Id=A.PresenzeTipoOraId
 WHERE C.PersonaleQualificaId='3') A
+WHERE Oggi=1 OR Domani=1
 GROUP BY Personale, Settore, PresenzeTipoOraId,TipoOre
 GO
