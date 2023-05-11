@@ -18,6 +18,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personal
         public string FileId { get; set; }
         public string FileName { get; set; }
         public string Stato { get; set; }
+        public bool DipendentiDisabled { get; set; }
     }
 }
 

@@ -289,7 +289,7 @@ namespace GaCloudServer.Jobs.Jobs
                     var mailService = scope.ServiceProvider.GetService<IMailService>();
                     var personaleService = scope.ServiceProvider.GetService<IGaPersonaleService>();
                     var notificationService = scope.ServiceProvider.GetService<INotificationService>();
-                    var list = personaleService.GetViewGaPersonaleScadenziarioAsync(true).Result;
+                    var list = personaleService.GetViewGaPersonaleScadenziarioAsync().Result;
                     var scadenziario = (from x in list.Data
                                         where (x.Stato == "R" || x.Stato == "G") && x.Disabled == false && x.Sede == "NOVI LIGURE"
                                         select x).OrderBy(x => x.DataScadenza).ToList();
@@ -376,7 +376,7 @@ namespace GaCloudServer.Jobs.Jobs
                     var mailService = scope.ServiceProvider.GetService<IMailService>();
                     var personaleService = scope.ServiceProvider.GetService<IGaPersonaleService>();
                     var notificationService = scope.ServiceProvider.GetService<INotificationService>();
-                    var list = personaleService.GetViewGaPersonaleScadenziarioAsync(true).Result;
+                    var list = personaleService.GetViewGaPersonaleScadenziarioAsync().Result;
                     var scadenziario = (from x in list.Data
                                         where (x.Stato == "R" || x.Stato == "G") && x.Disabled == false && x.Sede == "TORTONA"
                                         select x).OrderBy(x => x.DataScadenza).ToList();

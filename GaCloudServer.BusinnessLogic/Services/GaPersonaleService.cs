@@ -475,6 +475,21 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<PagedList<ViewGaPersonaleScadenziario>> ExportGaPersonaleScadenziarioByIdsAsync(long[] ids)
+        {
+            try
+            {
+                return await viewGaPersonaleScadenziarioRepo.GetWithFilterAsync(x => ids.ToList().Contains(x.Id));
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
         #endregion
 
         #region Views
@@ -485,10 +500,17 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
-        public async Task<PagedList<ViewGaPersonaleScadenziario>> GetViewGaPersonaleScadenziarioAsync(bool all = true)
+        public async Task<PagedList<ViewGaPersonaleScadenziario>> GetViewGaPersonaleScadenziarioAsync()
         {
-            var view = all == true ? await viewGaPersonaleScadenziarioRepo.GetAllAsync(1, 0, "Dipendente") : await viewGaPersonaleScadenziarioRepo.GetWithFilterAsync(x => x.Disabled == false, 1, 0, "Dipendente");
-            return view;
+            try
+            {
+                return await viewGaPersonaleScadenziarioRepo.GetAllAsync(1, 0, "Dipendente");
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
         }
 
         #endregion
@@ -1042,19 +1064,6 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        //public async Task<bool> ValidateGaPersonaleAbilitazioneAsync(long id, string descrizione)
-        //{
-        //    var entity = await gaPersonaleAbilitazioniRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
-
-        //    if (entity.Data.Count > 0)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        return true;
-        //    }
-        //}
 
         public async Task<bool> ChangeStatusGaPersonaleAbilitazioneAsync(long id)
         {
@@ -1074,6 +1083,20 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+
+        public async Task<PagedList<ViewGaPersonaleScadenziarioAbilitazioni>> ExportGaPersonaleScadenziarioAbilitazioniByIdsAsync(long[] ids)
+        {
+            try
+            {
+                return await viewGaPersonaleScadenziarioAbilitazioniRepo.GetWithFilterAsync(x => ids.ToList().Contains(x.Id));
+
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
         }
         #endregion
 
