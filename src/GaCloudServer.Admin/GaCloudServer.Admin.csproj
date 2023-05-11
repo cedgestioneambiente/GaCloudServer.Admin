@@ -209,7 +209,13 @@
 	  <None Update="Scripts\Ost\DROP_ViewOst.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Personale\CREATE_ViewGaPersonale_V2.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Personale\CREATE_ViewGaPersonale.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Personale\DROP_ViewGaPersonale_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Personale\DROP_ViewGaPersonale.sql">

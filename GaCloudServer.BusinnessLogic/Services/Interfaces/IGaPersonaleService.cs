@@ -104,11 +104,13 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         //Task<bool> ValidateGaPersonaleScadenzaAsync(long id, string descrizione);
         Task<bool> ChangeStatusGaPersonaleScadenzaAsync(long id);
+
+        Task<PagedList<ViewGaPersonaleScadenziario>> ExportGaPersonaleScadenziarioByIdsAsync(long[] ids);
         #endregion
 
         #region Views
         Task<PagedList<ViewGaPersonaleScadenze>> GetViewGaPersonaleScadenzeByDipendenteIdAsync(long dipendenteId);
-        Task<PagedList<ViewGaPersonaleScadenziario>> GetViewGaPersonaleScadenziarioAsync(bool all = true);
+        Task<PagedList<ViewGaPersonaleScadenziario>> GetViewGaPersonaleScadenziarioAsync();
         #endregion
 
         #endregion
@@ -193,6 +195,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         //Task<bool> ValidateGaPersonaleAbilitazioneAsync(long id, string descrizione);
         Task<bool> ChangeStatusGaPersonaleAbilitazioneAsync(long id);
+        Task<PagedList<ViewGaPersonaleScadenziarioAbilitazioni>> ExportGaPersonaleScadenziarioAbilitazioniByIdsAsync(long[] ids);
 
         #region Views
         Task<PagedList<ViewGaPersonaleAbilitazioni>> GetViewGaPersonaleAbilitazioniByDipendenteIdAsync(long dipendenteId);

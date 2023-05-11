@@ -91,6 +91,8 @@
         public const string GaPersonaleMigration = @".\Scripts\Personale\";
         public const string CREATE_ViewGaPersonale = "CREATE_ViewGaPersonale.sql";
         public const string DROP_ViewGaPersonale = "DROP_ViewGaPersonale.sql";
+        public const string CREATE_ViewGaPersonale_V2 = "CREATE_ViewGaPersonale_V2.sql";
+        public const string DROP_ViewGaPersonale_V2 = "DROP_ViewGaPersonale_V2.sql";
 
         //ContactCenter
         public const string GaContactCenterMigration = @".\Scripts\ContactCenter\";

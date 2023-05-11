@@ -1003,12 +1003,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetViewGaPersonaleScadenziarioAsync/{all}")]
-        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleScadenziarioAsync(bool all = true)
+        [HttpGet("GetViewGaPersonaleScadenziarioAsync")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleScadenziarioAsync()
         {
             try
             {
-                var view = await _gaPersonaleService.GetViewGaPersonaleScadenziarioAsync(all);
+                var view = await _gaPersonaleService.GetViewGaPersonaleScadenziarioAsync();
                 return new ApiResponse(view);
             }
             catch (Exception ex)
@@ -1019,6 +1019,31 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpPost("ExportGaPersonaleScadenziarioAsync")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaPersonaleScadenziarioAsync([FromBody] long[] ids)
+        {
+
+            try
+            {
+                var entities = _gaPersonaleService.ExportGaPersonaleScadenziarioByIdsAsync(ids).Result.Data;
+                string title = "Lista Scadenze";
+                string[] columns = { "Id", "Dipendente","Sede","ScadenzaTipo", "ScadenzaDettaglio", "DataScadenza", "", };
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "LISTA_Scadenze", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "export_scadenze_list.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
 
         #endregion
 
@@ -1902,28 +1927,30 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ExportGaDipendentiScadenziarioAbilitazione")]
+
+        [HttpPost("ExportGaPersonaleScadenziarioAbilitazioniAsync")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
         [AutoWrapIgnore]
-        public IActionResult ExportGaDipendentiScadenziarioAbilitazione()
+        public IActionResult ExportGaPersonaleScadenziarioAbilitazioniAsync([FromBody] long[] ids)
         {
 
             try
             {
-                var entities = _gaPersonaleService.GetViewGaPersonaleScadenziarioAbilitazioniAsync().Result.Data;
-                string title = "Scadenziario Abilitazione Dipendenti";
+                var entities = _gaPersonaleService.ExportGaPersonaleScadenziarioAbilitazioniByIdsAsync(ids).Result.Data;
+                string title = "Lista Abilitazioni";
                 string[] columns = { "Id", "Dipendente", "Sede", "DataScadenza", "DataVisita", "AbilitazioneTipo", "AbilitazioneDettaglio", "Stato", "Disabled" };
-                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "SCADENZIARIO_ABILITAZIONE_DIPENDENTI", true, columns);
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "LISTA_Abilitazioni", true, columns);
 
                 return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
                 {
-                    FileDownloadName = "Scadenziario_Abilitazione_Dipendenti.xlsx"
+                    FileDownloadName = "export_abilitazioni_list.xlsx"
                 };
             }
             catch (Exception ex)
             {
-                throw new ApiException(ex.Message);
+                _logger.LogError(ex.Message);
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
 
@@ -1947,7 +1974,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpGet("GetViewGaPersonaleScadenziarioAbilitazioniAsync")]
-        public async Task<ApiResponse> GetViewGaPersonaleScadenziarioAbilitazioniAsync()
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleScadenziarioAbilitazioniAsync()
         {
             try
             {
@@ -1958,8 +1985,10 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 _logger.LogError(ex.Message, ex);
                 throw new ApiException(ex.Message);
-            };
+            }
+
         }
+
         #endregion
 
 
