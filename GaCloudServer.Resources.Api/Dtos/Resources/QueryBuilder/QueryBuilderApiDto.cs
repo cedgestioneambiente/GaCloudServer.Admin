@@ -65,6 +65,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.QueryBuilder
     }
 
     public class QueryBuilderQuery { 
+        public string userId { get; set; }
         public string query { get; set; }
     }
 

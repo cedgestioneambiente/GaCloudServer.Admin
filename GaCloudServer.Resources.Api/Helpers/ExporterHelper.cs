@@ -220,5 +220,7 @@ namespace GaCloudServer.Resources.Api.Helpers
             return ExportExcel(ListObjectToDataTable(data), Heading, extra1, extra2, type, showSlno, ColumnsToTake);
         }
 
+
+
     }
 }
