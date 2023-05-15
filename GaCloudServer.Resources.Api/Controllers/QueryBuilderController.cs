@@ -1,6 +1,9 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
+using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.QueryBuilder;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
+using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
@@ -10,6 +13,7 @@ using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Reflection;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -24,14 +28,17 @@ namespace GaCloudServer.Resources.Api.Controllers
     {
         private readonly IQueryBuilderService _queryBuilderService;
         private readonly ILogger<QueryBuilderController> _logger;
+        private readonly IHubContext<BackgroundServicesHub, IBackgroundServicesHub> hub;
 
         public QueryBuilderController(
             IQueryBuilderService queryBuilderService
+            , IHubContext<BackgroundServicesHub, IBackgroundServicesHub> hub
             , ILogger<QueryBuilderController> logger)
         {
 
             _queryBuilderService = queryBuilderService;
             _logger = logger;
+            this.hub = hub;
         }
 
 
@@ -61,7 +68,16 @@ namespace GaCloudServer.Resources.Api.Controllers
 
             try
             {
+                DownloadProgressDto progress = new DownloadProgressDto();
+                progress.progress = 0;
+                progress.message = "Elaborazione query in corso...";
+                await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
                 var entities = await  _queryBuilderService.GetFromQueryAsync(query.query);
+                progress.progress = 40;
+                progress.message =string.Format("Elaborazione {0} risultati in corso...",entities.Count());
+                await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
                 string title = "Query Result";
                 if (entities.Count > 0)
                 {
@@ -79,10 +95,16 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                     }
 
+                    progress.progress = 60;
+                    progress.message = string.Format("Conversione {0} risultati in corso...", entities.Count());
+                    await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
                     string[] columns = listColumns.ToArray();
 
-
-                    byte[] filecontent = ExporterHelper.ExportObjectExcel(entities, title, "", "", "Query Result", true, columns);
+                    progress.progress = 80;
+                    progress.message = string.Format("Esportazione {0} risultati in corso...", entities.Count());
+                    await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+                    byte[] filecontent = ExporterHelper.ExportObjectExcel(entities, title, "", "", "Query Result", false, columns);
 
                     return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
                     {
