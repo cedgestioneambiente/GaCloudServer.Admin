@@ -1,6 +1,7 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -667,6 +668,52 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entities = await viewConsorzioRegistrazioniRepo.GetWithFilterAsync(x => x.Roles == roles);
             return entities;
+        }
+
+        public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniQueryable(GridOperationsModel filterParams)
+        {
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+                var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                return filterResult;
+            }
+            else
+            {
+                var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2(filterParams);
+                return filterResult;
+            }
+        }
+
+        public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByProduttoreQueryable(GridOperationsModel filterParams, long[]? produttoriId)
+        {
+
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+                if (produttoriId == null || produttoriId.Count() == 0)
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => produttoriId.Contains(x.ProduttoreId), filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+            }
+            else
+            {
+                if (produttoriId == null || produttoriId.Count() == 0)
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2(filterParams);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => produttoriId.Contains(x.ProduttoreId), filterParams);
+                    return filterResult;
+                }
+            }
+
         }
         #endregion
 

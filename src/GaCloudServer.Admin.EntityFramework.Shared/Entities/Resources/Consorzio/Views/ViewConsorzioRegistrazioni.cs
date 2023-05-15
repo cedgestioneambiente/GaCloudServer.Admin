@@ -12,6 +12,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
         public DateTime DataRegistrazione { get; set; }
         public string Cer { get; set; }
         public string Produttore { get; set; }
+        public long ProduttoreId { get; set; }
         public string Trasportatore { get; set; }
         public string Destinatario { get; set; }
         public string Nominativo { get; set; }
