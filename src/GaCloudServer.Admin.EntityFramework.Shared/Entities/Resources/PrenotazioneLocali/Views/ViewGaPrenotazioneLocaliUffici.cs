@@ -4,7 +4,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotaz
 {
     public class ViewGaPrenotazioneLocaliUffici : GenericListEntity
     {
-        public string Nominativo { get; set; }
         public string Colore { get; set; }
         public string Sede { get; set; }
     }

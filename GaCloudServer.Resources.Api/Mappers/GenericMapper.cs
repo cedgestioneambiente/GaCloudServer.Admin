@@ -14,6 +14,7 @@ using GaCloudServer.Resources.Api.Mappers.Mezzi;
 using GaCloudServer.Resources.Api.Mappers.Notification;
 using GaCloudServer.Resources.Api.Mappers.Personale;
 using GaCloudServer.Resources.Api.Mappers.PrenotazioneAuto;
+using GaCloudServer.Resources.Api.Mappers.PrenotazioneLocali;
 using GaCloudServer.Resources.Api.Mappers.Presenze;
 using GaCloudServer.Resources.Api.Mappers.Progetti;
 using GaCloudServer.Resources.Api.Mappers.QueryBuilder;
@@ -54,7 +55,8 @@ namespace GaCloudServer.Resources.Api.Mappers
             new TasksMapperProfile(),
             new SystemMapperProfile(),
             new ConsorzioMapperProfile(),
-            new CrmMapperProfile()
+            new CrmMapperProfile(),
+            new PrenotazioneLocaliMapperProfile(),
         };
 
         static GenericMapper() {

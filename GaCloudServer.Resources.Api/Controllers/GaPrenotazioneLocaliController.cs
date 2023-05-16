@@ -335,6 +335,23 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region PrenotazioneLocaliRegistrazioni
+        [HttpGet("GetGaPrenotazioneLocaliRegistrazioniAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPrenotazioneLocaliRegistrazioniAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPrenotazioneLocaliService.GetGaPrenotazioneLocaliRegistrazioniAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PrenotazioneLocaliRegistrazioniApiDto, PrenotazioneLocaliRegistrazioniDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetGaPrenotazioneLocaliRegistrazioneByIdAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetGaPrenotazioneLocaliRegistrazioneByIdAsync(long id)
         {

@@ -41,6 +41,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IOstService, OstService>();
             services.AddTransient<IGaPrevisioService, GaPrevisioService>();
             services.AddTransient<IGaProgettiService, GaProgettiService>();
+            services.AddTransient<IGaPrenotazioneLocaliService, GaPrenotazioneLocaliService>();
 
             services.AddTransient<IFileService, FileService>();
             services.AddScoped<INotificationService, NotificationService>();

@@ -5,8 +5,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.PrenotazioneLocali
     #region PrenotazioneLocaliSedi
     public class PrenotazioneLocaliSedeDto : GenericListDto
     {
-        public string Colore { get; set; }
-        public long PrenotazioneLocaliSedeId { get; set; }
+
     }
 
     public class PrenotazioneLocaliSediDto : GenericPagedListDto<PrenotazioneLocaliSedeDto>
@@ -18,6 +17,8 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.PrenotazioneLocali
     #region PrenotazioneLocaliUffici
     public class PrenotazioneLocaliUfficioDto : GenericListDto
     {
+        public string Colore { get; set; }
+        public long PrenotazioneLocaliSedeId { get; set; }
 
     }
 
@@ -28,7 +29,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.PrenotazioneLocali
     #endregion
 
     #region PrenotazioneLocaliRegistrazioni
-    public class PrenotazioneLocaliRegistrazioneDto : GenericListDto
+    public class PrenotazioneLocaliRegistrazioneDto : GenericDto
     {
         public string Colore { get; set; }
         public DateTime DataInizio { get; set; }

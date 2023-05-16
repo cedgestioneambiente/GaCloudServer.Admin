@@ -5,8 +5,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.PrenotazioneLocali
     #region PrenotazioneLocaliSedi
     public class PrenotazioneLocaliSedeApiDto : GenericListApiDto
     {
-        public string Colore { get; set; }
-        public long PrenotazioneLocaliSedeId { get; set; }
+        
     }
 
     public class PrenotazioneLocaliSediApiDto : GenericPagedListApiDto<PrenotazioneLocaliSedeApiDto>
@@ -18,7 +17,8 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.PrenotazioneLocali
     #region PrenotazioneLocaliUffici
     public class PrenotazioneLocaliUfficioApiDto : GenericListApiDto
     {
-
+        public string Colore { get; set; }
+        public long PrenotazioneLocaliSedeId { get; set; }
     }
 
     public class PrenotazioneLocaliUfficiApiDto : GenericPagedListApiDto<PrenotazioneLocaliUfficiApiDto>
@@ -28,7 +28,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.PrenotazioneLocali
     #endregion
 
     #region PrenotazioneLocaliRegistrazioni
-    public class PrenotazioneLocaliRegistrazioneApiDto : GenericListApiDto
+    public class PrenotazioneLocaliRegistrazioneApiDto : GenericApiDto
     {
         public string Colore { get; set; }
         public DateTime DataInizio { get; set; }

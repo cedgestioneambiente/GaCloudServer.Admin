@@ -53,6 +53,5 @@ CREATE VIEW [dbo].[ViewGaCrmTickets]
 AS
     SELECT *
       FROM [20.82.75.6].[TARI].[dbo].[ViewGaCrmTickets] A
-	  WHERE A.Id NOT IN (SELECT CrmTicketId FROM GaCrmEvents WHERE CrmEventStateId NOT IN('3','4'))
 
 GO

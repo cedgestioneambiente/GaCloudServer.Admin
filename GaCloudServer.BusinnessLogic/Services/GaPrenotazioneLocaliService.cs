@@ -211,6 +211,13 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region PrenotazioneLocaliRegistrazioni
+        public async Task<PrenotazioneLocaliRegistrazioniDto> GetGaPrenotazioneLocaliRegistrazioniAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPrenotazioneLocaliRegistrazioniRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PrenotazioneLocaliRegistrazioniDto, PagedList<PrenotazioneLocaliRegistrazione>>();
+            return dtos;
+        }
+
         public async Task<PrenotazioneLocaliRegistrazioneDto> GetGaPrenotazioneLocaliRegistrazioneByIdAsync(long id)
         {
             var entity = await gaPrenotazioneLocaliRegistrazioniRepo.GetByIdAsync(id);

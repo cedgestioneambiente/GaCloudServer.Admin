@@ -49,6 +49,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -471,5 +473,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
         #endregion
         #endregion
+
+        #region GaPrenotazioneLocali
+        DbSet<PrenotazioneLocaliRegistrazione> GaPrenotazioneLocaliRegistrazioni { get; set; }
+        DbSet<PrenotazioneLocaliUfficio> GaPrenotazioneLocaliUffici { get; set; }
+        DbSet<PrenotazioneLocaliSede> GaPrenotazioneLocaliSedi { get; set; }
+        #region Views
+        DbSet<ViewGaPrenotazioneLocaliUffici> ViewGaPrenotazioneLocaliUffici { get; set; }
+        DbSet<ViewGaPrenotazioneLocaliRegistrazioni> ViewGaPrenotazioneLocaliRegistrazioni { get; set; }
+        #endregion
+
+        #endregion
+
     }
 }

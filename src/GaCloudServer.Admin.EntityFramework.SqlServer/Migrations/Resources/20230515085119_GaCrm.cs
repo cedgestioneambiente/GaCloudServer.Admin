@@ -72,13 +72,13 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.CrmEventAreaId,
                         principalTable: "GaCrmEventAreas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_GaCrmEvents_GaCrmEventStates_CrmEventStateId",
                         column: x => x.CrmEventStateId,
                         principalTable: "GaCrmEventStates",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

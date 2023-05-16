@@ -40,6 +40,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region GaPrenotazioneLocaliRegistrazione
+        Task<PrenotazioneLocaliRegistrazioniDto> GetGaPrenotazioneLocaliRegistrazioniAsync(int page = 1, int pageSize = 0);
         Task<PrenotazioneLocaliRegistrazioneDto> GetGaPrenotazioneLocaliRegistrazioneByIdAsync(long id);
         Task<long> AddGaPrenotazioneLocaliRegistrazioneAsync(PrenotazioneLocaliRegistrazioneDto dto);
         Task<long> UpdateGaPrenotazioneLocaliRegistrazioneAsync(PrenotazioneLocaliRegistrazioneDto dto);
