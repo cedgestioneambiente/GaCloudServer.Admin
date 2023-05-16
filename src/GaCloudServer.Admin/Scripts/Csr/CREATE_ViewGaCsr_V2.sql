@@ -24,11 +24,11 @@ GO
 
 CREATE VIEW [dbo].[ViewGaCsrRegistrazioni]
 AS
-SELECT        dbo.GaCsrRegistrazioni.Id, dbo.GaCsrRegistrazioni.Data, dbo.GaCsrComuni.Descrizione AS Comune, dbo.GaCsrTrasportatori.RagioneSociale AS Trasportatore, dbo.GaCsrRegistrazioni.PesoTotale, 
-                         dbo.GaCsrDestinatari.RagioneSociale AS Destinatario, CAST('False' AS bit) AS Disabled, dbo.ViewGaCsrCodiciCers.Descrizione AS CodiceCer, dbo.ViewGaCsrCodiciCers.Modalita
+SELECT        dbo.GaCsrRegistrazioni.Id, dbo.GaCsrRegistrazioni.Data, dbo.GaCsrComuni.Descrizione AS Comune, dbo.ViewGaCsrCodiciCers.Descrizione AS CodiceCer, dbo.GaCsrTrasportatori.RagioneSociale AS Trasportatore, 
+                         dbo.GaCsrRegistrazioni.PesoTotale, dbo.GaCsrDestinatari.RagioneSociale AS Destinatario, CAST('False' AS bit) AS Disabled, dbo.ViewGaCsrCodiciCers.Modalita
 FROM            dbo.GaCsrRegistrazioni INNER JOIN
                          dbo.GaCsrDestinatari ON dbo.GaCsrRegistrazioni.CsrDestinatarioId = dbo.GaCsrDestinatari.Id INNER JOIN
                          dbo.GaCsrComuni ON dbo.GaCsrRegistrazioni.CsrComuneId = dbo.GaCsrComuni.Id INNER JOIN
                          dbo.GaCsrTrasportatori ON dbo.GaCsrRegistrazioni.CsrTrasportatoreId = dbo.GaCsrTrasportatori.Id INNER JOIN
-                         dbo.ViewGaCsrCodiciCers ON dbo.GaCsrRegistrazioni.Id = dbo.ViewGaCsrCodiciCers.Id
+                         dbo.ViewGaCsrCodiciCers ON dbo.GaCsrRegistrazioni.CsrCodiceCerId = dbo.ViewGaCsrCodiciCers.Id
 GO

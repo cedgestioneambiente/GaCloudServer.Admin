@@ -1,5 +1,6 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -1102,6 +1103,37 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetViewConsorzioRegistrazioniQueryable")]
+        public ApiResponse GetViewConsorzioRegistrazioniQueryable(GridOperationsModel filter)
+        {
+            try
+            {
+                var entities = _consorzioService.GetViewConsorzioRegistrazioniQueryable(filter);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+
+        [HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{produttoriId}")]
+        public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam(GridOperationsModel filter, string? produttoriId = "0")
+        {
+            try
+            {
+                produttoriId = produttoriId == "NaN" ? "0" : produttoriId;
+                var entities = _consorzioService.GetViewConsorzioRegistrazioniByProduttoreQueryable(filter, produttoriId.Split(",").Select(long.Parse).ToArray());
+                return new ApiResponse(entities);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
         #endregion
         #endregion
 

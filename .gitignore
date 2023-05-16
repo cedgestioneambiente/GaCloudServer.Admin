@@ -363,3 +363,10 @@ MigrationBackup/
 FodyWeavers.xsd
 /src/GaCloudServer.Admin.EntityFramework.Shared/MigrationHelpers/.config/dotnet-tools.json
 /src/GaCloudServer.Admin.EntityFramework.Shared/Entities/Resources/PrenotazioneLocali
+/GaCloudServer.BusinnessLogic/DTOs/Resources/PrenotazioniLocali/PrenotazioniLocaliDto.cs
+/GaCloudServer.BusinnessLogic/Mappers/PrenotazioneLocali/PrenotazioneLocaliMapperProfile.cs
+/GaCloudServer.BusinnessLogic/Services/Interfaces/IGaPrenotazioneLocaliService.cs
+/GaCloudServer.BusinnessLogic/Services/GaPrenotazioneLocaliService.cs
+/GaCloudServer.Resources.Api/Controllers/GaPrenotazioneLocaliController.cs
+/GaCloudServer.Resources.Api/Dtos/Resources/PrenotazioneLocali/PrenotazioneLocaliApiDto.cs
+/GaCloudServer.Resources.Api/Mappers/PrenotazioneLocali/PrenotazioneLocaliMapperProfile.cs
