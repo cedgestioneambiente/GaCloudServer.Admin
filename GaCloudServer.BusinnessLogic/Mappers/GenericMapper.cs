@@ -22,6 +22,7 @@ using GaCloudServer.BusinessLogic.Mappers.Progetti;
 using GaCloudServer.BusinnessLogic.Mappers.Tasks;
 using GaCloudServer.BusinessLogic.Mappers.System;
 using GaCloudServer.BusinessLogic.Mappers.Consorzio;
+using GaCloudServer.BusinessLogic.Mappers.Crm;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -54,6 +55,7 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new TasksMapperProfile(),
             new SystemMapperProfile(),
             new ConsorzioMapperProfile(),
+            new CrmMapperProfile()
         };
 
         static GenericMapper() {

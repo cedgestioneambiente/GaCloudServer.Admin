@@ -53,6 +53,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<ITasksService, TasksService>();
             services.AddTransient<ISystemService, SystemService>();
             services.AddTransient<IConsorzioService, ConsorzioService>();
+            services.AddTransient<IGaCrmService, GaCrmService>();
 
             services.AddTransient<IQueryBuilderService, QueryBuilderService>();
 

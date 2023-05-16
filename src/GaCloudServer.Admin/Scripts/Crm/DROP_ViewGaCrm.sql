@@ -2,9 +2,9 @@
 GO
 DROP VIEW IF EXISTS [dbo].[ViewGaCrmCausali]
 GO
-DROP VIEW IF EXISTS [dbo].[ViewGaCrmState]
+DROP VIEW IF EXISTS [dbo].[ViewGaCrmStati]
 GO
 DROP VIEW IF EXISTS [dbo].[ViewGaCrmCausaliType]
 GO
-DROP VIEW IF EXISTS [dbo].[ViewGaCrmMaster]
+DROP VIEW IF EXISTS [dbo].[ViewGaCrmTickets]
 GO

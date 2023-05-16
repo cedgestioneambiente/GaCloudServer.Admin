@@ -47,6 +47,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -453,6 +455,20 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewConsorzioDestinatari> ViewConsorzioDestinatari { get; set; }
         DbSet<ViewConsorzioTrasportatori> ViewConsorzioTrasportatori { get; set; }
         DbSet<ViewConsorzioRegistrazioni> ViewConsorzioRegistrazioni { get; set; }
+        #endregion
+        #endregion
+
+        #region Crm
+        DbSet<CrmEventState> GaCrmEventStates { get; set; }
+        DbSet<CrmEventArea> GaCrmEventAreas { get; set; }
+        DbSet<CrmEvent> GaCrmEvents { get; set; }
+
+        #region Views
+        DbSet<ViewGaCrmCanali> ViewGaCrmCanali { get; set; }
+        DbSet<ViewGaCrmCausali> ViewGaCrmCausali { get; set; }
+        DbSet<ViewGaCrmCausaliTypes> ViewGaCrmCausaliTypes { get; set; }
+        DbSet<ViewGaCrmState> ViewGaCrmState { get; set; }
+        DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
         #endregion
         #endregion
     }

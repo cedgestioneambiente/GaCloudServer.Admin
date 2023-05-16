@@ -12,11 +12,11 @@ DROP VIEW IF EXISTS [dbo].[ViewGaCrmCanali]
 GO
 DROP VIEW IF EXISTS [dbo].[ViewGaCrmCausali]
 GO
-DROP VIEW IF EXISTS [dbo].[ViewGaCrmState]
+DROP VIEW IF EXISTS [dbo].[ViewGaCrmStati]
 GO
 DROP VIEW IF EXISTS [dbo].[ViewGaCrmCausaliType]
 GO
-DROP VIEW IF EXISTS [dbo].[ViewGaCrmMaster]
+DROP VIEW IF EXISTS [dbo].[ViewGaCrmTickets]
 GO
 
 CREATE VIEW [dbo].[ViewGaCrmCanali]
@@ -42,7 +42,7 @@ GO
 
 CREATE VIEW [dbo].[ViewGaCrmStati]
 AS
-    SELECT [TYPE] as Id
+    SELECT [ID] as Id
           ,[DESCRIZIONE] as Descrizione
           ,[ACTIVE] AS Active
           ,CAST(0 AS BIT) Disabled
@@ -51,58 +51,8 @@ GO
 
 CREATE VIEW [dbo].[ViewGaCrmTickets]
 AS
-  SELECT  A.[ID] as Id
-      ,A.[PREFIX] as Prefix
-	  ,F.DESAZI AS DesAzi
-      ,A.[DATA_INS] as DataIns
-      ,A.[DATA_ANNULLAMENTO] as DataAnnullamento
-      ,A.[ORIGIN_INS] as OriginIns
-	  ,B.DESCRIZIONE AS OriginDesc
-      ,A.[COGNOME] as Cognome
-      ,A.[NOME] as Nome
-      ,A.[RAPPRESENTA] as Rappresenta
-      ,A.[CODCLI] as CodCLi
-      ,A.[NUMCON] as NumCon
-      ,A.[NOTA_ANAGRAFICA] as NotaAnagrafica
-      ,A.[TELEFONO] as Telefono
-      ,A.[CELLULARE] as Cellulare
-      ,A.[EMAIL] as Email
-      ,A.[PEC] as Pec
-      ,A.[CANALE_RISPOSTA] as CanaleRisposta
-	  ,G.Descrizione AS CanaleRispostaDesc
-      ,A.[STATO] as Stato
-	  ,H.DESCRIZIONE AS StatoDesc
-      ,A.[DATA_STATO] as DataStato
-      ,A.[CODUTE] as CodUte
-	  ,D.Name AS CodUteDesc
-      ,A.[CODUTEWORK] as CodUteWork
-	  ,E.Name AS CodUteWorkDesc
-      ,A.[TOTAL_MINUTE_WORK] as TotalMinutiWork
-      ,A.[DTSCAD] as DtScad
-      ,A.[CODCAUSALE] as CodCausale
-      ,A.[DTULAG] as DtUlag
-      ,A.[TYPE] as [Type]
-	  ,C.Descrizione AS TypeDesc
-      ,A.[INDIRIZZO] as Indirizzo
-      ,A.[CODPERS] as CodPers
-      ,A.[CODCOM] as CodCom
-      ,A.[CITTA] as Citta
-      ,A.[NUMCIV] as NumCiv
-      ,A.[CODFIS] as CodFis
-      ,A.[DOMEST] as Domest
-      ,A.[CODVIA] as CodVia
-      ,A.[TRASMESSO] as Trasmesso
-      ,A.[ORATRASM] as OraTrasm
-      ,A.[AUTO_CLOSE] as AutoClose
-      ,A.[CPROWNUM] as CpRowNum
-      FROM [20.82.75.6].[TARI].[dbo].[CRM_MASTER] A
-	  INNER JOIN [20.82.75.6].[TARI].[dbo].[CRM_CANALE] B ON A.ORIGIN_INS=B.ID
-	  INNER JOIN [20.82.75.6].[TARI].[dbo].[CRM_CAUSALE] C ON A.[TYPE]=C.ID
-	  INNER JOIN [20.82.75.6].[TARI].[dbo].[CPUSER] D ON A.CODUTE=D.CODE
-	  INNER JOIN [20.82.75.6].[TARI].[dbo].[CPUSER] E ON A.CODUTEWORK=E.CODE
-	  INNER JOIN [20.82.75.6].[TARI].[dbo].[CPAZI] F ON A.PREFIX=F.CODAZI
-	  INNER JOIN [20.82.75.6].[TARI].[dbo].[CRM_CANALE] G ON A.CANALE_RISPOSTA=G.ID
-	  INNER JOIN [20.82.75.6].[TARI].[dbo].[CRM_STATE] H ON A.STATO=H.ID
-
+    SELECT *
+      FROM [20.82.75.6].[TARI].[dbo].[ViewGaCrmTickets] A
+	  WHERE A.Id NOT IN (SELECT CrmTicketId FROM GaCrmEvents WHERE CrmEventStateId NOT IN('3','4'))
 
 GO

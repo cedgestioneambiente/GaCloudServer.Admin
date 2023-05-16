@@ -48,6 +48,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -455,6 +457,21 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewConsorzioDestinatari> ViewConsorzioDestinatari { get; set; }
         public DbSet<ViewConsorzioTrasportatori> ViewConsorzioTrasportatori { get; set; }
         public DbSet<ViewConsorzioRegistrazioni> ViewConsorzioRegistrazioni { get; set; }
+        #endregion
+        #endregion
+
+        #region Crm
+        public DbSet<CrmEventState> GaCrmEventStates { get; set; }
+        public DbSet<CrmEventArea> GaCrmEventAreas { get; set; }
+        public DbSet<CrmEvent> GaCrmEvents { get; set; }
+
+
+        #region Views
+        public DbSet<ViewGaCrmCanali> ViewGaCrmCanali { get; set; }
+        public DbSet<ViewGaCrmCausali> ViewGaCrmCausali { get; set; }
+        public DbSet<ViewGaCrmCausaliTypes> ViewGaCrmCausaliTypes { get; set; }
+        public DbSet<ViewGaCrmState> ViewGaCrmState { get; set; }
+        public DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
         #endregion
         #endregion
 
@@ -1226,6 +1243,44 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewConsorzioRegistrazioni))
+                .HasKey(x => x.Id);
+            });
+            #endregion
+
+            #region Crm
+
+            builder.Entity<ViewGaCrmCanali>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmCanali))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCrmCausali>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmCausali))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCrmCausaliTypes>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmCausaliTypes))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCrmState>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmState))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCrmTickets>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmTickets))
                 .HasKey(x => x.Id);
             });
             #endregion

@@ -6,6 +6,7 @@ using GaCloudServer.Resources.Api.Mappers.Comunicati;
 using GaCloudServer.Resources.Api.Mappers.Consorzio;
 using GaCloudServer.Resources.Api.Mappers.ContactCenter;
 using GaCloudServer.Resources.Api.Mappers.Contratti;
+using GaCloudServer.Resources.Api.Mappers.Crm;
 using GaCloudServer.Resources.Api.Mappers.Csr;
 using GaCloudServer.Resources.Api.Mappers.Dashboard;
 using GaCloudServer.Resources.Api.Mappers.Global;
@@ -53,6 +54,7 @@ namespace GaCloudServer.Resources.Api.Mappers
             new TasksMapperProfile(),
             new SystemMapperProfile(),
             new ConsorzioMapperProfile(),
+            new CrmMapperProfile()
         };
 
         static GenericMapper() {

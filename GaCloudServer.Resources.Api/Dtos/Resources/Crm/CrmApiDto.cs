@@ -1,0 +1,60 @@
+﻿using GaCloudServer.Resources.Api.Dtos.Base;
+
+namespace GaCloudServer.Resources.Api.Dtos.Crm
+{
+    #region CrmEventsApiDto
+    public class CrmEventApiDto : GenericApiDto
+    {
+        public string CodAzi { get; set; }
+        public string CodCli { get; set; }
+        public string NumCon { get; set; }
+        public string CpRowNum { get; set; }
+        public DateTime DateSchedule { get; set; }
+        public string RagSo { get; set; }
+        public string Telefono { get; set; }
+        public string Cellulare { get; set; }
+        public string Email { get; set; }
+        public string Pec { get; set; }
+        public string Tipo { get; set; }
+        public string Citta { get; set; }
+        public string Indirizzo { get; set; }
+        public string NumCiv { get; set; }
+        public bool Domest { get; set; }
+        public long CrmEventStateId { get; set; }
+        public long CrmEventAreaId { get; set; }
+        public int CrmTicketId { get; set; }
+        public string UserId { get; set; }
+        public string NotaAnagrafica { get; set; }
+    }
+
+    public class CrmEventsApiDto : GenericPagedListApiDto<CrmEventApiDto>
+    {
+    }
+
+    #endregion
+
+    #region CrmEventStatesApiDto
+    public class CrmEventStateApiDto : GenericListApiDto
+    {
+        
+    }
+
+    public class CrmEventStatesApiDto : GenericPagedListApiDto<CrmEventStateApiDto>
+    {
+    }
+
+    #endregion
+
+    #region CrmEventAreasApiDto
+    public class CrmEventAreaApiDto : GenericListApiDto
+    {
+
+    }
+
+    public class CrmEventAreasApiDto : GenericPagedListApiDto<CrmEventAreaApiDto>
+    {
+    }
+
+    #endregion
+
+}

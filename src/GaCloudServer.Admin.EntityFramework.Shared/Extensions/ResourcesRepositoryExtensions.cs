@@ -14,6 +14,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
@@ -446,6 +448,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewConsorzioProduttori>, GenericRepository<TResourcesDbContext, ViewConsorzioProduttori>>();
             services.AddTransient<IGenericRepository<ViewConsorzioTrasportatori>, GenericRepository<TResourcesDbContext, ViewConsorzioTrasportatori>>();
             services.AddTransient<IGenericRepository<ViewConsorzioRegistrazioni>, GenericRepository<TResourcesDbContext, ViewConsorzioRegistrazioni>>();
+            #endregion
+
+            //Crm
+            #region Crm
+            services.AddTransient<IGenericRepository<CrmEventState>, GenericRepository<TResourcesDbContext, CrmEventState>>();
+            services.AddTransient<IGenericRepository<CrmEventArea>, GenericRepository<TResourcesDbContext, CrmEventArea>>();
+            services.AddTransient<IGenericRepository<CrmEvent>, GenericRepository<TResourcesDbContext, CrmEvent>>();
+
+            services.AddTransient<IGenericRepository<ViewGaCrmCanali>, GenericRepository<TResourcesDbContext, ViewGaCrmCanali>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmCausali>, GenericRepository<TResourcesDbContext, ViewGaCrmCausali>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmCausaliTypes>, GenericRepository<TResourcesDbContext, ViewGaCrmCausaliTypes>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmState>, GenericRepository<TResourcesDbContext, ViewGaCrmState>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmTickets>>();
             #endregion
 
             return services; 

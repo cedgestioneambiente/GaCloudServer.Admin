@@ -1,0 +1,322 @@
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
+using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Csr;
+using GaCloudServer.BusinnessLogic.Mappers;
+using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+
+namespace GaCloudServer.BusinnessLogic.Services
+{
+    public class GaCrmService : IGaCrmService
+    {
+        protected readonly IGenericRepository<CrmEventState> gaCrmEventStatesRepo;
+        protected readonly IGenericRepository<CrmEventArea> gaCrmEventAreasRepo;
+        protected readonly IGenericRepository<CrmEvent> gaCrmEventsRepo;
+
+        protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo;
+
+        protected readonly IUnitOfWork unitOfWork;
+
+        public GaCrmService(
+            IGenericRepository<CrmEventState> gaCrmEventStatesRepo,
+            IGenericRepository<CrmEventArea> gaCrmEventAreasRepo,
+            IGenericRepository<CrmEvent> gaCrmEventsRepo,
+
+            IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo,
+
+            IUnitOfWork unitOfWork)
+        {
+            this.gaCrmEventAreasRepo = gaCrmEventAreasRepo;
+            this.gaCrmEventStatesRepo = gaCrmEventStatesRepo;
+            this.gaCrmEventsRepo = gaCrmEventsRepo;
+
+            this.viewGaCrmMasterRepo = viewGaCrmMasterRepo;
+
+
+            this.unitOfWork = unitOfWork;
+
+        }
+
+        #region CrmMaster
+
+        #region Views
+        public async Task<PagedList<ViewGaCrmTickets>> GetViewGaCrmMasterAsync()
+        {
+            var entities = await viewGaCrmMasterRepo.GetWithFilterAsync(x => x.CodCausale == 84 && (x.Stato==1 || x.Stato==109));
+            return entities;
+        }
+        #endregion
+
+        #endregion
+
+        #region CrmEventStates
+        public async Task<CrmEventStatesDto> GetGaCrmEventStatesAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmEventStatesRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CrmEventStatesDto, PagedList<CrmEventState>>();
+            return dtos;
+        }
+
+        public async Task<CrmEventStateDto> GetGaCrmEventStateByIdAsync(long id)
+        {
+            var entity = await gaCrmEventStatesRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmEventStateDto, CrmEventState>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCrmEventStateAsync(CrmEventStateDto dto)
+        {
+            var entity = dto.ToEntity<CrmEventState, CrmEventStateDto>();
+            await gaCrmEventStatesRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmEventStateAsync(CrmEventStateDto dto)
+        {
+            var entity = dto.ToEntity<CrmEventState, CrmEventStateDto>();
+            gaCrmEventStatesRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCrmEventStateAsync(long id)
+        {
+            var entity = await gaCrmEventStatesRepo.GetByIdAsync(id);
+            gaCrmEventStatesRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaCremEventStateAsync(long id, string descrizione)
+        {
+            var entity = await gaCrmEventStatesRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaCrmEventStateAsync(long id)
+        {
+            var entity = await gaCrmEventStatesRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCrmEventStatesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCrmEventStatesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region CrmEventAreas
+        public async Task<CrmEventAreasDto> GetGaCrmEventAreasAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmEventAreasRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CrmEventAreasDto, PagedList<CrmEventArea>>();
+            return dtos;
+        }
+
+        public async Task<CrmEventAreaDto> GetGaCrmEventAreaByIdAsync(long id)
+        {
+            var entity = await gaCrmEventAreasRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmEventAreaDto, CrmEventArea>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCrmEventAreaAsync(CrmEventAreaDto dto)
+        {
+            var entity = dto.ToEntity<CrmEventArea, CrmEventAreaDto>();
+            await gaCrmEventAreasRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmEventAreaAsync(CrmEventAreaDto dto)
+        {
+            var entity = dto.ToEntity<CrmEventArea, CrmEventAreaDto>();
+            gaCrmEventAreasRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCrmEventAreaAsync(long id)
+        {
+            var entity = await gaCrmEventAreasRepo.GetByIdAsync(id);
+            gaCrmEventAreasRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaCremEventAreaAsync(long id, string descrizione)
+        {
+            var entity = await gaCrmEventAreasRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaCrmEventAreaAsync(long id)
+        {
+            var entity = await gaCrmEventAreasRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCrmEventAreasRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCrmEventAreasRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region CrmEvents
+        public async Task<CrmEventsDto> GetGaCrmEventsAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmEventsRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CrmEventsDto, PagedList<CrmEvent>>();
+            return dtos;
+        }
+
+        public async Task<CrmEventDto> GetGaCrmEventByIdAsync(long id)
+        {
+            var entity = await gaCrmEventsRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmEventDto, CrmEvent>();
+            return dto;
+        }
+
+        public async Task<CrmEventDto> GetGaCrmEventByTicketIdAsync(long id)
+        {
+            var entity = gaCrmEventsRepo.GetWithFilterAsync(x=>x.CrmTicketId==id).Result.Data.FirstOrDefault();
+            var dto = entity.ToDto<CrmEventDto, CrmEvent>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCrmEventAsync(CrmEventDto dto)
+        {
+            var entity = dto.ToEntity<CrmEvent, CrmEventDto>();
+            await gaCrmEventsRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmEventAsync(CrmEventDto dto)
+        {
+            var entity = dto.ToEntity<CrmEvent, CrmEventDto>();
+            gaCrmEventsRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCrmEventAsync(long id)
+        {
+            var entity = await gaCrmEventsRepo.GetByIdAsync(id);
+            gaCrmEventsRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaCremEventAsync(long id, string descrizione)
+        {
+            //var entity = await gaCrmEventsRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            //if (entity.Data.Count > 0)
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            //    return true;
+            //}
+
+            return true;
+        }
+
+        public async Task<bool> ChangeStatusGaCrmEventAsync(long id)
+        {
+            var entity = await gaCrmEventsRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCrmEventsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCrmEventsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+
+
+        #region Common
+        private async Task<long> SaveChanges()
+        {
+            return await unitOfWork.SaveChangesAsync();
+        }
+
+        private void DetachEntity<T>(T entity)
+        {
+            unitOfWork.DetachEntity(entity);
+        }
+        #endregion
+
+    }
+}
