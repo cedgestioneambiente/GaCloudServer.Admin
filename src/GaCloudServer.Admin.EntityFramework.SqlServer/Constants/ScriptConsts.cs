@@ -170,6 +170,12 @@
         public const string DROP_ViewGaCrm = "DROP_ViewGaCrm.sql";
         public const string CREATE_ViewGaCrm_V3 = "CREATE_ViewGaCrm_V3.sql";
         public const string DROP_ViewGaCrm_V3 = "DROP_ViewGaCrm_V3.sql";
+        public const string CREATE_ViewGaCrm_V2 = "CREATE_ViewGaCrm_V2.sql";
+        public const string DROP_ViewGaCrm_V2 = "DROP_ViewGaCrm_V2.sql";
 
+        //PrenotazioneLocali
+        public const string GaPrenotazioneLocaliMigration = @".\Scripts\PrenotazioneLocali\";
+        public const string CREATE_ViewGaPrenotazioneLocali = "CREATE_ViewGaPrenotazioneLocali.sql";
+        public const string DROP_ViewGaPrenotazioneLocali = "DROP_ViewGaPrenotazioneLocali.sql";
     }
 }

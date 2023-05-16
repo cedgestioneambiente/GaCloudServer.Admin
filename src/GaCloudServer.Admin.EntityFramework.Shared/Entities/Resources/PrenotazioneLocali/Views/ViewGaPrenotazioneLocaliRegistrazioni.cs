@@ -1,0 +1,15 @@
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using System;
+
+namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views
+{
+    public class ViewGaPrenotazioneLocaliRegistrazioni : GenericEntity
+    {
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public string Color { get; set; }
+        public string BackgroundColor { get; set; }
+        public string Title { get; set; }
+        public string UserId { get; set; }
+    }
+}

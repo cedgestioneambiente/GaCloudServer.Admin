@@ -50,6 +50,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -474,6 +476,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaCrmState> ViewGaCrmState { get; set; }
         public DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
         #endregion
+        #endregion
+
+        #region GaPrenotazioneLocali
+        public DbSet<PrenotazioneLocaliRegistrazione> GaPrenotazioneLocaliRegistrazioni { get; set; }
+        public DbSet<PrenotazioneLocaliUfficio> GaPrenotazioneLocaliUffici { get; set; }
+        public DbSet<PrenotazioneLocaliSede> GaPrenotazioneLocaliSedi { get; set; }
+
+        #region Views
+        public DbSet<ViewGaPrenotazioneLocaliUffici> ViewGaPrenotazioneLocaliUffici { get; set; }
+        public DbSet<ViewGaPrenotazioneLocaliRegistrazioni> ViewGaPrenotazioneLocaliRegistrazioni { get; set; }
+        #endregion
+
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -1284,6 +1298,23 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .ToView(nameof(ViewGaCrmTickets))
                 .HasKey(x => x.Id);
             });
+            #endregion
+
+            #region PrenotazioneLocali
+            builder.Entity<ViewGaPrenotazioneLocaliRegistrazioni>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPrenotazioneLocaliRegistrazioni))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaPrenotazioneLocaliUffici>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPrenotazioneLocaliUffici))
+                .HasKey(x => x.Id);
+            });
+
             #endregion
 
 

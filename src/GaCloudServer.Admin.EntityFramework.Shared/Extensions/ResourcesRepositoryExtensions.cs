@@ -31,6 +31,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
@@ -462,6 +464,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaCrmState>, GenericRepository<TResourcesDbContext, ViewGaCrmState>>();
             services.AddTransient<IGenericRepository<ViewGaCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmTickets>>();
             #endregion
+
+            //PrenotazioneLocali
+            #region PrenotazioneLocali
+            services.AddTransient<IGenericRepository<PrenotazioneLocaliRegistrazione>, GenericRepository<TResourcesDbContext, PrenotazioneLocaliRegistrazione>>();
+            services.AddTransient<IGenericRepository<PrenotazioneLocaliSede>, GenericRepository<TResourcesDbContext, PrenotazioneLocaliSede>>();
+            services.AddTransient<IGenericRepository<PrenotazioneLocaliUfficio>, GenericRepository<TResourcesDbContext, PrenotazioneLocaliUfficio>>();
+
+            services.AddTransient<IGenericRepository<ViewGaPrenotazioneLocaliUffici>, GenericRepository<TResourcesDbContext, ViewGaPrenotazioneLocaliUffici>>();
+            services.AddTransient<IGenericRepository<ViewGaPrenotazioneLocaliRegistrazioni>, GenericRepository<TResourcesDbContext, ViewGaPrenotazioneLocaliRegistrazioni>>();
+            #endregion
+
 
             return services; 
         }
