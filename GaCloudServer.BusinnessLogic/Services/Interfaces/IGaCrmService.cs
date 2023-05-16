@@ -58,6 +58,11 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region CrmEventDevices
+        Task<bool> ChangeStatusGaCrmEventDeviceAsync(long id);
+        Task<bool> ChangeSelectionGaCrmEventDeviceAsync(long id);
+        #endregion
+
 
     }
 }

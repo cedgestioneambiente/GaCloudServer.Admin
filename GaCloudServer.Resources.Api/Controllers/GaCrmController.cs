@@ -480,6 +480,42 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region CrmEventDevices
+        [HttpGet("ChangeStatusGaCrmEventDeviceAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaCrmEventDeviceAsync(long id)
+        {
+            try
+            {
+                var result = await _gaCrmService.ChangeStatusGaCrmEventDeviceAsync(id);
+
+                return new ApiResponse(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeSelectionGaCrmEventDeviceAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeSelectionGaCrmEventDeviceAsync(long id)
+        {
+            try
+            {
+                var result = await _gaCrmService.ChangeSelectionGaCrmEventDeviceAsync(id);
+
+                return new ApiResponse(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
 
     }
 }

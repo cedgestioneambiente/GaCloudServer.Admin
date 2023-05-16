@@ -1,4 +1,5 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
@@ -18,6 +19,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<CrmEventState> gaCrmEventStatesRepo;
         protected readonly IGenericRepository<CrmEventArea> gaCrmEventAreasRepo;
         protected readonly IGenericRepository<CrmEvent> gaCrmEventsRepo;
+        protected readonly IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo;
+
+        protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
 
         protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo;
 
@@ -27,6 +31,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<CrmEventState> gaCrmEventStatesRepo,
             IGenericRepository<CrmEventArea> gaCrmEventAreasRepo,
             IGenericRepository<CrmEvent> gaCrmEventsRepo,
+            IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo,
+
+            IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
 
             IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo,
 
@@ -35,6 +42,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaCrmEventAreasRepo = gaCrmEventAreasRepo;
             this.gaCrmEventStatesRepo = gaCrmEventStatesRepo;
             this.gaCrmEventsRepo = gaCrmEventsRepo;
+            this.gaCrmEventDevicesRepo = gaCrmEventDevicesRepo;
+
+            this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
 
             this.viewGaCrmMasterRepo = viewGaCrmMasterRepo;
 
@@ -242,6 +252,29 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<CrmEvent, CrmEventDto>();
             await gaCrmEventsRepo.AddAsync(entity);
             await SaveChanges();
+
+            var devices = await viewGaBackOfficeUtenzeDispositiviRepo.GetWithFilterAsync(x => x.NumCon == dto.NumCon && x.CpAzi == dto.CodAzi && x.CpRowNum == Convert.ToInt32(dto.CpRowNum) && x.DtRit == "31/12/2029");
+
+            foreach (var item in devices.Data)
+            {
+                var device = new CrmEventDevice();
+                device.CrmEventId = entity.Id;
+                device.CrmTicketId = dto.CrmTicketId;
+                device.Identi1 = item.Identi1;
+                device.Identi2= item.Identi2;
+                device.TipCon = item.TipCon;
+                device.DesCon = item.DesCon;
+                device.DtCon = item.DtCon;
+                device.DtRit = item.DtRit;
+                device.Selected = true;
+                device.Completed = false;
+                device.Disabled = false;
+
+                await gaCrmEventDevicesRepo.AddAsync(device);
+                await SaveChanges();
+            }
+
+
             return entity.Id;
         }
 
@@ -302,6 +335,47 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #endregion
+
+        #region CrmEventDevices
+        public async Task<bool> ChangeStatusGaCrmEventDeviceAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
+            if (entity.Completed)
+            {
+                entity.Completed = false;
+                gaCrmEventDevicesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Completed = true;
+                gaCrmEventDevicesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        public async Task<bool> ChangeSelectionGaCrmEventDeviceAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
+            if (entity.Selected)
+            {
+                entity.Selected = false;
+                gaCrmEventDevicesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Selected = true;
+                gaCrmEventDevicesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
         #endregion
 
 

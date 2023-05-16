@@ -31,7 +31,14 @@ namespace GaCloudServer.Resources.Api.Mappers.Crm
             CreateMap<CrmEventsDto, CrmEventsApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            
+            //CrmEvent
+            CreateMap<CrmEventDeviceDto, CrmEventDeviceApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<CrmEventDevicesDto, CrmEventDevicesApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+
         }
     }
 }

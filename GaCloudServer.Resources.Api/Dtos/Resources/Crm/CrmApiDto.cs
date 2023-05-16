@@ -1,4 +1,6 @@
-﻿using GaCloudServer.Resources.Api.Dtos.Base;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using GaCloudServer.BusinnessLogic.DTOs.Base;
+using GaCloudServer.Resources.Api.Dtos.Base;
 
 namespace GaCloudServer.Resources.Api.Dtos.Crm
 {
@@ -25,6 +27,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public int CrmTicketId { get; set; }
         public string UserId { get; set; }
         public string NotaAnagrafica { get; set; }
+        public bool Sended { get; set; }
     }
 
     public class CrmEventsApiDto : GenericPagedListApiDto<CrmEventApiDto>
@@ -55,6 +58,25 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
     {
     }
 
+    #endregion
+
+    #region CrmEventDevices
+    public class CrmEventDeviceApiDto : GenericEntity
+    {
+        public long CrmEventId { get; set; }
+        public int CrmTicketId { get; set; }
+        public string Identi1 { get; set; }
+        public string Identi2 { get; set; }
+        public int TipCon { get; set; }
+        public string DesCon { get; set; }
+        public bool Selected { get; set; }
+        public bool Completed { get; set; }
+
+    }
+
+    public class CrmEventDevicesApiDto : GenericPagedListDto<CrmEventDeviceApiDto>
+    {
+    }
     #endregion
 
 }

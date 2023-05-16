@@ -168,6 +168,8 @@
         public const string GaCrm = @".\Scripts\Crm\";
         public const string CREATE_ViewGaCrm = "CREATE_ViewGaCrm.sql";
         public const string DROP_ViewGaCrm = "DROP_ViewGaCrm.sql";
+        public const string CREATE_ViewGaCrm_V3 = "CREATE_ViewGaCrm_V3.sql";
+        public const string DROP_ViewGaCrm_V3 = "DROP_ViewGaCrm_V3.sql";
 
     }
 }

@@ -143,7 +143,13 @@
 	  <None Update="Scripts\Contratti\DROP_ViewGaContratti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Crm\CREATE_ViewGaCrm_V3.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Crm\CREATE_ViewGaCrm.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V3.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Crm\DROP_ViewGaCrm.sql">
