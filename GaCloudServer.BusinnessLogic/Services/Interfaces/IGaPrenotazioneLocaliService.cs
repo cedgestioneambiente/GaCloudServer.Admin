@@ -18,6 +18,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusGaPrenotazioneLocaliSedeAsync(long id);
 
         #endregion
+
         #endregion
 
         #region GaPrenotazioneLocaliUffici

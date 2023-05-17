@@ -555,6 +555,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<CsrRegistrazione, CsrRegistrazioneDto>();
             await gaCsrRegistrazioniRepo.AddAsync(entity);
             await SaveChanges();
+            await AddOrUpdateGaCsrRegistrazionePesoAsync(entity);
             return entity.Id;
         }
 
@@ -562,6 +563,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entity = dto.ToEntity<CsrRegistrazione, CsrRegistrazioneDto>();
             gaCsrRegistrazioniRepo.Update(entity);
+            await AddOrUpdateGaCsrRegistrazionePesoAsync(entity);
             await SaveChanges();
 
             return entity.Id;
@@ -732,32 +734,50 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
-        //public async Task<long> AddGaCsrRegistrazionePesoAsync(CsrRegistrazionePesoDto dto)
-        //{
-        //    var entity = dto.ToEntity<CsrRegistrazionePeso, CsrRegistrazionePesoDto>();
-        //    await gaCsrRegistrazioniPesiRepo.AddAsync(entity);
-        //    await SaveChanges();
-        //    return entity.Id;
-        //}
+        private async Task<bool> AddOrUpdateGaCsrRegistrazionePesoAsync(CsrRegistrazione model)
+        {
+            
+            try
+            {
+                var entities = await gaCsrRegistrazioniPesiRepo.GetWithFilterAsync(x => x.CsrRegistrazioneId == model.Id);
+                if (entities.Data.Count > 0)
+                {
+                    foreach (var itm in entities.Data)
+                    {
+                        gaCsrRegistrazioniPesiRepo.Remove(itm);
+                    }
+                    await SaveChanges();
+                }
 
-        //public async Task<long> UpdateGaCsrRegistrazionePesoAsync(CsrRegistrazionePesoDto dto)
-        //{
-        //    var entity = dto.ToEntity<CsrRegistrazionePeso, CsrRegistrazionePesoDto>();
-        //    gaCsrRegistrazioniPesiRepo.Update(entity);
-        //    await SaveChanges();
+                var ripartizioni = await gaCsrRipartizioniPercentualiRepo.GetWithFilterAsync(x => x.CsrComuneId == model.CsrComuneId);
 
-        //    return entity.Id;
+                foreach (var itm in ripartizioni.Data)
+                {
+                    CsrRegistrazionePeso entity = new CsrRegistrazionePeso();
+                    entity.Id = 0;
+                    entity.CsrCodiceCerId = model.CsrCodiceCerId;
+                    entity.CsrComuneId = model.CsrComuneId;
+                    entity.CsrDestinatarioId = model.CsrDestinatarioId;
+                    entity.Percentuale = itm.Percentuale;
+                    entity.Peso = (Convert.ToDouble(model.PesoTotale) / 100.00) * Convert.ToDouble(itm.Percentuale);
+                    entity.CsrProduttoreId = itm.CsrProduttoreId;
+                    entity.CsrRegistrazioneId = model.Id;
+                    entity.CsrTrasportatoreId = model.CsrTrasportatoreId;
 
-        //}
+                    await gaCsrRegistrazioniPesiRepo.AddAsync(entity);
+                }
 
-        //public async Task<bool> DeleteGaCsrRegistrazionePesoAsync(long id)
-        //{
-        //    var entity = await gaCsrRegistrazioniPesiRepo.GetByIdAsync(id);
-        //    gaCsrRegistrazioniPesiRepo.Remove(entity);
-        //    await SaveChanges();
+                await SaveChanges();
 
-        //    return true;
-        //}
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
 
         #region Functions
 

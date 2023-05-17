@@ -1138,6 +1138,24 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region ConsorzioRegistrazioniAllegati
+
+        [HttpGet("GetConsorzioRegistrazioniAllegatiByRegistrazioneIdAsync/{consorzioRegistrazioneId}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioRegistrazioniAllegatiByRegistrazioneIdAsync(long consorzioRegistrazioneId)
+        {
+            try
+            {
+                var dtos = await _consorzioService.GetConsorzioRegistrazioniAllegatiByRegistrazioneIdAsync(consorzioRegistrazioneId);
+                var apiDtos = dtos.ToApiDto<ConsorzioRegistrazioniAllegatiApiDto, ConsorzioRegistrazioniAllegatiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetConsorzioRegistrazioniAllegatiAsync/{page}/{pageSize}")]
         public async Task<ActionResult<ApiResponse>> GetConsorzioRegistrazioniAllegatiAsync(int page = 1, int pageSize = 0)
         {

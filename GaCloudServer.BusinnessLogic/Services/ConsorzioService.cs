@@ -734,11 +734,19 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
+        public async Task<ConsorzioRegistrazioniAllegatiDto> GetConsorzioRegistrazioniAllegatiByRegistrazioneIdAsync(long consorzioRegistrazioneId)
+        {
+            var entities = await consorzioRegistrazioniAllegatiRepo.GetWithFilterAsync(x => x.ConsorzioRegistrazioneId == consorzioRegistrazioneId);
+            var dtos = entities.ToDto<ConsorzioRegistrazioniAllegatiDto, PagedList<ConsorzioRegistrazioneAllegato>>();
+            return dtos;
+        }
+
         public async Task<long> AddConsorzioRegistrazioneAllegatoAsync(ConsorzioRegistrazioneAllegatoDto dto)
         {
             var entity = dto.ToEntity<ConsorzioRegistrazioneAllegato, ConsorzioRegistrazioneAllegatoDto>();
             await consorzioRegistrazioniAllegatiRepo.AddAsync(entity);
             await SaveChanges();
+            DetachEntity(entity);
             return entity.Id;
         }
 
@@ -747,7 +755,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<ConsorzioRegistrazioneAllegato, ConsorzioRegistrazioneAllegatoDto>();
             consorzioRegistrazioniAllegatiRepo.Update(entity);
             await SaveChanges();
-
+            DetachEntity(entity);
             return entity.Id;
 
         }

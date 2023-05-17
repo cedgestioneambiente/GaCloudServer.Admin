@@ -85,8 +85,8 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
     #region ConsorzioRegistrazioni
     public class ConsorzioRegistrazioneDto : GenericDto
     {
-        public string UserId { get; set; }
-        public string Roles { get; set; }
+        public string? UserId { get; set; }
+        public string? Roles { get; set; }
         public float PesoTotale { get; set; }
         public string? Operazione { get; set; }
         public DateTime DataRegistrazione { get; set; }

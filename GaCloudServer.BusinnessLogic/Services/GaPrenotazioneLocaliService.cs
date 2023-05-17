@@ -127,7 +127,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var dtos = entities.ToDto<PrenotazioneLocaliUfficiDto, PagedList<PrenotazioneLocaliUfficio>>();
             return dtos;
         }
-
+       
         public async Task<PrenotazioneLocaliUfficioDto> GetGaPrenotazioneLocaliUfficioByIdAsync(long id)
         {
             var entity = await gaPrenotazioneLocaliUfficiRepo.GetByIdAsync(id);
