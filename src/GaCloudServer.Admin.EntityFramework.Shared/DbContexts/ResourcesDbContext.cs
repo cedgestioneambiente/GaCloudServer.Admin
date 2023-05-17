@@ -475,6 +475,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaCrmCausaliTypes> ViewGaCrmCausaliTypes { get; set; }
         public DbSet<ViewGaCrmState> ViewGaCrmState { get; set; }
         public DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
+        public DbSet<ViewGaCrmEventJobs> ViewGaCrmEventJobs { get; set; }
         #endregion
         #endregion
 
@@ -1297,6 +1298,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 entity
                 .ToView(nameof(ViewGaCrmTickets))
                 .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaCrmEventJobs>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmEventJobs))
+                .HasNoKey();
             });
             #endregion
 

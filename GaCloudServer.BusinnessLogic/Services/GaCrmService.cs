@@ -1,13 +1,8 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
-using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
-using GaCloudServer.BusinnessLogic.DTOs.Resources.Csr;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
@@ -24,6 +19,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
 
         protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo;
+        protected readonly IGenericRepository<ViewGaCrmEventJobs> viewGaCrmEventJobsRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -34,6 +30,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo,
 
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
+            IGenericRepository<ViewGaCrmEventJobs> viewGaCrmEventJobsRepo,
 
             IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo,
 
@@ -46,6 +43,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
 
+            this.viewGaCrmEventJobsRepo = viewGaCrmEventJobsRepo;
             this.viewGaCrmMasterRepo = viewGaCrmMasterRepo;
 
 
@@ -232,6 +230,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             var dtos = entities.ToDto<CrmEventsDto, PagedList<CrmEvent>>();
             return dtos;
         }
+        public async Task<CrmEventsDto> GetGaCrmEventByBoardAsync(DateTime date,long area)
+        {
+            var entities = await gaCrmEventsRepo.GetWithFilterAsync(x => x.DateSchedule.Date==date.Date && x.CrmEventAreaId==area);
+            var dtos = entities.ToDto<CrmEventsDto, PagedList<CrmEvent>>();
+            return dtos;
+        }
 
         public async Task<CrmEventDto> GetGaCrmEventByIdAsync(long id)
         {
@@ -246,6 +250,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             var dto = entity.ToDto<CrmEventDto, CrmEvent>();
             return dto;
         }
+
+
 
         public async Task<long> AddGaCrmEventAsync(CrmEventDto dto)
         {
@@ -338,6 +344,36 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region CrmEventDevices
+        public async Task<CrmEventDevicesDto> GetGaCrmEventDevicesByEventIdAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetWithFilterAsync(x => x.CrmEventId == id);
+            var dto = entity.ToDto<CrmEventDevicesDto, PagedList<CrmEventDevice>>();
+            return dto;
+        }
+
+        public async Task<bool> DeleteGaCrmEventDeviceAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
+            gaCrmEventDevicesRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        public async Task<bool> DeleteGaCrmEventDevicesByEventIdAsync(long id)
+        {
+            var entities = await gaCrmEventDevicesRepo.GetWithFilterAsync(x => x.CrmEventId == id);
+            foreach (var entity in entities.Data)
+            {
+                gaCrmEventDevicesRepo.Remove(entity);
+                await SaveChanges();
+            }
+            
+
+            return true;
+        }
+
+        #region Functions
         public async Task<bool> ChangeStatusGaCrmEventDeviceAsync(long id)
         {
             var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
@@ -376,6 +412,24 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+        #endregion
+        #endregion
+
+        #region CrmEventJobs
+        public async Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsAsync(int page = 1, int pageSize = 0)
+        {
+            var view = await viewGaCrmEventJobsRepo.GetAllAsync(page, pageSize);
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(DateTime dateStart,DateTime dateEnd)
+        {
+            var view = await viewGaCrmEventJobsRepo.GetWithFilterAsync(x => x.DateSchedule >= dateStart && x.DateSchedule <= dateEnd);
+            return view;
+        }
+
+       
+
         #endregion
 
 

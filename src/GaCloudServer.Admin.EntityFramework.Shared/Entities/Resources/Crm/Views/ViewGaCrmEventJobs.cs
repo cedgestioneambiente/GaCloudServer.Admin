@@ -10,8 +10,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.View
     public class ViewGaCrmEventJobs : GenericEntity
     {
         public DateTime DateSchedule { get; set; }
-        public string Descrizione { get; set; }
-        public int TotalCount { get; set; }
+        public long AreaId { get; set; }
+        public string Area { get; set; }
+        public int ToDoCount { get; set; }
+        public int CompletedCount { get; set; }
+        public int CancelledCount { get; set; }
         
 
     }

@@ -45,9 +45,9 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region CrmEvents
         Task<CrmEventsDto> GetGaCrmEventsAsync(int page = 1, int pageSize = 0);
+        Task<CrmEventsDto> GetGaCrmEventByBoardAsync(DateTime date, long area);
         Task<CrmEventDto> GetGaCrmEventByIdAsync(long id);
         Task<CrmEventDto> GetGaCrmEventByTicketIdAsync(long id);
-
         Task<long> AddGaCrmEventAsync(CrmEventDto dto);
         Task<long> UpdateGaCrmEventAsync(CrmEventDto dto);
 
@@ -59,10 +59,18 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region CrmEventDevices
+        Task<CrmEventDevicesDto> GetGaCrmEventDevicesByEventIdAsync(long id);
+        Task<bool> DeleteGaCrmEventDeviceAsync(long id);
+        Task<bool> DeleteGaCrmEventDevicesByEventIdAsync(long id);
+        #region Functions
         Task<bool> ChangeStatusGaCrmEventDeviceAsync(long id);
         Task<bool> ChangeSelectionGaCrmEventDeviceAsync(long id);
         #endregion
+        #endregion
 
-
+        #region CrmEventJobs
+        Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsAsync(int page = 1, int pageSize = 0);
+        Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(DateTime dateStart, DateTime dateEnd);
+        #endregion
     }
 }

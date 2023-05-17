@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
+using GaCloudServer.BusinnessLogic.DTOs.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,6 +105,16 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public List<string> Immagini { get; set; }
 
     }
+
+    public class CrmEventsTemplateDto : GenericPrintDto
+    {
+        public string Area { get; set; }
+        public string Data { get; set; }
+        public List<CrmEventDto> Items { get; set; }
+        public List<CrmEventDeviceDto> Devices { get; set; }
+    }
+
+
 
 
 }

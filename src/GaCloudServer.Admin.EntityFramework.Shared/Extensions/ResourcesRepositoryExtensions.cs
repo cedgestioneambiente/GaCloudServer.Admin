@@ -457,12 +457,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<CrmEventState>, GenericRepository<TResourcesDbContext, CrmEventState>>();
             services.AddTransient<IGenericRepository<CrmEventArea>, GenericRepository<TResourcesDbContext, CrmEventArea>>();
             services.AddTransient<IGenericRepository<CrmEvent>, GenericRepository<TResourcesDbContext, CrmEvent>>();
+            services.AddTransient<IGenericRepository<CrmEventDevice>, GenericRepository<TResourcesDbContext, CrmEventDevice>>();
 
             services.AddTransient<IGenericRepository<ViewGaCrmCanali>, GenericRepository<TResourcesDbContext, ViewGaCrmCanali>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCausali>, GenericRepository<TResourcesDbContext, ViewGaCrmCausali>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCausaliTypes>, GenericRepository<TResourcesDbContext, ViewGaCrmCausaliTypes>>();
             services.AddTransient<IGenericRepository<ViewGaCrmState>, GenericRepository<TResourcesDbContext, ViewGaCrmState>>();
             services.AddTransient<IGenericRepository<ViewGaCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmTickets>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmEventJobs>, GenericRepository<TResourcesDbContext, ViewGaCrmEventJobs>>();
             #endregion
 
             //PrenotazioneLocali
