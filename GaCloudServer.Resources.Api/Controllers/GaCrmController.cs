@@ -40,6 +40,22 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #region CrmMaster
 
+        [HttpGet("UpdateCrmMasterStateByIdAsunc/{id}/{state}")]
+        public async Task<ActionResult<ApiResponse>> UpdateCrmMasterStateByIdAsunc(int id,long state)
+        {
+            try
+            {
+                var result =await  _gaCrmService.UpdateCrmMasterStateByIdAsync(id, state);
+                return new ApiResponse(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #region Views
         [HttpGet("GetViewGaCrmMasterAsync")]
         public async Task<ActionResult<ApiResponse>> GetViewGaCrmMasterAsync()
@@ -482,7 +498,31 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        
+        [HttpGet("UpdateGaCrmEventStateByIdAsync/{id}/{state}")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCrmEventStateByIdAsync(long id,long state)
+        {
+            try
+            {
+                var response = await _gaCrmService.UpdateGaCrmEventStateByIdAsync(id,state);
+                if (response)
+                {
+                    var responseTari = await _gaCrmService.UpdateCrmMasterStateByIdAsync(Convert.ToInt32(id), state);
+                    if (responseTari > 0)
+                    {
+                        return new ApiResponse("TariError",null,code.Status200OK);
+
+                    }
+                    return new ApiResponse("CrmError", null, code.Status200OK);
+                }
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
 
         [HttpGet("PrintGaCrmEventsByFilterAsync/{date}/{areaId}")]
         public async Task<ApiResponse> PrintGaContactCenterIngByFilterAsync(DateTime date,long areaId)

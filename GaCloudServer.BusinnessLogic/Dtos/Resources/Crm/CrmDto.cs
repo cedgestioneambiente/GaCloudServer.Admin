@@ -26,8 +26,10 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public long CrmEventAreaId { get; set; }
         public int CrmTicketId { get; set; }
         public string UserId { get; set; }
+        public string UserName { get; set; }
         public string NotaAnagrafica { get; set; }
         public bool Sended { get; set; }
+        public string NotaOperatore { get; set; }
     }
 
     public class CrmEventsDto : GenericPagedListDto<CrmEventDto>

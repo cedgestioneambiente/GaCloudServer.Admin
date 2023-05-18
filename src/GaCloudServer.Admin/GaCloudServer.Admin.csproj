@@ -149,10 +149,16 @@
 	  <None Update="Scripts\Crm\CREATE_ViewGaCrm.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Crm\CREATE_ViewGaCrm_V3.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Crm\DROP_ViewGaCrm.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V3.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Csr\CREATE_ViewGaCsr_V2.sql">
@@ -195,6 +201,12 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Jobs\DROP_TableJobs.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\LinkedServer\CREATE_LinkedServer2082756.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\LinkedServer\DROP_LinkedServer2082756.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Mezzi\CREATE_ViewGaMezzi.sql">

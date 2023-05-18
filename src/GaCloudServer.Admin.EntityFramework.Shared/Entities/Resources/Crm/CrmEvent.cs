@@ -24,8 +24,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
         public long CrmEventAreaId { get; set; }
         public int CrmTicketId { get; set; }
         public string UserId { get; set; }
+        public string UserName { get; set; }
         public string NotaAnagrafica { get; set; }
         public bool Sended { get; set; }
+        public string NotaOperatore { get; set; }
 
         public CrmEventState CrmEventState { get; set; }
         public CrmEventArea CrmEventArea { get; set; }

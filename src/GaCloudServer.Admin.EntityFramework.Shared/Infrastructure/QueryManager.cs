@@ -33,6 +33,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         }
 
+        public async Task<int> ExecCommandAsync(string query)
+        {
+            using (var command = _context.Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandText = query;
+                command.CommandType = System.Data.CommandType.Text;
+                command.CommandTimeout = 0;
+
+                _context.Database.SetCommandTimeout(480);
+                _context.Database.OpenConnection();
+                int rowsAffected=await command.ExecuteNonQueryAsync();
+                return rowsAffected;
+                
+            }
+        }
+
 
         public async Task<List<object>> ExecQueryAsync(string query)
         {

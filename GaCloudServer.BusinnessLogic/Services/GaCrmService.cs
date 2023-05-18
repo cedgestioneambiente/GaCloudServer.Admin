@@ -2,6 +2,7 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Constants;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -11,6 +12,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 {
     public class GaCrmService : IGaCrmService
     {
+        protected readonly IQueryManager _queryManager;
+
         protected readonly IGenericRepository<CrmEventState> gaCrmEventStatesRepo;
         protected readonly IGenericRepository<CrmEventArea> gaCrmEventAreasRepo;
         protected readonly IGenericRepository<CrmEvent> gaCrmEventsRepo;
@@ -24,6 +27,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IUnitOfWork unitOfWork;
 
         public GaCrmService(
+            IQueryManager queryManager,
+
             IGenericRepository<CrmEventState> gaCrmEventStatesRepo,
             IGenericRepository<CrmEventArea> gaCrmEventAreasRepo,
             IGenericRepository<CrmEvent> gaCrmEventsRepo,
@@ -36,6 +41,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IUnitOfWork unitOfWork)
         {
+            this._queryManager = queryManager;
+
             this.gaCrmEventAreasRepo = gaCrmEventAreasRepo;
             this.gaCrmEventStatesRepo = gaCrmEventStatesRepo;
             this.gaCrmEventsRepo = gaCrmEventsRepo;
@@ -52,6 +59,30 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region CrmMaster
+
+        public async Task<int> UpdateCrmMasterStateByIdAsync(int id, long state)
+        {
+            var sql = SqlContants.crmMasterUpdateState;
+            string newState = "1";
+            switch (state)
+            {
+                case 1:
+                    newState= "1"; break;
+                case 2:
+                    newState= "110"; break;
+                case 3:
+                    newState= "1000"; break;
+                case 4:
+                    newState = "1";break;
+                default:
+                    newState = "1";break;
+            }
+
+            sql = sql.Replace("@ID", id.ToString()).Replace("@STATO", newState);
+
+            var result = await _queryManager.ExecCommandAsync(sql);
+            return result;
+        }
 
         #region Views
         public async Task<PagedList<ViewGaCrmTickets>> GetViewGaCrmMasterAsync()
@@ -304,6 +335,16 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
+        public async Task<bool> UpdateGaCrmEventStateByIdAsync(long id, long state)
+        {
+            var entity = await gaCrmEventsRepo.GetByIdAsync(id);
+
+            entity.CrmEventStateId = state;
+            gaCrmEventsRepo.Update(entity);
+            await SaveChanges();
+            return true;
+            
+        }
         public async Task<bool> ValidateGaCremEventAsync(long id, string descrizione)
         {
             //var entity = await gaCrmEventsRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);

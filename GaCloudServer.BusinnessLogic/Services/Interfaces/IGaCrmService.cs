@@ -9,6 +9,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
     {
         #region CrmMaster
 
+        Task<int> UpdateCrmMasterStateByIdAsync(int id, long state);
+
         #region Views
         Task<PagedList<ViewGaCrmTickets>> GetViewGaCrmMasterAsync();
         #endregion
@@ -52,6 +54,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<long> UpdateGaCrmEventAsync(CrmEventDto dto);
 
         Task<bool> DeleteGaCrmEventAsync(long id);
+
+        #region Functions
+        Task<bool> UpdateGaCrmEventStateByIdAsync(long id,long state);
+        #endregion
 
         #region Views
         #endregion
