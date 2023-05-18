@@ -81,6 +81,13 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
     }
     #endregion
 
+    public class CrmChangeEventStateDto
+    { 
+        public long id { get; set; }
+        public int crmId { get; set; }
+        public long state { get; set; }
+    }
+
 }
 
 

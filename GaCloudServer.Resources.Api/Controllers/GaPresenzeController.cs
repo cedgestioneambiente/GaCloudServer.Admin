@@ -343,7 +343,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 var richiestaMail = await _gaPresenzeService.GetViewGaPresenzeRichiestaMailByIdAsync(id);
                 var respList = await _gaPresenzeService.GetViewGaPresenzeResponsabiliOnSettoreMailBySettoreId(richiestaMail.SettoreId);
-                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Presenze);
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Presenze,AppConsts.PresenzeInfo);
                 //var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
 
                 List<string> userMails = new List<string>();

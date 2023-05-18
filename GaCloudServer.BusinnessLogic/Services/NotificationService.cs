@@ -8,6 +8,7 @@ using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Graph;
 using Skoruba.AuditLogging.Events;
 using Skoruba.AuditLogging.Services;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
@@ -81,11 +82,30 @@ namespace GaCloudServer.BusinnessLogic.Services
             var dto = entity.ToDto<NotificationAppDto, NotificationApp>();
             return dto;
         }
-        public async Task<NotificationAppDto> GetNotificationAppByDescrizioneAsync(string descrizione)
+        public async Task<NotificationAppDto> GetNotificationAppByDescrizioneAsync(string descrizione,string info)
         {
             var entity = await notificationAppsRepo.GetSingleWithFilter(x=>x.Descrizione==descrizione);
-            var dto = entity.ToDto<NotificationAppDto, NotificationApp>();
-            return dto;
+
+            if (entity == null)
+            {
+                var item = new NotificationApp();
+                item.Descrizione = descrizione;
+                item.Info = info;
+                item.Icon = "add_alert";
+                item.Disabled = false;
+
+                await notificationAppsRepo.AddAsync(item);
+                await SaveChanges();
+
+                var dto = item.ToDto<NotificationAppDto, NotificationApp>();
+                return dto;
+
+            }
+            else
+            {
+                var dto = entity.ToDto<NotificationAppDto, NotificationApp>();
+                return dto;
+            }
         }
 
         public async Task<long> AddNotificationAppAsync(NotificationAppDto dto)

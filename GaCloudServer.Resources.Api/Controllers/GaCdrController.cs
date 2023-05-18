@@ -1188,7 +1188,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Cdr);
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Cdr, AppConsts.CdrInfo);
                 var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
 
                 var richiestaViaggio = await _gaCdrService.GetViewGaCdrRichiestaViaggio(id);

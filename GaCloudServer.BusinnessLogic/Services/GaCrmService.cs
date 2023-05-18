@@ -345,6 +345,20 @@ namespace GaCloudServer.BusinnessLogic.Services
             return true;
             
         }
+
+        public async Task<bool> UpdateGaCrmEventsSendedAsync(List<CrmEventDto> dtos)
+        {
+            foreach (var item in dtos)
+            {
+                var entity = await gaCrmEventsRepo.GetByIdAsync(item.Id);
+
+                entity.Sended = true;
+                gaCrmEventsRepo.Update(entity);
+            }
+
+            await SaveChanges();
+            return true;
+        }
         public async Task<bool> ValidateGaCremEventAsync(long id, string descrizione)
         {
             //var entity = await gaCrmEventsRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
@@ -451,6 +465,28 @@ namespace GaCloudServer.BusinnessLogic.Services
                 await SaveChanges();
                 return true;
             }
+
+        }
+
+        public async Task<bool> SetCompletedGaCrmEventDeviceAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
+            entity.Completed = true;
+            gaCrmEventDevicesRepo.Update(entity);
+            await SaveChanges();
+            return true;
+            
+
+        }
+
+        public async Task<bool> SetNotCompletedGaCrmEventDeviceAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
+            entity.Completed = false;
+            gaCrmEventDevicesRepo.Update(entity);
+            await SaveChanges();
+            return true;
+
 
         }
         #endregion

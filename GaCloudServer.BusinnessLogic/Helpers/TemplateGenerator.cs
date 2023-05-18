@@ -445,5 +445,92 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
         }
+
+        public static string CrmEventsReport(CrmEventsTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventsReport/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+            foreach (var itm in dto.Items)
+            {
+                var devices = from x in dto.Devices
+                              where x.CrmEventId == itm.Id
+                              select x;
+
+                table += String.Format("<div class='content-item page-break'>" +
+                    "<table class='table-user'>" +
+                    "<thead>" +
+                    "<tr>" +
+                    "<th style='width:10%;'>" +
+                    "Orario" +
+                    "</th>" +
+                    "<th style='width:45%;'>" +
+                    "Utente" +
+                    "</th>" +
+                    "<th style='widt:45%;'>" +
+                    "Note CRM" +
+                    "</th>" +
+                    "</tr>" +
+                    "</thead>" +
+                    "<tbody" +
+                    "<tr>" +
+                    "<td style='padding:5px;'>{0}</td>" +
+                    "<td style='padding:5px;'>Richiedente: {1}<br />NumCon: {2}<br />Prog: {3}<br />Comune: {5}<br />Indirizzo:{6}</td>" +
+                    "<td style='padding:5px;'>{4}</td>" +
+                    "</tr>" +
+                    "</tbody>" +
+                    "</table>",
+                    itm.DateSchedule.ToString("HH:mm"), itm.RagSo, itm.NumCon, itm.CpRowNum, itm.NotaAnagrafica, itm.Citta,itm.Indirizzo +", "+itm.NumCiv);
+
+                string tableDevices = "" +
+                    "<table class='table-device'>" +
+                    "<thead>" +
+                    "<tr>" +
+                    "<th style='width:30%;'>" +
+                    "Matricola" +
+                    "</th>" +
+                    "<th style='width:40%;'>" +
+                    "Tipo Contenitore" +
+                    "</th>" +
+                    "<th style='widt:30%;'>" +
+                    "Ritirato" +
+                    "</th>" +
+                    "</thead>" +
+                    "<tbody";
+
+                foreach (var device in devices)
+                {
+                    tableDevices += string.Format(
+                        "<tr>" +
+                        "<td style='padding:5px;'>{0}</td>" +
+                        "<td style='padding:5px;'>{1}</td>" +
+                        "<td style='padding:5px;font-size:20px;'>&#9744;</td>" +
+                        "</tr>", device.Identi2, device.DesCon);
+                }
+
+                tableDevices += "</tbody>" +
+                    "</table>" +
+                    "<div class='notes'>" +
+                    "<div class='notes-col-1'>" +
+                    "Note Operatore: " +itm.NotaOperatore+""+
+                    "</div>" +
+                    "</div>" +
+                    "</div>";
+
+                table += tableDevices;
+
+
+
+            }
+
+
+
+            sb.AppendFormat(@fileContent, dto.Area, dto.Data, table);
+            return sb.ToString();
+
+
+        }
     }
 }

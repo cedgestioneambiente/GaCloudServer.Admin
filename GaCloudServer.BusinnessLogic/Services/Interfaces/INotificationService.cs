@@ -9,7 +9,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region NotificationApps
         Task<NotificationAppsDto> GetNotificationAppsAsync(int page = 1, int pageSize = 0);
         Task<NotificationAppDto> GetNotificationAppByIdAsync(long id);
-        Task<NotificationAppDto> GetNotificationAppByDescrizioneAsync(string descrizione);
+        Task<NotificationAppDto> GetNotificationAppByDescrizioneAsync(string descrizione,string info);
         Task<long> AddNotificationAppAsync(NotificationAppDto dto);
         Task<long> UpdateNotificationAppAsync(NotificationAppDto dto);
         Task<bool> DeleteNotificationAppAsync(long id);

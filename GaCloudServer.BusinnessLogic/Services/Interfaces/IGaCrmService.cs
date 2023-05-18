@@ -57,6 +57,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         Task<bool> UpdateGaCrmEventStateByIdAsync(long id,long state);
+
+        Task<bool> UpdateGaCrmEventsSendedAsync(List<CrmEventDto> dtos);
         #endregion
 
         #region Views
@@ -71,6 +73,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ChangeStatusGaCrmEventDeviceAsync(long id);
         Task<bool> ChangeSelectionGaCrmEventDeviceAsync(long id);
+
+        Task<bool> SetCompletedGaCrmEventDeviceAsync(long id);
+        Task<bool> SetNotCompletedGaCrmEventDeviceAsync(long id);
+
         #endregion
         #endregion
 

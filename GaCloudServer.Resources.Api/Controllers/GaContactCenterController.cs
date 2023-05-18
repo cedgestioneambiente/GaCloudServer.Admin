@@ -1178,7 +1178,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try 
             {
-                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.ContactCenter);
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.ContactCenter, AppConsts.ContactCenterInfo);
                 var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
 
                 var ticket = await _gaContactCenterService.GetViewGaContactCenterTicketById(apiDto.id);

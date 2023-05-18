@@ -95,6 +95,12 @@
     <None Update="Template\ContactCenterTicketInt\assets\template.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Template\CrmEventsReport\assets\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\CrmEventsReport\assets\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Template\CrmEvents\assets\styles.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

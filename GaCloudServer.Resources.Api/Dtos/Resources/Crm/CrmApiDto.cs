@@ -25,8 +25,8 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public long CrmEventStateId { get; set; }
         public long CrmEventAreaId { get; set; }
         public int CrmTicketId { get; set; }
-        public string UserId { get; set; }
-        public string UserName { get; set; }
+        public string? UserId { get; set; }
+        public string? UserName { get; set; }
         public string NotaAnagrafica { get; set; }
         public bool Sended { get; set; }
         public string? NotaOperatore { get; set; }
@@ -80,5 +80,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
     {
     }
     #endregion
+
+
 
 }

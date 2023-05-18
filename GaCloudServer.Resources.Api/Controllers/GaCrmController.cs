@@ -1,13 +1,17 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Crm;
 using GaCloudServer.Resources.Api.Dtos.Custom;
 using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,15 +30,21 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly IGaCrmService _gaCrmService;
         private readonly ILogger<GaCrmController> _logger;
         private readonly IPrintService _printService;
+        private readonly IMailService _mailService;
+        private readonly INotificationService _notificationService;
 
         public GaCrmController(
             IGaCrmService gaCrmService
+            , IMailService mailService
+            , INotificationService notificationService
             , IPrintService printService
             , ILogger<GaCrmController> logger)
         {
 
             _gaCrmService = gaCrmService;
             _printService = printService;
+            _mailService = mailService;
+            _notificationService = notificationService;
             _logger = logger;
         }
 
@@ -460,6 +470,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var dto = apiDto.ToDto<CrmEventDto, CrmEventApiDto>();
                 var response = await _gaCrmService.UpdateGaCrmEventAsync(dto);
 
+                var responseTari = await _gaCrmService.UpdateCrmMasterStateByIdAsync(dto.CrmTicketId, dto.CrmEventStateId);
+
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -498,23 +510,102 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("UpdateGaCrmEventStateByIdAsync/{id}/{state}")]
-        public async Task<ActionResult<ApiResponse>> UpdateGaCrmEventStateByIdAsync(long id,long state)
+        [HttpGet("UpdateGaCrmEventStateByIdAsync/{id}/{crmId}/{state}")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCrmEventStateByIdAsync(long id,int crmId,long state)
         {
             try
             {
                 var response = await _gaCrmService.UpdateGaCrmEventStateByIdAsync(id,state);
                 if (response)
                 {
-                    var responseTari = await _gaCrmService.UpdateCrmMasterStateByIdAsync(Convert.ToInt32(id), state);
+                    var responseTari = await _gaCrmService.UpdateCrmMasterStateByIdAsync(crmId, state);
                     if (responseTari > 0)
                     {
-                        return new ApiResponse("TariError",null,code.Status200OK);
-
+                        return new ApiResponse(response);
                     }
+                    else
+                    {
+                        return new ApiResponse("TariError", null, code.Status200OK);
+                    }
+
+                }
+                else
+                {
                     return new ApiResponse("CrmError", null, code.Status200OK);
                 }
-                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("UpdateGaCrmEventStatesByFilterAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCrmEventStatesByFilterAsync([FromBody]List<CrmChangeEventStateDto> dto)
+        {
+            try
+            {
+                int error = 0;
+                int crmError = 0;
+
+                foreach (var itm in dto)
+                {
+                    var response = await _gaCrmService.UpdateGaCrmEventStateByIdAsync(itm.id, itm.state);
+                    if (response)
+                    {
+                        var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(itm.id);
+                        if (itm.state == 2)
+                        {
+
+                            foreach (var device in devices.Data)
+                            {
+                                if (device.Selected)
+                                {
+                                    await _gaCrmService.SetCompletedGaCrmEventDeviceAsync(device.Id);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var device in devices.Data)
+                            {
+                                if (device.Selected)
+                                {
+                                    await _gaCrmService.SetNotCompletedGaCrmEventDeviceAsync(device.Id);
+                                }
+                            }
+
+                        }
+
+
+                        var responseTari = await _gaCrmService.UpdateCrmMasterStateByIdAsync(itm.crmId, itm.state);
+                        if (responseTari > 0)
+                        {
+                            
+                        }
+                        else
+                        {
+                            crmError++;
+                        }
+
+                    }
+                    else
+                    {
+                        error++;
+                    }
+                }
+
+                if (error + crmError > 0)
+                {
+                    return new ApiResponse(string.Format("CrmError: {0}, TariError: {1}",error,crmError), "PartialError", code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse(true);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -537,28 +628,59 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
 
                 var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(areaId);
-                var dto = await  GenerateCrmEventsTemplate(list.Data, date, area.Descrizione);
+                var dto = await  GenerateCrmEventsTemplate(list.Data.Where(x => x.CrmEventStateId == 1).ToList(), date, area.Descrizione);
                 var response = await _printService.Print("CrmEvents", dto);
 
-                //var dto = GenerateContactCenterTicketsIngTemplate(apiDto.all ? list : list.Where(x => x.Stato == "IN GESTIONE").ToList(), apiDto.comuneAltro, apiDto.dataEsecuzione.GetValueOrDefault(), apiDto.tipoStampa);
-                //var response = await _printService.Print("ContactCenterTicketsIng", dto);
+                return new ApiResponse(response);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
+        [HttpGet("SendGaCrmEventsByFilterAsync/{date}/{areaId}/{userId}/{userName}")]
+        public async Task<ApiResponse> SendGaContactCenterIngByFilterAsync(DateTime date, long areaId,string userId,string userName)
+        {
+            try
+            {
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Crm,AppConsts.CrmInfo);
 
 
-                //var printDto = new ContactCenterStatusTicketsApiDto();
-                //if (apiDto.all)
-                //{
-                //    printDto.ticketsId = (from x in list
-                //                          select x.Id).ToArray();
+                var list = await _gaCrmService.GetGaCrmEventByBoardAsync(date, areaId);
 
-                //}
-                //else
-                //{
-                //    printDto.ticketsId = (from x in list
-                //                          where x.Stato == "IN GESTIONE"
-                //    select x.Id).ToArray();
+                if (list == null || (list.Data.Where(x => x.CrmEventStateId == 2).Count() == 0))
+                {
+                    return new ApiResponse("NoData", null, code.Status200OK);
+                }
 
-                //}
-                //await _gaContactCenterService.SetPrintedGaContactCenterTicketsAsync(printDto.ticketsId);
+                var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(areaId);
+                var dto = await GenerateCrmEventsTemplate(list.Data.Where(x=>x.CrmEventStateId==2).ToList(), date, area.Descrizione,"CrmEventsReport.pdf");
+                var attachPath = await _printService.Print("CrmEventsReport", dto);
+
+                string mailTo = "ced@gestioneambiente.net;matteo.derocchi@gestioneambiente.net";
+                string mailCC = "";
+
+                var result = await _mailService.AddMailJobAsync(new MailJob()
+                {
+                    Id = 0,
+                    Description = string.Format("Rapporto Ritiri {0} - {1}",date.ToString("dd/MM/yyyy"),area.Descrizione),
+                    DateScheduled = DateTime.Now,
+                    Title = string.Format("Rapporto Ritiri {0} - {1}", date.ToString("dd/MM/yyyy"), area.Descrizione),
+                    MailingTo = mailTo,
+                    MailCc = mailCC,
+                    Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Crm),
+                    Content = HtmlHelpers.GenerateText("In allegato è possibile visionare il report.<br>"+userName),
+                    Template = "DefaultMailJob.html",
+                    UserId = userId,
+                    OkMessage = String.Format("Il Report {0} - {1} è stato inoltrato correttamente.", date.ToString("dd/MM/yyyy"),area.Descrizione),
+                    KoMessage = String.Format("Si è verificato un problema durante l'invio del Report {0} - {1}.", date.ToString("dd/MM/yyyy"), area.Descrizione),
+                    Attachment = true,
+                    AttachmentPath = attachPath
+                });
+
+                var response = await _gaCrmService.UpdateGaCrmEventsSendedAsync(list.Data.Where(x => x.CrmEventStateId == 2).ToList());
 
                 return new ApiResponse(response);
 
@@ -664,14 +786,14 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Helpers
-        private async Task<CrmEventsTemplateDto> GenerateCrmEventsTemplate(List<CrmEventDto> events, DateTime date, string area)
+        private async Task<CrmEventsTemplateDto> GenerateCrmEventsTemplate(List<CrmEventDto> events, DateTime date, string area,string fileName= "CrmEvents.pdf")
         {
             var dto = new CrmEventsTemplateDto()
             {
-                FileName = "CrmEventss.pdf",
+                FileName = fileName,
                 FilePath = @"Print/Crm",
                 Title = "Crm Eventi Programmati",
-                Css = "CrmEvents",
+                Css = "CrmEventsReport",
                 Area = area,
                 Data = date.ToString("dd/MM/yyyy"),
                 Items = new List<CrmEventDto>(),
