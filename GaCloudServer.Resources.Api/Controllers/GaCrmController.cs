@@ -649,10 +649,20 @@ namespace GaCloudServer.Resources.Api.Controllers
 
 
                 var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(_event.CrmEventAreaId);
-                var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione);
-                var response = await _printService.Print("CrmEventRecipe", dto);
+                if (_event.Tipo == "RITIRO CONTENITORI")
+                {
+                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione,"Ricevuta Prenotazione Ritiro");
+                    var response = await _printService.Print("CrmEventRecipt", dto);
 
-                return new ApiResponse(response);
+                    return new ApiResponse(response);
+                }
+                else
+                {
+                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione, "Ricevuta Prenotazione Ritiro per Cessazione "+DateTime.Now.ToString("dd/MM/yyyy"),"CrmEventCloseRecipt.pdf","CrmEventCloseRecipt");
+                    var response = await _printService.Print("CrmEventCloseRecipt", dto);
+
+                    return new ApiResponse(response);
+                }
 
             }
             catch (Exception ex)
@@ -838,22 +848,19 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        private async Task<CrmEventsTemplateDto> GenerateCrmEventTemplate(CrmEventDto _event, DateTime date, string area, string fileName = "CrmEventRecipe.pdf")
+        private async Task<CrmEventTemplateDto> GenerateCrmEventTemplate(CrmEventDto _event, DateTime date, string area, string title, string fileName = "CrmEventRecipt.pdf",string css= "CrmEventRecipt")
         {
-            var dto = new CrmEventsTemplateDto()
+            var dto = new CrmEventTemplateDto()
             {
                 FileName = fileName,
                 FilePath = @"Print/Crm",
-                Title = "Ricevuta Prenotazione Ritiro per Cessazione",
-                Css = "CrmEventsRecipe",
+                Title = title,
+                Css = css,
                 Area = area,
                 Data = date.ToString("dd/MM/yyyy"),
-                Items = new List<CrmEventDto>(),
+                Item = _event,
                 Devices = new List<CrmEventDeviceDto>()
             };
-
-
-            dto.Items.Add(_event);
 
             var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(_event.Id);
             foreach (var device in devices.Data)

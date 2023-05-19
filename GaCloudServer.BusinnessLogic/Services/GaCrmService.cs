@@ -87,7 +87,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Views
         public async Task<PagedList<ViewGaCrmTickets>> GetViewGaCrmMasterAsync()
         {
-            var entities = await viewGaCrmMasterRepo.GetWithFilterAsync(x => x.CodCausale == 84 && (x.Stato==1 || x.Stato==109));
+            var entities = await viewGaCrmMasterRepo.GetWithFilterAsync(x => (x.CodCausale == 84 || x.CodCausale==88) && (x.Stato==1 || x.Stato==109));
             return entities;
         }
         #endregion
