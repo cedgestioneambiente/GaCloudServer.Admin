@@ -8,6 +8,7 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
         public string Codice { get; set; }
         public bool Pericoloso { get; set; }
         public string? Immagine { get; set; }
+        public string? CodiceRaggruppamento { get; set; }
         public long ConsorzioCerSmaltimentoId { get; set; }
     }
 
@@ -28,10 +29,13 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
 
     #endregion
 
-    #region ConsorzioCersComuni
+    #region ConsorzioComuni
     public class ConsorzioComuneApiDto : GenericListApiDto
     {
         public string? Cap { get; set; }
+        public string? Istat { get; set; }
+        public string? Regione { get; set; }
+        public string? Provincia { get; set; }
     }
 
     public class ConsorzioComuniApiDto : GenericPagedListApiDto<ConsorzioComuneApiDto>
@@ -94,6 +98,7 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
         public long ConsorzioProduttoreId { get; set; }
         public long ConsorzioTrasportatoreId { get; set; }
         public long ConsorzioDestinatarioId { get; set; }
+        public string? Note { get; set; }
     }
 
     public class ConsorzioRegistrazioniApiDto : GenericPagedListApiDto<ConsorzioRegistrazioneApiDto>

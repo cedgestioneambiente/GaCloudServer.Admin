@@ -14,6 +14,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
         public long ConsorzioProduttoreId { get; set; }
         public long ConsorzioTrasportatoreId { get; set; }
         public long ConsorzioDestinatarioId { get; set; }
+        public string Note { get; set; }
 
         public ConsorzioCer ConsorzioCer { get; set; }
         public ConsorzioProduttore ConsorzioProduttore { get; set; }

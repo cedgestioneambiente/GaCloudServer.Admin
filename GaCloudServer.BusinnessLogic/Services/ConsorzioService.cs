@@ -25,6 +25,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewConsorzioDestinatari> viewConsorzioDestinatariRepo;
         protected readonly IGenericRepository<ViewConsorzioTrasportatori> viewConsorzioTrasportatoriRepo;
         protected readonly IGenericRepository<ViewConsorzioRegistrazioni> viewConsorzioRegistrazioniRepo;
+        protected readonly IGenericRepository<ViewConsorzioComuni> viewConsorzioComuniRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -44,6 +45,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewConsorzioDestinatari> viewConsorzioDestinatariRepo,
             IGenericRepository<ViewConsorzioTrasportatori> viewConsorzioTrasportatoriRepo,
             IGenericRepository<ViewConsorzioRegistrazioni> viewConsorzioRegistrazioniRepo,
+            IGenericRepository<ViewConsorzioComuni> viewConsorzioComuniRepo,
 
             IUnitOfWork unitOfWork)
         {
@@ -60,6 +62,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewConsorzioProduttoriRepo = viewConsorzioProduttoriRepo;
             this.viewConsorzioDestinatariRepo = viewConsorzioDestinatariRepo;
             this.viewConsorzioTrasportatoriRepo = viewConsorzioTrasportatoriRepo;
+            this.viewConsorzioComuniRepo = viewConsorzioComuniRepo;
             this.viewConsorzioRegistrazioniRepo = viewConsorzioRegistrazioniRepo;
 
 
@@ -310,6 +313,14 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewConsorzioComuni>> GetViewConsorzioComuniAsync(bool all = true)
+        {
+            var entities = all ? await viewConsorzioComuniRepo.GetAllAsync(1, 0) : await viewConsorzioComuniRepo.GetWithFilterAsync(x => x.Disabled == false);
+            return entities;
         }
         #endregion
 

@@ -450,6 +450,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewConsorzioProduttori>, GenericRepository<TResourcesDbContext, ViewConsorzioProduttori>>();
             services.AddTransient<IGenericRepository<ViewConsorzioTrasportatori>, GenericRepository<TResourcesDbContext, ViewConsorzioTrasportatori>>();
             services.AddTransient<IGenericRepository<ViewConsorzioRegistrazioni>, GenericRepository<TResourcesDbContext, ViewConsorzioRegistrazioni>>();
+            services.AddTransient<IGenericRepository<ViewConsorzioComuni>, GenericRepository<TResourcesDbContext, ViewConsorzioComuni>>();
             #endregion
 
             //Crm

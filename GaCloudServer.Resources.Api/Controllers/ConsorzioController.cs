@@ -465,6 +465,25 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #region Views
+        [HttpGet("GetViewConsorzioComuniAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewConsorzioComuniAsync(bool all = true)
+        {
+            try
+            {
+                var view = await _consorzioService.GetViewConsorzioComuniAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #endregion
+
         #endregion
 
         #region ConsorzioProduttori

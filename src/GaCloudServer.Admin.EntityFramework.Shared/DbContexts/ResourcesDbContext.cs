@@ -459,7 +459,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewConsorzioDestinatari> ViewConsorzioDestinatari { get; set; }
         public DbSet<ViewConsorzioTrasportatori> ViewConsorzioTrasportatori { get; set; }
         public DbSet<ViewConsorzioRegistrazioni> ViewConsorzioRegistrazioni { get; set; }
+        public DbSet<ViewConsorzioComuni> ViewConsorzioComuni { get; set; }
         #endregion
+
         #endregion
 
         #region Crm
@@ -1261,6 +1263,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .ToView(nameof(ViewConsorzioRegistrazioni))
                 .HasKey(x => x.Id);
             });
+
+            builder.Entity<ViewConsorzioComuni>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewConsorzioComuni))
+                .HasKey(x => x.Id);
+            });
+
             #endregion
 
             #region Crm
