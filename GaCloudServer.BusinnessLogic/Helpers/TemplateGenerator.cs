@@ -532,5 +532,72 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
         }
+
+        public static string CrmEventRecipt(CrmEventTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventRecipt/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+
+            var devices = from x in dto.Devices
+                          where x.CrmEventId == dto.Item.Id
+                          select x;
+
+            table += String.Format("<div class='content-item page-break'>" +
+                    "<table class='table-user'>" +
+                    "<thead>" +
+                    "<tr>" +
+                    "<th style='width:99%;'>" +
+                    "Utente" +
+                    "</th>" +
+                    "</tr>" +
+                    "</thead>" +
+                    "<tbody" +
+                    "<tr>" +
+                    "<td style='padding:5px;'>Richiedente: <b>{0}</b><br />Comune: <b>{1}</b><br />Indirizzo: <b>{2}</b><br />N° Civico: <b>{3}</b></td>" +
+                    "</tr>" +
+                    "</tbody>" +
+                    "</table>",
+                    dto.Item.RagSo, dto.Item.Citta,dto.Item.Indirizzo,dto.Item.NumCiv);
+
+            string tableDevices = "" +
+                   "<table class='table-device'>" +
+                   "<thead>" +
+                   "<tr>" +
+                   "<th style='width:30%;'>" +
+                   "Matricola" +
+                   "</th>" +
+                   "<th style='width:40%;'>" +
+                   "Tipo Contenitore" +
+                   "</th>" +
+                   "<th style='widt:30%;'>" +
+                   "Ritirato" +
+                   "</th>" +
+                   "</thead>" +
+                   "<tbody";
+
+            foreach (var device in devices)
+            {
+                tableDevices += string.Format(
+                    "<tr>" +
+                    "<td style='padding:5px;'>{0}</td>" +
+                    "<td style='padding:5px;'>{1}</td>" +
+                    "<td style='padding:5px;font-size:20px;'>&#9744;</td>" +
+                    "</tr>", device.Identi2, device.DesCon);
+            }
+
+            tableDevices += "</tbody>" +
+                "</table>" +
+                "</div>";
+
+            table += tableDevices;
+
+            sb.AppendFormat(@fileContent, dto.Area, dto.Data, table);
+            return sb.ToString();
+
+
+        }
     }
 }

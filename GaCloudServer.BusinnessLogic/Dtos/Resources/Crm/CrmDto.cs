@@ -30,6 +30,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string NotaAnagrafica { get; set; }
         public bool Sended { get; set; }
         public string NotaOperatore { get; set; }
+        public DateTime? DataCessazione { get; set; }
     }
 
     public class CrmEventsDto : GenericPagedListDto<CrmEventDto>

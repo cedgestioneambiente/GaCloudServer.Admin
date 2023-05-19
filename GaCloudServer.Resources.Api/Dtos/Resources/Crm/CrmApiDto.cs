@@ -30,6 +30,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public string NotaAnagrafica { get; set; }
         public bool Sended { get; set; }
         public string? NotaOperatore { get; set; }
+        public DateTime? DataCessazione { get; set; }
     }
 
     public class CrmEventsApiDto : GenericPagedListApiDto<CrmEventApiDto>

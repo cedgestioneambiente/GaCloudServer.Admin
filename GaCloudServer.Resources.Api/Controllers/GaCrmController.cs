@@ -640,6 +640,27 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpGet("PrintGaCrmEventReciptByIdAsync/{id}")]
+        public async Task<ApiResponse> PrintGaCrmEventReciptByIdAsync(long id)
+        {
+            try
+            {
+                var _event = await _gaCrmService.GetGaCrmEventByIdAsync(id);
+
+
+                var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(_event.CrmEventAreaId);
+                var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione);
+                var response = await _printService.Print("CrmEventRecipe", dto);
+
+                return new ApiResponse(response);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
         [HttpGet("SendGaCrmEventsByFilterAsync/{date}/{areaId}/{userId}/{userName}")]
         public async Task<ApiResponse> SendGaContactCenterIngByFilterAsync(DateTime date, long areaId,string userId,string userName)
         {
@@ -812,6 +833,36 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
             
             }
+
+            return dto;
+
+        }
+
+        private async Task<CrmEventsTemplateDto> GenerateCrmEventTemplate(CrmEventDto _event, DateTime date, string area, string fileName = "CrmEventRecipe.pdf")
+        {
+            var dto = new CrmEventsTemplateDto()
+            {
+                FileName = fileName,
+                FilePath = @"Print/Crm",
+                Title = "Ricevuta Prenotazione Ritiro per Cessazione",
+                Css = "CrmEventsRecipe",
+                Area = area,
+                Data = date.ToString("dd/MM/yyyy"),
+                Items = new List<CrmEventDto>(),
+                Devices = new List<CrmEventDeviceDto>()
+            };
+
+
+            dto.Items.Add(_event);
+
+            var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(_event.Id);
+            foreach (var device in devices.Data)
+            {
+                if (device.Selected)
+                    dto.Devices.Add(device);
+            }
+
+            
 
             return dto;
 
