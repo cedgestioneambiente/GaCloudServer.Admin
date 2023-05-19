@@ -165,6 +165,8 @@
         public const string DROP_ViewConsorzio = "DROP_ViewConsorzio.sql";
         public const string CREATE_ViewConsorzio_V2 = "CREATE_ViewConsorzio_V2.sql";
         public const string DROP_ViewConsorzio_V2 = "DROP_ViewConsorzio_V2.sql";
+        public const string CREATE_ViewConsorzio_V3 = "CREATE_ViewConsorzio_V3.sql";
+        public const string DROP_ViewConsorzio_V3 = "DROP_ViewConsorzio_V3.sql";
 
         //Crm
         public const string GaCrm = @".\Scripts\Crm\";

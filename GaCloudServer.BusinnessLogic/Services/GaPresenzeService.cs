@@ -233,7 +233,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var approvazioneAutomatica = gaPresenzeTipiOreRepo.GetByIdAsync(entity.PresenzeTipoOraId).Result.ApprovazioneAutomatica;
             if (approvazioneAutomatica && entity.PresenzeStatoRichiestaId != 3)
             {
-                entity.PresenzeStatoRichiestaId = 1;
+                entity.PresenzeStatoRichiestaId = 2;
             }
             gaPresenzeRichiesteRepo.Update(entity);
             await SaveChanges();
