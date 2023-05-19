@@ -16,6 +16,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
         public string Trasportatore { get; set; }
         public string Destinatario { get; set; }
         public string Nominativo { get; set; }
-
+        public string Note { get; set; }
+        public string CodiceRaggruppamento { get; set; }
     }
 }

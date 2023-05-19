@@ -35,7 +35,7 @@ CREATE VIEW [dbo].[ViewConsorzioRegistrazioni]
 AS
 SELECT        dbo.ConsorzioRegistrazioni.UserId, dbo.ConsorzioRegistrazioni.Roles, dbo.ConsorzioRegistrazioni.PesoTotale, dbo.ConsorzioRegistrazioni.Operazione, dbo.ConsorzioRegistrazioni.DataRegistrazione, 
                          dbo.ConsorzioCers.Codice AS Cer, dbo.ConsorzioProduttori.Descrizione AS Produttore, dbo.ConsorzioTrasportatori.Descrizione AS Trasportatore, dbo.ConsorzioDestinatari.Descrizione AS Destinatario, 
-                         dbo.PrivateViewIdentityServerAdminUserList.FullName AS Nominativo, dbo.ConsorzioRegistrazioni.Id, dbo.ConsorzioRegistrazioni.Disabled
+                         dbo.PrivateViewIdentityServerAdminUserList.FullName AS Nominativo, dbo.ConsorzioRegistrazioni.Id, dbo.ConsorzioRegistrazioni.Disabled, dbo.ConsorzioRegistrazioni.ConsorzioProduttoreId AS ProduttoreId
 FROM            dbo.ConsorzioProduttori INNER JOIN
                          dbo.ConsorzioRegistrazioni ON dbo.ConsorzioProduttori.Id = dbo.ConsorzioRegistrazioni.ConsorzioProduttoreId INNER JOIN
                          dbo.ConsorzioDestinatari ON dbo.ConsorzioRegistrazioni.ConsorzioDestinatarioId = dbo.ConsorzioDestinatari.Id INNER JOIN

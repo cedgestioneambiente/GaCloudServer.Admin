@@ -57,6 +57,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> ChangeStatusConsorzioComuneAsync(long id);
         #endregion
 
+        #region Views
+        Task<PagedList<ViewConsorzioComuni>> GetViewConsorzioComuniAsync(bool all = true);
+        #endregion
+
         #endregion
 
         #region ConsorzioDestinatari
