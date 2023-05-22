@@ -298,6 +298,18 @@ namespace GaCloudServer.Resources.Api.Helpers
                                 (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.UserFoRole)
                             )
                         ));
+
+                options.AddPolicy(AuthorizationConsts.AdminOrUserAllPolicy,
+                    policy =>
+                        policy.RequireAssertion(context => context.User.HasClaim(c =>
+                                (c.Type == JwtClaimTypes.Role && c.Value == resourcesApiConfiguration.AdministrationRole) ||
+                                (c.Type == JwtClaimTypes.Role && c.Value == resourcesApiConfiguration.UserRole) ||
+                                (c.Type == JwtClaimTypes.Role && c.Value == resourcesApiConfiguration.UserExtRole) ||
+                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.AdministrationRole) ||
+                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.UserRole) ||
+                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.UserExtRole)
+                            )
+                        ));
             });
         }
 

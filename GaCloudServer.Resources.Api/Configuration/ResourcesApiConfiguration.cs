@@ -20,6 +20,7 @@
         public string? UserRole { get; set; }
         public string? UserEcRole { get; set; }
         public string? UserFoRole { get; set; }
+        public string? UserExtRole { get; set; }
 
         public bool CorsAllowAnyOrigin { get; set; }
 

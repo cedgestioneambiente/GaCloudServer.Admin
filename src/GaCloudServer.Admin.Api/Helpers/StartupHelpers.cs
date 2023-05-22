@@ -263,6 +263,7 @@ namespace GaCloudServer.Admin.Api.Helpers
                                 (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == adminApiConfiguration.UserRole) 
                             )
                         ));
+
             });
         }
 

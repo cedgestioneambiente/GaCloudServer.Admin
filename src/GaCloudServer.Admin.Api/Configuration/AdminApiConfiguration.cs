@@ -21,6 +21,7 @@ namespace GaCloudServer.Admin.Api.Configuration
 
         public string AdministrationRole { get; set; }
         public string UserRole { get; set; }
+        public string UserExtRole { get; set; }
 
         public bool CorsAllowAnyOrigin { get; set; }
 

@@ -7,6 +7,7 @@ namespace GaCloudServer.Admin.Api.Configuration.Constants
     {
         public const string AdministrationPolicy = "RequireAdministratorRole";
         public const string AdminOrUserPolicy = "RequireAdministratorRoleOrUserRole";
+        public const string AdminOrUserAllPolicy = "RequireAdministratorRoleOrUserAllRole";
     }
 }
 
