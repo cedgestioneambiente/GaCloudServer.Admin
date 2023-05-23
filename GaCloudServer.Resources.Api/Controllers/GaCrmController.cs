@@ -384,7 +384,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                var dtos = await _gaCrmService.GetGaCrmEventByBoardAsync(date,area);
+                var dtos = await _gaCrmService.GetGaCrmEventByBoardAsync(date,area,true);
                 var apiDtos = dtos.ToApiDto<CrmEventsApiDto, CrmEventsDto>();
                 return new ApiResponse(apiDtos);
             }
@@ -620,7 +620,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                var list = await _gaCrmService.GetGaCrmEventByBoardAsync(date,areaId);
+                var list = await _gaCrmService.GetGaCrmEventByBoardAsync(date,areaId,true);
 
                 if (list == null || (list.Data.Where(x => x.CrmEventStateId == 1).Count() == 0))
                 {
@@ -671,15 +671,15 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpGet("SendGaCrmEventsByFilterAsync/{date}/{areaId}/{userId}/{userName}")]
-        public async Task<ApiResponse> SendGaContactCenterIngByFilterAsync(DateTime date, long areaId,string userId,string userName)
+        [HttpGet("SendGaCrmEventsByFilterAsync/{date}/{areaId}/{userId}/{userName}/{all}")]
+        public async Task<ApiResponse> SendGaCrmEventsByFilterAsync(DateTime date, long areaId,string userId,string userName,bool all)
         {
             try
             {
                 var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Crm,AppConsts.CrmInfo);
 
 
-                var list = await _gaCrmService.GetGaCrmEventByBoardAsync(date, areaId);
+                var list = await _gaCrmService.GetGaCrmEventByBoardAsync(date, areaId,all);
 
                 if (list == null || (list.Data.Where(x => x.CrmEventStateId == 2).Count() == 0))
                 {

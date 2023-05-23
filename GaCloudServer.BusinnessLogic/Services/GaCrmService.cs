@@ -261,9 +261,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             var dtos = entities.ToDto<CrmEventsDto, PagedList<CrmEvent>>();
             return dtos;
         }
-        public async Task<CrmEventsDto> GetGaCrmEventByBoardAsync(DateTime date,long area)
+        public async Task<CrmEventsDto> GetGaCrmEventByBoardAsync(DateTime date,long area, bool all)
         {
-            var entities = await gaCrmEventsRepo.GetWithFilterAsync(x => x.DateSchedule.Date==date.Date && x.CrmEventAreaId==area);
+            var entities = all? await gaCrmEventsRepo.GetWithFilterAsync(x => x.DateSchedule.Date==date.Date && x.CrmEventAreaId==area):
+                await gaCrmEventsRepo.GetWithFilterAsync(x => x.DateSchedule.Date == date.Date && x.CrmEventAreaId == area && x.Sended==false);
             var dtos = entities.ToDto<CrmEventsDto, PagedList<CrmEvent>>();
             return dtos;
         }
