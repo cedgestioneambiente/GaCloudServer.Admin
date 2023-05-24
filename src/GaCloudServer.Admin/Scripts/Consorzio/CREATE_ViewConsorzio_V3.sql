@@ -14,6 +14,8 @@ DROP VIEW IF EXISTS [dbo].[ViewConsorzioDestinatari]
 GO
 DROP VIEW IF EXISTS [dbo].[ViewConsorzioTrasportatori]
 GO
+DROP VIEW IF EXISTS [dbo].[ViewConsorzioExport]
+GO
 
 CREATE VIEW [dbo].[ViewConsorzioProduttori]
 AS
@@ -39,4 +41,19 @@ SELECT        dbo.ConsorzioTrasportatori.Id, dbo.ConsorzioComuni.Descrizione + N
                          dbo.ConsorzioTrasportatori.Indirizzo + N' ' + dbo.ConsorzioComuni.Descrizione + N' ' + N'(' + dbo.ConsorzioComuni.Provincia + N')' AS IndirizzoEsteso
 FROM            dbo.ConsorzioTrasportatori INNER JOIN
                          dbo.ConsorzioComuni ON dbo.ConsorzioTrasportatori.ConsorzioComuneId = dbo.ConsorzioComuni.Id
+GO
+
+CREATE VIEW [dbo].[ViewConsorzioExport]
+AS
+SELECT        dbo.ConsorzioRegistrazioni.Id, dbo.ConsorzioRegistrazioni.DataRegistrazione AS [Data Registrazione], dbo.ConsorzioCers.Codice AS Cer, dbo.ConsorzioCers.Descrizione AS [Descrizione CER], 
+                         dbo.ConsorzioRegistrazioni.PesoTotale AS [Peso (Kg)], dbo.ConsorzioCersSmaltimenti.Descrizione AS [Tipo Smaltimento], dbo.ConsorzioCers.CodiceRaggruppamento AS [Codice Raggruppamento], 
+                         dbo.ConsorzioRegistrazioni.Operazione, dbo.ConsorzioProduttori.Descrizione AS Produttore, dbo.ConsorzioTrasportatori.Descrizione AS Trasportatore, dbo.ConsorzioDestinatari.Descrizione AS Destinatario, 
+                         dbo.PrivateViewIdentityServerAdminUserList.FullName AS [Nominativo Registrazione], dbo.ConsorzioRegistrazioni.Note
+FROM            dbo.ConsorzioProduttori INNER JOIN
+                         dbo.ConsorzioRegistrazioni ON dbo.ConsorzioProduttori.Id = dbo.ConsorzioRegistrazioni.ConsorzioProduttoreId INNER JOIN
+                         dbo.ConsorzioDestinatari ON dbo.ConsorzioRegistrazioni.ConsorzioDestinatarioId = dbo.ConsorzioDestinatari.Id INNER JOIN
+                         dbo.ConsorzioTrasportatori ON dbo.ConsorzioRegistrazioni.ConsorzioTrasportatoreId = dbo.ConsorzioTrasportatori.Id INNER JOIN
+                         dbo.ConsorzioCers ON dbo.ConsorzioRegistrazioni.ConsorzioCerId = dbo.ConsorzioCers.Id INNER JOIN
+                         dbo.PrivateViewIdentityServerAdminUserList ON dbo.ConsorzioRegistrazioni.UserId = dbo.PrivateViewIdentityServerAdminUserList.Id INNER JOIN
+                         dbo.ConsorzioCersSmaltimenti ON dbo.ConsorzioCers.ConsorzioCerSmaltimentoId = dbo.ConsorzioCersSmaltimenti.Id
 GO

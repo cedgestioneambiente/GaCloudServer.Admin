@@ -3,8 +3,10 @@ using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
+using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Dtos.Custom;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
@@ -1152,6 +1154,38 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 throw new ApiException(ex.Message);
             }
+        }
+
+        //[HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{roles}")]
+        //public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam(GridOperationsModel filter, string? roles = "0")
+        //{
+        //    try
+        //    {
+        //        roles = roles == "NaN" ? "0" : roles;
+        //        var entities = _consorzioService.GetViewConsorzioRegistrazioniByRolesQueryable(filter, roles.Split(",").ToArray());
+        //        return new ApiResponse(entities);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ApiException(ex.Message);
+        //    }
+        //}
+
+        [HttpPost("GetViewConsorzioRegistrazioniQueryableByDateAsync")]
+        public async Task<ActionResult<ApiResponse>> GetViewConsorzioRegistrazioniQueryableByDateAsync(DateRangeDto dto)
+        {
+            try
+            {
+                var view = await _consorzioService.GetViewConsorzioRegistrazioniQueryableByDateAsync(dto.dateStart, dto.dateEnd.SetTime(23, 59, 59));
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
         }
         #endregion
         #endregion
