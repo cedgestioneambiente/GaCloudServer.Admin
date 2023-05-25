@@ -27,7 +27,7 @@ AS
 SELECT        dbo.GaPrenotazioneLocaliRegistrazioni.Id, dbo.GaPrenotazioneLocaliRegistrazioni.DataInizio AS start, dbo.GaPrenotazioneLocaliRegistrazioni.DataFine AS [end], dbo.GaPrenotazioneLocaliUffici.Colore AS color, 
                          dbo.GaPrenotazioneLocaliUffici.Colore AS backgroundColor, LEFT(CONVERT(VARCHAR, dbo.GaPrenotazioneLocaliRegistrazioni.DataInizio, 108), LEN(CONVERT(VARCHAR, dbo.GaPrenotazioneLocaliRegistrazioni.DataInizio, 
                          108)) - 3) + N' - ' + LEFT(CONVERT(VARCHAR, dbo.GaPrenotazioneLocaliRegistrazioni.DataFine, 108), LEN(CONVERT(VARCHAR, dbo.GaPrenotazioneLocaliRegistrazioni.DataFine, 108)) - 3) 
-                         + N' - ' + dbo.GaPrenotazioneLocaliRegistrazioni.Motivazione AS title, dbo.GaPrenotazioneLocaliRegistrazioni.Disabled
+                         + N' - ' + dbo.GaPrenotazioneLocaliRegistrazioni.Motivazione AS title, dbo.GaPrenotazioneLocaliRegistrazioni.Disabled, dbo.GaPrenotazioneLocaliRegistrazioni.UserId
 FROM            dbo.GaPrenotazioneLocaliRegistrazioni INNER JOIN
                          dbo.GaPrenotazioneLocaliUffici ON dbo.GaPrenotazioneLocaliRegistrazioni.PrenotazioneLocaliUfficioId = dbo.GaPrenotazioneLocaliUffici.Id
 GO
