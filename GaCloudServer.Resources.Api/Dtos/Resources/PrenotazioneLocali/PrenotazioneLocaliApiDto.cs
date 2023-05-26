@@ -30,7 +30,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.PrenotazioneLocali
     #region PrenotazioneLocaliRegistrazioni
     public class PrenotazioneLocaliRegistrazioneApiDto : GenericApiDto
     {
-        public string Colore { get; set; }
+        public string? Colore { get; set; }
         public DateTime DataInizio { get; set; }
         public DateTime DataFine { get; set; }
         public bool InteraGiornata { get; set; }

@@ -726,6 +726,45 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByRolesQueryable(GridOperationsModel filterParams, string[]? roles)
+        {
+
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+                if (roles == null || roles.Count() == 0)
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => roles.Contains(x.Roles), filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+            }
+            else
+            {
+                if (roles == null || roles.Count() == 0)
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2(filterParams);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => roles.Contains(x.Roles), filterParams);
+                    return filterResult;
+                }
+            }
+
+        }
+
+        public async Task<PagedList<ViewConsorzioRegistrazioni>> GetViewConsorzioRegistrazioniQueryableByDateAsync(DateTime dateStart, DateTime dateEnd)
+        {
+            var view = await viewConsorzioRegistrazioniRepo
+            .GetWithFilterAsync(x => x.DataRegistrazione >= dateStart && x.DataRegistrazione <= dateEnd, 1, 0, "DataRegistrazione", "OrderByDescending");
+            return view;
+        }
         #endregion
 
         #endregion
