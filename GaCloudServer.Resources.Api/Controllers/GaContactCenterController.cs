@@ -1103,7 +1103,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                apiDto.DataTicket = DateTime.UtcNow;
+                apiDto.DataTicket = DateTime.Now;
                 var dto = apiDto.ToDto<ContactCenterTicketDto, ContactCenterTicketApiDto>();
                 var response = await _gaContactCenterService.AddGaContactCenterTicketAsync(dto);
 
@@ -1204,7 +1204,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 if (!ticket.Ingombranti)
                 {
-                    var dto = GenerateContactCenterTicketIntTemplate(ticket, dataStampa);
+                    var dto = GenerateContactCenterTicketIntTemplate(ticket, dataStampa, "ContactCenterInterventoTicketMail.pdf");
 
                     var attachPath = await _printService.Print("ContactCenterTicketInt", dto);
 
@@ -1232,7 +1232,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
                 else
                 {
-                    var dto = GenerateContactCenterTicketIngTemplate(ticket, dataStampa);
+                    var dto = GenerateContactCenterTicketIngTemplate(ticket, dataStampa, "ContactCenterIngombrantiTicketMail.pdf");
 
                     var attachPath = await _printService.Print("ContactCenterTicketIng", dto);
                     var result = await _mailService.AddMailJobAsync(new MailJob()
@@ -1673,11 +1673,11 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Helpers
-        private ContactCenterTicketIntTemplateDto GenerateContactCenterTicketIntTemplate(ViewGaContactCenterTickets ticket, string dataStampa) 
+        private ContactCenterTicketIntTemplateDto GenerateContactCenterTicketIntTemplate(ViewGaContactCenterTickets ticket, string dataStampa,string fileName= "ContactCenterInterventoTicket.pdf") 
         {
             var dto = new ContactCenterTicketIntTemplateDto()
             {
-                FileName = "ContactCenterInterventoTicket.pdf",
+                FileName = fileName,
                 FilePath = @"Print/ContactCenter",
                 Title = "Contact Center Ticket Intervento",
                 Css = "ContactCenterTicketInt"
@@ -1705,11 +1705,11 @@ namespace GaCloudServer.Resources.Api.Controllers
             return dto;
         }
 
-        private ContactCenterTicketIngTemplateDto GenerateContactCenterTicketIngTemplate(ViewGaContactCenterTickets ticket, string dataStampa)
+        private ContactCenterTicketIngTemplateDto GenerateContactCenterTicketIngTemplate(ViewGaContactCenterTickets ticket, string dataStampa,string fileName= "ContactCenterIngombrantiTicket.pdf")
         {
             var dto = new ContactCenterTicketIngTemplateDto()
             {
-                FileName = "ContactCenterIngombrantiTicket.pdf",
+                FileName = fileName,
                 FilePath = @"Print/ContactCenter",
                 Title = "Contact Center Ticket Ingombranti",
                 Css = "ContactCenterTicketIng"
