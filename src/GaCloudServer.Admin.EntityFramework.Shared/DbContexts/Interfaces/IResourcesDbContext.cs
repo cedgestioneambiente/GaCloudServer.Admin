@@ -465,6 +465,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Crm
         DbSet<CrmEventState> GaCrmEventStates { get; set; }
         DbSet<CrmEventArea> GaCrmEventAreas { get; set; }
+        DbSet<CrmEventComune> GaCrmEventComuni { get; set; }
         DbSet<CrmEvent> GaCrmEvents { get; set; }
         DbSet<CrmEventDevice> GaCrmEventDevices { get; set; }
 

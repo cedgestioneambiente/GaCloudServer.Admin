@@ -457,6 +457,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Crm
             services.AddTransient<IGenericRepository<CrmEventState>, GenericRepository<TResourcesDbContext, CrmEventState>>();
             services.AddTransient<IGenericRepository<CrmEventArea>, GenericRepository<TResourcesDbContext, CrmEventArea>>();
+            services.AddTransient<IGenericRepository<CrmEventComune>, GenericRepository<TResourcesDbContext, CrmEventComune>>();
             services.AddTransient<IGenericRepository<CrmEvent>, GenericRepository<TResourcesDbContext, CrmEvent>>();
             services.AddTransient<IGenericRepository<CrmEventDevice>, GenericRepository<TResourcesDbContext, CrmEventDevice>>();
 

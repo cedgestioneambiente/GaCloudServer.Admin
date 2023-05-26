@@ -31,6 +31,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public bool Sended { get; set; }
         public string NotaOperatore { get; set; }
         public DateTime? DataCessazione { get; set; }
+        public long? Duration { get; set; }
     }
 
     public class CrmEventsDto : GenericPagedListDto<CrmEventDto>
@@ -54,10 +55,24 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
     #region CrmEventAreas
     public class CrmEventAreaDto : GenericListEntity
     {
-
+        public string Days { get; set; }
+        public string Color { get; set; }
     }
 
     public class CrmEventAreasDto : GenericPagedListDto<CrmEventAreaDto>
+    {
+    }
+
+    #endregion
+
+    #region CrmEventComuni
+    public class CrmEventComuneDto : GenericListEntity
+    {
+        public string CodAzi { get; set; }
+        public long Duration { get; set; }
+    }
+
+    public class CrmEventComuniDto : GenericPagedListDto<CrmEventComuneDto>
     {
     }
 

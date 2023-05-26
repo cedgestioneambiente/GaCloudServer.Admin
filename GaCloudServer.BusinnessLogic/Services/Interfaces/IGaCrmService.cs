@@ -45,6 +45,20 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region CrmEventComuni
+        Task<CrmEventComuniDto> GetGaCrmEventComuniAsync(int page = 1, int pageSize = 0);
+        Task<CrmEventComuneDto> GetGaCrmEventComuneByIdAsync(long id);
+
+        Task<long> AddGaCrmEventComuneAsync(CrmEventComuneDto dto);
+        Task<long> UpdateGaCrmEventComuneAsync(CrmEventComuneDto dto);
+
+        Task<bool> DeleteGaCrmEventComuneAsync(long id);
+
+        #region Views
+        #endregion
+
+        #endregion
+
         #region CrmEvents
         Task<CrmEventsDto> GetGaCrmEventsAsync(int page = 1, int pageSize = 0);
         Task<CrmEventsDto> GetGaCrmEventByBoardAsync(DateTime date, long area,bool all);

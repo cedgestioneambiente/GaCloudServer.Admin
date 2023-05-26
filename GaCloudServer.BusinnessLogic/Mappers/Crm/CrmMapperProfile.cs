@@ -23,6 +23,13 @@ namespace GaCloudServer.BusinessLogic.Mappers.Crm
             CreateMap<PagedList<CrmEventArea>, CrmEventAreasDto>(MemberList.Destination)
                 .ReverseMap();
 
+            //CrmEventComuni
+            CreateMap<CrmEventComune, CrmEventComuneDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<CrmEventComune>, CrmEventComuniDto>(MemberList.Destination)
+                .ReverseMap();
+
             //CrmEvent
             CreateMap<CrmEvent, CrmEventDto>(MemberList.Destination)
                 .ReverseMap();

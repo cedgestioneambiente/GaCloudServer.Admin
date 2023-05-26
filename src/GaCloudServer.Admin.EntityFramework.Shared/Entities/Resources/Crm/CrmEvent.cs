@@ -29,6 +29,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
         public bool Sended { get; set; }
         public string NotaOperatore { get; set; }
         public DateTime? DataCessazione { get; set; }
+        public long? Duration { get; set; }
 
         public CrmEventState CrmEventState { get; set; }
         public CrmEventArea CrmEventArea { get; set; }

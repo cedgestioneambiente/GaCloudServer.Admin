@@ -31,6 +31,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public bool Sended { get; set; }
         public string? NotaOperatore { get; set; }
         public DateTime? DataCessazione { get; set; }
+        public long? Duration { get; set; }
     }
 
     public class CrmEventsApiDto : GenericPagedListApiDto<CrmEventApiDto>
@@ -54,10 +55,24 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
     #region CrmEventAreasApiDto
     public class CrmEventAreaApiDto : GenericListApiDto
     {
-
+        public string Days { get; set; }
+        public string Color { get; set; }
     }
 
     public class CrmEventAreasApiDto : GenericPagedListApiDto<CrmEventAreaApiDto>
+    {
+    }
+
+    #endregion
+
+    #region CrmEventComuneApiDto
+    public class CrmEventComuneApiDto : GenericListApiDto
+    {
+        public string CodAzi { get; set; }
+        public long Duration{ get; set; }
+    }
+
+    public class CrmEventComuniApiDto : GenericPagedListApiDto<CrmEventComuneApiDto>
     {
     }
 

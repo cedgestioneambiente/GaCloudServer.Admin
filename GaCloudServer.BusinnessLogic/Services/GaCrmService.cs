@@ -16,6 +16,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         protected readonly IGenericRepository<CrmEventState> gaCrmEventStatesRepo;
         protected readonly IGenericRepository<CrmEventArea> gaCrmEventAreasRepo;
+        protected readonly IGenericRepository<CrmEventComune> gaCrmEventComuniRepo;
         protected readonly IGenericRepository<CrmEvent> gaCrmEventsRepo;
         protected readonly IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo;
 
@@ -31,6 +32,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<CrmEventState> gaCrmEventStatesRepo,
             IGenericRepository<CrmEventArea> gaCrmEventAreasRepo,
+            IGenericRepository<CrmEventComune> gaCrmEventComuniRepo,
             IGenericRepository<CrmEvent> gaCrmEventsRepo,
             IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo,
 
@@ -44,6 +46,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this._queryManager = queryManager;
 
             this.gaCrmEventAreasRepo = gaCrmEventAreasRepo;
+            this.gaCrmEventComuniRepo = gaCrmEventComuniRepo;
             this.gaCrmEventStatesRepo = gaCrmEventStatesRepo;
             this.gaCrmEventsRepo = gaCrmEventsRepo;
             this.gaCrmEventDevicesRepo = gaCrmEventDevicesRepo;
@@ -245,6 +248,86 @@ namespace GaCloudServer.BusinnessLogic.Services
             {
                 entity.Disabled = true;
                 gaCrmEventAreasRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region CrmEventComuni
+        public async Task<CrmEventComuniDto> GetGaCrmEventComuniAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmEventComuniRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CrmEventComuniDto, PagedList<CrmEventComune>>();
+            return dtos;
+        }
+
+        public async Task<CrmEventComuneDto> GetGaCrmEventComuneByIdAsync(long id)
+        {
+            var entity = await gaCrmEventComuniRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmEventComuneDto, CrmEventComune>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCrmEventComuneAsync(CrmEventComuneDto dto)
+        {
+            var entity = dto.ToEntity<CrmEventComune, CrmEventComuneDto>();
+            await gaCrmEventComuniRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmEventComuneAsync(CrmEventComuneDto dto)
+        {
+            var entity = dto.ToEntity<CrmEventComune, CrmEventComuneDto>();
+            gaCrmEventComuniRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCrmEventComuneAsync(long id)
+        {
+            var entity = await gaCrmEventComuniRepo.GetByIdAsync(id);
+            gaCrmEventComuniRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaCremEventComuneAsync(long id, string descrizione)
+        {
+            var entity = await gaCrmEventComuniRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaCrmEventComuneAsync(long id)
+        {
+            var entity = await gaCrmEventComuniRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCrmEventComuniRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCrmEventComuniRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }

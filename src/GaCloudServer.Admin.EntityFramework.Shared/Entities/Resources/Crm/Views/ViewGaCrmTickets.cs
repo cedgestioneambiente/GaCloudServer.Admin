@@ -51,6 +51,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.View
         public DateTime? OraTrasm { get; set; }
         public string AutoClose { get; set; }
         public int? CpRowNum { get; set; }
+        public long? Duration { get; set; }
 
     }
 }

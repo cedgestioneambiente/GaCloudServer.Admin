@@ -51,7 +51,10 @@ GO
 
 CREATE VIEW [dbo].[ViewGaCrmTickets]
 AS
-    SELECT *
+    SELECT A.*,b.Duration
       FROM [20.82.75.6].[TARI].[dbo].[ViewGaCrmTickets] A
+         LEFT OUTER JOIN GaCrmEventComuni B ON TRIM(A.Prefix)=B.CodAzi COLLATE DATABASE_DEFAULT
+         WHERE A.Id NOT IN (SELECT CrmTicketId FROM GaCrmEvents WHERE CrmEventStateId NOT IN('3','4'))
+
 
 GO

@@ -361,6 +361,143 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region CrmEventComuni
+        [HttpGet("GetGaCrmEventComuniAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmEventComuniAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaCrmService.GetGaCrmEventComuniAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<CrmEventComuniApiDto, CrmEventComuniDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCrmEventComuneByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmEventComuneByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCrmService.GetGaCrmEventComuneByIdAsync(id);
+                var apiDto = dto.ToApiDto<CrmEventComuneApiDto, CrmEventComuneDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaCrmEventComuneAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaCrmEventComuneAsync([FromBody] CrmEventComuneApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CrmEventComuneDto, CrmEventComuneApiDto>();
+                var response = await _gaCrmService.AddGaCrmEventComuneAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaCrmEventComuneAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCrmEventComuneAsync([FromBody] CrmEventComuneApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CrmEventComuneDto, CrmEventComuneApiDto>();
+                var response = await _gaCrmService.UpdateGaCrmEventComuneAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaCrmEventComuneAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaCrmEventComuneAsync(long id)
+        {
+            try
+            {
+                var response = await _gaCrmService.DeleteGaCrmEventComuneAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        //[HttpGet("ValidateGaCrmEventComuneAsync/{id}/{descrizione}")]
+        //public async Task<ActionResult<ApiResponse>> ValidateGaCrmEventComuneAsync(long id, string descrizione)
+        //{
+        //    try
+        //    {
+        //        var response = await _gaCrmService.ValidateGaCrmEventComuneAsync(id, descrizione);
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+
+        //}
+
+        //[HttpGet("ChangeStatusGaCrmEventComuneAsync/{id}")]
+        //public async Task<ActionResult<ApiResponse>> ChangeStatusGaCrmEventComuneAsync(long id)
+        //{
+        //    try
+        //    {
+        //        var response = await _gaCrmService.ChangeStatusGaCrmEventComuneAsync(id);
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+
+        //}
+        #endregion
+
+        #endregion
+
         #region CrmEvents
         [HttpGet("GetGaCrmEventsAsync/{page}/{pageSize}")]
         public async Task<ActionResult<ApiResponse>> GetGaCrmEventsAsync(int page = 1, int pageSize = 0)
