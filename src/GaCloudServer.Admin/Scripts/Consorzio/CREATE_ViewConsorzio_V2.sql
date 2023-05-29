@@ -18,7 +18,8 @@ GO
 CREATE VIEW [dbo].[ViewConsorzioCers]
 AS
 SELECT        dbo.ConsorzioCers.Id, dbo.ConsorzioCers.Codice, dbo.ConsorzioCers.Pericoloso, dbo.ConsorzioCers.Immagine, dbo.ConsorzioCers.Descrizione, dbo.ConsorzioCersSmaltimenti.Descrizione AS TipoSmaltimento, 
-                         dbo.ConsorzioCers.Disabled, dbo.ConsorzioCers.CodiceRaggruppamento
+                         dbo.ConsorzioCers.Disabled, dbo.ConsorzioCers.CodiceRaggruppamento,            
+						 CONCAT(dbo.ConsorzioCers.Codice , N' - ' , dbo.ConsorzioCers.CodiceRaggruppamento , N' ' , N'(' + dbo.ConsorzioCers.Descrizione + N')') AS DescrizioneEstesa
 FROM            dbo.ConsorzioCers INNER JOIN
                          dbo.ConsorzioCersSmaltimenti ON dbo.ConsorzioCers.ConsorzioCerSmaltimentoId = dbo.ConsorzioCersSmaltimenti.Id
 GO
