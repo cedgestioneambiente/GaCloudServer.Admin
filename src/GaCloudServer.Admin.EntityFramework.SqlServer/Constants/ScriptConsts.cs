@@ -175,7 +175,9 @@
         public const string CREATE_ViewGaCrm_V3 = "CREATE_ViewGaCrm_V3.sql";
         public const string DROP_ViewGaCrm_V3 = "DROP_ViewGaCrm_V3.sql";
         public const string CREATE_ViewGaCrm_V2 = "CREATE_ViewGaCrm_V2.sql";
+        public const string CREATE_ViewGaCrm_V4 = "CREATE_ViewGaCrm_V4.sql";
         public const string DROP_ViewGaCrm_V2 = "DROP_ViewGaCrm_V2.sql";
+        public const string DROP_ViewGaCrm_V4 = "DROP_ViewGaCrm_V4.sql";
 
         //PrenotazioneLocali
         public const string GaPrenotazioneLocaliMigration = @".\Scripts\PrenotazioneLocali\";
