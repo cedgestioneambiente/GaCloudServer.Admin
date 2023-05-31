@@ -1,16 +1,12 @@
 ﻿using AutoWrapper.Wrappers;
-using GaCloudServer.BusinnessLogic.Dtos.Resources.Autorizzazioni;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Shortcuts;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
-using GaCloudServer.Resources.Api.Dtos.Autorizzazioni;
 using GaCloudServer.Resources.Api.Dtos.Resources.Shortcuts;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
-using GaCloudServer.Resources.Api.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -18,7 +14,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
     public class ShortcutsController : Controller
     {
         private readonly IShortcutsService _shortcutsService;

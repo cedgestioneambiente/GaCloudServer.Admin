@@ -305,9 +305,13 @@ namespace GaCloudServer.Resources.Api.Helpers
                                 (c.Type == JwtClaimTypes.Role && c.Value == resourcesApiConfiguration.AdministrationRole) ||
                                 (c.Type == JwtClaimTypes.Role && c.Value == resourcesApiConfiguration.UserRole) ||
                                 (c.Type == JwtClaimTypes.Role && c.Value == resourcesApiConfiguration.UserExtRole) ||
+                                (c.Type == JwtClaimTypes.Role && c.Value == resourcesApiConfiguration.UserFoRole) ||
+                                (c.Type == JwtClaimTypes.Role && c.Value == resourcesApiConfiguration.UserEcRole) ||
                                 (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.AdministrationRole) ||
                                 (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.UserRole) ||
-                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.UserExtRole)
+                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.UserExtRole) ||
+                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.UserFoRole) ||
+                                (c.Type == $"client_{JwtClaimTypes.Role}" && c.Value == resourcesApiConfiguration.UserEcRole) 
                             )
                         ));
             });

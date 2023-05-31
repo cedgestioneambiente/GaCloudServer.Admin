@@ -114,12 +114,13 @@
                             </button>
                             <div class="collapse navbar-collapse" id="navigation">
                                 <ul class="navbar-nav mx-auto ms-xl-auto me-xl-7">
-                                    <li class="nav-item">
+                                    @*<li class="nav-item">
                                         <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/ServerSideSessions">
                                             <i class="fa fa-server opacity-6 text-dark me-1"></i>
                                             @Localizer["Sessions"]
                                         </a>
-                                    </li>
+                                    </li>*@
+                                    <vc:session-server-admin-link></vc:session-server-admin-link>
                                     <vc:identity-server-admin-link></vc:identity-server-admin-link>
                                 </ul>
                                 <li class="nav-item d-flex align-items-center">
