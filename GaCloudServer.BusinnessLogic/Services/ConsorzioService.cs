@@ -369,9 +369,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioProduttoreAsync(long id, string descrizione)
+        public async Task<bool> ValidateConsorzioProduttoreAsync(long id, string cdPiva, string indirizzo)
         {
-            var entity = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+            var entity = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CdPiva == cdPiva && x.Indirizzo == indirizzo && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -457,9 +457,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioDestinatarioAsync(long id, string descrizione)
+        public async Task<bool> ValidateConsorzioDestinatarioAsync(long id, string cdPiva, string indirizzo)
         {
-            var entity = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+            var entity = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CdPiva == cdPiva  && x.Indirizzo == indirizzo && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -545,9 +545,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string descrizione)
+        public async Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string cdPiva, string indirizzo)
         {
-            var entity = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+            var entity = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CdPiva == cdPiva && x.Indirizzo == indirizzo && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -729,6 +729,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByRolesQueryable(GridOperationsModel filterParams, string[]? roles)
         {
+            //Aggiungere controllo ruolo admin o extconsorzioadmin
 
             if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
             {
@@ -739,8 +740,16 @@ namespace GaCloudServer.BusinnessLogic.Services
                 }
                 else
                 {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => roles.Contains(x.Roles), filterParams, filterParams.quickFilter);
-                    return filterResult;
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => x.Id>0, filterParams, filterParams.quickFilter)
+                        .Data
+                        .AsEnumerable()
+                        .Where(t=>roles.Any(p=>t.Roles.Contains(p)));
+
+                    var result = new PagedList<ViewConsorzioRegistrazioni>();
+                    result.TotalCount=filterResult.Count();
+                    result.PageSize = 0;
+                    result.Data.AddRange(filterResult);
+                    return result;
                 }
             }
             else
@@ -752,8 +761,16 @@ namespace GaCloudServer.BusinnessLogic.Services
                 }
                 else
                 {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => roles.Contains(x.Roles), filterParams);
-                    return filterResult;
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => x.Id>0, filterParams)
+                        .Data
+                        .AsEnumerable()
+                        .Where(t => roles.Any(p => t.Roles.Contains(p)));
+
+                    var result = new PagedList<ViewConsorzioRegistrazioni>();
+                    result.TotalCount = filterResult.Count();
+                    result.PageSize = 0;
+                    result.Data.AddRange(filterResult);
+                    return result;
                 }
             }
 

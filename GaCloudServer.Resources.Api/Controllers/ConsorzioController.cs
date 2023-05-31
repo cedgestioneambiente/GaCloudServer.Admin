@@ -590,12 +590,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioProduttoreAsync/{id}/{descrizione}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioProduttoreAsync(long id, string descrizione)
+        [HttpGet("ValidateConsorzioProduttoreAsync/{id}/{cdPiva}/{indirizzo}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioProduttoreAsync(long id, string cdPiva, string indirizzo)
         {
             try
             {
-                var response = await _consorzioService.ValidateConsorzioProduttoreAsync(id, descrizione);
+                var response = await _consorzioService.ValidateConsorzioProduttoreAsync(id, cdPiva, indirizzo);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -746,12 +746,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioDestinatarioAsync/{id}/{descrizione}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioDestinatarioAsync(long id, string descrizione)
+        [HttpGet("ValidateConsorzioDestinatarioAsync/{id}/{cdPiva}/{indirizzo}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioDestinatarioAsync(long id, string cdPiva, string indirizzo)
         {
             try
             {
-                var response = await _consorzioService.ValidateConsorzioDestinatarioAsync(id, descrizione);
+                var response = await _consorzioService.ValidateConsorzioDestinatarioAsync(id, cdPiva, indirizzo);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -902,12 +902,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioTrasportatoreAsync/{id}/{descrizione}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioTrasportatoreAsync(long id, string descrizione)
+        [HttpGet("ValidateConsorzioTrasportatoreAsync/{id}/{cdPiva}/{indirizzo}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioTrasportatoreAsync(long id, string cdPiva, string indirizzo)
         {
             try
             {
-                var response = await _consorzioService.ValidateConsorzioTrasportatoreAsync(id, descrizione);
+                var response = await _consorzioService.ValidateConsorzioTrasportatoreAsync(id, cdPiva, indirizzo);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -1140,29 +1140,13 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
 
-        [HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{produttoriId}")]
-        public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam(GridOperationsModel filter, string? produttoriId = "0")
-        {
-            try
-            {
-                produttoriId = produttoriId == "NaN" ? "0" : produttoriId;
-                var entities = _consorzioService.GetViewConsorzioRegistrazioniByProduttoreQueryable(filter, produttoriId.Split(",").Select(long.Parse).ToArray());
-                return new ApiResponse(entities);
-
-            }
-            catch (Exception ex)
-            {
-                throw new ApiException(ex.Message);
-            }
-        }
-
-        //[HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{roles}")]
-        //public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam(GridOperationsModel filter, string? roles = "0")
+        //[HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{produttoriId}")]
+        //public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam(GridOperationsModel filter, string? produttoriId = "0")
         //{
         //    try
         //    {
-        //        roles = roles == "NaN" ? "0" : roles;
-        //        var entities = _consorzioService.GetViewConsorzioRegistrazioniByRolesQueryable(filter, roles.Split(",").ToArray());
+        //        produttoriId = produttoriId == "NaN" ? "0" : produttoriId;
+        //        var entities = _consorzioService.GetViewConsorzioRegistrazioniByProduttoreQueryable(filter, produttoriId.Split(",").Select(long.Parse).ToArray());
         //        return new ApiResponse(entities);
 
         //    }
@@ -1171,6 +1155,22 @@ namespace GaCloudServer.Resources.Api.Controllers
         //        throw new ApiException(ex.Message);
         //    }
         //}
+
+        [HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{roles}")]
+        public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam(GridOperationsModel filter, string? roles = "0")
+        {
+            try
+            {
+                roles = roles == "NaN" ? "0" : roles;
+                var entities = _consorzioService.GetViewConsorzioRegistrazioniByRolesQueryable(filter, roles.Split(","));
+                return new ApiResponse(entities);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
 
         [HttpPost("GetViewConsorzioRegistrazioniQueryableByDateAsync")]
         public async Task<ActionResult<ApiResponse>> GetViewConsorzioRegistrazioniQueryableByDateAsync(DateRangeDto dto)
