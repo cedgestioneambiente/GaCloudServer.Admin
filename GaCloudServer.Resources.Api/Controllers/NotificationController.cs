@@ -9,6 +9,8 @@ using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Resources.Dtos.Resources.Notification;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Authorization;
+using GaCloudServer.Resources.Api.Configuration.Constants;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -16,7 +18,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    //[Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
     public class NotificationController : Controller
     {
         private readonly INotificationService _notificationService;

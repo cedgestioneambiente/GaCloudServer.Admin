@@ -10,6 +10,7 @@ namespace GaCloudServer.STS.Identity.Configuration
         public string LogoOndeUri { get; set; }
         public string FaviconUri { get; set; }
         public string IdentityAdminBaseUrl { get; set; }
+        public string SessionAdminBaseUrl { get; set; }
         public string AdministrationRole { get; set; }
 
         public string Theme { get; set; }

@@ -8,9 +8,6 @@ using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Graph;
-using Skoruba.AuditLogging.Events;
-using Skoruba.AuditLogging.Services;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
