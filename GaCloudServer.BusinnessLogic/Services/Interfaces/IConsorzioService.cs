@@ -73,7 +73,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteConsorzioDestinatarioAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioDestinatarioAsync(long id, string descrizione);
+        Task<bool> ValidateConsorzioDestinatarioAsync(long id, string cdPiva, string indirizzo);
         Task<bool> ChangeStatusConsorzioDestinatarioAsync(long id);
         #endregion
 
@@ -93,7 +93,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteConsorzioProduttoreAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioProduttoreAsync(long id, string descrizione);
+        Task<bool> ValidateConsorzioProduttoreAsync(long id, string cdPiva, string indirizzo);
         Task<bool> ChangeStatusConsorzioProduttoreAsync(long id);
         #endregion
 
@@ -113,7 +113,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteConsorzioTrasportatoreAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string descrizione);
+        Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string cdPiva, string indirizzo);
         Task<bool> ChangeStatusConsorzioTrasportatoreAsync(long id);
         #endregion
 
