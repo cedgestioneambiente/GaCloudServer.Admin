@@ -97,6 +97,39 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
     }
     #endregion
 
+    #region Crm Tickets
+    public class CrmTicketDto : GenericEntity
+    {
+        public DateTime DataTicket { get; set; }
+        public DateTime DataRichiesta { get; set; }
+        public long CrmEventComuneId { get; set; }
+        public string Utente { get; set; }
+        public string CodCli { get; set; }
+        public string NumCon { get; set; }
+        public string Partita { get; set; }
+        public string Prg { get; set; }
+        public string CfPiva { get; set; }
+        public string Via { get; set; }
+        public string NumCiv { get; set; }
+        public long ContactCenterProvenienzaId { get; set; }
+        public string? Telefono { get; set; }
+        public string? Cellulare { get; set; }
+        public string? Email { get; set; }
+        public long ContactCenterTioRichiestaId { get; set; }
+        public DateTime? DataChiusura { get; set; }
+        public long ContactCenterStatoRichiestaId { get; set; }
+        public string Creator { get; set; }
+        public string Assignee { get; set; }
+        public string? NoteCrm { get; set; }
+        public string? NoteOperatore { get; set; }
+    }
+
+    public class CrmTicketsDto : GenericPagedListDto<CrmTicketDto>
+    {
+    }
+
+    #endregion
+
     public class CrmChangeEventStateDto
     { 
         public long id { get; set; }

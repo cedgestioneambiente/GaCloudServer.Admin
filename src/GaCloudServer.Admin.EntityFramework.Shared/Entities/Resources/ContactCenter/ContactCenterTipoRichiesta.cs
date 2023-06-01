@@ -10,5 +10,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
     public class ContactCenterTipoRichiesta : GenericListEntity
     {
         public bool Ingombranti { get; set; }
+        public bool Magazzino { get; set; }
+        public bool MagazzinoCalendar { get; set; }
+        public bool Fatturazione { get; set; }
+        public bool ContactCenter { get; set; }
+        public bool ContactCenterCalendar { get; set; }
+        public string CodArera { get; set; }
+        public string PrintTemplate { get; set; }
+        public string Group { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -153,7 +154,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             var pagedList = new PagedList<TEntity>();
 
             List<TEntity> entities;
-            var queryableEntities = _entities.Where(predicate).AsQueryable();
+            IQueryable<TEntity> queryableEntities = _entities.Where(predicate);
 
             var prop = typeof(TEntity).GetProperty(orderField);
             var parameter = Expression.Parameter(typeof(TEntity), "x");
@@ -183,6 +184,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             return pagedList;
 
         }
+
+
+
 
         public virtual async Task<TEntity> GetSingleWithFilter(Expression<Func<TEntity, bool>> predicate)
         {
@@ -509,6 +513,33 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         {
             return await _entities.AsNoTracking().AnyAsync(predicate);
         }
+
+        private IQueryable<TEntity> ApplyOrdering(IQueryable<TEntity> query, string orderField, string orderType)
+        {
+            var entityType = typeof(TEntity);
+            var parameter = Expression.Parameter(entityType, "x");
+
+            // Get the property specified by orderField
+            var property = Expression.Property(parameter, orderField);
+
+            // Create the lambda expression x => x.Property
+            var lambda = Expression.Lambda(property, parameter);
+
+            // Get the OrderBy or OrderByDescending method based on orderType
+            var methodName = orderType == "OrderByDescending" ? "OrderByDescending" : "OrderBy";
+
+            // Create the expression for the OrderBy/OrderByDescending method call
+            var methodCallExpression = Expression.Call(
+                typeof(Queryable),
+                methodName,
+                new[] { entityType, property.Type },
+                query.Expression,
+                Expression.Quote(lambda)
+            );
+
+            return query.Provider.CreateQuery<TEntity>(methodCallExpression);
+        }
+
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)

@@ -121,6 +121,22 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetViewGaBackOfficeUtenzeGroupedByCodAziAndFilterAsync/{codAzi}/{filter}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeUtenzeGroupedByCodAziAndFilterAsync(string codAzi, string filter)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeUtenzeGroupedByCodAziAndFilterAsync(codAzi, filter);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+              _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAsync/{codAzi}/{numCon}")]
         public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAsync(string codAzi, string numCon)
         {

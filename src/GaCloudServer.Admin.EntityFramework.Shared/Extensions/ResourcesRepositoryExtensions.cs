@@ -172,6 +172,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeZone>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenze>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartite>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartite>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteGrp>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeDispositivi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeDispositivi>>();
 
             //Sp
@@ -460,6 +461,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<CrmEventComune>, GenericRepository<TResourcesDbContext, CrmEventComune>>();
             services.AddTransient<IGenericRepository<CrmEvent>, GenericRepository<TResourcesDbContext, CrmEvent>>();
             services.AddTransient<IGenericRepository<CrmEventDevice>, GenericRepository<TResourcesDbContext, CrmEventDevice>>();
+            services.AddTransient<IGenericRepository<CrmTicket>, GenericRepository<TResourcesDbContext, CrmTicket>>();
 
             services.AddTransient<IGenericRepository<ViewGaCrmCanali>, GenericRepository<TResourcesDbContext, ViewGaCrmCanali>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCausali>, GenericRepository<TResourcesDbContext, ViewGaCrmCausali>>();

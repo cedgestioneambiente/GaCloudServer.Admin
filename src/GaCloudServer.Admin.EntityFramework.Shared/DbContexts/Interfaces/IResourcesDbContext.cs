@@ -169,6 +169,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         DbSet<ViewGaBackOfficeUtenze> ViewGaBackOfficeUtenze { get; set; }
         DbSet<ViewGaBackOfficeUtenzePartite> ViewGaBackOfficeUtenzePartite { get; set; }
+        DbSet<ViewGaBackOfficeUtenzePartiteGrp> ViewGaBackOfficeUtenzePartiteGrp { get; set; }
         DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
         #endregion
 
@@ -468,6 +469,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<CrmEventComune> GaCrmEventComuni { get; set; }
         DbSet<CrmEvent> GaCrmEvents { get; set; }
         DbSet<CrmEventDevice> GaCrmEventDevices { get; set; }
+        DbSet<CrmTicket> GaCrmTickets { get; set; }
 
         #region Views
         DbSet<ViewGaCrmCanali> ViewGaCrmCanali { get; set; }

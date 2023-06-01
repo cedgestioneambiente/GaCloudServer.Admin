@@ -1,6 +1,6 @@
 ﻿using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.Services;
@@ -9,13 +9,11 @@ using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Crm;
 using GaCloudServer.Resources.Api.Dtos.Custom;
-using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Graph;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -916,6 +914,131 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
         #endregion
+        #endregion
+
+        #region CrmTickets
+        [HttpGet("GetGaCrmTicketsAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmTicketsAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaCrmService.GetGaCrmTicketsAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<CrmTicketsApiDto, CrmTicketsDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCrmTicketByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmTicketByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCrmService.GetGaCrmTicketByIdAsync(id);
+                var apiDto = dto.ToApiDto<CrmTicketApiDto, CrmTicketDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaCrmTicketAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaCrmTicketAsync([FromBody] CrmTicketApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CrmTicketDto, CrmTicketApiDto>();
+                var response = await _gaCrmService.AddGaCrmTicketAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaCrmTicketAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCrmTicketAsync([FromBody] CrmTicketApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CrmTicketDto, CrmTicketApiDto>();
+                var response = await _gaCrmService.UpdateGaCrmTicketAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaCrmTicketAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaCrmTicketAsync(long id)
+        {
+            try
+            {
+                var response = await _gaCrmService.DeleteGaCrmTicketAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+
+        #endregion
+
+        #region Views
+        [HttpPost("GetViewGaContactCenterTicketsQueryableFilterSingleParam/{assignee}")]
+        public ApiResponse GetViewGaContactCenterTicketsQueryableFilterSingleParam(GridOperationsModel filter, string? assignee = "0")
+        {
+            try
+            {
+                assignee = assignee == "NaN" ? "0" : assignee;
+                var entities = _gaCrmService.GetViewGaCrmTicketsByAssigneeQueryable(filter, assignee.Split(",").ToArray());
+                return new ApiResponse(entities);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
+        #endregion
+
         #endregion
 
         #region CrmEventJobs

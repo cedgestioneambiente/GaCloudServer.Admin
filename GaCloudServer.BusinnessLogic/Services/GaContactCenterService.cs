@@ -306,7 +306,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region ContactCenterTipiRichieste
         public async Task<ContactCenterTipiRichiesteDto> GetGaContactCenterTipiRichiesteAsync(int page = 1, int pageSize = 0)
         {
-            var entities = await gaContactCenterTipiRichiesteRepo.GetAllAsync(page, pageSize);
+            var entities = await gaContactCenterTipiRichiesteRepo.GetWithFilterAsync(x=>x.ContactCenter==true);
             var dtos = entities.ToDto<ContactCenterTipiRichiesteDto, PagedList<ContactCenterTipoRichiesta>>();
             return dtos;
         }

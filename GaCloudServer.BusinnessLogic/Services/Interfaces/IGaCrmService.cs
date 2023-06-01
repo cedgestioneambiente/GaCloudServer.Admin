@@ -1,5 +1,7 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
-using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
@@ -94,9 +96,30 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
         #endregion
 
+        #region CrmTicket
+        Task<CrmTicketsDto> GetGaCrmTicketsAsync(int page = 1, int pageSize = 0);
+        Task<CrmTicketDto> GetGaCrmTicketByIdAsync(long id);
+
+        Task<long> AddGaCrmTicketAsync(CrmTicketDto dto);
+        Task<long> UpdateGaCrmTicketAsync(CrmTicketDto dto);
+
+        Task<bool> DeleteGaCrmTicketAsync(long id);
+
+        #region Views
+        PagedList<ViewGaCrmTickets> GetViewGaCrmTicketsByAssigneeQueryable(GridOperationsModel filterParams, string[]? assignee);
+        #endregion
+
+        #endregion
+
         #region CrmEventJobs
         Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsAsync(int page = 1, int pageSize = 0);
         Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(DateTime dateStart, DateTime dateEnd);
+        #endregion
+
+        #region Shared Data Table
+        Task<PagedList<ContactCenterProvenienza>> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0);
+        Task<PagedList<ContactCenterTipoRichiesta>> GetGaCrmTipiTicketAsync(int page = 1, int pageSize = 0);
+        Task<PagedList<ContactCenterStatoRichiesta>> GetGaCrmStatiTicketAsync(int page = 1, int pageSize = 0);
         #endregion
     }
 }

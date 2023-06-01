@@ -40,8 +40,16 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         #region ContactCenterTipiRichieste
         public class ContactCenterTipoRichiestaApiDto : GenericListApiDto
         {
-            public bool Ingombranti { get; set; }
-        }
+        public bool Ingombranti { get; set; }
+        public bool Magazzino { get; set; }
+        public bool MagazzinoCalendar { get; set; }
+        public bool Fatturazione { get; set; }
+        public bool ContactCenter { get; set; }
+        public bool ContactCenterCalendar { get; set; }
+        public string? CodArera { get; set; }
+        public string? PrintTemplate { get; set; }
+        public string? Group { get; set; }
+    }
 
         public class ContactCenterTipiRichiesteApiDto : GenericPagedListApiDto<ContactCenterTipoRichiestaApiDto>
         {

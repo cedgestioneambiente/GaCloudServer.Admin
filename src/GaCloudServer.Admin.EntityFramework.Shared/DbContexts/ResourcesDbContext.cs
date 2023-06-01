@@ -174,6 +174,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         public DbSet<ViewGaBackOfficeUtenze> ViewGaBackOfficeUtenze { get; set; }
         public DbSet<ViewGaBackOfficeUtenzePartite> ViewGaBackOfficeUtenzePartite { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzePartiteGrp> ViewGaBackOfficeUtenzePartiteGrp { get; set; }
         public DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
         #endregion
 
@@ -470,6 +471,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<CrmEventComune> GaCrmEventComuni { get; set; }
         public DbSet<CrmEvent> GaCrmEvents { get; set; }
         public DbSet<CrmEventDevice> GaCrmEventDevices { get; set; }
+        public DbSet<CrmTicket> GaCrmTickets { get; set; }
 
 
         #region Views
@@ -726,6 +728,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasNoKey();
             });
 
+            builder.Entity<ViewGaBackOfficeUtenzePartiteGrp>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzePartiteGrp))
+                .HasNoKey();
+            });
+
             builder.Entity<ViewGaBackOfficeUtenzeDispositivi>(entity =>
             {
                 entity
@@ -768,6 +777,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasNoKey()
                 .ToView(null);
             });
+
 
             builder.Entity<SpGaBackOfficeUtenzeDispositivi>(entity =>
             {

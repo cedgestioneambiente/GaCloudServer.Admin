@@ -30,6 +30,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaBackOfficeContenitoriLetture> viewGaBackOfficeContenitoriLettureRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenze> viewGaBackOfficeUtenzeRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartite> viewGaBackOfficeUtenzePartiteRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
 
         protected readonly IGenericRepository<ViewGaBackOfficeZone> viewGaBackOfficeZoneRepo;
@@ -53,6 +54,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeContenitoriLetture> viewGaBackOfficeContenitoriLettureRepo,
             IGenericRepository<ViewGaBackOfficeUtenze> viewGaBackOfficeUtenzeRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartite> viewGaBackOfficeUtenzePartiteRepo,
+            IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
 
             IGenericRepository<ViewGaBackOfficeZone> viewGaBackOfficeZoneRepo,
@@ -78,6 +80,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.viewGaBackOfficeUtenzeRepo = viewGaBackOfficeUtenzeRepo;
             this.viewGaBackOfficeUtenzePartiteRepo = viewGaBackOfficeUtenzePartiteRepo;
+            this.viewGaBackOfficeUtenzePartiteGrpRepo = viewGaBackOfficeUtenzePartiteGrpRepo;
             this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
 
             this.viewGaBackOfficeZoneRepo = viewGaBackOfficeZoneRepo;
@@ -153,6 +156,15 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
+        public async Task<PagedList<ViewGaBackOfficeUtenzeGrouped>> GetViewGaBackOfficeUtenzeGroupedByCodAziAndFilterAsync(string codAzi, string filter)
+        {
+            var view = await viewGaBackOfficeUtenzeGroupedRepo.GetWithFilterAsync(x => x.CodAzi == codAzi && 
+            (EF.Functions.Like(x.RagCli, filter.toWildcardString()) || 
+            EF.Functions.Like(x.CodFis, filter.toWildcardString()) ||
+            EF.Functions.Like(x.NumCon, filter.toWildcardString())), 1, 0, "RagCli");
+            return view;
+        }
+
         public async Task<PagedList<ViewGaBackOfficeUtenze>> GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(string cpAzi, string filter)
         {
             var view = await viewGaBackOfficeUtenzeRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi 
@@ -162,6 +174,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             , 1, 0, "RagSo");
             return view;
         }
+
 
         public async Task<PagedList<ViewGaBackOfficeUtenzePartite>> GetViewGaBackOfficeUtenzePartiteByCpAziAndNumConAsync(string cpAzi, string numCon)
         {

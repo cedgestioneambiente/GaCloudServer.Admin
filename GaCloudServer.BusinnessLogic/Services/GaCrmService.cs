@@ -1,7 +1,10 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Constants;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Mappers;
@@ -19,11 +22,17 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<CrmEventComune> gaCrmEventComuniRepo;
         protected readonly IGenericRepository<CrmEvent> gaCrmEventsRepo;
         protected readonly IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo;
+        protected readonly IGenericRepository<CrmTicket> gaCrmTicketsRepo;
+
+        private readonly IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo;
+        private readonly IGenericRepository<ContactCenterTipoRichiesta> gaCrmTipiTicketRepo;
+        private readonly IGenericRepository<ContactCenterStatoRichiesta> gaCrmStatiTicketRepo;
 
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
 
         protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo;
         protected readonly IGenericRepository<ViewGaCrmEventJobs> viewGaCrmEventJobsRepo;
+        protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmTicketsRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -35,9 +44,15 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<CrmEventComune> gaCrmEventComuniRepo,
             IGenericRepository<CrmEvent> gaCrmEventsRepo,
             IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo,
+            IGenericRepository<CrmTicket> gaCrmTicketsRepo,
+
+            IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo,
+            IGenericRepository<ContactCenterTipoRichiesta> gaCrmTipiTicketRepo,
+            IGenericRepository<ContactCenterStatoRichiesta> gaCrmStatiTicketRepo,
 
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
             IGenericRepository<ViewGaCrmEventJobs> viewGaCrmEventJobsRepo,
+            IGenericRepository<ViewGaCrmTickets> viewGaCrmTicketsRepo,
 
             IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo,
 
@@ -50,11 +65,17 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaCrmEventStatesRepo = gaCrmEventStatesRepo;
             this.gaCrmEventsRepo = gaCrmEventsRepo;
             this.gaCrmEventDevicesRepo = gaCrmEventDevicesRepo;
+            this.gaCrmTicketsRepo = gaCrmTicketsRepo;
+
+            this.gaCrmProvenienzeTicketRepo = gaCrmProvenienzeTicketRepo;
+            this.gaCrmTipiTicketRepo = gaCrmTipiTicketRepo;
+            this.gaCrmStatiTicketRepo= gaCrmStatiTicketRepo;
 
             this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
 
             this.viewGaCrmEventJobsRepo = viewGaCrmEventJobsRepo;
             this.viewGaCrmMasterRepo = viewGaCrmMasterRepo;
+            this.viewGaCrmTicketsRepo = viewGaCrmTicketsRepo;
 
 
             this.unitOfWork = unitOfWork;
@@ -90,8 +111,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Views
         public async Task<PagedList<ViewGaCrmTickets>> GetViewGaCrmMasterAsync()
         {
-            var entities = await viewGaCrmMasterRepo.GetWithFilterAsync(x => (x.CodCausale == 84 || x.CodCausale==88) && (x.Stato==1 || x.Stato==109));
+            var entities = await viewGaCrmMasterRepo.GetWithFilterAsync(x => (x.MagazzinoCalendar == true) && (x.StatoId==1));
             return entities;
+
+
         }
         #endregion
 
@@ -589,8 +612,128 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
-       
 
+
+        #endregion
+
+        #region CrmTickets
+        public async Task<CrmTicketsDto> GetGaCrmTicketsAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmTicketsRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CrmTicketsDto, PagedList<CrmTicket>>();
+            return dtos;
+        }
+
+        public async Task<CrmTicketDto> GetGaCrmTicketByIdAsync(long id)
+        {
+            var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmTicketDto, CrmTicket>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCrmTicketAsync(CrmTicketDto dto)
+        {
+            var entity = dto.ToEntity<CrmTicket, CrmTicketDto>();
+            await gaCrmTicketsRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmTicketAsync(CrmTicketDto dto)
+        {
+            var entity = dto.ToEntity<CrmTicket, CrmTicketDto>();
+            gaCrmTicketsRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCrmTicketAsync(long id)
+        {
+            var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
+            gaCrmTicketsRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ChangeStatusGaCrmTicketAsync(long id)
+        {
+            var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCrmTicketsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCrmTicketsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #region Views
+        public PagedList<ViewGaCrmTickets> GetViewGaCrmTicketsByAssigneeQueryable(GridOperationsModel filterParams, string[]? assignee)
+        {
+
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+                if (assignee == null || assignee.Count() == 0)
+                {
+                    var filterResult = viewGaCrmTicketsRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewGaCrmTicketsRepo.GetWithFilterQueryableV2WithQuickFilter(x => assignee.Contains(x.Assignee), filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+            }
+            else
+            {
+                if (assignee == null || assignee.Count() == 0)
+                {
+                    var filterResult = viewGaCrmTicketsRepo.GetAllQueryableV2(filterParams);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewGaCrmTicketsRepo.GetWithFilterQueryableV2(x => assignee.Contains(x.Assignee), filterParams);
+                    return filterResult;
+                }
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Shared Data Tables
+        public async Task<PagedList<ContactCenterProvenienza>> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmProvenienzeTicketRepo.GetAllAsync(page, pageSize);
+            return entities;
+        }
+
+        public async Task<PagedList<ContactCenterTipoRichiesta>> GetGaCrmTipiTicketAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmTipiTicketRepo.GetWithFilterAsync(x => x.Magazzino == true || x.Fatturazione == true);
+            return entities;
+        }
+
+        public async Task<PagedList<ContactCenterStatoRichiesta>> GetGaCrmStatiTicketAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmStatiTicketRepo.GetAllAsync(page, pageSize);
+            return entities;
+        }
         #endregion
 
 

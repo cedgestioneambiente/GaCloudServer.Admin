@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230601095610_GaCrm_V10")]
+    partial class GaCrm_V10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3991,9 +3993,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Cellulare")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CfPiva")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CodCli")
                         .HasColumnType("nvarchar(max)");
 
@@ -4045,9 +4044,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("NoteOperatore")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumCiv")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NumCon")
                         .HasColumnType("nvarchar(max)");
 
@@ -4079,9 +4075,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("bigint");
 
                     b.Property<string>("Utente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Via")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

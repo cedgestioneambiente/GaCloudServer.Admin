@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230531143211_GaCrm_V8")]
+    partial class GaCrm_V8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2682,9 +2684,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("ContactCenter")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("ContactCenterCalendar")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Descrizione")
                         .HasColumnType("nvarchar(max)");
 
@@ -2701,9 +2700,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("bit");
 
                     b.Property<bool>("Magazzino")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("MagazzinoCalendar")
                         .HasColumnType("bit");
 
                     b.Property<string>("PrintTemplate")
@@ -3774,9 +3770,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Cellulare")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CfPiva")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CodCli")
                         .HasColumnType("nvarchar(max)");
 
@@ -3819,9 +3812,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("NoteOperatore")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumCiv")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NumCon")
                         .HasColumnType("nvarchar(max)");
 
@@ -3835,9 +3825,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Utente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Via")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -3979,70 +3966,91 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<string>("Assignee")
+                    b.Property<string>("AutoClose")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CanaleDesc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CanaleId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("CanaleRisposta")
+                        .HasColumnType("int");
 
                     b.Property<string>("Cellulare")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CfPiva")
+                    b.Property<string>("Citta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CodCausale")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodCausaleDesc")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CodCli")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ComuneCod")
+                    b.Property<string>("CodCom")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ComuneDesc")
+                    b.Property<string>("CodFis")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ComuneId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("ContactCenterCalendar")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Creator")
+                    b.Property<string>("CodPers")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataChiusura")
+                    b.Property<int?>("CodUte")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodUteDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CodUteWork")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodUteWorkDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodVia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cognome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CpRowNum")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DataAnnullamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataRichiesta")
+                    b.Property<DateTime?>("DataIns")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataTicket")
+                    b.Property<DateTime?>("DataStato")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
-                    b.Property<long>("Duration")
+                    b.Property<string>("Domest")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DtScad")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DtUlag")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("Duration")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Fatturazione")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Magazzino")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("MagazzinoCalendar")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NoteCrm")
+                    b.Property<string>("Indirizzo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NoteOperatore")
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NotaAnagrafica")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumCiv")
@@ -4051,37 +4059,43 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("NumCon")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Numero")
-                        .HasColumnType("bigint");
+                    b.Property<DateTime?>("OraTrasm")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Partita")
+                    b.Property<int?>("OriginIns")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OriginInsDesc")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Prg")
+                    b.Property<string>("Pec")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PrintTemplate")
+                    b.Property<string>("Prefix")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rappresenta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Stato")
+                        .HasColumnType("int");
 
                     b.Property<string>("StatoDesc")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("StatoId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TipoDesc")
+                    b.Property<int?>("TotalMinutiWork")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Trasmesso")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("TipoId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Utente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Via")
+                    b.Property<string>("TypeDesc")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
