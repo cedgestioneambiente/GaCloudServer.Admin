@@ -681,6 +681,44 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entities;
         }
 
+        public async Task<PagedList<ViewConsorzioRegistrazioni>> GetViewConsorzioRegistrazioniByFilterAsync(long id, string roles)
+        {
+            try
+            {
+                PagedList<ViewConsorzioRegistrazioni> entities = new PagedList<ViewConsorzioRegistrazioni>();
+
+                string[] rolesToCheck = roles.Split(',');
+
+                if (roles.Contains("Administrator") || roles.Contains("ExtConsorzioAdmin"))
+                {
+                    return await viewConsorzioRegistrazioniRepo.GetWithFilterAsync(x => x.Id == id);
+                }
+                else
+                {
+                    var data = viewConsorzioRegistrazioniRepo.GetWithFilterAsync(x => x.Id == id)
+                        .Result
+                        .Data
+                        .AsEnumerable()
+                        .Where(t => rolesToCheck.Any(p => t.Roles.Contains(p)));
+
+                    entities.Data.AddRange(data);
+                    entities.TotalCount = data.Count();
+                    entities.PageSize = 0;
+
+                    return entities;
+
+                }
+
+
+                return entities;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
         public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniQueryable(GridOperationsModel filterParams)
         {
             if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))

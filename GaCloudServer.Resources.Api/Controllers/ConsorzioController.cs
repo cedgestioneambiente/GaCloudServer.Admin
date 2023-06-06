@@ -1124,6 +1124,21 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpPost("GetViewConsorzioRegistrazioniByFilterAsync")]
+        public async Task<ApiResponse> GetViewConsorzioRegistrazioniByFilterAsync([FromBody] ConsorzioRegistrazioniFilterApiDto apiDto)
+        {
+            try
+            {
+                var view = await _consorzioService.GetViewConsorzioRegistrazioniByFilterAsync(apiDto.id, apiDto.roles);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
         [HttpGet("GetViewConsorzioRegistrazioniQueryable")]
         public ApiResponse GetViewConsorzioRegistrazioniQueryable(GridOperationsModel filter)
         {

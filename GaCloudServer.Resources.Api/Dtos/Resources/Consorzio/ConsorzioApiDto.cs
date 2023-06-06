@@ -119,4 +119,13 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
     }
 
     #endregion
+
+
+    //Internal
+    public class ConsorzioRegistrazioniFilterApiDto
+    {
+        public long id { get; set; }
+        public string roles { get; set; }
+        public string quickFilter { get; set; }
+    }
 }
