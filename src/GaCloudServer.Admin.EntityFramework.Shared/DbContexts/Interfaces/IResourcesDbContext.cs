@@ -444,13 +444,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #region Consorzio
         DbSet<ConsorzioCer> ConsorzioCers { get; set; }
-        DbSet<ConsorzioCerSmaltimento> ConsorzioCersSmaltimenti { get; set; }
+        DbSet<ConsorzioSmaltimento> ConsorzioSmaltimenti { get; set; }
         DbSet<ConsorzioComune> ConsorzioComuni { get; set; }
         DbSet<ConsorzioProduttore> ConsorzioProduttori { get; set; }
         DbSet<ConsorzioDestinatario> ConsorzioDestinatari { get; set; }
         DbSet<ConsorzioTrasportatore> ConsorzioTrasportatori { get; set; }
         DbSet<ConsorzioRegistrazione> ConsorzioRegistrazioni { get; set; }
         DbSet<ConsorzioRegistrazioneAllegato> ConsorzioRegistrazioniAllegati { get; set; }
+        DbSet<ConsorzioPeriodo> ConsorzioPeriodi { get; set; }
+        DbSet<ConsorzioOperazione> ConsorzioOperazioni { get; set; }
 
         #region Views
         DbSet<ViewConsorzioCers> ViewConsorzioCers { get; set; }

@@ -195,14 +195,14 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
-        #region ConsorzioCersSmaltimenti
-        [HttpGet("GetConsorzioCersSmaltimentiAsync/{page}/{pageSize}")]
-        public async Task<ActionResult<ApiResponse>> GetConsorzioCersSmaltimentiAsync(int page = 1, int pageSize = 0)
+        #region ConsorzioSmaltimenti
+        [HttpGet("GetConsorzioSmaltimentiAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioSmaltimentiAsync(int page = 1, int pageSize = 0)
         {
             try
             {
-                var dtos = await _consorzioService.GetConsorzioCersSmaltimentiAsync(page, pageSize);
-                var apiDtos = dtos.ToApiDto<ConsorzioCersSmaltimentiApiDto, ConsorzioCersSmaltimentiDto>();
+                var dtos = await _consorzioService.GetConsorzioSmaltimentiAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ConsorzioSmaltimentiApiDto, ConsorzioSmaltimentiDto>();
                 return new ApiResponse(apiDtos);
             }
             catch (Exception ex)
@@ -213,13 +213,13 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetConsorzioCerSmaltimentoByIdAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> GetConsorzioCerSmaltimentoByIdAsync(long id)
+        [HttpGet("GetConsorzioSmaltimentoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioSmaltimentoByIdAsync(long id)
         {
             try
             {
-                var dto = await _consorzioService.GetConsorzioCerSmaltimentoByIdAsync(id);
-                var apiDto = dto.ToApiDto<ConsorzioCerSmaltimentoApiDto, ConsorzioCerSmaltimentoDto>();
+                var dto = await _consorzioService.GetConsorzioSmaltimentoByIdAsync(id);
+                var apiDto = dto.ToApiDto<ConsorzioSmaltimentoApiDto, ConsorzioSmaltimentoDto>();
                 return new ApiResponse(apiDto);
             }
             catch (Exception ex)
@@ -230,8 +230,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("AddConsorzioCerSmaltimentoAsync")]
-        public async Task<ActionResult<ApiResponse>> AddConsorzioCerSmaltimentoAsync([FromBody] ConsorzioCerSmaltimentoApiDto apiDto)
+        [HttpPost("AddConsorzioSmaltimentoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddConsorzioSmaltimentoAsync([FromBody] ConsorzioSmaltimentoApiDto apiDto)
         {
             try
             {
@@ -239,8 +239,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                var dto = apiDto.ToDto<ConsorzioCerSmaltimentoDto, ConsorzioCerSmaltimentoApiDto>();
-                var response = await _consorzioService.AddConsorzioCerSmaltimentoAsync(dto);
+                var dto = apiDto.ToDto<ConsorzioSmaltimentoDto, ConsorzioSmaltimentoApiDto>();
+                var response = await _consorzioService.AddConsorzioSmaltimentoAsync(dto);
 
                 return new ApiResponse(response);
             }
@@ -257,8 +257,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("UpdateConsorzioCerSmaltimentoAsync")]
-        public async Task<ActionResult<ApiResponse>> UpdateConsorzioCerSmaltimentoAsync([FromBody] ConsorzioCerSmaltimentoApiDto apiDto)
+        [HttpPost("UpdateConsorzioSmaltimentoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateConsorzioSmaltimentoAsync([FromBody] ConsorzioSmaltimentoApiDto apiDto)
         {
             try
             {
@@ -266,8 +266,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                var dto = apiDto.ToDto<ConsorzioCerSmaltimentoDto, ConsorzioCerSmaltimentoApiDto>();
-                var response = await _consorzioService.UpdateConsorzioCerSmaltimentoAsync(dto);
+                var dto = apiDto.ToDto<ConsorzioSmaltimentoDto, ConsorzioSmaltimentoApiDto>();
+                var response = await _consorzioService.UpdateConsorzioSmaltimentoAsync(dto);
 
                 return new ApiResponse(response);
             }
@@ -279,12 +279,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpDelete("DeleteConsorzioCerSmaltimentoAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteConsorzioCerSmaltimentoAsync(long id)
+        [HttpDelete("DeleteConsorzioSmaltimentoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteConsorzioSmaltimentoAsync(long id)
         {
             try
             {
-                var response = await _consorzioService.DeleteConsorzioCerSmaltimentoAsync(id);
+                var response = await _consorzioService.DeleteConsorzioSmaltimentoAsync(id);
 
                 return new ApiResponse(response);
             }
@@ -297,12 +297,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioCerSmaltimentoAsync/{id}/{descrizione}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioCerSmaltimentoAsync(long id, string descrizione)
+        [HttpGet("ValidateConsorzioSmaltimentoAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioSmaltimentoAsync(long id, string descrizione)
         {
             try
             {
-                var response = await _consorzioService.ValidateConsorzioCerSmaltimentoAsync(id, descrizione);
+                var response = await _consorzioService.ValidateConsorzioSmaltimentoAsync(id, descrizione);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -313,12 +313,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ChangeStatusConsorzioCerSmaltimentoAsync/{id}")]
-        public async Task<ActionResult<ApiResponse>> ChangeStatusConsorzioCerSmaltimentoAsync(long id)
+        [HttpGet("ChangeStatusConsorzioSmaltimentoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusConsorzioSmaltimentoAsync(long id)
         {
             try
             {
-                var response = await _consorzioService.ChangeStatusConsorzioCerSmaltimentoAsync(id);
+                var response = await _consorzioService.ChangeStatusConsorzioSmaltimentoAsync(id);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -590,12 +590,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioProduttoreAsync/{id}/{cdPiva}/{indirizzo}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioProduttoreAsync(long id, string cdPiva, string indirizzo)
+        [HttpGet("ValidateConsorzioProduttoreAsync/{id}/{cfPiva}/{indirizzo}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioProduttoreAsync(long id, string cfPiva, string indirizzo)
         {
             try
             {
-                var response = await _consorzioService.ValidateConsorzioProduttoreAsync(id, cdPiva, indirizzo);
+                var response = await _consorzioService.ValidateConsorzioProduttoreAsync(id, cfPiva, indirizzo);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -746,12 +746,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioDestinatarioAsync/{id}/{cdPiva}/{indirizzo}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioDestinatarioAsync(long id, string cdPiva, string indirizzo)
+        [HttpGet("ValidateConsorzioDestinatarioAsync/{id}/{cfPiva}/{indirizzo}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioDestinatarioAsync(long id, string cfPiva, string indirizzo)
         {
             try
             {
-                var response = await _consorzioService.ValidateConsorzioDestinatarioAsync(id, cdPiva, indirizzo);
+                var response = await _consorzioService.ValidateConsorzioDestinatarioAsync(id, cfPiva, indirizzo);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -902,12 +902,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioTrasportatoreAsync/{id}/{cdPiva}/{indirizzo}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioTrasportatoreAsync(long id, string cdPiva, string indirizzo)
+        [HttpGet("ValidateConsorzioTrasportatoreAsync/{id}/{cfPiva}/{indirizzo}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioTrasportatoreAsync(long id, string cfPiva, string indirizzo)
         {
             try
             {
-                var response = await _consorzioService.ValidateConsorzioTrasportatoreAsync(id, cdPiva, indirizzo);
+                var response = await _consorzioService.ValidateConsorzioTrasportatoreAsync(id, cfPiva, indirizzo);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -1122,6 +1122,21 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
 
+        }
+
+        [HttpPost("GetViewConsorzioRegistrazioniByFilterAsync")]
+        public async Task<ApiResponse> GetViewConsorzioRegistrazioniByFilterAsync([FromBody] ConsorzioRegistrazioniFilterApiDto apiDto)
+        {
+            try
+            {
+                var view = await _consorzioService.GetViewConsorzioRegistrazioniByFilterAsync(apiDto.id, apiDto.roles);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
         }
 
         [HttpGet("GetViewConsorzioRegistrazioniQueryable")]
@@ -1408,6 +1423,280 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var response = await _consorzioService.ChangeStatusConsorzioRegistrazioneAllegatoAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region ConsorzioOperazioni
+        [HttpGet("GetConsorzioOperazioniAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioOperazioniAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _consorzioService.GetConsorzioOperazioniAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ConsorzioOperazioniApiDto, ConsorzioOperazioniDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetConsorzioOperazioneByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioOperazioneByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _consorzioService.GetConsorzioOperazioneByIdAsync(id);
+                var apiDto = dto.ToApiDto<ConsorzioOperazioneApiDto, ConsorzioOperazioneDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddConsorzioOperazioneAsync")]
+        public async Task<ActionResult<ApiResponse>> AddConsorzioOperazioneAsync([FromBody] ConsorzioOperazioneApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioOperazioneDto, ConsorzioOperazioneApiDto>();
+                var response = await _consorzioService.AddConsorzioOperazioneAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateConsorzioOperazioneAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateConsorzioOperazioneAsync([FromBody] ConsorzioOperazioneApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioOperazioneDto, ConsorzioOperazioneApiDto>();
+                var response = await _consorzioService.UpdateConsorzioOperazioneAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteConsorzioOperazioneAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteConsorzioOperazioneAsync(long id)
+        {
+            try
+            {
+                var response = await _consorzioService.DeleteConsorzioOperazioneAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateConsorzioOperazioneAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioOperazioneAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _consorzioService.ValidateConsorzioOperazioneAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusConsorzioOperazioneAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusConsorzioOperazioneAsync(long id)
+        {
+            try
+            {
+                var response = await _consorzioService.ChangeStatusConsorzioOperazioneAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region ConsorzioPeriodi
+        [HttpGet("GetConsorzioPeriodiAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioPeriodiAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _consorzioService.GetConsorzioPeriodiAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ConsorzioPeriodiApiDto, ConsorzioPeriodiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetConsorzioPeriodoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioPeriodoByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _consorzioService.GetConsorzioPeriodoByIdAsync(id);
+                var apiDto = dto.ToApiDto<ConsorzioPeriodoApiDto, ConsorzioPeriodoDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddConsorzioPeriodoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddConsorzioPeriodoAsync([FromBody] ConsorzioPeriodoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioPeriodoDto, ConsorzioPeriodoApiDto>();
+                var response = await _consorzioService.AddConsorzioPeriodoAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateConsorzioPeriodoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateConsorzioPeriodoAsync([FromBody] ConsorzioPeriodoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioPeriodoDto, ConsorzioPeriodoApiDto>();
+                var response = await _consorzioService.UpdateConsorzioPeriodoAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteConsorzioPeriodoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteConsorzioPeriodoAsync(long id)
+        {
+            try
+            {
+                var response = await _consorzioService.DeleteConsorzioPeriodoAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateConsorzioPeriodoAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioPeriodoAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _consorzioService.ValidateConsorzioPeriodoAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusConsorzioPeriodoAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusConsorzioPeriodoAsync(long id)
+        {
+            try
+            {
+                var response = await _consorzioService.ChangeStatusConsorzioPeriodoAsync(id);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
