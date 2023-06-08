@@ -1,6 +1,8 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.Services;
@@ -9,6 +11,7 @@ using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Crm;
 using GaCloudServer.Resources.Api.Dtos.Custom;
+using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
@@ -1022,8 +1025,8 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Views
-        [HttpPost("GetViewGaContactCenterTicketsQueryableFilterSingleParam/{assignee}")]
-        public ApiResponse GetViewGaContactCenterTicketsQueryableFilterSingleParam(GridOperationsModel filter, string? assignee = "0")
+        [HttpPost("GetViewGaCrmTicketsQueryableFilterSingleParam/{assignee}")]
+        public ApiResponse GetViewGaCrmTicketsQueryableFilterSingleParam(GridOperationsModel filter, string? assignee = "0")
         {
             try
             {
@@ -1074,6 +1077,59 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        #endregion
+
+        #region Shared Data Table
+        [HttpGet("GetGaCrmTipiTicketAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmTipiTicketAsync(bool all=false)
+        {
+            try
+            {
+                var dtos = await _gaCrmService.GetGaCrmTipiTicketAsync(all);
+                var apiDtos = dtos.ToApiDto<ContactCenterTipiRichiesteApiDto, ContactCenterTipiRichiesteDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCrmProvenienzeTicketAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaCrmService.GetGaCrmProvenienzeTicketAsync(page,pageSize);
+                var apiDtos = dtos.ToApiDto<ContactCenterProvenienzeApiDto, ContactCenterProvenienzeDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCrmStatiTicketAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmStatiTicketAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaCrmService.GetGaCrmStatiTicketAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ContactCenterStatiRichiesteApiDto, ContactCenterStatiRichiesteDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #region Helpers

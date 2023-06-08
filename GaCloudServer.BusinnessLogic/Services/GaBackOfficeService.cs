@@ -156,12 +156,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
-        public async Task<PagedList<ViewGaBackOfficeUtenzeGrouped>> GetViewGaBackOfficeUtenzeGroupedByCodAziAndFilterAsync(string codAzi, string filter)
+        public async Task<PagedList<ViewGaBackOfficeUtenzePartiteGrp>> GetViewGaBackOfficeUtenzePartiteGrpByCodAziAndFilterAsync(string codAzi, string filter)
         {
-            var view = await viewGaBackOfficeUtenzeGroupedRepo.GetWithFilterAsync(x => x.CodAzi == codAzi && 
-            (EF.Functions.Like(x.RagCli, filter.toWildcardString()) || 
+            var view = await viewGaBackOfficeUtenzePartiteGrpRepo.GetWithFilterAsync(x => x.CpAzi == codAzi && 
+            (EF.Functions.Like(x.RagSo, filter.toWildcardString()) || 
             EF.Functions.Like(x.CodFis, filter.toWildcardString()) ||
-            EF.Functions.Like(x.NumCon, filter.toWildcardString())), 1, 0, "RagCli");
+            EF.Functions.Like(x.NumCon, filter.toWildcardString())), 1, 0, "RagSo");
             return view;
         }
 

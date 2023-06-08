@@ -21,7 +21,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
         public string Telefono { get; set; }
         public string Cellulare { get; set; }
         public string Email { get; set; }
-        public long ContactCenterTioRichiestaId { get; set; }
+        public long ContactCenterTipoRichiestaId { get; set; }
         public DateTime? DataChiusura { get; set; }
         public long ContactCenterStatoRichiestaId { get; set; }
         public string Creator { get; set; }

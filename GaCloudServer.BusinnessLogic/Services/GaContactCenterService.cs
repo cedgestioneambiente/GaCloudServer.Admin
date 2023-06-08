@@ -311,6 +311,14 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dtos;
         }
 
+        public async Task<ContactCenterTipiRichiesteDto> GetGaContactCenterTipiRichiesteByFilterAsync(bool all=false)
+        {
+            var entities = all ? await gaContactCenterTipiRichiesteRepo.GetAllAsync()
+            : await gaContactCenterTipiRichiesteRepo.GetWithFilterAsync(x => x.ContactCenter == true);
+            var dtos = entities.ToDto<ContactCenterTipiRichiesteDto, PagedList<ContactCenterTipoRichiesta>>();
+            return dtos;
+        }
+
         public async Task<ContactCenterTipoRichiestaDto> GetGaContactCenterTipoRichiestaByIdAsync(long id)
         {
             var entity = await gaContactCenterTipiRichiesteRepo.GetByIdAsync(id);

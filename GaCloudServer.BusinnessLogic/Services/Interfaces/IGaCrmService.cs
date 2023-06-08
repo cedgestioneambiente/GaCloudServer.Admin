@@ -2,6 +2,7 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
@@ -117,9 +118,9 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Shared Data Table
-        Task<PagedList<ContactCenterProvenienza>> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0);
-        Task<PagedList<ContactCenterTipoRichiesta>> GetGaCrmTipiTicketAsync(int page = 1, int pageSize = 0);
-        Task<PagedList<ContactCenterStatoRichiesta>> GetGaCrmStatiTicketAsync(int page = 1, int pageSize = 0);
+        Task<ContactCenterProvenienzeDto> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0);
+        Task<ContactCenterTipiRichiesteDto> GetGaCrmTipiTicketAsync(bool all);
+        Task<ContactCenterStatiRichiesteDto> GetGaCrmStatiTicketAsync(int page = 1, int pageSize = 0);
         #endregion
     }
 }

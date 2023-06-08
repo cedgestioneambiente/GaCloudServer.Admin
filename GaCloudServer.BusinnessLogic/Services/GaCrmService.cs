@@ -6,6 +6,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Constants;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -717,22 +718,26 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Shared Data Tables
-        public async Task<PagedList<ContactCenterProvenienza>> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0)
+        public async Task<ContactCenterProvenienzeDto> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0)
         {
             var entities = await gaCrmProvenienzeTicketRepo.GetAllAsync(page, pageSize);
-            return entities;
+            var dtos = entities.ToDto<ContactCenterProvenienzeDto, PagedList<ContactCenterProvenienza>>();
+            return dtos;
         }
 
-        public async Task<PagedList<ContactCenterTipoRichiesta>> GetGaCrmTipiTicketAsync(int page = 1, int pageSize = 0)
+        public async Task<ContactCenterTipiRichiesteDto> GetGaCrmTipiTicketAsync(bool all)
         {
-            var entities = await gaCrmTipiTicketRepo.GetWithFilterAsync(x => x.Magazzino == true || x.Fatturazione == true);
-            return entities;
+            var entities = all? await gaCrmTipiTicketRepo.GetAllAsync():
+            await gaCrmTipiTicketRepo.GetWithFilterAsync(x => x.Magazzino == true || x.Fatturazione == true);
+            var dtos = entities.ToDto<ContactCenterTipiRichiesteDto, PagedList<ContactCenterTipoRichiesta>>();
+            return dtos;
         }
 
-        public async Task<PagedList<ContactCenterStatoRichiesta>> GetGaCrmStatiTicketAsync(int page = 1, int pageSize = 0)
+        public async Task<ContactCenterStatiRichiesteDto> GetGaCrmStatiTicketAsync(int page = 1, int pageSize = 0)
         {
             var entities = await gaCrmStatiTicketRepo.GetAllAsync(page, pageSize);
-            return entities;
+            var dtos = entities.ToDto<ContactCenterStatiRichiesteDto, PagedList<ContactCenterStatoRichiesta>>();
+            return dtos;
         }
         #endregion
 

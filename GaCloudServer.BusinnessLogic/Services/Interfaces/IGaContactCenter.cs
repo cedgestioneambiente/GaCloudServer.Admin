@@ -62,6 +62,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region GaContactCenterTipiRichieste
         Task<ContactCenterTipiRichiesteDto> GetGaContactCenterTipiRichiesteAsync(int page = 1, int pageSize = 0);
+        Task<ContactCenterTipiRichiesteDto> GetGaContactCenterTipiRichiesteByFilterAsync(bool all=false);
         Task<ContactCenterTipoRichiestaDto> GetGaContactCenterTipoRichiestaByIdAsync(long id);
 
         Task<long> AddGaContactCenterTipoRichiestaAsync(ContactCenterTipoRichiestaDto dto);
