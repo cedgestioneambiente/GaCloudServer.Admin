@@ -15,11 +15,11 @@ namespace GaCloudServer.Resources.Api.Mappers.Consorzio
             CreateMap<ConsorzioCersDto, ConsorzioCersApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            //ConsorzioCerSmaltimentosSmaltimenti
-            CreateMap<ConsorzioCerSmaltimentoDto, ConsorzioCerSmaltimentoApiDto>(MemberList.Destination)
+            //ConsorzioSmaltimenti
+            CreateMap<ConsorzioSmaltimentoDto, ConsorzioSmaltimentoApiDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<ConsorzioCersSmaltimentiDto, ConsorzioCersSmaltimentiApiDto>(MemberList.Destination)
+            CreateMap<ConsorzioSmaltimentiDto, ConsorzioSmaltimentiApiDto>(MemberList.Destination)
                 .ReverseMap();
 
             //ConsorzioComuni
@@ -62,6 +62,20 @@ namespace GaCloudServer.Resources.Api.Mappers.Consorzio
                 .ReverseMap();
 
             CreateMap<ConsorzioRegistrazioniAllegatiDto, ConsorzioRegistrazioniAllegatiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //ConsorzioPeriodi
+            CreateMap<ConsorzioPeriodoDto, ConsorzioPeriodoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ConsorzioPeriodiDto, ConsorzioPeriodiApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //ConsorzioOperazioni
+            CreateMap<ConsorzioOperazioneDto, ConsorzioOperazioneApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ConsorzioOperazioniDto, ConsorzioOperazioniApiDto>(MemberList.Destination)
                 .ReverseMap();
         }
     }

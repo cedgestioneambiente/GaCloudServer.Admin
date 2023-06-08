@@ -1,0 +1,9 @@
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+
+namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio
+{
+    public class ConsorzioPeriodo : GenericListEntity
+    {
+        public int Giorni { get; set; }
+    }
+}

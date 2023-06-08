@@ -438,13 +438,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Consorzio
             #region Consorzio
             services.AddTransient<IGenericRepository<ConsorzioCer>, GenericRepository<TResourcesDbContext, ConsorzioCer>>();
-            services.AddTransient<IGenericRepository<ConsorzioCerSmaltimento>, GenericRepository<TResourcesDbContext, ConsorzioCerSmaltimento>>();
+            services.AddTransient<IGenericRepository<ConsorzioSmaltimento>, GenericRepository<TResourcesDbContext, ConsorzioSmaltimento>>();
             services.AddTransient<IGenericRepository<ConsorzioComune>, GenericRepository<TResourcesDbContext, ConsorzioComune>>();
             services.AddTransient<IGenericRepository<ConsorzioDestinatario>, GenericRepository<TResourcesDbContext, ConsorzioDestinatario>>();
             services.AddTransient<IGenericRepository<ConsorzioProduttore>, GenericRepository<TResourcesDbContext, ConsorzioProduttore>>();
             services.AddTransient<IGenericRepository<ConsorzioTrasportatore>, GenericRepository<TResourcesDbContext, ConsorzioTrasportatore>>();
             services.AddTransient<IGenericRepository<ConsorzioRegistrazione>, GenericRepository<TResourcesDbContext, ConsorzioRegistrazione>>();
             services.AddTransient<IGenericRepository<ConsorzioRegistrazioneAllegato>, GenericRepository<TResourcesDbContext, ConsorzioRegistrazioneAllegato>>();
+            services.AddTransient<IGenericRepository<ConsorzioPeriodo>, GenericRepository<TResourcesDbContext, ConsorzioPeriodo>>();
+            services.AddTransient<IGenericRepository<ConsorzioOperazione>, GenericRepository<TResourcesDbContext, ConsorzioOperazione>>();
 
             services.AddTransient<IGenericRepository<ViewConsorzioCers>, GenericRepository<TResourcesDbContext, ViewConsorzioCers>>();
             services.AddTransient<IGenericRepository<ViewConsorzioDestinatari>, GenericRepository<TResourcesDbContext, ViewConsorzioDestinatari>>();

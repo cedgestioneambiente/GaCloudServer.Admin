@@ -12,13 +12,15 @@ namespace GaCloudServer.BusinnessLogic.Services
     public class ConsorzioService : IConsorzioService
     {
         protected readonly IGenericRepository<ConsorzioCer> consorzioCersRepo;
-        protected readonly IGenericRepository<ConsorzioCerSmaltimento> consorzioCersSmaltimentiRepo;
+        protected readonly IGenericRepository<ConsorzioSmaltimento> consorzioSmaltimentiRepo;
         protected readonly IGenericRepository<ConsorzioComune> consorzioComuniRepo;
         protected readonly IGenericRepository<ConsorzioProduttore> consorzioProduttoriRepo;
         protected readonly IGenericRepository<ConsorzioDestinatario> consorzioDestinatariRepo;
         protected readonly IGenericRepository<ConsorzioTrasportatore> consorzioTrasportatoriRepo;
         protected readonly IGenericRepository<ConsorzioRegistrazione> consorzioRegistrazioniRepo;
         protected readonly IGenericRepository<ConsorzioRegistrazioneAllegato> consorzioRegistrazioniAllegatiRepo;
+        protected readonly IGenericRepository<ConsorzioOperazione> consorzioOperazioniRepo;
+        protected readonly IGenericRepository<ConsorzioPeriodo> consorzioPeriodiRepo;
 
         protected readonly IGenericRepository<ViewConsorzioCers> viewConsorzioCersRepo;
         protected readonly IGenericRepository<ViewConsorzioProduttori> viewConsorzioProduttoriRepo;
@@ -32,13 +34,15 @@ namespace GaCloudServer.BusinnessLogic.Services
         public ConsorzioService(
 
             IGenericRepository<ConsorzioCer> consorzioCersRepo,
-            IGenericRepository<ConsorzioCerSmaltimento> consorzioCersSmaltimentiRepo,
+            IGenericRepository<ConsorzioSmaltimento> consorzioSmaltimentiRepo,
             IGenericRepository<ConsorzioComune> consorzioComuniRepo,
             IGenericRepository<ConsorzioProduttore> consorzioProduttoriRepo,
             IGenericRepository<ConsorzioDestinatario> consorzioDestinatariRepo,
             IGenericRepository<ConsorzioTrasportatore> consorzioTrasportatoriRepo,
             IGenericRepository<ConsorzioRegistrazione> consorzioRegistrazioniRepo,
             IGenericRepository<ConsorzioRegistrazioneAllegato> consorzioRegistrazioniAllegatiRepo,
+            IGenericRepository<ConsorzioOperazione> consorzioOperazioniRepo,
+            IGenericRepository<ConsorzioPeriodo> consorzioPeriodiRepo,
 
             IGenericRepository<ViewConsorzioCers> viewConsorzioCersRepo,
             IGenericRepository<ViewConsorzioProduttori> viewConsorzioProduttoriRepo,
@@ -50,13 +54,15 @@ namespace GaCloudServer.BusinnessLogic.Services
             IUnitOfWork unitOfWork)
         {
             this.consorzioCersRepo = consorzioCersRepo;
-            this.consorzioCersSmaltimentiRepo = consorzioCersSmaltimentiRepo;
+            this.consorzioSmaltimentiRepo = consorzioSmaltimentiRepo;
             this.consorzioComuniRepo = consorzioComuniRepo;
             this.consorzioProduttoriRepo = consorzioProduttoriRepo;
             this.consorzioDestinatariRepo = consorzioDestinatariRepo;
             this.consorzioTrasportatoriRepo = consorzioTrasportatoriRepo;
             this.consorzioRegistrazioniRepo = consorzioRegistrazioniRepo;
             this.consorzioRegistrazioniAllegatiRepo = consorzioRegistrazioniAllegatiRepo;
+            this.consorzioOperazioniRepo = consorzioOperazioniRepo;
+            this.consorzioPeriodiRepo = consorzioPeriodiRepo;
 
             this.viewConsorzioCersRepo = viewConsorzioCersRepo;
             this.viewConsorzioProduttoriRepo = viewConsorzioProduttoriRepo;
@@ -158,52 +164,52 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-        #region ConsorzioCersSmaltimenti
-        public async Task<ConsorzioCersSmaltimentiDto> GetConsorzioCersSmaltimentiAsync(int page = 1, int pageSize = 0)
+        #region ConsorzioSmaltimenti
+        public async Task<ConsorzioSmaltimentiDto> GetConsorzioSmaltimentiAsync(int page = 1, int pageSize = 0)
         {
-            var entities = await consorzioCersSmaltimentiRepo.GetAllAsync(page, pageSize);
-            var dtos = entities.ToDto<ConsorzioCersSmaltimentiDto, PagedList<ConsorzioCerSmaltimento>>();
+            var entities = await consorzioSmaltimentiRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ConsorzioSmaltimentiDto, PagedList<ConsorzioSmaltimento>>();
             return dtos;
         }
 
-        public async Task<ConsorzioCerSmaltimentoDto> GetConsorzioCerSmaltimentoByIdAsync(long id)
+        public async Task<ConsorzioSmaltimentoDto> GetConsorzioSmaltimentoByIdAsync(long id)
         {
-            var entity = await consorzioCersSmaltimentiRepo.GetByIdAsync(id);
-            var dto = entity.ToDto<ConsorzioCerSmaltimentoDto, ConsorzioCerSmaltimento>();
+            var entity = await consorzioSmaltimentiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ConsorzioSmaltimentoDto, ConsorzioSmaltimento>();
             return dto;
         }
 
-        public async Task<long> AddConsorzioCerSmaltimentoAsync(ConsorzioCerSmaltimentoDto dto)
+        public async Task<long> AddConsorzioSmaltimentoAsync(ConsorzioSmaltimentoDto dto)
         {
-            var entity = dto.ToEntity<ConsorzioCerSmaltimento, ConsorzioCerSmaltimentoDto>();
-            await consorzioCersSmaltimentiRepo.AddAsync(entity);
+            var entity = dto.ToEntity<ConsorzioSmaltimento, ConsorzioSmaltimentoDto>();
+            await consorzioSmaltimentiRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
         }
 
-        public async Task<long> UpdateConsorzioCerSmaltimentoAsync(ConsorzioCerSmaltimentoDto dto)
+        public async Task<long> UpdateConsorzioSmaltimentoAsync(ConsorzioSmaltimentoDto dto)
         {
-            var entity = dto.ToEntity<ConsorzioCerSmaltimento, ConsorzioCerSmaltimentoDto>();
-            consorzioCersSmaltimentiRepo.Update(entity);
+            var entity = dto.ToEntity<ConsorzioSmaltimento, ConsorzioSmaltimentoDto>();
+            consorzioSmaltimentiRepo.Update(entity);
             await SaveChanges();
 
             return entity.Id;
 
         }
 
-        public async Task<bool> DeleteConsorzioCerSmaltimentoAsync(long id)
+        public async Task<bool> DeleteConsorzioSmaltimentoAsync(long id)
         {
-            var entity = await consorzioCersSmaltimentiRepo.GetByIdAsync(id);
-            consorzioCersSmaltimentiRepo.Remove(entity);
+            var entity = await consorzioSmaltimentiRepo.GetByIdAsync(id);
+            consorzioSmaltimentiRepo.Remove(entity);
             await SaveChanges();
 
             return true;
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioCerSmaltimentoAsync(long id, string descrizione)
+        public async Task<bool> ValidateConsorzioSmaltimentoAsync(long id, string descrizione)
         {
-            var entity = await consorzioCersSmaltimentiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+            var entity = await consorzioSmaltimentiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -215,20 +221,20 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
-        public async Task<bool> ChangeStatusConsorzioCerSmaltimentoAsync(long id)
+        public async Task<bool> ChangeStatusConsorzioSmaltimentoAsync(long id)
         {
-            var entity = await consorzioCersSmaltimentiRepo.GetByIdAsync(id);
+            var entity = await consorzioSmaltimentiRepo.GetByIdAsync(id);
             if (entity.Disabled)
             {
                 entity.Disabled = false;
-                consorzioCersSmaltimentiRepo.Update(entity);
+                consorzioSmaltimentiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
             else
             {
                 entity.Disabled = true;
-                consorzioCersSmaltimentiRepo.Update(entity);
+                consorzioSmaltimentiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
@@ -369,9 +375,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioProduttoreAsync(long id, string cdPiva, string indirizzo)
+        public async Task<bool> ValidateConsorzioProduttoreAsync(long id, string cfPiva, string indirizzo)
         {
-            var entity = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CdPiva == cdPiva && x.Indirizzo == indirizzo && x.Id != id);
+            var entity = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -457,9 +463,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioDestinatarioAsync(long id, string cdPiva, string indirizzo)
+        public async Task<bool> ValidateConsorzioDestinatarioAsync(long id, string cfPiva, string indirizzo)
         {
-            var entity = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CdPiva == cdPiva  && x.Indirizzo == indirizzo && x.Id != id);
+            var entity = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva  && x.Indirizzo == indirizzo && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -545,9 +551,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string cdPiva, string indirizzo)
+        public async Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string cfPiva, string indirizzo)
         {
-            var entity = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CdPiva == cdPiva && x.Indirizzo == indirizzo && x.Id != id);
+            var entity = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -903,6 +909,166 @@ namespace GaCloudServer.BusinnessLogic.Services
             {
                 entity.Disabled = true;
                 consorzioRegistrazioniAllegatiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region ConsorzioOperazioni
+        public async Task<ConsorzioOperazioniDto> GetConsorzioOperazioniAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await consorzioOperazioniRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ConsorzioOperazioniDto, PagedList<ConsorzioOperazione>>();
+            return dtos;
+        }
+
+        public async Task<ConsorzioOperazioneDto> GetConsorzioOperazioneByIdAsync(long id)
+        {
+            var entity = await consorzioOperazioniRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ConsorzioOperazioneDto, ConsorzioOperazione>();
+            return dto;
+        }
+
+        public async Task<long> AddConsorzioOperazioneAsync(ConsorzioOperazioneDto dto)
+        {
+            var entity = dto.ToEntity<ConsorzioOperazione, ConsorzioOperazioneDto>();
+            await consorzioOperazioniRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateConsorzioOperazioneAsync(ConsorzioOperazioneDto dto)
+        {
+            var entity = dto.ToEntity<ConsorzioOperazione, ConsorzioOperazioneDto>();
+             consorzioOperazioniRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteConsorzioOperazioneAsync(long id)
+        {
+            var entity = await consorzioOperazioniRepo.GetByIdAsync(id);
+            consorzioOperazioniRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateConsorzioOperazioneAsync(long id, string descrizione)
+        {
+            var entity = await consorzioOperazioniRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusConsorzioOperazioneAsync(long id)
+        {
+            var entity = await consorzioOperazioniRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                consorzioOperazioniRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                consorzioOperazioniRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
+
+        #region ConsorzioPeriodi
+        public async Task<ConsorzioPeriodiDto> GetConsorzioPeriodiAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await consorzioPeriodiRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ConsorzioPeriodiDto, PagedList<ConsorzioPeriodo>>();
+            return dtos;
+        }
+
+        public async Task<ConsorzioPeriodoDto> GetConsorzioPeriodoByIdAsync(long id)
+        {
+            var entity = await consorzioPeriodiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ConsorzioPeriodoDto, ConsorzioPeriodo>();
+            return dto;
+        }
+
+        public async Task<long> AddConsorzioPeriodoAsync(ConsorzioPeriodoDto dto)
+        {
+            var entity = dto.ToEntity<ConsorzioPeriodo, ConsorzioPeriodoDto>();
+            await consorzioPeriodiRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateConsorzioPeriodoAsync(ConsorzioPeriodoDto dto)
+        {
+            var entity = dto.ToEntity<ConsorzioPeriodo, ConsorzioPeriodoDto>();
+            consorzioPeriodiRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteConsorzioPeriodoAsync(long id)
+        {
+            var entity = await consorzioPeriodiRepo.GetByIdAsync(id);
+            consorzioPeriodiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateConsorzioPeriodoAsync(long id, string descrizione)
+        {
+            var entity = await consorzioPeriodiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusConsorzioPeriodoAsync(long id)
+        {
+            var entity = await consorzioPeriodiRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                consorzioPeriodiRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                consorzioPeriodiRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }

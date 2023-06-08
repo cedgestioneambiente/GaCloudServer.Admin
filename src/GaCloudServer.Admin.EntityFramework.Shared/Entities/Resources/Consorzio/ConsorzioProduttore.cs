@@ -7,7 +7,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
     {
         public long ConsorzioComuneId { get; set; }
         public string Indirizzo { get; set; }
-        public string CdPiva { get; set; }
+        public string CfPiva { get; set; }
 
         public ConsorzioComune ConsorzioComune { get; set; }
     }

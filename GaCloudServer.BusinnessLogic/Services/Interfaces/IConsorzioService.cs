@@ -27,18 +27,18 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
-        #region ConsorzioCersSmaltimenti
-        Task<ConsorzioCersSmaltimentiDto> GetConsorzioCersSmaltimentiAsync(int page = 1, int pageSize = 0);
-        Task<ConsorzioCerSmaltimentoDto> GetConsorzioCerSmaltimentoByIdAsync(long id);
+        #region ConsorzioSmaltimenti
+        Task<ConsorzioSmaltimentiDto> GetConsorzioSmaltimentiAsync(int page = 1, int pageSize = 0);
+        Task<ConsorzioSmaltimentoDto> GetConsorzioSmaltimentoByIdAsync(long id);
 
-        Task<long> AddConsorzioCerSmaltimentoAsync(ConsorzioCerSmaltimentoDto dto);
-        Task<long> UpdateConsorzioCerSmaltimentoAsync(ConsorzioCerSmaltimentoDto dto);
+        Task<long> AddConsorzioSmaltimentoAsync(ConsorzioSmaltimentoDto dto);
+        Task<long> UpdateConsorzioSmaltimentoAsync(ConsorzioSmaltimentoDto dto);
 
-        Task<bool> DeleteConsorzioCerSmaltimentoAsync(long id);
+        Task<bool> DeleteConsorzioSmaltimentoAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioCerSmaltimentoAsync(long id, string descrizione);
-        Task<bool> ChangeStatusConsorzioCerSmaltimentoAsync(long id);
+        Task<bool> ValidateConsorzioSmaltimentoAsync(long id, string descrizione);
+        Task<bool> ChangeStatusConsorzioSmaltimentoAsync(long id);
         #endregion
 
         #endregion
@@ -73,7 +73,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteConsorzioDestinatarioAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioDestinatarioAsync(long id, string cdPiva, string indirizzo);
+        Task<bool> ValidateConsorzioDestinatarioAsync(long id, string cfPiva, string indirizzo);
         Task<bool> ChangeStatusConsorzioDestinatarioAsync(long id);
         #endregion
 
@@ -93,7 +93,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteConsorzioProduttoreAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioProduttoreAsync(long id, string cdPiva, string indirizzo);
+        Task<bool> ValidateConsorzioProduttoreAsync(long id, string cfPiva, string indirizzo);
         Task<bool> ChangeStatusConsorzioProduttoreAsync(long id);
         #endregion
 
@@ -113,7 +113,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteConsorzioTrasportatoreAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string cdPiva, string indirizzo);
+        Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string cfPiva, string indirizzo);
         Task<bool> ChangeStatusConsorzioTrasportatoreAsync(long id);
         #endregion
 
@@ -162,6 +162,38 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateConsorzioRegistrazioneAllegatoAsync(long id, string descrizione);
         Task<bool> ChangeStatusConsorzioRegistrazioneAllegatoAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region ConsorzioPeriodi
+        Task<ConsorzioPeriodiDto> GetConsorzioPeriodiAsync(int page = 1, int pageSize = 0);
+        Task<ConsorzioPeriodoDto> GetConsorzioPeriodoByIdAsync(long id);
+
+        Task<long> AddConsorzioPeriodoAsync(ConsorzioPeriodoDto dto);
+        Task<long> UpdateConsorzioPeriodoAsync(ConsorzioPeriodoDto dto);
+
+        Task<bool> DeleteConsorzioPeriodoAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateConsorzioPeriodoAsync(long id, string descrizione);
+        Task<bool> ChangeStatusConsorzioPeriodoAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region ConsorzioOperazioni
+        Task<ConsorzioOperazioniDto> GetConsorzioOperazioniAsync(int page = 1, int pageSize = 0);
+        Task<ConsorzioOperazioneDto> GetConsorzioOperazioneByIdAsync(long id);
+
+        Task<long> AddConsorzioOperazioneAsync(ConsorzioOperazioneDto dto);
+        Task<long> UpdateConsorzioOperazioneAsync(ConsorzioOperazioneDto dto);
+
+        Task<bool> DeleteConsorzioOperazioneAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateConsorzioOperazioneAsync(long id, string descrizione);
+        Task<bool> ChangeStatusConsorzioOperazioneAsync(long id);
         #endregion
 
         #endregion
