@@ -110,12 +110,12 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public string Prg { get; set; }
         public string CfPiva { get; set; }
         public string Via { get; set; }
-        public string NumCiv { get; set; }
+        public string? NumCiv { get; set; }
         public long ContactCenterProvenienzaId { get; set; }
         public string? Telefono { get; set; }
         public string? Cellulare { get; set; }
         public string? Email { get; set; }
-        public long ContactCenterTioRichiestaId { get; set; }
+        public long ContactCenterTipoRichiestaId { get; set; }
         public DateTime? DataChiusura { get; set; }
         public long ContactCenterStatoRichiestaId { get; set; }
         public string Creator { get; set; }

@@ -121,12 +121,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetViewGaBackOfficeUtenzeGroupedByCodAziAndFilterAsync/{codAzi}/{filter}")]
-        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeUtenzeGroupedByCodAziAndFilterAsync(string codAzi, string filter)
+        [HttpGet("GetViewGaBackOfficeUtenzePartiteGrpByCodAziAndFilterAsync/{codAzi}/{filter}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeUtenzePartiteGrpByCodAziAndFilterAsync(string codAzi, string filter)
         {
             try
             {
-                var view = await _gaBackOfficeService.GetViewGaBackOfficeUtenzeGroupedByCodAziAndFilterAsync(codAzi, filter);
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeUtenzePartiteGrpByCodAziAndFilterAsync(codAzi, filter);
                 return new ApiResponse(view);
             }
             catch (Exception ex)

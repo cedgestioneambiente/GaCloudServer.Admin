@@ -22,7 +22,8 @@ D.Id TipoId,D.Descrizione TipoDesc,D.Fatturazione,D.Magazzino,D.PrintTemplate,D.
 A.DataChiusura,
 E.Id StatoId,E.Descrizione StatoDesc,
 A.Creator,A.Assignee,
-A.NoteCrm,A.NoteOperatore
+A.NoteCrm,A.NoteOperatore,
+CAST(0 AS BIT) Disabled
 FROM GaCrmTickets A
 INNER JOIN GaCrmEventComuni B ON A.CrmEventComuneId=B.Id
 INNER JOIN GaContactCenterProvenienze C ON A.ContactCenterProvenienzaId=C.Id

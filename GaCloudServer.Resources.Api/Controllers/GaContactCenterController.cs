@@ -486,6 +486,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+
         [HttpGet("GetGaContactCenterTipoRichiestaByIdAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetGaContactCenterTipoRichiestaByIdAsync(long id)
         {
@@ -593,6 +594,24 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 var response = await _gaContactCenterService.ChangeStatusGaContactCenterTipoRichiestaAsync(id);
                 return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+
+        [HttpGet("GetGaContactCenterTipiRichiesteByFilterAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContactCenterTipiRichiesteByFilterAsync(bool all = false)
+        {
+            try
+            {
+                var dtos = await _gaContactCenterService.GetGaContactCenterTipiRichiesteByFilterAsync(all);
+                var apiDtos = dtos.ToApiDto<ContactCenterTipiRichiesteApiDto, ContactCenterTipiRichiesteDto>();
+                return new ApiResponse(apiDtos);
             }
             catch (Exception ex)
             {
