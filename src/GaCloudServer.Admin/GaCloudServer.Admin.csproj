@@ -113,6 +113,9 @@
 	  <None Update="Scripts\Cdr\DROP_ViewGaCdr.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Consorzio\CREATE_ViewConsorzio_V4.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Consorzio\CREATE_ViewConsorzio_V3.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
@@ -120,6 +123,9 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Consorzio\CREATE_ViewConsorzio.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Consorzio\DROP_ViewConsorzio_V4.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Consorzio\DROP_ViewConsorzio_V3.sql">

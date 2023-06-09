@@ -739,37 +739,37 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
-        public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByProduttoreQueryable(GridOperationsModel filterParams, long[]? produttoriId)
-        {
+        //public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByProduttoreQueryable(GridOperationsModel filterParams, long[]? produttoriId)
+        //{
 
-            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
-            {
-                if (produttoriId == null || produttoriId.Count() == 0)
-                {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
-                    return filterResult;
-                }
-                else
-                {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => produttoriId.Contains(x.ProduttoreId), filterParams, filterParams.quickFilter);
-                    return filterResult;
-                }
-            }
-            else
-            {
-                if (produttoriId == null || produttoriId.Count() == 0)
-                {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2(filterParams);
-                    return filterResult;
-                }
-                else
-                {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => produttoriId.Contains(x.ProduttoreId), filterParams);
-                    return filterResult;
-                }
-            }
+        //    if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+        //    {
+        //        if (produttoriId == null || produttoriId.Count() == 0)
+        //        {
+        //            var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+        //            return filterResult;
+        //        }
+        //        else
+        //        {
+        //            var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => produttoriId.Contains(x.ProduttoreId), filterParams, filterParams.quickFilter);
+        //            return filterResult;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (produttoriId == null || produttoriId.Count() == 0)
+        //        {
+        //            var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2(filterParams);
+        //            return filterResult;
+        //        }
+        //        else
+        //        {
+        //            var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => produttoriId.Contains(x.ProduttoreId), filterParams);
+        //            return filterResult;
+        //        }
+        //    }
 
-        }
+        //}
 
         public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByRolesQueryable(GridOperationsModel filterParams, string[]? roles)
         {
