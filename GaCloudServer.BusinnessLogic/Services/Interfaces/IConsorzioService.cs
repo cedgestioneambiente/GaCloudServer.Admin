@@ -142,7 +142,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewConsorzioRegistrazioni>> GetViewConsorzioRegistrazioneByRolesAsync(string roles);
         Task<PagedList<ViewConsorzioRegistrazioni>> GetViewConsorzioRegistrazioniByFilterAsync(long id, string roles);
         PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniQueryable(GridOperationsModel filterParams);
-        PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByProduttoreQueryable(GridOperationsModel filterParams, long[]? produttoreId);
+        //PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByProduttoreQueryable(GridOperationsModel filterParams, long[]? produttoreId);
         PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByRolesQueryable(GridOperationsModel filterParams, string[]? roles);
         Task<PagedList<ViewConsorzioRegistrazioni>> GetViewConsorzioRegistrazioniQueryableByDateAsync(DateTime dateStart, DateTime dateEnd);
         #endregion
