@@ -661,7 +661,54 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             table += tableDevices;
 
-            sb.AppendFormat(@fileContent, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data, dto.Item.DataCessazione.GetValueOrDefault().ToString("dd/MM/yyy"), table);
+            sb.AppendFormat(@fileContent, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data, dto.Item.DataRichiesta.ToString("dd/MM/yyy"), table);
+            return sb.ToString();
+
+
+        }
+
+        public static string CrmEventDefault(CrmEventTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventDefault/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+
+            sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
+                dto.Item.RagSo,dto.Item.CodFis,dto.Item.Citta,dto.Item.Indirizzo+", "+dto.Item.NumCiv+ "- Zona: "+dto.Item.CodZona,dto.Item.Partita,"Tel.: "+dto.Item.Telefono+" - Cel.:"+dto.Item.Cellulare,  dto.Item.NumCon+""+dto.Item.CpRowNum, table);
+            return sb.ToString();
+
+
+        }
+
+        public static string CrmEventCons(CrmEventTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventCons/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+
+            var devices = from x in dto.Devices
+                          where x.CrmEventId == dto.Item.Id
+                          select x;
+
+            var devicesContent = "";
+
+            foreach (var device in devices)
+            {
+                devicesContent += string.Format(
+                    "<div class='box-full-col'>" +
+                        "<div class='title'>{0}</div>" +
+                        "<div class='content'></div>" +
+                    "</div>", device.DesCon);
+            }
+
+            sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
+                dto.Item.RagSo, dto.Item.CodFis, dto.Item.Citta, dto.Item.Indirizzo + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
+                dto.Item.Partita, "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare, 
+                dto.Item.NumCon + "" + dto.Item.CpRowNum, devicesContent);
             return sb.ToString();
 
 

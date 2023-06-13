@@ -101,6 +101,18 @@
     <None Update="Template\CrmEventCloseRecipt\assets\template.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Template\CrmEventCons\assets\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\CrmEventCons\assets\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\CrmEventDefault\assets\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\CrmEventDefault\assets\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Template\CrmEventRecipt\assets\styles.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

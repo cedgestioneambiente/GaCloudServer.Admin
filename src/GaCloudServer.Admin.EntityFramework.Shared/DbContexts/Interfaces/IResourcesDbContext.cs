@@ -166,6 +166,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaBackOfficeCategorie> ViewGaBackOfficeCategorie { get; set; }
         DbSet<ViewGaBackOfficeContenitoriLetture> ViewGaBackOfficeContenitoriLetture { get; set; }
         DbSet<ViewGaBackOfficeZone> ViewGaBackOfficeZone { get; set; }
+        DbSet<ViewGaBackOfficeTipCon> ViewGaBackOfficeTipCon { get; set; }
 
         DbSet<ViewGaBackOfficeUtenze> ViewGaBackOfficeUtenze { get; set; }
         DbSet<ViewGaBackOfficeUtenzePartite> ViewGaBackOfficeUtenzePartite { get; set; }
@@ -318,6 +319,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
         DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
         DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
+        DbSet<ContactCenterPrintTemplate> ContactCenterPrintTemplates { get; set; }
 
         #region Views
         DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
@@ -479,6 +481,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaCrmCausaliTypes> ViewGaCrmCausaliTypes { get; set; }
         DbSet<ViewGaCrmState> ViewGaCrmState { get; set; }
         DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
+        DbSet<ViewGaCrmCalendarTickets> ViewGaCrmCalendarTickets { get; set; }
         DbSet<ViewGaCrmEventJobs> ViewGaCrmEventJobs { get; set; }
         #endregion
         #endregion

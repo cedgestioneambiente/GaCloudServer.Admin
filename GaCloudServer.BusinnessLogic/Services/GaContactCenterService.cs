@@ -21,6 +21,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ContactCenterAllegato> gaContactCenterAllegatiRepo;
         protected readonly IGenericRepository<ContactCenterMailOnTicket> gaContactCenterMailsOnTicketsRepo;
         protected readonly IGenericRepository<ContactCenterTicket> gaContactCenterTicketsRepo;
+        protected readonly IGenericRepository<ContactCenterPrintTemplate> gaContactCenterPrintTemplatesRepo;
 
         protected readonly IGenericRepository<ViewGaContactCenterTickets> viewGaContactCenterTicketsRepo;
         protected readonly IGenericRepository<ViewFoContactCenterTickets> viewFoContactCenterTicketsRepo;
@@ -38,6 +39,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ContactCenterAllegato> gaContactCenterAllegatiRepo,
             IGenericRepository<ContactCenterMailOnTicket> gaContactCenterMailsOnTicketsRepo,
             IGenericRepository<ContactCenterTicket> gaContactCenterTicketsRepo,
+            IGenericRepository<ContactCenterPrintTemplate> gaContactCenterPrintTemplatesRepo,
 
             IGenericRepository<ViewGaContactCenterTickets> viewGaContactCenterTicketsRepo,
             IGenericRepository<ViewFoContactCenterTickets> viewFoContactCenterTicketsRepo,
@@ -54,6 +56,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaContactCenterAllegatiRepo = gaContactCenterAllegatiRepo;
             this.gaContactCenterMailsOnTicketsRepo = gaContactCenterMailsOnTicketsRepo;
             this.gaContactCenterTicketsRepo = gaContactCenterTicketsRepo;
+            this.gaContactCenterPrintTemplatesRepo = gaContactCenterPrintTemplatesRepo;
 
             this.viewGaContactCenterTicketsRepo = viewGaContactCenterTicketsRepo;
             this.viewFoContactCenterTicketsRepo = viewFoContactCenterTicketsRepo;
@@ -1273,6 +1276,86 @@ namespace GaCloudServer.BusinnessLogic.Services
                 var filterResult = viewFoContactCenterTicketsRepo.GetAllQueryableV2NoSkip(filterParams).Data;
                 return filterResult;
             }
+        }
+        #endregion
+
+        #endregion
+
+        #region ContactCenterPrintTemplates
+        public async Task<ContactCenterPrintTemplatesDto> GetGaContactCenterPrintTemplatesAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaContactCenterPrintTemplatesRepo.GetAllAsync(1, 0);
+            var dtos = entities.ToDto<ContactCenterPrintTemplatesDto, PagedList<ContactCenterPrintTemplate>>();
+            return dtos;
+        }
+
+        public async Task<ContactCenterPrintTemplateDto> GetGaContactCenterPrintTemplateByIdAsync(long id)
+        {
+            var entity = await gaContactCenterPrintTemplatesRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ContactCenterPrintTemplateDto, ContactCenterPrintTemplate>();
+            return dto;
+        }
+
+        public async Task<long> AddGaContactCenterPrintTemplateAsync(ContactCenterPrintTemplateDto dto)
+        {
+            var entity = dto.ToEntity<ContactCenterPrintTemplate, ContactCenterPrintTemplateDto>();
+            await gaContactCenterPrintTemplatesRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaContactCenterPrintTemplateAsync(ContactCenterPrintTemplateDto dto)
+        {
+            var entity = dto.ToEntity<ContactCenterPrintTemplate, ContactCenterPrintTemplateDto>();
+            gaContactCenterPrintTemplatesRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaContactCenterPrintTemplateAsync(long id)
+        {
+            var entity = await gaContactCenterPrintTemplatesRepo.GetByIdAsync(id);
+            gaContactCenterPrintTemplatesRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaContactCenterPrintTemplateAsync(long id, string descrizione)
+        {
+            var entity = await gaContactCenterPrintTemplatesRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaContactCenterPrintTemplateAsync(long id)
+        {
+            var entity = await gaContactCenterPrintTemplatesRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaContactCenterPrintTemplatesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaContactCenterPrintTemplatesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
         }
         #endregion
 

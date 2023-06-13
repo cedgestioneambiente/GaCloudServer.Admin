@@ -28,12 +28,17 @@ namespace GaCloudServer.BusinnessLogic.Services
         private readonly IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo;
         private readonly IGenericRepository<ContactCenterTipoRichiesta> gaCrmTipiTicketRepo;
         private readonly IGenericRepository<ContactCenterStatoRichiesta> gaCrmStatiTicketRepo;
+        private readonly IGenericRepository<ContactCenterPrintTemplate> gaCrmPrintTemplatesRepo;
+
+
+        private readonly IGenericRepository<ViewGaBackOfficeTipCon> gaCrmTipConRepo;
 
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
 
         protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo;
         protected readonly IGenericRepository<ViewGaCrmEventJobs> viewGaCrmEventJobsRepo;
         protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmTicketsRepo;
+        protected readonly IGenericRepository<ViewGaCrmCalendarTickets> viewGaCrmCalendarTicketsRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -50,10 +55,14 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo,
             IGenericRepository<ContactCenterTipoRichiesta> gaCrmTipiTicketRepo,
             IGenericRepository<ContactCenterStatoRichiesta> gaCrmStatiTicketRepo,
+            IGenericRepository<ContactCenterPrintTemplate> gaCrmPrintTemplatesRepo,
+
+            IGenericRepository<ViewGaBackOfficeTipCon> gaCrmTipConRepo,
 
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
             IGenericRepository<ViewGaCrmEventJobs> viewGaCrmEventJobsRepo,
             IGenericRepository<ViewGaCrmTickets> viewGaCrmTicketsRepo,
+            IGenericRepository<ViewGaCrmCalendarTickets> viewGaCrmCalendarTicketsRepo,
 
             IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo,
 
@@ -71,12 +80,16 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaCrmProvenienzeTicketRepo = gaCrmProvenienzeTicketRepo;
             this.gaCrmTipiTicketRepo = gaCrmTipiTicketRepo;
             this.gaCrmStatiTicketRepo= gaCrmStatiTicketRepo;
+            this.gaCrmPrintTemplatesRepo = gaCrmPrintTemplatesRepo;
+
+            this.gaCrmTipConRepo= gaCrmTipConRepo;
 
             this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
 
             this.viewGaCrmEventJobsRepo = viewGaCrmEventJobsRepo;
             this.viewGaCrmMasterRepo = viewGaCrmMasterRepo;
             this.viewGaCrmTicketsRepo = viewGaCrmTicketsRepo;
+            this.viewGaCrmCalendarTicketsRepo = viewGaCrmCalendarTicketsRepo;
 
 
             this.unitOfWork = unitOfWork;
@@ -514,6 +527,25 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
+        public async Task<long> AddGaCrmEventDeviceAsync(CrmEventDeviceDto dto)
+        {
+            var entity = dto.ToEntity<CrmEventDevice, CrmEventDeviceDto>();
+            await gaCrmEventDevicesRepo.AddAsync(entity);
+            await SaveChanges();
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmEventDeviceAsync(CrmEventDeviceDto dto)
+        {
+            var entity = dto.ToEntity<CrmEventDevice, CrmEventDeviceDto>();
+            gaCrmEventDevicesRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
         public async Task<bool> DeleteGaCrmEventDeviceAsync(long id)
         {
             var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
@@ -713,6 +745,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<PagedList<ViewGaCrmCalendarTickets>> GetViewGaCrmCalendarTicketAsync()
+        {
+            var view = await viewGaCrmCalendarTicketsRepo.GetWithFilterAsync(x => x.MagazzinoCalendar == true && x.StatoId==1);
+            return view;
+        }
+
         #endregion
 
         #endregion
@@ -739,9 +778,18 @@ namespace GaCloudServer.BusinnessLogic.Services
             var dtos = entities.ToDto<ContactCenterStatiRichiesteDto, PagedList<ContactCenterStatoRichiesta>>();
             return dtos;
         }
+        public async Task<ContactCenterPrintTemplatesDto> GetGaCrmPrintTemplatesAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmPrintTemplatesRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ContactCenterPrintTemplatesDto, PagedList<ContactCenterPrintTemplate>>();
+            return dtos;
+        }
+        public async Task<PagedList<ViewGaBackOfficeTipCon>> GetViewGaCrmTipConAsync(int page = 1, int pageSize = 0)
+        {
+            var view = await gaCrmTipConRepo.GetAllAsync(page, pageSize);
+            return view;
+        }
         #endregion
-
-
 
         #region Common
         private async Task<long> SaveChanges()
@@ -753,6 +801,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             unitOfWork.DetachEntity(entity);
         }
+
+
         #endregion
 
     }

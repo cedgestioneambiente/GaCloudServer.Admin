@@ -624,6 +624,144 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region ContactCenterPrintTemplates
+        [HttpGet("GetGaContactCenterPrintTemplatesAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContactCenterPrintTemplatesAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaContactCenterService.GetGaContactCenterPrintTemplatesAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ContactCenterPrintTemplatesApiDto, ContactCenterPrintTemplatesDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+
+        [HttpGet("GetGaContactCenterPrintTemplateByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaContactCenterPrintTemplateByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaContactCenterService.GetGaContactCenterPrintTemplateByIdAsync(id);
+                var apiDto = dto.ToApiDto<ContactCenterPrintTemplateApiDto, ContactCenterPrintTemplateDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaContactCenterPrintTemplateAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaContactCenterPrintTemplateAsync([FromBody] ContactCenterPrintTemplateApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ContactCenterPrintTemplateDto, ContactCenterPrintTemplateApiDto>();
+                var response = await _gaContactCenterService.AddGaContactCenterPrintTemplateAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaContactCenterPrintTemplateAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaContactCenterPrintTemplateAsync([FromBody] ContactCenterPrintTemplateApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ContactCenterPrintTemplateDto, ContactCenterPrintTemplateApiDto>();
+                var response = await _gaContactCenterService.UpdateGaContactCenterPrintTemplateAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaContactCenterPrintTemplateAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaContactCenterPrintTemplateAsync(long id)
+        {
+            try
+            {
+                var response = await _gaContactCenterService.DeleteGaContactCenterPrintTemplateAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaContactCenterPrintTemplateAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaContactCenterPrintTemplateAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _gaContactCenterService.ValidateGaContactCenterPrintTemplateAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusGaContactCenterPrintTemplateAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusGaContactCenterPrintTemplateAsync(long id)
+        {
+            try
+            {
+                var response = await _gaContactCenterService.ChangeStatusGaContactCenterPrintTemplateAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
         #region ContactCenterMails
         [HttpGet("GetGaContactCenterMailsAsync/{page}/{pageSize}")]
         public async Task<ActionResult<ApiResponse>> GetGaContactCenterMailsAsync(int page = 1, int pageSize = 0)

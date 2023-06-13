@@ -46,7 +46,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
         public bool ContactCenter { get; set; }
         public bool ContactCenterCalendar { get; set; }
         public string CodArera { get; set; }
-        public string PrintTemplate { get; set; }
+        public long? ContactCenterPrintTemplateId { get; set; }
         public string Group { get; set; }
     }
 
@@ -137,6 +137,19 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
     }
 
     public class ContactCenterTicketsDto : GenericPagedListDto<ContactCenterTicketDto>
+    {
+    }
+
+    #endregion
+
+    #region ContactCenterPrintTemplates
+    public class ContactCenterPrintTemplateDto : GenericListDto
+    {
+        public string Template { get; set; }
+        
+    }
+
+    public class ContactCenterPrintTemplatesDto : GenericPagedListDto<ContactCenterPrintTemplateDto>
     {
     }
 

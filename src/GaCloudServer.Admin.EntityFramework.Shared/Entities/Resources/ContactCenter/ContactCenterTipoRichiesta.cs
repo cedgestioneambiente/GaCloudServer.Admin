@@ -16,7 +16,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public bool ContactCenter { get; set; }
         public bool ContactCenterCalendar { get; set; }
         public string CodArera { get; set; }
-        public string PrintTemplate { get; set; }
+        public long? ContactCenterPrintTemplateId { get; set; }
+        public bool PrintMassive { get; set; }
         public string Group { get; set; }
     }
 }

@@ -71,6 +71,9 @@
 	  <None Update="Scripts\BackOffice\CREATE_SpGaBackOffice.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V5.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V4.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
@@ -87,6 +90,9 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\BackOffice\DROP_SpGaBackOffice.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V5.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V4.sql">

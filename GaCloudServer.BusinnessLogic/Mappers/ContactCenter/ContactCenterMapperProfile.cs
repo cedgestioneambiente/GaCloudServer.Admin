@@ -64,6 +64,14 @@ namespace GaCloudServer.BusinessLogic.Mappers.ContactCenter
 
             CreateMap<PagedList<ContactCenterTicket>, ContactCenterTicketsDto>(MemberList.Destination)
                 .ReverseMap();
+
+            //ContactCenterTickets
+            CreateMap<ContactCenterPrintTemplate, ContactCenterPrintTemplateDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<ContactCenterPrintTemplate>, ContactCenterPrintTemplatesDto>(MemberList.Destination)
+                .ReverseMap();
+
         }
     }
 }

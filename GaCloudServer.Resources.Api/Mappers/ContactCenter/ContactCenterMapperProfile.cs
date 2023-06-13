@@ -64,6 +64,13 @@ namespace GaCloudServer.Resources.Api.Mappers.ContactCenter
 
             CreateMap<ContactCenterTicketsDto, ContactCenterTicketsApiDto>(MemberList.Destination)
                 .ReverseMap();
+
+            //ContactCenterPrintTemplate
+            CreateMap<ContactCenterPrintTemplateDto, ContactCenterPrintTemplateApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ContactCenterPrintTemplatesDto, ContactCenterPrintTemplatesApiDto>(MemberList.Destination)
+                .ReverseMap();
         }
     }
 }

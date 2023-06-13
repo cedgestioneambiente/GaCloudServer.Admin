@@ -10,6 +10,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffi
         public string NumCon { get; set; }
         public string Partita { get; set; }
         public int CpRowNum { get; set; }
+        public string CodSdi { get; set; }
         public string RagSo { get; set; }
         public string CodFis { get; set; }
         public DateTime? DtIni { get; set; }

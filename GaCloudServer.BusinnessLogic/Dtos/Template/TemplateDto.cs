@@ -108,6 +108,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
 
     public class CrmEventTemplateDto : GenericPrintDto
     {
+        
         public string Area { get; set; }
         public string Data { get; set; }
         public CrmEventDto Item { get; set; }
@@ -119,6 +120,14 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public string Area { get; set; }
         public string Data { get; set; }
         public List<CrmEventDto> Items { get; set; }
+        public List<CrmEventDeviceDto> Devices { get; set; }
+    }
+
+    public class CrmTicketTemplateDto : GenericPrintDto
+    {
+        public string Area { get; set; }
+        public string Data { get; set; }
+        public CrmTicketDto Item { get; set; }
         public List<CrmEventDeviceDto> Devices { get; set; }
     }
 

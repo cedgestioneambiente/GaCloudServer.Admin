@@ -14,13 +14,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
         public string NumCon { get; set; }
         public string Partita { get; set; }
         public string Prg { get; set; }
+        public string CodSdi { get; set; }
         public string CfPiva { get; set; }
         public string Via { get; set; }
         public string NumCiv { get; set; }
+        public string CodZona { get; set; }
         public long ContactCenterProvenienzaId { get; set; }
         public string Telefono { get; set; }
         public string Cellulare { get; set; }
         public string Email { get; set; }
+        public string EmailPec { get; set; }
         public long ContactCenterTipoRichiestaId { get; set; }
         public DateTime? DataChiusura { get; set; }
         public long ContactCenterStatoRichiestaId { get; set; }
@@ -28,7 +31,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
         public string Assignee { get; set; }
         public string NoteCrm { get; set; }
         public string NoteOperatore { get; set; }
-       
+        public string Tributo { get; set; }
 
         public CrmEventComune CrmEventComune { get; set; }
         public ContactCenterProvenienza ContactCenterProvenienza { get; set; }

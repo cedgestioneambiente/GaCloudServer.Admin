@@ -171,6 +171,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaBackOfficeCategorie> ViewGaBackOfficeCategorie { get; set; }
         public DbSet<ViewGaBackOfficeContenitoriLetture> ViewGaBackOfficeContenitoriLetture { get; set; }
         public DbSet<ViewGaBackOfficeZone> ViewGaBackOfficeZone { get; set; }
+        public DbSet<ViewGaBackOfficeTipCon> ViewGaBackOfficeTipCon { get; set; }
 
         public DbSet<ViewGaBackOfficeUtenze> ViewGaBackOfficeUtenze { get; set; }
         public DbSet<ViewGaBackOfficeUtenzePartite> ViewGaBackOfficeUtenzePartite { get; set; }
@@ -324,6 +325,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ContactCenterAllegato> GaContactCenterAllegati { get; set; }
         public DbSet<ContactCenterMailOnTicket> GaContactCenterMailsOnTickets { get; set; }
         public DbSet<ContactCenterTicket> GaContactCenterTickets { get; set; }
+        public DbSet<ContactCenterPrintTemplate> ContactCenterPrintTemplates { get; set; }
 
         #region Views
         public DbSet<ViewGaContactCenterTickets> ViewGaContactCenterTickets { get; set; }
@@ -482,6 +484,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaCrmCausaliTypes> ViewGaCrmCausaliTypes { get; set; }
         public DbSet<ViewGaCrmState> ViewGaCrmState { get; set; }
         public DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
+        public DbSet<ViewGaCrmCalendarTickets> ViewGaCrmCalendarTickets { get; set; }
         public DbSet<ViewGaCrmEventJobs> ViewGaCrmEventJobs { get; set; }
         #endregion
         #endregion
@@ -713,6 +716,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 entity
                 .ToView(nameof(ViewGaBackOfficeZone))
                 .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaBackOfficeTipCon>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeTipCon))
+                .HasNoKey();
             });
 
 
@@ -1320,6 +1330,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewGaCrmTickets))
+                .HasKey(x => x.Id);
+            });
+
+
+            builder.Entity<ViewGaCrmCalendarTickets>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmCalendarTickets))
                 .HasKey(x => x.Id);
             });
 

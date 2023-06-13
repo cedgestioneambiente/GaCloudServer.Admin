@@ -1,9 +1,11 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
+using Microsoft.Graph;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
@@ -85,6 +87,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region CrmEventDevices
         Task<CrmEventDevicesDto> GetGaCrmEventDevicesByEventIdAsync(long id);
+        Task<long> AddGaCrmEventDeviceAsync(CrmEventDeviceDto dto);
+        Task<long> UpdateGaCrmEventDeviceAsync(CrmEventDeviceDto dto);
         Task<bool> DeleteGaCrmEventDeviceAsync(long id);
         Task<bool> DeleteGaCrmEventDevicesByEventIdAsync(long id);
         #region Functions
@@ -108,6 +112,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         PagedList<ViewGaCrmTickets> GetViewGaCrmTicketsByAssigneeQueryable(GridOperationsModel filterParams, string[]? assignee);
+
+        Task<PagedList<ViewGaCrmCalendarTickets>> GetViewGaCrmCalendarTicketAsync();
         #endregion
 
         #endregion
@@ -121,6 +127,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<ContactCenterProvenienzeDto> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0);
         Task<ContactCenterTipiRichiesteDto> GetGaCrmTipiTicketAsync(bool all);
         Task<ContactCenterStatiRichiesteDto> GetGaCrmStatiTicketAsync(int page = 1, int pageSize = 0);
+        Task<PagedList<ViewGaBackOfficeTipCon>> GetViewGaCrmTipConAsync(int page = 1, int pageSize = 0);
+        Task<ContactCenterPrintTemplatesDto> GetGaCrmPrintTemplatesAsync(int page = 1, int pageSize = 0);
         #endregion
     }
 }

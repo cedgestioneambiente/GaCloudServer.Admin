@@ -161,6 +161,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var view = await viewGaBackOfficeUtenzePartiteGrpRepo.GetWithFilterAsync(x => x.CpAzi == codAzi && 
             (EF.Functions.Like(x.RagSo, filter.toWildcardString()) || 
             EF.Functions.Like(x.CodFis, filter.toWildcardString()) ||
+            EF.Functions.Like(x.CodCli, filter.toWildcardString()) ||
             EF.Functions.Like(x.NumCon, filter.toWildcardString())), 1, 0, "RagSo");
             return view;
         }

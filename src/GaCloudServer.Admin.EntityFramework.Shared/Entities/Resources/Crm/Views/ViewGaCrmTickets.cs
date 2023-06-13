@@ -29,20 +29,26 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.View
         public string Telefono { get; set; }
         public string Cellulare { get; set; }
         public string Email { get; set; }
+        public string EmailPec { get; set; }
         public long TipoId { get; set; }
         public string TipoDesc { get; set; }
         public bool Fatturazione { get; set; }
         public bool Magazzino { get; set; }
-        public string PrintTemplate { get; set; }
+        public long PrintTemplate { get; set; }
         public bool MagazzinoCalendar { get; set; }
         public bool ContactCenterCalendar { get; set; }
-        public DateTime DataChiusura { get; set; }
+        public DateTime? DataChiusura { get; set; }
         public long StatoId { get; set; }
         public string StatoDesc { get; set; }
         public string Creator { get; set; }
+        public string CreatorDesc { get; set; }
         public string Assignee { get; set; }
+        public string AssigneeDesc { get; set; }
         public string NoteCrm { get; set; }
         public string NoteOperatore { get; set; }
+        public string CodZona { get; set; }
+        public string Tributo { get; set; }
+        public DateTime? DataProgrammazione { get; set; }
 
     }
 }

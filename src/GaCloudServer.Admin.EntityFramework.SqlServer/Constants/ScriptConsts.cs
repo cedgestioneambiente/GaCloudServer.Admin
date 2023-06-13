@@ -45,10 +45,12 @@
         public const string CREATE_ViewGaBackOffice_V2 = "CREATE_ViewGaBackOffice_V2.sql";
         public const string CREATE_ViewGaBackOffice_V3 = "CREATE_ViewGaBackOffice_V3.sql";
         public const string CREATE_ViewGaBackOffice_V4 = "CREATE_ViewGaBackOffice_V4.sql";
+        public const string CREATE_ViewGaBackOffice_V5 = "CREATE_ViewGaBackOffice_V5.sql";
         public const string DROP_ViewGaBackOffice = "DROP_ViewGaBackOffice.sql";
         public const string DROP_ViewGaBackOffice_V2 = "DROP_ViewGaBackOffice_V2.sql";
         public const string DROP_ViewGaBackOffice_V3 = "DROP_ViewGaBackOffice_V3.sql";
         public const string DROP_ViewGaBackOffice_V4 = "DROP_ViewGaBackOffice_V4.sql";
+        public const string DROP_ViewGaBackOffice_V5 = "DROP_ViewGaBackOffice_V5.sql";
 
         //PrenotazioneAuto
         public const string GaPrenotazioneAutoMigration = @".\Scripts\PrenotazioneAuto\";

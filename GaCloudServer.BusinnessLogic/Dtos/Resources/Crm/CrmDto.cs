@@ -10,17 +10,22 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string CodAzi { get; set; }
         public string CodCli { get; set; }
         public string NumCon { get; set; }
+        public string Partita { get; set; }
         public string CpRowNum { get; set; }
         public DateTime DateSchedule { get; set; }
+        public DateTime DataRichiesta { get; set; }
         public string RagSo { get; set; }
+        public string CodFis { get; set; }
         public string Telefono { get; set; }
         public string Cellulare { get; set; }
         public string Email { get; set; }
         public string Pec { get; set; }
+        public long TipoId { get; set; }
         public string Tipo { get; set; }
         public string Citta { get; set; }
         public string Indirizzo { get; set; }
         public string NumCiv { get; set; }
+        public string CodZona { get; set; }
         public bool Domest { get; set; }
         public long CrmEventStateId { get; set; }
         public long CrmEventAreaId { get; set; }
@@ -30,7 +35,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string NotaAnagrafica { get; set; }
         public bool Sended { get; set; }
         public string NotaOperatore { get; set; }
-        public DateTime? DataCessazione { get; set; }
+
         public long? Duration { get; set; }
     }
 
@@ -85,7 +90,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public int CrmTicketId { get; set; }
         public string Identi1 { get; set; }
         public string Identi2 { get; set; }
-        public int TipCon { get; set; }
+        public string TipCon { get; set; }
         public string DesCon { get; set; }
         public bool Selected { get; set; }
         public bool Completed { get; set; }
@@ -108,13 +113,16 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string NumCon { get; set; }
         public string Partita { get; set; }
         public string Prg { get; set; }
+        public string? CodSdi { get; set; }
         public string CfPiva { get; set; }
         public string Via { get; set; }
         public string? NumCiv { get; set; }
+        public string? CodZona { get; set; }
         public long ContactCenterProvenienzaId { get; set; }
         public string? Telefono { get; set; }
         public string? Cellulare { get; set; }
         public string? Email { get; set; }
+        public string? EmailPec { get; set; }
         public long ContactCenterTipoRichiestaId { get; set; }
         public DateTime? DataChiusura { get; set; }
         public long ContactCenterStatoRichiestaId { get; set; }
@@ -122,6 +130,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string Assignee { get; set; }
         public string? NoteCrm { get; set; }
         public string? NoteOperatore { get; set; }
+        public string? Tributo { get; set; }
     }
 
     public class CrmTicketsDto : GenericPagedListDto<CrmTicketDto>

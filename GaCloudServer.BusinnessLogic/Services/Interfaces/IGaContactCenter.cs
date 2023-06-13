@@ -162,6 +162,22 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #endregion
+
+        #region GaContactCenterPrintTemplates
+        Task<ContactCenterPrintTemplatesDto> GetGaContactCenterPrintTemplatesAsync(int page = 1, int pageSize = 0);
+        Task<ContactCenterPrintTemplateDto> GetGaContactCenterPrintTemplateByIdAsync(long id);
+
+        Task<long> AddGaContactCenterPrintTemplateAsync(ContactCenterPrintTemplateDto dto);
+        Task<long> UpdateGaContactCenterPrintTemplateAsync(ContactCenterPrintTemplateDto dto);
+
+        Task<bool> DeleteGaContactCenterPrintTemplateAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaContactCenterPrintTemplateAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaContactCenterPrintTemplateAsync(long id);
+        #endregion
+
+        #endregion
     }
 }
 

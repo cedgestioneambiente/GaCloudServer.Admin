@@ -19,6 +19,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         protected readonly IUnitOfWork unitOfWork;
 
+        private readonly TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+
         public GaPrenotazioneAutoService(
         IGenericRepository<PrenotazioneAutoVeicolo> gaPrenotazioneAutoVeicoliRepo,
         IGenericRepository<PrenotazioneAutoSede> gaPrenotazioneAutoSediRepo,
@@ -250,8 +252,11 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<int> ValidateGaPrenotazioneAutoRegistrazioneAsync(PrenotazioneAutoRegistrazioneDto dto)
         {
             int result = 0;
+            var dataInizio = dto.DataInizio.Add(offset);
+            var dataFine = dto.DataFine.Add(offset);
+
             var entities = await gaPrenotazioneAutoRegistrazioniRepo
-                .GetWithFilterAsync(x => x.PrenotazioneAutoVeicoloId == dto.PrenotazioneAutoVeicoloId && (dto.DataInizio<=x.DataFine && x.DataInizio<dto.DataFine) && x.Id != dto.Id);
+                .GetWithFilterAsync(x => x.PrenotazioneAutoVeicoloId == dto.PrenotazioneAutoVeicoloId && (dataInizio<=x.DataFine && x.DataInizio<dataFine) && x.Id != dto.Id);
 
             var veicolo = await gaPrenotazioneAutoVeicoliRepo.GetByIdAsync(dto.PrenotazioneAutoVeicoloId);
 
@@ -260,7 +265,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return -2;
             }
 
-            if (dto.DataInizio > dto.DataFine)
+            if (dataInizio > dataFine)
             {
                 return -3;
             }
