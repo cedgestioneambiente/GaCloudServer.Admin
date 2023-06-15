@@ -33,10 +33,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             _converter = converter;
         }
 
-        public dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, string title = "", string css = "", Orientation orientation = Orientation.Portrait)
+        public dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, HeaderSettings headerSettings,FooterSettings footerSettings, int copies, string title = "", string css = "", Orientation orientation = Orientation.Portrait)
         {
             string filePath = Path.Combine(_webRootPath, _path, _fileName);
-
+     
             var globalSettings = new GlobalSettings
             {
                 ColorMode = ColorMode.Color,
@@ -44,6 +44,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 PaperSize = PaperKind.A4,
                 Margins = new MarginSettings { Top = 10 },
                 DocumentTitle = "PDF Report",
+                Copies=copies,
                 Out = filePath
             };
 
@@ -52,8 +53,8 @@ namespace GaCloudServer.BusinnessLogic.Services
                 PagesCount = true,
                 HtmlContent = _htmlContent,
                 WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "Template/" + css + "/assets", "styles.css") },
-                HeaderSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Right = "Pagina [page] di [toPage]", Line = true },
-                FooterSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, Center = title }
+                HeaderSettings = headerSettings, //{ FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Right = "Pagina [page] di [toPage]", Line = true },
+                FooterSettings = footerSettings//{ FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, Center = title }
             };
 
             var pdf = new HtmlToPdfDocument()

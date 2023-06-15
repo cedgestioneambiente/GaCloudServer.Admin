@@ -568,7 +568,6 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-
         [HttpPost("AddGaCrmEventAsync")]
         public async Task<ActionResult<ApiResponse>> AddGaCrmEventAsync([FromBody] CrmEventApiDto apiDto)
         {
@@ -831,7 +830,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 else
                 {
                     var _template = templates.Data.Where(x => x.Id == _tipo.ContactCenterPrintTemplateId).First();
-                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione, _tipo.Descrizione,  _template.Template+".pdf", _template.Template);
+                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione, "Redatto in duplice copia",  _template.Template+".pdf", _template.Template);
                     var response = await _printService.Print(_template.Template, dto);
 
                     return new ApiResponse(response);
@@ -906,6 +905,23 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 var dto = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(id);
                 var apiDto = dto.ToApiDto<CrmEventDevicesApiDto, CrmEventDevicesDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCrmEventDeviceByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmEventDeviceByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCrmService.GetGaCrmEventDeviceByIdAsync(id);
+                var apiDto = dto.ToApiDto<CrmEventDeviceApiDto, CrmEventDeviceDto>();
                 return new ApiResponse(apiDto);
             }
             catch (Exception ex)
@@ -1323,10 +1339,14 @@ namespace GaCloudServer.Resources.Api.Controllers
                 FilePath = @"Print/Crm",
                 Title = title,
                 Css = css,
+                HeaderSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Right = "Redatto in duplice copia", Line = true },
+                FooterSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true,Center="Gestione Ambiente S.p.A." },
+                Copies=2,
                 Area = area,
                 Data = date.ToString("dd/MM/yyyy"),
                 Item = _event,
                 Devices = new List<CrmEventDeviceDto>()
+
             };
 
             var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(_event.Id);

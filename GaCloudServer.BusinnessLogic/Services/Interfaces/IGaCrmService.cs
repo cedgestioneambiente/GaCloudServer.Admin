@@ -87,6 +87,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region CrmEventDevices
         Task<CrmEventDevicesDto> GetGaCrmEventDevicesByEventIdAsync(long id);
+        Task<CrmEventDeviceDto> GetGaCrmEventDeviceByIdAsync(long id);
         Task<long> AddGaCrmEventDeviceAsync(CrmEventDeviceDto dto);
         Task<long> UpdateGaCrmEventDeviceAsync(CrmEventDeviceDto dto);
         Task<bool> DeleteGaCrmEventDeviceAsync(long id);
