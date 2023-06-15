@@ -9,6 +9,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
         public bool Pericoloso { get; set; }
         public string? Immagine { get; set; }
         public string? CodiceRaggruppamento { get; set; }
+        public bool Conteggio { get; set; }
     }
 
     public class ConsorzioCersDto : GenericPagedListDto<ConsorzioCerDto>

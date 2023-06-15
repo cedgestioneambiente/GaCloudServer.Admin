@@ -20,7 +20,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
     public class ConsorzioController : Controller
     {
         private readonly IConsorzioService _consorzioService;

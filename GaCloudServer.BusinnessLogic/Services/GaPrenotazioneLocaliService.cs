@@ -18,6 +18,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaPrenotazioneLocaliRegistrazioni> viewGaPrenotazioneLocaliRegistrazioniRepo;
 
         protected readonly IUnitOfWork unitOfWork;
+        private readonly TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
 
         public GaPrenotazioneLocaliService(
         IGenericRepository<PrenotazioneLocaliUfficio> gaPrenotazioneLocaliUfficiRepo,
@@ -255,10 +256,13 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<int> ValidateGaPrenotazioneLocaliRegistrazioneAsync(PrenotazioneLocaliRegistrazioneDto dto)
         {
             int result = 0;
-            var entities = await gaPrenotazioneLocaliRegistrazioniRepo
-                .GetWithFilterAsync(x => x.PrenotazioneLocaliUfficioId == dto.PrenotazioneLocaliUfficioId && (dto.DataInizio <= x.DataFine && x.DataInizio < dto.DataFine) && x.Id != dto.Id);
+            var dataInizio = dto.DataInizio.Add(offset);
+            var dataFine = dto.DataFine.Add(offset);
 
-            var veicolo = await gaPrenotazioneLocaliUfficiRepo.GetByIdAsync(dto.PrenotazioneLocaliUfficioId);
+            var entities = await gaPrenotazioneLocaliRegistrazioniRepo
+                .GetWithFilterAsync(x => x.PrenotazioneLocaliUfficioId == dto.PrenotazioneLocaliUfficioId && (dataInizio <= x.DataFine && x.DataInizio < dataFine) && x.Id != dto.Id);
+
+            var ufficio = await gaPrenotazioneLocaliUfficiRepo.GetByIdAsync(dto.PrenotazioneLocaliUfficioId);
 
             if (entities.Data.Count > 0)
             {
