@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using GaCloudServer.Admin.EntityFramework.SqlServer.Constants;
+using GaCloudServer.Admin.EntityFramework.SqlServer.Helpers;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -14,6 +16,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
+
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCrm, ScriptConsts.CREATE_ViewGaCrm_V5));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -21,6 +25,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
             migrationBuilder.DropColumn(
                 name: "Conteggio",
                 table: "ConsorzioCers");
+
+            migrationBuilder.Sql(MigrationHelper.CommandToString(ScriptConsts.GaCrm, ScriptConsts.DROP_ViewGaCrm_V5));
         }
     }
 }

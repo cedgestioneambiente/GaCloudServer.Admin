@@ -18,7 +18,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
     public class GaPrenotazioneLocaliController : Controller
     {
         private readonly IGaPrenotazioneLocaliService _gaPrenotazioneLocaliService;

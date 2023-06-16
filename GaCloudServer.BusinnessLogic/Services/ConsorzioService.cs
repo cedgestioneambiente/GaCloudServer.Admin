@@ -119,9 +119,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioCerAsync(long id, string descrizione)
+        public async Task<bool> ValidateConsorzioCerAsync(long id, string codice, string codiceRaggruppamento)
         {
-            var entity = await consorzioCersRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+            var entity = await consorzioCersRepo.GetWithFilterAsync(x => x.Codice == codice && x.CodiceRaggruppamento == codiceRaggruppamento && x.Id != id);
 
             if (entity.Data.Count > 0)
             {

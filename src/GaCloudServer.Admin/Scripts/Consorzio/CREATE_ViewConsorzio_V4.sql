@@ -26,7 +26,7 @@ CREATE VIEW [dbo].[ViewConsorzioCers]
 AS
 SELECT        dbo.ConsorzioCers.Id, dbo.ConsorzioCers.Codice, dbo.ConsorzioCers.Pericoloso, dbo.ConsorzioCers.Immagine, dbo.ConsorzioCers.Descrizione, 
                          dbo.ConsorzioCers.Disabled, dbo.ConsorzioCers.CodiceRaggruppamento,            
-						 CONCAT(dbo.ConsorzioCers.Codice , N' - ' , dbo.ConsorzioCers.CodiceRaggruppamento , N' ' , N'(' + dbo.ConsorzioCers.Descrizione + N')') AS DescrizioneEstesa
+						 CONCAT(dbo.ConsorzioCers.Codice , N' - ' , dbo.ConsorzioCers.CodiceRaggruppamento , N' ' , N'(' + dbo.ConsorzioCers.Descrizione + N')') AS DescrizioneEstesa, dbo.ConsorzioCers.Conteggio
 FROM            dbo.ConsorzioCers
 GO
 

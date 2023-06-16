@@ -17,7 +17,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteConsorzioCerAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioCerAsync(long id, string descrizione);
+        Task<bool> ValidateConsorzioCerAsync(long id, string codice, string codiceRaggruppamento);
         Task<bool> ChangeStatusConsorzioCerAsync(long id);
         #endregion
 
