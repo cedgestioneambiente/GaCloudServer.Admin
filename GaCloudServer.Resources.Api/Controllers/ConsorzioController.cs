@@ -141,12 +141,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioCerAsync/{id}/{descrizione}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioCerAsync(long id, string descrizione)
+        [HttpGet("ValidateConsorzioCerAsync/{id}/{codice}/{codiceRaggruppamento}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioCerAsync(long id, string codice, string codiceRaggruppamento)
         {
             try
             {
-                var response = await _consorzioService.ValidateConsorzioCerAsync(id, descrizione);
+                var response = await _consorzioService.ValidateConsorzioCerAsync(id, codice, codiceRaggruppamento);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
