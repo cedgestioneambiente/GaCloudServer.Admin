@@ -527,6 +527,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
+        public async Task<CrmEventDeviceDto> GetGaCrmEventDeviceByIdAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmEventDeviceDto, CrmEventDevice>();
+            return dto;
+        }
+
         public async Task<long> AddGaCrmEventDeviceAsync(CrmEventDeviceDto dto)
         {
             var entity = dto.ToEntity<CrmEventDevice, CrmEventDeviceDto>();

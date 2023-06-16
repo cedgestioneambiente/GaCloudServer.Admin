@@ -9,6 +9,6 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
     public interface ILocalFileService
     {
-        dynamic UploadOnServerPrint(string fileName, string path, string htmlContent, string title = "", string css = "", Orientation orientation = Orientation.Portrait);
+        dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, HeaderSettings headerSettings, FooterSettings footerSettings,int copies, string title = "", string css = "", Orientation orientation = Orientation.Portrait);
     }
 }

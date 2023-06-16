@@ -713,5 +713,118 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
         }
+
+        public static string CrmEventSost(CrmEventTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventSost/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+
+            var devices = from x in dto.Devices
+                          where x.CrmEventId == dto.Item.Id
+                          select x;
+
+            var devicesContent = "";
+
+            foreach (var device in devices)
+            {
+                devicesContent += string.Format(
+                    "<div class='box-full-col'>" +
+                        "<div class='title'>{0}</div>" +
+                        "<div class='content'></div>" +
+                    "</div>", device.DesCon);
+            }
+
+            string tableDevices = "" +
+                   "<table class='table-device'>" +
+                   "<thead>" +
+                   "<tr>" +
+                   "<th style='width:30%;'>" +
+                   "Matricola" +
+                   "</th>" +
+                   "<th style='width:40%;'>" +
+                   "Tipo Contenitore" +
+                   "</th>" +
+                   "<th style='widt:30%;'>" +
+                   "Ritirato" +
+                   "</th>" +
+                   "</thead>" +
+                   "<tbody";
+
+            foreach (var device in devices)
+            {
+                tableDevices += string.Format(
+                    "<tr>" +
+                    "<td style='padding:5px;'>{0}</td>" +
+                    "<td style='padding:5px;'>{1}</td>" +
+                    "<td style='padding:5px;font-size:20px;'>&#9744;</td>" +
+                    "</tr>", device.Identi2, device.DesCon);
+            }
+
+            tableDevices += "</tbody>" +
+                "</table>" +
+                "</div>";
+
+
+            sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
+                dto.Item.RagSo, dto.Item.CodFis, dto.Item.Citta, dto.Item.Indirizzo + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
+                dto.Item.Partita, "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare,
+                dto.Item.NumCon + "" + dto.Item.CpRowNum, devicesContent,tableDevices);
+            return sb.ToString();
+
+
+        }
+
+        public static string CrmEventRit(CrmEventTemplateDto dto)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventrIT/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            var devices = from x in dto.Devices
+                          where x.CrmEventId == dto.Item.Id
+                          select x;
+
+            string tableDevices = "" +
+                   "<table class='table-device'>" +
+                   "<thead>" +
+                   "<tr>" +
+                   "<th style='width:30%;'>" +
+                   "Matricola" +
+                   "</th>" +
+                   "<th style='width:40%;'>" +
+                   "Tipo Contenitore" +
+                   "</th>" +
+                   "<th style='widt:30%;'>" +
+                   "Ritirato" +
+                   "</th>" +
+                   "</thead>" +
+                   "<tbody";
+
+            foreach (var device in devices)
+            {
+                tableDevices += string.Format(
+                    "<tr>" +
+                    "<td style='padding:5px;'>{0}</td>" +
+                    "<td style='padding:5px;'>{1}</td>" +
+                    "<td style='padding:5px;font-size:20px;'>&#9744;</td>" +
+                    "</tr>", device.Identi2, device.DesCon);
+            }
+
+            tableDevices += "</tbody>" +
+                "</table>" +
+                "</div>";
+
+
+            sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
+                dto.Item.RagSo, dto.Item.CodFis, dto.Item.Citta, dto.Item.Indirizzo + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
+                dto.Item.Partita, "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare,
+                dto.Item.NumCon + "" + dto.Item.CpRowNum,tableDevices,dto.Item.DataRichiesta.ToString("dd/MM/yyyy"));
+            return sb.ToString();
+
+
+        }
     }
 }

@@ -54,12 +54,18 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Base
         public string Title { get; set; }
         public string Css { get; set; }
         public Orientation Orientation { get; set; }
+        public HeaderSettings HeaderSettings { get; set; }
+        public FooterSettings FooterSettings { get; set; }
+        public int Copies { get; set; }
 
         public GenericPrintDto()
         {
             this.Title = "";
             this.Css = "";
             this.Orientation=Orientation.Portrait;
+            this.Copies = 1;
+            this.HeaderSettings = new HeaderSettings() { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Right = "Pagina [page] di [toPage]", Line = true };
+            this.FooterSettings = new FooterSettings() { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, Center = this.Title };
         }
     }
 }
