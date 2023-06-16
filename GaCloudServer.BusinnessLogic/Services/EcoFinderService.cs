@@ -16,7 +16,7 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         private readonly string username="ExtGestAmb";
         private readonly string password= "Ext01?GestAmb!";
-        private readonly string EcoFinderBaseUri = "http://tellus.formulaconsorzio.it:8080/ecofinder/services/extern/";
+        private readonly string EcoFinderBaseUri = "https://tellus.consorziocfa.it/ecofinder/services/extern/";
 
         public EcoFinderService()
         { }

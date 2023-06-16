@@ -104,7 +104,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     progress.progress = 80;
                     progress.message = string.Format("Esportazione {0} risultati in corso...", entities.Count());
                     await hub.Clients.Groups(query.userId).DownloadProgress(progress);
-                    byte[] filecontent = ExporterHelper.ExportObjectExcel(entities, title, "", "", "Query Result", false, columns);
+                    byte[] filecontent = ExporterHelper.ExportObjectExcel(entities, title, "forceDateTime", "", "Query Result", false, columns);
 
                     return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
                     {

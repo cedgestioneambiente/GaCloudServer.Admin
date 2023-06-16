@@ -25,7 +25,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdminOrUserFoPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
     public class GaContactCenterController : Controller
     {
         private readonly IGaContactCenterService _gaContactCenterService;
