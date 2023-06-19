@@ -1,10 +1,12 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Personale;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.Personale;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
@@ -23,20 +25,26 @@ namespace GaCloudServer.Resources.Api.Controllers
     public class GaPersonaleController : Controller
     {
         private readonly IGaPersonaleService _gaPersonaleService;
+        private readonly INotificationService _notificationService;
         private readonly IFileService _fileService;
         private readonly ILogger<GaPersonaleController> _logger;
+        private readonly IMailService _mailService;
         private readonly IPrintService _printService;
 
         public GaPersonaleController(
             IGaPersonaleService gaPersonaleService
+            , INotificationService notificationService
             , IFileService fileService
+            , IMailService mailService
             , ILogger<GaPersonaleController> logger,
             IPrintService printService)
         {
 
             _gaPersonaleService = gaPersonaleService;
+            _notificationService = notificationService;
             _fileService = fileService;
             _logger = logger;
+            _mailService = mailService;
             _printService = printService;
         }
 
@@ -448,6 +456,68 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+
+
+        [HttpGet("SendGaPersonaleDipendenteAsync/{id}")]
+        public async Task<ApiResponse> SendGaPersonaleDipendenteAsync(long id)
+        {
+            try
+            {
+                var richiestaMail = await _gaPersonaleService.GetViewGaPersonaleDipendenteByIdAsync(id);
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Personale, AppConsts.PersonaleInfo);
+
+
+                    string mailTo = "";
+                    string mailCC = "";
+
+
+                    mailTo = string.Join(";", "giancarlo.masini@gestioneambiente.net");
+                    mailCC = string.Join(";", "ced@gestioneambiente.net");
+
+
+                    List<string> descriptors = new List<string>() {
+                        "Nominativo",
+                        "Sede",
+                        "Qualifica"
+                    };
+
+                    List<string> details = new List<string>() {
+                        richiestaMail.CognomeNome,
+                        richiestaMail.Sede,
+                        richiestaMail.Qualifica
+                    };
+
+                    var response = await _mailService.AddMailJobAsync(new MailJob()
+                    {
+                        Id = 0,
+                        Description = "Nuovo Dipendente",
+                        DateScheduled = DateTime.Now,
+                        Title = "Nuovo Dipendente",
+                        MailingTo = mailTo,
+                        MailCc = mailCC,
+                        Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Personale),
+                        Content = HtmlHelpers.GenerateList(descriptors, details),
+                        Template = "DefaultMailJob.html",
+                        UserId = richiestaMail.UserId,
+                        OkMessage = "La tua richiesta è stata inoltrata correttamente.",
+                        KoMessage = "Si è verificato un problema durante l'invio della tua richiesta."
+
+                    });
+                    return new ApiResponse(response);
+
+                return new ApiResponse(0);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+
+
+
         #endregion
 
         #region Views

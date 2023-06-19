@@ -9,6 +9,8 @@ namespace GaCloudServer.Resources.Api.Constants
 {
     public static class AppConsts
     {
+        public const string Personale = "Personale";
+        public const string PersonaleInfo = "Ricevi notifiche relative all'App Personale";
         public const string Presenze = "Presenze";
         public const string PresenzeInfo = "Ricevi notifiche relative all'App Presenze";
         public const string ContactCenter = "ContactCenter";
