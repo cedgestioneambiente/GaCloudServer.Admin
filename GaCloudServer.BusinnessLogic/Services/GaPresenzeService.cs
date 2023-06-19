@@ -45,6 +45,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         protected readonly IUnitOfWork unitOfWork;
 
+        private readonly TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+
         public GaPresenzeService(
             IGenericRepository<PresenzeStatoRichiesta> gaPresenzeStatiRichiesteRepo,
             IGenericRepository<PresenzeRichiesta> gaPresenzeRichiesteRepo,
@@ -268,7 +270,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Functions
         public async Task<int> ValidateGaPresenzeRichiestaAsync(PresenzeRichiestaValidateDto dto)
         {
-            var entities = await gaPresenzeRichiesteRepo.GetWithFilterAsync(x => x.PresenzeDipendenteId == dto.richiesta.PresenzeDipendenteId && (dto.richiesta.DataInizio <= x.DataFine && x.DataInizio < dto.richiesta.DataFine) && x.Id != dto.richiesta.Id, 1, 0);
+            var dataInizio = dto.richiesta.DataInizio.Add(offset);
+            var dataFine = dto.richiesta.DataFine.Add(offset);
+
+            var entities = await gaPresenzeRichiesteRepo.GetWithFilterAsync(x => x.PresenzeDipendenteId == dto.richiesta.PresenzeDipendenteId && (dataInizio <= x.DataFine && x.DataInizio < dataFine) && x.Id != dto.richiesta.Id, 1, 0);
             var dipendente = await viewGaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.UserId == dto.UserId);
             var bancaOre = gaPresenzeDipendentiRepo.GetSingleWithFilter(x => x.Id == dto.richiesta.PresenzeDipendenteId).Result.BancaOre;
 
