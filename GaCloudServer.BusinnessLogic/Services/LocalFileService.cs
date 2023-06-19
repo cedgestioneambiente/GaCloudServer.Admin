@@ -76,6 +76,64 @@ namespace GaCloudServer.BusinnessLogic.Services
             return MakeWebPath(Path.Combine(_webPath, _path, _fileName));
         }
 
+        public dynamic UploadMergedOnServerPrint(string _fileName, string _path, List<ObjectSettings> pages, int copies, Orientation orientation = Orientation.Portrait)
+        {
+            string filePath = Path.Combine(_webRootPath, _path, _fileName);
+
+            var globalSettings = new GlobalSettings
+            {
+                ColorMode = ColorMode.Color,
+                Orientation = orientation,
+                PaperSize = PaperKind.A4,
+                Margins = new MarginSettings { Top = 10 },
+                DocumentTitle = "PDF Report",
+                Copies = copies,
+                Out = filePath
+            };
+
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = globalSettings 
+            };
+
+            foreach (var itm in pages)
+            { 
+                pdf.Objects.Add(itm);
+            }
+
+            var directoryExist = Directory.Exists(Path.Combine(_webRootPath, _path));
+
+            if (!directoryExist)
+            {
+                Directory.CreateDirectory(Path.Combine(_webRootPath, _path));
+            }
+
+
+            var result = _converter.Convert(pdf);
+
+            return MakeWebPath(Path.Combine(_webPath, _path, _fileName));
+        }
+
+        public bool DeleteFromServerPrint(string _fileName, string _path)
+        {
+            try
+            {
+                string filePath = Path.Combine(_webRootPath, _path, _fileName);
+                var fileExist = File.Exists(filePath);
+                if (fileExist)
+                {
+                    File.Delete(filePath);
+
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
         private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
         {

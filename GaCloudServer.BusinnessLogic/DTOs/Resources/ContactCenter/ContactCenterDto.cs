@@ -45,9 +45,10 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter
         public bool Fatturazione { get; set; }
         public bool ContactCenter { get; set; }
         public bool ContactCenterCalendar { get; set; }
-        public string CodArera { get; set; }
+        public string? CodArera { get; set; }
         public long? ContactCenterPrintTemplateId { get; set; }
-        public string Group { get; set; }
+        public bool PrintMassive { get; set; }
+        public string? Group { get; set; }
     }
 
     public class ContactCenterTipiRichiesteDto : GenericPagedListDto<ContactCenterTipoRichiestaDto>

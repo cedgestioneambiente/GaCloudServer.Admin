@@ -15,6 +15,7 @@ using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
@@ -655,7 +656,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var response = await _gaCrmService.UpdateGaCrmEventStateByIdAsync(id,state);
                 if (response)
                 {
-                    var responseTari = await _gaCrmService.UpdateCrmMasterStateByIdAsync(crmId, state);
+                    var responseTari = await _gaCrmService.UpdateCrmTicketStateByIdAsync(crmId, state);
                     if (responseTari > 0)
                     {
                         return new ApiResponse(response);
@@ -717,7 +718,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                         }
 
 
-                        var responseTari = await _gaCrmService.UpdateCrmMasterStateByIdAsync(itm.crmId, itm.state);
+                        var responseTari = await _gaCrmService.UpdateCrmTicketStateByIdAsync(itm.crmId, itm.state);
                         if (responseTari > 0)
                         {
                             
@@ -752,8 +753,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("PrintGaCrmEventsByFilterAsync/{date}/{areaId}")]
-        public async Task<ApiResponse> PrintGaContactCenterIngByFilterAsync(DateTime date,long areaId)
+        [HttpGet("PrintGaCrmEventsGroupedByFilterAsync/{date}/{areaId}")]
+        public async Task<ApiResponse> PrintGaCrmEventsGroupedByFilterAsync(DateTime date,long areaId)
         {
             try
             {
@@ -765,10 +766,72 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
 
                 var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(areaId);
-                var dto = await  GenerateCrmEventsTemplate(list.Data.Where(x => x.CrmEventStateId == 1).ToList(), date, area.Descrizione);
-                var response = await _printService.Print("CrmEvents", dto);
+                var dto = await  GenerateCrmEventsGroupedTemplate(list.Data.Where(x => x.CrmEventStateId == 1).ToList(), date, area.Descrizione);
+                if (dto.Items.Count > 0)
+                {
+                    var response = await _printService.Print("CrmEventsGrouped", dto);
 
-                return new ApiResponse(response);
+                    return new ApiResponse(response);
+                }
+                else
+                {
+                    return new ApiResponse("NoData", null, code.Status200OK);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
+        [HttpGet("PrintGaCrmEventsMergedByFilterAsync/{date}/{areaId}")]
+        public async Task<ApiResponse> PrintGaCrmEventsMergedByFilterAsync(DateTime date, long areaId)
+        {
+            try
+            {
+                var tipologie = await _gaCrmService.GetGaCrmTipiTicketAsync(true);
+                var templates = await _gaCrmService.GetGaCrmPrintTemplatesAsync(1, 0);
+                var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(areaId);
+
+                var list = await _gaCrmService.GetGaCrmEventByBoardAsync(date, areaId, true);
+
+                var dtos = new List<CrmEventTemplateDto>();
+                int counter = 0;
+
+                foreach (var _event in list.Data.Where(x=>x.CrmEventStateId==1))
+                {
+                    var _tipo = tipologie.Data.Where(x => x.Id == _event.TipoId).First();
+                    if (!_tipo.PrintMassive)
+                    {
+                        counter++;
+                        if (_tipo.ContactCenterPrintTemplateId == 0 || _tipo.ContactCenterPrintTemplateId == null)
+                        {
+                            var dto = await GenerateCrmEventMergeTemplate(_event, _event.DateSchedule, area.Descrizione, _tipo.Descrizione, "CrmEventDefault");
+                            dtos.Add(dto);
+                        }
+                        else
+                        {
+                            var _template = templates.Data.Where(x => x.Id == _tipo.ContactCenterPrintTemplateId).First();
+                            var dto = await GenerateCrmEventMergeTemplate(_event, _event.DateSchedule, area.Descrizione, "Redatto in duplice copia", _template.Template + ".pdf", _template.Template);
+                            dtos.Add(dto);
+                        }
+                    }
+                }
+
+                if (counter > 0)
+                {
+                    var response = await _printService.PrintMerged(dtos);
+
+                    return new ApiResponse(response);
+                }
+                else
+                {
+                    return new ApiResponse("NoData", null, code.Status200OK);
+                }
+
+                
+
 
             }
             catch (Exception ex)
@@ -859,7 +922,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
 
                 var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(areaId);
-                var dto = await GenerateCrmEventsTemplate(list.Data.Where(x=>x.CrmEventStateId==2).ToList(), date, area.Descrizione,"CrmEventsReport.pdf");
+                var dto = await GenerateCrmEventsGroupedTemplate(list.Data.Where(x=>x.CrmEventStateId==2).ToList(), date, area.Descrizione,"CrmEventsReport.pdf");
                 var attachPath = await _printService.Print("CrmEventsReport", dto);
 
                 string mailTo = "ced@gestioneambiente.net;matteo.derocchi@gestioneambiente.net";
@@ -1300,32 +1363,72 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Helpers
-        private async Task<CrmEventsTemplateDto> GenerateCrmEventsTemplate(List<CrmEventDto> events, DateTime date, string area,string fileName= "CrmEvents.pdf")
+        private async Task<CrmEventsTemplateDto> GenerateCrmEventsGroupedTemplate(List<CrmEventDto> events, DateTime date, string area,string fileName= "CrmEventsGrouped.pdf")
         {
             var dto = new CrmEventsTemplateDto()
             {
                 FileName = fileName,
                 FilePath = @"Print/Crm",
                 Title = "Crm Eventi Programmati",
-                Css = "CrmEventsReport",
+                Css = "CrmEventsGrouped",
                 Area = area,
                 Data = date.ToString("dd/MM/yyyy"),
                 Items = new List<CrmEventDto>(),
                 Devices= new List<CrmEventDeviceDto>()
             };
 
+            var tipologie = await _gaCrmService.GetGaCrmTipiTicketAsync(true);
+            
+
             foreach (var item in events)
             {
-                dto.Items.Add(item);
-
-                var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(item.Id);
-                foreach (var device in devices.Data)
+                var _tipo = tipologie.Data.Where(x => x.Id == item.TipoId).First();
+                if (_tipo.PrintMassive)
                 {
-                    if (device.Selected)
-                        dto.Devices.Add(device);
+
+                    dto.Items.Add(item);
+
+                    var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(item.Id);
+                    foreach (var device in devices.Data)
+                    {
+                        if (device.Selected)
+                            dto.Devices.Add(device);
+                    }
                 }
             
             }
+
+            return dto;
+
+        }
+
+        private async Task<CrmEventTemplateDto> GenerateCrmEventMergeTemplate(CrmEventDto _event, DateTime date, string area, string title, string fileName = "CrmEventDefault.pdf", string css = "CrmEventDefault")
+        {
+            var dto = new CrmEventTemplateDto()
+            {
+                FileName = fileName,
+                FilePath = @"Print/Crm",
+                Title = title,
+                Css = css,
+                TemplateName=css,
+                HeaderSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Right = "Redatto in duplice copia", Line = true },
+                FooterSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, Center = "Gestione Ambiente S.p.A." },
+                Copies = 2,
+                Area = area,
+                Data = date.ToString("dd/MM/yyyy"),
+                Item = _event,
+                Devices = new List<CrmEventDeviceDto>()
+
+            };
+
+            var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(_event.Id);
+            foreach (var device in devices.Data)
+            {
+                if (device.Selected)
+                    dto.Devices.Add(device);
+            }
+
+
 
             return dto;
 

@@ -10,6 +10,7 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.Graph;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -120,6 +121,34 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             var result = await _queryManager.ExecCommandAsync(sql);
             return result;
+        }
+
+        public async Task<long> UpdateCrmTicketStateByIdAsync(int id, long state)
+        {
+            long newState = 1;
+            switch (state)
+            {
+                case 1:
+                    newState = 1; break;
+                case 2:
+                    newState =2; break;
+                case 3:
+                    newState = 1; break;
+                case 4:
+                    newState = 3; break;
+                default:
+                    newState = 1; break;
+            }
+
+            var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
+            entity.ContactCenterStatoRichiestaId= newState;
+
+            gaCrmTicketsRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+            
         }
 
         #region Views

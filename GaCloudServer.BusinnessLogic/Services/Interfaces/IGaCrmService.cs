@@ -15,6 +15,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region CrmMaster
 
         Task<int> UpdateCrmMasterStateByIdAsync(int id, long state);
+        Task<long> UpdateCrmTicketStateByIdAsync(int id, long state);
 
         #region Views
         Task<PagedList<ViewGaCrmTickets>> GetViewGaCrmMasterAsync();

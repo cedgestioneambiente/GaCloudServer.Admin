@@ -5,6 +5,7 @@ using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Models;
 using GaCloudServer.BusinnessLogic.Providers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
@@ -30,6 +31,42 @@ namespace GaCloudServer.BusinnessLogic.Services
                 string htmlContent = (string)mi.Invoke(this, new object[] { dto});
 
                 return _localFileService.UploadOnServerPrint(dto.FileName,dto.FilePath,htmlContent,dto.HeaderSettings,dto.FooterSettings,dto.Copies, dto.Title,dto.Css,dto.Orientation);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> PrintMerged(dynamic dtos)
+        {
+            try
+            {
+                List<ObjectSettings> pages = new List<ObjectSettings>();
+                string fileName = "";
+                string filePath = "";
+                foreach (var dto in dtos)
+                {
+                    Type templateType = typeof(TemplateGeneratorHelper);
+                    MethodInfo mi = templateType.GetMethod(dto.TemplateName);
+
+                    fileName = dto.FileName;
+                    filePath= dto.FilePath;
+
+                    var htmlContent= (string)mi.Invoke(this, new object[] { dto });
+
+                    pages.Add(new ObjectSettings()
+                    {
+                        PagesCount = true,
+                        HtmlContent = htmlContent,
+                        WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Template/" + dto.Css + "/assets", "styles.css") },
+                        HeaderSettings = dto.HeaderSettings, //{ FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Right = "Pagina [page] di [toPage]", Line = true },
+                        FooterSettings = dto.FooterSettings//{ FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, Center = title }
+                    });
+                }
+                
+
+                return _localFileService.UploadMergedOnServerPrint(fileName,filePath,pages,2);
             }
             catch (Exception ex)
             {

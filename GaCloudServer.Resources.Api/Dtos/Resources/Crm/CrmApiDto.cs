@@ -101,7 +101,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
     }
     #endregion
 
-    #region CrmTicketssApiDto
+    #region CrmTicketsApiDto
     public class CrmTicketApiDto : GenericApiDto
     {
         public DateTime DataTicket { get; set; }
