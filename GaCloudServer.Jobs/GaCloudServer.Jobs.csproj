@@ -26,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\Mail\DefaultMailWithLinkJob.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\Mail\DefaultMailJob.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

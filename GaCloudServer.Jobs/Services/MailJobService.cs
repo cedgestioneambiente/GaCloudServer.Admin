@@ -63,6 +63,12 @@ namespace GaCloudServer.Jobs.Services
                 body = body.Replace("{jobContent}", mailJob.Content);
                 body = body.Replace("{jobDate}", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
 
+                if (mailJob.Link!=null && mailJob.Link==true)
+                {
+                    body = body.Replace("{jobLinkHref}", mailJob.LinkHref);
+                    body = body.Replace("{jobLinkDescription}", mailJob.LinkDescription);
+                }
+
                 if (!mailJob.Attachment)
                 {
                     email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };

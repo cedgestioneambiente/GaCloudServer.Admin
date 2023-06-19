@@ -25,5 +25,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail
         public bool IsError { get; set; }
         public bool Attachment { get; set; }
         public string AttachmentPath { get; set; }
+        public bool? Link { get; set; }
+        public string? LinkDescription { get; set; }
+        public string? LinkHref { get; set; }
+
     }
 }
