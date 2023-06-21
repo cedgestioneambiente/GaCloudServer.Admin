@@ -472,7 +472,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     string mailCC = "";
 
 
-                    mailTo = string.Join(";", "giancarlo.masini@gestioneambiente.net");
+                    mailTo = string.Join(";", "simone.bighiani@gestioneambiente.net");
                     mailCC = string.Join(";", "ced@gestioneambiente.net");
 
 
