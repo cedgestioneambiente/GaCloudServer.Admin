@@ -34,7 +34,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.View
         public string TipoDesc { get; set; }
         public bool Fatturazione { get; set; }
         public bool Magazzino { get; set; }
-        public long PrintTemplate { get; set; }
+        public long? PrintTemplate { get; set; }
         public bool MagazzinoCalendar { get; set; }
         public bool ContactCenterCalendar { get; set; }
         public DateTime? DataChiusura { get; set; }

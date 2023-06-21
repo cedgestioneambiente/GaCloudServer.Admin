@@ -93,6 +93,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public string DesCon { get; set; }
         public bool Selected { get; set; }
         public bool Completed { get; set; }
+        public bool SostLuch { get; set; }
 
     }
 
@@ -137,5 +138,14 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
     }
 
     #endregion
+
+    public class CrmSendMailApiDto 
+    { 
+        public long id { get; set; }
+        public string userId { get; set; }
+        public string userName { get; set; }
+        public string mailingList { get; set; }
+    
+    }
 
 }

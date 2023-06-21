@@ -501,7 +501,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                         Template = "DefaultMailWithLinkJob.html",
                         Link = true,
                         LinkDescription = "vai al dipendente",
-                        LinkHref = String.Format("https://localhost:4200/personale/personale-dipendente-update-tab/{0}?componentTitle={1}%20-%20{2}%20{3}&componentGoBackUrl=personale%2Fpersonale-dipendenti-list",id,id,richiestaMail.Cognome,richiestaMail.Nome).Replace(" ","%20%"),
+                        LinkHref = String.Format("https://localhost:4200/welcome").Replace(" ","%20%"),
                         UserId = richiestaMail.UserId,
                         OkMessage = "La tua richiesta è stata inoltrata correttamente.",
                         KoMessage = "Si è verificato un problema durante l'invio della tua richiesta."

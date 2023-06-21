@@ -96,6 +96,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ChangeStatusGaCrmEventDeviceAsync(long id);
         Task<bool> ChangeSelectionGaCrmEventDeviceAsync(long id);
+        Task<bool> ChangeSostLuchGaCrmEventDeviceAsync(long id);
 
         Task<bool> SetCompletedGaCrmEventDeviceAsync(long id);
         Task<bool> SetNotCompletedGaCrmEventDeviceAsync(long id);
@@ -112,8 +113,15 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         Task<bool> DeleteGaCrmTicketAsync(long id);
 
+        #region Functions
+        Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetGaCrmTicketDevicesByUserAsync(string cpAzi, string numCon, string cpRowNum);
+        Task<PagedList<ViewGaCrmTickets>> GetGaCrmTicketsByUserAsync(long comuneId, string numCon, string prg);
+        Task<bool> CheckGaCrmTicketEventExistAsync(long id);
+        #endregion
+
         #region Views
         PagedList<ViewGaCrmTickets> GetViewGaCrmTicketsByAssigneeQueryable(GridOperationsModel filterParams, string[]? assignee);
+        Task<ViewGaCrmTickets> GetViewGaCrmTicketByIdAsync(long id);
 
         Task<PagedList<ViewGaCrmCalendarTickets>> GetViewGaCrmCalendarTicketAsync();
         #endregion
