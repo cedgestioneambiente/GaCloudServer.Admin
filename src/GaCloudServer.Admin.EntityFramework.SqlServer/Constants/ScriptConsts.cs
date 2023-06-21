@@ -173,6 +173,8 @@
         public const string DROP_ViewConsorzio_V3 = "DROP_ViewConsorzio_V3.sql";
         public const string CREATE_ViewConsorzio_V4 = "CREATE_ViewConsorzio_V4.sql";
         public const string DROP_ViewConsorzio_V4 = "DROP_ViewConsorzio_V4.sql";
+        public const string CREATE_ViewConsorzio_V5 = "CREATE_ViewConsorzio_V5.sql";
+        public const string DROP_ViewConsorzio_V5 = "DROP_ViewConsorzio_V5.sql";
 
         //Crm
         public const string GaCrm = @".\Scripts\Crm\";
@@ -191,5 +193,10 @@
         public const string GaPrenotazioneLocaliMigration = @".\Scripts\PrenotazioneLocali\";
         public const string CREATE_ViewGaPrenotazioneLocali = "CREATE_ViewGaPrenotazioneLocali.sql";
         public const string DROP_ViewGaPrenotazioneLocali = "DROP_ViewGaPrenotazioneLocali.sql";
+
+        //Emz
+        public const string EmzMigration = @".\Scripts\Emz\";
+        public const string CREATE_ViewEmz = "CREATE_ViewEmz.sql";
+        public const string DROP_ViewEmz = "DROP_ViewEmz.sql";
     }
 }

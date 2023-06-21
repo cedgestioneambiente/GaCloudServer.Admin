@@ -183,6 +183,7 @@ namespace GaCloudServer.Jobs.Jobs
             }
         }
 
+
         [PersistJobDataAfterExecution]
         [DisallowConcurrentExecution]
         public class GaContrattiScadenziarioJob : IJob
@@ -357,6 +358,7 @@ namespace GaCloudServer.Jobs.Jobs
                 return Task.CompletedTask;
             }
         }
+
 
         [PersistJobDataAfterExecution]
         [DisallowConcurrentExecution]

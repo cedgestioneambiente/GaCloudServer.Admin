@@ -51,6 +51,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -495,6 +496,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaPrenotazioneLocaliRegistrazioni> ViewGaPrenotazioneLocaliRegistrazioni { get; set; }
         #endregion
 
+        #endregion
+
+        #region Emz
+
+        #region Views
+        DbSet<ViewEmzWhiteList> ViewEmzWhiteList { get; set; }
+        #endregion
         #endregion
 
     }

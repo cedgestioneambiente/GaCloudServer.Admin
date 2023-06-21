@@ -233,6 +233,12 @@
 	  <None Update="Scripts\Dashboard\DROP_ViewDashboard.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Emz\CREATE_ViewEmz.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Emz\DROP_ViewEmz.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Global\CREATE_ObjectGlobal.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

@@ -20,6 +20,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
@@ -487,6 +488,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #endregion
 
 
+            //Emz
+            #region Emz
+
+            services.AddTransient<IGenericRepository<ViewEmzWhiteList>, GenericRepository<TResourcesDbContext, ViewEmzWhiteList>>();
+            # endregion
+
             return services; 
         }
 
@@ -547,7 +554,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IProcedureManager<SpGaContrattiPermessoMode>, ProcedureManager<TResourcesDbContext, SpGaContrattiPermessoMode>>();
 
             #endregion
-
 
             //Personale
             #region Personale
@@ -619,6 +625,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<MailJob>, GenericRepository<TResourcesDbContext, MailJob>>();
             #endregion
 
+            //Emz
+            #region Emz
+
+            services.AddTransient<IGenericRepository<ViewEmzWhiteList>, GenericRepository<TResourcesDbContext, ViewEmzWhiteList>>();
+            # endregion
 
             return services;
         }

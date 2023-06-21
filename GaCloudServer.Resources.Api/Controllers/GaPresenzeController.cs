@@ -409,8 +409,11 @@ namespace GaCloudServer.Resources.Api.Controllers
                         MailCc = mailCC,
                         Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Presenze),
                         Content = HtmlHelpers.GenerateList(descriptors,details),
-                        Template = "DefaultMailJob.html",
-                        UserId=richiestaMail.UserId,
+                        Template = "DefaultMailWithLinkJob.html",
+                        Link = true,
+                        LinkHref = String.Format("https://cloud.gestioneambiente.net/presenze/calendar/presenze-dipendenti-richieste-calendar"),
+                        LinkDescription = "Vai al calendario",
+                        UserId =richiestaMail.UserId,
                         OkMessage="La tua richiesta è stata inoltrata correttamente.",
                         KoMessage="Si è verificato un problema durante l'invio della tua richiesta."
 

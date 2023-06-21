@@ -52,6 +52,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -499,6 +500,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaPrenotazioneLocaliRegistrazioni> ViewGaPrenotazioneLocaliRegistrazioni { get; set; }
         #endregion
 
+        #endregion
+
+        #region Emz
+
+        #region Views
+        public DbSet<ViewEmzWhiteList> ViewEmzWhiteList { get; set; }
+        #endregion
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -1364,6 +1372,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasKey(x => x.Id);
             });
 
+            #endregion
+
+            #region Emz
+
+            builder.Entity<ViewEmzWhiteList>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewEmzWhiteList))
+                .HasNoKey();
+            });
             #endregion
 
 
