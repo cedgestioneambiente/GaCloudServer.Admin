@@ -195,7 +195,7 @@
         public const string DROP_ViewGaPrenotazioneLocali = "DROP_ViewGaPrenotazioneLocali.sql";
 
         //Emz
-        public const string EmzMigration = @".\Scripts\Emz\";
+        public const string Emz = @".\Scripts\Emz\";
         public const string CREATE_ViewEmz = "CREATE_ViewEmz.sql";
         public const string DROP_ViewEmz = "DROP_ViewEmz.sql";
     }

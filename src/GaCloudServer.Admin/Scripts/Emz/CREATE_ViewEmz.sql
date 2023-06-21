@@ -12,11 +12,12 @@ GO
 
 CREATE VIEW [dbo].[ViewEmzWhiteList]
     AS
-	SELECT [IDENTI2] Identi2
+	SELECT 
+	[IDENTI2] Identi2
       ,[CHIAVE1] Chiave1
       ,[ATTIVO] Attivo
-      , Id = 0
-	  , Disabled = 0
+      , cast(0 as bigint) Id
+	  , cast(0 as bit) Disabled
   FROM [20.82.75.6].[SUPPORT].[dbo].[ViewGaEmzWhiteList]
   WHERE (Chiave1 LIKE '1004%' or Chiave1 LIKE 'C0%') AND DATALENGTH (Chiave1) =16
 
