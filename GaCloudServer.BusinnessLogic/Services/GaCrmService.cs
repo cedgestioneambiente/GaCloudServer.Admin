@@ -432,8 +432,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
-
-
         public async Task<long> AddGaCrmEventAsync(CrmEventDto dto)
         {
             var entity = dto.ToEntity<CrmEvent, CrmEventDto>();
@@ -644,6 +642,26 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
+        public async Task<bool> ChangeSostLuchGaCrmEventDeviceAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
+            if (entity.SostLuch)
+            {
+                entity.SostLuch = false;
+                gaCrmEventDevicesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.SostLuch = true;
+                gaCrmEventDevicesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+
         public async Task<bool> SetCompletedGaCrmEventDeviceAsync(long id)
         {
             var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
@@ -747,6 +765,33 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetGaCrmTicketDevicesByUserAsync(string cpAzi, string numCon, string cpRowNum)
+        {
+            var view = await viewGaBackOfficeUtenzeDispositiviRepo.GetWithFilterAsync(x => x.NumCon == numCon && x.CpAzi == cpAzi && x.CpRowNum == Convert.ToInt32(cpRowNum) && x.DtRit == "31/12/2029");
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaCrmTickets>> GetGaCrmTicketsByUserAsync(long comuneId, string numCon, string prg)
+        {
+            var view = await viewGaCrmTicketsRepo.GetWithFilterAsync(x => x.NumCon == numCon && x.ComuneId == comuneId && x.Prg == prg);
+            return view;
+        }
+
+        public async Task<bool> CheckGaCrmTicketEventExistAsync(long id)
+        {
+            var entity = await gaCrmEventsRepo.GetWithFilterAsync(x => x.CrmTicketId == id);
+
+            if (entity.Data.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region Views
@@ -779,6 +824,13 @@ namespace GaCloudServer.BusinnessLogic.Services
                     return filterResult;
                 }
             }
+
+        }
+
+        public async Task<ViewGaCrmTickets> GetViewGaCrmTicketByIdAsync(long id)
+        {
+            var view = await viewGaCrmTicketsRepo.GetByIdAsync(id);
+            return view;
 
         }
 

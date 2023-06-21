@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
 using System;
@@ -136,10 +137,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
 
     public class CrmTicketTemplateDto : GenericPrintDto
     {
-        public string Area { get; set; }
-        public string Data { get; set; }
-        public CrmTicketDto Item { get; set; }
-        public List<CrmEventDeviceDto> Devices { get; set; }
+        public ViewGaCrmTickets Item { get; set; }
     }
 
 

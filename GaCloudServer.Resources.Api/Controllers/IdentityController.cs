@@ -81,6 +81,14 @@ namespace GaCloudServer.Resources.Api.Controllers
             return Ok(rolesDto);
         }
 
+        [HttpGet("GetUsersAsync")]
+        public async Task<ActionResult<TUsersDto>> GetUsersAsync()
+        {
+            var usersDto = await _identityService.GetUsersAsync("", 1,1000);
+
+            return Ok(usersDto);
+        }
+
 
 
 

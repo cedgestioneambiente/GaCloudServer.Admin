@@ -94,6 +94,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string DesCon { get; set; }
         public bool Selected { get; set; }
         public bool Completed { get; set; }
+        public bool SostLuch { get; set; }
 
     }
 
