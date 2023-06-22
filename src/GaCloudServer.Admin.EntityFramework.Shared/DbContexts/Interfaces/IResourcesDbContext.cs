@@ -475,6 +475,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<CrmEvent> GaCrmEvents { get; set; }
         DbSet<CrmEventDevice> GaCrmEventDevices { get; set; }
         DbSet<CrmTicket> GaCrmTickets { get; set; }
+        DbSet<CrmTicketAllegato> GaCrmTicketAllegati { get; set; }
 
         #region Views
         DbSet<ViewGaCrmCanali> ViewGaCrmCanali { get; set; }

@@ -34,6 +34,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly ILogger<GaCrmController> _logger;
         private readonly IPrintService _printService;
         private readonly IMailService _mailService;
+        private readonly IFileService _fileService;
         private readonly INotificationService _notificationService;
 
         public GaCrmController(
@@ -41,6 +42,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             , IMailService mailService
             , INotificationService notificationService
             , IPrintService printService
+            ,IFileService fileService
             , ILogger<GaCrmController> logger)
         {
 
@@ -48,6 +50,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             _printService = printService;
             _mailService = mailService;
             _notificationService = notificationService;
+            _fileService = fileService;
             _logger = logger;
         }
 
@@ -1311,6 +1314,20 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
+
+        [HttpPost("DuplicateGaCrmTicketAsync")]
+        public async Task<ApiResponse> DuplicateGaContactCenterTicketAsync([FromBody] CrmDuplicateTicketsApiDto apiDto)
+        {
+            try
+            {
+                var entities = await _gaCrmService.DuplicateGaCrmTicketAsync(apiDto.ticketsId, apiDto.userId);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
         #endregion
 
         #region Views
@@ -1348,6 +1365,218 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region CrmTicketAllegati
+        [HttpGet("GetGaCrmTicketAllegatiByTicketIdAsync/{CrmTicketTicketId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmTicketAllegatiByTicketIdAsync(long CrmTicketTicketId)
+        {
+            try
+            {
+                var dtos = await _gaCrmService.GetGaCrmTicketAllegatiByTicketIdAsync(CrmTicketTicketId);
+                var apiDtos = dtos.ToApiDto<CrmTicketAllegatiApiDto, CrmTicketAllegatiDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCrmTicketAllegatoByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmTicketAllegatoByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCrmService.GetGaCrmTicketAllegatoByIdAsync(id);
+                var apiDto = dto.ToApiDto<CrmTicketAllegatoApiDto, CrmTicketAllegatoDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaCrmTicketAllegatoAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaCrmTicketAllegatoAsync([FromForm] CrmTicketAllegatoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "GaCloud/CrmTicket";
+                var dto = apiDto.ToDto<CrmTicketAllegatoDto, CrmTicketAllegatoApiDto>();
+                var response = await _gaCrmService.AddGaCrmTicketAllegatoAsync(dto);
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaCrmService.UpdateGaCrmTicketAllegatoAsync(dto);
+                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaCrmTicketAllegatoAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCrmTicketAllegatoAsync([FromBody] CrmTicketAllegatoApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "GaCloud/CrmTicket";
+                var dto = apiDto.ToDto<CrmTicketAllegatoDto, CrmTicketAllegatoApiDto>();
+                var response = await _gaCrmService.UpdateGaCrmTicketAllegatoAsync(dto);
+                bool failureDelete = false;
+                if (apiDto.deleteFile)
+                {
+                    var deleteResponse = await _fileService.Remove(apiDto.FileId);
+                    if (!deleteResponse)
+                    {
+                        failureDelete = true;
+
+                    }
+                    else
+                    {
+                        dto.Id = response;
+                        dto.FileFolder = null;
+                        dto.FileName = null;
+                        dto.FileSize = null;
+                        dto.FileType = null;
+                        dto.FileId = null;
+                        var updateFileResponse = await _gaCrmService.UpdateGaCrmTicketAllegatoAsync(dto);
+                    }
+                }
+
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    var updateFileResponse = await _gaCrmService.UpdateGaCrmTicketAllegatoAsync(dto);
+
+                    if (!failureDelete)
+                    {
+                        return new ApiResponse("UpdatedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("UpdatedWithFile/FailureDelete", response, code.Status207MultiStatus);
+                    }
+
+                }
+
+                if (!failureDelete)
+                {
+                    return new ApiResponse("Updated", response, code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Updated/FailureDelete", response, code.Status207MultiStatus);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpDelete("DeleteGaCrmTicketAllegatoAsync/{id}/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaCrmTicketAllegatoAsync(long id, string fileId)
+        {
+            try
+            {
+                var response = await _gaCrmService.DeleteGaCrmTicketAllegatoAsync(id);
+                if (response && fileId != null && fileId != "null" && fileId != "")
+                {
+                    var deleteResponse = await _fileService.Remove(fileId);
+                    if (deleteResponse)
+                    {
+                        return new ApiResponse("DeletedWithFile", response, code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("DeletedErrorFile", response, code.Status206PartialContent);
+                    }
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        //[HttpGet("ValidateGaCrmTicketAllegatoAsync/{id}/{descrizione}")]
+        //public async Task<ActionResult<ApiResponse>> ValidateGaCrmTicketAllegatoAsync(long id, string descrizione)
+        //{
+        //    try
+        //    {
+        //        var response = await _gaCrmTicketService.ValidateGaCrmTicketAllegatoAsync(id, descrizione);
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+
+        //}
+
+        //[HttpGet("ChangeStatusGaCrmTicketAllegatoAsync/{id}")]
+        //public async Task<ActionResult<ApiResponse>> ChangeStatusGaCrmTicketAllegatoAsync(long id)
+        //{
+        //    try
+        //    {
+        //        var response = await _gaCrmTicketService.ChangeStatusGaCrmTicketAllegatoAsync(id);
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+
+        //}
+        #endregion
+
+        #endregion
+
         #region CrmEventJobs
         [HttpGet("GetViewGaCrmEventJobsAsync")]
         public async Task<ActionResult<ApiResponse>> GetViewGaCrmEventJobsAsync()
@@ -1365,12 +1594,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("GetViewGaCrmEventJobsByFilterAsync")]
-        public async Task<ActionResult<ApiResponse>> GetViewGaCrmEventJobsByFilterAsync([FromBody]DateRangeDto filter)
+        [HttpPut("GetViewGaCrmEventJobsByFilterAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaCrmEventJobsByFilterAsync([FromRoute] int all, [FromBody]DateRangeDto filter)
         {
             try
             {
-                var view = await _gaCrmService.GetViewGaCrmEventJobsByFilterAsync(filter.dateStart,filter.dateEnd);
+                var view = await _gaCrmService.GetViewGaCrmEventJobsByFilterAsync(all==1?true:false,filter.dateStart,filter.dateEnd);
                 return new ApiResponse(view);
             }
             catch (Exception ex)

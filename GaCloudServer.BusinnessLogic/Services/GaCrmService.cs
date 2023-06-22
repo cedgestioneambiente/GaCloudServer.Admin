@@ -25,6 +25,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<CrmEvent> gaCrmEventsRepo;
         protected readonly IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo;
         protected readonly IGenericRepository<CrmTicket> gaCrmTicketsRepo;
+        protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAllegatiRepo;
 
         private readonly IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo;
         private readonly IGenericRepository<ContactCenterTipoRichiesta> gaCrmTipiTicketRepo;
@@ -52,8 +53,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<CrmEvent> gaCrmEventsRepo,
             IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo,
             IGenericRepository<CrmTicket> gaCrmTicketsRepo,
+            IGenericRepository<CrmTicketAllegato> gaCrmTicketAllegatiRepo,
 
-            IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo,
+        IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo,
             IGenericRepository<ContactCenterTipoRichiesta> gaCrmTipiTicketRepo,
             IGenericRepository<ContactCenterStatoRichiesta> gaCrmStatiTicketRepo,
             IGenericRepository<ContactCenterPrintTemplate> gaCrmPrintTemplatesRepo,
@@ -77,6 +79,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaCrmEventsRepo = gaCrmEventsRepo;
             this.gaCrmEventDevicesRepo = gaCrmEventDevicesRepo;
             this.gaCrmTicketsRepo = gaCrmTicketsRepo;
+            this.gaCrmTicketAllegatiRepo = gaCrmTicketAllegatiRepo;
 
             this.gaCrmProvenienzeTicketRepo = gaCrmProvenienzeTicketRepo;
             this.gaCrmTipiTicketRepo = gaCrmTipiTicketRepo;
@@ -693,9 +696,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
-        public async Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(DateTime dateStart,DateTime dateEnd)
+        public async Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(bool all,DateTime dateStart,DateTime dateEnd)
         {
-            var view = await viewGaCrmEventJobsRepo.GetWithFilterAsync(x => x.DateSchedule >= dateStart && x.DateSchedule <= dateEnd);
+            var view = all == true ? await viewGaCrmEventJobsRepo.GetWithFilterAsync(x => x.DateSchedule >= dateStart && x.DateSchedule <= dateEnd) :
+                await viewGaCrmEventJobsRepo.GetWithFilterAsync(x => x.DateSchedule >= dateStart && x.DateSchedule <= dateEnd && x.ToDoCount > 0);
             return view;
         }
 
@@ -792,6 +796,31 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
+        public async Task<bool> DuplicateGaCrmTicketAsync(long[] ticketsId, string userId)
+        {
+            try
+            {
+                foreach (var itm in ticketsId)
+                {
+                    var entity = gaCrmTicketsRepo.GetByIdAsNoTraking(x => x.Id == itm);
+                    entity.Id = 0;
+                    entity.DataTicket = DateTime.Now;
+                    entity.Creator = userId;
+                    entity.ContactCenterStatoRichiestaId = 1;
+                    gaCrmTicketsRepo.Add(entity);
+
+                }
+
+                await SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
         #endregion
 
         #region Views
@@ -840,6 +869,89 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
+        #endregion
+
+        #endregion
+
+        #region CrmTicketAllegati
+        public async Task<CrmTicketAllegatiDto> GetGaCrmTicketAllegatiByTicketIdAsync(long crmTicketId)
+        {
+            var entities = await gaCrmTicketAllegatiRepo.GetWithFilterAsync(x => x.CrmTicketId == crmTicketId);
+            var dtos = entities.ToDto<CrmTicketAllegatiDto, PagedList<CrmTicketAllegato>>();
+            return dtos;
+        }
+
+        public async Task<CrmTicketAllegatoDto> GetGaCrmTicketAllegatoByIdAsync(long id)
+        {
+            var entity = await gaCrmTicketAllegatiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmTicketAllegatoDto, CrmTicketAllegato>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCrmTicketAllegatoAsync(CrmTicketAllegatoDto dto)
+        {
+            var entity = dto.ToEntity<CrmTicketAllegato, CrmTicketAllegatoDto>();
+            await gaCrmTicketAllegatiRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmTicketAllegatoAsync(CrmTicketAllegatoDto dto)
+        {
+            var entity = dto.ToEntity<CrmTicketAllegato, CrmTicketAllegatoDto>();
+            gaCrmTicketAllegatiRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCrmTicketAllegatoAsync(long id)
+        {
+            var entity = await gaCrmTicketAllegatiRepo.GetByIdAsync(id);
+            gaCrmTicketAllegatiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        //public async Task<bool> ValidateGaContactCenterAllegatoAsync(long id, string descrizione)
+        //{
+        //    var entity = await gaContactCenterAllegatiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+        //    if (entity.Data.Count > 0)
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+        //}
+
+        //public async Task<bool> ChangeStatusGaContactCenterAllegatoAsync(long id)
+        //{
+        //    var entity = await gaContactCenterAllegatiRepo.GetByIdAsync(id);
+        //    if (entity.Disabled)
+        //    {
+        //        entity.Disabled = false;
+        //        gaContactCenterAllegatiRepo.Update(entity);
+        //        await SaveChanges();
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        entity.Disabled = true;
+        //        gaContactCenterAllegatiRepo.Update(entity);
+        //        await SaveChanges();
+        //        return true;
+        //    }
+
+        //}
         #endregion
 
         #endregion

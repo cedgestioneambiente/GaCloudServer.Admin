@@ -140,6 +140,19 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
 
     #endregion
 
+    #region Crm TicketAllegati
+    public class CrmTicketAllegatoDto : GenericFileDto
+    {
+        public long CrmTicketId { get; set; }
+        public string Descrizione { get; set; }
+    }
+
+    public class CrmTicketAllegatiDto : GenericPagedListDto<CrmTicketAllegatoDto>
+    {
+    }
+
+    #endregion
+
     public class CrmChangeEventStateDto
     { 
         public long id { get; set; }
