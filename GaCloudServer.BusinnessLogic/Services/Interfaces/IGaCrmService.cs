@@ -147,7 +147,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region CrmEventJobs
         Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsAsync(int page = 1, int pageSize = 0);
-        Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(DateTime dateStart, DateTime dateEnd);
+        Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(bool all,DateTime dateStart, DateTime dateEnd);
         #endregion
 
         #region Shared Data Table

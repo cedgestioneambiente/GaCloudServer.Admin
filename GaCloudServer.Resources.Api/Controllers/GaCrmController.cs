@@ -1594,12 +1594,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("GetViewGaCrmEventJobsByFilterAsync")]
-        public async Task<ActionResult<ApiResponse>> GetViewGaCrmEventJobsByFilterAsync([FromBody]DateRangeDto filter)
+        [HttpPut("GetViewGaCrmEventJobsByFilterAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaCrmEventJobsByFilterAsync([FromRoute] int all, [FromBody]DateRangeDto filter)
         {
             try
             {
-                var view = await _gaCrmService.GetViewGaCrmEventJobsByFilterAsync(filter.dateStart,filter.dateEnd);
+                var view = await _gaCrmService.GetViewGaCrmEventJobsByFilterAsync(all==1?true:false,filter.dateStart,filter.dateEnd);
                 return new ApiResponse(view);
             }
             catch (Exception ex)

@@ -696,9 +696,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
-        public async Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(DateTime dateStart,DateTime dateEnd)
+        public async Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(bool all,DateTime dateStart,DateTime dateEnd)
         {
-            var view = await viewGaCrmEventJobsRepo.GetWithFilterAsync(x => x.DateSchedule >= dateStart && x.DateSchedule <= dateEnd);
+            var view = all == true ? await viewGaCrmEventJobsRepo.GetWithFilterAsync(x => x.DateSchedule >= dateStart && x.DateSchedule <= dateEnd) :
+                await viewGaCrmEventJobsRepo.GetWithFilterAsync(x => x.DateSchedule >= dateStart && x.DateSchedule <= dateEnd && x.ToDoCount > 0);
             return view;
         }
 
@@ -805,6 +806,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     entity.Id = 0;
                     entity.DataTicket = DateTime.Now;
                     entity.Creator = userId;
+                    entity.ContactCenterStatoRichiestaId = 1;
                     gaCrmTicketsRepo.Add(entity);
 
                 }
