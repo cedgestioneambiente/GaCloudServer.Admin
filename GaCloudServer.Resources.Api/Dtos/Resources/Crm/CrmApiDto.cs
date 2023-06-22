@@ -139,6 +139,19 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
 
     #endregion
 
+    #region CrmTicketAllegatiApiDto
+    public class CrmTicketAllegatoApiDto : GenericFileApiDto
+    {
+        public long CrmTicketId { get; set; }
+        public string Descrizione { get; set; }
+    }
+
+    public class CrmTicketAllegatiApiDto : GenericPagedListDto<CrmTicketAllegatoApiDto>
+    {
+    }
+
+    #endregion
+
     public class CrmSendMailApiDto 
     { 
         public long id { get; set; }
@@ -146,6 +159,12 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public string userName { get; set; }
         public string mailingList { get; set; }
     
+    }
+
+    public class CrmDuplicateTicketsApiDto
+    {
+        public long[] ticketsId { get; set; }
+        public string userId { get; set; }
     }
 
 }

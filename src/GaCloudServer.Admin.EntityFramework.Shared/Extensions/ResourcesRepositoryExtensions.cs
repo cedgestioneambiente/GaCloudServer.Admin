@@ -467,6 +467,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<CrmEvent>, GenericRepository<TResourcesDbContext, CrmEvent>>();
             services.AddTransient<IGenericRepository<CrmEventDevice>, GenericRepository<TResourcesDbContext, CrmEventDevice>>();
             services.AddTransient<IGenericRepository<CrmTicket>, GenericRepository<TResourcesDbContext, CrmTicket>>();
+            services.AddTransient<IGenericRepository<CrmTicketAllegato>, GenericRepository<TResourcesDbContext, CrmTicketAllegato>>();
 
             services.AddTransient<IGenericRepository<ViewGaCrmCanali>, GenericRepository<TResourcesDbContext, ViewGaCrmCanali>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCausali>, GenericRepository<TResourcesDbContext, ViewGaCrmCausali>>();

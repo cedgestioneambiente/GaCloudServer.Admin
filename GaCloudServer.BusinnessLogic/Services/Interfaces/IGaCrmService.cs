@@ -117,6 +117,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetGaCrmTicketDevicesByUserAsync(string cpAzi, string numCon, string cpRowNum);
         Task<PagedList<ViewGaCrmTickets>> GetGaCrmTicketsByUserAsync(long comuneId, string numCon, string prg);
         Task<bool> CheckGaCrmTicketEventExistAsync(long id);
+        Task<bool> DuplicateGaCrmTicketAsync(long[] ticketsId, string userId);
         #endregion
 
         #region Views
@@ -124,6 +125,22 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<ViewGaCrmTickets> GetViewGaCrmTicketByIdAsync(long id);
 
         Task<PagedList<ViewGaCrmCalendarTickets>> GetViewGaCrmCalendarTicketAsync();
+        #endregion
+
+        #endregion
+
+        #region GaCrmTicketAllegati
+        Task<CrmTicketAllegatiDto> GetGaCrmTicketAllegatiByTicketIdAsync(long CrmTicketTicketId);
+        Task<CrmTicketAllegatoDto> GetGaCrmTicketAllegatoByIdAsync(long id);
+
+        Task<long> AddGaCrmTicketAllegatoAsync(CrmTicketAllegatoDto dto);
+        Task<long> UpdateGaCrmTicketAllegatoAsync(CrmTicketAllegatoDto dto);
+
+        Task<bool> DeleteGaCrmTicketAllegatoAsync(long id);
+
+        #region Functions
+        //Task<bool> ValidateGaCrmTicketAllegatoAsync(long id, string descrizione);
+        //Task<bool> ChangeStatusGaCrmTicketAllegatoAsync(long id);
         #endregion
 
         #endregion

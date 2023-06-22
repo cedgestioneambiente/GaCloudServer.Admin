@@ -457,8 +457,6 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-
-
         [HttpGet("SendGaPersonaleDipendenteAsync/{id}")]
         public async Task<ApiResponse> SendGaPersonaleDipendenteAsync(long id)
         {
@@ -472,7 +470,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     string mailCC = "";
 
 
-                    mailTo = string.Join(";", "simone.bighiani@gestioneambiente.net");
+                    mailTo = string.Join(";", "simone.bighiani@gestioneambiente.net","simone.antinori@gestioneambiente.net");
                     mailCC = string.Join(";", "ced@gestioneambiente.net");
 
 
@@ -517,9 +515,6 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
         }
-
-
-
 
         #endregion
 
