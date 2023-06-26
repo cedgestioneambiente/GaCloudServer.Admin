@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Reflection;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
+using GaCloudServer.Resources.Api.Dtos.Custom;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -722,12 +723,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("GetViewQueryBuilderScriptsByRolesAsync/{roles}")]
-        public async Task<ActionResult<ApiResponse>> GetViewQueryBuilderScriptsByRolesAsync(string roles)
+        [HttpPost("GetViewQueryBuilderScriptsByRolesAsync")]
+        public async Task<ActionResult<ApiResponse>> GetViewQueryBuilderScriptsByRolesAsync([FromBody] AuthRolesFilterApiDto apiDto)
         {
             try
             {
-                var view = await _queryBuilderService.GetViewQueryBuilderScriptsByRolesAsync(roles);
+                var view = await _queryBuilderService.GetViewQueryBuilderScriptsByRolesAsync(apiDto.roles);
                 return new ApiResponse(view);
             }
             catch (Exception ex)

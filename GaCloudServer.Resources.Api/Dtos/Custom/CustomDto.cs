@@ -11,5 +11,10 @@
         public DateTime dateEnd { get; set; }
     }
 
+    public class AuthRolesFilterApiDto
+    { 
+        public string roles { get; set; }
+    }
+
    
 }
