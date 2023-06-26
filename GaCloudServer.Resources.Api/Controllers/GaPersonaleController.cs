@@ -457,6 +457,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+
+
         [HttpGet("SendGaPersonaleDipendenteAsync/{id}")]
         public async Task<ApiResponse> SendGaPersonaleDipendenteAsync(long id)
         {
@@ -470,11 +472,31 @@ namespace GaCloudServer.Resources.Api.Controllers
                     string mailCC = "";
 
 
-                    mailTo = string.Join(";", "simone.bighiani@gestioneambiente.net","simone.antinori@gestioneambiente.net");
-                    mailCC = string.Join(";", "ced@gestioneambiente.net");
+                if (richiestaMail.QualificaId == 1 && richiestaMail.SedeId == 2)
+                {
+                    mailTo = string.Join(";", "optortona@gestioneambiente.net", "ufficio.acquisti@gestioneambiente.net", "eleonora.chiesa@acosspa.it", "sara.bergagnini@acosspa.it", "francesca.ghiotto@gestioneacqua.it");
+                    mailCC = string.Join(";", "ced@gestioneambiente.net", "marco.peretti@gestioneambiente.net");
+                }
+
+                else if (richiestaMail.QualificaId == 1 && richiestaMail.SedeId == 1)
+                {
+                    mailTo = string.Join(";", "opnoviligure@gestioneambiente.net", "ufficio.acquisti@gestioneambiente.net", "eleonora.chiesa@acosspa.it", "sara.bergagnini@acosspa.it", "francesca.ghiotto@gestioneacqua.it");
+                    mailCC = string.Join(";", "ced@gestioneambiente.net", "marco.peretti@gestioneambiente.net");
+                }
+
+                else if (richiestaMail.QualificaId == 3)
+                {
+                    mailTo = string.Join(";", "eleonora.chiesa@acosspa.it", "sara.bergagnini@acosspa.it", "francesca.ghiotto@gestioneacqua.it");
+                    mailCC = string.Join(";", "ced@gestioneambiente.net", "marco.peretti@gestioneambiente.net");
+                }
+
+                else
+                {
+                    mailTo = string.Join(";", "ced@gestioneambiente.net");
+                }
 
 
-                    List<string> descriptors = new List<string>() {
+                List<string> descriptors = new List<string>() {
                         "Nominativo",
                         "Sede",
                         "Qualifica"
@@ -515,6 +537,88 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
         }
+
+        [HttpGet("SendGaPersonaleDipendenteDisabledAsync/{id}")]
+        public async Task<ApiResponse> SendGaPersonaleDipendenteDisabledAsync(long id)
+        {
+            try
+            {
+                var richiestaMail = await _gaPersonaleService.GetViewGaPersonaleDipendenteByIdAsync(id);
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Personale, AppConsts.PersonaleInfo);
+
+
+                string mailTo = "";
+                string mailCC = "";
+
+
+                if (richiestaMail.QualificaId == 1 && richiestaMail.SedeId == 2)
+                {
+                    mailTo = string.Join(";", "optortona@gestioneambiente.net", "ufficio.acquisti@gestioneambiente.net", "eleonora.chiesa@acosspa.it", "sara.bergagnini@acosspa.it", "francesca.ghiotto@gestioneacqua.it");
+                    mailCC = string.Join(";", "ced@gestioneambiente.net","marco.peretti@gestioneambiente.net");
+                }
+
+                else if (richiestaMail.QualificaId == 1 && richiestaMail.SedeId == 1)
+                {
+                    mailTo = string.Join(";", "opnoviligure@gestioneambiente.net", "ufficio.acquisti@gestioneambiente.net", "eleonora.chiesa@acosspa.it", "sara.bergagnini@acosspa.it", "francesca.ghiotto@gestioneacqua.it");
+                    mailCC = string.Join(";", "ced@gestioneambiente.net", "marco.peretti@gestioneambiente.net");
+                }
+
+                else if (richiestaMail.QualificaId == 3)
+                {
+                    mailTo = string.Join(";", "eleonora.chiesa@acosspa.it", "sara.bergagnini@acosspa.it", "francesca.ghiotto@gestioneacqua.it");
+                    mailCC = string.Join(";", "ced@gestioneambiente.net", "marco.peretti@gestioneambiente.net");
+                }
+
+                else
+                {
+                    mailTo = string.Join(";", "ced@gestioneambiente.net");
+                }
+
+
+                List<string> descriptors = new List<string>() {
+                        "Nominativo",
+                        "Sede",
+                        "Qualifica"
+                    };
+
+                List<string> details = new List<string>() {
+                        richiestaMail.CognomeNome,
+                        richiestaMail.Sede,
+                        richiestaMail.Qualifica
+                    };
+
+                var response = await _mailService.AddMailJobAsync(new MailJob()
+                {
+                    Id = 0,
+                    Description = "Dipendente Disabilitato",
+                    DateScheduled = DateTime.Now,
+                    Title = "Dipendente Disabilitato",
+                    MailingTo = mailTo,
+                    MailCc = mailCC,
+                    Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Personale),
+                    Content = HtmlHelpers.GenerateList(descriptors, details),
+                    Template = "DefaultMailWithLinkJob.html",
+                    Link = true,
+                    LinkDescription = "Vai al dipendente",
+                    LinkHref = String.Format("https://cloud.gestioneambiente.net/personale/personale-dipendente-update-tab/{0}?componentTitle={1}%20-%20{2}%20{3}&componentGoBackUrl=personale%2Fpersonale-dipendenti-list", id, id, richiestaMail.Cognome, richiestaMail.Nome).Replace(" ", "%20%"),
+                    UserId = richiestaMail.UserId,
+                    OkMessage = "La tua richiesta è stata inoltrata correttamente.",
+                    KoMessage = "Si è verificato un problema durante l'invio della tua richiesta."
+
+                });
+                return new ApiResponse(response);
+
+                return new ApiResponse(0);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+
+
 
         #endregion
 
