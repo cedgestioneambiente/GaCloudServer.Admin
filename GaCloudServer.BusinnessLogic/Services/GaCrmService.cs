@@ -126,7 +126,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             return result;
         }
 
-        public async Task<long> UpdateCrmTicketStateByIdAsync(int id, long state)
+        public async Task<long> UpdateCrmTicketStateByIdAsync(int id, long state,string note)
         {
             long newState = 1;
             switch (state)
@@ -145,6 +145,10 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
             entity.ContactCenterStatoRichiestaId= newState;
+            if (note != null)
+            {
+                entity.NoteOperatore = note;
+            }
 
             gaCrmTicketsRepo.Update(entity);
             await SaveChanges();
@@ -813,6 +817,20 @@ namespace GaCloudServer.BusinnessLogic.Services
 
                 await SaveChanges();
                 return true;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
+        public async Task<PagedList<ViewGaCrmTickets>> ExportGaCrmTicketsAsync(long[] ids)
+        {
+            try
+            {
+                return await viewGaCrmTicketsRepo.GetWithFilterAsync(x => ids.ToList().Contains(x.Id));
+
             }
             catch (Exception ex)
             {

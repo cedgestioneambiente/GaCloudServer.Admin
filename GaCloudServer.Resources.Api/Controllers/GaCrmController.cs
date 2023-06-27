@@ -1,4 +1,5 @@
-﻿using AutoWrapper.Wrappers;
+﻿using AutoWrapper.Filters;
+using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
@@ -612,7 +613,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var dto = apiDto.ToDto<CrmEventDto, CrmEventApiDto>();
                 var response = await _gaCrmService.UpdateGaCrmEventAsync(dto);
 
-                var responseTari = await _gaCrmService.UpdateCrmTicketStateByIdAsync(dto.CrmTicketId, dto.CrmEventStateId);
+                var responseTari = await _gaCrmService.UpdateCrmTicketStateByIdAsync(dto.CrmTicketId, dto.CrmEventStateId,dto.NotaOperatore);
 
                 return new ApiResponse(response);
             }
@@ -1326,6 +1327,42 @@ namespace GaCloudServer.Resources.Api.Controllers
             catch (Exception ex)
             {
                 throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpPost("ExportGaCrmTicketsAsync")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaCrmTicketsAsync([FromBody] long[] ids)
+        {
+
+            try
+            {
+                var entities = _gaCrmService.ExportGaCrmTicketsAsync(ids).Result.Data.ToList();
+
+
+                string title = "Lista Ticket";
+                string[] columns = { "Numero", "DataTicket","DataRichiesta","DataProgrammazione",
+                    "Utente","CodCli","NumCon","Partita","Prg","CfPiva","Tributo",
+                    "ComuneCod","ComuneDesc","Via","NumCiv","CodZona",
+                    "CanaleDesc",
+                    "Telefono","Cellulare","Email","EmailPec",
+                    "TipoDesc",
+                    "DataChiusura","StatoDesc",
+                    "CreatorDesc","AssigneeDesc",
+                    "NoteCrm","NoteOperatore"};
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "TICKET_CRM", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Ticket_CRM.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
         #endregion

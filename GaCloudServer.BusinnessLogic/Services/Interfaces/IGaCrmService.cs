@@ -15,7 +15,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region CrmMaster
 
         Task<int> UpdateCrmMasterStateByIdAsync(int id, long state);
-        Task<long> UpdateCrmTicketStateByIdAsync(int id, long state);
+        Task<long> UpdateCrmTicketStateByIdAsync(int id, long state, string note=null);
 
         #region Views
         Task<PagedList<ViewGaCrmTickets>> GetViewGaCrmMasterAsync();
@@ -118,6 +118,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaCrmTickets>> GetGaCrmTicketsByUserAsync(long comuneId, string numCon, string prg);
         Task<bool> CheckGaCrmTicketEventExistAsync(long id);
         Task<bool> DuplicateGaCrmTicketAsync(long[] ticketsId, string userId);
+        Task<PagedList<ViewGaCrmTickets>> ExportGaCrmTicketsAsync(long[] ids);
         #endregion
 
         #region Views

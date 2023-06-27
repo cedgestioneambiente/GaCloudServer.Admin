@@ -1089,6 +1089,28 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpPut("ImportConsorzioRegistrazioniAsync/{step}")]
+        public async Task<ActionResult<ApiResponse>> ImportConsorzioRegistrazioniAsync([FromRoute] int step)
+        {
+            try
+            {
+                int passed = 0;
+                switch (step)
+                {
+                    case 1:
+
+                        break;
+                }
+                
+                return new ApiResponse(passed);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
         #endregion
 
         #region Views
