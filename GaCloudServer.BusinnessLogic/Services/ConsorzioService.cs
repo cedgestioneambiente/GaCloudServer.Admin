@@ -21,6 +21,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ConsorzioRegistrazioneAllegato> consorzioRegistrazioniAllegatiRepo;
         protected readonly IGenericRepository<ConsorzioOperazione> consorzioOperazioniRepo;
         protected readonly IGenericRepository<ConsorzioPeriodo> consorzioPeriodiRepo;
+        protected readonly IGenericRepository<ConsorzioImportTask> consorzioImportsTasksRepo;
 
         protected readonly IGenericRepository<ViewConsorzioCers> viewConsorzioCersRepo;
         protected readonly IGenericRepository<ViewConsorzioProduttori> viewConsorzioProduttoriRepo;
@@ -43,6 +44,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ConsorzioRegistrazioneAllegato> consorzioRegistrazioniAllegatiRepo,
             IGenericRepository<ConsorzioOperazione> consorzioOperazioniRepo,
             IGenericRepository<ConsorzioPeriodo> consorzioPeriodiRepo,
+            IGenericRepository<ConsorzioImportTask> consorzioImportsTasksRepo,
 
             IGenericRepository<ViewConsorzioCers> viewConsorzioCersRepo,
             IGenericRepository<ViewConsorzioProduttori> viewConsorzioProduttoriRepo,
@@ -63,6 +65,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.consorzioRegistrazioniAllegatiRepo = consorzioRegistrazioniAllegatiRepo;
             this.consorzioOperazioniRepo = consorzioOperazioniRepo;
             this.consorzioPeriodiRepo = consorzioPeriodiRepo;
+            this.consorzioImportsTasksRepo = consorzioImportsTasksRepo;
 
             this.viewConsorzioCersRepo = viewConsorzioCersRepo;
             this.viewConsorzioProduttoriRepo = viewConsorzioProduttoriRepo;
@@ -1075,6 +1078,32 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
         #endregion
+
+        #endregion
+
+        #region ConsorzioImportsTasks
+        public async Task<ConsorzioImportsTasksDto> GetConsorzioImportsTasksAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await consorzioImportsTasksRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ConsorzioImportsTasksDto, PagedList<ConsorzioImportTask>>();
+            return dtos;
+        }
+
+        public async Task<ConsorzioImportTaskDto> GetConsorzioImportTaskByIdAsync(long id)
+        {
+            var entity = await consorzioImportsTasksRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ConsorzioImportTaskDto, ConsorzioImportTask>();
+            return dto;
+        }
+
+        public async Task<long> AddConsorzioImportTaskAsync(ConsorzioImportTaskDto dto)
+        {
+            var entity = dto.ToEntity<ConsorzioImportTask, ConsorzioImportTaskDto>();
+            await consorzioImportsTasksRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+            return entity.Id;
+        }
 
         #endregion
 
