@@ -450,6 +450,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ConsorzioRegistrazioneAllegato>, GenericRepository<TResourcesDbContext, ConsorzioRegistrazioneAllegato>>();
             services.AddTransient<IGenericRepository<ConsorzioPeriodo>, GenericRepository<TResourcesDbContext, ConsorzioPeriodo>>();
             services.AddTransient<IGenericRepository<ConsorzioOperazione>, GenericRepository<TResourcesDbContext, ConsorzioOperazione>>();
+            services.AddTransient<IGenericRepository<ConsorzioImportTask>, GenericRepository<TResourcesDbContext, ConsorzioImportTask>>();
 
             services.AddTransient<IGenericRepository<ViewConsorzioCers>, GenericRepository<TResourcesDbContext, ViewConsorzioCers>>();
             services.AddTransient<IGenericRepository<ViewConsorzioDestinatari>, GenericRepository<TResourcesDbContext, ViewConsorzioDestinatari>>();

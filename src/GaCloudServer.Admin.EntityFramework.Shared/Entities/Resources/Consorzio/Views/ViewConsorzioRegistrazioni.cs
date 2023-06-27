@@ -7,7 +7,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
     {
         public string UserId { get; set; }
         public string Roles { get; set; }
-        public float PesoTotale { get; set; }
+        public double PesoTotale { get; set; }
         public DateTime DataRegistrazione { get; set; }
         public string Cer { get; set; }
         public string Produttore { get; set; }

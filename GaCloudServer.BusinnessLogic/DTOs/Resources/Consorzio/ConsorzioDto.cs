@@ -91,7 +91,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
     {
         public string? UserId { get; set; }
         public string? Roles { get; set; }
-        public float PesoTotale { get; set; }
+        public double PesoTotale { get; set; }
         public DateTime DataRegistrazione { get; set; }
         public long ConsorzioOperazioneId { get; set; }
         public long ConsorzioCerId { get; set; }
@@ -100,6 +100,8 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
         public long ConsorzioDestinatarioId { get; set; }
         public long ConsorzioPeriodoId { get; set; }
         public string? Note { get; set; }
+        public string? ConsorzioImportTaskId { get; set; }
+        public string? ImportRecordId { get; set; }
     }
 
     public class ConsorzioRegistrazioniDto : GenericPagedListDto<ConsorzioRegistrazioneDto>
@@ -144,4 +146,52 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
     }
 
     #endregion
+
+    #region ConsorzioImportsTasks
+    public class ConsorzioImportTaskDto : GenericFileDto
+    {
+        public string? TaskId { get; set; }
+        public string? Log { get; set; }
+        public DateTime? DateStart { get; set; }
+        public DateTime? DateEnd { get; set; }
+        public int? Completed { get; set; }
+        public int? Error { get; set; }
+        public string? UserId { get; set; }
+    }
+
+    public class ConsorzioImportsTasksDto : GenericPagedListDto<ConsorzioImportTaskDto>
+    {
+    }
+
+    #endregion
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

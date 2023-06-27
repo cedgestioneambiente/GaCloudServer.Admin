@@ -1731,5 +1731,82 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #endregion
+
+        #region ConsorzioImportsTasks
+
+        [HttpGet("GetConsorzioImportsTasksAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioImportsTasksAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _consorzioService.GetConsorzioImportsTasksAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ConsorzioImportsTasksApiDto, ConsorzioImportsTasksDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetConsorzioImportTaskByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioImportTaskByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _consorzioService.GetConsorzioImportTaskByIdAsync(id);
+                var apiDto = dto.ToApiDto<ConsorzioImportTaskApiDto, ConsorzioImportTaskDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddConsorzioImportTaskAsync")]
+        public async Task<ActionResult<ApiResponse>> AddConsorzioImportTaskAsync([FromForm] ConsorzioImportTaskApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "GaCloud/Consorzio/Log";
+                var dto = apiDto.ToDto<ConsorzioImportTaskDto, ConsorzioImportTaskApiDto>();
+                var response = await _consorzioService.AddConsorzioImportTaskAsync(dto);
+                if (apiDto.uploadFile)
+                {
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
+                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        #endregion
     }
 }

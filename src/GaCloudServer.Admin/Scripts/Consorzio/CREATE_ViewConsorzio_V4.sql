@@ -58,7 +58,7 @@ GO
 
 CREATE VIEW [dbo].[ViewConsorzioRegistrazioni]
 AS
-SELECT        dbo.ConsorzioRegistrazioni.UserId, dbo.ConsorzioRegistrazioni.Roles, dbo.ConsorzioRegistrazioni.PesoTotale, dbo.ConsorzioRegistrazioni.DataRegistrazione, dbo.ConsorzioCers.Codice AS Cer, 
+SELECT        dbo.ConsorzioRegistrazioni.UserId, dbo.ConsorzioRegistrazioni.Roles, CAST (dbo.ConsorzioRegistrazioni.PesoTotale AS float) AS PesoTotale, dbo.ConsorzioRegistrazioni.DataRegistrazione, dbo.ConsorzioCers.Codice AS Cer, 
                          dbo.ConsorzioProduttori.Descrizione AS Produttore, dbo.ConsorzioTrasportatori.Descrizione AS Trasportatore, dbo.ConsorzioDestinatari.Descrizione AS Destinatario, 
                          dbo.PrivateViewIdentityServerAdminUserList.FullName AS Nominativo, dbo.ConsorzioRegistrazioni.Id, dbo.ConsorzioRegistrazioni.Disabled, dbo.ConsorzioRegistrazioni.Note, dbo.ConsorzioCers.CodiceRaggruppamento, 
                          dbo.ConsorzioPeriodi.Descrizione AS Periodo, dbo.ConsorzioOperazioni.Descrizione AS Operazione, FORMAT(dbo.ConsorzioRegistrazioni.DataRegistrazione, 'MMMM', 'it-IT') AS Mese, 

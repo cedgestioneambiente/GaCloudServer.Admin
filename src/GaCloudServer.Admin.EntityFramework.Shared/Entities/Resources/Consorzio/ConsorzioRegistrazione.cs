@@ -7,7 +7,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
     {
         public string UserId { get; set; }
         public string Roles { get; set; }
-        public float PesoTotale { get; set; }
+        public double PesoTotale { get; set; }
         public DateTime DataRegistrazione { get; set; }
         public long ConsorzioOperazioneId { get; set; }
         public long ConsorzioCerId { get; set; }
@@ -16,6 +16,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
         public long ConsorzioDestinatarioId { get; set; }
         public long ConsorzioPeriodoId { get; set; }
         public string Note { get; set; }
+        public string ConsorzioImportTaskId { get; set; }
+        public string ImportRecordId { get; set; }
+
 
         public ConsorzioCer ConsorzioCer { get; set; }
         public ConsorzioOperazione ConsorzioOperazione { get; set; }

@@ -458,6 +458,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ConsorzioRegistrazioneAllegato> ConsorzioRegistrazioniAllegati { get; set; }
         public DbSet<ConsorzioPeriodo> ConsorzioPeriodi { get; set; }
         public DbSet<ConsorzioOperazione> ConsorzioOperazioni { get; set; }
+        public DbSet<ConsorzioImportTask> ConsorzioImportsTasks { get; set; }
 
         #region Views
         public DbSet<ViewConsorzioCers> ViewConsorzioCers { get; set; }
