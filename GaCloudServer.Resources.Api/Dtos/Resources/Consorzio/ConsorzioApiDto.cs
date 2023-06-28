@@ -179,4 +179,32 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
         public string row { get; set; }
         public string error { get; set; }
     }
+
+    public class ConsorzioImportFileApiDto
+    { 
+        public int PRG { get; set; }
+        public DateTime DATA { get; set; }
+        public string CER { get; set; }
+        public string? RAGGRUPPAMENTO_CER { get; set; }
+        public double PESO_KG { get; set; }
+        public string OPERAZIONE { get; set; }
+        public string PRODUTTORE_RAGSO { get; set; }
+        public string PRODUTTORE_INDIRIZZO { get; set; }
+        public string PRODUTTORE_CFPIVA { get; set; }
+        public string PRODUTTORE_ISTAT_COMUNE { get; set; }
+        public string DESTINATARIO_RAGSO { get; set; }
+        public string DESTINATARIO_INDIRIZZO { get; set; }
+        public string DESTINATARIO_CFPIVA { get; set; }
+        public string DESTINATARIO_ISTAT_COMUNE { get; set; }
+        public string TRASPORTATORE_RAGSO { get; set; }
+        public string TRASPORTATORE_INDIRIZZO { get; set; }
+        public string TRASPORTATORE_CFPIVA { get; set; }
+        public string TRASPORTATORE_ISTAT_COMUNE { get; set; }
+        public long PERIODO { get; set; }
+        public bool step1Error { get; set; }
+        public bool step2Error { get; set; }
+        public bool step3Error { get; set; }
+        public string ErrorDesc { get; set; }
+        public string OperationDesc { get; set; }
+    }
 }

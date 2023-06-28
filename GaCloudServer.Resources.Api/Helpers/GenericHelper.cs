@@ -25,5 +25,10 @@ namespace GaCloudServer.Resources.Api.Helpers
         {
             return !string.IsNullOrEmpty(input);
         }
+
+        public static string ConvertNullToString(string input)
+        {
+            return input ?? "";
+        }
     }
 }
