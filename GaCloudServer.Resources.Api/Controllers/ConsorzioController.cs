@@ -11,8 +11,11 @@ using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic.FileIO;
+using System.Data;
 using System.Reflection;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
+using gh = GaCloudServer.Resources.Api.Helpers.GenericHelper;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -1806,6 +1809,244 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+
+        #region Functions
+        [HttpPost("UploadConsorzioImportFileAsync")]
+        public async Task<ActionResult<ApiResponse>> UploadConsorzioImportFileAsync([FromForm] FileApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                string fileFolder = "GaCloud/Consorzio/ImportFiles";
+
+                var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+
+                var guid = new Guid();
+
+                var response = new { taskId = guid, fileId = fileUploadResponse.id };
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpGet("ValidateConsorzioImportStep1/{fileId}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep1(string fileId)
+        {
+            try
+            {
+                var file = await _fileService.DownloadById(fileId);
+                DataTable dt = new DataTable();
+
+                using (TextFieldParser parser = new TextFieldParser(file.stream))
+                {
+                    parser.Delimiters = new string[] { ";" };
+                    parser.HasFieldsEnclosedInQuotes = true;
+
+                    // Read the header row to create DataTable columns
+                    if (!parser.EndOfData)
+                    {
+                        string[] headers = parser.ReadFields();
+                        foreach (string header in headers)
+                        {
+                            dt.Columns.Add(header);
+                        }
+                    }
+
+                    // Read the remaining rows and populate the DataTable
+                    while (!parser.EndOfData)
+                    {
+                        string[] fields = parser.ReadFields();
+                        dt.Rows.Add(fields);
+                    }
+
+                }
+
+                if (dt.Columns.Count == 19)
+                {
+                    List<string> prgCheck = new List<string>();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        
+                        if (!gh.IsNotNullOrEmpty(row.ItemArray[0].ToString()) || !gh.CanConvertToInt(row.ItemArray[0].ToString()))
+                        {
+                            return new ApiResponse("Step1PrgEmptyError", code.Status200OK);
+                        }
+                        else
+                        {
+                            if (prgCheck.Contains(row.ItemArray[0].ToString()))
+                            {
+                                return new ApiResponse("Step1PrgDuplicateError", code.Status200OK);
+                            }
+                            else
+                            {
+                                prgCheck.Add(row.ItemArray[0].ToString());
+                            }
+                        }
+                    }
+
+                    int index = 0;
+                    List<ConsorzioImportErrorApiDto> errorList = new List<ConsorzioImportErrorApiDto>();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (index == 0)
+                        {
+                            index++;
+                        }
+                        else
+                        {
+                            int i = 0;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()) || !gh.CanConvertToInt(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo PRG è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()) || !gh.CanConvertToDate(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo DATA è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo CER è vuoto o non valido" });
+                            }
+                            i++;
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()) || !gh.CanConvertToDouble(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo PESO_KG è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo OPERAZIONE è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo PRODUTTORE_RAGSO è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo PRODUTTORE_INDIRIZZO è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo PRODUTTORE_CFPIVA è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo PRODUTTORE_ISTAT_COMUNE è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo DESTINATARIO_RAGSO è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo DESTINATARIO_INDIRIZZO è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo DESTINATARIO_CFPIVA è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo DESTINATARIO_ISTAT_COMUNE è vuoto o non valido" });
+                            }
+                            i++;
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo TRASPORTATORE_RAGSO è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo TRASPORTATORE_INDIRIZZO è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo TRASPORTATORE_CFPIVA è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo TRASPORTATORE_ISTAT_COMUNE è vuoto o non valido" });
+                            }
+                            i++;
+
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()) || !gh.CanConvertToInt(row.ItemArray[i].ToString()))
+                            {
+                                errorList.Add(new ConsorzioImportErrorApiDto() { row = row.ItemArray[0].ToString(), error = "Il campo PERIODO è vuoto o non valido" });
+                            }
+                            i++;
+
+                            index++;
+
+
+                        }
+                    }
+
+                    if (errorList.Count()==0)
+                    {
+                        return new ApiResponse("Passed", code.Status200OK);
+                    }
+                    else
+                    {
+                        return new ApiResponse("Step1RowError", errorList, code.Status200OK);
+                    }
+                }
+                else
+                {
+                    return new ApiResponse("Step1ColumnError",dt.Columns.Count, code.Status200OK);
+                }
+                    
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+        }
+        #endregion
 
         #endregion
     }

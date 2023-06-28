@@ -173,4 +173,10 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
         public string roles { get; set; }
         public string quickFilter { get; set; }
     }
+
+    public class ConsorzioImportErrorApiDto
+    { 
+        public string row { get; set; }
+        public string error { get; set; }
+    }
 }

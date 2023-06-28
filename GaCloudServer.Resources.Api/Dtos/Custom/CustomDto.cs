@@ -1,4 +1,6 @@
-﻿namespace GaCloudServer.Resources.Api.Dtos.Custom
+﻿using GaCloudServer.Resources.Api.Dtos.Base;
+
+namespace GaCloudServer.Resources.Api.Dtos.Custom
 {
     public class ImageItemApiDto
     {
@@ -16,5 +18,7 @@
         public string roles { get; set; }
     }
 
+    public class FileApiDto:GenericFileApiDto { 
+    }
    
 }
