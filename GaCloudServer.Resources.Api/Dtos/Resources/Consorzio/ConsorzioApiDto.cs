@@ -206,5 +206,6 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
         public bool step3Error { get; set; }
         public string ErrorDesc { get; set; }
         public string OperationDesc { get; set; }
+        public bool Imported { get; set; }
     }
 }

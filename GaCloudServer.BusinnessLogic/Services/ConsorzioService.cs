@@ -1096,6 +1096,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
+        public async Task<ConsorzioImportTaskDto> GetConsorzioImportTaskByTaskIdAsync(string taskId)
+        {
+            var entity = await consorzioImportsTasksRepo.GetSingleWithFilter(x=>x.TaskId==taskId);
+            var dto = entity.ToDto<ConsorzioImportTaskDto, ConsorzioImportTask>();
+            return dto;
+        }
+
         public async Task<long> AddConsorzioImportTaskAsync(ConsorzioImportTaskDto dto)
         {
             var entity = dto.ToEntity<ConsorzioImportTask, ConsorzioImportTaskDto>();

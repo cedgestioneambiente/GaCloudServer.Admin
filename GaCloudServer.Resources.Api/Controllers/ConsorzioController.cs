@@ -2122,7 +2122,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                     if (itemList.Where(x=>x.step1Error==true).Count()==0)
                     {
-                        return new ApiResponse("Passed", code.Status200OK);
+                        return new ApiResponse("Passed", itemList, code.Status200OK);
                     }
                     else
                     {
@@ -2344,6 +2344,118 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex);
             }
         }
+
+        [HttpPut("ValidateConsorzioImportStep3/{taskId}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep3([FromRoute] string taskId,[FromBody] List<ConsorzioImportFileApiDto> dtos)
+        {
+            try
+            {
+                var task = await _consorzioService.GetConsorzioImportTaskByTaskIdAsync(taskId);
+
+                var itemList = new List<ConsorzioImportFileApiDto>();
+
+                var listCer = await _consorzioService.GetConsorzioCersAsync(1, 0);
+                var listPeriodi = await _consorzioService.GetConsorzioPeriodiAsync(1, 0);
+                var listProd = await _consorzioService.GetConsorzioProduttoriAsync(1, 0);
+                var listDest = await _consorzioService.GetConsorzioDestinatariAsync(1, 0);
+                var listTrasp = await _consorzioService.GetConsorzioTrasportatoriAsync(1, 0);
+                var listOp = await _consorzioService.GetConsorzioOperazioniAsync(1, 0);
+                var listComuni = await _consorzioService.GetConsorzioComuniAsync(1, 0);
+
+                List<string> errorList = new List<string>();
+                List<string> operationList = new List<string>();
+
+                foreach (var dto in dtos)
+                {
+                    var item = new ConsorzioImportFileApiDto();
+                    if (dto.step1Error == false && dto.step2Error == false)
+                    {
+                        try
+                        {
+                            var comuneProd = listComuni.Data.Where(x => x.Istat == dto.PRODUTTORE_ISTAT_COMUNE).FirstOrDefault();
+                            var comuneDest = listComuni.Data.Where(x => x.Istat == dto.DESTINATARIO_ISTAT_COMUNE).FirstOrDefault();
+                            var comuneTrasp = listComuni.Data.Where(x => x.Istat == dto.TRASPORTATORE_ISTAT_COMUNE).FirstOrDefault();
+
+                            var cer = listCer.Data.Where(x => x.Codice == dto.CER && gh.ConvertNullToString(x.CodiceRaggruppamento) == dto.RAGGRUPPAMENTO_CER).FirstOrDefault();
+                            var produttore = listProd.Data.Where(x => x.Descrizione == dto.PRODUTTORE_RAGSO
+                            && x.Indirizzo == dto.PRODUTTORE_INDIRIZZO
+                            && x.CfPiva == dto.PRODUTTORE_CFPIVA
+                            && x.ConsorzioComuneId == comuneProd.Id).FirstOrDefault();
+                            var destinatario = listDest.Data.Where(x => x.Descrizione == dto.DESTINATARIO_RAGSO
+                            && x.Indirizzo == dto.DESTINATARIO_INDIRIZZO
+                            && x.CfPiva == dto.DESTINATARIO_CFPIVA
+                            && x.ConsorzioComuneId == comuneDest.Id).FirstOrDefault();
+                            var trasportatore = listTrasp.Data.Where(x => x.Descrizione == dto.TRASPORTATORE_RAGSO
+                            && x.Indirizzo == dto.TRASPORTATORE_INDIRIZZO
+                            && x.CfPiva == dto.TRASPORTATORE_CFPIVA
+                            && x.ConsorzioComuneId == comuneTrasp.Id).FirstOrDefault();
+                            var periodo = listPeriodi.Data.Where(x => x.Id == dto.PERIODO).FirstOrDefault();
+                            var operazione = listOp.Data.Where(x => x.Descrizione == dto.OPERAZIONE).FirstOrDefault();
+
+                            var registrazione = new ConsorzioRegistrazioneDto();
+                            registrazione.Id = 0;
+                            registrazione.Disabled = false;
+                            registrazione.UserId = task.UserId;
+                            registrazione.ImportRecordId = dto.PRG.ToString();
+                            registrazione.PesoTotale = dto.PESO_KG;
+                            registrazione.DataRegistrazione = dto.DATA;
+                            registrazione.ConsorzioOperazioneId = operazione.Id;
+                            registrazione.ConsorzioProduttoreId = produttore.Id;
+                            registrazione.ConsorzioTrasportatoreId = trasportatore.Id;
+                            registrazione.ConsorzioDestinatarioId = destinatario.Id;
+                            registrazione.ConsorzioPeriodoId = periodo.Id;
+                            registrazione.ConsorzioImportTaskId = task.TaskId;
+                            registrazione.Roles = "";
+
+
+                            var soggetto = new ConsorzioProduttoreDto();
+                            soggetto.Id = 0;
+                            soggetto.Disabled = false;
+                            soggetto.Descrizione = dto.PRODUTTORE_RAGSO;
+                            soggetto.Indirizzo = dto.PRODUTTORE_INDIRIZZO;
+                            soggetto.ConsorzioComuneId = comuneProd.Id;
+                            soggetto.CfPiva = dto.PRODUTTORE_CFPIVA;
+
+                            var responseSoggetto = await _consorzioService.AddConsorzioProduttoreAsync(soggetto);
+                            if (responseSoggetto <= 0)
+                            {
+
+                                errorList.Add("Produttore non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
+                            }
+                            else
+                            {
+                                listProd = await _consorzioService.GetConsorzioProduttoriAsync(1, 0);
+                                operationList.Add("Il Produttore non presente sul database è stato aggiunto automaticamente. ");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            errorList.Add("Record non importato a causa di un errore di sistema.");
+                        }
+
+
+                    }
+
+                    
+
+                }
+
+                if (itemList.Where(x => x.step3Error == true).Count() == 0)
+                {
+                    return new ApiResponse("Passed", code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Step3RowError", itemList, code.Status200OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+        }
+
         #endregion
 
         #endregion
