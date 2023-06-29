@@ -145,6 +145,16 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
             entity.ContactCenterStatoRichiestaId= newState;
+
+            if (newState == 2)
+            {
+                entity.DataChiusura = DateTime.Now;
+            }
+            else
+            {
+                entity.DataChiusura = null;
+            }
+
             if (note != null)
             {
                 entity.NoteOperatore = note;

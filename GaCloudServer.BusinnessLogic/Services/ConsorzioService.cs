@@ -622,6 +622,16 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entity.Id;
         }
 
+        public async Task<ConsorzioRegistrazioniDto> AddRangeConsorzioRegistrazioneAsync(ConsorzioRegistrazioniDto dto)
+        {
+            var entities = dto.ToEntity<PagedList<ConsorzioRegistrazione>, ConsorzioRegistrazioniDto>();
+            consorzioRegistrazioniRepo.AddRange(entities.Data.AsEnumerable());
+            await SaveChanges();
+
+            var response = entities.ToDto<ConsorzioRegistrazioniDto, PagedList<ConsorzioRegistrazione>>();
+            return response;
+        }
+
         public async Task<long> UpdateConsorzioRegistrazioneAsync(ConsorzioRegistrazioneDto dto)
         {
             var entity = dto.ToEntity<ConsorzioRegistrazione, ConsorzioRegistrazioneDto>();
