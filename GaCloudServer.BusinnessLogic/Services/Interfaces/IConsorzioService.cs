@@ -204,6 +204,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<ConsorzioImportTaskDto> GetConsorzioImportTaskByTaskIdAsync(string taskId);
 
         Task<long> AddConsorzioImportTaskAsync(ConsorzioImportTaskDto dto);
+        Task<long> UpdateConsorzioImportTaskAsync(ConsorzioImportTaskDto dto);
 
         #endregion
     }

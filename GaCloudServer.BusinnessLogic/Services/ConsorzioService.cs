@@ -1112,6 +1112,16 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entity.Id;
         }
 
+        public async Task<long> UpdateConsorzioImportTaskAsync(ConsorzioImportTaskDto dto)
+        {
+            var entity = dto.ToEntity<ConsorzioImportTask, ConsorzioImportTaskDto>();
+            consorzioImportsTasksRepo.Update(entity);
+            await SaveChanges();
+            return entity.Id;
+
+           
+        }
+
         #endregion
 
         #region Common

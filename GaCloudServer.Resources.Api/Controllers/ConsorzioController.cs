@@ -4,14 +4,17 @@ using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Extensions;
+using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Custom;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.FileIO;
+using Newtonsoft.Json;
 using System.Data;
 using System.Reflection;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
@@ -2173,6 +2176,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 foreach (var dto in dtos)
                 {
+                    errorList = new List<string>();
+                    operationList = new List<string>();
                     var item = new ConsorzioImportFileApiDto();
                     if (dto.step1Error == false)
                     {
@@ -2330,7 +2335,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 if (itemList.Where(x => x.step2Error == true).Count() == 0)
                 {
-                    return new ApiResponse("Passed", code.Status200OK);
+                    return new ApiResponse("Passed",itemList, code.Status200OK);
                 }
                 else
                 {
@@ -2345,8 +2350,8 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpPut("ValidateConsorzioImportStep3/{taskId}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep3([FromRoute] string taskId,[FromBody] List<ConsorzioImportFileApiDto> dtos)
+        [HttpPut("ValidateConsorzioImportStep3/{taskId}/{aziendaId}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep3([FromRoute] string taskId,[FromRoute] string aziendaId, [FromBody] List<ConsorzioImportFileApiDto> dtos)
         {
             try
             {
@@ -2367,11 +2372,15 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 foreach (var dto in dtos)
                 {
+                    errorList = new List<string>();
+                    operationList = new List<string>();
                     var item = new ConsorzioImportFileApiDto();
                     if (dto.step1Error == false && dto.step2Error == false)
                     {
                         try
                         {
+                            item = dto;
+
                             var comuneProd = listComuni.Data.Where(x => x.Istat == dto.PRODUTTORE_ISTAT_COMUNE).FirstOrDefault();
                             var comuneDest = listComuni.Data.Where(x => x.Istat == dto.DESTINATARIO_ISTAT_COMUNE).FirstOrDefault();
                             var comuneTrasp = listComuni.Data.Where(x => x.Istat == dto.TRASPORTATORE_ISTAT_COMUNE).FirstOrDefault();
@@ -2397,6 +2406,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                             registrazione.Disabled = false;
                             registrazione.UserId = task.UserId;
                             registrazione.ImportRecordId = dto.PRG.ToString();
+                            registrazione.ConsorzioCerId = cer.Id;
                             registrazione.PesoTotale = dto.PESO_KG;
                             registrazione.DataRegistrazione = dto.DATA;
                             registrazione.ConsorzioOperazioneId = operazione.Id;
@@ -2405,27 +2415,18 @@ namespace GaCloudServer.Resources.Api.Controllers
                             registrazione.ConsorzioDestinatarioId = destinatario.Id;
                             registrazione.ConsorzioPeriodoId = periodo.Id;
                             registrazione.ConsorzioImportTaskId = task.TaskId;
-                            registrazione.Roles = "";
+                            registrazione.Roles = aziendaId;
 
-
-                            var soggetto = new ConsorzioProduttoreDto();
-                            soggetto.Id = 0;
-                            soggetto.Disabled = false;
-                            soggetto.Descrizione = dto.PRODUTTORE_RAGSO;
-                            soggetto.Indirizzo = dto.PRODUTTORE_INDIRIZZO;
-                            soggetto.ConsorzioComuneId = comuneProd.Id;
-                            soggetto.CfPiva = dto.PRODUTTORE_CFPIVA;
-
-                            var responseSoggetto = await _consorzioService.AddConsorzioProduttoreAsync(soggetto);
-                            if (responseSoggetto <= 0)
+                            var responseRegistrazione = await _consorzioService.AddConsorzioRegistrazioneAsync(registrazione);
+                            if (responseRegistrazione <= 0)
                             {
 
-                                errorList.Add("Produttore non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
+                                errorList.Add("Record non importato a causa di un errore sulla procedura.");
                             }
                             else
                             {
-                                listProd = await _consorzioService.GetConsorzioProduttoriAsync(1, 0);
-                                operationList.Add("Il Produttore non presente sul database è stato aggiunto automaticamente. ");
+                                operationList.Add("Registrazione inserita correttamente. ");
+                                item.Imported = true;
                             }
                         }
                         catch (Exception ex)
@@ -2433,16 +2434,38 @@ namespace GaCloudServer.Resources.Api.Controllers
                             errorList.Add("Record non importato a causa di un errore di sistema.");
                         }
 
+                        if (errorList.Count > 0)
+                        {
+                            item.step3Error = true;
+                            item.ErrorDesc = string.Join(";", errorList);
+                        }
 
+                        item.OperationDesc = string.Join(";", operationList);
+
+                        itemList.Add(item);
+
+
+                    }
+                    else
+                    {
+                        item = dto;
+                        itemList.Add(item);
                     }
 
                     
 
                 }
 
+                task.DateEnd = DateTime.Now;
+                task.Completed = itemList.Where(x => x.Imported == true).Count();
+                task.Error = itemList.Where(x => x.Imported == false).Count();
+                task.Log = JsonConvert.SerializeObject(itemList);
+
+                await _consorzioService.UpdateConsorzioImportTaskAsync(task);
+
                 if (itemList.Where(x => x.step3Error == true).Count() == 0)
                 {
-                    return new ApiResponse("Passed", code.Status200OK);
+                    return new ApiResponse("Passed",itemList, code.Status200OK);
                 }
                 else
                 {
@@ -2453,6 +2476,37 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 _logger.LogError(ex.Message, ex);
                 throw new ApiException(ex);
+            }
+        }
+
+        [HttpPost("ExportConsorzioImportReportAsync")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportConsorzioImportReportAsync([FromBody] List<ConsorzioImportFileApiDto> dtos)
+        {
+
+            try
+            {
+                var entities = dtos;
+
+
+                string title = "Lista Ticket";
+                string[] columns = { "PRG", "DATA", "CER","RAGGRUPPAMENTO_CER","PESO_KG","OPERAZIONE","PRODUTTORE_RAGSO","PRODUTTORE_INDIRIZZO","PRODUTTORE_CFPIVA",
+                                "PRODUTTORE_ISTAT_COMUNE","DESTINATARIO_RAGSO","DESTINATARIO_INDIRIZZO","DESTINATARIO_CFPIVA","DESTINATARIO_ISTAT_COMUNE"
+                                ,"TRASPORTATORE_RAGSO","TRASPORTATORE_INDIRIZZO","TRASPORTATORE_CFPIVA","TRASPORTATORE_ISTAT_COMUNE"
+                                ,"PERIODO"
+                                ,"step1Error","step2Error","step3Error","ErrorDesc","OperationDesc","Imported"};
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "CONSORZIO_IMPORT_REPORT", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Consorzio_Import_Report.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
 
