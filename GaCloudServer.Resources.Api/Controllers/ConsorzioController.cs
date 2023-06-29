@@ -4,6 +4,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Extensions;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
+using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
@@ -13,12 +15,15 @@ using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using System.Data;
 using System.Reflection;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 using gh = GaCloudServer.Resources.Api.Helpers.GenericHelper;
+using GaCloudServer.BusinnessLogic.Dtos.Custom;
+using Microsoft.AspNet.SignalR;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -26,22 +31,25 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
+    [Microsoft.AspNetCore.Authorization.Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
     public class ConsorzioController : Controller
     {
         private readonly IConsorzioService _consorzioService;
         private readonly ILogger<ConsorzioController> _logger;
         private readonly IFileService _fileService;
+        private readonly IHubContext<BackgroundServicesHub, IBackgroundServicesHub> _hub;
 
         public ConsorzioController(
             IConsorzioService consorzioService
             , IFileService fileService
-            , ILogger<ConsorzioController> logger)
+            , ILogger<ConsorzioController> logger
+            , IHubContext<BackgroundServicesHub, IBackgroundServicesHub> hub)
         {
 
             _consorzioService = consorzioService;
             _fileService = fileService;
             _logger = logger;
+            _hub = hub;
         }
 
 
@@ -1847,12 +1855,17 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ValidateConsorzioImportStep1/{fileId}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep1(string fileId)
+        [HttpGet("ValidateConsorzioImportStep1/{fileId}/{userId}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep1(string fileId,string userId)
         {
             try
             {
+                DownloadProgressDto progress = new DownloadProgressDto();
+                progress.message = string.Format("Download file in corso...");
+                progress.progress = 50;
                 var file = await _fileService.DownloadById(fileId);
+                await _hub.Clients.Groups(userId).DownloadProgress(progress);
+
                 DataTable dt = new DataTable();
 
                 using (TextFieldParser parser = new TextFieldParser(file.stream))
@@ -1881,6 +1894,9 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 if (dt.Columns.Count == 19)
                 {
+                    progress.message = string.Format("Controllo colonne file in corso");
+                    progress.progress = 100;
+
                     List<string> prgCheck = new List<string>();
                     List<ConsorzioImportFileApiDto> itemList = new List<ConsorzioImportFileApiDto>();
                     foreach (DataRow row in dt.Rows)
@@ -1903,11 +1919,16 @@ namespace GaCloudServer.Resources.Api.Controllers
                         }
                     }
 
+                    await _hub.Clients.Groups(userId).DownloadProgress(progress);
+
                     int index = 0;
                     foreach (DataRow row in dt.Rows)
                     {
+                        progress.message = string.Format("Controllo formale Record {0}/{1}", index, dt.Rows.Count);
+                        progress.progress = (Int32)(((Double)index / (Double)dt.Rows.Count) * 100);
+                        await _hub.Clients.Groups(userId).DownloadProgress(progress);
 
-                            int i = 0;
+                        int i = 0;
                             var item = new ConsorzioImportFileApiDto();
                             List<string> errorList = new List<string>();
 
@@ -2145,6 +2166,11 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
+                DownloadProgressDto progress = new DownloadProgressDto();
+                progress.message = string.Format("Controllo dati in corso...");
+                progress.progress = 0;
+                await _hub.Clients.Groups(userId).DownloadProgress(progress);
+
                 ConsorzioImportTaskDto task = new ConsorzioImportTaskDto();
                 task.DateStart = DateTime.Now;
                 task.TaskId = taskId;
@@ -2169,8 +2195,14 @@ namespace GaCloudServer.Resources.Api.Controllers
                 List<string> errorList = new List<string>();
                 List<string> operationList = new List<string>();
 
+                int index = 1;
+
                 foreach (var dto in dtos)
                 {
+                    progress.message = string.Format("Controllo dati Record {0}/{1}", index, dtos.Count());
+                    progress.progress = (Int32)(((Double)index / (Double)dtos.Count()) * 100);
+                    await _hub.Clients.Groups(userId).DownloadProgress(progress);
+
                     errorList = new List<string>();
                     operationList = new List<string>();
                     var item = new ConsorzioImportFileApiDto();
@@ -2325,6 +2357,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                         item = dto;
                         itemList.Add(item);
                     }
+
+                    index++;
                 
                 }
 
@@ -2345,11 +2379,16 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpPut("ValidateConsorzioImportStep3/{taskId}/{aziendaId}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep3([FromRoute] string taskId,[FromRoute] string aziendaId, [FromBody] List<ConsorzioImportFileApiDto> dtos)
+        [HttpPut("ValidateConsorzioImportStep3/{taskId}/{aziendaId}/{userId}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep3([FromRoute] string taskId,[FromRoute] string aziendaId, [FromRoute] string userId, [FromBody] List<ConsorzioImportFileApiDto> dtos)
         {
             try
             {
+                DownloadProgressDto progress = new DownloadProgressDto();
+                progress.message = string.Format("Importazione dati in corso...");
+                progress.progress = 0;
+                await _hub.Clients.Groups(userId).DownloadProgress(progress);
+
                 var task = await _consorzioService.GetConsorzioImportTaskByTaskIdAsync(taskId);
 
                 var itemList = new List<ConsorzioImportFileApiDto>();
@@ -2364,6 +2403,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 List<string> errorList = new List<string>();
                 List<string> operationList = new List<string>();
+
+                int index = 1;
 
                 foreach (var dto in dtos)
                 {
@@ -2446,6 +2487,11 @@ namespace GaCloudServer.Resources.Api.Controllers
                         item = dto;
                         itemList.Add(item);
                     }
+                    progress.message = string.Format("Controllo dati Record {0}/{1}", index, dtos.Count());
+                    progress.progress = (Int32)(((Double)index / (Double)dtos.Count()) * 100);
+                    await _hub.Clients.Groups(userId).DownloadProgress(progress);
+
+                    index++;
 
                     
 
