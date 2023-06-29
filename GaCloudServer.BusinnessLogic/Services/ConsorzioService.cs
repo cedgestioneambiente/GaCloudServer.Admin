@@ -1100,6 +1100,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entity = await consorzioImportsTasksRepo.GetSingleWithFilter(x=>x.TaskId==taskId);
             var dto = entity.ToDto<ConsorzioImportTaskDto, ConsorzioImportTask>();
+            DetachEntity(entity);
             return dto;
         }
 
@@ -1117,6 +1118,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<ConsorzioImportTask, ConsorzioImportTaskDto>();
             consorzioImportsTasksRepo.Update(entity);
             await SaveChanges();
+            DetachEntity(entity);
             return entity.Id;
 
            
