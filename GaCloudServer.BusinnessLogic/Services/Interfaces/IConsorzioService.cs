@@ -129,6 +129,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<ConsorzioRegistrazioneDto> GetConsorzioRegistrazioneByIdAsync(long id);
 
         Task<long> AddConsorzioRegistrazioneAsync(ConsorzioRegistrazioneDto dto);
+        Task<ConsorzioRegistrazioniDto> AddRangeConsorzioRegistrazioneAsync(ConsorzioRegistrazioniDto dto);
+
         Task<long> UpdateConsorzioRegistrazioneAsync(ConsorzioRegistrazioneDto dto);
 
         Task<bool> DeleteConsorzioRegistrazioneAsync(long id);

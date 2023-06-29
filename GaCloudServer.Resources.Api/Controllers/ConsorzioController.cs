@@ -2407,6 +2407,161 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var task = await _consorzioService.GetConsorzioImportTaskByTaskIdAsync(taskId);
 
                 var itemList = new List<ConsorzioImportFileApiDto>();
+                var itemStored = new List<ConsorzioImportFileApiDto>();
+
+                var listCer = await _consorzioService.GetConsorzioCersAsync(1, 0);
+                var listPeriodi = await _consorzioService.GetConsorzioPeriodiAsync(1, 0);
+                var listProd = await _consorzioService.GetConsorzioProduttoriAsync(1, 0);
+                var listDest = await _consorzioService.GetConsorzioDestinatariAsync(1, 0);
+                var listTrasp = await _consorzioService.GetConsorzioTrasportatoriAsync(1, 0);
+                var listOp = await _consorzioService.GetConsorzioOperazioniAsync(1, 0);
+                var listComuni = await _consorzioService.GetConsorzioComuniAsync(1, 0);
+
+                List<string> errorList = new List<string>();
+                List<string> operationList = new List<string>();
+
+                int index = 0;
+                var registrazioniList = new ConsorzioRegistrazioniDto();
+                foreach (var dto in dtos)
+                {
+                    index++;
+                    errorList = new List<string>();
+                    operationList = new List<string>();
+                    
+
+                    var item = new ConsorzioImportFileApiDto();
+                    if (dto.step1Error == false && dto.step2Error == false)
+                    {
+                        try
+                        {
+                            item = dto;
+
+                            var comuneProd = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.PRODUTTORE_ISTAT_COMUNE)).FirstOrDefault();
+                            var comuneDest = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.DESTINATARIO_ISTAT_COMUNE)).FirstOrDefault();
+                            var comuneTrasp = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.TRASPORTATORE_ISTAT_COMUNE)).FirstOrDefault();
+
+                            var cer = listCer.Data.Where(x => x.Codice == dto.CER && gh.ConvertNullToString(x.CodiceRaggruppamento) == dto.RAGGRUPPAMENTO_CER).FirstOrDefault();
+                            var produttore = listProd.Data.Where(x => x.Descrizione == dto.PRODUTTORE_RAGSO
+                            && x.Indirizzo == dto.PRODUTTORE_INDIRIZZO
+                            && x.CfPiva == dto.PRODUTTORE_CFPIVA
+                            && x.ConsorzioComuneId == comuneProd.Id).FirstOrDefault();
+                            var destinatario = listDest.Data.Where(x => x.Descrizione == dto.DESTINATARIO_RAGSO
+                            && x.Indirizzo == dto.DESTINATARIO_INDIRIZZO
+                            && x.CfPiva == dto.DESTINATARIO_CFPIVA
+                            && x.ConsorzioComuneId == comuneDest.Id).FirstOrDefault();
+                            var trasportatore = listTrasp.Data.Where(x => x.Descrizione == dto.TRASPORTATORE_RAGSO
+                            && x.Indirizzo == dto.TRASPORTATORE_INDIRIZZO
+                            && x.CfPiva == dto.TRASPORTATORE_CFPIVA
+                            && x.ConsorzioComuneId == comuneTrasp.Id).FirstOrDefault();
+                            var periodo = listPeriodi.Data.Where(x => x.Id == dto.PERIODO).FirstOrDefault();
+                            var operazione = listOp.Data.Where(x => x.Descrizione == dto.OPERAZIONE).FirstOrDefault();
+
+                            var registrazione = new ConsorzioRegistrazioneDto();
+                            registrazione.Id = 0;
+                            registrazione.Disabled = false;
+                            registrazione.UserId = task.UserId;
+                            registrazione.ImportRecordId = dto.PRG.ToString();
+                            registrazione.ConsorzioCerId = cer.Id;
+                            registrazione.PesoTotale = dto.PESO_KG;
+                            registrazione.DataRegistrazione = dto.DATA;
+                            registrazione.ConsorzioOperazioneId = operazione.Id;
+                            registrazione.ConsorzioProduttoreId = produttore.Id;
+                            registrazione.ConsorzioTrasportatoreId = trasportatore.Id;
+                            registrazione.ConsorzioDestinatarioId = destinatario.Id;
+                            registrazione.ConsorzioPeriodoId = periodo.Id;
+                            registrazione.ConsorzioImportTaskId = task.TaskId;
+                            registrazione.Roles = aziendaId;
+
+                            registrazioniList.Data.Add(registrazione);
+                            itemList.Add(item);
+
+                            if (registrazioniList.Data.Count == 200 || index==dtos.Count())
+                            {
+                                var store= await _consorzioService.AddRangeConsorzioRegistrazioneAsync(registrazioniList);
+                                foreach (var itm in store.Data)
+                                { 
+                                    var objectModify = itemList.Where(x=>x.PRG==Convert.ToInt32(itm.ImportRecordId)).FirstOrDefault();
+                                    if (itm.Id == 0)
+                                    {
+                                        objectModify.step3Error = true;
+                                        objectModify.ErrorDesc = "Record non importato a causa di un errore sulla procedura.";
+                                    }
+                                    else
+                                    {
+                                        objectModify.Imported = true;
+                                        objectModify.OperationDesc = "Registrazione inserita correttamente.";
+                                    }
+
+                                }
+                                registrazioniList = new ConsorzioRegistrazioniDto();
+
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            errorList.Add("Record non importato a causa di un errore di sistema.");
+                        }
+
+                        //if (errorList.Count > 0)
+                        //{
+                        //    item.step3Error = true;
+                        //    item.ErrorDesc = string.Join(";", errorList);
+                        //}
+
+                        //item.OperationDesc = string.Join(";", operationList);
+
+                        
+
+
+                    }
+                    else
+                    {
+                        item = dto;
+                        itemList.Add(item);
+                    }
+                    progress.message = string.Format("Importazione Record {0}/{1}", index, dtos.Count());
+                    progress.progress = (Int32)(((Double)index / (Double)dtos.Count()) * 100);
+                    await _hub.Clients.Groups(userId).DownloadProgress(progress);                   
+
+                }
+
+                task.DateEnd = DateTime.Now;
+                task.Completed = itemList.Where(x => x.Imported == true).Count();
+                task.Error = itemList.Where(x => x.Imported == false).Count();
+                task.Log = JsonConvert.SerializeObject(itemList);
+
+                await _consorzioService.UpdateConsorzioImportTaskAsync(task);
+
+                if (itemList.Where(x => x.step3Error == true).Count() == 0)
+                {
+                    return new ApiResponse("Passed",itemList, code.Status200OK);
+                }
+                else
+                {
+                    return new ApiResponse("Step3RowError", itemList, code.Status200OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+        }
+
+        [HttpPut("ValidateConsorzioImportStep3OLD/{taskId}/{aziendaId}/{userId}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioImportStep3OLD([FromRoute] string taskId, [FromRoute] string aziendaId, [FromRoute] string userId, [FromBody] List<ConsorzioImportFileApiDto> dtos)
+        {
+            try
+            {
+                DownloadProgressDto progress = new DownloadProgressDto();
+                progress.message = string.Format("Importazione dati in corso...");
+                progress.progress = 0;
+                await _hub.Clients.Groups(userId).DownloadProgress(progress);
+
+                var task = await _consorzioService.GetConsorzioImportTaskByTaskIdAsync(taskId);
+
+                var itemList = new List<ConsorzioImportFileApiDto>();
 
                 var listCer = await _consorzioService.GetConsorzioCersAsync(1, 0);
                 var listPeriodi = await _consorzioService.GetConsorzioPeriodiAsync(1, 0);
@@ -2508,7 +2663,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                     index++;
 
-                    
+
 
                 }
 
@@ -2521,7 +2676,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 if (itemList.Where(x => x.step3Error == true).Count() == 0)
                 {
-                    return new ApiResponse("Passed",itemList, code.Status200OK);
+                    return new ApiResponse("Passed", itemList, code.Status200OK);
                 }
                 else
                 {
@@ -2534,6 +2689,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex);
             }
         }
+
 
         [HttpPost("ExportConsorzioImportReportAsync")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
