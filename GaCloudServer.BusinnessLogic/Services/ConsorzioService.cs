@@ -155,6 +155,29 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<bool> DuplicateConsorzioCerAsync(long[] cerId)
+        {
+            try
+            {
+                foreach (var itm in cerId)
+                {
+                    var entity = consorzioCersRepo.GetByIdAsNoTraking(x => x.Id == itm);
+                    entity.Id = 0;
+                    consorzioCersRepo.Add(entity);
+
+                }
+
+                await SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+
+        }
         #endregion
 
         #region Views

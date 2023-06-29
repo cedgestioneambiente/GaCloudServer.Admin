@@ -186,6 +186,21 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpPost("DuplicateConsorzioCerAsync")]
+        public async Task<ApiResponse> DuplicateConsorzioCerAsync([FromBody] ConsorzioDuplicateCersApiDto apiDto)
+        {
+            try
+            {
+                var entities = await _consorzioService.DuplicateConsorzioCerAsync(apiDto.cerId);
+                return new ApiResponse(entities);
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
+
         #endregion
 
         #region Views

@@ -19,6 +19,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateConsorzioCerAsync(long id, string codice, string codiceRaggruppamento);
         Task<bool> ChangeStatusConsorzioCerAsync(long id);
+        Task<bool> DuplicateConsorzioCerAsync(long[] cerId);
         #endregion
 
         #region Views
