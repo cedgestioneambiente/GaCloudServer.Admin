@@ -1906,12 +1906,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     int index = 0;
                     foreach (DataRow row in dt.Rows)
                     {
-                        if (index == 0)
-                        {
-                            index++;
-                        }
-                        else
-                        {
+
                             int i = 0;
                             var item = new ConsorzioImportFileApiDto();
                             List<string> errorList = new List<string>();
@@ -2006,7 +2001,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                             }
                             i++;
 
-                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()) || !gh.CanConvertToInt(row.ItemArray[i].ToString()))
                             {
                                 errorList.Add("Il campo PRODUTTORE_ISTAT_COMUNE è vuoto o non valido");
                             }
@@ -2046,7 +2041,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                             }
                             i++;
 
-                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()) || !gh.CanConvertToInt(row.ItemArray[i].ToString()))
                             {
                                 errorList.Add("Il campo DESTINATARIO_ISTAT_COMUNE è vuoto o non valido");
                             }
@@ -2086,7 +2081,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                             }
                             i++;
 
-                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()))
+                            if (!gh.IsNotNullOrEmpty(row.ItemArray[i].ToString()) || !gh.CanConvertToInt(row.ItemArray[i].ToString()))
                             {
                                 errorList.Add("Il campo TRASPORTATORE_ISTAT_COMUNE è vuoto o non valido");
                             }
@@ -2120,7 +2115,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                             index++;
 
 
-                        }
+                        
                     }
 
                     if (itemList.Where(x=>x.step1Error==true).Count()==0)
@@ -2181,9 +2176,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                     var item = new ConsorzioImportFileApiDto();
                     if (dto.step1Error == false)
                     {
-                        var comuneProd = listComuni.Data.Where(x => x.Istat == dto.PRODUTTORE_ISTAT_COMUNE).FirstOrDefault();
-                        var comuneDest = listComuni.Data.Where(x => x.Istat == dto.DESTINATARIO_ISTAT_COMUNE).FirstOrDefault();
-                        var comuneTrasp = listComuni.Data.Where(x => x.Istat == dto.TRASPORTATORE_ISTAT_COMUNE).FirstOrDefault();
+                        var comuneProd = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.PRODUTTORE_ISTAT_COMUNE)).FirstOrDefault();
+                        var comuneDest = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.DESTINATARIO_ISTAT_COMUNE)).FirstOrDefault();
+                        var comuneTrasp = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.TRASPORTATORE_ISTAT_COMUNE)).FirstOrDefault();
 
 
                         var checkCer = listCer.Data.Where(x => x.Codice == dto.CER && gh.ConvertNullToString(x.CodiceRaggruppamento) == dto.RAGGRUPPAMENTO_CER).Count();
@@ -2381,9 +2376,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                         {
                             item = dto;
 
-                            var comuneProd = listComuni.Data.Where(x => x.Istat == dto.PRODUTTORE_ISTAT_COMUNE).FirstOrDefault();
-                            var comuneDest = listComuni.Data.Where(x => x.Istat == dto.DESTINATARIO_ISTAT_COMUNE).FirstOrDefault();
-                            var comuneTrasp = listComuni.Data.Where(x => x.Istat == dto.TRASPORTATORE_ISTAT_COMUNE).FirstOrDefault();
+                            var comuneProd = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.PRODUTTORE_ISTAT_COMUNE)).FirstOrDefault();
+                            var comuneDest = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.DESTINATARIO_ISTAT_COMUNE)).FirstOrDefault();
+                            var comuneTrasp = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.TRASPORTATORE_ISTAT_COMUNE)).FirstOrDefault();
 
                             var cer = listCer.Data.Where(x => x.Codice == dto.CER && gh.ConvertNullToString(x.CodiceRaggruppamento) == dto.RAGGRUPPAMENTO_CER).FirstOrDefault();
                             var produttore = listProd.Data.Where(x => x.Descrizione == dto.PRODUTTORE_RAGSO
