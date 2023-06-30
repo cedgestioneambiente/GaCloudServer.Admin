@@ -1,4 +1,6 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
+using GaCloudServer.BusinnessLogic.DTOs.Base;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti
 {
@@ -44,8 +46,38 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti
     }
     #endregion
 
+    #region ProgettiJobAllegati
+    public class ProgettiJobAllegatoDto : GenericFileDto
+    {
+        public string Descrizione { get; set; }
+        public long ProgettiJobId { get; set; }
+
+    }
+
+    public class ProgettiJobAllegatiDto : GenericPagedListDto<ProgettiJobAllegatoDto>
+    {
+    }
+    #endregion
+
+    #region ProgettiWorkSettings
+    public class ProgettiWorkSettingDto : GenericDto
+    {
+        public long ProgettiWorkId { get; set; }
+        public string UserId { get; set; }
+        public bool AddJobNotification { get; set; }
+        public bool UpdateJobNotification { get; set; }
+        public bool DeleteJobNotification { get; set; }
+        public bool WorkStatusMail { get; set; }
+
+    }
+
+    public class ProgettiWorkSettingsDto : GenericPagedListDto<ProgettiWorkSettingDto>
+    {
+    }
+    #endregion
+
     #region Internal
-    
+
     #endregion
 
 

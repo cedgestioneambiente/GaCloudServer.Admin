@@ -36,7 +36,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteGaProgettiJobAsync(long id);
 
         #region Functions
-        Task<bool> ValidateGaProgettiJobAsync(long id, string descrizione);
+        Task<bool> ValidateGaProgettiJobAsync(long id, string descrizione,long workId,long parentId);
         Task<bool> ChangeStatusGaProgettiJobAsync(long id);
         Task<bool> AddGaProgettiJobLinkAsync(long sourceId, long targetId);
         #endregion
@@ -46,6 +46,22 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<List<GanttItemDto>> GetViewGaProgettiJobsByWorkIdWithChildrenAsync(long workId);
         Task<List<GanttItemDto>> GetViewGaProgettiJobsByWorkIdWithChildrenAndStatusAsync(long workId,bool all=true);
         Task<PagedList<ViewGaProgettiJobs>> GetViewGaProgettiJobsByWorkIdAndParentIdAsync(long workId,long parentId);
+        #endregion
+
+        #endregion
+
+        #region GaProgettiJobAllegati
+        Task<ProgettiJobAllegatiDto> GetGaProgettiJobAllegatiByJobIdAsync(long jobId);
+        Task<ProgettiJobAllegatoDto> GetGaProgettiJobAllegatoByIdAsync(long id);
+
+        Task<long> AddGaProgettiJobAllegatoAsync(ProgettiJobAllegatoDto dto);
+        Task<long> UpdateGaProgettiJobAllegatoAsync(ProgettiJobAllegatoDto dto);
+
+        Task<bool> DeleteGaProgettiJobAllegatoAsync(long id);
+
+        #region Functions
+        //Task<bool> ValidateGaProgettiJobAllegatoAsync(long id, string descrizione);
+        //Task<bool> ChangeStatusGaProgettiJobAllegatoAsync(long id);
         #endregion
 
         #endregion

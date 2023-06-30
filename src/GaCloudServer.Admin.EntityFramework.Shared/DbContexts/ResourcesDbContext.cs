@@ -403,6 +403,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Progetti
         public DbSet<ProgettiWork> GaProgettiWorks { get; set; }
         public DbSet<ProgettiJob> GaProgettiJobs { get; set; }
+        public DbSet<ProgettiJobAllegato> GaProgettiJobAllegati { get; set; }
+        public DbSet<ProgettiWorkSetting> GaProgettiWorkSettings { get; set; }
 
         #region Views
         public DbSet<ViewGaProgettiJobs> ViewGaProgettiJobs { get; set; }

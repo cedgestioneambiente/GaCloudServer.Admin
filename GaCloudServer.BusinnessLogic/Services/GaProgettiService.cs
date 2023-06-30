@@ -1,7 +1,9 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Custom;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti;
 using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Mappers;
@@ -15,6 +17,7 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         protected readonly IGenericRepository<ProgettiWork> gaProgettiWorksRepo;
         protected readonly IGenericRepository<ProgettiJob> gaProgettiJobsRepo;
+        protected readonly IGenericRepository<ProgettiJobAllegato> gaProgettiJobAllegatiRepo;
 
         protected readonly IGenericRepository<ViewGaProgettiJobs> viewGaProgettiJobsRepo;
 
@@ -23,6 +26,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public GaProgettiService(
             IGenericRepository<ProgettiWork> gaProgettiWorksRepo,
             IGenericRepository<ProgettiJob> gaProgettiJobsRepo,
+            IGenericRepository<ProgettiJobAllegato> gaProgettiJobAllegatiRepo,
 
             IGenericRepository<ViewGaProgettiJobs> viewGaProgettiJobsRepo,
 
@@ -30,6 +34,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             this.gaProgettiWorksRepo = gaProgettiWorksRepo;
             this.gaProgettiJobsRepo = gaProgettiJobsRepo;
+            this.gaProgettiJobAllegatiRepo = gaProgettiJobAllegatiRepo;
 
             this.viewGaProgettiJobsRepo = viewGaProgettiJobsRepo;
 
@@ -185,9 +190,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateGaProgettiJobAsync(long id, string descrizione)
+        public async Task<bool> ValidateGaProgettiJobAsync(long id, string descrizione,long workId,long parentId)
         {
-            var entity = await gaProgettiJobsRepo.GetWithFilterAsync(x => x.Title == descrizione && x.Id != id);
+            var entity = await gaProgettiJobsRepo.GetWithFilterAsync(x => x.Title == descrizione && x.ProgettiWorkId==workId && x.ParentId== parentId && x.Id != id);
 
             if (entity.Data.Count > 0)
             {
@@ -354,6 +359,57 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
 
         }
+        #endregion
+
+        #endregion
+
+        #region ProgettiJobAllegati
+        public async Task<ProgettiJobAllegatiDto> GetGaProgettiJobAllegatiByJobIdAsync(long jobId)
+        {
+            var entities = await gaProgettiJobAllegatiRepo.GetWithFilterAsync(x => x.ProgettiJobId == jobId);
+            var dtos = entities.ToDto<ProgettiJobAllegatiDto, PagedList<ProgettiJobAllegato>>();
+            return dtos;
+        }
+
+        public async Task<ProgettiJobAllegatoDto> GetGaProgettiJobAllegatoByIdAsync(long id)
+        {
+            var entity = await gaProgettiJobAllegatiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ProgettiJobAllegatoDto, ProgettiJobAllegato>();
+            return dto;
+        }
+
+        public async Task<long> AddGaProgettiJobAllegatoAsync(ProgettiJobAllegatoDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobAllegato, ProgettiJobAllegatoDto>();
+            await gaProgettiJobAllegatiRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaProgettiJobAllegatoAsync(ProgettiJobAllegatoDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobAllegato, ProgettiJobAllegatoDto>();
+            gaProgettiJobAllegatiRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaProgettiJobAllegatoAsync(long id)
+        {
+            var entity = await gaProgettiJobAllegatiRepo.GetByIdAsync(id);
+            gaProgettiJobAllegatiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+
         #endregion
 
         #endregion

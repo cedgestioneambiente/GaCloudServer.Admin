@@ -43,4 +43,34 @@ namespace GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti
     {
     }
     #endregion
+
+    #region ProgettiJobAllegati
+    public class ProgettiJobAllegatoApiDto : GenericFileApiDto
+    {
+        public string Descrizione { get; set; }
+        public long ProgettiJobId { get; set; }
+
+    }
+
+    public class ProgettiJobAllegatiApiDto : GenericPagedListApiDto<ProgettiJobAllegatoApiDto>
+    {
+    }
+    #endregion
+
+    #region ProgettiWorkSettings
+    public class ProgettiWorkSettingApiDto : GenericApiDto
+    {
+        public long ProgettiWorkId { get; set; }
+        public string UserId { get; set; }
+        public bool AddJobNotification { get; set; }
+        public bool UpdateJobNotification { get; set; }
+        public bool DeleteJobNotification { get; set; }
+        public bool WorkStatusMail { get; set; }
+
+    }
+
+    public class ProgettiWorkSettingsApiDto : GenericPagedListApiDto<ProgettiWorkSettingApiDto>
+    {
+    }
+    #endregion
 }
