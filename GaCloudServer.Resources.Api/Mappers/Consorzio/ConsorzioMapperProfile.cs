@@ -84,6 +84,7 @@ namespace GaCloudServer.Resources.Api.Mappers.Consorzio
 
             CreateMap<ConsorzioImportsTasksDto, ConsorzioImportsTasksApiDto>(MemberList.Destination)
                 .ReverseMap();
+
         }
     }
 }

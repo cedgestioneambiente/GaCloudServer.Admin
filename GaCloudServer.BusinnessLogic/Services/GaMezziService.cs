@@ -686,16 +686,16 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<bool> ChangeStatusGaMezziVeicoloAsync(long id)
         {
             var entity = await gaMezziVeicoliRepo.GetByIdAsync(id);
-            if (entity.Disabled)
+            if (entity.Dismesso)
             {
-                entity.Disabled = false;
+                entity.Dismesso = false;
                 gaMezziVeicoliRepo.Update(entity);
                 await SaveChanges();
                 return true;
             }
             else
             {
-                entity.Disabled = true;
+                entity.Dismesso = true;
                 gaMezziVeicoliRepo.Update(entity);
                 await SaveChanges();
                 return true;
@@ -707,7 +707,13 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Views
         public async Task<PagedList<ViewGaMezziVeicoli>> GetViewGaMezziVeicoliAsync(bool all = true)
         {
-            var entities = all ? await viewGaMezziVeicoliRepo.GetAllAsync(1, 0) : await viewGaMezziVeicoliRepo.GetWithFilterAsync(x => x.Disabled == false);
+            var entities = all ? await viewGaMezziVeicoliRepo.GetAllAsync(1, 0) : await viewGaMezziVeicoliRepo.GetWithFilterAsync(x => x.Dismesso == false);
+            return entities;
+        }
+
+        public async Task<PagedList<ViewGaMezziVeicoli>> GetViewGaMezziVeicoliDismessiAsync(bool all = true)
+        {
+            var entities = all ? await viewGaMezziVeicoliRepo.GetAllAsync(1, 0) : await viewGaMezziVeicoliRepo.GetWithFilterAsync(x => x.Dismesso == true);
             return entities;
         }
         #endregion

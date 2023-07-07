@@ -40,7 +40,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region EcSegnalazioniDocumentiImmagini
-        Task<SegnalazioniDocumentiImmaginiDto> GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId);
+        Task<SegnalazioniDocumentiImmaginiDto> GetEcSegnalazioniDocumentoImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId);
 
         Task<long> AddEcSegnalazioniDocumentoImmagineAsync(SegnalazioniDocumentoImmagineDto dto);
         //Task<long> UpdateEcSegnalazioniAllegatoAsync(SegnalazioniAllegatoDto dto);
@@ -68,10 +68,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Views
-        Task<ViewEcSegnalazioniDocumenti> GetViewEcSegnalazioniDocumentoByIdAsync(long id);
+        Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentoByIdAsync(long id);
         Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(bool all = true);
-        Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "Ec-s-administrator");
-        Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "Ec-s-administrator", int page = 1, int pageSize = 100);
+        Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ec-s-administrator");
+        Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(SegnalazioniDocumentiMode mode, string userId = "ec-s-administrator", int page = 1, int pageSize = 100);
         #endregion
         #endregion
     }

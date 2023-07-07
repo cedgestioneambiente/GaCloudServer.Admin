@@ -1176,6 +1176,22 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetViewGaMezziVeicoliDismessiAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaMezziVeicoliDismessiAsync(bool all = true)
+        {
+            try
+            {
+                var view = await _gaMezziService.GetViewGaMezziVeicoliDismessiAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #endregion
@@ -1373,6 +1389,32 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(ex.Message);
             }
 
+        }
+
+        [HttpGet("ExportGaMezziScadenzeVeicoli")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaMezziScadenzeVeicoli()
+        {
+
+            try
+            {
+                var entities = _gaMezziService.GetViewGaMezziScadenzeAsync().Result.Data;
+                string title = "Lista Mezzi";
+                string[] columns = { "Id", "Targa", "Cantiere", "TipoScadenza", "DataUltimaScadenza", "DataScadenza","Note",
+                    "Stato","Dismesso"  };
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "SCADENZIARIO_MEZZI", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Lista_Scadenze_Mezzi.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
         }
         #endregion
 

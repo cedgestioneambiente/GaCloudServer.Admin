@@ -164,6 +164,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
     }
 
     #endregion
+
 }
 
 

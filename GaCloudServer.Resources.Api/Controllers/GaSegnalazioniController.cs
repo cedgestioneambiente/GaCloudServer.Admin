@@ -504,6 +504,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region SegnalazioniDocumentiImmagini
+
         [HttpGet("GetGaSegnalazioniDocumentoImmaginiByDocumentoIdAsync/{segnalazioniDocumentoId}")]
         public async Task<ActionResult<ApiResponse>> GetGaSegnalazioniDocumentoImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId)
         {
@@ -521,7 +522,6 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-
         [HttpPost("AddGaSegnalazioniDocumentoImmagineAsync")]
         public async Task<ActionResult<ApiResponse>> AddGaSegnalazioniDocumentoImmagineAsync([FromBody] ImageItemApiDto apiDto)
         {
@@ -538,7 +538,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             dto.Id = 0;
             dto.SegnalazioniDocumentoId = apiDto.id;
             dto.FileFolder = fileFolder;
-            dto.FileId=fileUploadResponse.id;
+            dto.FileId = fileUploadResponse.id;
             dto.FileName = generatedFileName;
             dto.FileSize = fileUploadResponse.fileSize;
             dto.FileType = "";
