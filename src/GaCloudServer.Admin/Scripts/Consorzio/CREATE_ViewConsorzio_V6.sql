@@ -13,7 +13,7 @@ GO
 
 CREATE VIEW [dbo].[ViewConsorzioImportsTasks]
 AS
-SELECT        dbo.ConsorzioImportsTasks.Id, dbo.ConsorzioImportsTasks.TaskId, dbo.ConsorzioImportsTasks.DateStart, dbo.ConsorzioImportsTasks.DateEnd, dbo.ConsorzioImportsTasks.Completed, dbo.ConsorzioImportsTasks.Error, 
+SELECT        dbo.ConsorzioImportsTasks.Id, dbo.ConsorzioImportsTasks.TaskId, dbo.ConsorzioImportsTasks.DateStart, dbo.ConsorzioImportsTasks.DateEnd, dbo.ConsorzioImportsTasks.Completed, dbo.ConsorzioImportsTasks.Error, (Error + Completed) AS Totale,
                          dbo.ConsorzioImportsTasks.FileId, dbo.PrivateViewIdentityServerAdminUserList.FullName, CASE WHEN DateEnd <= DateStart THEN 'ND' ELSE CONCAT(DATEDIFF(minute, dbo.ConsorzioImportsTasks.DateStart,dbo.ConsorzioImportsTasks.DateEnd),' minuti') END AS DurataMinuti,
 						 CASE WHEN Error <= 0 THEN 'V' ELSE 'R' END AS Successo, dbo.ConsorzioImportsTasks.Disabled,
 						 CASE WHEN DateEnd <= DateStart THEN 'ND' ELSE CONCAT(DATEDIFF(second, dbo.ConsorzioImportsTasks.DateStart,dbo.ConsorzioImportsTasks.DateEnd),' secondi') END AS DurataSecondi

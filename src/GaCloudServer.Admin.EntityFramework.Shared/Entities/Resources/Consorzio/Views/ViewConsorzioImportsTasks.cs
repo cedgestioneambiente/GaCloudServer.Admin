@@ -10,6 +10,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
         public DateTime DateEnd { get; set; }
         public int Completed { get; set; }
         public int Error { get; set; }
+        public int Totale { get; set; }
         public string DurataMinuti { get; set; }
         public string DurataSecondi { get; set; }
         public string Successo { get; set; }
