@@ -187,12 +187,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("DuplicateConsorzioCerAsync")]
-        public async Task<ApiResponse> DuplicateConsorzioCerAsync([FromBody] ConsorzioDuplicateCersApiDto apiDto)
+        [HttpGet("DuplicateConsorzioCerAsync/{id}")]
+        public async Task<ApiResponse> DuplicateConsorzioCerAsync(long id)
         {
             try
             {
-                var entities = await _consorzioService.DuplicateConsorzioCerAsync(apiDto.cerId);
+                var entities = await _consorzioService.DuplicateConsorzioCerAsync(id);
                 return new ApiResponse(entities);
             }
             catch (Exception ex)
@@ -2723,6 +2723,27 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #endregion
+
+
+        #region Views
+        [HttpGet("GetViewConsorzioImportsTasksAsync/{all}")]
+        public async Task<ActionResult<ApiResponse>> GetViewConsorzioImportsTasksAsync(bool all = true)
+        {
+            try
+            {
+                var view = await _consorzioService.GetViewConsorzioImportsTasksAsync(all);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #endregion
+
 
         #endregion
     }

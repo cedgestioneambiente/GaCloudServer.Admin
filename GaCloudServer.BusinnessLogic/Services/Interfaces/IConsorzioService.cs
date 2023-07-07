@@ -19,7 +19,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateConsorzioCerAsync(long id, string codice, string codiceRaggruppamento);
         Task<bool> ChangeStatusConsorzioCerAsync(long id);
-        Task<bool> DuplicateConsorzioCerAsync(long[] cerId);
+        Task<bool> DuplicateConsorzioCerAsync(long id);
         #endregion
 
         #region Views
@@ -208,6 +208,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         Task<long> AddConsorzioImportTaskAsync(ConsorzioImportTaskDto dto);
         Task<long> UpdateConsorzioImportTaskAsync(ConsorzioImportTaskDto dto);
+
+        #region Views
+        Task<PagedList<ViewConsorzioImportsTasks>> GetViewConsorzioImportsTasksAsync(bool all = true);
+        #endregion
 
         #endregion
     }

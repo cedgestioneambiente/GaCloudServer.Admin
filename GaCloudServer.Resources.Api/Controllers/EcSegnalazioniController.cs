@@ -19,7 +19,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
     public class EcSegnalazioniController : Controller
     {
         private readonly IEcSegnalazioniService _ecSegnalazioniService;
@@ -317,12 +317,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #region SegnalazioniDocumentiImmagini
 
-        [HttpGet("GetEcSegnalazioniDocumentiImmaginiByDocumentoId/{segnalazioniDocumentoId}")]
-        public async Task<ActionResult<ApiResponse>> GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId)
+        [HttpGet("GetEcSegnalazioniDocumentoImmaginiByDocumentoIdAsync/{segnalazioniDocumentoId}")]
+        public async Task<ActionResult<ApiResponse>> GetEcSegnalazioniDocumentoImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId)
         {
             try
             {
-                var dto = await _ecSegnalazioniService.GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(segnalazioniDocumentoId);
+                var dto = await _ecSegnalazioniService.GetEcSegnalazioniDocumentoImmaginiByDocumentoIdAsync(segnalazioniDocumentoId);
                 var apiDto = dto.ToApiDto<SegnalazioniDocumentiImmaginiApiDto, SegnalazioniDocumentiImmaginiDto>();
                 return new ApiResponse(apiDto);
             }
@@ -501,23 +501,23 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var view = await _ecSegnalazioniService.GetViewEcSegnalazioniDocumentoByIdAsync(id);
-                var immagini = await _ecSegnalazioniService.GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(id);
-                SegnalazioniDocumentoTemplateDto dto = new SegnalazioniDocumentoTemplateDto();
-                dto.FileName = "SegnalazioniDocumento.pdf";
-                dto.FilePath = @"Print/Segnalazione";
-                dto.Title = "Segnalazione";
-                dto.Css = "SegnalazioniDocumento";
+                var immagini = await _ecSegnalazioniService.GetEcSegnalazioniDocumentoImmaginiByDocumentoIdAsync(id);
+                EcSegnalazioniDocumentoTemplateDto dto = new EcSegnalazioniDocumentoTemplateDto();
+                dto.FileName = "EcSegnalazioniDocumento.pdf";
+                dto.FilePath = @"Print/EcSegnalazione";
+                dto.Title = "EcSegnalazione";
+                dto.Css = "EcSegnalazioniDocumento";
 
-                //dto.Numero = view.Data.FirstOrDefault().Id.ToString();
-                //dto.Data = view.Data.FirstOrDefault().DataOra;
-                //dto.Note = view.Data.FirstOrDefault().Note;
-                //dto.User = view.Data.FirstOrDefault().User;
-                //dto.Tipo = view.Data.FirstOrDefault().Tipo;
+                dto.Numero = view.Data.FirstOrDefault().Id.ToString();
+                dto.Data = view.Data.FirstOrDefault().DataOra;
+                dto.Note = view.Data.FirstOrDefault().Note;
+                dto.User = view.Data.FirstOrDefault().User;
+                dto.Tipo = view.Data.FirstOrDefault().Tipo;
 
                 dto.Immagini = (from x in immagini.Data
                                 select x.FileId).ToList();
 
-                var response = await _printService.Print("SegnalazioniDocumento", dto);
+                var response = await _printService.Print("EcSegnalazioniDocumento", dto);
                 return new ApiResponse(response);
 
             }

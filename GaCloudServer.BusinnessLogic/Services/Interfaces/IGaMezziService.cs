@@ -139,6 +139,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         Task<PagedList<ViewGaMezziVeicoli>> GetViewGaMezziVeicoliAsync(bool all = true);
+        Task<PagedList<ViewGaMezziVeicoli>> GetViewGaMezziVeicoliDismessiAsync(bool all = true);
         #endregion
         #endregion
 

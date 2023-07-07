@@ -467,6 +467,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewConsorzioTrasportatori> ViewConsorzioTrasportatori { get; set; }
         DbSet<ViewConsorzioRegistrazioni> ViewConsorzioRegistrazioni { get; set; }
         DbSet<ViewConsorzioComuni> ViewConsorzioComuni { get; set; }
+        DbSet<ViewConsorzioImportsTasks> ViewConsorzioImportsTasks { get; set; }
         #endregion
 
         #endregion
