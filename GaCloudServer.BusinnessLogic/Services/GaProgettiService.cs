@@ -18,6 +18,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ProgettiWork> gaProgettiWorksRepo;
         protected readonly IGenericRepository<ProgettiJob> gaProgettiJobsRepo;
         protected readonly IGenericRepository<ProgettiJobAllegato> gaProgettiJobAllegatiRepo;
+        protected readonly IGenericRepository<ProgettiWorkSetting> gaProgettiWorkSettingsRepo;
 
         protected readonly IGenericRepository<ViewGaProgettiJobs> viewGaProgettiJobsRepo;
 
@@ -27,6 +28,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ProgettiWork> gaProgettiWorksRepo,
             IGenericRepository<ProgettiJob> gaProgettiJobsRepo,
             IGenericRepository<ProgettiJobAllegato> gaProgettiJobAllegatiRepo,
+            IGenericRepository<ProgettiWorkSetting> gaProgettiWorkSettingsRepo,
 
             IGenericRepository<ViewGaProgettiJobs> viewGaProgettiJobsRepo,
 
@@ -35,6 +37,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaProgettiWorksRepo = gaProgettiWorksRepo;
             this.gaProgettiJobsRepo = gaProgettiJobsRepo;
             this.gaProgettiJobAllegatiRepo = gaProgettiJobAllegatiRepo;
+            this.gaProgettiWorkSettingsRepo = gaProgettiWorkSettingsRepo;
 
             this.viewGaProgettiJobsRepo = viewGaProgettiJobsRepo;
 
@@ -412,6 +415,45 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
+        #endregion
+
+        #region ProgettiWorkSettings
+        public async Task<ProgettiWorkSettingDto> GetGaProgettiWorkSettingByWorkIdAndUserIsAsync(long workId, string userId)
+        {
+            var entities = await gaProgettiWorkSettingsRepo.GetWithFilterAsync(x => x.ProgettiWorkId == workId && x.UserId==userId);
+            var setting = entities.Data.FirstOrDefault();
+            if (setting == null)
+            {
+                var entity = new ProgettiWorkSetting();
+                entity.Id = 0;
+                entity.Disabled = false;
+                entity.ProgettiWorkId = workId;
+                entity.UserId = userId;
+                entity.AddJobNotification = false;
+                entity.UpdateJobNotification = false;
+                entity.DeleteJobNotification = false;
+                await gaProgettiWorkSettingsRepo.AddAsync(entity);
+
+                var dto = entity.ToDto<ProgettiWorkSettingDto, ProgettiWorkSetting>();
+                return dto;
+
+
+            }
+            else { 
+                var dto= setting.ToDto<ProgettiWorkSettingDto, ProgettiWorkSetting>();
+                return dto;
+            }
+
+        }
+        public async Task<long> UpdateGaProgettiWorkSettingAsync(ProgettiWorkSettingDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiWorkSetting, ProgettiWorkSettingDto>();
+            gaProgettiWorkSettingsRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
         #endregion
 
         #region Common

@@ -630,9 +630,55 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        
+
         #endregion
 
+        #endregion
+
+        #region ProgettiWorkSettings
+        [HttpGet("GetGaProgettiWorkSettingByWorkIdAndUserIsAsync/{workId}/{userId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiWorkSettingByWorkIdAndUserIsAsync(long workId, string userId)
+        {
+            try
+            {
+                var dtos = await _gaProgettiService.GetGaProgettiWorkSettingByWorkIdAndUserIsAsync(workId, userId);
+                var apiDtos = dtos.ToApiDto<ProgettiWorkSettingApiDto, ProgettiWorkSettingDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("UpdateGaProgettiWorkSettingAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaProgettiWorkSettingAsync([FromBody] ProgettiWorkSettingApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ProgettiWorkSettingDto, ProgettiWorkSettingApiDto>();
+                var response = await _gaProgettiService.UpdateGaProgettiWorkSettingAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
         #endregion
 
 
