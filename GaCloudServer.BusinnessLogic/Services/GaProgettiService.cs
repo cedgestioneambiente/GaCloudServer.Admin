@@ -9,6 +9,7 @@ using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Http.Metadata;
+using Microsoft.Graph;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -418,7 +419,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region ProgettiWorkSettings
-        public async Task<ProgettiWorkSettingDto> GetGaProgettiWorkSettingByWorkIdAndUserIsAsync(long workId, string userId)
+        public async Task<ProgettiWorkSettingDto> GetGaProgettiWorkSettingByWorkIdAndUserIdAsync(long workId, string userId)
         {
             var entities = await gaProgettiWorkSettingsRepo.GetWithFilterAsync(x => x.ProgettiWorkId == workId && x.UserId==userId);
             var setting = entities.Data.FirstOrDefault();
@@ -443,6 +444,13 @@ namespace GaCloudServer.BusinnessLogic.Services
                 var dto= setting.ToDto<ProgettiWorkSettingDto, ProgettiWorkSetting>();
                 return dto;
             }
+
+        }
+        public async Task<ProgettiWorkSettingsDto> GetGaProgettiWorkSettingsByWorkIdAsync(long workId)
+        {
+            var entities = await gaProgettiWorkSettingsRepo.GetWithFilterAsync(x => x.ProgettiWorkId == workId);
+            var dtos = entities.ToDto<ProgettiWorkSettingsDto, PagedList<ProgettiWorkSetting>>();
+            return dtos;
 
         }
         public async Task<long> UpdateGaProgettiWorkSettingAsync(ProgettiWorkSettingDto dto)

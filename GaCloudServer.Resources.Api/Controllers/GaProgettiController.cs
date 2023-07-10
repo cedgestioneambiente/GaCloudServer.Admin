@@ -5,7 +5,9 @@ using GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -16,20 +18,23 @@ namespace GaCloudServer.Resources.Api.Controllers
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
     [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
-    public class GaProgettiController : Controller
+    public class GaProgettiController<TUser, TKey> : Controller
+        where TUser : IdentityUser<TKey>, new()
+        where TKey : IEquatable<TKey>
     {
         private readonly IGaProgettiService _gaProgettiService;
         private readonly INotificationService _notificationService;
         private readonly IMailService _mailService;
         private readonly IFileService _fileService;
-        private readonly ILogger<GaProgettiController> _logger;
+        private readonly ILogger<GaProgettiController<TUser,TKey>> _logger;
 
         public GaProgettiController(
-            IGaProgettiService gaProgettiService,
-            INotificationService notificationService,
-            IMailService mailService
+            IGaProgettiService gaProgettiService
+            , INotificationService notificationService
+            , IMailService mailService
             , IFileService fileService
-            , ILogger<GaProgettiController> logger)
+            , ILogger<GaProgettiController<TUser,TKey>> logger
+            )
         {
 
             _gaProgettiService = gaProgettiService;
@@ -278,6 +283,16 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var dto = apiDto.ToDto<ProgettiJobDto, ProgettiJobApiDto>();
                 var response = await _gaProgettiService.AddGaProgettiJobAsync(dto);
 
+                var work = await _gaProgettiService.GetGaProgettiWorkByIdAsync(dto.ProgettiWorkId);
+                var settings = await _gaProgettiService.GetGaProgettiWorkSettingsByWorkIdAsync(dto.ProgettiWorkId);
+                var user = User.Claims.Where(x => x.Type == "sub").FirstOrDefault().Value;
+                string link = "/progetti/calendar/progetti-works-gantt-calendar";
+
+                foreach (var setting in settings.Data.Where(x => x.UserId != user && x.AddJobNotification == true))
+                {
+                    await _notificationService.CreateNotificationAsync("Nuovo Task", string.Format("È stato aggiunto il task [{0}] all'area di lavoro [{1}]",apiDto.Title, work.Descrizione), null, setting.UserId, "Progetti", link, true);
+                }
+
                 return new ApiResponse(response);
             }
             catch (ApiProblemDetailsException ex)
@@ -305,6 +320,16 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var dto = apiDto.ToDto<ProgettiJobDto, ProgettiJobApiDto>();
                 var response = await _gaProgettiService.UpdateGaProgettiJobAsync(dto);
 
+                var work = await _gaProgettiService.GetGaProgettiWorkByIdAsync(dto.ProgettiWorkId);
+                var settings = await _gaProgettiService.GetGaProgettiWorkSettingsByWorkIdAsync(dto.ProgettiWorkId);
+                var user = User.Claims.Where(x => x.Type == "sub").FirstOrDefault().Value;
+                string link = "/progetti/calendar/progetti-works-gantt-calendar";
+
+                foreach (var setting in settings.Data.Where(x => x.UserId != user && x.UpdateJobNotification == true))
+                {
+                    await _notificationService.CreateNotificationAsync("Task Aggiornato", string.Format("È stato aggiornato il task [{0}] nell'area di lavoro [{1}]", apiDto.Title, work.Descrizione), null, setting.UserId, "Progetti", link, true);
+                }
+
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -320,7 +345,18 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
+                var dto = await _gaProgettiService.GetGaProgettiJobByIdAsync(id);
                 var response = await _gaProgettiService.DeleteGaProgettiJobAsync(id);
+
+                var work = await _gaProgettiService.GetGaProgettiWorkByIdAsync(dto.ProgettiWorkId);
+                var settings = await _gaProgettiService.GetGaProgettiWorkSettingsByWorkIdAsync(dto.ProgettiWorkId);
+                var user = User.Claims.Where(x => x.Type == "sub").FirstOrDefault().Value;
+                string link = "/progetti/calendar/progetti-works-gantt-calendar";
+
+                foreach (var setting in settings.Data.Where(x => x.UserId != user && x.AddJobNotification == true))
+                {
+                    await _notificationService.CreateNotificationAsync("Task Eliminato", string.Format("È stato eliminato il task [{0}] all'area di lavoro [{1}]", dto.Title, work.Descrizione), null, setting.UserId, "Progetti", link, true);
+                }
 
                 return new ApiResponse(response);
             }
@@ -636,13 +672,30 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region ProgettiWorkSettings
-        [HttpGet("GetGaProgettiWorkSettingByWorkIdAndUserIsAsync/{workId}/{userId}")]
-        public async Task<ActionResult<ApiResponse>> GetGaProgettiWorkSettingByWorkIdAndUserIsAsync(long workId, string userId)
+        [HttpGet("GetGaProgettiWorkSettingByWorkIdAndUserIdAsync/{workId}/{userId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiWorkSettingByWorkIdAndUserIdAsync(long workId, string userId)
         {
             try
             {
-                var dtos = await _gaProgettiService.GetGaProgettiWorkSettingByWorkIdAndUserIsAsync(workId, userId);
+                var dtos = await _gaProgettiService.GetGaProgettiWorkSettingByWorkIdAndUserIdAsync(workId, userId);
                 var apiDtos = dtos.ToApiDto<ProgettiWorkSettingApiDto, ProgettiWorkSettingDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaProgettiWorkSettingsByWorkIdAsync/{workId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiWorkSettingsByWorkIdAsync(long workId)
+        {
+            try
+            {
+                var dtos = await _gaProgettiService.GetGaProgettiWorkSettingsByWorkIdAsync(workId);
+                var apiDtos = dtos.ToApiDto<ProgettiWorkSettingsApiDto, ProgettiWorkSettingsDto>();
                 return new ApiResponse(apiDtos);
             }
             catch (Exception ex)

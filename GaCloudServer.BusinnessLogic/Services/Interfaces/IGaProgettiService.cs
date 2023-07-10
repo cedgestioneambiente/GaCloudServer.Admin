@@ -67,7 +67,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region GaProgettiWorkSettings
-        Task<ProgettiWorkSettingDto> GetGaProgettiWorkSettingByWorkIdAndUserIsAsync(long workId, string userId);
+        Task<ProgettiWorkSettingDto> GetGaProgettiWorkSettingByWorkIdAndUserIdAsync(long workId, string userId);
+        Task<ProgettiWorkSettingsDto> GetGaProgettiWorkSettingsByWorkIdAsync(long workId);
         Task<long> UpdateGaProgettiWorkSettingAsync(ProgettiWorkSettingDto dto);
 
         #endregion
