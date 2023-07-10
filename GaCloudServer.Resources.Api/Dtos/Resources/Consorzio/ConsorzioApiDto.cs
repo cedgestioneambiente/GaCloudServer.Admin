@@ -209,8 +209,4 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
         public bool Imported { get; set; }
     }
 
-    public class ConsorzioDuplicateCersApiDto
-    {
-        public long[] cerId { get; set; }
-    }
 }

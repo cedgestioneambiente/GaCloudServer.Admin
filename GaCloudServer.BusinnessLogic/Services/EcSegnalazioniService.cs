@@ -208,7 +208,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    return dtos;
         //}
 
-        public async Task<SegnalazioniDocumentiImmaginiDto> GetEcSegnalazioniDocumentiImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId)
+        public async Task<SegnalazioniDocumentiImmaginiDto> GetEcSegnalazioniDocumentoImmaginiByDocumentoIdAsync(long segnalazioniDocumentoId)
         {
             var entity = await ecSegnalazioniDocumentiImmaginiRepo.GetWithFilterAsync(x => x.SegnalazioniDocumentoId == segnalazioniDocumentoId);
             var dto = entity.ToDto<SegnalazioniDocumentiImmaginiDto, PagedList<EcSegnalazioniDocumentoImmagine>>();
@@ -336,11 +336,18 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
-        public async Task<ViewEcSegnalazioniDocumenti> GetViewEcSegnalazioniDocumentoByIdAsync(long id)
-        {
-            var entity = await viewEcSegnalazioniDocumentiRepo.GetByIdAsync(id);
 
-            return entity;
+        public async Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentoByIdAsync(long id)
+        {
+            try
+            {
+                return await viewEcSegnalazioniDocumentiRepo.GetWithFilterAsync(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
         }
 
         public async Task<PagedList<ViewEcSegnalazioniDocumenti>> GetViewEcSegnalazioniDocumentiAsync(bool all = true)

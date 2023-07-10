@@ -29,6 +29,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewConsorzioTrasportatori> viewConsorzioTrasportatoriRepo;
         protected readonly IGenericRepository<ViewConsorzioRegistrazioni> viewConsorzioRegistrazioniRepo;
         protected readonly IGenericRepository<ViewConsorzioComuni> viewConsorzioComuniRepo;
+        protected readonly IGenericRepository<ViewConsorzioImportsTasks> viewConsorzioImportsTasksRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -52,6 +53,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewConsorzioTrasportatori> viewConsorzioTrasportatoriRepo,
             IGenericRepository<ViewConsorzioRegistrazioni> viewConsorzioRegistrazioniRepo,
             IGenericRepository<ViewConsorzioComuni> viewConsorzioComuniRepo,
+            IGenericRepository<ViewConsorzioImportsTasks> viewConsorzioImportsTasksRepo,
 
             IUnitOfWork unitOfWork)
         {
@@ -73,6 +75,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewConsorzioTrasportatoriRepo = viewConsorzioTrasportatoriRepo;
             this.viewConsorzioComuniRepo = viewConsorzioComuniRepo;
             this.viewConsorzioRegistrazioniRepo = viewConsorzioRegistrazioniRepo;
+            this.viewConsorzioImportsTasksRepo = viewConsorzioImportsTasksRepo;
 
 
             this.unitOfWork = unitOfWork;
@@ -156,19 +159,19 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
-        public async Task<bool> DuplicateConsorzioCerAsync(long[] cerId)
+        public async Task<bool> DuplicateConsorzioCerAsync(long id)
         {
             try
             {
-                foreach (var itm in cerId)
-                {
-                    var entity = consorzioCersRepo.GetByIdAsNoTraking(x => x.Id == itm);
-                    entity.Id = 0;
-                    consorzioCersRepo.Add(entity);
+                var original = consorzioCersRepo.GetByIdAsNoTraking(x => x.Id == id);
+                var entity = original;
+                entity.Id = 0;
+                entity.CodiceRaggruppamento = "Cer Duplicato";
 
-                }
 
+                await consorzioCersRepo.AddAsync(entity);
                 await SaveChanges();
+
                 return true;
             }
             catch (Exception ex)
@@ -178,6 +181,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
         #endregion
 
         #region Views
@@ -1156,6 +1160,15 @@ namespace GaCloudServer.BusinnessLogic.Services
 
            
         }
+
+        #region Views
+        public async Task<PagedList<ViewConsorzioImportsTasks>> GetViewConsorzioImportsTasksAsync(bool all = true)
+        {
+            var entities = all ? await viewConsorzioImportsTasksRepo.GetAllAsync(1, 0) : await viewConsorzioImportsTasksRepo.GetWithFilterAsync(x => x.Disabled == false);
+            return entities;
+        }
+        #endregion
+
 
         #endregion
 
