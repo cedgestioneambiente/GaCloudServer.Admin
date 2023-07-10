@@ -2207,6 +2207,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var listOp = await _consorzioService.GetConsorzioOperazioniAsync(1, 0);
                 var listComuni = await _consorzioService.GetConsorzioComuniAsync(1, 0);
 
+
                 List<string> errorList = new List<string>();
                 List<string> operationList = new List<string>();
 
@@ -2229,18 +2230,23 @@ namespace GaCloudServer.Resources.Api.Controllers
 
 
                         var checkCer = listCer.Data.Where(x => x.Codice == dto.CER && gh.ConvertNullToString(x.CodiceRaggruppamento) == dto.RAGGRUPPAMENTO_CER).Count();
-                        var checkProd = listProd.Data.Where(x => x.Descrizione == dto.PRODUTTORE_RAGSO 
-                        && x.Indirizzo == dto.PRODUTTORE_INDIRIZZO 
-                        && x.CfPiva==dto.PRODUTTORE_CFPIVA
-                        && x.ConsorzioComuneId==comuneProd.Id).Count();
+
+                        var checkProd = listProd.Data.Where(x => x.Descrizione == dto.PRODUTTORE_RAGSO
+                        && x.Indirizzo == dto.PRODUTTORE_INDIRIZZO
+                        && x.CfPiva == dto.PRODUTTORE_CFPIVA
+                        && x.ConsorzioComuneId == comuneProd.Id).Count();
+
                         var checkDest = listDest.Data.Where(x => x.Descrizione == dto.DESTINATARIO_RAGSO
                         && x.Indirizzo == dto.DESTINATARIO_INDIRIZZO
                         && x.CfPiva == dto.DESTINATARIO_CFPIVA
                         && x.ConsorzioComuneId == comuneDest.Id).Count();
+
+
                         var checkTrasp = listTrasp.Data.Where(x => x.Descrizione == dto.TRASPORTATORE_RAGSO
                         && x.Indirizzo == dto.TRASPORTATORE_INDIRIZZO
                         && x.CfPiva == dto.TRASPORTATORE_CFPIVA
                         && x.ConsorzioComuneId == comuneTrasp.Id).Count();
+
                         var checkPeriodi = listPeriodi.Data.Where(x => x.Id == dto.PERIODO).Count();
                         var checkOp = listOp.Data.Where(x => x.Descrizione == dto.OPERAZIONE).Count();
                         var checkPeso = dto.PESO_KG > 0 ? true : false;
@@ -2254,91 +2260,116 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         if (checkProd == 0)
                         {
-                            try
+                            if (comuneProd != null)
                             {
-                                var soggetto = new ConsorzioProduttoreDto();
-                                soggetto.Id = 0;
-                                soggetto.Disabled = false;
-                                soggetto.Descrizione = dto.PRODUTTORE_RAGSO;
-                                soggetto.Indirizzo = dto.PRODUTTORE_INDIRIZZO;
-                                soggetto.ConsorzioComuneId = comuneProd.Id;
-                                soggetto.CfPiva = dto.PRODUTTORE_CFPIVA;
-
-                                var responseSoggetto = await _consorzioService.AddConsorzioProduttoreAsync(soggetto);
-                                if (responseSoggetto <= 0)
+                                try
                                 {
-                                    
+                                    var soggetto = new ConsorzioProduttoreDto();
+                                    soggetto.Id = 0;
+                                    soggetto.Disabled = false;
+                                    soggetto.Descrizione = dto.PRODUTTORE_RAGSO;
+                                    soggetto.Indirizzo = dto.PRODUTTORE_INDIRIZZO;
+                                    soggetto.ConsorzioComuneId = comuneProd.Id;
+                                    soggetto.CfPiva = dto.PRODUTTORE_CFPIVA;
+
+                                    var responseSoggetto = await _consorzioService.AddConsorzioProduttoreAsync(soggetto);
+                                    if (responseSoggetto <= 0)
+                                    {
+
+                                        errorList.Add("Produttore non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
+                                    }
+                                    else
+                                    {
+                                        listProd = await _consorzioService.GetConsorzioProduttoriAsync(1, 0);
+                                        operationList.Add("Il Produttore non presente sul database è stato aggiunto automaticamente. ");
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
                                     errorList.Add("Produttore non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
                                 }
-                                else
-                                {
-                                    listProd = await _consorzioService.GetConsorzioProduttoriAsync(1, 0);
-                                    operationList.Add("Il Produttore non presente sul database è stato aggiunto automaticamente. ");
-                                }
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                errorList.Add("Produttore non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
+                                errorList.Add("Il comune del produttore non esiste sul database, non è possibile effettuare l'inserimento automatico.");
                             }
+
+                            
                         }
 
                         if (checkDest == 0)
                         {
-                            try
+                            if (comuneDest != null)
                             {
-                                var soggetto = new ConsorzioDestinatarioDto();
-                                soggetto.Id = 0;
-                                soggetto.Disabled = false;
-                                soggetto.Descrizione = dto.DESTINATARIO_RAGSO;
-                                soggetto.Indirizzo = dto.DESTINATARIO_INDIRIZZO;
-                                soggetto.ConsorzioComuneId = comuneDest.Id;
-                                soggetto.CfPiva = dto.DESTINATARIO_CFPIVA;
-
-                                var responseSoggetto = await _consorzioService.AddConsorzioDestinatarioAsync(soggetto);
-                                if (responseSoggetto <= 0)
+                                try
                                 {
-                                    
+                                    var soggetto = new ConsorzioDestinatarioDto();
+                                    soggetto.Id = 0;
+                                    soggetto.Disabled = false;
+                                    soggetto.Descrizione = dto.DESTINATARIO_RAGSO;
+                                    soggetto.Indirizzo = dto.DESTINATARIO_INDIRIZZO;
+                                    soggetto.ConsorzioComuneId = comuneDest.Id;
+                                    soggetto.CfPiva = dto.DESTINATARIO_CFPIVA;
+
+                                    var responseSoggetto = await _consorzioService.AddConsorzioDestinatarioAsync(soggetto);
+                                    if (responseSoggetto <= 0)
+                                    {
+
+                                        errorList.Add("Destinatario non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
+                                    }
+                                    else
+                                    {
+                                        listDest = await _consorzioService.GetConsorzioDestinatariAsync(1, 0);
+                                        operationList.Add("Il Destinatario non presente sul database è stato aggiunto automaticamente. ");
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
                                     errorList.Add("Destinatario non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
                                 }
-                                else
-                                {
-                                    listDest = await _consorzioService.GetConsorzioDestinatariAsync(1, 0);
-                                    operationList.Add("Il Destinatario non presente sul database è stato aggiunto automaticamente. ");
-                                }
+
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                errorList.Add("Destinatario non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
+                                errorList.Add("Il comune del destinatario non esiste sul database, non è possibile effettuare l'inserimento automatico.");
                             }
+                            
                         }
 
                         if (checkTrasp == 0)
                         {
-                            try
+                            if (comuneTrasp != null)
                             {
-                                var soggetto = new ConsorzioTrasportatoreDto();
-                                soggetto.Id = 0;
-                                soggetto.Disabled = false;
-                                soggetto.Descrizione = dto.TRASPORTATORE_RAGSO;
-                                soggetto.Indirizzo = dto.TRASPORTATORE_INDIRIZZO;
-                                soggetto.ConsorzioComuneId = comuneTrasp.Id;
-                                soggetto.CfPiva = dto.TRASPORTATORE_CFPIVA;
-
-                                var responseSoggetto = await _consorzioService.AddConsorzioTrasportatoreAsync(soggetto);
-                                if (responseSoggetto <= 0)
+                                try
                                 {
-                                    
+                                    var soggetto = new ConsorzioTrasportatoreDto();
+                                    soggetto.Id = 0;
+                                    soggetto.Disabled = false;
+                                    soggetto.Descrizione = dto.TRASPORTATORE_RAGSO;
+                                    soggetto.Indirizzo = dto.TRASPORTATORE_INDIRIZZO;
+                                    soggetto.ConsorzioComuneId = comuneTrasp.Id;
+                                    soggetto.CfPiva = dto.TRASPORTATORE_CFPIVA;
+
+                                    var responseSoggetto = await _consorzioService.AddConsorzioTrasportatoreAsync(soggetto);
+                                    if (responseSoggetto <= 0)
+                                    {
+
+                                        errorList.Add("Trasportatore non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
+                                    }
+                                    else
+                                    {
+                                        listTrasp = await _consorzioService.GetConsorzioTrasportatoriAsync(1, 0);
+                                        operationList.Add("Il Trasportatore non presente sul database è stato aggiunto automaticamente. ");
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
                                     errorList.Add("Trasportatore non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
                                 }
-                                else
-                                {
-                                    listTrasp = await _consorzioService.GetConsorzioTrasportatoriAsync(1, 0);
-                                    operationList.Add("Il Trasportatore non presente sul database è stato aggiunto automaticamente. ");
-                                }
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                errorList.Add("Trasportatore non presente sul database. Si è verificato un errore durante il tentativo di inserimento automatico.");
+                                errorList.Add("Il comune del trasportatore non esiste sul database, non è possibile effettuare l'inserimento automatico.");
                             }
                         }
 
@@ -2351,6 +2382,10 @@ namespace GaCloudServer.Resources.Api.Controllers
                         {
                             errorList.Add("Operazione non presente sul database.");
                         }
+
+
+
+
 
                         if (!checkPeso)
                         {
