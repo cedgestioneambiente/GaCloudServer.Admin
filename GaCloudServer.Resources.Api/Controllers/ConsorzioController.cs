@@ -1227,9 +1227,16 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                roles = roles == "NaN" ? "0" : roles;
-                var entities = _consorzioService.GetViewConsorzioRegistrazioniByRolesQueryable(filter, roles.Split(","));
-                return new ApiResponse(entities);
+                if (roles != "NaN")
+                {
+                    var entities = _consorzioService.GetViewConsorzioRegistrazioniByRolesQueryable(filter, roles.Split(","));
+                    return new ApiResponse(entities);
+                }
+                else
+                {
+                    return new ApiResponse(null);
+                }
+                
 
             }
             catch (Exception ex)
