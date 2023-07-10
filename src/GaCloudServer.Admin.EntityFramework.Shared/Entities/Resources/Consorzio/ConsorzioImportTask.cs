@@ -1,5 +1,6 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio
 {

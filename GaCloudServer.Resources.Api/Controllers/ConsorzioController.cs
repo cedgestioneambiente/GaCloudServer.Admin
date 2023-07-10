@@ -2224,9 +2224,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                     var item = new ConsorzioImportFileApiDto();
                     if (dto.step1Error == false)
                     {
-                        var comuneProd = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.PRODUTTORE_ISTAT_COMUNE)).FirstOrDefault();
-                        var comuneDest = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.DESTINATARIO_ISTAT_COMUNE)).FirstOrDefault();
-                        var comuneTrasp = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.TRASPORTATORE_ISTAT_COMUNE)).FirstOrDefault();
+                        var comuneProd = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.PRODUTTORE_ISTAT_COMUNE)).FirstOrDefault(new ConsorzioComuneDto());
+                        var comuneDest = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.DESTINATARIO_ISTAT_COMUNE)).FirstOrDefault(new ConsorzioComuneDto());
+                        var comuneTrasp = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.TRASPORTATORE_ISTAT_COMUNE)).FirstOrDefault(new ConsorzioComuneDto());
 
 
                         var checkCer = listCer.Data.Where(x => x.Codice == dto.CER && gh.ConvertNullToString(x.CodiceRaggruppamento) == dto.RAGGRUPPAMENTO_CER).Count();
@@ -2260,7 +2260,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         if (checkProd == 0)
                         {
-                            if (comuneProd != null)
+                            if (comuneProd.Istat != null)
                             {
                                 try
                                 {
@@ -2299,7 +2299,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         if (checkDest == 0)
                         {
-                            if (comuneDest != null)
+                            if (comuneDest.Istat != null)
                             {
                                 try
                                 {
@@ -2338,7 +2338,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         if (checkTrasp == 0)
                         {
-                            if (comuneTrasp != null)
+                            if (comuneTrasp.Istat != null)
                             {
                                 try
                                 {
@@ -2510,7 +2510,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                             registrazioniList.Data.Add(registrazione);
                             itemList.Add(item);
 
-                            if (registrazioniList.Data.Count == 200 || index==dtos.Count())
+                            if (registrazioniList.Data.Count == 200 || index==dtos.Where(x=>x.step1Error==false && x.step2Error==false).Count())
                             {
                                 var store= await _consorzioService.AddRangeConsorzioRegistrazioneAsync(registrazioniList);
                                 foreach (var itm in store.Data)
@@ -2736,6 +2736,38 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var entities = dtos;
+
+
+                string title = "Lista Ticket";
+                string[] columns = { "PRG", "DATA", "CER","RAGGRUPPAMENTO_CER","PESO_KG","OPERAZIONE","PRODUTTORE_RAGSO","PRODUTTORE_INDIRIZZO","PRODUTTORE_CFPIVA",
+                                "PRODUTTORE_ISTAT_COMUNE","DESTINATARIO_RAGSO","DESTINATARIO_INDIRIZZO","DESTINATARIO_CFPIVA","DESTINATARIO_ISTAT_COMUNE"
+                                ,"TRASPORTATORE_RAGSO","TRASPORTATORE_INDIRIZZO","TRASPORTATORE_CFPIVA","TRASPORTATORE_ISTAT_COMUNE"
+                                ,"PERIODO"
+                                ,"step1Error","step2Error","step3Error","ErrorDesc","OperationDesc","Imported"};
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "CONSORZIO_IMPORT_REPORT", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Consorzio_Import_Report.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
+        [HttpGet("ExportConsorzioImportLogByTaskIdAsync/{id}")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportConsorzioImportLogByTaskIdAsync(long id)
+        {
+
+            try
+            {
+                var log = _consorzioService.GetConsorzioImportTaskLogByTaskId(id).Result;
+                List<ConsorzioImportFileApiDto> entities =JsonConvert.DeserializeObject<List<ConsorzioImportFileApiDto>>(log);
 
 
                 string title = "Lista Ticket";

@@ -1161,6 +1161,15 @@ namespace GaCloudServer.BusinnessLogic.Services
            
         }
 
+        #region Functions
+        public async Task<string> GetConsorzioImportTaskLogByTaskId(long id)
+        {
+            var entity = await consorzioImportsTasksRepo.GetByIdAsync(id);
+            var log = entity.Log;
+            return log;
+        }
+        #endregion
+
         #region Views
         public async Task<PagedList<ViewConsorzioImportsTasks>> GetViewConsorzioImportsTasksAsync(bool all = true)
         {
