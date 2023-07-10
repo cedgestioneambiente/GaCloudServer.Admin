@@ -624,17 +624,17 @@ namespace GaCloudServer.BusinnessLogic.Services
                                select x.Data.ToString("dd/MM/yyyy")).Distinct();
 
 
-                if (accessi.Count() == 5)
+                if (accessi.Count() == 4)
                 {
                     return 8;
                 }
 
-                if (accessi.Count() == 6)
+                if (accessi.Count() == 5)
                 {
                     return 9;
                 }
 
-                if (accessi.Count() > 6)
+                if (accessi.Count() >= 6)
                 {
                     return 10;
                 }
@@ -644,17 +644,17 @@ namespace GaCloudServer.BusinnessLogic.Services
                                      select x.Data.ToString("dd/MM/yyyy")).Distinct();
 
 
-                if (accessiUtente.Count() == 5)
+                if (accessiUtente.Count() == 4)
                 {
                     return 11;
                 }
 
-                if (accessiUtente.Count() == 6)
+                if (accessiUtente.Count() == 5)
                 {
                     return 12;
                 }
 
-                if (accessiUtente.Count() > 6)
+                if (accessiUtente.Count() >= 6)
                 {
                     return 13;
                 }

@@ -1335,6 +1335,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try 
             {
+
                 var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.ContactCenter, AppConsts.ContactCenterInfo);
                 var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
 
@@ -1361,7 +1362,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 if (!ticket.Ingombranti)
                 {
-                    var dto = GenerateContactCenterTicketIntTemplate(ticket, dataStampa, "ContactCenterInterventoTicketMail.pdf");
+                    var dto = GenerateContactCenterTicketIntTemplate(ticket, dataStampa, string.Format("Ticket_{0}.pdf",ticket.Id));
 
                     var attachPath = await _printService.Print("ContactCenterTicketInt", dto);
 
@@ -1389,7 +1390,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
                 else
                 {
-                    var dto = GenerateContactCenterTicketIngTemplate(ticket, dataStampa, "ContactCenterIngombrantiTicketMail.pdf");
+                    var dto = GenerateContactCenterTicketIngTemplate(ticket, dataStampa, string.Format( "Ticket_{0}.pdf",ticket.Id));
 
                     var attachPath = await _printService.Print("ContactCenterTicketIng", dto);
                     var result = await _mailService.AddMailJobAsync(new MailJob()

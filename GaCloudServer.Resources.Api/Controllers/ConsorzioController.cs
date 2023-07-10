@@ -1205,23 +1205,6 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-
-        //[HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{produttoriId}")]
-        //public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam(GridOperationsModel filter, string? produttoriId = "0")
-        //{
-        //    try
-        //    {
-        //        produttoriId = produttoriId == "NaN" ? "0" : produttoriId;
-        //        var entities = _consorzioService.GetViewConsorzioRegistrazioniByProduttoreQueryable(filter, produttoriId.Split(",").Select(long.Parse).ToArray());
-        //        return new ApiResponse(entities);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ApiException(ex.Message);
-        //    }
-        //}
-
         [HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{roles}")]
         public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam(GridOperationsModel filter, string? roles = "0")
         {
