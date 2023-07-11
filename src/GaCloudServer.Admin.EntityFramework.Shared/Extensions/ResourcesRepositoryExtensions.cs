@@ -20,6 +20,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
@@ -497,7 +498,25 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Emz
 
             services.AddTransient<IGenericRepository<ViewEmzWhiteList>, GenericRepository<TResourcesDbContext, ViewEmzWhiteList>>();
+            #endregion
+
+            //Dispositivi
+            #region Dispositivi
+
+            services.AddTransient<IGenericRepository<DispositiviCategoria>, GenericRepository<TResourcesDbContext, DispositiviCategoria>>();
+            services.AddTransient<IGenericRepository<DispositiviClasse>, GenericRepository<TResourcesDbContext, DispositiviClasse>>();
+            services.AddTransient<IGenericRepository<DispositiviItem>, GenericRepository<TResourcesDbContext, DispositiviItem>>();
+            services.AddTransient<IGenericRepository<DispositiviMarca>, GenericRepository<TResourcesDbContext, DispositiviMarca>>();
+            services.AddTransient<IGenericRepository<DispositiviModello>, GenericRepository<TResourcesDbContext, DispositiviModello>>();
+            services.AddTransient<IGenericRepository<DispositiviModulo>, GenericRepository<TResourcesDbContext, DispositiviModulo>>();
+            services.AddTransient<IGenericRepository<DispositiviOnDipendente>, GenericRepository<TResourcesDbContext, DispositiviOnDipendente>>();
+            services.AddTransient<IGenericRepository<DispositiviOnModulo>, GenericRepository<TResourcesDbContext, DispositiviOnModulo>>();
+            services.AddTransient<IGenericRepository<DispositiviStock>, GenericRepository<TResourcesDbContext, DispositiviStock>>();
+            services.AddTransient<IGenericRepository<DispositiviTipologia>, GenericRepository<TResourcesDbContext, DispositiviTipologia>>();
+
             # endregion
+
+
 
             return services; 
         }

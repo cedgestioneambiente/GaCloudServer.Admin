@@ -52,6 +52,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -508,6 +509,32 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Views
         DbSet<ViewEmzWhiteList> ViewEmzWhiteList { get; set; }
         #endregion
+        #endregion
+
+        #region GaDispositivi
+
+        DbSet<DispositiviCategoria> GaDispositiviCategorie { get; set; }
+        DbSet<DispositiviClasse> GaDispositiviClassi { get; set; }
+        DbSet<DispositiviItem> GaDispositiviItems { get; set; }
+        DbSet<DispositiviMarca> GaDispositiviMarche { get; set; }
+        DbSet<DispositiviModello> GaDispositiviModelli { get; set; }
+        DbSet<DispositiviOnDipendente> GaDispositiviOnDipendenti { get; set; }
+        DbSet<DispositiviStock> GaDispositiviStocks { get; set; }
+        DbSet<DispositiviTipologia> GaDispositiviTipologie { get; set; }
+        DbSet<DispositiviModulo> GaDispositiviModuli { get; set; }
+        DbSet<DispositiviOnModulo> GaDispositiviOnModuli { get; set; }
+
+
+
+        #region Views
+        //public DbSet<ViewGaDispositiviDipendenti> ViewGaDispositiviDipendenti { get; set; }
+        //public DbSet<ViewGaDispositiviItems> ViewGaDispositiviItems { get; set; }
+        //public DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
+        //public DbSet<ViewGaDispositiviStocks> ViewGaDispositiviStocks { get; set; }
+        //public DbSet<ViewGaDispositiviOnModuli> ViewGaDispositiviOnModuli { get; set; }
+
+        #endregion
+
         #endregion
 
     }

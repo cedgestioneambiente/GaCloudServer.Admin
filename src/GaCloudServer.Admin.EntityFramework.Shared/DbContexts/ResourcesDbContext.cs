@@ -53,6 +53,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -512,6 +513,32 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Views
         public DbSet<ViewEmzWhiteList> ViewEmzWhiteList { get; set; }
         #endregion
+        #endregion
+
+        #region GaDispositivi
+
+        public DbSet<DispositiviCategoria> GaDispositiviCategorie { get; set; }
+        public DbSet<DispositiviClasse> GaDispositiviClassi { get; set; }
+        public DbSet<DispositiviItem> GaDispositiviItems { get; set; }
+        public DbSet<DispositiviMarca> GaDispositiviMarche { get; set; }
+        public DbSet<DispositiviModello> GaDispositiviModelli { get; set; }
+        public DbSet<DispositiviOnDipendente> GaDispositiviOnDipendenti { get; set; }
+        public DbSet<DispositiviStock> GaDispositiviStocks { get; set; }
+        public DbSet<DispositiviTipologia> GaDispositiviTipologie { get; set; }
+        public DbSet<DispositiviModulo> GaDispositiviModuli { get; set; }
+        public DbSet<DispositiviOnModulo> GaDispositiviOnModuli { get; set; }
+
+
+
+        #region Views
+        //public DbSet<ViewGaDispositiviDipendenti> ViewGaDispositiviDipendenti { get; set; }
+        //public DbSet<ViewGaDispositiviItems> ViewGaDispositiviItems { get; set; }
+        //public DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
+        //public DbSet<ViewGaDispositiviStocks> ViewGaDispositiviStocks { get; set; }
+        //public DbSet<ViewGaDispositiviOnModuli> ViewGaDispositiviOnModuli { get; set; }
+
+        #endregion
+
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
