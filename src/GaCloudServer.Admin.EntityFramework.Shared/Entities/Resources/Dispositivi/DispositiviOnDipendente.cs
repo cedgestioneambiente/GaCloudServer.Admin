@@ -9,7 +9,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Disposit
     public class DispositiviOnDipendente : GenericEntity
 	{
 		public long DispositiviStockId { get; set; }
-		public string PersonaleDipendenteId { get; set; }
+		public long PersonaleDipendenteId { get; set; }
 		public DateTime DataConsegna { get; set; }
 		public DateTime? DataRitiro { get; set; }
 

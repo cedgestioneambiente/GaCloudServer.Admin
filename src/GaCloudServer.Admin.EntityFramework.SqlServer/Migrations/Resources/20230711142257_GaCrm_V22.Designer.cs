@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230711142257_GaCrm_V22")]
+    partial class GaCrm_V22
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5438,14 +5440,17 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("DispositiviStockId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PersonaleDipendenteId")
+                    b.Property<string>("PersonaleDipendenteId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("PersonaleDipendenteId1")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DispositiviStockId");
 
-                    b.HasIndex("PersonaleDipendenteId");
+                    b.HasIndex("PersonaleDipendenteId1");
 
                     b.ToTable("GaDispositiviOnDipendenti");
                 });
@@ -10672,9 +10677,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", "PersonaleDipendente")
                         .WithMany()
-                        .HasForeignKey("PersonaleDipendenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonaleDipendenteId1");
 
                     b.Navigation("DispositiviStock");
 

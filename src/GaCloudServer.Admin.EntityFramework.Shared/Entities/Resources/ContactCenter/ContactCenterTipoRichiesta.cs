@@ -19,5 +19,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public long? ContactCenterPrintTemplateId { get; set; }
         public bool PrintMassive { get; set; }
         public string Group { get; set; }
+        public int? GiorniGestione { get; set; }
     }
 }

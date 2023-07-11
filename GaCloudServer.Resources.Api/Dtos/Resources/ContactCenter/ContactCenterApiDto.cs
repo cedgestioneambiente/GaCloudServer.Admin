@@ -50,6 +50,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         public long? ContactCenterPrintTemplateId { get; set; }
         public bool PrintMassive { get; set; }
         public string? Group { get; set; }
+        public int? GiorniGestione { get; set; }
     }
 
     public class ContactCenterTipiRichiesteApiDto : GenericPagedListApiDto<ContactCenterTipoRichiestaApiDto>

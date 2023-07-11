@@ -36,6 +36,9 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public bool Sended { get; set; }
         public string? NotaOperatore { get; set; }
         public long? Duration { get; set; }
+
+        public bool RitardoCausaUtente { get; set; }
+        public bool RitardoCausaAzienda { get; set; }
     }
 
     public class CrmEventsApiDto : GenericPagedListApiDto<CrmEventApiDto>

@@ -36,6 +36,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
 
         public long? Duration { get; set; }
 
+        public bool RitardoCausaUtente { get; set; }
+        public bool RitardoCausaAzienda { get; set; }
+
         public CrmEventState CrmEventState { get; set; }
         public CrmEventArea CrmEventArea { get; set; }
     }
