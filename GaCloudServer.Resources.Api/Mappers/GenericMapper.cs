@@ -9,6 +9,7 @@ using GaCloudServer.Resources.Api.Mappers.Contratti;
 using GaCloudServer.Resources.Api.Mappers.Crm;
 using GaCloudServer.Resources.Api.Mappers.Csr;
 using GaCloudServer.Resources.Api.Mappers.Dashboard;
+using GaCloudServer.Resources.Api.Mappers.Dispositivi;
 using GaCloudServer.Resources.Api.Mappers.Global;
 using GaCloudServer.Resources.Api.Mappers.Mezzi;
 using GaCloudServer.Resources.Api.Mappers.Notification;
@@ -57,6 +58,7 @@ namespace GaCloudServer.Resources.Api.Mappers
             new ConsorzioMapperProfile(),
             new CrmMapperProfile(),
             new PrenotazioneLocaliMapperProfile(),
+            new DispositiviMapperProfile(),
         };
 
         static GenericMapper() {

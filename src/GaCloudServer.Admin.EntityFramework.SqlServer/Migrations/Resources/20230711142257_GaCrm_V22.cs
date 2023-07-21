@@ -30,7 +30,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             // InitData EventStates
             migrationBuilder.InsertData(
-                table: "ContactCenterStatoRichiesta",
+                table: "GaContactCenterStatiRichieste",
                 columns: new[] { "Id", "Descrizione", "Disabled" },
                 values: new object[,]
                 {

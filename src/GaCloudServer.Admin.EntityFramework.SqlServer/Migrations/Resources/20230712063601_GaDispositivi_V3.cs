@@ -4,25 +4,25 @@
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class GaDispositivi_V2 : Migration
+    public partial class GaDispositivi_V3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_GaDispositiviOnDipendenti_GaPersonaleDipendenti_PersonaleDipendenteId1",
-                table: "GaDispositiviOnDipendenti");
+                name: "FK_GaDispositiviModuli_GaPersonaleDipendenti_PersonaleDipendenteId1",
+                table: "GaDispositiviModuli");
 
             migrationBuilder.DropIndex(
-                name: "IX_GaDispositiviOnDipendenti_PersonaleDipendenteId1",
-                table: "GaDispositiviOnDipendenti");
+                name: "IX_GaDispositiviModuli_PersonaleDipendenteId1",
+                table: "GaDispositiviModuli");
 
             migrationBuilder.DropColumn(
                 name: "PersonaleDipendenteId1",
-                table: "GaDispositiviOnDipendenti");
+                table: "GaDispositiviModuli");
 
             migrationBuilder.AlterColumn<long>(
                 name: "PersonaleDipendenteId",
-                table: "GaDispositiviOnDipendenti",
+                table: "GaDispositiviModuli",
                 type: "bigint",
                 nullable: false,
                 defaultValue: 0L,
@@ -31,13 +31,13 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 oldNullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_GaDispositiviOnDipendenti_PersonaleDipendenteId",
-                table: "GaDispositiviOnDipendenti",
+                name: "IX_GaDispositiviModuli_PersonaleDipendenteId",
+                table: "GaDispositiviModuli",
                 column: "PersonaleDipendenteId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_GaDispositiviOnDipendenti_GaPersonaleDipendenti_PersonaleDipendenteId",
-                table: "GaDispositiviOnDipendenti",
+                name: "FK_GaDispositiviModuli_GaPersonaleDipendenti_PersonaleDipendenteId",
+                table: "GaDispositiviModuli",
                 column: "PersonaleDipendenteId",
                 principalTable: "GaPersonaleDipendenti",
                 principalColumn: "Id",
@@ -47,16 +47,16 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_GaDispositiviOnDipendenti_GaPersonaleDipendenti_PersonaleDipendenteId",
-                table: "GaDispositiviOnDipendenti");
+                name: "FK_GaDispositiviModuli_GaPersonaleDipendenti_PersonaleDipendenteId",
+                table: "GaDispositiviModuli");
 
             migrationBuilder.DropIndex(
-                name: "IX_GaDispositiviOnDipendenti_PersonaleDipendenteId",
-                table: "GaDispositiviOnDipendenti");
+                name: "IX_GaDispositiviModuli_PersonaleDipendenteId",
+                table: "GaDispositiviModuli");
 
             migrationBuilder.AlterColumn<string>(
                 name: "PersonaleDipendenteId",
-                table: "GaDispositiviOnDipendenti",
+                table: "GaDispositiviModuli",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(long),
@@ -64,18 +64,18 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             migrationBuilder.AddColumn<long>(
                 name: "PersonaleDipendenteId1",
-                table: "GaDispositiviOnDipendenti",
+                table: "GaDispositiviModuli",
                 type: "bigint",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_GaDispositiviOnDipendenti_PersonaleDipendenteId1",
-                table: "GaDispositiviOnDipendenti",
+                name: "IX_GaDispositiviModuli_PersonaleDipendenteId1",
+                table: "GaDispositiviModuli",
                 column: "PersonaleDipendenteId1");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_GaDispositiviOnDipendenti_GaPersonaleDipendenti_PersonaleDipendenteId1",
-                table: "GaDispositiviOnDipendenti",
+                name: "FK_GaDispositiviModuli_GaPersonaleDipendenti_PersonaleDipendenteId1",
+                table: "GaDispositiviModuli",
                 column: "PersonaleDipendenteId1",
                 principalTable: "GaPersonaleDipendenti",
                 principalColumn: "Id");

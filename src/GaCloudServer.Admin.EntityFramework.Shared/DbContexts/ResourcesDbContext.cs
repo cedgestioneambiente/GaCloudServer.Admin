@@ -54,6 +54,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -531,11 +532,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
 
         #region Views
-        //public DbSet<ViewGaDispositiviDipendenti> ViewGaDispositiviDipendenti { get; set; }
-        //public DbSet<ViewGaDispositiviItems> ViewGaDispositiviItems { get; set; }
-        //public DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
-        //public DbSet<ViewGaDispositiviStocks> ViewGaDispositiviStocks { get; set; }
-        //public DbSet<ViewGaDispositiviOnModuli> ViewGaDispositiviOnModuli { get; set; }
+        public DbSet<ViewGaDispositiviItems> ViewGaDispositiviItems { get; set; }
+        public DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
+        public DbSet<ViewGaDispositiviStocks> ViewGaDispositiviStocks { get; set; }
+        public DbSet<ViewGaDispositiviOnModuli> ViewGaDispositiviOnModuli { get; set; }
 
         #endregion
 
@@ -1422,6 +1422,38 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .ToView(nameof(ViewEmzWhiteList))
                 .HasNoKey();
             });
+            #endregion
+
+            #region Dispositivi
+
+            builder.Entity<ViewGaDispositiviItems>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaDispositiviItems))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaDispositiviStocks>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaDispositiviStocks))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaDispositiviOnDipendenti>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaDispositiviOnDipendenti))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewGaDispositiviOnModuli>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaDispositiviOnModuli))
+                .HasKey(x => x.Id);
+            });
+
             #endregion
 
 
