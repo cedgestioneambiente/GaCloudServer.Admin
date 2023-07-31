@@ -21,6 +21,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
@@ -514,6 +515,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<DispositiviOnModulo>, GenericRepository<TResourcesDbContext, DispositiviOnModulo>>();
             services.AddTransient<IGenericRepository<DispositiviStock>, GenericRepository<TResourcesDbContext, DispositiviStock>>();
             services.AddTransient<IGenericRepository<DispositiviTipologia>, GenericRepository<TResourcesDbContext, DispositiviTipologia>>();
+
+            services.AddTransient<IGenericRepository<ViewGaDispositiviItems>, GenericRepository<TResourcesDbContext, ViewGaDispositiviItems>>();
+            services.AddTransient<IGenericRepository<ViewGaDispositiviOnDipendenti>, GenericRepository<TResourcesDbContext, ViewGaDispositiviOnDipendenti>>();
+            services.AddTransient<IGenericRepository<ViewGaDispositiviOnModuli>, GenericRepository<TResourcesDbContext, ViewGaDispositiviOnModuli>>();
+            services.AddTransient<IGenericRepository<ViewGaDispositiviStocks>, GenericRepository<TResourcesDbContext, ViewGaDispositiviStocks>>();
 
             # endregion
 

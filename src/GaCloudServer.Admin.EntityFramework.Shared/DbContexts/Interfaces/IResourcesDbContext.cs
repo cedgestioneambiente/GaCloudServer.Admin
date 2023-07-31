@@ -53,6 +53,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -528,11 +529,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
 
         #region Views
-        //public DbSet<ViewGaDispositiviDipendenti> ViewGaDispositiviDipendenti { get; set; }
-        //public DbSet<ViewGaDispositiviItems> ViewGaDispositiviItems { get; set; }
-        //public DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
-        //public DbSet<ViewGaDispositiviStocks> ViewGaDispositiviStocks { get; set; }
-        //public DbSet<ViewGaDispositiviOnModuli> ViewGaDispositiviOnModuli { get; set; }
+        DbSet<ViewGaDispositiviItems> ViewGaDispositiviItems { get; set; }
+        DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
+        DbSet<ViewGaDispositiviStocks> ViewGaDispositiviStocks { get; set; }
+        DbSet<ViewGaDispositiviOnModuli> ViewGaDispositiviOnModuli { get; set; }
 
         #endregion
 

@@ -152,6 +152,14 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public ViewGaCrmTickets Item { get; set; }
     }
 
+    public class DispositiviModuloTemplateDto : GenericPrintDto
+    {
+        public string Nominativo { get; set; }
+        public string Data { get; set; }
+        public string Note { get; set; }
+        public List<dynamic> Dispositivi { get; set; }
+
+    }
 
 
 

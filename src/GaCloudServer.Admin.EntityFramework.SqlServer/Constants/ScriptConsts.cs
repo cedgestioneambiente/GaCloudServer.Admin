@@ -200,5 +200,11 @@
         public const string Emz = @".\Scripts\Emz\";
         public const string CREATE_ViewEmz = "CREATE_ViewEmz.sql";
         public const string DROP_ViewEmz = "DROP_ViewEmz.sql";
+
+        //Dispositivi
+        public const string GaDispositivi = @".\Scripts\Dispositivi\";
+        public const string CREATE_ViewGaDispositivi = "CREATE_ViewGaDispositivi.sql";
+        public const string DROP_ViewGaDispositivi = "DROP_ViewGaDispositivi.sql";
+
     }
 }

@@ -17,10 +17,6 @@
 		<PackageReference Include="Skoruba.Duende.IdentityServer.Admin.EntityFramework.Configuration" Version="1.1.0" />
 		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.2" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Entities\Resources\Dispositivi\" />
-	</ItemGroup>
 </Project>
 
 
