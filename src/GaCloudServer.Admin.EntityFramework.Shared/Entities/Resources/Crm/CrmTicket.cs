@@ -32,6 +32,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
         public string NoteCrm { get; set; }
         public string NoteOperatore { get; set; }
         public string Tributo { get; set; }
+        public string Tags { get; set; }
 
         public CrmEventComune CrmEventComune { get; set; }
         public ContactCenterProvenienza ContactCenterProvenienza { get; set; }

@@ -146,6 +146,24 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region CrmTicketTags
+        Task<CrmTicketTagsDto> GetGaCrmTicketTagsAsync(int page = 1, int pageSize = 0);
+        Task<CrmTicketTagDto> GetGaCrmTicketTagByIdAsync(long id);
+
+        Task<long> AddGaCrmTicketTagAsync(CrmTicketTagDto dto);
+        Task<long> UpdateGaCrmTicketTagAsync(CrmTicketTagDto dto);
+
+        Task<bool> DeleteGaCrmTicketTagAsync(long id);
+
+        #region Views
+        #endregion
+
+        #region Functions
+
+        #endregion
+
+        #endregion
+
         #region CrmEventJobs
         Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsAsync(int page = 1, int pageSize = 0);
         Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(bool all,DateTime dateStart, DateTime dateEnd);

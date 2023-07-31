@@ -630,10 +630,14 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
+                var dto = await _gaCrmService.GetGaCrmEventByIdAsync(id);
+
                 var devicesRemove = await _gaCrmService.DeleteGaCrmEventDevicesByEventIdAsync(id);
                 if (devicesRemove)
                 {
                     var response = await _gaCrmService.DeleteGaCrmEventAsync(id);
+                    var responseTari = await _gaCrmService.UpdateCrmTicketStateByIdAsync(dto.CrmTicketId, 1, dto.NotaOperatore);
+
 
                     return new ApiResponse(response);
                 }
@@ -1601,6 +1605,143 @@ namespace GaCloudServer.Resources.Api.Controllers
         //    try
         //    {
         //        var response = await _gaCrmTicketService.ChangeStatusGaCrmTicketAllegatoAsync(id);
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+
+        //}
+        #endregion
+
+        #endregion
+
+        #region CrmTicketTags
+        [HttpGet("GetGaCrmTicketTagsAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmTicketTagsAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaCrmService.GetGaCrmTicketTagsAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<CrmTicketTagsApiDto, CrmTicketTagsDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCrmTicketTagByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmTicketTagByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCrmService.GetGaCrmTicketTagByIdAsync(id);
+                var apiDto = dto.ToApiDto<CrmTicketTagApiDto, CrmTicketTagDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaCrmTicketTagAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaCrmTicketTagAsync([FromBody] CrmTicketTagApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CrmTicketTagDto, CrmTicketTagApiDto>();
+                var response = await _gaCrmService.AddGaCrmTicketTagAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaCrmTicketTagAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaCrmTicketTagAsync([FromBody] CrmTicketTagApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<CrmTicketTagDto, CrmTicketTagApiDto>();
+                var response = await _gaCrmService.UpdateGaCrmTicketTagAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaCrmTicketTagAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaCrmTicketTagAsync(long id)
+        {
+            try
+            {
+                var response = await _gaCrmService.DeleteGaCrmTicketTagAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        //[HttpGet("ValidateGaCrmTicketTagAsync/{id}/{descrizione}")]
+        //public async Task<ActionResult<ApiResponse>> ValidateGaCrmTicketTagAsync(long id, string descrizione)
+        //{
+        //    try
+        //    {
+        //        var response = await _gaCrmService.ValidateGaCrmTicketTagAsync(id, descrizione);
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex.Message);
+        //    }
+
+        //}
+
+        //[HttpGet("ChangeStatusGaCrmTicketTagAsync/{id}")]
+        //public async Task<ActionResult<ApiResponse>> ChangeStatusGaCrmTicketTagAsync(long id)
+        //{
+        //    try
+        //    {
+        //        var response = await _gaCrmService.ChangeStatusGaCrmTicketTagAsync(id);
         //        return new ApiResponse(response);
         //    }
         //    catch (Exception ex)

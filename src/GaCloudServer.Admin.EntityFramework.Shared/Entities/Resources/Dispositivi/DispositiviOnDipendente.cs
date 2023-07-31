@@ -1,12 +1,10 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi
 {
-    public class DispositiviOnDipendente : GenericEntity
+	public class DispositiviOnDipendente : GenericEntity
 	{
 		public long DispositiviStockId { get; set; }
 		public long PersonaleDipendenteId { get; set; }

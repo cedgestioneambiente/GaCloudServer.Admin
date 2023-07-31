@@ -134,6 +134,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public string? NoteCrm { get; set; }
         public string? NoteOperatore { get; set; }
         public string? Tributo { get; set; }
+        public string? Tags { get; set; }
     }
 
     public class CrmTicketsApiDto : GenericPagedListApiDto<CrmTicketApiDto>
@@ -150,6 +151,17 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
     }
 
     public class CrmTicketAllegatiApiDto : GenericPagedListDto<CrmTicketAllegatoApiDto>
+    {
+    }
+
+    #endregion
+
+    #region CrmTicketTagsApiDto
+    public class CrmTicketTagApiDto : GenericListApiDto
+    {
+    }
+
+    public class CrmTicketTagsApiDto : GenericPagedListDto<CrmTicketTagApiDto>
     {
     }
 

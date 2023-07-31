@@ -1,14 +1,7 @@
 ﻿using GaCloudServer.BusinnessLogic.Dtos.Extras.EcoFinder;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
-using Microsoft.Graph;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {

@@ -26,6 +26,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo;
         protected readonly IGenericRepository<CrmTicket> gaCrmTicketsRepo;
         protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAllegatiRepo;
+        protected readonly IGenericRepository<CrmTicketTag> gaCrmTicketTagsRepo;
 
         private readonly IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo;
         private readonly IGenericRepository<ContactCenterTipoRichiesta> gaCrmTipiTicketRepo;
@@ -54,8 +55,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo,
             IGenericRepository<CrmTicket> gaCrmTicketsRepo,
             IGenericRepository<CrmTicketAllegato> gaCrmTicketAllegatiRepo,
+            IGenericRepository<CrmTicketTag> gaCrmTicketTagsRepo,
 
-        IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo,
+            IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo,
             IGenericRepository<ContactCenterTipoRichiesta> gaCrmTipiTicketRepo,
             IGenericRepository<ContactCenterStatoRichiesta> gaCrmStatiTicketRepo,
             IGenericRepository<ContactCenterPrintTemplate> gaCrmPrintTemplatesRepo,
@@ -80,6 +82,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaCrmEventDevicesRepo = gaCrmEventDevicesRepo;
             this.gaCrmTicketsRepo = gaCrmTicketsRepo;
             this.gaCrmTicketAllegatiRepo = gaCrmTicketAllegatiRepo;
+            this.gaCrmTicketTagsRepo = gaCrmTicketTagsRepo;
 
             this.gaCrmProvenienzeTicketRepo = gaCrmProvenienzeTicketRepo;
             this.gaCrmTipiTicketRepo = gaCrmTipiTicketRepo;
@@ -131,10 +134,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             long newState = 1;
             switch (state)
             {
-                case 1:
+                case 1: 
                     newState = 1; break;
                 case 2:
-                    newState =2; break;
+                    
+                    newState = 2; 
+                    break;
                 case 3:
                     newState = 1; break;
                 case 4:
@@ -143,11 +148,21 @@ namespace GaCloudServer.BusinnessLogic.Services
                     newState = 1; break;
             }
 
+            var _event = await gaCrmEventsRepo.GetSingleWithFilter(x => x.CrmTicketId == id);
             var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
             entity.ContactCenterStatoRichiestaId= newState;
 
             if (newState == 2)
             {
+                if (_event.RitardoCausaAzienda)
+                {
+                    entity.ContactCenterStatoRichiestaId = 5;
+                }
+
+                if (_event.RitardoCausaUtente)
+                {
+                    entity.ContactCenterStatoRichiestaId = 4;
+                }
                 entity.DataChiusura = DateTime.Now;
             }
             else
@@ -980,6 +995,86 @@ namespace GaCloudServer.BusinnessLogic.Services
         //    }
 
         //}
+        #endregion
+
+        #endregion
+
+        #region CrmTicketTags
+        public async Task<CrmTicketTagsDto> GetGaCrmTicketTagsAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaCrmTicketTagsRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<CrmTicketTagsDto, PagedList<CrmTicketTag>>();
+            return dtos;
+        }
+
+        public async Task<CrmTicketTagDto> GetGaCrmTicketTagByIdAsync(long id)
+        {
+            var entity = await gaCrmTicketTagsRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmTicketTagDto, CrmTicketTag>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCrmTicketTagAsync(CrmTicketTagDto dto)
+        {
+            var entity = dto.ToEntity<CrmTicketTag, CrmTicketTagDto>();
+            await gaCrmTicketTagsRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmTicketTagAsync(CrmTicketTagDto dto)
+        {
+            var entity = dto.ToEntity<CrmTicketTag, CrmTicketTagDto>();
+            gaCrmTicketTagsRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCrmTicketTagAsync(long id)
+        {
+            var entity = await gaCrmTicketTagsRepo.GetByIdAsync(id);
+            gaCrmTicketTagsRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaCrmTicketTagAsync(long id, string descrizione)
+        {
+            var entity = await gaCrmEventAreasRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaCrmTicketTagAsync(long id)
+        {
+            var entity = await gaCrmTicketTagsRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaCrmTicketTagsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaCrmTicketTagsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
         #endregion
 
         #endregion

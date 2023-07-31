@@ -135,6 +135,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string? NoteCrm { get; set; }
         public string? NoteOperatore { get; set; }
         public string? Tributo { get; set; }
+        public string? Tags { get; set; }
     }
 
     public class CrmTicketsDto : GenericPagedListDto<CrmTicketDto>
@@ -156,6 +157,16 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
 
     #endregion
 
+    #region Crm Ticket Tags
+    public class CrmTicketTagDto : GenericListDto
+    {
+    }
+
+    public class CrmTicketTagsDto : GenericPagedListDto<CrmTicketTagDto>
+    {
+    }
+
+    #endregion
     public class CrmChangeEventStateDto
     { 
         public long id { get; set; }

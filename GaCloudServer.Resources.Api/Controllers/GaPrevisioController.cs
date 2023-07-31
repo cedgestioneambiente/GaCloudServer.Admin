@@ -1,9 +1,7 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
-using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Extras.EcoFinder;
 using GaCloudServer.BusinnessLogic.Extensions;
-using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Custom;
@@ -11,6 +9,7 @@ using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -93,6 +92,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }

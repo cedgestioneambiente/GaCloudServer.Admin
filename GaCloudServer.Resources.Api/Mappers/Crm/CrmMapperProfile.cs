@@ -61,6 +61,14 @@ namespace GaCloudServer.Resources.Api.Mappers.Crm
                 .ReverseMap();
 
 
+            //CrmTicketTags
+            CreateMap<CrmTicketTagDto, CrmTicketTagApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<CrmTicketTagsDto, CrmTicketTagsApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+
         }
     }
 }
