@@ -49,6 +49,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.View
         public string CodZona { get; set; }
         public string Tributo { get; set; }
         public DateTime? DataProgrammazione { get; set; }
+        public string? Tags { get; set;  }
 
     }
 }

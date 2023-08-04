@@ -40,5 +40,20 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Tasks
     }
 
     #endregion
+
+    #region TasksAction
+    public class TasksActionApiDto : GenericApiDto
+    {
+        public string Content { get; set; }
+        public bool? Completed { get; set; }
+        public long TaskItemId { get; set; }
+       
+    }
+
+    public class TasksActionsApiDto : GenericPagedListApiDto<TasksActionApiDto>
+    {
+    }
+
+    #endregion
 }
 

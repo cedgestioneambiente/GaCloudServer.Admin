@@ -422,6 +422,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ProgettiWork>, GenericRepository<TResourcesDbContext, ProgettiWork>>();
             services.AddTransient<IGenericRepository<ProgettiJob>, GenericRepository<TResourcesDbContext, ProgettiJob>>();
             services.AddTransient<IGenericRepository<ProgettiJobAllegato>, GenericRepository<TResourcesDbContext, ProgettiJobAllegato>>();
+            services.AddTransient<IGenericRepository<ProgettiJobTask>, GenericRepository<TResourcesDbContext, ProgettiJobTask>>();
             services.AddTransient<IGenericRepository<ProgettiWorkSetting>, GenericRepository<TResourcesDbContext, ProgettiWorkSetting>>();
 
             services.AddTransient<IGenericRepository<ViewGaProgettiJobs>, GenericRepository<TResourcesDbContext, ViewGaProgettiJobs>>();
@@ -432,6 +433,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Tasks
             services.AddTransient<IGenericRepository<TasksTag>, GenericRepository<TResourcesDbContext, TasksTag>>();
             services.AddTransient<IGenericRepository<TasksItem>, GenericRepository<TResourcesDbContext, TasksItem>>();
+            services.AddTransient<IGenericRepository<TasksAction>, GenericRepository<TResourcesDbContext, TasksAction>>();
 
             services.AddTransient<IGenericRepository<ViewTasks>, GenericRepository<TResourcesDbContext, ViewTasks>>();
             services.AddTransient<IGenericRepository<ViewTasksTags>, GenericRepository<TResourcesDbContext, ViewTasksTags>>();

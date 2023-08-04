@@ -1,19 +1,16 @@
 ﻿using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
-using GaCloudServer.BusinnessLogic.DTOs.Resources.Global;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks;
-using GaCloudServer.BusinnessLogic.Hub.Interfaces;
-using GaCloudServer.BusinnessLogic.Hub;
+using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti;
 using GaCloudServer.Resources.Api.Configuration.Constants;
-using GaCloudServer.Resources.Api.Dtos.Resources.Global;
 using GaCloudServer.Resources.Api.Dtos.Resources.Tasks;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -331,6 +328,22 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("CopyTaskItemAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> CopyTaskItemAsync(long id)
+        {
+            try
+            {
+                var response = await _tasksService.CopyTaskItemAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #region Views
@@ -381,6 +394,114 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+        #endregion
+
+        #endregion
+
+        #region TaskItemActions
+        [HttpGet("GetTaskItemActionsByTaskIdAsync/{taskId}")]
+        public async Task<ActionResult<ApiResponse>> GetTaskItemActionsByTaskIdAsync(long taskId)
+        {
+            try
+            {
+                var dtos = await _tasksService.GetTaskItemActionsByTaskIdAsync(taskId);
+                var apiDtos = dtos.ToApiDto<TasksActionsApiDto, TasksActionsDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetTaskItemActionByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetTaskItemActionByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _tasksService.GetTaskItemActionByIdAsync(id);
+                var apiDto = dto.ToApiDto<TasksActionApiDto, TasksActionDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddTaskItemActionAsync")]
+        public async Task<ActionResult<ApiResponse>> AddTaskItemActionAsync([FromBody] TasksActionApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+
+                var dto = apiDto.ToDto<TasksActionDto, TasksActionApiDto>();
+                var response = await _tasksService.AddTaskItemActionAsync(dto);
+
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateTaskItemActionAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateTaskItemActionAsync([FromBody] TasksActionApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<TasksActionDto, TasksActionApiDto>();
+                var response = await _tasksService.UpdateTaskItemActionAsync(dto);
+
+                return new ApiResponse(response);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpDelete("DeleteTaskItemActionAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteTaskItemActionAsync(long id)
+        {
+            try
+            {
+                var response = await _tasksService.DeleteTaskItemActionAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+
         #endregion
 
         #endregion

@@ -6,7 +6,12 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.QueryBuilder;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Shortcuts;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -292,6 +297,75 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<string> GenerateQueryBuilderScriptAsync(string script,List<ViewQueryBuilderParamOnScripts> paramsScript, dynamic paramsData)
+        {
+
+            JObject jObject= JObject.Parse(paramsData.ToString());
+
+            foreach (var property in jObject.Properties())
+            { 
+                var param = paramsScript.Where(x=>x.Nome== property.Name).FirstOrDefault();
+                string paramType = param.ParamType;
+
+                if (paramType == "input")
+                {
+                    string strToReplace = $"{{{{{property.Name}}}}}";
+                    string strReplace = $"'{jObject[property.Name].Value<string>()}'";
+                    Regex regeEx = new Regex(Regex.Escape(strToReplace), RegexOptions.IgnoreCase);
+                    script = regeEx.Replace(script, strReplace);
+                }
+                else if (paramType == "datepicker")
+                {
+                    string strToReplace = $"{{{{{property.Name}}}}}";
+                    string strReplace = $"'{((DateTime)jObject[property.Name].Value<DateTime>()).ToString("yyyyMMdd")}'";
+                    Regex regeEx = new Regex(Regex.Escape(strToReplace), RegexOptions.IgnoreCase);
+                    script = regeEx.Replace(script, strReplace);
+                }
+                else
+                {
+                    string strToReplace = $"{{{{{property.Name}}}}}";
+                    string strReplace = $"{jObject[property.Name].Value<string>()}";
+                    Regex regeEx = new Regex(Regex.Escape(strToReplace), RegexOptions.IgnoreCase);
+                    script = regeEx.Replace(script, strReplace);
+                }
+
+            }
+
+
+            
+
+            return script;
+        }
+
+        public async Task<bool> CopyQueryBuilderScriptAsync(long id)
+        {
+            var script = await _queryBuilderScriptsRepo.GetByIdAsync(id);
+            var paramsOnScript = await _queryBuilderParamOnScriptsRepo.GetWithFilterAsync(x => x.QueryBuilderScriptId == id);
+
+            var entity = script;
+            DetachEntity(script);
+            entity.Id = 0;
+            entity.Descrizione = entity.Descrizione + " (copia del " + DateTime.Now.ToString("dd-MM-yyyy HH:mm") + ")";
+
+            await _queryBuilderScriptsRepo.AddAsync(entity);
+            await SaveChanges();
+
+            foreach (var param in paramsOnScript.Data)
+            {
+                var paramEntity = param;
+                paramEntity.Id = 0;
+                paramEntity.QueryBuilderScriptId = entity.Id;
+
+                await _queryBuilderParamOnScriptsRepo.AddAsync(paramEntity);
+
+                await SaveChanges();
+            }
+
+            return true;
+
+
+        }
         #endregion
 
         #endregion
@@ -418,6 +492,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #endregion
+
+        #region Helpers
         #endregion
 
         #region Common

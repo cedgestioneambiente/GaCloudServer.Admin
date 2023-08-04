@@ -17,6 +17,11 @@ namespace GaCloudServer.Resources.Api.Mappers.Tasks
                .ReverseMap();
             CreateMap<TasksTagsDto, TasksTagsApiDto>(MemberList.Destination)
                 .ReverseMap();
+
+            CreateMap<TasksActionDto, TasksActionApiDto>(MemberList.Destination)
+               .ReverseMap();
+            CreateMap<TasksActionsDto, TasksActionsApiDto>(MemberList.Destination)
+                .ReverseMap();
         }
     }
 }

@@ -59,6 +59,157 @@ namespace GaCloudServer.Resources.Api.Controllers
             
         }
 
+        [HttpPut("ExecQueryWithParamsAsync/{id}/{userId}")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [AutoWrapIgnore]
+        public async Task<ActionResult<ApiResponse>> ExecQueryWithParamsAsync([FromRoute]long id,[FromRoute] string userId, [FromBody] dynamic paramsData)
+        {
+            try
+            {
+                var script = await _queryBuilderService.GetQueryBuilderScriptByIdAsync(id);
+                var paramsScript = _queryBuilderService.GetViewQueryBuilderParamOnScriptsByScriptIdAsync(id).Result.Data.ToList();
+
+                var result = await _queryBuilderService.GenerateQueryBuilderScriptAsync(script.Script, paramsScript, paramsData);
+
+                QueryBuilderQuery query= new QueryBuilderQuery();
+                query.query = result;
+                query.userId = userId;
+
+                DownloadProgressDto progress = new DownloadProgressDto();
+                progress.progress = 0;
+                progress.message = "Elaborazione query in corso...";
+                await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
+                var entities = await _queryBuilderService.GetFromQueryAsync(query.query);
+                progress.progress = 40;
+                progress.message = string.Format("Elaborazione {0} risultati in corso...", entities.Count());
+                await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
+                string title = "Query Result";
+                if (entities.Count > 0)
+                {
+                    List<string> listColumns = new List<string>();
+                    dynamic objProp = entities[0];
+                    foreach (PropertyInfo prop in entities[0].GetType().GetProperties())
+                    {
+
+                    }
+
+                    foreach (KeyValuePair<string, object> property in objProp)
+                    {
+                        listColumns.Add(property.Key);
+                        Console.WriteLine(property.Key + ": " + property.Value);
+
+                    }
+
+                    progress.progress = 60;
+                    progress.message = string.Format("Conversione {0} risultati in corso...", entities.Count());
+                    await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
+                    string[] columns = listColumns.ToArray();
+
+                    progress.progress = 80;
+                    progress.message = string.Format("Esportazione {0} risultati in corso...", entities.Count());
+                    await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+                    byte[] filecontent = ExporterHelper.ExportObjectExcel(entities, title, "forceDateTime", "", "Query Result", false, columns);
+
+                    return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                    {
+                        FileDownloadName = "Query_Result.xlsx"
+                    };
+                }
+                else
+                {
+                    return NoContent();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+
+            }
+
+
+        }
+
+        [HttpGet("ExecQueryAsync/{id}/{userId}")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [AutoWrapIgnore]
+        public async Task<ActionResult<ApiResponse>> ExecQueryAsync(long id,string userId)
+        {
+            try
+            {
+                var script = await _queryBuilderService.GetQueryBuilderScriptByIdAsync(id);
+
+                QueryBuilderQuery query = new QueryBuilderQuery();
+                query.query = script.Script;
+                query.userId = userId;
+
+                DownloadProgressDto progress = new DownloadProgressDto();
+                progress.progress = 0;
+                progress.message = "Elaborazione query in corso...";
+                await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
+                var entities = await _queryBuilderService.GetFromQueryAsync(query.query);
+                progress.progress = 40;
+                progress.message = string.Format("Elaborazione {0} risultati in corso...", entities.Count());
+                await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
+                string title = "Query Result";
+                if (entities.Count > 0)
+                {
+                    List<string> listColumns = new List<string>();
+                    dynamic objProp = entities[0];
+                    foreach (PropertyInfo prop in entities[0].GetType().GetProperties())
+                    {
+
+                    }
+
+                    foreach (KeyValuePair<string, object> property in objProp)
+                    {
+                        listColumns.Add(property.Key);
+                        Console.WriteLine(property.Key + ": " + property.Value);
+
+                    }
+
+                    progress.progress = 60;
+                    progress.message = string.Format("Conversione {0} risultati in corso...", entities.Count());
+                    await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+
+                    string[] columns = listColumns.ToArray();
+
+                    progress.progress = 80;
+                    progress.message = string.Format("Esportazione {0} risultati in corso...", entities.Count());
+                    await hub.Clients.Groups(query.userId).DownloadProgress(progress);
+                    byte[] filecontent = ExporterHelper.ExportObjectExcel(entities, title, "forceDateTime", "", "Query Result", false, columns);
+
+                    return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                    {
+                        FileDownloadName = "Query_Result.xlsx"
+                    };
+                }
+                else
+                {
+                    return NoContent();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+
+            }
+
+
+        }
+
         [HttpPost("ExportFromQueryAsync")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
@@ -524,6 +675,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var response = await _queryBuilderService.ChangeStatusQueryBuilderScriptAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("CopyQueryBuilderScriptAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> CopyQueryBuilderScriptAsync(long id)
+        {
+            try
+            {
+                var response = await _queryBuilderService.CopyQueryBuilderScriptAsync(id);
                 return new ApiResponse(response);
             }
             catch (Exception ex)

@@ -404,6 +404,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ProgettiWork> GaProgettiWorks { get; set; }
         DbSet<ProgettiJob> GaProgettiJobs { get; set; }
         DbSet<ProgettiJobAllegato> GaProgettiJobAllegati { get; set; }
+        DbSet<ProgettiJobTask> GaProgettiJobTask { get; set; }
         DbSet<ProgettiWorkSetting> GaProgettiWorkSettings { get; set; }
 
         #region Views
@@ -438,6 +439,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Tasks
         DbSet<TasksTag> TasksTags{ get; set; }
         DbSet<TasksItem> TasksItems { get; set; }
+        DbSet<TasksAction> TasksActions { get; set; }
 
         #region Views
         DbSet<ViewTasks> ViewTasks { get; set; }

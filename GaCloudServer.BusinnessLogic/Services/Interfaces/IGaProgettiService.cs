@@ -66,6 +66,22 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region GaProgettiJobTasks
+        Task<ProgettiJobTasksDto> GetGaProgettiJobTasksByJobIdAsync(long jobId);
+        Task<ProgettiJobTaskDto> GetGaProgettiJobTaskByIdAsync(long id);
+
+        Task<long> AddGaProgettiJobTaskAsync(ProgettiJobTaskDto dto);
+        Task<long> UpdateGaProgettiJobTaskAsync(ProgettiJobTaskDto dto);
+
+        Task<bool> DeleteGaProgettiJobTaskAsync(long id);
+
+        #region Functions
+        //Task<bool> ValidateGaProgettiJobAllegatoAsync(long id, string descrizione);
+        //Task<bool> ChangeStatusGaProgettiJobAllegatoAsync(long id);
+        #endregion
+
+        #endregion
+
         #region GaProgettiWorkSettings
         Task<ProgettiWorkSettingDto> GetGaProgettiWorkSettingByWorkIdAndUserIdAsync(long workId, string userId);
         Task<ProgettiWorkSettingsDto> GetGaProgettiWorkSettingsByWorkIdAsync(long workId);

@@ -1,9 +1,12 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using Microsoft.Graph;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -13,6 +16,7 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         protected readonly IGenericRepository<TasksItem> tasksItemsRepo;
         protected readonly IGenericRepository<TasksTag> tasksTagsRepo;
+        protected readonly IGenericRepository<TasksAction> tasksItemActionsRepo;
 
         protected readonly IGenericRepository<ViewTasks> viewTasksRepo;
         protected readonly IGenericRepository<ViewTasksTags> viewTasksTagsRepo;
@@ -23,6 +27,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public TasksService(
             IGenericRepository<TasksItem> tasksItemsRepo,
             IGenericRepository<TasksTag> tasksTagsRepo,
+            IGenericRepository<TasksAction> tasksItemActionsRepo,
 
             IGenericRepository<ViewTasks> viewTasksRepo,
             IGenericRepository<ViewTasksTags> viewTasksTagsRepo,
@@ -31,6 +36,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             this.tasksItemsRepo = tasksItemsRepo;
             this.tasksTagsRepo = tasksTagsRepo;
+            this.tasksItemActionsRepo = tasksItemActionsRepo;
 
             this.viewTasksRepo = viewTasksRepo;
             this.viewTasksTagsRepo = viewTasksTagsRepo;
@@ -142,6 +148,31 @@ namespace GaCloudServer.BusinnessLogic.Services
             
 
         }
+
+        public async Task<long> CopyTaskItemAsync(long id)
+        {
+            var task = await tasksItemsRepo.GetByIdAsync(id);
+            var taskAction = await tasksItemActionsRepo.GetWithFilterAsync(x => x.TaskItemId == id);
+
+            var entity = task;
+            entity.Id = 0;
+            entity.Title = entity.Title + " (Copia del " + DateTime.Now.ToString("dd-MM-yyyy HH:mm") + ")";
+            await tasksItemsRepo.AddAsync(entity);
+            await SaveChanges();
+
+            foreach (var action in taskAction.Data)
+            {
+                var entityAction = action;
+                entityAction.Id = 0;
+                entityAction.TaskItemId = entity.Id;
+                await tasksItemActionsRepo.AddAsync(entityAction);
+
+                await SaveChanges();
+                
+            }
+            return entity.Id;
+
+        }
         #endregion
 
         #region Views
@@ -241,6 +272,57 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+        #endregion
+
+        #endregion
+
+        #region TasksItemAction
+        public async Task<TasksActionsDto> GetTaskItemActionsByTaskIdAsync(long taskId)
+        {
+            var entities = await tasksItemActionsRepo.GetWithFilterAsync(x => x.TaskItemId == taskId);
+            var dtos = entities.ToDto<TasksActionsDto, PagedList<TasksAction>>();
+            return dtos;
+        }
+
+        public async Task<TasksActionDto> GetTaskItemActionByIdAsync(long id)
+        {
+            var entity = await tasksItemActionsRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<TasksActionDto, TasksAction>();
+            return dto;
+        }
+
+        public async Task<long> AddTaskItemActionAsync(TasksActionDto dto)
+        {
+            var entity = dto.ToEntity<TasksAction, TasksActionDto>();
+            await tasksItemActionsRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateTaskItemActionAsync(TasksActionDto dto)
+        {
+            var entity = dto.ToEntity<TasksAction, TasksActionDto>();
+            tasksItemActionsRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteTaskItemActionAsync(long id)
+        {
+            var entity = await tasksItemActionsRepo.GetByIdAsync(id);
+            tasksItemActionsRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+
         #endregion
 
         #endregion

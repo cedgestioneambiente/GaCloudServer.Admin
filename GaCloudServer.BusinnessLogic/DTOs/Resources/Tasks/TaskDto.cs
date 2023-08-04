@@ -39,4 +39,19 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Tasks
     }
 
     #endregion
+
+    #region TasksActions
+    public class TasksActionDto : GenericDto
+    {
+        public string Content { get; set; }
+        public bool? Completed { get; set; }
+        public long TaskItemId { get; set; }
+       
+    }
+
+    public class TasksActionsDto : GenericPagedListDto<TasksActionDto>
+    {
+    }
+
+    #endregion
 }

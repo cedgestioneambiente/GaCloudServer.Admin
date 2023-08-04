@@ -57,6 +57,21 @@ namespace GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti
     }
     #endregion
 
+
+    #region ProgettiJobTasks
+    public class ProgettiJobTaskApiDto : GenericApiDto
+    {
+        public string? Content { get; set; }
+        public bool? Completed { get; set; }
+        public long ProgettiJobId { get; set; }
+
+    }
+
+    public class ProgettiJobTasksApiDto : GenericPagedListApiDto<ProgettiJobTaskApiDto>
+    {
+    }
+    #endregion
+
     #region ProgettiWorkSettings
     public class ProgettiWorkSettingApiDto : GenericApiDto
     {

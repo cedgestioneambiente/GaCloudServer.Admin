@@ -406,6 +406,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ProgettiWork> GaProgettiWorks { get; set; }
         public DbSet<ProgettiJob> GaProgettiJobs { get; set; }
         public DbSet<ProgettiJobAllegato> GaProgettiJobAllegati { get; set; }
+        public DbSet<ProgettiJobTask> GaProgettiJobTask { get; set; }
         public DbSet<ProgettiWorkSetting> GaProgettiWorkSettings { get; set; }
 
         #region Views
@@ -440,6 +441,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Tasks
         public DbSet<TasksTag> TasksTags { get; set; }
         public DbSet<TasksItem> TasksItems { get; set; }
+        public DbSet<TasksAction> TasksActions { get; set; }
 
         #region Views
         public DbSet<ViewTasks> ViewTasks { get; set; }
@@ -537,6 +539,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
         public DbSet<ViewGaDispositiviStocks> ViewGaDispositiviStocks { get; set; }
         public DbSet<ViewGaDispositiviOnModuli> ViewGaDispositiviOnModuli { get; set; }
+        
 
         #endregion
 

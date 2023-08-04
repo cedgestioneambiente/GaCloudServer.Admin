@@ -19,6 +19,11 @@ namespace GaCloudServer.BusinnessLogic.Mappers.Tasks
             CreateMap<PagedList<TasksItem>, TasksItemsDto>(MemberList.Destination)
                 .ReverseMap();
 
+            CreateMap<TasksAction, TasksActionDto>(MemberList.Destination)
+                .ReverseMap();
+            CreateMap<PagedList<TasksAction>, TasksActionsDto>(MemberList.Destination)
+                .ReverseMap();
+
         }
     }
 }

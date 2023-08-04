@@ -59,6 +59,20 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti
     }
     #endregion
 
+    #region ProgettiJobTask
+    public class ProgettiJobTaskDto : GenericDto
+    {
+        public string? Content { get; set; }
+        public bool Completed { get; set; }
+        public long ProgettiJobId { get; set; }
+
+    }
+
+    public class ProgettiJobTasksDto : GenericPagedListDto<ProgettiJobTaskDto>
+    {
+    }
+    #endregion
+
     #region ProgettiWorkSettings
     public class ProgettiWorkSettingDto : GenericDto
     {

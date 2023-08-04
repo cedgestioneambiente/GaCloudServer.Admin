@@ -52,6 +52,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateQueryBuilderScriptAsync(long id, string descrizione);
         Task<bool> ChangeStatusQueryBuilderScriptAsync(long id);
+        Task<string> GenerateQueryBuilderScriptAsync(string script, List<ViewQueryBuilderParamOnScripts> paramsScript, dynamic paramsData);
+        Task<bool> CopyQueryBuilderScriptAsync(long id);
         #endregion
 
         #endregion

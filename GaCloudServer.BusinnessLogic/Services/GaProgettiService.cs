@@ -19,6 +19,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ProgettiWork> gaProgettiWorksRepo;
         protected readonly IGenericRepository<ProgettiJob> gaProgettiJobsRepo;
         protected readonly IGenericRepository<ProgettiJobAllegato> gaProgettiJobAllegatiRepo;
+        protected readonly IGenericRepository<ProgettiJobTask> gaProgettiJobTasksRepo;
         protected readonly IGenericRepository<ProgettiWorkSetting> gaProgettiWorkSettingsRepo;
 
         protected readonly IGenericRepository<ViewGaProgettiJobs> viewGaProgettiJobsRepo;
@@ -29,6 +30,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ProgettiWork> gaProgettiWorksRepo,
             IGenericRepository<ProgettiJob> gaProgettiJobsRepo,
             IGenericRepository<ProgettiJobAllegato> gaProgettiJobAllegatiRepo,
+            IGenericRepository<ProgettiJobTask> gaProgettiJobTasksRepo,
             IGenericRepository<ProgettiWorkSetting> gaProgettiWorkSettingsRepo,
 
             IGenericRepository<ViewGaProgettiJobs> viewGaProgettiJobsRepo,
@@ -38,6 +40,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaProgettiWorksRepo = gaProgettiWorksRepo;
             this.gaProgettiJobsRepo = gaProgettiJobsRepo;
             this.gaProgettiJobAllegatiRepo = gaProgettiJobAllegatiRepo;
+            this.gaProgettiJobTasksRepo = gaProgettiJobTasksRepo;
             this.gaProgettiWorkSettingsRepo = gaProgettiWorkSettingsRepo;
 
             this.viewGaProgettiJobsRepo = viewGaProgettiJobsRepo;
@@ -407,6 +410,57 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entity = await gaProgettiJobAllegatiRepo.GetByIdAsync(id);
             gaProgettiJobAllegatiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+
+        #endregion
+
+        #endregion
+
+        #region ProgettiJobTasks
+        public async Task<ProgettiJobTasksDto> GetGaProgettiJobTasksByJobIdAsync(long jobId)
+        {
+            var entities = await gaProgettiJobTasksRepo.GetWithFilterAsync(x => x.ProgettiJobId == jobId);
+            var dtos = entities.ToDto<ProgettiJobTasksDto, PagedList<ProgettiJobTask>>();
+            return dtos;
+        }
+
+        public async Task<ProgettiJobTaskDto> GetGaProgettiJobTaskByIdAsync(long id)
+        {
+            var entity = await gaProgettiJobTasksRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ProgettiJobTaskDto, ProgettiJobTask>();
+            return dto;
+        }
+
+        public async Task<long> AddGaProgettiJobTaskAsync(ProgettiJobTaskDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobTask, ProgettiJobTaskDto>();
+            await gaProgettiJobTasksRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaProgettiJobTaskAsync(ProgettiJobTaskDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobTask, ProgettiJobTaskDto>();
+            gaProgettiJobTasksRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaProgettiJobTaskAsync(long id)
+        {
+            var entity = await gaProgettiJobTasksRepo.GetByIdAsync(id);
+            gaProgettiJobTasksRepo.Remove(entity);
             await SaveChanges();
 
             return true;
