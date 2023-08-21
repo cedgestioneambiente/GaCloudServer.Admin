@@ -1082,9 +1082,29 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+        //[HttpPost("AddGaDispositiviOnDipendenteAsync")]
+        //public async Task<ApiResponse> AddGaDispositiviOnDipendenteAsync([FromBody] DispositiviOnDipendentiApiDto apiDto)
+        //{
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        throw new ApiProblemDetailsException(ModelState);
+
+        //    }
+        //    long response = 0;
+        //    var dtos = apiDto.ToDto<DispositiviOnDipendentiDto, DispositiviOnDipendentiApiDto>();
+        //    foreach (var dto in dtos.Data)
+        //    {
+        //        response = await _gaDispositiviService.AddGaDispositiviOnDipendenteAsync(dto);
+        //        await _gaDispositiviService.SetGaDispositiviStockNonDisponibileAsync(dto.DispositiviStockId);
+        //    }
+
+        //    return new ApiResponse("Created", response, code.Status201Created);
+        //}
+
 
         [HttpPost("AddGaDispositiviOnDipendenteAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaDispositiviOnDipendenteAsync([FromBody] DispositiviOnDipendentiApiDto apiDto)
+        public async Task<ActionResult<ApiResponse>> AddGaDispositiviOnDipendenteAsync([FromBody] DispositiviOnDipendenteApiDto apiDto)
         {
             try
             {
@@ -1092,13 +1112,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                long response = 0;
-                var dtos = apiDto.ToDto<DispositiviOnDipendentiDto, DispositiviOnDipendentiApiDto>();
-                foreach (var dto in dtos.Data)
-                {
-                    response = await _gaDispositiviService.AddGaDispositiviOnDipendenteAsync(dto);
-                    await _gaDispositiviService.SetGaDispositiviStockNonDisponibileAsync(dto.DispositiviStockId);
-                }
+                var dto = apiDto.ToDto<DispositiviOnDipendenteDto, DispositiviOnDipendenteApiDto>();
+                var response = await _gaDispositiviService.AddGaDispositiviOnDipendenteAsync(dto);
+                await _gaDispositiviService.SetGaDispositiviStockNonDisponibileAsync(dto.DispositiviStockId);
 
                 return new ApiResponse(response);
             }
@@ -1114,6 +1130,52 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+        //[HttpPost("AddGaDispositiviOnDipendenteAsync")]
+        //public async Task<ActionResult<ApiResponse>> AddGaDispositiviOnDipendenteAsync([FromBody] DispositiviOnDipendenteApiDto apiDto)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new ApiProblemDetailsException(ModelState);
+        //        }
+
+        //        var dto = new DispositiviOnDipendenteDto();
+        //        dto.Id = 0;
+        //        dto.Disabled = false;
+        //        //dto.Numero = apiDto.Numero;
+        //        dto.PersonaleDipendenteId = apiDto.PersonaleDipendenteId;
+        //        dto.DispositiviStockId = apiDto.DispositiviStockId;
+        //        dto.DataConsegna = apiDto.DataConsegna;
+
+        //        var response = await _gaDispositiviService.AddGaDispositiviOnDipendenteAsync(dto);
+        //        foreach (var itm in apiDto.Items)
+        //        {
+        //            var dettaglio = new DispositiviOnDipendenteDto();
+        //            dettaglio.Id = 0;
+        //            dettaglio.Disabled = false;
+        //            //dettaglio.PersonaleSchedaConsegnaId = response;
+        //            dettaglio.DispositiviStockId = itm.Id;
+        //            //dettaglio.Taglia = itm.Taglia;
+        //            //dettaglio.Qta = itm.Qta;
+
+        //            var insertDettagli = await _gaDispositiviService.AddGaDispositiviOnDipendenteAsync(dettaglio);
+        //        }
+        //        await _gaDispositiviService.SetGaDispositiviStockNonDisponibileAsync(dto.DispositiviStockId);
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (ApiProblemDetailsException ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw ex;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex);
+        //    }
+
+        //}
 
         //[HttpPost("AddGaDispositiviOnDipendenteAsync")]
         //public async Task<ActionResult<ApiResponse>> AddGaDispositiviOnDipendenteAsync([FromBody] DispositiviOnDipendenteApiDto apiDto)
@@ -1131,6 +1193,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         //        dto.PersonaleDipendenteId = apiDto.PersonaleDipendenteId;
 
         //        var response = await _gaDispositiviService.AddGaDispositiviOnDipendenteAsync(dto);
+        //        await _gaDispositiviService.SetGaDispositiviStockNonDisponibileAsync(dto.DispositiviStockId);
 
         //        return new ApiResponse(response);
         //    }
@@ -1286,7 +1349,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpPost("AddGaDispositiviModuloAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaDispositiviModuloAsync([FromForm] DispositiviModuloApiDto apiDto)
+        public async Task<ActionResult<ApiResponse>> AddGaDispositiviModuloAsync([FromBody] DispositiviModuloNewApiDto apiDto)
         {
             try
             {
@@ -1294,20 +1357,28 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-                string fileFolder = "GaCloud/Dispositivi";
-                var dto = apiDto.ToDto<DispositiviModuloDto, DispositiviModuloApiDto>();
+
+                var dto = new DispositiviModuloDto();
+                dto.Id = 0;
+                dto.Disabled = false;
+                dto.Numero = apiDto.Numero;
+                dto.PersonaleDipendenteId = apiDto.PersonaleDipendenteId;
+                dto.Data = apiDto.Data;
+
                 var response = await _gaDispositiviService.AddGaDispositiviModuloAsync(dto);
-                if (apiDto.uploadFile)
+                foreach (var itm in apiDto.Items)
                 {
-                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
-                    dto.Id = response;
-                    dto.FileFolder = fileFolder;
-                    dto.FileName = fileUploadResponse.fileName;
-                    dto.FileSize = apiDto.File.Length.ToString();
-                    dto.FileType = apiDto.File.ContentType;
-                    dto.FileId = fileUploadResponse.id;
+                    var dettaglio = new DispositiviOnDipendenteDto();
+                    dettaglio.Id = 0;
+                    dettaglio.Disabled = false;
+                    dettaglio.PersonaleDipendenteId = response;
+                    dettaglio.DispositiviStockId = itm.Id;
+                    dettaglio.DataConsegna = itm.DataConsegna;
+                    dettaglio.DataRitiro = itm.DataRitiro;
+
+
+                    var insertDettagli = await _gaDispositiviService.AddGaDispositiviOnDipendenteAsync(dettaglio);
                     var updateFileResponse = await _gaDispositiviService.UpdateGaDispositiviModuloAsync(dto);
-                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
                 }
 
                 return new ApiResponse(response);
@@ -1324,7 +1395,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
-
+       
         [HttpPost("UpdateGaDispositiviModuloAsync")]
         public async Task<ActionResult<ApiResponse>> UpdateGaDispositiviModuloAsync([FromForm] DispositiviModuloApiDto apiDto)
         {
@@ -1334,10 +1405,12 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
+
                 string fileFolder = "GaCloud/Dispositivi";
                 var dto = apiDto.ToDto<DispositiviModuloDto, DispositiviModuloApiDto>();
                 var response = await _gaDispositiviService.UpdateGaDispositiviModuloAsync(dto);
                 bool failureDelete = false;
+
                 if (apiDto.deleteFile)
                 {
                     var deleteResponse = await _fileService.Remove(apiDto.FileId);

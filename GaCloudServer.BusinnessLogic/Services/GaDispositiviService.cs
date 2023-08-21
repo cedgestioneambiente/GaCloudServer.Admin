@@ -760,6 +760,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> AddGaDispositiviModuloAsync(DispositiviModuloDto dto)
         {
             var entity = dto.ToEntity<DispositiviModulo, DispositiviModuloDto>();
+            entity.Numero = await GenerateNumberDispositiviModulo(dto.Data.Year);
             await gaDispositiviModuliRepo.AddAsync(entity);
             await SaveChanges();
             DetachEntity(entity);
@@ -920,6 +921,23 @@ namespace GaCloudServer.BusinnessLogic.Services
         private void DetachEntity<T>(T entity)
         {
             unitOfWork.DetachEntity(entity);
+        }
+        #endregion
+
+        #region Private Functions
+        private async Task<string> GenerateNumberDispositiviModulo(int year)
+        {
+            try
+            {
+                var entities = await gaDispositiviModuliRepo.GetWithFilterAsync(x => x.Data.Year == year);
+                int num = 0;
+                if (entities.Data.Count() > 0) { num = entities.Data.Select(x => int.Parse(x.Numero.Substring(0, x.Numero.IndexOf("/")))).Max(); }
+                return (Convert.ToInt32(num) + 1).ToString() + "/" + year.ToString();
+            }
+            catch (Exception)
+            {
+                return "1/" + year.ToString();
+            }
         }
         #endregion
 

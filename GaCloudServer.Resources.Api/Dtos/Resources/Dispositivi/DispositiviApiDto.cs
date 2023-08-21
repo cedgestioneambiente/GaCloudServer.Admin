@@ -160,4 +160,24 @@ namespace GaCloudServer.Resources.Api.Dtos.Dispositivi
     }
 
     #endregion
+
+    //Internal
+    public class DispositiviModuloNewApiDto : GenericApiDto
+    {
+        public long PersonaleDipendenteId { get; set; }
+        public DateTime Data { get; set; }
+        public string Numero { get; set; }
+        public string? Note { get; set; }
+        public List<DispositiviOnDipendenteItemApiDto> Items { get; set; }
+    }
+    public class DispositiviOnDipendenteItemApiDto
+    {
+        public long Id { get; set; }
+        public string? Item { get; set; }
+        public DateTime DataConsegna { get; set; }
+        public DateTime? DataRitiro { get; set; }
+        //public string Dpi { get; set; }
+        //public string Taglia { get; set; }
+        //public int Qta { get; set; }
+    }
 }

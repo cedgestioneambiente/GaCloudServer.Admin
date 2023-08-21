@@ -156,7 +156,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
     {
         public string Nominativo { get; set; }
         public string Data { get; set; }
-        public string Note { get; set; }
+        //public string Note { get; set; }
         public List<dynamic> Dispositivi { get; set; }
 
     }
