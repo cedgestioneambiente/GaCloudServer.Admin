@@ -26,9 +26,12 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
         Task<PagedList<ViewGaBackOfficeUtenzeGrouped>> GetViewGaBackOfficeUtenzeGroupedByCodAziAndRagCliCfAsync(string codAzi, string ragCliCf);
         Task<PagedList<ViewGaBackOfficeUtenzePartiteGrp>> GetViewGaBackOfficeUtenzePartiteGrpByCodAziAndFilterAsync(string codAzi, string filter);
+        Task<ViewGaBackOfficeUtenze> GetViewGaBackOfficeUtenzaByCpAziAndNumConAsync(string cpAzi, string numCon);
         Task<PagedList<ViewGaBackOfficeUtenze>> GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(string cpAzi, string filter);
         Task<PagedList<ViewGaBackOfficeUtenzePartite>> GetViewGaBackOfficeUtenzePartiteByCpAziAndNumConAsync(string cpAzi, string numCon);
+        Task<PagedList<ViewGaBackOfficeUtenzePartiteDetail>> GetViewGaBackOfficeUtenzePartiteByCpAziAndIndirizzoAsync(string cpAzi,string via, int startNumCiv,int endNumCiv);
         Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAsync(string cpAzi, string numCon);
+        Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAndPartitaAsync(string cpAzi, string numCon, string partita);
 
 
         #region Sp

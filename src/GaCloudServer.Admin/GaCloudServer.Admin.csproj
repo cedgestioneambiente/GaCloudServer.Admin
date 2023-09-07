@@ -65,6 +65,18 @@
 	  <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V6.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V6.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\SmartCity\CREATE_ViewGaSmartCity.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\SmartCity\DROP_ViewGaSmartCity.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\BackOffice\CREATE_SpGaBackOffice_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

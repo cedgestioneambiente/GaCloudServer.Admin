@@ -25,6 +25,7 @@ using GaCloudServer.BusinessLogic.Mappers.Consorzio;
 using GaCloudServer.BusinessLogic.Mappers.Crm;
 using GaCloudServer.BusinnessLogic.Mappers.PrenotazioneLocali;
 using GaCloudServer.BusinessLogic.Mappers.Dispositivi;
+using GaCloudServer.BusinessLogic.Mappers.SmartCity;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -60,6 +61,7 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new CrmMapperProfile(),
             new PrenotazioneLocaliMapperProfile(),
             new DispositiviMapperProfile(),
+            new SmartCityMapperProfile()
         };
 
         static GenericMapper() {

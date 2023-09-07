@@ -673,7 +673,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
-
         public async Task<bool> ChangeSostLuchGaCrmEventDeviceAsync(long id)
         {
             var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
@@ -704,7 +703,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             
 
         }
-
         public async Task<bool> SetNotCompletedGaCrmEventDeviceAsync(long id)
         {
             var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
@@ -714,6 +712,192 @@ namespace GaCloudServer.BusinnessLogic.Services
             return true;
 
 
+        }
+
+        public async Task<bool> AddGaCrmEventDevice120KitAsync(long eventId,int ticketId)
+        {
+
+            CrmEventDevice device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "04";
+            device.DesCon = "120 SECCO GRIGIO";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled=false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "08";
+            device.DesCon = "120 CARTA E CARTONE GIALLO";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "11";
+            device.DesCon = "120 IMB.PLASTICA E LATTINE BIA";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "07";
+            device.DesCon = "23 UMIDO MARRONE";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "16";
+            device.DesCon = "240 VEGETALE BEIGE";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            await SaveChanges();
+
+            return true;
+        }
+
+        public async Task<bool> AddGaCrmEventDevice30KitAsync(long eventId, int ticketId)
+        {
+
+            CrmEventDevice device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "05";
+            device.DesCon = "30 SECCO GRIGIO";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "09";
+            device.DesCon = "30 CARTA E CARTONE GIALLO";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "12";
+            device.DesCon = "30 IMB.PLASTICA E LATTINE BIA";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "07";
+            device.DesCon = "23 UMIDO MARRONE";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            device = new CrmEventDevice();
+            device.Id = 0;
+            device.Selected = true;
+            device.TipCon = "16";
+            device.DesCon = "240 VEGETALE BEIGE";
+            device.DtCon = DateTime.Now.ToString("dd/MM/yyyy");
+            device.DtRit = "31/12/2029";
+            device.Completed = false;
+            device.SostLuch = false;
+            device.Disabled = false;
+            device.Identi1 = "";
+            device.Identi2 = "";
+            device.CrmEventId = eventId;
+            device.CrmTicketId = ticketId;
+
+            await gaCrmEventDevicesRepo.AddAsync(device);
+
+            await SaveChanges();
+
+            return true;
         }
         #endregion
         #endregion

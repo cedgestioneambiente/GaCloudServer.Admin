@@ -54,6 +54,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -173,6 +175,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         DbSet<ViewGaBackOfficeUtenze> ViewGaBackOfficeUtenze { get; set; }
         DbSet<ViewGaBackOfficeUtenzePartite> ViewGaBackOfficeUtenzePartite { get; set; }
+        DbSet<ViewGaBackOfficeUtenzePartiteDetail> ViewGaBackOfficeUtenzePartiteDetail { get; set; }
         DbSet<ViewGaBackOfficeUtenzePartiteGrp> ViewGaBackOfficeUtenzePartiteGrp { get; set; }
         DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
         #endregion
@@ -528,8 +531,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<DispositiviModulo> GaDispositiviModuli { get; set; }
         DbSet<DispositiviOnModulo> GaDispositiviOnModuli { get; set; }
 
-
-
         #region Views
         DbSet<ViewGaDispositiviItems> ViewGaDispositiviItems { get; set; }
         DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
@@ -538,6 +539,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #endregion
 
+        #endregion
+
+        #region SmartCity
+        DbSet<SmartCityPermission> GaSmartCityPermissions { get; set; }
+
+        #region Views
+        DbSet<ViewGaSmartCityPermissions> ViewGaSmartCityPermissions { get; set; }
+        #endregion
         #endregion
 
     }

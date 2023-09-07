@@ -55,6 +55,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -178,6 +180,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         public DbSet<ViewGaBackOfficeUtenze> ViewGaBackOfficeUtenze { get; set; }
         public DbSet<ViewGaBackOfficeUtenzePartite> ViewGaBackOfficeUtenzePartite { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzePartiteDetail> ViewGaBackOfficeUtenzePartiteDetail { get; set; }
         public DbSet<ViewGaBackOfficeUtenzePartiteGrp> ViewGaBackOfficeUtenzePartiteGrp { get; set; }
         public DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
         #endregion
@@ -539,10 +542,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaDispositiviOnDipendenti> ViewGaDispositiviOnDipendenti { get; set; }
         public DbSet<ViewGaDispositiviStocks> ViewGaDispositiviStocks { get; set; }
         public DbSet<ViewGaDispositiviOnModuli> ViewGaDispositiviOnModuli { get; set; }
-        
+
 
         #endregion
 
+        #endregion
+
+        #region SmartCity
+        public DbSet<SmartCityPermission> GaSmartCityPermissions { get; set; }
+
+        #region Views
+        public DbSet<ViewGaSmartCityPermissions> ViewGaSmartCityPermissions { get; set; }
+        #endregion
         #endregion
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
@@ -781,6 +792,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewGaBackOfficeUtenzePartite))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzePartiteDetail>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzePartiteDetail))
                 .HasNoKey();
             });
 
@@ -1458,6 +1476,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasKey(x => x.Id);
             });
 
+            #endregion
+
+            #region SmartCity
+            builder.Entity<ViewGaSmartCityPermissions>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaSmartCityPermissions))
+                .HasNoKey();
+            });
             #endregion
 
 

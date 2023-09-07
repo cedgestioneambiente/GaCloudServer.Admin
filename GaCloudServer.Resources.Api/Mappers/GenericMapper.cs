@@ -22,6 +22,7 @@ using GaCloudServer.Resources.Api.Mappers.QueryBuilder;
 using GaCloudServer.Resources.Api.Mappers.Reclami;
 using GaCloudServer.Resources.Api.Mappers.Segnalazioni;
 using GaCloudServer.Resources.Api.Mappers.Shortcuts;
+using GaCloudServer.Resources.Api.Mappers.SmartCity;
 using GaCloudServer.Resources.Api.Mappers.System;
 using GaCloudServer.Resources.Api.Mappers.Tasks;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
@@ -59,6 +60,7 @@ namespace GaCloudServer.Resources.Api.Mappers
             new CrmMapperProfile(),
             new PrenotazioneLocaliMapperProfile(),
             new DispositiviMapperProfile(),
+            new SmartCityMapperProfile()
         };
 
         static GenericMapper() {

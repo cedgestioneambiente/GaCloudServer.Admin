@@ -1123,6 +1123,40 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("AddGaCrmEventDevice120KitAsync/{eventId}/{ticketId}")]
+        public async Task<ActionResult<ApiResponse>> ChangeSostLuchGaCrmEventDeviceAsync(long eventId,int ticketId)
+        {
+            try
+            {
+                var result = await _gaCrmService.AddGaCrmEventDevice120KitAsync(eventId,ticketId);
+
+                return new ApiResponse(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("AddGaCrmEventDevice30KitAsync/{eventId}/{ticketId}")]
+        public async Task<ActionResult<ApiResponse>> AddGaCrmEventDevice30KitAsync(long eventId, int ticketId)
+        {
+            try
+            {
+                var result = await _gaCrmService.AddGaCrmEventDevice30KitAsync(eventId, ticketId);
+
+                return new ApiResponse(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #endregion

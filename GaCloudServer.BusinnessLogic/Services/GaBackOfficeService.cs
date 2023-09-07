@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using nh = GaCloudServer.BusinnessLogic.Helpers.NumberHelper;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -30,6 +31,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaBackOfficeContenitoriLetture> viewGaBackOfficeContenitoriLettureRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenze> viewGaBackOfficeUtenzeRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartite> viewGaBackOfficeUtenzePartiteRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail> viewGaBackOfficeUtenzePartiteDetailRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
 
@@ -54,6 +56,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeContenitoriLetture> viewGaBackOfficeContenitoriLettureRepo,
             IGenericRepository<ViewGaBackOfficeUtenze> viewGaBackOfficeUtenzeRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartite> viewGaBackOfficeUtenzePartiteRepo,
+            IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail> viewGaBackOfficeUtenzePartiteDetailRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
 
@@ -80,6 +83,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.viewGaBackOfficeUtenzeRepo = viewGaBackOfficeUtenzeRepo;
             this.viewGaBackOfficeUtenzePartiteRepo = viewGaBackOfficeUtenzePartiteRepo;
+            this.viewGaBackOfficeUtenzePartiteDetailRepo = viewGaBackOfficeUtenzePartiteDetailRepo;
             this.viewGaBackOfficeUtenzePartiteGrpRepo = viewGaBackOfficeUtenzePartiteGrpRepo;
             this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
 
@@ -150,6 +154,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Views
+
         public async Task<PagedList<ViewGaBackOfficeUtenzeGrouped>> GetViewGaBackOfficeUtenzeGroupedByCodAziAndRagCliCfAsync(string codAzi, string ragCliCf)
         {
             var view = await viewGaBackOfficeUtenzeGroupedRepo.GetWithFilterAsync(x=>x.CodAzi==codAzi && (EF.Functions.Like(x.RagCli,ragCliCf.toWildcardString())||EF.Functions.Like(x.CodFis,ragCliCf.toWildcardString())),1,0,"RagCli");
@@ -166,6 +171,11 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
+        public async Task<ViewGaBackOfficeUtenze> GetViewGaBackOfficeUtenzaByCpAziAndNumConAsync(string cpAzi, string numCon)
+        {
+            var view= await viewGaBackOfficeUtenzeRepo.GetSingleWithFilter(x=>x.CpAzi==cpAzi && x.NumCon==numCon);
+            return view;
+        }
         public async Task<PagedList<ViewGaBackOfficeUtenze>> GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(string cpAzi, string filter)
         {
             var view = await viewGaBackOfficeUtenzeRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi 
@@ -185,10 +195,59 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
+        public async Task<PagedList<ViewGaBackOfficeUtenzePartiteDetail>> GetViewGaBackOfficeUtenzePartiteByCpAziAndIndirizzoAsync(string cpAzi, string via,int startNumCiv,int endNumCiv)
+        {
+            if (via.Length > 0 && startNumCiv != 0 && endNumCiv != 0)
+            {
+                var view = await viewGaBackOfficeUtenzePartiteDetailRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi
+                && (EF.Functions.Like(x.DesVia, via.toWildcardString()))
+                && x.NumCivNum >= startNumCiv && x.NumCivNum <= endNumCiv
+            , 1, 0, "NumCivNum");
+                return view;
+            }
+            else if (via.Length > 0 && startNumCiv != 0)
+            {
+                var view = await viewGaBackOfficeUtenzePartiteDetailRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi
+               && (EF.Functions.Like(x.DesVia, via.toWildcardString()))
+               && x.NumCivNum >= startNumCiv
+           , 1, 0, "NumCivNum");
+                return view;
+            }
+            else if (via.Length > 0 && endNumCiv != 0)
+            {
+                var view = await viewGaBackOfficeUtenzePartiteDetailRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi
+                && (EF.Functions.Like(x.DesVia, via.toWildcardString()))
+                && x.NumCivNum <= endNumCiv
+            , 1, 0, "NumCivNum");
+                return view;
+            }
+            else if (via.Length > 0)
+            {
+                var view = await viewGaBackOfficeUtenzePartiteDetailRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi
+                    && (EF.Functions.Like(x.DesVia, via.toWildcardString()))
+                , 1, 0, "NumCivNum");
+                return view;
+            }
+            else
+            {
+                return null;
+            }
+
+            
+        }
+
         public async Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAsync(string cpAzi, string numCon)
         {
             var view = await viewGaBackOfficeUtenzeDispositiviRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi
             && x.NumCon == numCon
+            , 1, 0, "Partita");
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAndPartitaAsync(string cpAzi, string numCon, string partita)
+        {
+            var view = await viewGaBackOfficeUtenzeDispositiviRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi
+            && x.NumCon == numCon && x.Partita==partita
             , 1, 0, "Partita");
             return view;
         }

@@ -101,6 +101,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> SetCompletedGaCrmEventDeviceAsync(long id);
         Task<bool> SetNotCompletedGaCrmEventDeviceAsync(long id);
 
+        Task<bool> AddGaCrmEventDevice120KitAsync(long eventId, int ticketId);
+
+        Task<bool> AddGaCrmEventDevice30KitAsync(long eventId, int ticketId);
+
         #endregion
         #endregion
 

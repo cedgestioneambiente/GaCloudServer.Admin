@@ -51,6 +51,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
@@ -175,6 +177,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeZone>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenze>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartite>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartite>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteDetail>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteGrp>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeDispositivi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeDispositivi>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeTipCon>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeTipCon>>();
@@ -523,7 +526,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaDispositiviOnModuli>, GenericRepository<TResourcesDbContext, ViewGaDispositiviOnModuli>>();
             services.AddTransient<IGenericRepository<ViewGaDispositiviStocks>, GenericRepository<TResourcesDbContext, ViewGaDispositiviStocks>>();
 
-            # endregion
+            #endregion
+
+            //SmartCity
+            #region SmartCity
+
+            services.AddTransient<IGenericRepository<SmartCityPermission>, GenericRepository<TResourcesDbContext, SmartCityPermission>>();
+
+            services.AddTransient<IGenericRepository<ViewGaSmartCityPermissions>, GenericRepository<TResourcesDbContext, ViewGaSmartCityPermissions>>();
+
+            #endregion
+
 
 
 
