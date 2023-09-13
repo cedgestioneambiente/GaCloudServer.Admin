@@ -376,11 +376,12 @@ namespace GaCloudServer.AI.Core.Services
         /// <returns></returns>
         private static int GetElapsed(long timestamp)
         {
-            //return (int)Stopwatch.GetElapsedTime(timestamp).TotalMilliseconds;
+            long actualTimestamp = Stopwatch.GetTimestamp();
 
-            DateTimeOffset startingDateTime = DateTimeOffset.FromUnixTimeSeconds(timestamp);
-            TimeSpan elapsedTime = startingDateTime.Subtract(DateTimeOffset.UtcNow);
-            return (int)elapsedTime.TotalMilliseconds;
+            long elapsedTicks = actualTimestamp - timestamp;
+            double elapsedMilliseconds = (double)elapsedTicks / Stopwatch.Frequency * 1000.0;
+
+            return (int)elapsedMilliseconds;
         }
 
 
