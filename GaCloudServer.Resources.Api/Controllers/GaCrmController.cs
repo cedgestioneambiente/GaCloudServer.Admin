@@ -1,4 +1,5 @@
-﻿using AutoWrapper.Filters;
+﻿using AutoMapper;
+using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
@@ -6,6 +7,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Ftp;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
 using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -13,6 +15,7 @@ using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Crm;
 using GaCloudServer.Resources.Api.Dtos.Custom;
+using GaCloudServer.Resources.Api.Dtos.Garbage;
 using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
@@ -20,6 +23,7 @@ using GaCloudServer.Resources.Api.Mappers;
 using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -36,6 +40,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly IPrintService _printService;
         private readonly IMailService _mailService;
         private readonly IFileService _fileService;
+        private readonly IFtpService _ftpService;
         private readonly INotificationService _notificationService;
 
         public GaCrmController(
@@ -43,7 +48,8 @@ namespace GaCloudServer.Resources.Api.Controllers
             , IMailService mailService
             , INotificationService notificationService
             , IPrintService printService
-            ,IFileService fileService
+            , IFileService fileService
+            , IFtpService ftpService
             , ILogger<GaCrmController> logger)
         {
 
@@ -52,6 +58,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             _mailService = mailService;
             _notificationService = notificationService;
             _fileService = fileService;
+            _ftpService = ftpService;
             _logger = logger;
         }
 
@@ -1822,6 +1829,429 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        #endregion
+
+        #region Garbage
+        [HttpGet("UploadFTPViewGaCrmGarbageUtenzeAsync")]
+        public async Task<ActionResult<ApiResponse>> UploadFTPViewGaCrmGarbageUtenzeAsync()
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ViewGaCrmGarbageUtenze, GarbageUtenzaApiDto>();
+
+                });
+
+                IMapper mapper = config.CreateMapper();
+
+                var view = await _gaCrmService.GetViewGaCrmGarbageUtenzeAsync();
+                var list = mapper.Map<List<GarbageUtenzaApiDto>>(view.Data);
+                var csvList = list.ToDelimitedText(";", false, true);
+
+                //Creare directory Storage
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Storage")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Storage"));
+
+                }
+                var fileName = string.Format("Storage\\EXPORT_UTENZE.csv");
+
+                var fullPath = Path.Combine(Path.GetDirectoryName("Storage"), fileName);
+
+                System.IO.File.WriteAllText(fullPath, csvList);
+
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://gestioneambiente.garbageweb.it/" + fileName.Replace("Storage\\", ""));
+
+                request.Credentials = new NetworkCredential("GestAmbAnagrafiche", "G3e$s!An4gR!2023");
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = true;
+
+                string response = "";
+
+                using (Stream fileStream = System.IO.File.OpenRead(Path.GetFullPath(fileName)))
+                using (Stream ftpStream = request.GetRequestStream())
+                {
+                    byte[] buffer = new byte[10240];
+                    int read;
+                    while ((read = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ftpStream.Write(buffer, 0, read);
+                        Console.WriteLine("Uploaded {0} bytes", fileStream.Position);
+                        response=string.Format("Uploaded {0} bytes", fileStream.Position);
+                    }
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("UploadFTPViewGaCrmGarbagePartiteAsync")]
+        public async Task<ActionResult<ApiResponse>> UploadFTPViewGaCrmGarbagePartiteAsync()
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ViewGaCrmGarbagePartite, GarbagePartitaApiDto>();
+
+                });
+
+                IMapper mapper = config.CreateMapper();
+
+                var view = await _gaCrmService.GetViewGaCrmGarbagePartiteAsync();
+                var list = mapper.Map<List<GarbagePartitaApiDto>>(view.Data);
+                var csvList = list.ToDelimitedText(";", false, true);
+
+                //Creare directory Storage
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Storage")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Storage"));
+
+                }
+                var fileName = string.Format("Storage\\EXPORT_PARTITE.csv");
+
+                var fullPath = Path.Combine(Path.GetDirectoryName("Storage"), fileName);
+
+                System.IO.File.WriteAllText(fullPath, csvList);
+
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://gestioneambiente.garbageweb.it/" + fileName.Replace("Storage\\", ""));
+
+                request.Credentials = new NetworkCredential("GestAmbAnagrafiche", "G3e$s!An4gR!2023");
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = true;
+
+                string response = "";
+
+                using (Stream fileStream = System.IO.File.OpenRead(Path.GetFullPath(fileName)))
+                using (Stream ftpStream = request.GetRequestStream())
+                {
+                    byte[] buffer = new byte[10240];
+                    int read;
+                    while ((read = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ftpStream.Write(buffer, 0, read);
+                        Console.WriteLine("Uploaded {0} bytes", fileStream.Position);
+                        response = string.Format("Uploaded {0} bytes", fileStream.Position);
+                    }
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("UploadFTPViewGaCrmGarbageTipologieAsync")]
+        public async Task<ActionResult<ApiResponse>> UploadFTPViewGaCrmGarbageTipologieAsync()
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ViewGaCrmGarbageTipologie, GarbageTipologiaApiDto>();
+
+                });
+
+                IMapper mapper = config.CreateMapper();
+
+                var view = await _gaCrmService.GetViewGaCrmGarbageTipologieAsync();
+                var list = mapper.Map<List<GarbageTipologiaApiDto>>(view.Data);
+                var csvList = list.ToDelimitedText(";", false, true);
+
+                //Creare directory Storage
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Storage")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Storage"));
+
+                }
+                var fileName = string.Format("Storage\\EXPORT_TICKET_TIPOLOGIE.csv");
+
+                var fullPath = Path.Combine(Path.GetDirectoryName("Storage"), fileName);
+
+                System.IO.File.WriteAllText(fullPath, csvList);
+
+                FtpUploadDto dto = new FtpUploadDto();
+                dto.serverUri = "gestioneambiente.garbageweb.it/";
+                dto.filePath = fullPath;
+                dto.fileName = fileName.Replace("Storage\\", "");
+                dto.credentials = new NetworkCredential("GestAmbAnagrafiche", "G3e$s!An4gR!2023");
+                dto.useBinary = true;
+                dto.usePassive = true;
+                dto.keepAlive = true;
+
+                var response = await _ftpService.UploadAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("UploadFTPViewGaCrmGarbageProvenienzeAsync")]
+        public async Task<ActionResult<ApiResponse>> UploadFTPViewGaCrmGarbageProvenienzeAsync()
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ViewGaCrmGarbageProvenienze, GarbageProvenienzaApiDto>();
+
+                });
+
+                IMapper mapper = config.CreateMapper();
+
+                var view = await _gaCrmService.GetViewGaCrmGarbageProvenienzeAsync();
+                var list = mapper.Map<List<GarbageProvenienzaApiDto>>(view.Data);
+                var csvList = list.ToDelimitedText(";", false, true);
+
+                //Creare directory Storage
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Storage")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Storage"));
+
+                }
+                var fileName = string.Format("Storage\\EXPORT_TICKET_PROVENIENZE.csv");
+
+                var fullPath = Path.Combine(Path.GetDirectoryName("Storage"), fileName);
+
+                System.IO.File.WriteAllText(fullPath, csvList);
+
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://gestioneambiente.garbageweb.it/" + fileName.Replace("Storage\\", ""));
+
+                request.Credentials = new NetworkCredential("GestAmbAnagrafiche", "G3e$s!An4gR!2023");
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = true;
+
+                string response = "";
+
+                using (Stream fileStream = System.IO.File.OpenRead(Path.GetFullPath(fileName)))
+                using (Stream ftpStream = request.GetRequestStream())
+                {
+                    byte[] buffer = new byte[10240];
+                    int read;
+                    while ((read = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ftpStream.Write(buffer, 0, read);
+                        Console.WriteLine("Uploaded {0} bytes", fileStream.Position);
+                        response = string.Format("Uploaded {0} bytes", fileStream.Position);
+                    }
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("UploadFTPViewGaCrmGarbageStatiAsync")]
+        public async Task<ActionResult<ApiResponse>> UploadFTPViewGaCrmGarbageStatiAsync()
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ViewGaCrmGarbageStati, GarbageStatoApiDto>();
+
+                });
+
+                IMapper mapper = config.CreateMapper();
+
+                var view = await _gaCrmService.GetViewGaCrmGarbageStatiAsync();
+                var list = mapper.Map<List<GarbageStatoApiDto>>(view.Data);
+                var csvList = list.ToDelimitedText(";", false, true);
+
+                //Creare directory Storage
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Storage")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Storage"));
+
+                }
+                var fileName = string.Format("Storage\\EXPORT_TICKET_STATI.csv");
+
+                var fullPath = Path.Combine(Path.GetDirectoryName("Storage"), fileName);
+
+                System.IO.File.WriteAllText(fullPath, csvList);
+
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://gestioneambiente.garbageweb.it/" + fileName.Replace("Storage\\", ""));
+
+                request.Credentials = new NetworkCredential("GestAmbAnagrafiche", "G3e$s!An4gR!2023");
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = true;
+
+                string response = "";
+
+                using (Stream fileStream = System.IO.File.OpenRead(Path.GetFullPath(fileName)))
+                using (Stream ftpStream = request.GetRequestStream())
+                {
+                    byte[] buffer = new byte[10240];
+                    int read;
+                    while ((read = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ftpStream.Write(buffer, 0, read);
+                        Console.WriteLine("Uploaded {0} bytes", fileStream.Position);
+                        response = string.Format("Uploaded {0} bytes", fileStream.Position);
+                    }
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("UploadFTPViewGaCrmGarbageTicketContactCenterAsync")]
+        public async Task<ActionResult<ApiResponse>> UploadFTPViewGaCrmGarbageTicketContactCenterAsync()
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ViewGaCrmGarbageTicketContactCenter, GarbageTicketContactCenterApiDto>();
+
+                });
+
+                IMapper mapper = config.CreateMapper();
+
+                var view = await _gaCrmService.GetViewGaCrmGarbageTicketContactCenterAsync();
+                var list = mapper.Map<List<GarbageTicketContactCenterApiDto>>(view.Data);
+                var csvList = list.ToDelimitedText(";", false, true);
+
+                //Creare directory Storage
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Storage")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Storage"));
+
+                }
+                var fileName = string.Format("Storage\\EXPORT_TICKET_CONTACT_CENTER.csv");
+
+                var fullPath = Path.Combine(Path.GetDirectoryName("Storage"), fileName);
+
+                System.IO.File.WriteAllText(fullPath, csvList);
+
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://gestioneambiente.garbageweb.it/" + fileName.Replace("Storage\\", ""));
+
+                request.Credentials = new NetworkCredential("GestAmbAnagrafiche", "G3e$s!An4gR!2023");
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = true;
+
+                string response = "";
+
+                using (Stream fileStream = System.IO.File.OpenRead(Path.GetFullPath(fileName)))
+                using (Stream ftpStream = request.GetRequestStream())
+                {
+                    byte[] buffer = new byte[10240];
+                    int read;
+                    while ((read = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ftpStream.Write(buffer, 0, read);
+                        Console.WriteLine("Uploaded {0} bytes", fileStream.Position);
+                        response = string.Format("Uploaded {0} bytes", fileStream.Position);
+                    }
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("UploadFTPViewGaCrmGarbageTicketMagazzinoAsync")]
+        public async Task<ActionResult<ApiResponse>> UploadFTPViewGaCrmGarbageTicketMagazzinoAsync()
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ViewGaCrmGarbageTicketMagazzino, GarbageTicketMagazzinoApiDto>();
+
+                });
+
+                IMapper mapper = config.CreateMapper();
+
+                var view = await _gaCrmService.GetViewGaCrmGarbageTicketMagazzinoAsync();
+                var list = mapper.Map<List<GarbageTicketMagazzinoApiDto>>(view.Data);
+                var csvList = list.ToDelimitedText(";", false, true);
+
+                //Creare directory Storage
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Storage")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Storage"));
+
+                }
+                var fileName = string.Format("Storage\\EXPORT_TICKET_MAGAZZINO.csv");
+
+                var fullPath = Path.Combine(Path.GetDirectoryName("Storage"), fileName);
+
+                System.IO.File.WriteAllText(fullPath, csvList);
+
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://gestioneambiente.garbageweb.it/" + fileName.Replace("Storage\\", ""));
+
+                request.Credentials = new NetworkCredential("GestAmbAnagrafiche", "G3e$s!An4gR!2023");
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = true;
+
+                string response = "";
+
+                using (Stream fileStream = System.IO.File.OpenRead(Path.GetFullPath(fileName)))
+                using (Stream ftpStream = request.GetRequestStream())
+                {
+                    byte[] buffer = new byte[10240];
+                    int read;
+                    while ((read = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ftpStream.Write(buffer, 0, read);
+                        Console.WriteLine("Uploaded {0} bytes", fileStream.Position);
+                        response = string.Format("Uploaded {0} bytes", fileStream.Position);
+                    }
+                }
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #region Shared Data Table

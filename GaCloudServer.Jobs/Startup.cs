@@ -3,6 +3,7 @@ using CrystalQuartz.AspNetCore;
 using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using GaCloudServer.Admin.EntityFramework.Shared.Extensions;
 using GaCloudServer.BusinnessLogic.Extensions;
+using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.Jobs.Helpers;
 using GaCloudServer.Jobs.Jobs;
 using GaCloudServer.Jobs.Providers;
@@ -12,12 +13,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
+using Skoruba.AuditLogging.EntityFramework.Entities;
 using System.Collections.Specialized;
 using System.Text;
-using Skoruba.AuditLogging.EntityFramework.Entities;
-using GaCloudServer.BusinnessLogic.Services.Interfaces;
-using GaCloudServer.BusinnessLogic.Services;
-using GaCloudServer.BusinnessLogic.Hub;
 
 namespace GaCloudServer.Jobs
 {
@@ -97,6 +95,13 @@ namespace GaCloudServer.Jobs
             services.AddScoped<ScadJobs.GaDipendentiTortonaScadenziarioJob>();
             services.AddScoped<ScadJobs.GaReclamiScadenziarioJob>();
             services.AddScoped<EmzJobs.EmzWhiteListJob>();
+            services.AddScoped<GarbageJobs.GarbageUtenzeJob>();
+            services.AddScoped<GarbageJobs.GarbagePartiteJob>();
+            services.AddScoped<GarbageJobs.GarbageTipologieJob>();
+            services.AddScoped<GarbageJobs.GarbageProvenienzeJob>();
+            services.AddScoped<GarbageJobs.GarbageStatiJob>();
+            services.AddScoped<GarbageJobs.GarbageTicketContactCenterJob>();
+            services.AddScoped<GarbageJobs.GarbageTicketMagazzinoJob>();
 
 
 
@@ -181,7 +186,14 @@ namespace GaCloudServer.Jobs
                         typeof(ScadJobs.GaDipendentiTortonaScadenziarioJob),
                         typeof(ScadJobs.GaContrattiScadenziarioJob),
                         typeof(ScadJobs.GaReclamiScadenziarioJob),
-                        typeof(EmzJobs.EmzWhiteListJob)
+                        typeof(EmzJobs.EmzWhiteListJob),
+                        typeof(GarbageJobs.GarbageUtenzeJob),
+                        typeof(GarbageJobs.GarbagePartiteJob),
+                        typeof(GarbageJobs.GarbageTipologieJob),
+                        typeof(GarbageJobs.GarbageStatiJob),
+                        typeof(GarbageJobs.GarbageProvenienzeJob),
+                        typeof(GarbageJobs.GarbageTicketContactCenterJob),
+                        typeof(GarbageJobs.GarbageTicketMagazzinoJob),
                     }
                 }
                 );

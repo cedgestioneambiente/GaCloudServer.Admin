@@ -1337,22 +1337,10 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views.ViewGaBackOfficeUtenzePartiteDetail", b =>
                 {
-                    b.Property<string>("Barrato")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CatComune")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Categ")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Cessato")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CodCli")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodZona")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Comune")
@@ -1361,41 +1349,20 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("CpAzi")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CpRowNum")
-                        .HasColumnType("int");
-
                     b.Property<string>("DesVia")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescriCat")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("DtFin")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DtFin1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DtIni")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Interno")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NrComp")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NrComp2")
-                        .HasColumnType("int");
-
                     b.Property<string>("NumCiv")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumCivNum")
+                        .HasColumnType("int");
 
                     b.Property<string>("NumCon")
                         .HasColumnType("nvarchar(max)");
@@ -1403,23 +1370,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Partita")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Piano")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("RagSo")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Scala")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sospeso")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Superfic")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Superficf")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Tributo")
                         .HasColumnType("nvarchar(max)");
@@ -4565,6 +4517,343 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("int");
 
                     b.ToView("ViewGaCrmEventJobs");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmGarbagePartite", b =>
+                {
+                    b.Property<string>("BARRATO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CESSATO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODCIE_COMUNE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODECE_CATEGORIA_UTENZA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODICE_CONTRATTO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODICE_PARTITA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODICE_ZONA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("COMUNE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DATA_FINE_PERIODO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DATA_FINE_UTENZA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DATA_INIZIO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DESCRIZIONE_CATEGORIA_UTENZA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("INTERNO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NUMERO_CIVICO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NUMERO_COMPONENTI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PIANO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PROGRESSIVO_VARIAZIONE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SCALA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SUPERFICIE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SUPERFICIE_FISSA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TIPO_UTENZA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VIA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaCrmGarbagePartite");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmGarbageProvenienze", b =>
+                {
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.ToView("ViewGaCrmGarbageProvenienze");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmGarbageStati", b =>
+                {
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.ToView("ViewGaCrmGarbageStati");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmGarbageTicketContactCenter", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("ASSEGNATO_A")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CELLULARE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CIVICO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("COD_COMUNE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("COD_PROVENIENZA_RICHIESTA")
+                        .HasColumnType("int");
+
+                    b.Property<int>("COD_STATO_RICHIESTA")
+                        .HasColumnType("int");
+
+                    b.Property<int>("COD_TIPO_RICHIESTA")
+                        .HasColumnType("int");
+
+                    b.Property<string>("COD_UTENZA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CREATO_DA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DATA_CHIUSURA")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DATA_RICHIESTA")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("EMAIL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EMAIL_PEC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NOTE_CHIUSURA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NOTE_TICKET")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TELEFONO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TRIBUTO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VIA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZONA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaCrmGarbageTicketContactCenter");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmGarbageTicketMagazzino", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("ASSEGNATO_A")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CELLULARE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CIVICO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("COD_COMUNE")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("COD_PROVENIENZA_RICHIESTA")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("COD_STATO_RICHIESTA")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("COD_TIPO_RICHIESTA")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("COD_UTENZA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CREATO_DA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DATA_CHIUSURA")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DATA_RICHIESTA")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("EMAIL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EMAIL_PEC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NOTE_CHIUSURA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NOTE_TICKET")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TELEFONO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TRIBUTO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VIA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZONA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaCrmGarbageTicketMagazzino");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmGarbageTipologie", b =>
+                {
+                    b.Property<string>("CodArera")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.ToView("ViewGaCrmGarbageTipologie");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmGarbageUtenze", b =>
+                {
+                    b.Property<string>("BARRATO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CAP")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CITTA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODICE_COMUNE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODICE_CONTRATTO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODICE_FISCALE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CODICE_ZONA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("COD_CLI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("COGNOME_RAGIONE_SOCIALE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DESCRIZIONE_ZONA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("INTERNO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NOME")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NUMERO_CIVICO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PARTITA_IVA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PIANO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PROVINCIA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RagSo1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SCALA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TIPO_PERSONA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VIA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaCrmGarbageUtenze");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmState", b =>

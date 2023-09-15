@@ -488,6 +488,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmTickets>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCalendarTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmCalendarTickets>>();
             services.AddTransient<IGenericRepository<ViewGaCrmEventJobs>, GenericRepository<TResourcesDbContext, ViewGaCrmEventJobs>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageUtenze>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageUtenze>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbagePartite>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbagePartite>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageTipologie>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageTipologie>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageProvenienze>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageProvenienze>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageStati>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageStati>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageTicketContactCenter>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageTicketContactCenter>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageTicketMagazzino>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageTicketMagazzino>>();
             #endregion
 
             //PrenotazioneLocali
@@ -499,7 +506,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaPrenotazioneLocaliUffici>, GenericRepository<TResourcesDbContext, ViewGaPrenotazioneLocaliUffici>>();
             services.AddTransient<IGenericRepository<ViewGaPrenotazioneLocaliRegistrazioni>, GenericRepository<TResourcesDbContext, ViewGaPrenotazioneLocaliRegistrazioni>>();
             #endregion
-
 
             //Emz
             #region Emz
@@ -675,7 +681,92 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Emz
 
             services.AddTransient<IGenericRepository<ViewEmzWhiteList>, GenericRepository<TResourcesDbContext, ViewEmzWhiteList>>();
-            # endregion
+            #endregion
+
+            //Crm
+            #region Crm
+            services.AddTransient<IGenericRepository<CrmEventState>, GenericRepository<TResourcesDbContext, CrmEventState>>();
+            services.AddTransient<IGenericRepository<CrmEventArea>, GenericRepository<TResourcesDbContext, CrmEventArea>>();
+            services.AddTransient<IGenericRepository<CrmEventComune>, GenericRepository<TResourcesDbContext, CrmEventComune>>();
+            services.AddTransient<IGenericRepository<CrmEvent>, GenericRepository<TResourcesDbContext, CrmEvent>>();
+            services.AddTransient<IGenericRepository<CrmEventDevice>, GenericRepository<TResourcesDbContext, CrmEventDevice>>();
+            services.AddTransient<IGenericRepository<CrmTicket>, GenericRepository<TResourcesDbContext, CrmTicket>>();
+            services.AddTransient<IGenericRepository<CrmTicketTag>, GenericRepository<TResourcesDbContext, CrmTicketTag>>();
+            services.AddTransient<IGenericRepository<CrmTicketAllegato>, GenericRepository<TResourcesDbContext, CrmTicketAllegato>>();
+
+            services.AddTransient<IGenericRepository<ViewGaCrmCanali>, GenericRepository<TResourcesDbContext, ViewGaCrmCanali>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmCausali>, GenericRepository<TResourcesDbContext, ViewGaCrmCausali>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmCausaliTypes>, GenericRepository<TResourcesDbContext, ViewGaCrmCausaliTypes>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmState>, GenericRepository<TResourcesDbContext, ViewGaCrmState>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmTickets>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmCalendarTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmCalendarTickets>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmEventJobs>, GenericRepository<TResourcesDbContext, ViewGaCrmEventJobs>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageUtenze>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageUtenze>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbagePartite>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbagePartite>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageTipologie>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageTipologie>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageProvenienze>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageProvenienze>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageStati>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageStati>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageTicketContactCenter>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageTicketContactCenter>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmGarbageTicketMagazzino>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageTicketMagazzino>>();
+            #endregion
+
+            //ContactCenter
+            #region ContactCenter
+            services.AddTransient<IGenericRepository<ContactCenterComune>, GenericRepository<TResourcesDbContext, ContactCenterComune>>();
+            services.AddTransient<IGenericRepository<ContactCenterProvenienza>, GenericRepository<TResourcesDbContext, ContactCenterProvenienza>>();
+            services.AddTransient<IGenericRepository<ContactCenterStatoRichiesta>, GenericRepository<TResourcesDbContext, ContactCenterStatoRichiesta>>();
+            services.AddTransient<IGenericRepository<ContactCenterTipoRichiesta>, GenericRepository<TResourcesDbContext, ContactCenterTipoRichiesta>>();
+            services.AddTransient<IGenericRepository<ContactCenterMail>, GenericRepository<TResourcesDbContext, ContactCenterMail>>();
+            services.AddTransient<IGenericRepository<ContactCenterAllegato>, GenericRepository<TResourcesDbContext, ContactCenterAllegato>>();
+            services.AddTransient<IGenericRepository<ContactCenterMailOnTicket>, GenericRepository<TResourcesDbContext, ContactCenterMailOnTicket>>();
+            services.AddTransient<IGenericRepository<ContactCenterTicket>, GenericRepository<TResourcesDbContext, ContactCenterTicket>>();
+            services.AddTransient<IGenericRepository<ContactCenterPrintTemplate>, GenericRepository<TResourcesDbContext, ContactCenterPrintTemplate>>();
+
+            //Views
+            services.AddTransient<IGenericRepository<ViewGaContactCenterTickets>, GenericRepository<TResourcesDbContext, ViewGaContactCenterTickets>>();
+            services.AddTransient<IGenericRepository<ViewFoContactCenterTickets>, GenericRepository<TResourcesDbContext, ViewFoContactCenterTickets>>();
+            services.AddTransient<IGenericRepository<ViewGaContactCenterTicketsIngombranti>, GenericRepository<TResourcesDbContext, ViewGaContactCenterTicketsIngombranti>>();
+
+            #endregion
+
+            //BackOffice
+            #region BackOffice
+            services.AddTransient<IGenericRepository<BackOfficeTicket>, GenericRepository<TResourcesDbContext, BackOfficeTicket>>();
+            services.AddTransient<IGenericRepository<BackOfficeParametroOnCategoria>, GenericRepository<TResourcesDbContext, BackOfficeParametroOnCategoria>>();
+            services.AddTransient<IGenericRepository<BackOfficeMargine>, GenericRepository<TResourcesDbContext, BackOfficeMargine>>();
+            services.AddTransient<IGenericRepository<BackOfficeZona>, GenericRepository<TResourcesDbContext, BackOfficeZona>>();
+
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeComuni>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeComuni>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeGrouped>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenze>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeNdUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeNdUtenzeGrouped>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeContenitoriLetture>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeContenitoriLetture>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeZone>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenze>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartite>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartite>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteDetail>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteGrp>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeDispositivi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeDispositivi>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeTipCon>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeTipCon>>();
+
+            //Sp
+            services.AddTransient<IProcedureManager<SpGaBackOfficeUtenze>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenze>>();
+            services.AddTransient<IProcedureManager<SpGaBackOfficeUtenzePartite>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenzePartite>>();
+            services.AddTransient<IProcedureManager<SpGaBackOfficeUtenzeDispositivi>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenzeDispositivi>>();
+            #endregion
+
+            //QueryBuilder
+            #region QueryBuilder
+            services.AddTransient<IGenericRepository<QueryBuilderParamType>, GenericRepository<TResourcesDbContext, QueryBuilderParamType>>();
+            services.AddTransient<IGenericRepository<QueryBuilderSection>, GenericRepository<TResourcesDbContext, QueryBuilderSection>>();
+            services.AddTransient<IGenericRepository<QueryBuilderParamOnScript>, GenericRepository<TResourcesDbContext, QueryBuilderParamOnScript>>();
+            services.AddTransient<IGenericRepository<QueryBuilderScript>, GenericRepository<TResourcesDbContext, QueryBuilderScript>>();
+
+            services.AddTransient<IGenericRepository<ViewQueryBuilderParamOnScripts>, GenericRepository<TResourcesDbContext, ViewQueryBuilderParamOnScripts>>();
+            services.AddTransient<IGenericRepository<ViewQueryBuilderScripts>, GenericRepository<TResourcesDbContext, ViewQueryBuilderScripts>>();
+
+            services.AddTransient<IQueryManager, QueryManager<TResourcesDbContext>>();
+            #endregion
 
             return services;
         }

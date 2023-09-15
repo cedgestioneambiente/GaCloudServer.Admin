@@ -13,7 +13,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 {
     public static class ResourcesDatabaseExtensions
     {
-        public static void RegisterSqlServerDbContexts<TResourcesDbContext>(this IServiceCollection services, ExtendedConnectionStringConfiguration connectionStrings, ExtendedDatabaseMigrationsConfiguration databaseMigrations) 
+        public static void RegisterSqlServerDbContexts<TResourcesDbContext>(this IServiceCollection services, ExtendedConnectionStringConfiguration connectionStrings, ExtendedDatabaseMigrationsConfiguration databaseMigrations, int OperationTimeout=30) 
             where TResourcesDbContext : DbContext 
         {
             string migrationsAssembly = typeof(ResourcesDatabaseExtensions).GetTypeInfo().Assembly.GetName().Name;
@@ -21,6 +21,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             {
                 options.UseSqlServer(connectionStrings.ResourcesDbConnection, delegate (SqlServerDbContextOptionsBuilder sql)
                 {
+                    sql.CommandTimeout(OperationTimeout);
                     sql.MigrationsAssembly(databaseMigrations.ResourcesDbMigrationsAssembly ?? migrationsAssembly);
                 });
             });

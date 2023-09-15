@@ -173,6 +173,17 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaCrmEventJobs>> GetViewGaCrmEventJobsByFilterAsync(bool all,DateTime dateStart, DateTime dateEnd);
         #endregion
 
+        #region Garbage
+        Task<PagedList<ViewGaCrmGarbageUtenze>> GetViewGaCrmGarbageUtenzeAsync();
+        Task<PagedList<ViewGaCrmGarbagePartite>> GetViewGaCrmGarbagePartiteAsync();
+        Task<PagedList<ViewGaCrmGarbageTipologie>> GetViewGaCrmGarbageTipologieAsync();
+        Task<PagedList<ViewGaCrmGarbageProvenienze>> GetViewGaCrmGarbageProvenienzeAsync();
+        Task<PagedList<ViewGaCrmGarbageStati>> GetViewGaCrmGarbageStatiAsync();
+        Task<PagedList<ViewGaCrmGarbageTicketContactCenter>> GetViewGaCrmGarbageTicketContactCenterAsync();
+        Task<PagedList<ViewGaCrmGarbageTicketMagazzino>> GetViewGaCrmGarbageTicketMagazzinoAsync();
+        
+        #endregion
+
         #region Shared Data Table
         Task<ContactCenterProvenienzeDto> GetGaCrmProvenienzeTicketAsync(int page = 1, int pageSize = 0);
         Task<ContactCenterTipiRichiesteDto> GetGaCrmTipiTicketAsync(bool all);

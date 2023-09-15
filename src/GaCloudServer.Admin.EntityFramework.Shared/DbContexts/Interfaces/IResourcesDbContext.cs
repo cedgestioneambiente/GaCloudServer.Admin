@@ -497,7 +497,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
         DbSet<ViewGaCrmCalendarTickets> ViewGaCrmCalendarTickets { get; set; }
         DbSet<ViewGaCrmEventJobs> ViewGaCrmEventJobs { get; set; }
+        DbSet<ViewGaCrmGarbageUtenze> ViewGaCrmGarbageUtenze { get; set; }
+        DbSet<ViewGaCrmGarbagePartite> ViewGaCrmGarbagePartite { get; set; }
+        DbSet<ViewGaCrmGarbageTipologie> ViewGaCrmGarbageTipologie { get; set; }
+        DbSet<ViewGaCrmGarbageProvenienze> ViewGaCrmGarbageProvenienze { get; set; }
+        DbSet<ViewGaCrmGarbageStati> ViewGaCrmGarbageStati { get; set; }
+        DbSet<ViewGaCrmGarbageTicketContactCenter> ViewGaCrmGarbageTicketContactCenter { get; set; }
+        DbSet<ViewGaCrmGarbageTicketMagazzino> ViewGaCrmGarbageTicketMagazzino { get; set; }
         #endregion
+
         #endregion
 
         #region GaPrenotazioneLocali

@@ -3,6 +3,7 @@ using GaCloudServer.Jobs.Configuration.AuditLogging;
 using GaCloudServer.Jobs.Configuration.Configuration;
 using GaCloudServer.Jobs.Configuration.Constants;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Skoruba.AuditLogging.EntityFramework.DbContexts;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using Skoruba.AuditLogging.EntityFramework.Extensions;
@@ -57,7 +58,7 @@ namespace GaCloudServer.Jobs.Helpers
             {
                 case DatabaseProviderType.SqlServer:
                     services.AddDbContext<TAuditLoggingDbContext>(options => options.UseSqlServer(auditLoggingConnectionString));
-                    services.AddDbContext<TResourcesDbContext>(options => options.UseSqlServer(resourcesConnectionString));
+                    services.AddDbContext<TResourcesDbContext>(options => options.UseSqlServer(resourcesConnectionString, delegate (SqlServerDbContextOptionsBuilder sql) { sql.CommandTimeout(240); }));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(databaseProvider.ProviderType), $@"The value needs to be one of {string.Join(", ", Enum.GetNames(typeof(DatabaseProviderType)))}.");

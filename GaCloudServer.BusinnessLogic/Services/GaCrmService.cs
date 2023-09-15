@@ -1,6 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
@@ -10,7 +9,6 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
-using Microsoft.Graph;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -43,6 +41,14 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmTicketsRepo;
         protected readonly IGenericRepository<ViewGaCrmCalendarTickets> viewGaCrmCalendarTicketsRepo;
 
+        protected readonly IGenericRepository<ViewGaCrmGarbageUtenze> viewGaCrmGarbageUtenzeRepo;
+        protected readonly IGenericRepository<ViewGaCrmGarbagePartite> viewGaCrmGarbagePartiteRepo;
+        protected readonly IGenericRepository<ViewGaCrmGarbageTipologie> viewGaCrmGarbageTipologieRepo;
+        protected readonly IGenericRepository<ViewGaCrmGarbageProvenienze> viewGaCrmGarbageProvenienzeRepo;
+        protected readonly IGenericRepository<ViewGaCrmGarbageStati> viewGaCrmGarbageStatiRepo;
+        protected readonly IGenericRepository<ViewGaCrmGarbageTicketContactCenter> viewGaCrmGarbageTicketContactCenterRepo;
+        protected readonly IGenericRepository<ViewGaCrmGarbageTicketMagazzino> viewGaCrmGarbageTicketMagazzinoRepo;
+
         protected readonly IUnitOfWork unitOfWork;
 
         public GaCrmService(
@@ -71,7 +77,15 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo,
 
-            IUnitOfWork unitOfWork)
+            IGenericRepository<ViewGaCrmGarbageUtenze> viewGaCrmGarbageUtenzeRepo,
+            IGenericRepository<ViewGaCrmGarbagePartite> viewGaCrmGarbagePartiteRepo,
+            IGenericRepository<ViewGaCrmGarbageTipologie> viewGaCrmGarbageTipologieRepo,
+            IGenericRepository<ViewGaCrmGarbageProvenienze> viewGaCrmGarbageProvenienzeRepo,
+            IGenericRepository<ViewGaCrmGarbageStati> viewGaCrmGarbageStatiRepo,
+            IGenericRepository<ViewGaCrmGarbageTicketContactCenter> viewGaCrmGarbageTicketContactCenterRepo,
+            IGenericRepository<ViewGaCrmGarbageTicketMagazzino> viewGaCrmGarbageTicketMagazzinoRepo,
+
+        IUnitOfWork unitOfWork)
         {
             this._queryManager = queryManager;
 
@@ -97,6 +111,14 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaCrmMasterRepo = viewGaCrmMasterRepo;
             this.viewGaCrmTicketsRepo = viewGaCrmTicketsRepo;
             this.viewGaCrmCalendarTicketsRepo = viewGaCrmCalendarTicketsRepo;
+
+            this.viewGaCrmGarbageUtenzeRepo= viewGaCrmGarbageUtenzeRepo;
+            this.viewGaCrmGarbagePartiteRepo= viewGaCrmGarbagePartiteRepo;
+            this.viewGaCrmGarbageTipologieRepo= viewGaCrmGarbageTipologieRepo;
+            this.viewGaCrmGarbageProvenienzeRepo= viewGaCrmGarbageProvenienzeRepo;
+            this.viewGaCrmGarbageStatiRepo= viewGaCrmGarbageStatiRepo;
+            this.viewGaCrmGarbageTicketContactCenterRepo= viewGaCrmGarbageTicketContactCenterRepo;
+            this.viewGaCrmGarbageTicketMagazzinoRepo= viewGaCrmGarbageTicketMagazzinoRepo;
 
 
             this.unitOfWork = unitOfWork;
@@ -900,6 +922,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             return true;
         }
         #endregion
+
         #endregion
 
         #region CrmEventJobs
@@ -1261,6 +1284,43 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #endregion
+
+        #region Garbage
+        public async Task<PagedList<ViewGaCrmGarbageUtenze>> GetViewGaCrmGarbageUtenzeAsync()
+        {
+            return await viewGaCrmGarbageUtenzeRepo.GetAllAsync();
+        }
+
+        public async Task<PagedList<ViewGaCrmGarbagePartite>> GetViewGaCrmGarbagePartiteAsync()
+        {
+            return await viewGaCrmGarbagePartiteRepo.GetAllAsync();
+        }
+
+        public async Task<PagedList<ViewGaCrmGarbageTipologie>> GetViewGaCrmGarbageTipologieAsync()
+        {
+            return await viewGaCrmGarbageTipologieRepo.GetAllAsync();
+        }
+
+        public async Task<PagedList<ViewGaCrmGarbageProvenienze>> GetViewGaCrmGarbageProvenienzeAsync()
+        {
+            return await viewGaCrmGarbageProvenienzeRepo.GetAllAsync();
+        }
+
+        public async Task<PagedList<ViewGaCrmGarbageStati>> GetViewGaCrmGarbageStatiAsync()
+        {
+            return await viewGaCrmGarbageStatiRepo.GetAllAsync();
+        }
+
+        public async Task<PagedList<ViewGaCrmGarbageTicketContactCenter>> GetViewGaCrmGarbageTicketContactCenterAsync()
+        {
+            return await viewGaCrmGarbageTicketContactCenterRepo.GetAllAsync();
+        }
+
+        public async Task<PagedList<ViewGaCrmGarbageTicketMagazzino>> GetViewGaCrmGarbageTicketMagazzinoAsync()
+        {
+            return await viewGaCrmGarbageTicketMagazzinoRepo.GetAllAsync();
+        }
         #endregion
 
         #region Shared Data Tables

@@ -57,6 +57,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
+using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -491,7 +492,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<CrmTicketTag> GaCrmTicketTags { get; set; }
         public DbSet<CrmTicketAllegato> GaCrmTicketAllegati { get; set; }
 
-
         #region Views
         public DbSet<ViewGaCrmCanali> ViewGaCrmCanali { get; set; }
         public DbSet<ViewGaCrmCausali> ViewGaCrmCausali { get; set; }
@@ -500,7 +500,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
         public DbSet<ViewGaCrmCalendarTickets> ViewGaCrmCalendarTickets { get; set; }
         public DbSet<ViewGaCrmEventJobs> ViewGaCrmEventJobs { get; set; }
+        public DbSet<ViewGaCrmGarbageUtenze> ViewGaCrmGarbageUtenze { get; set; }
+        public DbSet<ViewGaCrmGarbagePartite> ViewGaCrmGarbagePartite { get; set; }
+        public DbSet<ViewGaCrmGarbageTipologie> ViewGaCrmGarbageTipologie { get; set; }
+        public DbSet<ViewGaCrmGarbageProvenienze> ViewGaCrmGarbageProvenienze { get; set; }
+        public DbSet<ViewGaCrmGarbageStati> ViewGaCrmGarbageStati { get; set; }
+        public DbSet<ViewGaCrmGarbageTicketContactCenter> ViewGaCrmGarbageTicketContactCenter { get; set; }
+        public DbSet<ViewGaCrmGarbageTicketMagazzino> ViewGaCrmGarbageTicketMagazzino { get; set; }
         #endregion
+
         #endregion
 
         #region GaPrenotazioneLocali
@@ -558,8 +566,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
         {
-
         }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -1416,6 +1424,55 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 entity
                 .ToView(nameof(ViewGaCrmEventJobs))
                 .HasNoKey();
+            });
+
+            builder.Entity<ViewGaCrmGarbageUtenze>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmGarbageUtenze))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaCrmGarbagePartite>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmGarbagePartite))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaCrmGarbageProvenienze>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmGarbageProvenienze))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaCrmGarbageStati>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmGarbageStati))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaCrmGarbageTipologie>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmGarbageTipologie))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaCrmGarbageTicketContactCenter>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmGarbageTicketContactCenter))
+                .HasKey(x=>x.Id);
+            });
+
+            builder.Entity<ViewGaCrmGarbageTicketMagazzino>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmGarbageTicketMagazzino))
+                .HasKey(x=>x.Id);
             });
             #endregion
 

@@ -188,7 +188,7 @@ namespace GaCloudServer.Resources.Api.Helpers
             switch (databaseProvider.ProviderType)
             {
                 case DatabaseProviderType.SqlServer:
-                    services.RegisterSqlServerDbContexts<TResourcesDbContext>(connectionStrings, databaseMigrations);
+                    services.RegisterSqlServerDbContexts<TResourcesDbContext>(connectionStrings, databaseMigrations,240);
                     break;
                 case DatabaseProviderType.PostgreSQL:
                     

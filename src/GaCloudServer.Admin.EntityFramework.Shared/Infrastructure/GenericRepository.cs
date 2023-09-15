@@ -17,4 +17,5 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
     {
         public GenericRepository(TDbContext context,IAuditEventLogger auditEventLogger) : base(context,auditEventLogger) { }
     }
+
 }
