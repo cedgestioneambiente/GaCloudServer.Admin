@@ -5,6 +5,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.View
 {
     public class ViewGaCrmGarbageTicketContactCenter:GenericEntity
     {
+        public string NUMERO_TICKET { get; set; }
         public DateTime DATA_RICHIESTA { get; set; }
         public DateTime? DATA_CHIUSURA { get; set; }
         public string COD_COMUNE { get; set; }

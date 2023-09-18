@@ -46,8 +46,8 @@ SELECT CAST(IDServizio as bigint) Id
       ,[DescrizioneIntermediario1]
       ,[IndirizzoImpiantoIntermediario1]
       ,[LocalitaImpiantoIntermediario1]
-      ,[CodiceCer]
-      ,[DescrizioneRifiuto]
+      ,CASE WHEN [CodiceCer] IS NULL THEN CodiceErp ELSE CodiceCer END CodiceCer
+      ,CASE WHEN [DescrizioneRifiuto] IS NULL THEN DenominazioneEstesa ELSE DescrizioneRifiuto END DescrizioneRifiuto
       ,[Operazione]
       ,[NumMov]
       ,[IDMOV] IdMov

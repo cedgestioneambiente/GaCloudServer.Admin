@@ -50,8 +50,9 @@ GO
 CREATE VIEW [dbo].[ViewGaCrmGarbageTicketContactCenter]
 AS
 SELECT
-A.Id,
-DataTicket DATA_RICHIESTA
+A.Id
+,CONCAT('CC-',A.Id) NUMERO_TICKET
+,DataTicket DATA_RICHIESTA
 ,DataEsecuzione DATA_CHIUSURA
 ,REPLACE(B.CodAzi,'C','') COD_COMUNE
 ,CONCAT(NumCon,'-',Partita) COD_UTENZA
@@ -80,7 +81,8 @@ GO
 CREATE VIEW [dbo].[ViewGaCrmGarbageTicketMagazzino]
 AS
 SELECT
-A.id
+A.Id
+,CONCAT('CRM-',A.Id) NUMERO_TICKET
 ,DataRichiesta DATA_RICHIESTA
 ,DataChiusura DATA_CHIUSURA
 ,CrmEventComuneId COD_COMUNE

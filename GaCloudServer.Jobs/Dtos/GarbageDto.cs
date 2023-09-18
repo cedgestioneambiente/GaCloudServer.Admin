@@ -75,7 +75,7 @@ namespace GaCloudServer.Jobs.Dtos.Garbage
 
     public class GarbageTicketContactCenterDto
     {
-        public long Id { get; set; }
+        public string NUMERO_TICKET { get; set; }
         public DateTime DATA_RICHIESTA { get; set; }
         public DateTime? DATA_CHIUSURA { get; set; }
         public string COD_COMUNE { get; set; }
@@ -99,7 +99,7 @@ namespace GaCloudServer.Jobs.Dtos.Garbage
 
     public class GarbageTicketMagazzinoDto
     {
-        public long Id { get; set; }
+        public string NUMERO_TICKET { get; set; }
         public DateTime DATA_RICHIESTA { get; set; }
         public DateTime? DATA_CHIUSURA { get; set; }
         public long COD_COMUNE { get; set; }
