@@ -1,9 +1,13 @@
-﻿using AutoWrapper.Wrappers;
+﻿using AutoWrapper.Filters;
+using AutoWrapper.Wrappers;
+using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {
@@ -115,6 +119,62 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        #region Functions
+
+        [HttpGet("ExportGaBackOfficeUtenzeByCpAziAndFilterAsync/{codAzi}/{filter}")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaBackOfficeUtenzeByCpAziAndFilterAsync(string codAzi, string filter)
+        {
+
+            try
+            {
+                var entities = _gaBackOfficeService.GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(codAzi, filter).Result.Data;
+                string title = "Lista Utenze";
+                string[] columns = GenericHelper.ConvertPropertyToColumn(entities.FirstOrDefault());
+
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "LISTA_UTENZE", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Lista_Utenze.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
+
+        [HttpGet("ExportGaBackOfficeUtenzePartiteByCpAziAndIndirizzoAsync/{codAzi}/{via}/{startNumCiv}/{endNumCiv}")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportGaBackOfficeUtenzePartiteByCpAziAndIndirizzoAsync(string codAzi, string via, int startNumCiv, int endNumCiv)
+        {
+
+            try
+            {
+                var entities = _gaBackOfficeService.GetViewGaBackOfficeUtenzePartiteByCpAziAndIndirizzoAsync(codAzi, via, startNumCiv, endNumCiv).Result.Data;
+                string title = "Lista Utenze";
+                string[] columns = GenericHelper.ConvertPropertyToColumn(entities.FirstOrDefault());
+
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "LISTA_UTENZE", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Lista_Utenze.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+        #endregion
         #endregion
 
         #region BackOfficePartite

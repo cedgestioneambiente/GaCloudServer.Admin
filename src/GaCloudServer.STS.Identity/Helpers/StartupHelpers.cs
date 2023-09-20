@@ -275,6 +275,8 @@ namespace GaCloudServer.STS.Identity.Helpers
             var registrationConfiguration = GetRegistrationConfiguration(configuration);
             var identityOptions = configuration.GetSection(nameof(IdentityOptions)).Get<IdentityOptions>();
 
+            
+
             services
                 .AddSingleton(registrationConfiguration)
                 .AddSingleton(loginConfiguration)

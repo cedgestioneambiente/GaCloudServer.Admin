@@ -16,8 +16,18 @@ using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace GaCloudServer.Jobs.Jobs
 {
+
+
+
     public static class GarbageJobs
     {
+        private static readonly NetworkCredential anagCredential = new NetworkCredential("GestAmbAnagrafiche", "G3e$s!An4gR!2023");
+        private static readonly NetworkCredential datiCredential = new NetworkCredential("GestAmbODL", "G3$a$m2023Xde");
+
+        private static readonly string ftpAnagServer = "gestioneambiente.garbageweb.it/";
+        private static readonly string ftpDatiServer = "gestioneambiente.garbageweb.it/Dati/";
+
+
 
         [PersistJobDataAfterExecution]
         [DisallowConcurrentExecution]
@@ -62,10 +72,10 @@ namespace GaCloudServer.Jobs.Jobs
                         System.IO.File.WriteAllText(fullPath, csvList);
 
                         FtpUploadDto dto = new FtpUploadDto();
-                        dto.serverUri = "gestioneambiente.garbageweb.it/Dati/";
+                        dto.serverUri = ftpAnagServer;
                         dto.filePath = fullPath;
                         dto.fileName = fileName.Replace("Storage\\", "");
-                        dto.credentials = new NetworkCredential("GestAmbODL", "G3$a$m2023Xde");
+                        dto.credentials = anagCredential;
                         dto.useBinary = true;
                         dto.usePassive = true;
                         dto.keepAlive = true;
@@ -128,10 +138,10 @@ namespace GaCloudServer.Jobs.Jobs
                         System.IO.File.WriteAllText(fullPath, csvList);
 
                         FtpUploadDto dto = new FtpUploadDto();
-                        dto.serverUri = "gestioneambiente.garbageweb.it/Dati/Dati";
+                        dto.serverUri = ftpAnagServer;
                         dto.filePath = fullPath;
                         dto.fileName = fileName.Replace("Storage\\", "");
-                        dto.credentials = new NetworkCredential("GestAmbODL", "G3$a$m2023Xde");
+                        dto.credentials = anagCredential;
                         dto.useBinary = true;
                         dto.usePassive = true;
                         dto.keepAlive = true;
@@ -194,10 +204,10 @@ namespace GaCloudServer.Jobs.Jobs
                         System.IO.File.WriteAllText(fullPath, csvList);
 
                         FtpUploadDto dto = new FtpUploadDto();
-                        dto.serverUri = "gestioneambiente.garbageweb.it/Dati/";
+                        dto.serverUri = ftpAnagServer;
                         dto.filePath = fullPath;
                         dto.fileName = fileName.Replace("Storage\\", "");
-                        dto.credentials = new NetworkCredential("GestAmbODL", "G3$a$m2023Xde");
+                        dto.credentials = anagCredential;
                         dto.useBinary = true;
                         dto.usePassive = true;
                         dto.keepAlive = true;
@@ -260,10 +270,10 @@ namespace GaCloudServer.Jobs.Jobs
                         System.IO.File.WriteAllText(fullPath, csvList);
 
                         FtpUploadDto dto = new FtpUploadDto();
-                        dto.serverUri = "gestioneambiente.garbageweb.it/Dati/";
+                        dto.serverUri = ftpAnagServer;
                         dto.filePath = fullPath;
                         dto.fileName = fileName.Replace("Storage\\", "");
-                        dto.credentials = new NetworkCredential("GestAmbODL", "G3$a$m2023Xde");
+                        dto.credentials = anagCredential;
                         dto.useBinary = true;
                         dto.usePassive = true;
                         dto.keepAlive = true;
@@ -326,10 +336,10 @@ namespace GaCloudServer.Jobs.Jobs
                         System.IO.File.WriteAllText(fullPath, csvList);
 
                         FtpUploadDto dto = new FtpUploadDto();
-                        dto.serverUri = "gestioneambiente.garbageweb.it/Dati/";
+                        dto.serverUri = ftpAnagServer;
                         dto.filePath = fullPath;
                         dto.fileName = fileName.Replace("Storage\\", "");
-                        dto.credentials = new NetworkCredential("GestAmbODL", "G3$a$m2023Xde");
+                        dto.credentials = anagCredential;
                         dto.useBinary = true;
                         dto.usePassive = true;
                         dto.keepAlive = true;
@@ -392,10 +402,10 @@ namespace GaCloudServer.Jobs.Jobs
                         System.IO.File.WriteAllText(fullPath, csvList);
 
                         FtpUploadDto dto = new FtpUploadDto();
-                        dto.serverUri = "gestioneambiente.garbageweb.it/Dati/";
+                        dto.serverUri = ftpDatiServer;
                         dto.filePath = fullPath;
                         dto.fileName = fileName.Replace("Storage\\", "");
-                        dto.credentials = new NetworkCredential("GestAmbODL", "G3$a$m2023Xde");
+                        dto.credentials = datiCredential;
                         dto.useBinary = true;
                         dto.usePassive = true;
                         dto.keepAlive = true;
@@ -458,10 +468,10 @@ namespace GaCloudServer.Jobs.Jobs
                         System.IO.File.WriteAllText(fullPath, csvList);
 
                         FtpUploadDto dto = new FtpUploadDto();
-                        dto.serverUri = "gestioneambiente.garbageweb.it/Dati/";
+                        dto.serverUri = ftpDatiServer;
                         dto.filePath = fullPath;
                         dto.fileName = fileName.Replace("Storage\\", "");
-                        dto.credentials = new NetworkCredential("GestAmbODL", "G3$a$m2023Xde");
+                        dto.credentials = datiCredential;
                         dto.useBinary = true;
                         dto.usePassive = true;
                         dto.keepAlive = true;

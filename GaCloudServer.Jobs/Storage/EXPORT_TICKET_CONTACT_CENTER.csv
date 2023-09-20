@@ -1,10 +1,10 @@
-CC-4;21/03/2023 16:30:55;;30;00194931-0000235273;;LARGO EUROPA;112;ZONA 3B;1;10;;;123456;;;;1;System Administrator;System Administrator
-CC-5;21/03/2023 16:33:05;;30;00194949-0000235293;;VIA GIACOMO MATTEOTTI;23;ZONA 3B;1;10;;;45564;;;;2;System Administrator;System Administrator
-CC-6;26/04/2023 15:21:45;;30;00194949-0000235293;;VIA GIACOMO MATTEOTTI;23;ZONA 3B;1;10;;;45564;;;;1;System Administrator;System Administrator
-CC-7;26/04/2023 15:22:08;;30;00194949-0000235293;;VIA GIACOMO MATTEOTTI;23;ZONA 3B;1;1;;;45564;;;;2;System Administrator;System Administrator
-CC-8;26/04/2023 13:23:06;;30;00000000-0000000000;;via prova ;;;1;10;;;0101;;sjkhkjdbndkjdvbjkdv;;2;System Administrator;System Administrator
-CC-9;26/04/2023 15:23:23;;30;00000000-0000000000;;via prova ;;;1;10;;;0101;;;;2;System Administrator;System Administrator
-CC-10;26/04/2023 15:24:12;01/01/2024 00:00:00;30;00000000-0000000000;;via prova ;;;1;10;;;0101;;sjkhkjdbndkjdvbjkdv;;2;System Administrator;System Administrator
-CC-11;26/04/2023 15:36:28;01/01/2024 00:00:00;15;00000000-0000000000;;via prova ;;;1;1;;;0101;;;;1;System Administrator;System Administrator
-CC-12;26/05/2023 11:50:22;;30;00194931-0000235273;;LARGO EUROPA;112;ZONA 3B;1;1;;;0101;;;;1;System Administrator;System Administrator
-CC-13;13/06/2023 15:46:25;;30;00279551-0000363163;;STRADA LEVANTE CASTELLO;22;ZONA 1;1;39;;;34014;;;;1;System Administrator;System Administrator
+CC-4;21/03/2023 16:30:55;;30;00194931-0000235273;DOM;LARGO EUROPA;112;ZONA 3B;1;10;;;123456;;;;1;System Administrator;System Administrator
+CC-5;21/03/2023 16:33:05;;30;00194949-0000235293;DOM;VIA GIACOMO MATTEOTTI;23;ZONA 3B;1;10;;;45564;;;;2;System Administrator;System Administrator
+CC-6;26/04/2023 15:21:45;;30;00194949-0000235293;DOM;VIA GIACOMO MATTEOTTI;23;ZONA 3B;1;10;;;45564;;;;1;System Administrator;System Administrator
+CC-7;26/04/2023 15:22:08;;30;00194949-0000235293;DOM;VIA GIACOMO MATTEOTTI;23;ZONA 3B;1;1;;;45564;;;;2;System Administrator;System Administrator
+CC-8;26/04/2023 13:23:06;;30;00000000-0000000000;DOM;via prova ;0;;1;10;;;0101;;sjkhkjdbndkjdvbjkdv;;2;System Administrator;System Administrator
+CC-9;26/04/2023 15:23:23;;30;00000000-0000000000;DOM;via prova ;0;;1;10;;;0101;;;;2;System Administrator;System Administrator
+CC-10;26/04/2023 15:24:12;01/01/2024 00:00:00;30;00000000-0000000000;DOM;via prova ;0;;1;10;;;0101;;sjkhkjdbndkjdvbjkdv;;2;System Administrator;System Administrator
+CC-11;26/04/2023 15:36:28;01/01/2024 00:00:00;15;00000000-0000000000;DOM;via prova ;15;;1;1;;;0101;;;;1;System Administrator;System Administrator
+CC-12;26/05/2023 11:50:22;;30;00194931-0000235273;DOM;LARGO EUROPA;112;ZONA 3B;1;1;;;0101;;;;1;System Administrator;System Administrator
+CC-13;13/06/2023 15:46:25;;30;00279551-0000363163;DOM;STRADA LEVANTE CASTELLO;22;ZONA 1;1;39;;;34014;;;;1;System Administrator;System Administrator
