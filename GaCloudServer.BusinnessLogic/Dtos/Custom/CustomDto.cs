@@ -37,4 +37,12 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Custom
         public int progress { get; set; }
         public string? timer { get; set; }
     }
+
+    public class PercentValidateDto
+    { 
+        public double percent { get; set; }
+        public long foundId { get; set; }
+        public dynamic? obj { get; set; }
+
+    }
 }

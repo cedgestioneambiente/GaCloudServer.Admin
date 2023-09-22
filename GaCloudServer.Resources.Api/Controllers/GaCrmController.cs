@@ -769,8 +769,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("PrintGaCrmEventsGroupedByFilterAsync/{date}/{areaId}")]
-        public async Task<ApiResponse> PrintGaCrmEventsGroupedByFilterAsync(DateTime date, long areaId)
+        [HttpGet("PrintGaCrmEventsGroupedByFilterAsync/{date}/{areaId}/{includeAll}")]
+        public async Task<ApiResponse> PrintGaCrmEventsGroupedByFilterAsync(DateTime date, long areaId,bool includeAll)
         {
             try
             {
@@ -782,7 +782,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
 
                 var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(areaId);
-                var dto = await GenerateCrmEventsGroupedTemplate(list.Data.Where(x => x.CrmEventStateId == 1).ToList(), date, area.Descrizione);
+                var dto = await GenerateCrmEventsGroupedTemplate(list.Data.Where(x => x.CrmEventStateId == 1).ToList(), date, area.Descrizione,includeAll);
                 if (dto.Items.Count > 0)
                 {
                     var response = await _printService.Print("CrmEventsGrouped", dto);
@@ -938,7 +938,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
 
                 var area = await _gaCrmService.GetGaCrmEventAreaByIdAsync(areaId);
-                var dto = await GenerateCrmEventsGroupedTemplate(list.Data.Where(x => x.CrmEventStateId == 2).ToList(), date, area.Descrizione, "CrmEventsReport.pdf");
+                var dto = await GenerateCrmEventsGroupedTemplate(list.Data.Where(x => x.CrmEventStateId == 2).ToList(), date, area.Descrizione,false, "CrmEventsReport.pdf");
                 var attachPath = await _printService.Print("CrmEventsReport", dto);
 
                 string mailTo = "ced@gestioneambiente.net;matteo.derocchi@gestioneambiente.net";
@@ -2341,7 +2341,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Helpers
-        private async Task<CrmEventsTemplateDto> GenerateCrmEventsGroupedTemplate(List<CrmEventDto> events, DateTime date, string area,string fileName= "CrmEventsGrouped.pdf")
+        private async Task<CrmEventsTemplateDto> GenerateCrmEventsGroupedTemplate(List<CrmEventDto> events, DateTime date, string area,bool includeAll,string fileName= "CrmEventsGrouped.pdf")
         {
             var dto = new CrmEventsTemplateDto()
             {
@@ -2361,7 +2361,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             foreach (var item in events)
             {
                 var _tipo = tipologie.Data.Where(x => x.Id == item.TipoId).First();
-                if (_tipo.PrintMassive)
+                if (_tipo.PrintMassive || includeAll)
                 {
 
                     dto.Items.Add(item);

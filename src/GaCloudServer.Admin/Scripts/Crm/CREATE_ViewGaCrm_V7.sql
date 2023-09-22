@@ -57,17 +57,17 @@ DataTicket DATA_RICHIESTA
 ,REPLACE(B.CodAzi,'C','') COD_COMUNE
 ,CONCAT(A.NumCon,'-',A.Partita) COD_UTENZA
 ,CASE WHEN D.Tributo IS NULL THEN 'DOM' ELSE D.Tributo END TRIBUTO
-,A.Via VIA
+,REPLACE(A.Via,';',',') VIA
 ,CAST(CASE WHEN PATINDEX('%[0-9]%',A.NumCiv)>0 THEN SUBSTRING(A.NumCiv, PATINDEX('%[0-9]%', A.NumCiv),ISNULL(NULLIF(PATINDEX('%[^0-9]%', SUBSTRING(A.NumCiv, PATINDEX('%[0-9]%',A.NumCiv), LEN(A.NumCiv))), 0) - 1, LEN(A.NumCiv))) ELSE CAST(0 as int) END AS VARCHAR) AS CIVICO
 ,Zona ZONA
 ,ContactCenterProvenienzaId COD_PROVENIENZA_RICHIESTA
 ,ContactCenterTipoRichiestaId COD_TIPO_RICHIESTA
 ,'' TELEFONO
 ,'' CELLULARE
-,TelefonoMail EMAIL
+,REPLACE(TelefonoMail,';',',') EMAIL
 ,'' EMAIL_PEC
-,Note1 NOTE_TICKET
-,NOTE2 NOTE_CHIUSURA
+,REPLACE(Note1,';',',') NOTE_TICKET
+,REPLACE(NOTE2,';',',') NOTE_CHIUSURA
 ,ContactCenterStatoRichiestaId COD_STATO_RICHIESTA
 ,C.FullName CREATO_DA
 ,C.FullName ASSEGNATO_A
@@ -89,17 +89,17 @@ A.id
 ,CrmEventComuneId COD_COMUNE
 ,CONCAT(NumCon,'-',Partita) COD_UTENZA
 ,CASE WHEN Tributo IS NULL THEN 'DOM' ELSE Tributo END TRIBUTO
-,Via VIA
+,REPLACE(Via,';',',') VIA
 ,CAST(CASE WHEN PATINDEX('%[0-9]%',A.NumCiv)>0 THEN SUBSTRING(A.NumCiv, PATINDEX('%[0-9]%', A.NumCiv),ISNULL(NULLIF(PATINDEX('%[^0-9]%', SUBSTRING(A.NumCiv, PATINDEX('%[0-9]%',A.NumCiv), LEN(A.NumCiv))), 0) - 1, LEN(A.NumCiv))) ELSE CAST(0 as int) END AS VARCHAR) AS CIVICO
 ,CodZona ZONA
 ,ContactCenterProvenienzaId COD_PROVENIENZA_RICHIESTA
 ,ContactCenterTipoRichiestaId COD_TIPO_RICHIESTA
-,Telefono TELEFONO
-,Cellulare CELLULARE
-,A.Email EMAIL
-,EmailPec EMAIL_PEC
-,NoteCrm NOTE_TICKET
-,NoteOperatore NOTE_CHIUSURA
+,REPLACE(Telefono,';',',') TELEFONO
+,REPLACE(Cellulare,';',',') CELLULARE
+,REPLACE(A.Email,';',',') EMAIL
+,REPLACE(EmailPec,';',',') EMAIL_PEC
+,REPLACE(NoteCrm,';',',') NOTE_TICKET
+,REPLACE(NoteOperatore,';',',') NOTE_CHIUSURA
 ,ContactCenterStatoRichiestaId COD_STATO_RICHIESTA
 ,B.FullName CREATO_DA
 ,REPLACE(C.Name,'AppCrm','') ASSEGNATO_A

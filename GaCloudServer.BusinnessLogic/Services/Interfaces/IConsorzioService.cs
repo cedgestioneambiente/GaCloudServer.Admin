@@ -1,5 +1,6 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
@@ -95,6 +96,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         Task<bool> ValidateConsorzioProduttoreAsync(long id, string cfPiva, string indirizzo);
+        Task<PercentValidateDto> ValidatePercentConsorzioProduttoreAsync(long id, string cfPiva, string indirizzo,string ragSo,long comuneId);
         Task<bool> ChangeStatusConsorzioProduttoreAsync(long id);
         #endregion
 

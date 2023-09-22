@@ -2,10 +2,12 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+using sh = GaCloudServer.BusinnessLogic.Helpers.StringHelper;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -416,6 +418,69 @@ namespace GaCloudServer.BusinnessLogic.Services
             else
             {
                 return true;
+            }
+        }
+
+        public async Task<PercentValidateDto> ValidatePercentConsorzioProduttoreAsync(long id, string cfPiva, string indirizzo,string ragSo,long comuneId)
+        {
+            var entity = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.ConsorzioComuneId==comuneId && x.Id != id && x.Disabled==false);
+
+            if (entity.Data.Count > 0)
+            {
+                return new PercentValidateDto() { foundId=entity.Data.FirstOrDefault().Id,percent=100,obj=entity.Data.FirstOrDefault()};
+            }
+            else
+            {
+                var entityCf = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId==comuneId && x.Disabled==false);
+                if (entityCf.Data.Count > 0)
+                {
+                    List<long> foundId = new List<long>();
+                    List<long> foundCompleteId = new List<long>();
+                    double ragSoPrc = 0;
+                    double indPrc = 0;
+
+                    foreach (var itm in entityCf.Data)
+                    {
+                        ragSoPrc = sh.CalculateEqualityJaccard(itm.Descrizione, ragSo);
+                        if (ragSoPrc > 0.8)
+                        {
+                            foundId.Add(itm.Id);
+                        }
+                    }
+
+                    if (foundId.Count > 0)
+                    {
+                        foreach (var itm in entityCf.Data.Where(x => foundId.Contains(x.Id)))
+                        {
+
+                            indPrc = sh.CalculateEqualityJaccard(itm.Indirizzo, indirizzo);
+                            if (indPrc > 0.7)
+                            {
+                                foundCompleteId.Add(itm.Id);
+                            }
+                        }
+
+                        if (foundCompleteId.Count > 0)
+                        {
+                            return new PercentValidateDto() { foundId = foundCompleteId.FirstOrDefault(), percent = 80, obj = entityCf.Data.Where(x=>x.Id==foundCompleteId.FirstOrDefault()).FirstOrDefault() };
+                        }
+                        else
+                        {
+                            return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                        }
+                    }
+                    else
+                    {
+                        return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                    }
+
+
+                }
+                else
+                {
+                    return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                }
+                
             }
         }
 

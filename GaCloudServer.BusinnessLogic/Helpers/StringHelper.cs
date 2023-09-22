@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.BusinnessLogic.Helpers
 {
-    internal class StringHelper
+    public class StringHelper
     {
         public static Dictionary<string, double> CalculateEquality(string inputString, string[] arrayDiStringhe)
         {
@@ -21,7 +21,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             return percentualiDiSomiglianza;
         }
 
-        static double CalculateEqualityJaccard(string stringa1, string stringa2)
+        public static double CalculateEqualityJaccard(string stringa1, string stringa2)
         {
             var set1 = new HashSet<char>(stringa1);
             var set2 = new HashSet<char>(stringa2);
