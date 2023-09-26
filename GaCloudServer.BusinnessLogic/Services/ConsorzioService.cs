@@ -423,11 +423,11 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<PercentValidateDto> ValidatePercentConsorzioProduttoreAsync(long id, string cfPiva, string indirizzo,string ragSo,long comuneId)
         {
-            var entity = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.ConsorzioComuneId==comuneId && x.Id != id && x.Disabled==false);
+            var entity = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.ConsorzioComuneId==comuneId && x.Descrizione==ragSo && x.Id != id && x.Disabled==false);
 
             if (entity.Data.Count > 0)
             {
-                return new PercentValidateDto() { foundId=entity.Data.FirstOrDefault().Id,percent=100,obj=entity.Data.FirstOrDefault()};
+                return new PercentValidateDto() { foundId=entity.Data.FirstOrDefault().Id,percent=1,obj=entity.Data.FirstOrDefault()};
             }
             else
             {
@@ -436,14 +436,19 @@ namespace GaCloudServer.BusinnessLogic.Services
                 {
                     List<long> foundId = new List<long>();
                     List<long> foundCompleteId = new List<long>();
+                    List<(long, double)> listRagsoPrc= new List<(long,double)>();
+                    List<(long, double)> listIndPrc= new List<(long,double)>();
+
                     double ragSoPrc = 0;
                     double indPrc = 0;
 
                     foreach (var itm in entityCf.Data)
                     {
-                        ragSoPrc = sh.CalculateEqualityJaccard(itm.Descrizione, ragSo);
+                        ragSoPrc = sh.CalculateSimilarity(itm.Descrizione, ragSo);
                         if (ragSoPrc > 0.8)
                         {
+                            listRagsoPrc.Add((itm.Id, ragSoPrc));
+
                             foundId.Add(itm.Id);
                         }
                     }
@@ -453,16 +458,22 @@ namespace GaCloudServer.BusinnessLogic.Services
                         foreach (var itm in entityCf.Data.Where(x => foundId.Contains(x.Id)))
                         {
 
-                            indPrc = sh.CalculateEqualityJaccard(itm.Indirizzo, indirizzo);
-                            if (indPrc > 0.7)
-                            {
-                                foundCompleteId.Add(itm.Id);
-                            }
+                            indPrc = sh.CalculateSimilarity(itm.Indirizzo, indirizzo);
+
+                            listIndPrc.Add((itm.Id, indPrc));
+                            foundCompleteId.Add(itm.Id);
+                            
                         }
+
+                        var resultPrc = listRagsoPrc.Concat(listIndPrc)
+                            .GroupBy(item => item.Item1)
+                            .Select(group => (group.Key, group.Sum(item => item.Item2)/2))
+                            .ToList();
+                        
 
                         if (foundCompleteId.Count > 0)
                         {
-                            return new PercentValidateDto() { foundId = foundCompleteId.FirstOrDefault(), percent = 80, obj = entityCf.Data.Where(x=>x.Id==foundCompleteId.FirstOrDefault()).FirstOrDefault() };
+                            return new PercentValidateDto() { foundId = foundCompleteId.FirstOrDefault(), percent = resultPrc.OrderByDescending(x=>x.Item2).Select(x=>x.Item2).FirstOrDefault(), obj = entityCf.Data.Where(x=>x.Id==foundCompleteId.FirstOrDefault()).FirstOrDefault() };
                         }
                         else
                         {
