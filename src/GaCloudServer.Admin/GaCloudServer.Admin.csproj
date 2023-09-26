@@ -71,6 +71,12 @@
 	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V6.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Consorzio\CREATE_ViewConsorzio_V7.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Consorzio\DROP_ViewConsorzio_V7.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Crm\CREATE_ViewGaCrm_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

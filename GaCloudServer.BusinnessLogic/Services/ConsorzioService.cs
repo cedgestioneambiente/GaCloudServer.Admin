@@ -1226,6 +1226,15 @@ namespace GaCloudServer.BusinnessLogic.Services
            
         }
 
+        public async Task<bool> DeleteConsorzioImportTaskByTaskIdAsync(string taskId)
+        {
+            var entities = await consorzioRegistrazioniRepo.GetSingleWithFilter(x => x.ConsorzioImportTaskId == taskId);
+            consorzioRegistrazioniRepo.Remove(entities);
+            await SaveChanges();
+
+            return true;
+        }
+
         #region Functions
         public async Task<string> GetConsorzioImportTaskLogByTaskId(long id)
         {
@@ -1233,6 +1242,27 @@ namespace GaCloudServer.BusinnessLogic.Services
             var log = entity.Log;
             return log;
         }
+
+        public async Task<bool> SetConsorzioImportTaskDeletedAsync(long id)
+        {
+            try
+            {
+                var original = consorzioImportsTasksRepo.GetByIdAsNoTraking(x => x.Id == id);
+                var entity = await consorzioImportsTasksRepo.GetByIdAsync(id);
+                entity.Deleted = true;
+
+                consorzioImportsTasksRepo.Update(entity);
+                await SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
+
         #endregion
 
         #region Views

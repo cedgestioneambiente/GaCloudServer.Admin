@@ -1839,6 +1839,26 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpDelete("DeleteConsorzioImportTaskByTaskIdAsync/{taskId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteConsorzioImportTaskByTaskIdAsync(string taskId)
+        {
+            try
+            {
+                var response = await _consorzioService.DeleteConsorzioImportTaskByTaskIdAsync(taskId);
+                //var dto = apiDto.ToDto<ConsorzioImportTaskDto, ConsorzioImportTaskApiDto>();
+                //await _consorzioService.SetConsorzioImportTaskDeletedAsync(dto.Id);
+
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
 
         #region Functions
         [HttpPost("UploadConsorzioImportFileAsync")]

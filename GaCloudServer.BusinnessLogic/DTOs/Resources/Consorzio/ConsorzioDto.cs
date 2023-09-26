@@ -157,6 +157,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
         public int? Completed { get; set; }
         public int? Error { get; set; }
         public string? UserId { get; set; }
+        public bool Deleted { get; set; }
     }
 
     public class ConsorzioImportsTasksDto : GenericPagedListDto<ConsorzioImportTaskDto>
