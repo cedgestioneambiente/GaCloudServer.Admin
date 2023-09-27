@@ -76,6 +76,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         Task<bool> ValidateConsorzioDestinatarioAsync(long id, string cfPiva, string indirizzo);
+        Task<PercentValidateDto> ValidatePercentConsorzioDestinatarioAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId);
         Task<bool> ChangeStatusConsorzioDestinatarioAsync(long id);
         #endregion
 
@@ -117,6 +118,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         Task<bool> ValidateConsorzioTrasportatoreAsync(long id, string cfPiva, string indirizzo);
+        Task<PercentValidateDto> ValidatePercentConsorzioTrasportatoreAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId);
         Task<bool> ChangeStatusConsorzioTrasportatoreAsync(long id);
         #endregion
 
@@ -214,7 +216,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         Task<string> GetConsorzioImportTaskLogByTaskId(long id);
-        Task<bool> SetConsorzioImportTaskDeletedAsync(long id);
+        Task<bool> SetConsorzioImportTaskDeletedAsync(string taskId);
         #endregion
 
         #region Views

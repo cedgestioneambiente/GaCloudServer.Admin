@@ -152,8 +152,8 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateConsorzioCerAsync/{id}/{codice}/{codiceRaggruppamento}")]
-        public async Task<ActionResult<ApiResponse>> ValidateConsorzioCerAsync(long id, string codice, string codiceRaggruppamento)
+        [HttpGet("ValidateConsorzioCerAsync/{id}/{codice}/{codiceRaggruppamento?}")]
+        public async Task<ActionResult<ApiResponse>> ValidateConsorzioCerAsync(long id, string codice, string? codiceRaggruppamento="")
         {
             try
             {
@@ -804,6 +804,22 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("ValidatePercentConsorzioDestinatarioAsync/{id}/{cfPiva}/{indirizzo}/{ragso}/{comuneId}")]
+        public async Task<ActionResult<ApiResponse>> ValidatePercentConsorzioDestinatarioAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        {
+            try
+            {
+                var response = await _consorzioService.ValidatePercentConsorzioDestinatarioAsync(id, cfPiva, indirizzo, ragSo, comuneId);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpGet("ChangeStatusConsorzioDestinatarioAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> ChangeStatusConsorzioDestinatarioAsync(long id)
         {
@@ -950,6 +966,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var response = await _consorzioService.ValidateConsorzioTrasportatoreAsync(id, cfPiva, indirizzo);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ValidatePercentConsorzioTrasportatoreAsync/{id}/{cfPiva}/{indirizzo}/{ragso}/{comuneId}")]
+        public async Task<ActionResult<ApiResponse>> ValidatePercentConsorzioTrasportatoreAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        {
+            try
+            {
+                var response = await _consorzioService.ValidatePercentConsorzioTrasportatoreAsync(id, cfPiva, indirizzo, ragSo, comuneId);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -1846,7 +1878,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 var response = await _consorzioService.DeleteConsorzioImportTaskByTaskIdAsync(taskId);
                 //var dto = apiDto.ToDto<ConsorzioImportTaskDto, ConsorzioImportTaskApiDto>();
-                //await _consorzioService.SetConsorzioImportTaskDeletedAsync(dto.Id);
+                await _consorzioService.SetConsorzioImportTaskDeletedAsync(taskId);
 
 
                 return new ApiResponse(response);

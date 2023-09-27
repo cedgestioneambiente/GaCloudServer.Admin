@@ -583,6 +583,80 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
+        public async Task<PercentValidateDto> ValidatePercentConsorzioDestinatarioAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        {
+            var entity = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.ConsorzioComuneId == comuneId && x.Descrizione == ragSo && x.Id != id && x.Disabled == false);
+
+            if (entity.Data.Count > 0)
+            {
+                return new PercentValidateDto() { foundId = entity.Data.FirstOrDefault().Id, percent = 1, obj = entity.Data.FirstOrDefault() };
+            }
+            else
+            {
+                var entityCf = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Disabled == false);
+                if (entityCf.Data.Count > 0)
+                {
+                    List<long> foundId = new List<long>();
+                    List<long> foundCompleteId = new List<long>();
+                    List<(long, double)> listRagsoPrc = new List<(long, double)>();
+                    List<(long, double)> listIndPrc = new List<(long, double)>();
+
+                    double ragSoPrc = 0;
+                    double indPrc = 0;
+
+                    foreach (var itm in entityCf.Data)
+                    {
+                        ragSoPrc = sh.CalculateSimilarity(itm.Descrizione, ragSo);
+                        if (ragSoPrc > 0.8)
+                        {
+                            listRagsoPrc.Add((itm.Id, ragSoPrc));
+
+                            foundId.Add(itm.Id);
+                        }
+                    }
+
+                    if (foundId.Count > 0)
+                    {
+                        foreach (var itm in entityCf.Data.Where(x => foundId.Contains(x.Id)))
+                        {
+
+                            indPrc = sh.CalculateSimilarity(itm.Indirizzo, indirizzo);
+
+                            listIndPrc.Add((itm.Id, indPrc));
+                            foundCompleteId.Add(itm.Id);
+
+                        }
+
+                        var resultPrc = listRagsoPrc.Concat(listIndPrc)
+                            .GroupBy(item => item.Item1)
+                            .Select(group => (group.Key, group.Sum(item => item.Item2) / 2))
+                            .ToList();
+
+
+                        if (foundCompleteId.Count > 0)
+                        {
+                            return new PercentValidateDto() { foundId = foundCompleteId.FirstOrDefault(), percent = resultPrc.OrderByDescending(x => x.Item2).Select(x => x.Item2).FirstOrDefault(), obj = entityCf.Data.Where(x => x.Id == foundCompleteId.FirstOrDefault()).FirstOrDefault() };
+                        }
+                        else
+                        {
+                            return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                        }
+                    }
+                    else
+                    {
+                        return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                    }
+
+
+                }
+                else
+                {
+                    return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                }
+
+            }
+        }
+
         public async Task<bool> ChangeStatusConsorzioDestinatarioAsync(long id)
         {
             var entity = await consorzioDestinatariRepo.GetByIdAsync(id);
@@ -668,6 +742,80 @@ namespace GaCloudServer.BusinnessLogic.Services
             else
             {
                 return true;
+            }
+        }
+
+        public async Task<PercentValidateDto> ValidatePercentConsorzioTrasportatoreAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        {
+            var entity = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.ConsorzioComuneId == comuneId && x.Descrizione == ragSo && x.Id != id && x.Disabled == false);
+
+            if (entity.Data.Count > 0)
+            {
+                return new PercentValidateDto() { foundId = entity.Data.FirstOrDefault().Id, percent = 1, obj = entity.Data.FirstOrDefault() };
+            }
+            else
+            {
+                var entityCf = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Disabled == false);
+                if (entityCf.Data.Count > 0)
+                {
+                    List<long> foundId = new List<long>();
+                    List<long> foundCompleteId = new List<long>();
+                    List<(long, double)> listRagsoPrc = new List<(long, double)>();
+                    List<(long, double)> listIndPrc = new List<(long, double)>();
+
+                    double ragSoPrc = 0;
+                    double indPrc = 0;
+
+                    foreach (var itm in entityCf.Data)
+                    {
+                        ragSoPrc = sh.CalculateSimilarity(itm.Descrizione, ragSo);
+                        if (ragSoPrc > 0.8)
+                        {
+                            listRagsoPrc.Add((itm.Id, ragSoPrc));
+
+                            foundId.Add(itm.Id);
+                        }
+                    }
+
+                    if (foundId.Count > 0)
+                    {
+                        foreach (var itm in entityCf.Data.Where(x => foundId.Contains(x.Id)))
+                        {
+
+                            indPrc = sh.CalculateSimilarity(itm.Indirizzo, indirizzo);
+
+                            listIndPrc.Add((itm.Id, indPrc));
+                            foundCompleteId.Add(itm.Id);
+
+                        }
+
+                        var resultPrc = listRagsoPrc.Concat(listIndPrc)
+                            .GroupBy(item => item.Item1)
+                            .Select(group => (group.Key, group.Sum(item => item.Item2) / 2))
+                            .ToList();
+
+
+                        if (foundCompleteId.Count > 0)
+                        {
+                            return new PercentValidateDto() { foundId = foundCompleteId.FirstOrDefault(), percent = resultPrc.OrderByDescending(x => x.Item2).Select(x => x.Item2).FirstOrDefault(), obj = entityCf.Data.Where(x => x.Id == foundCompleteId.FirstOrDefault()).FirstOrDefault() };
+                        }
+                        else
+                        {
+                            return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                        }
+                    }
+                    else
+                    {
+                        return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                    }
+
+
+                }
+                else
+                {
+                    return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                }
+
             }
         }
 
@@ -1239,8 +1387,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<bool> DeleteConsorzioImportTaskByTaskIdAsync(string taskId)
         {
-            var entities = await consorzioRegistrazioniRepo.GetSingleWithFilter(x => x.ConsorzioImportTaskId == taskId);
-            consorzioRegistrazioniRepo.Remove(entities);
+            var entities = await consorzioRegistrazioniRepo.GetWithFilterAsync(x => x.ConsorzioImportTaskId == taskId);
+            consorzioRegistrazioniRepo.RemoveRange(entities.Data);
             await SaveChanges();
 
             return true;
@@ -1254,12 +1402,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             return log;
         }
 
-        public async Task<bool> SetConsorzioImportTaskDeletedAsync(long id)
+        public async Task<bool> SetConsorzioImportTaskDeletedAsync(string taskId)
         {
             try
             {
-                var original = consorzioImportsTasksRepo.GetByIdAsNoTraking(x => x.Id == id);
-                var entity = await consorzioImportsTasksRepo.GetByIdAsync(id);
+                
+                var entity = await consorzioImportsTasksRepo.GetSingleWithFilter(x=>x.TaskId==taskId);
                 entity.Deleted = true;
 
                 consorzioImportsTasksRepo.Update(entity);
