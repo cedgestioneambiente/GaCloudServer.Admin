@@ -7,6 +7,8 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+using System.IO.Compression;
+using System.Text;
 using sh = GaCloudServer.BusinnessLogic.Helpers.StringHelper;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -431,7 +433,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
             else
             {
-                var entityCf = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId==comuneId && x.Disabled==false);
+                var entityCf = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId==comuneId && x.Id!=id && x.Disabled==false);
                 if (entityCf.Data.Count > 0)
                 {
                     List<long> foundId = new List<long>();
@@ -593,7 +595,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
             else
             {
-                var entityCf = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Disabled == false);
+                var entityCf = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Id != id && x.Disabled == false);
                 if (entityCf.Data.Count > 0)
                 {
                     List<long> foundId = new List<long>();
@@ -755,7 +757,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
             else
             {
-                var entityCf = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Disabled == false);
+                var entityCf = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Id != id && x.Disabled == false);
                 if (entityCf.Data.Count > 0)
                 {
                     List<long> foundId = new List<long>();
@@ -903,17 +905,26 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateConsorzioRegistrazioneAsync(long id, string userId)
+        public async Task<PercentValidateDto> ValidateConsorzioRegistrazioneAsync(ConsorzioRegistrazioneDto dto)
         {
-            var entity = await consorzioRegistrazioniRepo.GetWithFilterAsync(x => x.UserId == userId && x.Id != id);
+            var entity = await consorzioRegistrazioniRepo.GetWithFilterAsync(x => 
+            x.PesoTotale==dto.PesoTotale &&
+            x.DataRegistrazione.Month==dto.DataRegistrazione.Month &&
+            x.ConsorzioCerId==dto.ConsorzioCerId &&
+            x.ConsorzioProduttoreId==dto.ConsorzioProduttoreId &&
+            x.ConsorzioTrasportatoreId==dto.ConsorzioTrasportatoreId &&
+            x.ConsorzioDestinatarioId==dto.ConsorzioDestinatarioId &&
+            x.ConsorzioOperazioneId==dto.ConsorzioOperazioneId
+            && x.Id!=dto.Id);
 
             if (entity.Data.Count > 0)
             {
-                return false;
+                var response = await viewConsorzioRegistrazioniRepo.GetByIdAsync(entity.Data.FirstOrDefault().Id);
+                return new PercentValidateDto() { percent = 1, foundId = response.Id, obj = response };
             }
             else
             {
-                return true;
+                return new PercentValidateDto() { percent=0,foundId=-1};
             }
         }
 
@@ -1342,6 +1353,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
+        //import check su periodo
         #region ConsorzioImportsTasks
         public async Task<ConsorzioImportsTasksDto> GetConsorzioImportsTasksAsync(int page = 1, int pageSize = 0)
         {
@@ -1398,7 +1410,19 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<string> GetConsorzioImportTaskLogByTaskId(long id)
         {
             var entity = await consorzioImportsTasksRepo.GetByIdAsync(id);
-            var log = entity.Log;
+            byte[] decompressedLog = entity.Log;
+            string log;
+            using (MemoryStream ms = new MemoryStream(decompressedLog))
+            {
+                using (GZipStream gzip = new GZipStream(ms, CompressionMode.Decompress))
+                {
+                    using (StreamReader reader = new StreamReader(gzip, Encoding.UTF8))
+                    {
+                        log = reader.ReadToEnd();
+                    }
+                }
+            }
+
             return log;
         }
 
@@ -1417,7 +1441,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
             catch (Exception ex)
             {
-                await SaveChanges();
                 throw;
             }
         }

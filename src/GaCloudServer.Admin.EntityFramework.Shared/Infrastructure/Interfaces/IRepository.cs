@@ -47,6 +47,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces
         Task<PagedList<TEntity>> GetAllAsync(int page = 1, int pageSize = 0, string orderField = "Id", string orderType = "OrderBy");
         Task<PagedList<TEntity>> GetWithFilterAsync(Expression<Func<TEntity, bool>> predicate, int page = 1, int pageSize = 0, string orderField = "Id", string orderType = "OrderBy");
         Task<TEntity> GetSingleWithFilter(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> GetSingleWithFilterAsNoTrakingAsync(Expression<Func<TEntity, bool>> predicate);
         #endregion
 
         #region Functions

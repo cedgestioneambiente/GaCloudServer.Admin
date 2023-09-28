@@ -193,6 +193,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
             //auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET SINGLE - {0}", _entities.EntityType)) { });
             return await _entities.Where(predicate).FirstOrDefaultAsync();
         }
+
+        public virtual async Task<TEntity> GetSingleWithFilterAsNoTrakingAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            //auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET SINGLE - {0}", _entities.EntityType)) { });
+
+            return await _entities.AsNoTracking().Where(predicate).FirstOrDefaultAsync();
+        }
         #endregion
 
         public virtual PagedList<TEntity> GetAllQueryable(GridOperationsModel filterParams)

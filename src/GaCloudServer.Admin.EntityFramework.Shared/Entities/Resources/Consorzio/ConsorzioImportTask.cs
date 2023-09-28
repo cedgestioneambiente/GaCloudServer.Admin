@@ -7,7 +7,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
     public class ConsorzioImportTask : GenericFileEntity
     {
         public string TaskId { get; set; }
-        public string Log { get; set; }
+        public byte[] Log { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public int Completed { get; set; }

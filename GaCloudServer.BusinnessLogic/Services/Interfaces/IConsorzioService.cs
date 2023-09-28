@@ -140,7 +140,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteConsorzioRegistrazioneAsync(long id);
 
         #region Functions
-        Task<bool> ValidateConsorzioRegistrazioneAsync(long id, string userId);
+        Task<PercentValidateDto> ValidateConsorzioRegistrazioneAsync(ConsorzioRegistrazioneDto dto);
         Task<bool> ChangeStatusConsorzioRegistrazioneAsync(long id);
         #endregion
 
