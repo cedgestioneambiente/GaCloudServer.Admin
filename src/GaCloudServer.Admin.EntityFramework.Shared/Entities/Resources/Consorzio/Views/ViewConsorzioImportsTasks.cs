@@ -16,5 +16,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
         public string Successo { get; set; }
         public string FileId { get; set; }
         public string FullName { get; set; }
+        public bool Deleted { get; set; }
     }
 }
