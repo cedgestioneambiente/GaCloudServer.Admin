@@ -88,6 +88,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region CrmEventDevices
         Task<CrmEventDevicesDto> GetGaCrmEventDevicesByEventIdAsync(long id);
+        Task<CrmEventDevicesDto> GetGaCrmEventDevicesByTicketIdAsync(long id);
         Task<CrmEventDeviceDto> GetGaCrmEventDeviceByIdAsync(long id);
         Task<long> AddGaCrmEventDeviceAsync(CrmEventDeviceDto dto);
         Task<long> UpdateGaCrmEventDeviceAsync(CrmEventDeviceDto dto);
@@ -121,6 +122,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetGaCrmTicketDevicesByUserAsync(string cpAzi, string numCon, string cpRowNum);
         Task<PagedList<ViewGaCrmTickets>> GetGaCrmTicketsByUserAsync(long comuneId, string numCon, string prg);
         Task<bool> CheckGaCrmTicketEventExistAsync(long id);
+        Task<long?> GetGaCrmTicketEventIfExistAsync(long id);
         Task<bool> DuplicateGaCrmTicketAsync(long[] ticketsId, string userId);
         Task<PagedList<ViewGaCrmTickets>> ExportGaCrmTicketsAsync(long[] ids);
         #endregion

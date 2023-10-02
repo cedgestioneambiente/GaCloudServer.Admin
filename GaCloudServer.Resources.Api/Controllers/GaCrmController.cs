@@ -874,7 +874,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
                 else
                 {
-                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione, "Ricevuta Prenotazione Ritiro per Cessazione " + DateTime.Now.ToString("dd/MM/yyyy"), "CrmEventCloseRecipt.pdf", "CrmEventCloseRecipt");
+                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione, "Ricevuta Prenotazione Ritiro per Cessazione " + DateTime.Now.ToString("dd/MM/yyyy"), false,"CrmEventCloseRecipt.pdf", "CrmEventCloseRecipt");
                     var response = await _printService.Print("CrmEventCloseRecipt", dto);
 
                     return new ApiResponse(response);
@@ -909,7 +909,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 else
                 {
                     var _template = templates.Data.Where(x => x.Id == _tipo.ContactCenterPrintTemplateId).First();
-                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione, "Redatto in duplice copia", _template.Template + ".pdf", _template.Template);
+                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area.Descrizione, "Redatto in duplice copia",false, _template.Template + ".pdf", _template.Template);
                     var response = await _printService.Print(_template.Template, dto);
 
                     return new ApiResponse(response);
@@ -921,6 +921,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
+
 
         [HttpGet("SendGaCrmEventsByFilterAsync/{date}/{areaId}/{userId}/{userName}/{all}")]
         public async Task<ApiResponse> SendGaCrmEventsByFilterAsync(DateTime date, long areaId, string userId, string userName, bool all)
@@ -941,8 +942,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var dto = await GenerateCrmEventsGroupedTemplate(list.Data.Where(x => x.CrmEventStateId == 2).ToList(), date, area.Descrizione,false, "CrmEventsReport.pdf");
                 var attachPath = await _printService.Print("CrmEventsReport", dto);
 
-                string mailTo = "ced@gestioneambiente.net;matteo.derocchi@gestioneambiente.net";
-                string mailCC = "";
+                string mailTo = "tariffa@gestioneambiente.net";
+                string mailCC = "matteo.derocchi@gestioneambiente.net;ced@gestioneambiente.net";
 
                 var result = await _mailService.AddMailJobAsync(new MailJob()
                 {
@@ -983,6 +984,23 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var dto = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(id);
+                var apiDto = dto.ToApiDto<CrmEventDevicesApiDto, CrmEventDevicesDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaCrmEventDevicesByTicketIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmEventDevicesByTicketIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaCrmService.GetGaCrmEventDevicesByTicketIdAsync(id);
                 var apiDto = dto.ToApiDto<CrmEventDevicesApiDto, CrmEventDevicesDto>();
                 return new ApiResponse(apiDto);
             }
@@ -1318,6 +1336,22 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        [HttpGet("GetGaCrmTicketEventIfExistAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaCrmTicketEventIfExistAsync(long id)
+        {
+            try
+            {
+                var view = await _gaCrmService.GetGaCrmTicketEventIfExistAsync(id);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         [HttpPost("SendGaCrmTicketAsync")]
         public async Task<ApiResponse> SendGaCrmTicketAsync([FromBody] CrmSendMailApiDto apiDto)
         {
@@ -1410,16 +1444,93 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiProblemDetailsException(code.Status400BadRequest);
             }
         }
+
+
+        [HttpGet("PrintGaCrmTicketByIdAsync/{id}")]
+        public async Task<ApiResponse> PrintGaCrmTicketByIdAsync(long id)
+        {
+            try
+            {
+                //var _event = await _gaCrmService.GetGaCrmEventByIdAsync(id);
+                var _ticket = await _gaCrmService.GetGaCrmTicketByIdAsync(id);
+
+                CrmEventDto _event = new CrmEventDto();
+                _event.Id = _ticket.Id;
+                _event.CodAzi = "C"+ _ticket.CrmEventComuneId.ToString();
+                _event.CodCli = _ticket.CodCli;
+                _event.NumCon = _ticket.NumCon;
+                _event.Partita = _ticket.Partita;
+                _event.CpRowNum = _ticket.Prg;
+                _event.DateSchedule = DateTime.Now;
+                _event.DataRichiesta = _ticket.DataRichiesta;
+                _event.RagSo = _ticket.Utente;
+                _event.CodFis = _ticket.CfPiva;
+                _event.Telefono = _ticket.Telefono;
+                _event.Cellulare = _ticket.Cellulare;
+                _event.Email = _ticket.Email;
+                _event.Pec = _ticket.EmailPec;
+                _event.TipoId = _ticket.ContactCenterTipoRichiestaId;
+                _event.Tipo = "Tipo";
+                _event.Citta = "Città";
+                _event.Indirizzo = _ticket.Via;
+                _event.NumCiv = _ticket.NumCiv;
+                _event.CodZona = _ticket.CodZona;
+                _event.Domest = _ticket.Tributo == "DOM" ? true : false;
+                _event.CrmEventStateId = _ticket.ContactCenterStatoRichiestaId;
+                _event.CrmEventAreaId = 0;
+                _event.CrmTicketId = Convert.ToInt32(_ticket.Id);
+                _event.UserId = _ticket.Creator;
+                _event.UserName = "Creatore";
+                _event.NotaAnagrafica = _ticket.NoteCrm;
+                _event.Sended = false;
+                _event.NotaOperatore = _ticket.NoteOperatore;
+                _event.Duration = 0;
+                _event.RitardoCausaAzienda = false;
+                _event.RitardoCausaUtente = false;
+
+                var tipologie = await _gaCrmService.GetGaCrmTipiTicketAsync(true);
+                var _tipo = tipologie.Data.Where(x => x.Id == _event.TipoId).First();
+                var templates = await _gaCrmService.GetGaCrmPrintTemplatesAsync(1, 0);
+                var comune = await _gaCrmService.GetGaCrmEventComuneByIdAsync(_ticket.CrmEventComuneId);
+
+
+                _event.Tipo = _tipo.Descrizione;
+                _event.Citta = comune.Descrizione;
+
+                var area = "";// await _gaCrmService.GetGaCrmEventAreaByIdAsync(_event.CrmEventAreaId);
+                if (_tipo.ContactCenterPrintTemplateId == 0 || _tipo.ContactCenterPrintTemplateId == null)
+                {
+                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area, _tipo.Descrizione,true);
+                    var response = await _printService.Print("CrmEventDefault", dto);
+
+                    return new ApiResponse(response);
+                }
+                else
+                {
+                    var _template = templates.Data.Where(x => x.Id == _tipo.ContactCenterPrintTemplateId).First();
+                    var dto = await GenerateCrmEventTemplate(_event, _event.DateSchedule, area, "Redatto in duplice copia",true, _template.Template + ".pdf", _template.Template);
+                    var response = await _printService.Print(_template.Template, dto);
+
+                    return new ApiResponse(response);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
         #endregion
 
         #region Views
         [HttpPost("GetViewGaCrmTicketsQueryableFilterSingleParam/{assignee}")]
-        public ApiResponse GetViewGaCrmTicketsQueryableFilterSingleParam(GridOperationsModel filter, string? assignee = "0")
+        public ApiResponse GetViewGaCrmTicketsQueryableFilterSingleParam(GridOperationsModel filter,string? assignee="0")
         {
             try
             {
-                assignee = assignee == "NaN" ? "0" : assignee;
-                var entities = _gaCrmService.GetViewGaCrmTicketsByAssigneeQueryable(filter, assignee.Split(",").ToArray());
+                //assignee = assignee == "NaN" ? "0" : assignee;
+                assignee = assignee == "ARRAY" ? filter.extraFilter.ToString() : "0";
+                var entities = _gaCrmService.GetViewGaCrmTicketsByAssigneeQueryable(filter, assignee.ToString().Split(",").ToArray());
                 return new ApiResponse(entities);
 
             }
@@ -2412,7 +2523,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        private async Task<CrmEventTemplateDto> GenerateCrmEventTemplate(CrmEventDto _event, DateTime date, string area, string title, string fileName = "CrmEventDefault.pdf",string css= "CrmEventDefault")
+        private async Task<CrmEventTemplateDto> GenerateCrmEventTemplate(CrmEventDto _event, DateTime date, string area, string title, bool fromTicket = false, string fileName = "CrmEventDefault.pdf",string css= "CrmEventDefault")
         {
             var dto = new CrmEventTemplateDto()
             {
@@ -2430,16 +2541,34 @@ namespace GaCloudServer.Resources.Api.Controllers
 
             };
 
-            var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(_event.Id);
-            foreach (var device in devices.Data)
+            if (!fromTicket)
             {
-                if (device.Selected)
-                    dto.Devices.Add(device);
+                var devices = await _gaCrmService.GetGaCrmEventDevicesByEventIdAsync(_event.Id);
+                foreach (var device in devices.Data)
+                {
+                    if (device.Selected)
+                        dto.Devices.Add(device);
+                }
+                return dto;
+            }
+            else
+            {
+                var devices = await _gaCrmService.GetGaCrmEventDevicesByTicketIdAsync(_event.Id);
+                foreach (var device in devices.Data)
+                {
+                    if (device.Selected)
+                        device.CrmEventId=_event.Id;
+                        dto.Devices.Add(device);
+                }
+
+                return dto;
             }
 
             
 
-            return dto;
+            
+
+            
 
         }
         private async Task<CrmTicketTemplateDto> GenerateCrmTicketTemplate(ViewGaCrmTickets _event, string title, string fileName = "CrmTicketDefault.pdf", string css = "CrmTicketDefault")

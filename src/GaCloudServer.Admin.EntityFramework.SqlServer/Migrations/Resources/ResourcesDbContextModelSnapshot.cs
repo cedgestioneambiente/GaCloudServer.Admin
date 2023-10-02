@@ -4069,11 +4069,11 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
-                    b.Property<long>("CrmEventId")
+                    b.Property<long?>("CrmEventId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("CrmTicketId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CrmTicketId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("DesCon")
                         .HasColumnType("nvarchar(max)");
@@ -4103,8 +4103,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CrmEventId");
 
                     b.ToTable("GaCrmEventDevices");
                 });
@@ -11116,17 +11114,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Navigation("CrmEventArea");
 
                     b.Navigation("CrmEventState");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmEventDevice", b =>
-                {
-                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmEvent", "CrmEvent")
-                        .WithMany()
-                        .HasForeignKey("CrmEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CrmEvent");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmTicket", b =>

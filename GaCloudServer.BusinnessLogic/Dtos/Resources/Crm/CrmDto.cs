@@ -89,8 +89,8 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
     #region CrmEventDevices
     public class CrmEventDeviceDto : GenericEntity
     {
-        public long CrmEventId { get; set; }
-        public int CrmTicketId { get; set; }
+        public long? CrmEventId { get; set; }
+        public long? CrmTicketId { get; set; }
         public string Identi1 { get; set; }
         public string Identi2 { get; set; }
         public string TipCon { get; set; }

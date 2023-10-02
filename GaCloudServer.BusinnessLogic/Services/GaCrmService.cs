@@ -492,26 +492,36 @@ namespace GaCloudServer.BusinnessLogic.Services
             await gaCrmEventsRepo.AddAsync(entity);
             await SaveChanges();
 
-            var devices = await viewGaBackOfficeUtenzeDispositiviRepo.GetWithFilterAsync(x => x.NumCon == dto.NumCon && x.CpAzi == dto.CodAzi && x.CpRowNum == Convert.ToInt32(dto.CpRowNum) && x.DtRit == "31/12/2029");
+            var eventDevice = await gaCrmEventDevicesRepo.GetWithFilterAsync(x => x.CrmTicketId == dto.CrmTicketId);
 
-            foreach (var item in devices.Data)
+            foreach (var device in eventDevice.Data)
             {
-                var device = new CrmEventDevice();
                 device.CrmEventId = entity.Id;
-                device.CrmTicketId = dto.CrmTicketId;
-                device.Identi1 = item.Identi1;
-                device.Identi2= item.Identi2;
-                device.TipCon = item.TipCon;
-                device.DesCon = item.DesCon;
-                device.DtCon = item.DtCon;
-                device.DtRit = item.DtRit;
-                device.Selected = true;
-                device.Completed = false;
-                device.Disabled = false;
-
-                await gaCrmEventDevicesRepo.AddAsync(device);
+                gaCrmEventDevicesRepo.Update(device);
                 await SaveChanges();
             }
+            
+
+            //var devices = await viewGaBackOfficeUtenzeDispositiviRepo.GetWithFilterAsync(x => x.NumCon == dto.NumCon && x.CpAzi == dto.CodAzi && x.CpRowNum == Convert.ToInt32(dto.CpRowNum) && x.DtRit == "31/12/2029");
+
+            //foreach (var item in devices.Data)
+            //{
+            //    var device = new CrmEventDevice();
+            //    device.CrmEventId = entity.Id;
+            //    device.CrmTicketId = dto.CrmTicketId;
+            //    device.Identi1 = item.Identi1;
+            //    device.Identi2= item.Identi2;
+            //    device.TipCon = item.TipCon;
+            //    device.DesCon = item.DesCon;
+            //    device.DtCon = item.DtCon;
+            //    device.DtRit = item.DtRit;
+            //    device.Selected = true;
+            //    device.Completed = false;
+            //    device.Disabled = false;
+
+            //    await gaCrmEventDevicesRepo.AddAsync(device);
+            //    await SaveChanges();
+            //}
 
 
             return entity.Id;
@@ -608,6 +618,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
+        public async Task<CrmEventDevicesDto> GetGaCrmEventDevicesByTicketIdAsync(long id)
+        {
+            var entity = await gaCrmEventDevicesRepo.GetWithFilterAsync(x => x.CrmTicketId == id);
+            var dto = entity.ToDto<CrmEventDevicesDto, PagedList<CrmEventDevice>>();
+            return dto;
+        }
+
         public async Task<CrmEventDeviceDto> GetGaCrmEventDeviceByIdAsync(long id)
         {
             var entity = await gaCrmEventDevicesRepo.GetByIdAsync(id);
@@ -648,7 +665,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entities = await gaCrmEventDevicesRepo.GetWithFilterAsync(x => x.CrmEventId == id);
             foreach (var entity in entities.Data)
             {
-                gaCrmEventDevicesRepo.Remove(entity);
+                entity.CrmEventId = null;
+                gaCrmEventDevicesRepo.Update(entity);
                 await SaveChanges();
             }
             
@@ -963,6 +981,30 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = dto.ToEntity<CrmTicket, CrmTicketDto>();
             await gaCrmTicketsRepo.AddAsync(entity);
             await SaveChanges();
+
+            var comune = await gaCrmEventComuniRepo.GetByIdAsync(dto.CrmEventComuneId);
+
+            var devices = await viewGaBackOfficeUtenzeDispositiviRepo.GetWithFilterAsync(x => x.NumCon == dto.NumCon && x.CpAzi == comune.CodAzi && x.CpRowNum == Convert.ToInt32(dto.Prg) && x.DtRit == "31/12/2029");
+
+            foreach (var item in devices.Data)
+            {
+                var device = new CrmEventDevice();
+                device.CrmEventId = null;
+                device.CrmTicketId = entity.Id;
+                device.Identi1 = item.Identi1;
+                device.Identi2 = item.Identi2;
+                device.TipCon = item.TipCon;
+                device.DesCon = item.DesCon;
+                device.DtCon = item.DtCon;
+                device.DtRit = item.DtRit;
+                device.Selected = true;
+                device.Completed = false;
+                device.Disabled = false;
+
+                await gaCrmEventDevicesRepo.AddAsync(device);
+                await SaveChanges();
+            }
+
             return entity.Id;
         }
 
@@ -1030,6 +1072,21 @@ namespace GaCloudServer.BusinnessLogic.Services
             {
                 return false;
             }
+        }
+
+        public async Task<long?> GetGaCrmTicketEventIfExistAsync(long id)
+        {
+            var entity = await gaCrmEventsRepo.GetWithFilterAsync(x => x.CrmTicketId == id);
+
+            if (entity.TotalCount > 0)
+            {
+                return entity.Data.FirstOrDefault().Id;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public async Task<bool> DuplicateGaCrmTicketAsync(long[] ticketsId, string userId)

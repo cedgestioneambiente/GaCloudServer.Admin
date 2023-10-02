@@ -107,10 +107,10 @@
     <None Update="Template\CrmTicketDefault\assets\template.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Template\CrmEventRit - Copia\assets\styles.css">
+    <None Update="Template\CrmEventRitCess\assets\styles.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Template\CrmEventRit - Copia\assets\template.html">
+    <None Update="Template\CrmEventRitCess\assets\template.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Template\CrmEventRit\assets\styles.css">

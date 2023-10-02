@@ -41,6 +41,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Models
         public SortModel[] sortModel { get; set; }
         public Dictionary<string, FilterModel> filterModel { get; set; }
         public string quickFilter { get; set; }
+        public object? extraFilter { get; set; }
     }
 
     public class FilterRequestModel
