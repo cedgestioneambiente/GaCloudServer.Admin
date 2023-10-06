@@ -102,6 +102,7 @@ namespace GaCloudServer.Jobs
             services.AddScoped<GarbageJobs.GarbageStatiJob>();
             services.AddScoped<GarbageJobs.GarbageTicketContactCenterJob>();
             services.AddScoped<GarbageJobs.GarbageTicketMagazzinoJob>();
+            services.AddScoped<CrmJobs.CrmCessazioniReportJob>();
 
 
 
@@ -194,6 +195,7 @@ namespace GaCloudServer.Jobs
                         typeof(GarbageJobs.GarbageProvenienzeJob),
                         typeof(GarbageJobs.GarbageTicketContactCenterJob),
                         typeof(GarbageJobs.GarbageTicketMagazzinoJob),
+                        typeof(CrmJobs.CrmCessazioniReportJob)
                     }
                 }
                 );

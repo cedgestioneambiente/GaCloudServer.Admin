@@ -6,9 +6,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 {
     public static class TemplateGeneratorHelper
     {
-        public static string PersonaleSchedaConsegna(PersonaleSchedaConsegnaTemplateDto dto)
+        public static string PersonaleSchedaConsegna(PersonaleSchedaConsegnaTemplateDto dto,string? alternativePath=null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/PersonaleSchedaConsegna/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory=Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/PersonaleSchedaConsegna/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -26,9 +37,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             return sb.ToString();
         }
 
-        public static string ContactCenterTicketInt(ContactCenterTicketIntTemplateDto dto)
+        public static string ContactCenterTicketInt(ContactCenterTicketIntTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ContactCenterTicketInt/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/ContactCenterTicketInt/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -39,9 +61,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string ContactCenterTicketIng(ContactCenterTicketIngTemplateDto dto)
+        public static string ContactCenterTicketIng(ContactCenterTicketIngTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ContactCenterTicketIng/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/ContactCenterTicketIng/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -52,9 +85,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string ContactCenterTicketsIng(ContactCenterTicketsIngTemplateDto dto)
+        public static string ContactCenterTicketsIng(ContactCenterTicketsIngTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ContactCenterTicketsIng/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/ContactCenterTicketsIng/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -99,9 +143,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string ContactCenterTicketsInt(ContactCenterTicketsIntTemplateDto dto)
+        public static string ContactCenterTicketsInt(ContactCenterTicketsIntTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ContactCenterTicketsInt/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/ContactCenterTicketsInt/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -284,9 +339,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string ReclamiRegistro(ReclamiRegistroItemsTemplateDto dto)
+        public static string ReclamiRegistro(ReclamiRegistroItemsTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/ReclamiRegistro/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/ReclamiRegistro/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -317,9 +383,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             return sb.ToString();
         }
 
-        public static string SegnalazioniDocumento(SegnalazioniDocumentoTemplateDto dto)
+        public static string SegnalazioniDocumento(SegnalazioniDocumentoTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/SegnalazioniDocumento/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/SegnalazioniDocumento/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -359,9 +436,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             return sb.ToString();
         }
 
-        public static string EcSegnalazioniDocumento(EcSegnalazioniDocumentoTemplateDto dto)
+        public static string EcSegnalazioniDocumento(EcSegnalazioniDocumentoTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/EcSegnalazioniDocumento/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/EcSegnalazioniDocumento/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -401,9 +489,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             return sb.ToString();
         }
 
-        public static string CrmEvents(CrmEventsTemplateDto dto)
+        public static string CrmEvents(CrmEventsTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEvents/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEvents/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -488,9 +587,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventsReport(CrmEventsTemplateDto dto)
+        public static string CrmEventsReport(CrmEventsTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventsReport/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventsReport/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -580,9 +690,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventRecipt(CrmEventTemplateDto dto)
+        public static string CrmEventRecipt(CrmEventTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventRecipt/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventRecipt/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -647,9 +768,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventCloseRecipt(CrmEventTemplateDto dto)
+        public static string CrmEventCloseRecipt(CrmEventTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventCloseRecipt/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventCloseRecipt/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -714,9 +846,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventDefault(CrmEventTemplateDto dto)
+        public static string CrmEventDefault(CrmEventTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventDefault/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventDefault/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -729,9 +872,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventCons(CrmEventTemplateDto dto)
+        public static string CrmEventCons(CrmEventTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventCons/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventCons/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -761,9 +915,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventSost(CrmEventTemplateDto dto)
+        public static string CrmEventSost(CrmEventTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventSost/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventSost/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -823,9 +988,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
         }
-        public static string CrmEventLuch(CrmEventTemplateDto dto)
+        public static string CrmEventLuch(CrmEventTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventLuch/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventLuch/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -875,9 +1051,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventRit(CrmEventTemplateDto dto)
+        public static string CrmEventRit(CrmEventTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventRit/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventRit/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -925,9 +1112,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventRitCess(CrmEventTemplateDto dto)
+        public static string CrmEventRitCess(CrmEventTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventRitCess/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventRitCess/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -975,9 +1173,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmEventsGrouped(CrmEventsTemplateDto dto)
+        public static string CrmEventsGrouped(CrmEventsTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmEventsGrouped/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventsGrouped/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 
@@ -1063,9 +1272,20 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
-        public static string CrmTicketDefault(CrmTicketTemplateDto dto)
+        public static string CrmTicketDefault(CrmTicketTemplateDto dto, string? alternativePath = null)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Template/CrmTicketDefault/assets/", "template.html");
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmTicketDefault/assets/", "template.html");
             var fileContent = @File.ReadAllText(filePath);
             var sb = new StringBuilder();
 

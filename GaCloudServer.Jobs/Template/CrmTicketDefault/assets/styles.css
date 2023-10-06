@@ -1,0 +1,133 @@
+.header {
+    margin-top: 10px;
+    color: #000;
+    width: 100%;
+    height: 85px;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid #000;
+    border-radius:10px 10px 0px 0px;
+    border-bottom:none !important;
+}
+
+.header-logo {
+  display: inline-block;
+  width: 24%;
+  text-align: center;
+  height: 85px;
+  border-right: 1px solid #000;
+}
+
+.header-logo-img {
+  width: 163px;
+  height: 50px;
+  padding-top:20px;
+}
+
+.header-title {
+  width: 52%;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  height: 85px;
+  vertical-align: top;
+  padding-top:10px;
+}
+
+.header-title-2 {
+    width: 23%;
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+    height: 75px;
+    vertical-align: top;
+    padding-top: 10px;
+}
+
+.header-box {
+    color: #000;
+    width: 100%;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid #000;
+    border-radius: 0px 0px 10px 10px;
+}
+
+
+.content {
+    height: 100%;
+    width: 100%;
+    /*border: 1px solid #000;*/
+    font-family: Arial, Helvetica, sans-seriff;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display:flex;
+}
+
+
+
+.box {
+    margin-top: 10px;
+    color: #000;
+    width: 100%;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.box-row {
+    color: #000;
+    width: 100%;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    position:relative;
+}
+
+.box-row-col {
+    display: inline-block;
+    width: 22%;
+    vertical-align: top;
+    font-size: 18px;
+    padding:5px 8px;
+}
+
+.rb {
+    border-right: solid 1px #000;
+}
+
+.lb {
+    border-left: solid 1px #000;
+}
+
+.bb {
+    border-bottom:1px solid #000;
+}
+
+.pl-10 {
+    padding-left:10px;
+}
+
+.vl {
+    display: inline;
+    border-left: 1px solid #000;
+    height: 100%;
+    width: 1px;
+    position:absolute;
+}
+
+.barcode {
+    display:inline-block;
+    width:70%;
+    height:100%
+}
+
+
+.page-break {
+    page-break-inside: avoid;
+    /*page-break-after: always;*/
+}
+
+
+
+

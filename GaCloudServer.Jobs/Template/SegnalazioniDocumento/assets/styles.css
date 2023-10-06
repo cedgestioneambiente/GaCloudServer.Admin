@@ -1,0 +1,128 @@
+@font-face {
+  font-family: SourceSansPro;
+  src: url(SourceSansPro-Regular.ttf);
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #0087C3;
+  text-decoration: none;
+}
+
+body {
+  position: relative;
+  width: 21cm;  
+  height: 29.7cm; 
+  margin: 0 auto; 
+  color: #555555;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 14px; 
+  font-family: SourceSansPro;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #AAAAAA;
+}
+
+#logo {
+  float: left;
+  margin-top: 8px;
+}
+
+#logo img {
+  height: 50px;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+
+#details {
+  margin-bottom: 25px;
+}
+
+#client {
+  padding-left: 6px;
+  border-left: 6px solid #57B223;
+  float: left;
+}
+
+#client .to {
+  color: #777777;
+}
+
+#notes {
+    margin-bottom: 25px;
+}
+
+#notices {
+    padding-left: 6px;
+    border-left: 6px solid #57B223;
+}
+
+#notices .notice {
+    font-size: 1.4em;
+}
+
+h2.name {
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 0;
+}
+
+#invoice {
+  float: right;
+  text-align: right;
+}
+
+#invoice h1 {
+  color: #000000;
+  font-size: 2.4em;
+  line-height: 1em;
+  font-weight: 700;
+  margin: 0  0 10px 0;
+}
+
+#invoice .date {
+  font-size: 1.5em;
+  color: #777777;
+}
+
+#photo {
+    text-align: center;
+    width: 100%;
+}
+
+    #photo .detail {
+        width: 100%;
+        page-break-after: always;
+       
+    }
+
+        #photo .detail img {
+            width: 80%;
+            padding:15px;
+        }
+
+
+
+#notices{
+  padding-left: 6px;
+  border-left: 6px solid #57B223;  
+}
+
+#notices .notice {
+  font-size: 1.4em;
+}
+
+

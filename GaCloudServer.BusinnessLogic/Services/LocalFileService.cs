@@ -33,9 +33,20 @@ namespace GaCloudServer.BusinnessLogic.Services
             _converter = converter;
         }
 
-        public dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, HeaderSettings headerSettings,FooterSettings footerSettings, int copies, string title = "", string css = "", Orientation orientation = Orientation.Portrait)
+        public dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, HeaderSettings headerSettings,FooterSettings footerSettings, int copies, string title = "", string css = "", Orientation orientation = Orientation.Portrait,string? alternativePath=null)
         {
-            string filePath = Path.Combine(_webRootPath, _path, _fileName);
+            string filePath = "";
+            string currentDirectory = "";
+            if (alternativePath == null)
+            {
+                filePath = Path.Combine(_webRootPath, _path);
+                currentDirectory=Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                filePath = Path.Combine(Path.Combine(alternativePath,"wwwroot",_webPath), _path);
+                currentDirectory = alternativePath;
+            }
      
             var globalSettings = new GlobalSettings
             {
@@ -45,14 +56,14 @@ namespace GaCloudServer.BusinnessLogic.Services
                 Margins = new MarginSettings { Top = 10 },
                 DocumentTitle = "PDF Report",
                 Copies=copies,
-                Out = filePath
+                Out = Path.Combine(filePath,_fileName)
             };
 
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
                 HtmlContent = _htmlContent,
-                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "Template/" + css + "/assets", "styles.css") },
+                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(currentDirectory, "Template/" + css + "/assets", "styles.css") },
                 HeaderSettings = headerSettings, //{ FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Right = "Pagina [page] di [toPage]", Line = true },
                 FooterSettings = footerSettings//{ FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, Center = title }
             };
@@ -63,11 +74,11 @@ namespace GaCloudServer.BusinnessLogic.Services
                 Objects = { objectSettings }
             };
 
-            var directoryExist = Directory.Exists(Path.Combine(_webRootPath, _path));
+            var directoryExist = Directory.Exists(filePath);
 
             if (!directoryExist)
             {
-                Directory.CreateDirectory(Path.Combine(_webRootPath, _path));
+                Directory.CreateDirectory(filePath);
             }
 
 

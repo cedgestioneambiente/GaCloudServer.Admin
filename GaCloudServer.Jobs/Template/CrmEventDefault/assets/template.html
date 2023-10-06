@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+</head>
+<body style="height:100%">
+    <div class='header'>
+        <div class='header-logo'>
+            <img class='header-logo-img' src='http://dev.gestioneambiente.net/wwwroot/assets/logo_ga.png' />
+        </div>
+        <div class='header-title'>
+            <b>
+                {0}
+            </b>
+        </div>
+        <div class='header-title-2'>
+            <canvas id="barcode" class="barcode"></canvas>
+        </div>
+    </div>
+    <div class="header-box">
+        <div class="box-row bb">
+            <div class="box-row-col">
+                Richiedente
+            </div>
+            <div class="box-row-col">
+                <b>{5}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                P.Iva/Cod. Fiscale
+            </div>
+            <div class="box-row-col">
+                <b>{6}</b>
+            </div>
+        </div>
+        <div class="box-row bb">
+            <div class="box-row-col">
+                Comune
+            </div>
+            <div class="box-row-col">
+                <b>{7}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                Indirizzo
+            </div>
+            <div class="box-row-col">
+                <b>{8}</b>
+            </div>
+        </div>
+        <div class="box-row">
+            <div class="box-row-col">
+                Codice Partita
+            </div>
+            <div class="box-row-col">
+                <b>{9}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                Recapiti
+            </div>
+            <div class="box-row-col">
+                <b>{10}</b>
+            </div>
+        </div>
+
+    </div>
+ 
+    <div class="box">
+
+        <div class="box-row bb">
+            <div class="box-row-col">
+                Codice Utente
+            </div>
+            <div class="box-row-col">
+                <b>{1}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                Codice Contratto
+            </div>
+            <div class="box-row-col">
+                <b>{2}</b>
+            </div>
+        </div>
+        <div class="box-row">
+            <div class="box-row-col">
+                Area
+            </div>
+            <div class="box-row-col">
+                <b>{3}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                Data Programmazione
+            </div>
+            <div class="box-row-col">
+                <b>{4}</b>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+    <div class='content'>
+        <div style="height:100%">
+            {12}
+        </div>
+    </div>
+    <script>
+        // Genera il codice a barre utilizzando il valore desiderato
+        JsBarcode("#barcode", "{11}");
+    </script>
+</body>
+</html>

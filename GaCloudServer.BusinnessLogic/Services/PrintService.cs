@@ -21,16 +21,16 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             _localFileService = localFileService;
         }
-        public async Task<string> Print(string templateName,dynamic dto)
+        public async Task<string> Print(string templateName,dynamic dto, string? alternativePath=null)
         {
             try
             {
                 Type templateType = typeof(TemplateGeneratorHelper);
                 MethodInfo mi = templateType.GetMethod(templateName);
 
-                string htmlContent = (string)mi.Invoke(this, new object[] { dto});
+                string htmlContent = (string)mi.Invoke(this, new object[] { dto,alternativePath});
 
-                return _localFileService.UploadOnServerPrint(dto.FileName,dto.FilePath,htmlContent,dto.HeaderSettings,dto.FooterSettings,dto.Copies, dto.Title,dto.Css,dto.Orientation);
+                return _localFileService.UploadOnServerPrint(dto.FileName,dto.FilePath,htmlContent,dto.HeaderSettings,dto.FooterSettings,dto.Copies, dto.Title,dto.Css,dto.Orientation,alternativePath);
             }
             catch (Exception ex)
             {

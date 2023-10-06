@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+</head>
+<body style="height:100%">
+    <div class='header'>
+        <div class='header-logo'>
+            <img class='header-logo-img' src='http://dev.gestioneambiente.net/wwwroot/assets/logo_ga.png' />
+        </div>
+        <div class='header-title'>
+            <b>
+                {0}
+            </b>
+        </div>
+        <div class='header-title-2'>
+            <canvas id="barcode" class="barcode"></canvas>
+        </div>
+    </div>
+    <div class="header-box">
+        <div class="box-row bb">
+            <div class="box-row-col">
+                Richiedente
+            </div>
+            <div class="box-row-col">
+                <b>{5}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                P.Iva/Cod. Fiscale
+            </div>
+            <div class="box-row-col">
+                <b>{6}</b>
+            </div>
+        </div>
+        <div class="box-row bb">
+            <div class="box-row-col">
+                Comune
+            </div>
+            <div class="box-row-col">
+                <b>{7}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                Indirizzo
+            </div>
+            <div class="box-row-col">
+                <b>{8}</b>
+            </div>
+        </div>
+        <div class="box-row">
+            <div class="box-row-col">
+                Codice Partita
+            </div>
+            <div class="box-row-col">
+                <b>{9}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                Recapiti
+            </div>
+            <div class="box-row-col">
+                <b>{10}</b>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-row bb">
+            <div class="box-row-col">
+                Codice Utente
+            </div>
+            <div class="box-row-col">
+                <b>{1}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                Codice Contratto
+            </div>
+            <div class="box-row-col">
+                <b>{2}</b>
+            </div>
+        </div>
+        <div class="box-row">
+            <div class="box-row-col">
+                Area
+            </div>
+            <div class="box-row-col">
+                <b>{3}</b>
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col">
+                Data Programmazione
+            </div>
+            <div class="box-row-col">
+                <b>{4}</b>
+            </div>
+        </div>
+
+    </div>
+    <div class="box text-center">
+        <div class="box-full bb">
+            <b>Dispositivi</b>
+        </div>
+        {12}
+    </div>
+    <div class="container" style="page-break-after:always !important;">
+        <div class="section">
+            Si avvisa che i dispositivi per la raccolta sono affidati all'utente in comodato d'uso gratuito e pertanto si invita a
+            prendere visione dell'allegato in calce al presente modello in cui sono elencati i rispettivi impegni e le modalità di utilizzo.
+        </div>
+        <div class="section text-underline">
+            Il ritiro dei contenitori, anche con delega, comporta l'accettazione delle condizioni di consegna dei contenitori (comodato d'uso gratuito).
+        </div>
+        <div class="section">
+            <b>Vegetale</b><br />
+            Il servizio di raccolta del rifiuto vegetale è a pagamento e attivabile su richiesta,
+            le verrà consegnato un contenitore carrellato da 240 lt con coperchio beige. Ogni singola utenza, in base alle proprie esigenze, potrà richiedere ulteriori contenitori.
+            Le tariffe applicate per il servizio di raccolta del vegetale sono:
+            <ul>
+                <li>un contributo fisso di 20 euro l’anno a singolo contenitore consegnato;</li>
+                <li>un costo di 1 euro a svuotamento per singolo contenitore consegnato.</li>
+            </ul>
+        </div>
+        <div class="section">
+            <b>Tessera</b><br />
+            La prima e la seconda tessera sono affidate all’utente in comodato d’uso gratuito;
+            dalla terza tessera sarà addebitato un costo di 10 euro i.i che verrà inserito nella prima bollettazione.
+        </div>
+        <div class="section">
+            <b>Consegna a domicilio</b><br />
+            Il costo per la consegna a domicilio dei dispositivi è pari a 18 euro i.i. a viaggio.
+        </div>
+        <div class="section">
+            <b>Compostiera</b><br />
+            La prima compostiera viene consegnata in comodato d’uso gratuito. Le successive compostiere avranno un costo pari a 30 euro + iva cadauna.
+            Lei acconsente all’iscrizione all’albo dei compostatori, al fine di poter conteggiare correttamente la percentuale di raccolta differenziata del comune.
+            Pertanto, accetta gli eventuali controlli che saranno effettuati da nostri operatori (muniti di tesserino di riconoscimento)
+            per verificare ’effettivo svolgimento del compostaggio domestico e quindi di consentire l’accesso al personale incaricato al luogo in cui si pratica
+            il compostaggio domestico per l’esecuzione del controllo di cui sopra.
+        </div>
+    </div>
+
+    <div class="condition" style="page-break-before:always">
+        <div class="section">
+            <b>CONDIZIONI DEL CONTRATTO DI COMODATO D'USO GRATUITO PER L'UTILIZZO DEI DISPOSITIVI PER RACCOLTA DIFFERENZIATA</b>
+        </div>
+        <div class="section">
+            <b>Premesso che</b><br />
+            la società Gestione Ambiente S.p.A., PI/CF 01492290067 con sede legale in Tortona (AL), Ex S.S. 35 dei Giovi, n. 42, risulta affidataria del servizio pubblico di raccolta
+            e trasporto dei rifiuti urbani e assimilati e riscossione della tariffa relativa al servizio integrato nei 33 Comuni facenti parte dell'Area Omogenea n. 2 del Bacino
+            territoriale Novese e Tortonese.
+        </div>
+        <div class="section">
+            <b>Tutto ciò premesso si stabilisce quanto segue</b> <br />
+            <ol>
+                <li>
+                    Gestione Ambiente S.p.A. cede all'intestatario dell'utenza (di seguito Comodatario) i dispositivi per la raccolta da utilizzare presso
+                    la propria utenza così come risulta nell'allegato modulo di consegna. Il Comodatario dichiara di ricevere i contenitori in buono stato e
+                    idonei all'uso convenuto e si impegna a mantenerli nello stesso stato di conservazione in cui li ha ricevuti, salvo il normale deterioramento
+                    dovuto all'uso, mentre il lavaggio dei contenitori è a carico dell’utente. Il contenitore rimane di proprietà di Gestione Ambiente S.p.A.
+                    che potrà procedere in qualsiasi momento al ritiro dello stesso qualora venissero meno le condizioni per cui si è provveduto alla consegna.
+                </li>
+                <li>
+                    L'utente (Comodatario) si obbliga a:
+                    <ul>
+                        <li>non manomettere i contenitori, imbrattarli, modificarli negli allestimenti o rimuovere dispositivi ed adesivi applicati dal Gestore;</li>
+                        <li>a rispettare gli orari di esposizione;</li>
+                        <li>a conservare e a custodire i contenitori in buono stato e a posizionarli, sotto sua responsabilità, in modo che non arrechino danni alle persone o alle cose;</li>
+                        <li>consentire controlli periodici di verifica da parte del Gestore dell'integrità dei contenitori consegnati;</li>
+                        <li>restituire i contenitori in caso di cessazione dell'utenza e/o conduzione (trasferimento, fine attività, ecc...) ovvero comunicare al Gestore eventuali trasferimenti.</li>
+                    </ul>
+                </li>
+                <li>
+                    Il Gestore è sollevato da qualsiasi responsabilità per i danni diretti e indiretti a persone e/o cose che possano derivare da fatto doloso o
+                    colposo del Comodatario per il periodo di utilizzo dei contenitori. Analogamente il Gestore non sarà ritenuto in alcun modo responsabile per eventuali danni diretti e/o
+                    indiretti che possano derivare a terzi dall'incendio dei contenitori atti alla raccolta dei rifiuti o da fatti seguenti ad eventi atmosferici.
+                </li>
+                <li>
+                    Il Comodatario è responsabile dei danni che dovessero essere arrecati ai contenitori a causa di un uso contrario alla comune diligenza o a
+                    norme presenti nel Regolamento di gestione dei rifiuti. Nel caso in cui il contenitore venisse danneggiato accidentalmente o risulti non più funzionale all'uso,
+                    il Gestore provvede alla sua sostituzione previa richiesta e restituzione del
+                    contenitore danneggiato da parte dell'utente. Gli eventuali danni ai contenitori causati da negligenza ed incuria saranno a carico del Comodatario.
+                </li>
+                <li>
+                    Gestione Ambiente S.p.A. declina ogni responsabilità per i danni cagionati a terzi connessi ad utilizzo improprio dei contenitori da parte del Comodatario.
+                </li>
+                <li>
+                    La cessione dei contenitori consegnati ovvero la manomissione degli stessi non costituiranno in alcun caso causa di esonero dal pagamento del prelievo inerente
+                    il servizio di igiene ambientale comunque denominato.
+                </li>
+                <li>
+                    Per quanto non espressamente previsto nell'articolato precedente si rinvia al Regolamento di gestione dei rifiuti approvato, alla disciplina civilistica in quanto applicabile ed,
+                    in particolare, alle norme che regolamentano l'istituto del comodato ai sensi dell'art. 1803 cod. civ. e ss..
+                </li>
+                <li>Il Foro competente per le controversie che dovessero sorgere sarà il foro di Alessandria.</li>
+                <li>Il presente contratto dovrà essere firmato in calce per l’accettazione.</li>
+            </ol>
+            <b>Condizioni tecniche del servizio</b><br />
+            <ul>
+                <li>Gestione Ambiente S.p.a. esegue i lavori oggetto del contratto a regola d’arte e conformemente alla disciplina di riferimento vigente al momento della stipulazione del contratto stesso.</li>
+                <li>Il cliente si impegna a verificare immediatamente che il lavoro sia conforme a quanto specificato nel contratto, manlevando Gestione Ambiente S.p.a.  da qualsiasi responsabilità.</li>
+                <li>si precisa che all’atto della consegna dovrà essere presente il firmatario del presente contratto o un suo delegato per prendere atto della regolare consegna dei contenitori.</li>
+                <li>
+                    La consegna dei contenitori verrà effettuata su chiamata entro e non oltre 10 giorni lavorativi (da lunedì a venerdì) dopo Vostra segnalazione telefonica al numero verde 800.085.312 o
+                    tramite mail a info@gestioneambiente.net o fax allo 0143/746829.
+                </li>
+                <li>L’Impresa non risponde dei difetti dovuti al normale logorio o provocati da uso improprio delle attrezzature, nonché degli interventi di qualsivoglia soggetto diverso.</li>
+            </ul>
+            <b>Fatturazione e modalità di pagamento</b><br />
+            <ul>
+                <li>Nel caso di mancato pagamento, Gestione Ambiente S.p.a., si riserva la possibilità di ritirare i dispositivi già consegnati;</li>
+                <li>
+                    GESTIONE  AMBIENTE  S.p.a.  ha la  facoltà  per  tutto  l’arco  di  durata  del  presente  contratto,  di  apportare,  in  conseguenza  a  particolari  variazioni  di mercato,
+                    a partire dalla data di apposita comunicazione scritta, variazione ai prezzi esposti nella presente offerta.
+                </li>
+            </ul>
+            <b>Accettazione del contratto</b><br />
+            <ul>
+                <li>Il presente contratto dovrà essere firmato in calce per l’accettazione.</li>
+            </ul>
+            <b>Clausole privacy</b><br />
+            <ul>
+                <li>
+                    Gent.le Utente, siamo ad informarLa che:
+                    <ul>
+                        <li>
+                            i dati forniti verranno trattati al solo fine di gestire la consegna dei dispositivi per la raccolta differenziata,
+                            sia su supporto cartaceo che magnetico, manualmente e/o con strumenti elettronici o, comunque, automatizzati;
+                        </li>
+                        <li>il conferimento dei dati è obbligatorio e l'omessa comunicazione dei dati richiesti comporterà l'impossibilità di ricevere i dispositivi;</li>
+                        <li>
+                            salvo le comunicazioni a soggetti cui la facoltà di accedere ai dati sia riconosciuta da disposizioni di legge o da ordini di Autorità,
+                            i dati non verranno comunicati ad alcuno e non saranno trasferiti e trattati in paesi terzi;
+                        </li>
+                        <li>
+                            i dati potranno essere oggetto di trattamento da parte di soggetti qualificati come responsabili od incaricati, nell'ambito della finalità predette;
+                        </li>
+                        <li>
+                            i dati forniti verranno trattati dal Titolare, Gestione Ambiente S.p.A., con sede legale in Tortona (AL), Ex S.S. 35 dei Giovi, n. 42.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            I Suoi dati saranno trattati ai sensi del Reg. UE 2016/679. Informative consultabili nell’area GDPR del sito internet www.gestioneambiente.net, o presso i nostri uffici.
+
+        </div>
+    </div>
+
+
+    <div class="box">
+        <div class="box-row">
+            <div class="box-row-col-33">
+                Luogo e Data
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col-33">
+                Firma Operatore
+            </div>
+            <div class="vl"></div>
+            <div class="box-row-col-33">
+                Firma Utente
+            </div>
+        </div>
+    </div>
+    <script>
+        // Genera il codice a barre utilizzando il valore desiderato
+        JsBarcode("#barcode", "{11}");
+    </script>
+</body>
+</html>

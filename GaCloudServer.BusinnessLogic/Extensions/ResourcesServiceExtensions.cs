@@ -74,6 +74,11 @@ namespace GaCloudServer.BusinnessLogic.Extensions
         public static IServiceCollection AddJobsResourcesServices<TResourcesDbContext>(this IServiceCollection services)
             where TResourcesDbContext : DbContext, IResourcesDbContext
         {
+            var context = new CustomAssemblyLoadContext();
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "libwkhtmltox.dll"));
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
             services.AddTransient<IGaAutorizzazioniService, GaAutorizzazioniService>();
             services.AddTransient<IGaMezziService, GaMezziService>();
             services.AddTransient<IGaContrattiService,GaContrattiService>();
@@ -85,6 +90,8 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IGaBackOfficeService, GaBackOfficeService>();
 
             services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IPrintService,PrintService>();
+            services.AddTransient<ILocalFileService, LocalFileService>();
             services.AddTransient<IFtpService, FtpService>();
             services.AddScoped<INotificationService, NotificationService>();
 

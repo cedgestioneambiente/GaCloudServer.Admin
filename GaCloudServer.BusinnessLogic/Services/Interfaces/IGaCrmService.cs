@@ -68,6 +68,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region CrmEvents
         Task<CrmEventsDto> GetGaCrmEventsAsync(int page = 1, int pageSize = 0);
         Task<CrmEventsDto> GetGaCrmEventByBoardAsync(DateTime date, long area,bool all);
+        Task<CrmEventsDto> GetGaCrmEventByAreaIdAsync(string[] areas, DateTime? untillDate,bool all);
         Task<CrmEventDto> GetGaCrmEventByIdAsync(long id);
         Task<CrmEventDto> GetGaCrmEventByTicketIdAsync(long id);
         Task<long> AddGaCrmEventAsync(CrmEventDto dto);

@@ -472,6 +472,14 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dtos;
         }
 
+        public async Task<CrmEventsDto> GetGaCrmEventByAreaIdAsync(string[] areas, DateTime? untillDate, bool all)
+        {
+            var entities = all ? await gaCrmEventsRepo.GetWithFilterAsync(x => x.DateSchedule <= (untillDate == null ? DateTime.Now : untillDate) && areas.Contains(x.CrmEventAreaId.ToString())) :
+                await gaCrmEventsRepo.GetWithFilterAsync(x => x.DateSchedule <= (untillDate == null ? DateTime.Now : untillDate) && areas.Contains(x.CrmEventAreaId.ToString()) && x.Sended==false);
+            var dtos = entities.ToDto<CrmEventsDto, PagedList<CrmEvent>>();
+            return dtos;
+        }
+
         public async Task<CrmEventDto> GetGaCrmEventByIdAsync(long id)
         {
             var entity = await gaCrmEventsRepo.GetByIdAsync(id);
@@ -1172,7 +1180,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<PagedList<ViewGaCrmCalendarTickets>> GetViewGaCrmCalendarTicketAsync()
         {
-            var view = await viewGaCrmCalendarTicketsRepo.GetWithFilterAsync(x => x.MagazzinoCalendar == true && x.StatoId==1);
+            var view = await viewGaCrmCalendarTicketsRepo.GetWithFilterAsync(x => x.MagazzinoCalendar == true && x.AssigneeDesc=="Magazzino" && x.StatoId==1);
             return view;
         }
 

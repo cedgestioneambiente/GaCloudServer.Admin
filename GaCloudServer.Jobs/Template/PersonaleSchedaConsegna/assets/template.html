@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html style="height:100%;width:100%;padding:0px;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+  <body style="min-height:100%;width:98%;">
+      <div class="header">
+          <div class='header-logo'>
+              <img class='header-logo-img' src='http://dev.gestioneambiente.net/wwwroot/assets/logo_ga.png' />
+          </div>
+          <div class='header-title'>
+              <b>
+                  REG.GBS.01<br />
+                  DOCUMENTO DI PRELIEVO<br />
+                  DPI / VESTIARIO / PACCHETTO DI<br />
+                  MEDICAZIONE<br />
+              </b>
+          </div>
+          <div class="header-edition">
+              <b>
+                  Edizione 2 del 16/01/18<br />
+                  Revisione 0
+              </b>
+          </div>
+      </div>
+      <div class="sub-header">
+          <div class="sub-header-lavoratore">
+                NOME COGNOME DIPENDENTE UTILIZZATORE <br />
+                <b>{3}</b>
+          </div>
+          <div class="sub-header-data">
+                DATA CONSEGNA<br />
+                <b>{1}</b>
+          </div>
+          <div class="sub-header-cantiere">
+                UNITA' OPERATIVA<br />
+                <b>{2}</b>
+          </div>
+      </div>
+      <div class="line-1">
+          <div class="line-1-title">
+              <b>PRELIEVO</b>
+          </div>
+          <div class="line-1-scheda">
+              <b>{0}</b>
+          </div>
+      </div>
+      <div class="content">
+          <div class="content-articoli">
+              <table class='table-dpi' style="width:100%">
+                  <thead>
+                      <tr>
+                          <th style="border:1px solid #000;text-align:left;padding-left:5px;">
+                              Dispositivo
+                          </th>
+                          <th style="border:1px solid #000;">
+                              Taglia
+                          </th>
+                          <th style="border:1px solid #000;">
+                              Quantità
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {5}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="footer">
+          <div class="footer-line-1"><b>CAUSALE DEL PRELIEVO</b></div>
+          <div class="footer-line-2" style="border-right:1px solid #000;"><b>&#9744; NUOVA DOTAZIONE</b></div>
+          <div class="footer-line-2"><b>&#9744; SOST. PER USURA </b></div>
+          <div class="footer-line-2" style="border-left:1px solid #000;"><b>&#9744; CAMBIO TAGLIA</b></div>
+          <div class="footer-line-3"><b>CONSEGNA DISPOSITIVI DI PROTEZIONE INDIVIDUALE</b></div>
+          <div class="footer-line-4">
+              In riferimento alla normativa sulla prevenzione degli infortuni e igiene del lavoro (D.Lgs. 81/08 e s.m.i.), le ricordiamo che nello
+              svolgimento delle mansioni affidate, dovrà regolarmente utilizzare come da informazione, formazione ed addestramento
+              ricevuti i mezzi di protezione in dotazione che, contestualmente, alla presente le sono consegnati.
+              Con la sottoscrizione della presente lei si impegna formalmente ad osservare le norme relative ai provvedimenti richiamati, le
+              istruzioni impartite dal Datore di Lavoro, dai dirigenti e/o preposti ai fini della protezione collettiva ed individuale. Si impegna
+              altresì ad usare con cura ed in modo appropriato, a non modificare i dispositivi di sicurezza forniti.
+              La informiamo inoltre che è intenzione della Direzione dell’Azienda perseguire anche disciplinarmente il mancato
+              adempimento degli obblighi suddetti, dandone contemporaneamente informazione agli organi di vigilanza competenti
+          </div>
+          <div class="footer-line-5">
+              Per espressa accettazione di quanto sopra e per ricevuta di quanto ritirato con il presente documento:<br />
+              IL DIPENDENTE UTILIZZATORE(FIRMA)____________________________________
+          </div>
+          <div class="footer-line-5">
+              IL COORDINATORE/RESPONSABILE DEL SERVIZIO________________________FIRMA____________________
+          </div>
+          <div class="footer-line-6">
+              IL PRELEVANTE (se diverso dall'addetto utilizzatore)_____________________FIRMA_________________________
+          </div>
+      </div>
+  </body>
+</html>

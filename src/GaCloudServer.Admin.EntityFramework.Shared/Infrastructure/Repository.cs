@@ -185,6 +185,42 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
         }
 
+        public virtual async Task<PagedList<TEntity>> GetWithFilterAsNoTrakingAsync(Expression<Func<TEntity, bool>> predicate, int page = 1, int pageSize = 0, string orderField = "Id", string orderType = "OrderBy")
+        {
+            var pagedList = new PagedList<TEntity>();
+
+            List<TEntity> entities;
+            IQueryable<TEntity> queryableEntities = _entities.Where(predicate);
+
+            var prop = typeof(TEntity).GetProperty(orderField);
+            var parameter = Expression.Parameter(typeof(TEntity), "x");
+            var selector = Expression.PropertyOrField(parameter, orderField);
+
+            Expression expression = queryableEntities.Expression;
+            expression = Expression.Call(typeof(Queryable), orderType,
+                    new Type[] { queryableEntities.ElementType, selector.Type },
+                    expression, Expression.Quote(Expression.Lambda(selector, parameter)));
+
+            if (pageSize != 0)
+            {
+
+                entities = await _entities.AsNoTracking().Where(predicate).PageBy(x => x.Id, page, pageSize).ToListAsync();
+            }
+            else
+            {
+                entities = await queryableEntities.AsNoTracking().Provider.CreateQuery<TEntity>(expression).ToListAsync();
+            }
+
+            pagedList.Data.AddRange(entities);
+            pagedList.PageSize = pageSize;
+            pagedList.TotalCount = entities.Count();
+
+            //auditEventLogger.LogEventAsync(new GetEventModel(string.Format("GET WITH FILTER - {0}", _entities.EntityType)) { });
+
+            return pagedList;
+
+        }
+
 
 
 
