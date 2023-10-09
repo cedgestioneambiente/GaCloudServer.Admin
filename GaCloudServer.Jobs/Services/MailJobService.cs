@@ -1,4 +1,5 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+﻿using AuthServer.SSO.Schedule.Configuration;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -12,13 +13,15 @@ namespace GaCloudServer.Jobs.Services
         private readonly string sender;
         private readonly string senderPassword;
         public readonly IMailService _mailService;
+        public IConfiguration _configuration;
 
-        public MailJobService(IWebHostEnvironment env,IMailService mailService)
+        public MailJobService(IWebHostEnvironment env,IMailService mailService,IConfiguration configuration)
         {
             sender = "helpdesk@gestioneambiente.net";
             senderPassword = "Husa9919";
             _env = env;
             _mailService = mailService;
+            _configuration = configuration;
         }
 
 
@@ -77,13 +80,18 @@ namespace GaCloudServer.Jobs.Services
                 {
                     string projectDirectory = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
                     string wwwrootPath = "";
+
+                    string attachPath = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                    attachPath += "\\" + _configuration.GetSection("EnvConsts").Get<EnvConstsConfiguration>().alternativeFolder;
+
+
                     if (_env.IsDevelopment())
                     {
-                        wwwrootPath = Path.Combine(projectDirectory, "GaCloudServer\\GaCloudServer.Resources.Api", "wwwroot");
+                        wwwrootPath = Path.Combine(attachPath, "wwwroot");
                     }
                     else
                     { 
-                        wwwrootPath= Path.Combine(projectDirectory, "wwwroot\\gacloud.api.res", "wwwroot");
+                        wwwrootPath= Path.Combine(attachPath, "wwwroot");
                     }
                     
 
