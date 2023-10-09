@@ -56,7 +56,7 @@ namespace GaCloudServer.Jobs.Jobs
                     alternativePath += "\\"+_configuration.GetSection("EnvConsts").Get<EnvConstsConfiguration>().alternativeFolder;
 
 
-                    var attachPath = printService.Print("CrmEventsReport", dto,alternativePath).Result;
+                    var attachPath = printService.Print("CrmEventsDailyReport", dto,alternativePath).Result;
 
 
                     string mailTo = "";
@@ -79,9 +79,9 @@ namespace GaCloudServer.Jobs.Jobs
                         var result = mailService.AddMailJobAsync(new MailJob()
                         {
                             Id = 0,
-                            Description = string.Format("Rapporto Ritiri {0} - {1}", DateTime.Now.ToString("dd/MM/yyyy"), areas),
+                            Description = string.Format("Rapporto Cessazioni {0} - {1}", DateTime.Now.ToString("dd/MM/yyyy"), areas),
                             DateScheduled = DateTime.Now,
-                            Title = string.Format("Rapporto Ritiri {0} - {1}", DateTime.Now.ToString("dd/MM/yyyy"), areas),
+                            Title = string.Format("Rapporto Cessazioni {0} - {1}", DateTime.Now.ToString("dd/MM/yyyy"), areas),
                             MailingTo = mailTo,
                             MailCc = mailCc,
                             Application = string.Format("1|{0}.{1}.{2}", context.JobDetail.Key.Group, context.JobDetail.Key.Name, context.Trigger.Key.Name),
@@ -114,7 +114,7 @@ namespace GaCloudServer.Jobs.Jobs
                 FileName = fileName,
                 FilePath = @"Print/Crm",
                 Title = "Crm Eventi Programmati",
-                Css = "CrmEventsGrouped",
+                Css = "CrmEventsDailyReport",
                 Area = area,
                 Data = date.ToString("dd/MM/yyyy"),
                 Items = new List<CrmEventDto>(),

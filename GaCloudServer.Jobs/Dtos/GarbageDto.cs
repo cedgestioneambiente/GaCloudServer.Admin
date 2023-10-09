@@ -1,4 +1,6 @@
 ﻿
+using Duende.IdentityServer.Validation;
+
 namespace GaCloudServer.Jobs.Dtos.Garbage
 {
 
@@ -40,8 +42,10 @@ namespace GaCloudServer.Jobs.Dtos.Garbage
         public string SCALA { get; set; }
         public string PIANO { get; set; }
         public string INTERNO { get; set; }
-        public string SUPERFICIE { get; set; }
-        public string SUPERFICIE_FISSA { get; set; }
+        private string superficie;
+        public string SUPERFICIE { get { return superficie; } set { superficie = value.Replace(",", "."); } }
+        private string superficie_fissa;
+        public string SUPERFICIE_FISSA { get { return superficie_fissa; } set { superficie_fissa = value.Replace(",", "."); } }
         public string TIPO_UTENZA { get; set; }
         public string CODECE_CATEGORIA_UTENZA { get; set; }
         public string DESCRIZIONE_CATEGORIA_UTENZA { get; set; }

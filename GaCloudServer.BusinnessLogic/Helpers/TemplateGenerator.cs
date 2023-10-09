@@ -689,6 +689,105 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
         }
+        public static string CrmEventsDailyReport(CrmEventsTemplateDto dto, string? alternativePath = null)
+        {
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/CrmEventsDailyReport/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+            foreach (var itm in dto.Items)
+            {
+                var devices = from x in dto.Devices
+                              where x.CrmEventId == itm.Id
+                              select x;
+
+                table += String.Format("<div class='content-item page-break'>" +
+                    "<table class='table-user'>" +
+                    "<thead>" +
+                    "<tr>" +
+                    "<th style='width:100%;'>" +
+                    "Utente" +
+                    "</th>" +
+                    "</tr>" +
+                    "</thead>" +
+                    "<tbody" +
+                    "<tr>" +
+                    "<td style='padding:5px;'>Richiedente: {0}<br />NumCon: {1}<br />Prog: {2}<br />Comune: {3}<br />Indirizzo:{4}</td>" +
+                    "</tr>" +
+                    "</tbody>" +
+                    "</table>",
+                    itm.RagSo, itm.NumCon, itm.CpRowNum, itm.Citta, itm.Indirizzo + ", " + itm.NumCiv);
+
+                string tableDevices = "" +
+                    "<table class='table-device'>" +
+                    "<thead>" +
+                    "<tr>" +
+                    "<th style='width:30%;'>" +
+                    "Matricola" +
+                    "</th>" +
+                    "<th style='width:40%;'>" +
+                    "Tipo Contenitore" +
+                    "</th>" +
+                    "<th style='widt:30%;'>" +
+                    "Ritirato" +
+                    "</th>" +
+                    "</thead>" +
+                    "<tbody";
+
+                foreach (var device in devices)
+                {
+                    tableDevices += string.Format(
+                        "<tr>" +
+                        "<td style='padding:5px;'>{0}</td>" +
+                        "<td style='padding:5px;'>{1}</td>" +
+                        "<td style='padding:5px;font-size:20px;'>&#9744;</td>" +
+                        "</tr>", device.Identi2, device.DesCon);
+                }
+
+                tableDevices += "</tbody>" +
+                    "</table>" +
+                    "<div class='notes-crm'>" +
+                    "<div class='notes-crm-col-1'>" +
+                    "Note Crm: " + itm.NotaAnagrafica + "" +
+                    "</div>" +
+                    "</div>" +
+                    "<div class='notes'>" +
+                    "<div class='notes-col-1'>" +
+                    "Note Operatore: " + itm.NotaOperatore + "" +
+                    "</div>" +
+                    "</div>" +
+                    "<div class='notes'>" +
+                    "<div class='notes-col-1'>" +
+                    "Data Richiesta/Cessazione: " + itm.DataRichiesta.ToString("dd/MM/yyyy") + "" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>";
+
+                table += tableDevices;
+
+
+
+            }
+
+
+
+            sb.AppendFormat(@fileContent, dto.Area, dto.Data, table);
+            return sb.ToString();
+
+
+        }
 
         public static string CrmEventRecipt(CrmEventTemplateDto dto, string? alternativePath = null)
         {
