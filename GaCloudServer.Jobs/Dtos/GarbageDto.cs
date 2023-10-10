@@ -43,9 +43,9 @@ namespace GaCloudServer.Jobs.Dtos.Garbage
         public string PIANO { get; set; }
         public string INTERNO { get; set; }
         private string superficie;
-        public string SUPERFICIE { get { return superficie; } set { superficie = value.Replace(",", "."); } }
+        public string SUPERFICIE { get { return superficie; } set { superficie = value!=null? value.Replace(",", "."):""; } }
         private string superficie_fissa;
-        public string SUPERFICIE_FISSA { get { return superficie_fissa; } set { superficie_fissa = value.Replace(",", "."); } }
+        public string SUPERFICIE_FISSA { get { return superficie_fissa; } set { superficie_fissa = value!=null?value.Replace(",", "."):""; } }
         public string TIPO_UTENZA { get; set; }
         public string CODECE_CATEGORIA_UTENZA { get; set; }
         public string DESCRIZIONE_CATEGORIA_UTENZA { get; set; }

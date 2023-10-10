@@ -147,12 +147,12 @@
     display: inline-block;
     font-family: Arial, Helvetica, sans-serif;
     border-top:1px solid #000;
-    height:40px;
+    height:auto;
 }
 
 .notes-col-1 {
     display: inline-block;
-    width: 56%;
+    width: 100%;
     vertical-align: top;
     padding-top: 10px;
     padding-left: 10px;

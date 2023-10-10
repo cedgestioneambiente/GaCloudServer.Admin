@@ -2049,7 +2049,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                             }
                             else
                             {
-                                item.PESO_KG = Convert.ToDouble(row.ItemArray[i].ToString());
+                                item.PESO_KG = Convert.ToDouble(row.ItemArray[i].ToString().Replace(".",","));
                             }
                             i++;
 

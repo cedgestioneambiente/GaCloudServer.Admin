@@ -718,7 +718,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     "<thead>" +
                     "<tr>" +
                     "<th style='width:100%;'>" +
-                    "Utente" +
+                    "<div style='width:80%'>Ticket N°:{5}</div>"+
                     "</th>" +
                     "</tr>" +
                     "</thead>" +
@@ -728,7 +728,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     "</tr>" +
                     "</tbody>" +
                     "</table>",
-                    itm.RagSo, itm.NumCon, itm.CpRowNum, itm.Citta, itm.Indirizzo + ", " + itm.NumCiv);
+                    itm.RagSo, itm.NumCon, itm.CpRowNum, itm.Citta, itm.Indirizzo + ", " + itm.NumCiv,itm.Id);
 
                 string tableDevices = "" +
                     "<table class='table-device'>" +
@@ -752,8 +752,8 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                         "<tr>" +
                         "<td style='padding:5px;'>{0}</td>" +
                         "<td style='padding:5px;'>{1}</td>" +
-                        "<td style='padding:5px;font-size:20px;'>&#9744;</td>" +
-                        "</tr>", device.Identi2, device.DesCon);
+                        "<td style='padding:5px;font-size:20px;'>{2}</td>" +
+                        "</tr>", device.Identi2, device.DesCon, device.Completed==true? "&#9745;" : "&#9744;");
                 }
 
                 tableDevices += "</tbody>" +
