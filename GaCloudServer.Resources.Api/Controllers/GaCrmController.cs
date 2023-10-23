@@ -1366,6 +1366,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 string mailTo = string.Join(";",mailArray);
 
                 var dto = await GenerateCrmTicketTemplate(ticket, ticket.TipoDesc);
+                
                 var attachPath = await _printService.Print("CrmTicketDefault", dto);
 
                 var result = await _mailService.AddMailJobAsync(new MailJob()

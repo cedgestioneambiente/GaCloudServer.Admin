@@ -1008,7 +1008,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
                 dto.Item.RagSo, dto.Item.CodFis, dto.Item.Citta, dto.Item.Indirizzo + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
                 dto.Item.Partita, "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare, 
-                dto.Item.NumCon + "" + dto.Item.CpRowNum, devicesContent);
+                dto.Item.NumCon + "" + dto.Item.CpRowNum, devicesContent, dto.Item.Domest ? "DOMESTICA" : "NON DOMESTICA");
             return sb.ToString();
 
 
@@ -1082,7 +1082,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
                 dto.Item.RagSo, dto.Item.CodFis, dto.Item.Citta, dto.Item.Indirizzo + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
                 dto.Item.Partita, "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare,
-                dto.Item.NumCon + "" + dto.Item.CpRowNum, devicesContent,tableDevices);
+                dto.Item.NumCon + "" + dto.Item.CpRowNum, devicesContent,tableDevices,dto.Item.Domest?"DOMESTICA":"NON DOMESTICA");
             return sb.ToString();
 
 
@@ -1144,7 +1144,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
                 dto.Item.RagSo, dto.Item.CodFis, dto.Item.Citta, dto.Item.Indirizzo + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
                 dto.Item.Partita, "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare,
-                dto.Item.NumCon + "" + dto.Item.CpRowNum, tableDevices);
+                dto.Item.NumCon + "" + dto.Item.CpRowNum, tableDevices, dto.Item.Domest ? "DOMESTICA" : "NON DOMESTICA");
             return sb.ToString();
 
 
@@ -1205,7 +1205,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
                 dto.Item.RagSo, dto.Item.CodFis, dto.Item.Citta, dto.Item.Indirizzo + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
                 dto.Item.Partita, "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare,
-                dto.Item.NumCon + "" + dto.Item.CpRowNum,tableDevices);
+                dto.Item.NumCon + "" + dto.Item.CpRowNum,tableDevices, dto.Item.Domest ? "DOMESTICA" : "NON DOMESTICA");
             return sb.ToString();
 
 
@@ -1266,7 +1266,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             sb.AppendFormat(@fileContent, dto.Item.Tipo, dto.Item.CodAzi.Trim() + dto.Item.CodCli, dto.Item.CodAzi.Trim() + dto.Item.NumCon, dto.Area, dto.Data,
                 dto.Item.RagSo, dto.Item.CodFis, dto.Item.Citta, dto.Item.Indirizzo + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
                 dto.Item.Partita, "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare,
-                dto.Item.NumCon + "" + dto.Item.CpRowNum, tableDevices, dto.Item.DataRichiesta.ToString("dd/MM/yyyy"));
+                dto.Item.NumCon + "" + dto.Item.CpRowNum, tableDevices, dto.Item.DataRichiesta.ToString("dd/MM/yyyy"), dto.Item.Domest ? "DOMESTICA" : "NON DOMESTICA");
             return sb.ToString();
 
 
@@ -1398,7 +1398,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 dto.Item.Via + ", " + dto.Item.NumCiv + "- Zona: " + dto.Item.CodZona,
                 dto.Item.Partita,
                 "Tel.: " + dto.Item.Telefono + " - Cel.:" + dto.Item.Cellulare,
-                dto.Item.NumCon + "" + dto.Item.Prg);
+                dto.Item.NumCon + "" + dto.Item.Prg,dto.Item.NoteCrm,dto.Item.NoteOperatore,dto.Item.Tributo=="DOM"?"DOMESTICA":"NON DOMESTICA");
             return sb.ToString();
 
 
