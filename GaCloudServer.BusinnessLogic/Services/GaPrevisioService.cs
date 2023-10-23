@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Constants;
 using GaCloudServer.BusinnessLogic.Dtos.Extras.EcoFinder;
 using GaCloudServer.BusinnessLogic.Hub.Interfaces;
@@ -13,12 +12,18 @@ using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using static GaCloudServer.BusinnessLogic.Dtos.Extras.EcoFinder.CustomEcoFinderDto;
 using Microsoft.Extensions.Logging;
 using GaCloudServer.BusinnessLogic.Dtos.Custom;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Previsio;
+using GaCloudServer.BusinnessLogic.Mappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
     public class GaPrevisioService:IGaPrevisioService
     {
         protected readonly IQueryManager _queryManager;
+
+        protected readonly IGenericRepository<PrevisioOdsLettura> gaPrevisioOdsLettureRepo;
 
         protected readonly IGenericRepository<ViewGaPrevisioOdsReport> viewPrevisioOdsReportRepo;
         protected readonly IGenericRepository<ViewGaPrevisioOdsServiziReport> viewPrevisioOdsServiziReportRepo;
@@ -35,6 +40,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         public GaPrevisioService(
             IQueryManager queryManager,
 
+            IGenericRepository<PrevisioOdsLettura> gaPrevisioOdsLettureRepo,
+
             IGenericRepository<ViewGaPrevisioOdsReport> viewPrevisioOdsReportRepo,
             IGenericRepository<ViewGaPrevisioOdsServiziReport> viewPrevisioOdsServiziReportRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewBackOfficeUtenzeDispositiviRepo,
@@ -46,6 +53,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             ILogger<GaPrevisioService> logger)
         {
             this._queryManager = queryManager;
+
+            this.gaPrevisioOdsLettureRepo = gaPrevisioOdsLettureRepo;
 
             this.viewPrevisioOdsReportRepo = viewPrevisioOdsReportRepo;
             this.viewPrevisioOdsServiziReportRepo = viewPrevisioOdsServiziReportRepo;
@@ -60,7 +69,85 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
-        #region Previsio
+        #region PrevisioOdsLetture
+        public async Task<PrevisioOdsLettureDto> GetGaPrevisioOdsLettureAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPrevisioOdsLettureRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PrevisioOdsLettureDto, PagedList<PrevisioOdsLettura>>();
+            return dtos;
+        }
+
+        public async Task<PrevisioOdsLetturaDto> GetGaPrevisioOdsLetturaByIdAsync(long id)
+        {
+            var entity = await gaPrevisioOdsLettureRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PrevisioOdsLetturaDto, PrevisioOdsLettura>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPrevisioOdsLetturaAsync(PrevisioOdsLetturaDto dto)
+        {
+            var entity = dto.ToEntity<PrevisioOdsLettura, PrevisioOdsLetturaDto>();
+            await gaPrevisioOdsLettureRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaPrevisioOdsLetturaAsync(PrevisioOdsLetturaDto dto)
+        {
+            var entity = dto.ToEntity<PrevisioOdsLettura, PrevisioOdsLetturaDto>();
+            gaPrevisioOdsLettureRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPrevisioOdsLetturaAsync(long id)
+        {
+            var entity = await gaPrevisioOdsLettureRepo.GetByIdAsync(id);
+            gaPrevisioOdsLettureRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaPrevisioOdsLetturaAsync(long id, string descrizione)
+        {
+            var entity = await gaPrevisioOdsLettureRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusElaboratoGaPrevisioOdsLetturaAsync(long id)
+        {
+            var entity = await gaPrevisioOdsLettureRepo.GetByIdAsync(id);
+            if (entity.Elaborato)
+            {
+                entity.Elaborato = false;
+                gaPrevisioOdsLettureRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Elaborato = true;
+                gaPrevisioOdsLettureRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
+        #endregion
 
         #region Views
         public async Task<PagedList<ViewGaPrevisioOdsReport>> GetViewGaPrevisioOdsReportByDateAsync(DateTime dateStart, DateTime dateEnd)
@@ -278,7 +365,6 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-        #endregion
 
         #region Common
         private async Task<long> SaveChanges()

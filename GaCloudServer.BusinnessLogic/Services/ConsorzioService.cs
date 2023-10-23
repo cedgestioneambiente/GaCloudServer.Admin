@@ -1014,38 +1014,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
-        //public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByProduttoreQueryable(GridOperationsModel filterParams, long[]? produttoriId)
-        //{
-
-        //    if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
-        //    {
-        //        if (produttoriId == null || produttoriId.Count() == 0)
-        //        {
-        //            var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
-        //            return filterResult;
-        //        }
-        //        else
-        //        {
-        //            var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => produttoriId.Contains(x.ProduttoreId), filterParams, filterParams.quickFilter);
-        //            return filterResult;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (produttoriId == null || produttoriId.Count() == 0)
-        //        {
-        //            var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2(filterParams);
-        //            return filterResult;
-        //        }
-        //        else
-        //        {
-        //            var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => produttoriId.Contains(x.ProduttoreId), filterParams);
-        //            return filterResult;
-        //        }
-        //    }
-
-        //}
-
         public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByRolesQueryable(GridOperationsModel filterParams, string[]? roles)
         {
             //Aggiungere controllo ruolo admin o extconsorzioadmin
@@ -1100,6 +1068,38 @@ namespace GaCloudServer.BusinnessLogic.Services
             var view = await viewConsorzioRegistrazioniRepo
             .GetWithFilterAsync(x => x.DataRegistrazione >= dateStart && x.DataRegistrazione <= dateEnd, 1, 0, "DataRegistrazione", "OrderByDescending");
             return view;
+        }
+
+        public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByRolesQueryable_V2(GridOperationsModel filterParams, string[]? roles)
+        {
+
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+                if (roles == null || roles.Count() == 0)
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => roles.Contains(x.Roles), filterParams, filterParams.quickFilter);
+                    return filterResult;
+                }
+            }
+            else
+            {
+                if (roles == null || roles.Count() == 0)
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2(filterParams);
+                    return filterResult;
+                }
+                else
+                {
+                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => roles.Contains(x.Roles), filterParams);
+                    return filterResult;
+                }
+            }
+
         }
         #endregion
 

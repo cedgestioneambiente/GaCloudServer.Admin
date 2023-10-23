@@ -1,12 +1,15 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
 using GaCloudServer.BusinnessLogic.Dtos.Extras.EcoFinder;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Previsio;
 using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Custom;
+using GaCloudServer.Resources.Api.Dtos.Resources.Previsio;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
+using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -36,6 +39,143 @@ namespace GaCloudServer.Resources.Api.Controllers
             _ecoFinderService = ecoFinderService;
             _logger = logger;
         }
+
+        #region PrevisioOdsLetture
+        [HttpGet("GetGaPrevisioOdsLettureAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPrevisioOdsLettureAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _gaPrevisioService.GetGaPrevisioOdsLettureAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<PrevisioOdsLettureApiDto, PrevisioOdsLettureDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetGaPrevisioOdsLetturaByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetGaPrevisioOdsLetturaByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _gaPrevisioService.GetGaPrevisioOdsLetturaByIdAsync(id);
+                var apiDto = dto.ToApiDto<PrevisioOdsLetturaApiDto, PrevisioOdsLetturaDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddGaPrevisioOdsLetturaAsync")]
+        public async Task<ActionResult<ApiResponse>> AddGaPrevisioOdsLetturaAsync([FromBody] PrevisioOdsLetturaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PrevisioOdsLetturaDto, PrevisioOdsLetturaApiDto>();
+                var response = await _gaPrevisioService.AddGaPrevisioOdsLetturaAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateGaPrevisioOdsLetturaAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateGaPrevisioOdsLetturaAsync([FromBody] PrevisioOdsLetturaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<PrevisioOdsLetturaDto, PrevisioOdsLetturaApiDto>();
+                var response = await _gaPrevisioService.UpdateGaPrevisioOdsLetturaAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteGaPrevisioOdsLetturaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteGaPrevisioOdsLetturaAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPrevisioService.DeleteGaPrevisioOdsLetturaAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #region Functions
+        [HttpGet("ValidateGaPrevisioOdsLetturaAsync/{id}/{descrizione}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPrevisioOdsLetturaAsync(long id, string descrizione)
+        {
+            try
+            {
+                var response = await _gaPrevisioService.ValidateGaPrevisioOdsLetturaAsync(id, descrizione);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ChangeStatusElaboratoGaPrevisioOdsLetturaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ChangeStatusElaboratoGaPrevisioOdsLetturaAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPrevisioService.ChangeStatusElaboratoGaPrevisioOdsLetturaAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #endregion
 
         #region PrevisioOdsReport
 

@@ -38,6 +38,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
@@ -384,6 +385,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             //Previsio
             #region Previsio
+            services.AddTransient<IGenericRepository<PrevisioOdsLettura>, GenericRepository<TResourcesDbContext, PrevisioOdsLettura>>();
+
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsReport>>();
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsServiziReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsServiziReport>>();
             #endregion

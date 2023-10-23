@@ -56,6 +56,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -389,6 +390,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #endregion
 
         #region GaPrevisio
+        DbSet<PrevisioOdsLettura> GaPrevisioOdsLetture { get; set; }
         DbSet<ViewGaPrevisioOdsReport> ViewGaPrevisioOdsReport { get; set; }
         DbSet<ViewGaPrevisioOdsServiziReport> ViewGaPrevisioOdsServiziReport { get; set; }
         #endregion

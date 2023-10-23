@@ -1292,6 +1292,23 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam_V2/{roles}")]
+        public ApiResponse GetViewConsorzioRegistrazioniQueryableFilterSingleParam_V2(GridOperationsModel filter, string? roles = "0")
+        {
+            try
+            {
+                //roles = roles == "NaN" ? "0" : roles;
+                roles = roles == "ARRAY" ? filter.extraFilter.ToString() : "0";
+                var entities = _consorzioService.GetViewConsorzioRegistrazioniByRolesQueryable_V2(filter, roles.ToString().Split(",").ToArray());
+                return new ApiResponse(entities);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
         #endregion
         #endregion
 
