@@ -30,6 +30,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewBackOfficeUtenzeDispositiviRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartite> viewBackOfficeUtenzePartiteRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenze> viewBackOfficeUtenzeRepo;
+        protected readonly IGenericRepository<ViewGaPrevisioOdsLetture> viewPrevisioOdsLettureRepo;
 
 
         protected readonly IUnitOfWork unitOfWork;
@@ -47,6 +48,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewBackOfficeUtenzeDispositiviRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartite> viewBackOfficeUtenzePartiteRepo,
             IGenericRepository<ViewGaBackOfficeUtenze> viewBackOfficeUtenzeRepo,
+            IGenericRepository<ViewGaPrevisioOdsLetture> viewPrevisioOdsLettureRepo,
 
             IUnitOfWork unitOfWork,
             IHubContext<BackgroundServicesHub, IBackgroundServicesHub> hub,
@@ -61,6 +63,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewBackOfficeUtenzeDispositiviRepo = viewBackOfficeUtenzeDispositiviRepo;
             this.viewBackOfficeUtenzePartiteRepo = viewBackOfficeUtenzePartiteRepo;
             this.viewBackOfficeUtenzeRepo = viewBackOfficeUtenzeRepo;
+            this.viewPrevisioOdsLettureRepo = viewPrevisioOdsLettureRepo;
 
             this.unitOfWork = unitOfWork;
 
@@ -90,6 +93,29 @@ namespace GaCloudServer.BusinnessLogic.Services
             await gaPrevisioOdsLettureRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
+        }
+
+        public async Task<long> AddOrUpdateGaPrevisioOdsLetturaAsync(PrevisioOdsLetturaDto dto)
+        {
+            var entity = await gaPrevisioOdsLettureRepo.GetSingleWithFilter(x=>x.FileName==dto.FileName);
+            if (entity != null)
+            {
+                entity.ProcDescription = string.Concat(entity.ProcDescription, " | ", dto.ProcDescription);
+                entity.ErrDescription = string.Concat(entity.ErrDescription, " | ", dto.ErrDescription);
+                entity.DateUpdated = DateTime.Now;
+                entity.Retry += 1;
+                gaPrevisioOdsLettureRepo.Update(entity);
+                await SaveChanges();
+                return entity.Id;
+            }
+            else
+            { 
+                entity= dto.ToEntity<PrevisioOdsLettura, PrevisioOdsLetturaDto>();
+                entity.DateCreated = DateTime.Now;
+                await gaPrevisioOdsLettureRepo.AddAsync(entity);
+                await SaveChanges();
+                return entity.Id;
+            }
         }
 
         public async Task<long> UpdateGaPrevisioOdsLetturaAsync(PrevisioOdsLetturaDto dto)
@@ -144,6 +170,15 @@ namespace GaCloudServer.BusinnessLogic.Services
                 return true;
             }
 
+        }
+
+        #endregion
+
+        #region Views
+        public async Task<PagedList<ViewGaPrevisioOdsLetture>> GetViewGaPrevisioOdsLettureAsync()
+        {
+            var view = await viewPrevisioOdsLettureRepo.GetAllAsync();
+            return view;
         }
         #endregion
 

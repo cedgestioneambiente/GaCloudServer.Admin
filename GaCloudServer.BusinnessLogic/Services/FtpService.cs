@@ -21,7 +21,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
-        #region FtpUpload
+        #region FTP Methods
         public async Task<string> UploadAsync(FtpUploadDto dto)
         {
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://" + dto.serverUri + dto.fileName);
@@ -50,6 +50,158 @@ namespace GaCloudServer.BusinnessLogic.Services
             return response;
 
 
+        }
+
+        public async Task<string> DownloadAsync(FtpDownloadDto dto)
+        {
+            try
+            {
+                var directoryExist=Directory.Exists(dto.filePath);
+
+                if (!directoryExist)
+                {
+                    Directory.CreateDirectory(dto.filePath);
+                }
+
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://" + dto.serverUri + dto.fileName);
+
+                request.Credentials = dto.credentials;
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+                request.UsePassive = dto.usePassive;
+                request.UseBinary = dto.useBinary;
+                request.KeepAlive = dto.keepAlive;
+
+                string response = "";
+
+                Uri uri = new Uri(@"ftp://" + dto.serverUri + "/Letture/"+dto.fileName);
+
+                using (WebClient client = new WebClient())
+                {
+                    client.Credentials = dto.credentials;
+                    byte[] data = client.DownloadData(uri);
+
+                    File.WriteAllBytes(Path.Combine(dto.filePath,dto.fileName), data);
+
+                }
+
+                
+
+                return response;
+            }
+            catch (WebException webEx)
+            {
+                var errorCode=(FtpWebResponse)webEx.Response;
+                return errorCode.StatusDescription.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+
+        }
+
+        public async Task<string> DownloadAndUploadAsync(FtpDownloadAndUploadDto dto)
+        {
+            try
+            {
+                var directoryExist = Directory.Exists(dto.filePath);
+
+                if (!directoryExist)
+                {
+                    Directory.CreateDirectory(dto.filePath);
+                }
+
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://" + dto.serverUploadUri + dto.fileName);
+
+                request.Credentials = dto.uploadCredentials;
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UsePassive = dto.usePassive;
+                request.UseBinary = dto.useBinary;
+                request.KeepAlive = dto.keepAlive;
+
+                string response = "";
+
+                Uri uri = new Uri(@"ftp://" + dto.serverDownloadUri + "/Letture/" + dto.fileName);
+
+                using (WebClient client = new WebClient())
+                {
+                    client.Credentials = dto.downloadCredentials;
+                    byte[] data = client.DownloadData(uri);
+
+                    File.WriteAllBytes(Path.Combine(dto.filePath, dto.fileName), data);
+
+                    //Upload File
+
+                    string responseUpload = "";
+
+                    using (Stream fileStream = System.IO.File.OpenRead(Path.Combine(dto.filePath,dto.fileName)))
+                    using (Stream ftpStream = request.GetRequestStream())
+                    {
+                        byte[] buffer = new byte[10240];
+                        int read;
+                        while ((read = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            ftpStream.Write(buffer, 0, read);
+                            Console.WriteLine("Uploaded {0} bytes", fileStream.Position);
+                            response = string.Format("Uploaded {0} bytes", fileStream.Position);
+                        }
+                    }
+
+                    return response;
+
+
+                }
+
+
+
+                return response;
+            }
+            catch (WebException webEx)
+            {
+                var errorCode = (FtpWebResponse)webEx.Response;
+                return errorCode.StatusDescription.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+
+        }
+
+        public async Task<string> MoveAsync(FtpMoveDto dto)
+        {
+            try {
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://" + dto.serverUri+"/"+dto.sourcefilePath+"/"+dto.fileName);
+
+                request.Credentials = dto.credentials;
+                request.Method = WebRequestMethods.Ftp.Rename;
+                request.RenameTo = dto.destinationfilePath+"/"+ dto.fileName;
+                request.UsePassive = dto.usePassive;
+                request.UseBinary = dto.useBinary;
+                request.KeepAlive = dto.keepAlive;
+
+                try {
+                    FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                    Console.WriteLine("File spostato con successo.");
+                    response.Close();
+                    return "Ok";
+                }
+                catch (WebException ex)
+                {
+                    return "Ko";
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
 

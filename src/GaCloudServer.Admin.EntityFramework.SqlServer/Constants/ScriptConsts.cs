@@ -137,8 +137,11 @@
         public const string GaPrevisio = @".\Scripts\Previsio\";
         public const string CREATE_ViewPrevisio = "CREATE_ViewGaPrevisio.sql";
         public const string CREATE_ViewPrevisio_V2 = "CREATE_ViewGaPrevisio_V2.sql";
+        public const string CREATE_ViewPrevisio_V3 = "CREATE_ViewGaPrevisio_V3.sql";
+        public const string CREATE_ViewPrevisio_V4 = "CREATE_ViewGaPrevisio_V4.sql";
         public const string DROP_ViewPrevisio = "DROP_ViewGaPrevisio.sql";
         public const string DROP_ViewPrevisio_V2 = "DROP_ViewGaPrevisio_V2.sql";
+        public const string DROP_ViewPrevisio_V3 = "DROP_ViewGaPrevisio_V3.sql";
 
         //Shortcut
         public const string Shortcuts = @".\Scripts\Shortcuts\";

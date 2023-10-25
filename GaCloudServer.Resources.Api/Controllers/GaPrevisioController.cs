@@ -1,6 +1,7 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
 using GaCloudServer.BusinnessLogic.Dtos.Extras.EcoFinder;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Ftp;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Previsio;
 using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
@@ -13,6 +14,7 @@ using GaCloudServer.Resources.Api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -27,16 +29,25 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly IGaPrevisioService _gaPrevisioService;
         private readonly ILogger<GaMezziController> _logger;
         private readonly IEcoFinderService _ecoFinderService;
+        private readonly IFtpService _ftpService;
         private readonly string EcoFinderBaseUri = "http://tellus.formulaconsorzio.it:8080/ecofinder/services/extern/";
+
+        private static readonly string fileSvuotamentiFtpRoot = "20.82.78.5/";
+        private static readonly NetworkCredential fileSvuotamentiFtpCredentials = new NetworkCredential("srtgaadmin", "K8cAqARVH8*RExtL9VvD7_yU722-WQ");
+
+        private static readonly string nasLettureFtpRoot = "gads-novi.myds.me/";
+        private static readonly NetworkCredential nasLettureFtpCredentials = new NetworkCredential("csgroup", "QDS6bNPq*gH5^mZW");
 
         public GaPrevisioController(
             IGaPrevisioService gaPrevisioService
             ,IEcoFinderService ecoFinderService
+            ,IFtpService ftpService
             ,ILogger<GaMezziController> logger)
         {
 
             _gaPrevisioService = gaPrevisioService;
             _ecoFinderService = ecoFinderService;
+            _ftpService = ftpService;
             _logger = logger;
         }
 
@@ -171,6 +182,90 @@ namespace GaCloudServer.Resources.Api.Controllers
                 _logger.LogError(ex.Message, ex);
                 throw new ApiException(ex.Message);
             }
+
+        }
+
+        [HttpGet("TestGaPrevisioOdsLettureUploadAsync")]
+        public async Task<ActionResult<ApiResponse>> TestGaPrevisioOdsLettureUploadAsync()
+        {
+            try
+            {
+                var view = await _gaPrevisioService.GetViewGaPrevisioOdsLettureAsync();
+
+                FtpDownloadAndUploadDto dto = new FtpDownloadAndUploadDto();
+                dto.serverDownloadUri = nasLettureFtpRoot;
+                dto.serverUploadUri = fileSvuotamentiFtpRoot;
+                dto.filePath = "";
+                dto.fileName = "";
+                dto.downloadCredentials = nasLettureFtpCredentials;
+                dto.uploadCredentials = fileSvuotamentiFtpCredentials;
+                dto.useBinary = true;
+                dto.usePassive = true;
+                dto.keepAlive = true;
+
+                foreach (var itm in view.Data)
+                {
+                    dto.fileName = itm.FileName + ".txt";
+                    PrevisioOdsLetturaDto apiDto = new PrevisioOdsLetturaDto();
+                    apiDto.IdServizio = itm.IdServizio;
+                    apiDto.Descrizione = itm.Descrizione;
+                    apiDto.Elaborato = true;
+                    apiDto.FileName = dto.fileName;
+                    apiDto.Id = 0;
+                    apiDto.Retry = 0;
+                    apiDto.Disabled = false;
+
+                    try
+                    {
+                        dto.filePath=Path.Combine(Directory.GetCurrentDirectory(),"wwwroot","LocalLibrary","Download");
+                        
+                        var response = await _ftpService.DownloadAndUploadAsync(dto);
+
+                        if (response.Split("/")[0] != null && response.Split("/")[0] == "550 ")
+                        {
+                            apiDto.Elaborato = false;
+                            apiDto.ErrDescription = response;
+                            await _gaPrevisioService.AddOrUpdateGaPrevisioOdsLetturaAsync(apiDto);
+                        }
+                        else
+                        {
+                            apiDto.ProcDescription = response;
+                            await _gaPrevisioService.AddOrUpdateGaPrevisioOdsLetturaAsync(apiDto);
+
+                            var ftpMove = new FtpMoveDto();
+                            ftpMove.serverUri = nasLettureFtpRoot;
+                            ftpMove.fileName = dto.fileName;
+                            ftpMove.sourcefilePath = "/Letture";
+                            ftpMove.destinationfilePath = "/Letture/ELABORATE_GA";
+                            ftpMove.credentials = nasLettureFtpCredentials;
+                            ftpMove.useBinary = true;
+                            ftpMove.usePassive = true;
+                            ftpMove.keepAlive = true;
+
+                            await _ftpService.MoveAsync(ftpMove);
+
+                        }
+
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        apiDto.ErrDescription = ex.Message;
+                        await _gaPrevisioService.AddOrUpdateGaPrevisioOdsLetturaAsync(apiDto);
+
+                    }
+
+                }
+
+                return new ApiResponse(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+
+                throw new ApiException(ex.Message);
+            }
+
 
         }
         #endregion

@@ -8986,6 +8986,12 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Descrizione")
                         .HasColumnType("nvarchar(max)");
 
@@ -9004,9 +9010,35 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("IdServizio")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProcDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Retry")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("GaPrevisioOdsLetture");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views.ViewGaPrevisioOdsLetture", b =>
+                {
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("IdServizio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaPrevisioOdsLetture");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views.ViewGaPrevisioOdsReport", b =>

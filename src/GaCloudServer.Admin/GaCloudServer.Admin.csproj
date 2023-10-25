@@ -83,6 +83,15 @@
 	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Previsio\CREATE_ViewGaPrevisio_V4.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Previsio\CREATE_ViewGaPrevisio_V3.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Previsio\DROP_ViewGaPrevisio_V3.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\SmartCity\CREATE_ViewGaSmartCity.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

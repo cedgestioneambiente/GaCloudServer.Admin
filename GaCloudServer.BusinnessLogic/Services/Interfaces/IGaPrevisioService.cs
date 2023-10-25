@@ -14,6 +14,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PrevisioOdsLetturaDto> GetGaPrevisioOdsLetturaByIdAsync(long id);
 
         Task<long> AddGaPrevisioOdsLetturaAsync(PrevisioOdsLetturaDto dto);
+        Task<long> AddOrUpdateGaPrevisioOdsLetturaAsync(PrevisioOdsLetturaDto dto);
         Task<long> UpdateGaPrevisioOdsLetturaAsync(PrevisioOdsLetturaDto dto);
 
         Task<bool> DeleteGaPrevisioOdsLetturaAsync(long id);
@@ -21,6 +22,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         Task<bool> ValidateGaPrevisioOdsLetturaAsync(long id, string descrizione);
         Task<bool> ChangeStatusElaboratoGaPrevisioOdsLetturaAsync(long id);
+        #endregion
+
+        #region Views
+        Task<PagedList<ViewGaPrevisioOdsLetture>> GetViewGaPrevisioOdsLettureAsync();
         #endregion
 
         #endregion

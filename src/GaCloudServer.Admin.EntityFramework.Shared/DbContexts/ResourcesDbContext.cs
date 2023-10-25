@@ -397,6 +397,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PrevisioOdsLettura> GaPrevisioOdsLetture { get; set; }
         public DbSet<ViewGaPrevisioOdsReport> ViewGaPrevisioOdsReport { get; set; }
         public DbSet<ViewGaPrevisioOdsServiziReport> ViewGaPrevisioOdsServiziReport { get; set; }
+        public DbSet<ViewGaPrevisioOdsLetture> ViewGaPrevisioOdsLetture { get; set; }
         #endregion
 
         #region Shortcut
@@ -1249,6 +1250,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .ToView(nameof(ViewGaPrevisioOdsServiziReport))
                 .HasNoKey()
                 .Property(x => x.IDservizio);
+            });
+
+            builder.Entity<ViewGaPrevisioOdsLetture>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPrevisioOdsLetture))
+                .HasNoKey()
+                .Property(x => x.IdServizio);
             });
             #endregion
 

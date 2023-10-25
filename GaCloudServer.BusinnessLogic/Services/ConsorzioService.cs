@@ -1048,15 +1048,17 @@ namespace GaCloudServer.BusinnessLogic.Services
                 }
                 else
                 {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => x.Id>0, filterParams)
+                    var filterResult =  viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => x.Id > 0, filterParams);
+
+                    var data=filterResult
                         .Data
                         .AsEnumerable()
                         .Where(t => roles.Any(p => t.Roles.Contains(p)));
 
                     var result = new PagedList<ViewConsorzioRegistrazioni>();
-                    result.TotalCount = filterResult.Count();
+                    result.TotalCount = filterResult.TotalCount;
                     result.PageSize = 0;
-                    result.Data.AddRange(filterResult);
+                    result.Data.AddRange(data);
                     return result;
                 }
             }
