@@ -8,12 +8,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW ViewGaPrevisioOdsLetture
+CREATE VIEW [dbo].[ViewGaPrevisioOdsLetture]
 AS
 SELECT cast(0 as bigint) Id, IDSERVIZIO IdServizio,[FileName],STRING_AGG(Descrizione,' | ') Descrizione, cast(0 as bit) Disabled
 FROM [20.82.75.6].SUPPORT.[dbo].[ViewPrevisioOdsLetture]
-WHERE IDSERVIZIO NOT IN (SELECT IdServizio FROM GaPrevisioOdsLetture WHERE Elaborato=1)
+WHERE [fileName] COLLATE DATABASE_DEFAULT NOT IN (SELECT replace([FILENAME],'.txt','') from GaPrevisioOdsLetture  WHERE Elaborato=1 OR(Elaborato=0))
 group by idservizio,filename
 GO
-
 

@@ -1072,37 +1072,6 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
-        public PagedList<ViewConsorzioRegistrazioni> GetViewConsorzioRegistrazioniByRolesQueryable_V2(GridOperationsModel filterParams, string[]? roles)
-        {
-
-            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
-            {
-                if (roles == null || roles.Count() == 0)
-                {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
-                    return filterResult;
-                }
-                else
-                {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2WithQuickFilter(x => roles.Contains(x.Roles), filterParams, filterParams.quickFilter);
-                    return filterResult;
-                }
-            }
-            else
-            {
-                if (roles == null || roles.Count() == 0)
-                {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetAllQueryableV2(filterParams);
-                    return filterResult;
-                }
-                else
-                {
-                    var filterResult = viewConsorzioRegistrazioniRepo.GetWithFilterQueryableV2(x => roles.Contains(x.Roles), filterParams);
-                    return filterResult;
-                }
-            }
-
-        }
         #endregion
 
         #endregion
