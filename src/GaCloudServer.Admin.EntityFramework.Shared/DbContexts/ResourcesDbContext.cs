@@ -59,6 +59,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
+using Microsoft.AspNetCore.Http;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -567,8 +568,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #endregion
         #endregion
 
-        public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options) : base(options)
+        public IHttpContextAccessor httpContextAccessor { get; set; }
+        public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options,IHttpContextAccessor httpContextAccessor) : base(options)
         {
+            this.httpContextAccessor = httpContextAccessor;
         }
 
 

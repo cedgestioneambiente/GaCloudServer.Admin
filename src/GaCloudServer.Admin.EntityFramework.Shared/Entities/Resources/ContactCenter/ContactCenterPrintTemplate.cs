@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter
 {
-    public class ContactCenterPrintTemplate:GenericListEntity
+    public class ContactCenterPrintTemplate: GenericListAuditableEntity
     {
         public string Template { get; set; }
     }

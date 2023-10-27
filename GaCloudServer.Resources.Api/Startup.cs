@@ -146,6 +146,9 @@ namespace GaCloudServer.Resources.Api
                 //.AddInMemoryStorage();
             }
 
+            //Aggiungo HttpContextAccessor per avere accesso all'utente autenticato tramite Contesto Http
+            services.AddHttpContextAccessor();
+
 
         }
 

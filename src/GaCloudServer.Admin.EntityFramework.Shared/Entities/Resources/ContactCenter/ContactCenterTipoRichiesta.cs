@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter
 {
-    public class ContactCenterTipoRichiesta : GenericListEntity
+    public class ContactCenterTipoRichiesta : GenericListAuditableEntity
     {
         public bool Ingombranti { get; set; }
         public bool Magazzino { get; set; }

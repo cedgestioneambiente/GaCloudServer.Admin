@@ -4,7 +4,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
 {
-    public class CrmTicketAllegato : GenericFileEntity
+    public class CrmTicketAllegato : GenericFileAuditableEntity
     {
         public long CrmTicketId { get; set; }
         public string Descrizione { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter
 {
-    public class ContactCenterAllegato : GenericFileEntity
+    public class ContactCenterAllegato : GenericFileAuditableEntity
     {
         public long ContactCenterTicketId { get; set; }
         public string Descrizione { get; set; }

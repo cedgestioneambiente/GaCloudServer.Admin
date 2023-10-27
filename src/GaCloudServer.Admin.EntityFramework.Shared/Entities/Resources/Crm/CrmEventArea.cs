@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
 {
-    public class CrmEventArea : GenericListEntity
+    public class CrmEventArea : GenericListAuditableEntity
     {
         public string Days { get; set; }
         public string Color { get; set; }

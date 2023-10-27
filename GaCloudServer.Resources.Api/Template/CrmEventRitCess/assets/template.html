@@ -109,7 +109,7 @@
         </div>
         {12}
     </div>
-    <div class="container" style="page-break-after:always !important;">
+    <div class="container" style="page-break-after:always !important;font-size:18px">
         <div class="section">
             Data Cessazione: {13}
         </div>
@@ -225,7 +225,7 @@
     </div>
 
 
-    <div class="box">
+    <div class="box" style="page-break-after:always !important;">
         <div class="box-row">
             <div class="box-row-col-33">
                 Luogo e Data
@@ -240,6 +240,52 @@
             </div>
         </div>
     </div>
+
+    <div style="height:100%">
+        <div class='sub-header' style="margin-top:20px !important;">
+            <div class='sub-header-logo'>
+                <img class='sub-header-logo-img' src='http://dev.gestioneambiente.net/wwwroot/assets/logo_ga.png' />
+            </div>
+            <div class='sub-header-title'>
+                <b>
+                    {0}
+                </b>
+            </div>
+            <div class='sub-header-title-2'>
+            </div>
+        </div>
+
+        <div class="box text-center" style="margin:20px 0px">
+            <div class="box-full bb" style="font-size:20px;">
+                <b>Istruzioni per il ritiro</b>
+            </div>
+            <div style="line-height:36px;font-size:20px">
+                Il presente modulo dovrà essere affisso sui contenitori. <br />
+                Esporre entro le ore 08:00 del giorno <b>{4}</b>.
+                <br />
+                Esporre su suolo pubblico.
+            </div>
+        </div>
+
+        <div class="box text-center" style="margin:20px 0px">
+            <div class="box-full" style="font-size:28px;line-height:36px;">
+                <b>RITIRO PROGRAMMATO</b>
+                <br />
+                <b>GESTIONE AMBIENTE S.P.A.</b>
+            </div>
+        </div>
+
+        <div class="box text-center" style="margin:20px 0px">
+            <div class="box-full bb">
+                <b>Dispositivi da Ritirare</b>
+            </div>
+            {12}
+        </div>
+    </div>
+    
+
+
+
     <script>
         // Genera il codice a barre utilizzando il valore desiderato
         JsBarcode("#barcode", "{11}");

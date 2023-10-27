@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
 {
-    public class CrmTicketTag : GenericListEntity
+    public class CrmTicketTag : GenericListAuditableEntity
     {
     }
 }

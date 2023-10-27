@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter
 {
-    public class ContactCenterProvenienza : GenericListEntity
+    public class ContactCenterProvenienza : GenericListAuditableEntity
     {
     }
 }

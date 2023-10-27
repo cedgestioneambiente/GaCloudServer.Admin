@@ -4,7 +4,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter
 {
-    public class ContactCenterTicket : GenericEntity
+    public class ContactCenterTicket : GenericAuditableEntity
     {
         public string Utente { get; set; }
         public string NumCon { get; set; }

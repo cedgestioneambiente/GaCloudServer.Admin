@@ -4,7 +4,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
 {
-    public class CrmTicket : GenericEntity
+    public class CrmTicket : GenericAuditableEntity
     {
         public DateTime DataTicket { get; set; }
         public DateTime DataRichiesta { get; set; }

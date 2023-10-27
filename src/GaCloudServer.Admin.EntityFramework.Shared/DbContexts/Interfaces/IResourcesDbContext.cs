@@ -57,11 +57,14 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
+using Microsoft.AspNetCore.Http;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
     public interface IResourcesDbContext
     {
+        IHttpContextAccessor httpContextAccessor { get; set; }
+
         #region GaGlobal Tables
         DbSet<GlobalSede> GlobalSedi { get; set; }
         DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }

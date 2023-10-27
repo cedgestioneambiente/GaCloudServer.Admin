@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
 {
-    public class CrmEventComune : GenericListEntity
+    public class CrmEventComune : GenericListAuditableEntity
     {
         public string CodAzi { get; set; }
         public long Duration { get; set; }

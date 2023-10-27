@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter
 {
-    public class ContactCenterComune : GenericListEntity
+    public class ContactCenterComune : GenericListAuditableEntity
     {
         public string CodAzi { get; set; }
     }

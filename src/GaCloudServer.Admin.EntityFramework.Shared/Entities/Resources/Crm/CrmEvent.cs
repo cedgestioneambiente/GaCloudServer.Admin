@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
 {
-    public class CrmEvent : GenericEntity
+    public class CrmEvent : GenericAuditableEntity
     {
         public string CodAzi { get; set; }
         public string CodCli { get; set; }
