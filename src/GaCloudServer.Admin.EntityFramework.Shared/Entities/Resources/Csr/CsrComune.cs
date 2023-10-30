@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr
 {
-    public class CsrComune : GenericListEntity
+    public class CsrComune : GenericListAuditableEntity
     {
     }
 }

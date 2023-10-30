@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrComuneOnCentro : GenericEntity
+    public class CdrComuneOnCentro : GenericAuditableEntity
     {
         public long CdrCentroId { get; set; }
         public long CdrComuneId { get; set; }

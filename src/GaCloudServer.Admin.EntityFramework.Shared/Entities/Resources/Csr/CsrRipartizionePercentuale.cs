@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr
 {
-    public class CsrRipartizionePercentuale : GenericEntity
+    public class CsrRipartizionePercentuale : GenericAuditableEntity
     {
         public long CsrComuneId { get; set; }
         public long CsrProduttoreId { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti
 {
-    public class ProgettiJob:GenericEntity
+    public class ProgettiJob: GenericAuditableEntity
     {
         public string Title { get; set; }
         public DateTime? Start { get; set; }

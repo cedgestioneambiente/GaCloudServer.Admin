@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti
 {
-    public class ContrattiSoggetto : GenericEntity
+    public class ContrattiSoggetto : GenericAuditableEntity
     {
         public string RagioneSociale { get; set; }
         public string CodiceFiscale { get; set; }

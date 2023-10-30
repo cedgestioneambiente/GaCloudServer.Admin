@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
-    public class PresenzeOrarioGiornata : GenericEntity
+    public class PresenzeOrarioGiornata : GenericAuditableEntity
     {
         public long PresenzeOrarioId { get; set; }
         public int Giorno { get; set; }

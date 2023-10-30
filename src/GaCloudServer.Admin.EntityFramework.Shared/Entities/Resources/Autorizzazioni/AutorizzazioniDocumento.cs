@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni
 {
-    public class AutorizzazioniDocumento : GenericEntity
+    public class AutorizzazioniDocumento : GenericAuditableEntity
     {
         public string Numero { get; set; }
         public string RagioneSociale { get; set; }

@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrConferimento : GenericEntity
+    public class CdrConferimento : GenericAuditableEntity
     {
         public string UserId { get; set; }
         public DateTime Data { get; set; }

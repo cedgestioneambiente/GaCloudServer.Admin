@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrUtente : GenericEntity
+    public class CdrUtente : GenericAuditableEntity
     {
         public string RagioneSociale { get; set; }
         public string CfPiva { get; set; }

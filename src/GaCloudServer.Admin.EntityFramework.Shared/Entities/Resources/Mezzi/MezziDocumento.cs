@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi
 {
-    public class MezziDocumento:GenericFileEntity
+    public class MezziDocumento: GenericFileAuditableEntity
     {
         public string Descrizione { get; set; }
         public long MezziVeicoloId { get; set; }

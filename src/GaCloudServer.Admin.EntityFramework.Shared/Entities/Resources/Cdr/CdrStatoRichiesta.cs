@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrStatoRichiesta : GenericListEntity
+    public class CdrStatoRichiesta : GenericListAuditableEntity
     {
     }
 }

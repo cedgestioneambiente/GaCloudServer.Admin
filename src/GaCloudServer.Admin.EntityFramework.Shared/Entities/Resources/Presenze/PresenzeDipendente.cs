@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
-    public class PresenzeDipendente : GenericEntity
+    public class PresenzeDipendente : GenericAuditableEntity
     {
         public long PersonaleDipendenteId { get; set; }
         public string Matricola { get; set; }

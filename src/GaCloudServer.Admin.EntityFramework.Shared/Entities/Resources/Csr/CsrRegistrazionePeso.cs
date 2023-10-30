@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr
 {
-    public class CsrRegistrazionePeso : GenericEntity
+    public class CsrRegistrazionePeso : GenericAuditableEntity
     {
         public long CsrProduttoreId { get; set; }
         public long CsrCodiceCerId { get; set; }

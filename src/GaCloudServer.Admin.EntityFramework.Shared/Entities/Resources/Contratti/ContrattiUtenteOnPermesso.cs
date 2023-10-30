@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti
 {
-    public class ContrattiUtenteOnPermesso : GenericEntity
+    public class ContrattiUtenteOnPermesso : GenericAuditableEntity
     {
         public string UtenteId { get; set; }
         public long ContrattiPermessoId { get; set; }

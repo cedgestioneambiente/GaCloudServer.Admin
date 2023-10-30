@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
-    public class PresenzeResponsabileOnSettore : GenericEntity
+    public class PresenzeResponsabileOnSettore : GenericAuditableEntity
     {
         public long PresenzeResponsabileId { get; set; }
         public long GlobalSettoreId { get; set; }

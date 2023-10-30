@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi
 {
-    public class MezziPatente:GenericListEntity
+    public class MezziPatente: GenericListAuditableEntity
     {
     }
 }

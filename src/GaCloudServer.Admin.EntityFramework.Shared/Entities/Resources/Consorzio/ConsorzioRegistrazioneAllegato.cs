@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio
 {
-    public class ConsorzioRegistrazioneAllegato : GenericFileEntity
+    public class ConsorzioRegistrazioneAllegato : GenericFileAuditableEntity
     {
         public string Descrizione { get; set; }
         public long ConsorzioRegistrazioneId { get; set; }

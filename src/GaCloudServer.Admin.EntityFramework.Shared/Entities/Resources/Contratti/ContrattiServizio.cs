@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti
 {
-    public class ContrattiServizio : GenericListEntity
+    public class ContrattiServizio : GenericListAuditableEntity
     {
     }
 }

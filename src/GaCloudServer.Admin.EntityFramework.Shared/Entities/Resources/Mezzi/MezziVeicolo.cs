@@ -4,7 +4,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi
 {
-    public class MezziVeicolo:GenericEntity
+    public class MezziVeicolo: GenericAuditableEntity
     {
         public string Targa { get; set; }
         public string TargaPrecedente { get; set; }

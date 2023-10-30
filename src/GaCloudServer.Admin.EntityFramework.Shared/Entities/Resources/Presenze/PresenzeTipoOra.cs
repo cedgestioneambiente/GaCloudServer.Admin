@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
-    public class PresenzeTipoOra : GenericListEntity
+    public class PresenzeTipoOra : GenericListAuditableEntity
     {
         public bool ApprovazioneAutomatica { get; set; }
         public int DecrementaTipo { get; set; }

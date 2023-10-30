@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrComune : GenericEntity
+    public class CdrComune : GenericAuditableEntity
     {
         public string Comune { get; set; }
     }

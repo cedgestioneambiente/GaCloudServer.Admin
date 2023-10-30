@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti
 {
-    public class ProgettiJobAllegato:GenericFileEntity
+    public class ProgettiJobAllegato: GenericFileAuditableEntity
     {
         public string Descrizione { get; set; }
         public long ProgettiJobId { get; set; }

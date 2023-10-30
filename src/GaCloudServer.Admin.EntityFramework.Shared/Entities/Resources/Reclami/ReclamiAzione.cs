@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami
 {
-    public class ReclamiAzione : GenericListEntity
+    public class ReclamiAzione : GenericListAuditableEntity
     {
         public long ReclamiDocumentoId { get; set; }
         public long ReclamiTipoAzioneId { get; set; }

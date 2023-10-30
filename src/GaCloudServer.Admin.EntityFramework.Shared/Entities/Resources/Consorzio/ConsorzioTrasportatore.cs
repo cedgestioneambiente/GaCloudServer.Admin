@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio
 {
-    public class ConsorzioTrasportatore : GenericListEntity
+    public class ConsorzioTrasportatore : GenericListAuditableEntity
     {
         public long ConsorzioComuneId { get; set; }
         public string Indirizzo { get; set; }

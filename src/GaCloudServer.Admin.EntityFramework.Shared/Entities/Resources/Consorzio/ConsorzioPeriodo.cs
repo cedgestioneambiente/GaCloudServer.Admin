@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio
 {
-    public class ConsorzioPeriodo : GenericListEntity
+    public class ConsorzioPeriodo : GenericListAuditableEntity
     {
         public int Giorni { get; set; }
     }

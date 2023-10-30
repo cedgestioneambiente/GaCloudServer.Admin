@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti
 {
-    public class ContrattiDocumento : GenericEntity
+    public class ContrattiDocumento : GenericAuditableEntity
     {
         public long ContrattiSoggettoId { get; set; }
         public int Numero { get; set; }

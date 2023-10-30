@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti
 {
-    public class ProgettiJobTask:GenericEntity
+    public class ProgettiJobTask: GenericAuditableEntity
     {
         public string Content { get; set; }
         public bool? Completed { get; set; }

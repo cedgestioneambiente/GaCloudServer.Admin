@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr
 {
-    public class CsrProduttore : GenericEntity
+    public class CsrProduttore : GenericAuditableEntity
     {
         public string RagioneSociale { get; set; }
         public string Colore { get; set; }

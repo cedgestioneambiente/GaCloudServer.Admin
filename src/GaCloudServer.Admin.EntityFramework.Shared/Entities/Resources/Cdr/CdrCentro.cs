@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrCentro : GenericEntity
+    public class CdrCentro : GenericAuditableEntity
     {
         public string Centro { get; set; }
         public string Mail { get; set; }

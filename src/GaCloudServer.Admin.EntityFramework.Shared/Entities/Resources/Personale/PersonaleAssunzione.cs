@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale
 {
-    public class PersonaleAssunzione : GenericListEntity
+    public class PersonaleAssunzione : GenericListAuditableEntity
     {
     }
 }

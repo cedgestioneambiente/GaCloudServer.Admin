@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio
 {
-    public class ConsorzioSmaltimento : GenericListEntity
+    public class ConsorzioSmaltimento : GenericListAuditableEntity
     {
 
     }

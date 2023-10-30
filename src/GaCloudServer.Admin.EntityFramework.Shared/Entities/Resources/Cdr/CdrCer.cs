@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrCer : GenericEntity
+    public class CdrCer : GenericAuditableEntity
     {
         public string Cer { get; set; }
         public string Descrizione { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale
 {
-    public class PersonaleArticoloDpi : GenericListEntity
+    public class PersonaleArticoloDpi : GenericListAuditableEntity
     {
         public string Caratteristiche { get; set; }
         public bool OmettiStampa { get; set; }

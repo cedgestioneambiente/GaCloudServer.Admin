@@ -3,7 +3,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni
 {
-    public class AutorizzazioniTipo:GenericListEntity
+    public class AutorizzazioniTipo: GenericListAuditableEntity
     {
     }
 }

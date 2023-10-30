@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze
 {
-    public class PresenzeStatoRichiesta : GenericListEntity
+    public class PresenzeStatoRichiesta : GenericListAuditableEntity
     {
     }
 }

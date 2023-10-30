@@ -2,7 +2,7 @@
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi
 {
-    public class MezziScadenzaTipo:GenericListEntity
+    public class MezziScadenzaTipo: GenericListAuditableEntity
     {
     }
 }

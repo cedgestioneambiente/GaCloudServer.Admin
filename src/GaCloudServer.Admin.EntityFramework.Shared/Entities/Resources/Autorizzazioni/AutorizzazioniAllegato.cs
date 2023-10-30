@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni
 {
-    public class AutorizzazioniAllegato : GenericFileEntity
+    public class AutorizzazioniAllegato : GenericFileAuditableEntity
     {
         public long AutorizzazioniDocumentoId { get; set; }
         public string Descrizione { get; set; }

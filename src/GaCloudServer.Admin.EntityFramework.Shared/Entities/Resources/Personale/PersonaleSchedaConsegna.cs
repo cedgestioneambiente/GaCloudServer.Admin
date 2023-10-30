@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale
 {
-    public class PersonaleSchedaConsegna : GenericFileEntity
+    public class PersonaleSchedaConsegna : GenericFileAuditableEntity
     {
         public long PersonaleDipendenteId { get; set; }
         public DateTime Data { get; set; }

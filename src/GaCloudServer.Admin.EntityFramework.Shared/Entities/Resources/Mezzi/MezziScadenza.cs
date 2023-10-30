@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi
 {
-    public class MezziScadenza:GenericFileEntity
+    public class MezziScadenza: GenericFileAuditableEntity
     {
         public long MezziVeicoloId { get; set; }
         public long MezziScadenzaTipoId { get; set; }

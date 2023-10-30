@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale
 {
-    public class PersonaleDipendente : GenericEntity
+    public class PersonaleDipendente : GenericAuditableEntity
 
-    {
+	{
 		public string UserId { get; set; }
 		public long GlobalSedeId { get; set; }
 		public long GlobalCentroCostoId { get; set; }

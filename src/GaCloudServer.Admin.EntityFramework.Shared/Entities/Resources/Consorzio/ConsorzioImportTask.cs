@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio
 {
-    public class ConsorzioImportTask : GenericFileEntity
+    public class ConsorzioImportTask : GenericFileAuditableEntity
     {
         public string TaskId { get; set; }
         public byte[] Log { get; set; }

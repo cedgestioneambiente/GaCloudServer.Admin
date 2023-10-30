@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr
 {
-    public class CsrRegistrazione : GenericEntity
+    public class CsrRegistrazione : GenericAuditableEntity
     {
         public DateTime Data { get; set; }
         public long CsrComuneId { get; set; }

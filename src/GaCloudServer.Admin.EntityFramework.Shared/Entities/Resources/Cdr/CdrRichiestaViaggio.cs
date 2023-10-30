@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
 {
-    public class CdrRichiestaViaggio : GenericEntity
+    public class CdrRichiestaViaggio : GenericAuditableEntity
     {
         public DateTime Data { get; set; }
         public string UserId { get; set; }

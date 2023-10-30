@@ -3,7 +3,7 @@ using System;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni
 {
-    public class SegnalazioniTipo : GenericListEntity
+    public class SegnalazioniTipo : GenericListAuditableEntity
     {
     }
 }
