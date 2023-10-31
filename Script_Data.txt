@@ -41,6 +41,7 @@ INSERT [dbo].[GlobalSettori] ([Id], [Disabled], [Descrizione]) VALUES (3, 0, N'C
 GO
 SET IDENTITY_INSERT [dbo].[GlobalSettori] OFF
 GO
+go
 
 --AUTORIZZAZIONI
 
