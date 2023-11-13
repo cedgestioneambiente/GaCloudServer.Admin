@@ -416,6 +416,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ProgettiJobAllegato> GaProgettiJobAllegati { get; set; }
         public DbSet<ProgettiJobTask> GaProgettiJobTask { get; set; }
         public DbSet<ProgettiWorkSetting> GaProgettiWorkSettings { get; set; }
+        public DbSet<ProgettiJobUndertaking> GaProgettiJobsUndertakings { get; set; }
+        public DbSet<ProgettiJobUndertakingState> GaProgettiJobsUndertakingsStates { get; set; }
+        public DbSet<ProgettiJobUndertakingAllegato> GaProgettiJobsUndertakingsAllegati { get; set; }
 
         #region Views
         public DbSet<ViewGaProgettiJobs> ViewGaProgettiJobs { get; set; }

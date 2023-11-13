@@ -21,6 +21,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ProgettiJobAllegato> gaProgettiJobAllegatiRepo;
         protected readonly IGenericRepository<ProgettiJobTask> gaProgettiJobTasksRepo;
         protected readonly IGenericRepository<ProgettiWorkSetting> gaProgettiWorkSettingsRepo;
+        protected readonly IGenericRepository<ProgettiJobUndertaking> gaProgettiJobsUndertakingsRepo;
+        protected readonly IGenericRepository<ProgettiJobUndertakingState> gaProgettiJobsUndertakingsStatesRepo;
+        protected readonly IGenericRepository<ProgettiJobUndertakingAllegato> gaProgettiJobsUndertakingsAllegatiRepo;
 
         protected readonly IGenericRepository<ViewGaProgettiJobs> viewGaProgettiJobsRepo;
 
@@ -32,6 +35,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ProgettiJobAllegato> gaProgettiJobAllegatiRepo,
             IGenericRepository<ProgettiJobTask> gaProgettiJobTasksRepo,
             IGenericRepository<ProgettiWorkSetting> gaProgettiWorkSettingsRepo,
+            IGenericRepository<ProgettiJobUndertaking> gaProgettiJobsUndertakingsRepo,
+            IGenericRepository<ProgettiJobUndertakingState> gaProgettiJobsUndertakingsStatesRepo,
+            IGenericRepository<ProgettiJobUndertakingAllegato> gaProgettiJobsUndertakingsAllegatiRepo,
 
             IGenericRepository<ViewGaProgettiJobs> viewGaProgettiJobsRepo,
 
@@ -42,6 +48,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaProgettiJobAllegatiRepo = gaProgettiJobAllegatiRepo;
             this.gaProgettiJobTasksRepo = gaProgettiJobTasksRepo;
             this.gaProgettiWorkSettingsRepo = gaProgettiWorkSettingsRepo;
+            this.gaProgettiJobsUndertakingsRepo = gaProgettiJobsUndertakingsRepo;
+            this.gaProgettiJobsUndertakingsStatesRepo = gaProgettiJobsUndertakingsStatesRepo;
+            this.gaProgettiJobsUndertakingsAllegatiRepo = gaProgettiJobsUndertakingsAllegatiRepo;
 
             this.viewGaProgettiJobsRepo = viewGaProgettiJobsRepo;
 
@@ -516,6 +525,223 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entity.Id;
 
         }
+        #endregion
+
+        #region ProgettiJobsUndertakings
+        public async Task<ProgettiJobsUndertakingsDto> GetGaProgettiJobsUndertakingsAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaProgettiJobsUndertakingsRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ProgettiJobsUndertakingsDto, PagedList<ProgettiJobUndertaking>>();
+            return dtos;
+        }
+
+        public async Task<ProgettiJobUndertakingDto> GetGaProgettiJobUndertakingByIdAsync(long id)
+        {
+            var entity = await gaProgettiJobsUndertakingsRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ProgettiJobUndertakingDto, ProgettiJobUndertaking>();
+            return dto;
+        }
+
+        public async Task<ProgettiJobsUndertakingsDto> GetGaProgettiJobsUndertakingsByJobIdAsync(long jobId)
+        {
+            var entities = await gaProgettiJobsUndertakingsRepo.GetWithFilterAsync(x => x.Disabled == false && x.ProgettiJobId == jobId);
+            var dtos = entities.ToDto<ProgettiJobsUndertakingsDto, PagedList<ProgettiJobUndertaking>>();
+            return dtos;
+
+        }
+
+        public async Task<long> AddGaProgettiJobUndertakingAsync(ProgettiJobUndertakingDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobUndertaking, ProgettiJobUndertakingDto>();
+            await gaProgettiJobsUndertakingsRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaProgettiJobUndertakingAsync(ProgettiJobUndertakingDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobUndertaking, ProgettiJobUndertakingDto>();
+            gaProgettiJobsUndertakingsRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaProgettiJobUndertakingAsync(long id)
+        {
+            var entity = await gaProgettiJobsUndertakingsRepo.GetByIdAsync(id);
+            gaProgettiJobsUndertakingsRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaProgettiJobUndertakingAsync(long id, string descrizione, long jobId)
+        {
+            var entity = await gaProgettiJobsUndertakingsRepo.GetWithFilterAsync(x => x.Title == descrizione && x.ProgettiJobId == jobId  && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaProgettiJobUndertakingAsync(long id)
+        {
+            var entity = await gaProgettiJobsUndertakingsRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaProgettiJobsUndertakingsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaProgettiJobsUndertakingsRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+
+        #endregion
+
+
+        #endregion
+
+        #region ProgettiJobUndertakingsAllegati
+        public async Task<ProgettiJobsUndertakingsAllegatiDto> GetGaProgettiJobsUndertakingsAllegatiByUndertakingIdAsync(long undertakingId)
+        {
+            var entities = await gaProgettiJobsUndertakingsAllegatiRepo.GetWithFilterAsync(x => x.ProgettiJobUndertakingId == undertakingId);
+            var dtos = entities.ToDto<ProgettiJobsUndertakingsAllegatiDto, PagedList<ProgettiJobUndertakingAllegato>>();
+            return dtos;
+        }
+
+        public async Task<ProgettiJobUndertakingAllegatoDto> GetGaProgettiJobUndertakingAllegatoByIdAsync(long id)
+        {
+            var entity = await gaProgettiJobsUndertakingsAllegatiRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ProgettiJobUndertakingAllegatoDto, ProgettiJobUndertakingAllegato>();
+            return dto;
+        }
+
+        public async Task<long> AddGaProgettiJobUndertakingAllegatoAsync(ProgettiJobUndertakingAllegatoDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobUndertakingAllegato, ProgettiJobUndertakingAllegatoDto>();
+            await gaProgettiJobsUndertakingsAllegatiRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaProgettiJobUndertakingAllegatoAsync(ProgettiJobUndertakingAllegatoDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobUndertakingAllegato, ProgettiJobUndertakingAllegatoDto>();
+            gaProgettiJobsUndertakingsAllegatiRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaProgettiJobUndertakingAllegatoAsync(long id)
+        {
+            var entity = await gaProgettiJobsUndertakingsAllegatiRepo.GetByIdAsync(id);
+            gaProgettiJobsUndertakingsAllegatiRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #endregion
+
+        #region ProgettiJobsUndertakingsStates
+        public async Task<ProgettiJobsUndertakingsStatesDto> GetGaProgettiJobsUndertakingsStatesAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaProgettiJobsUndertakingsStatesRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ProgettiJobsUndertakingsStatesDto, PagedList<ProgettiJobUndertakingState>>();
+            return dtos;
+        }
+
+        public async Task<ProgettiJobUndertakingStateDto> GetGaProgettiJobUndertakingStateByIdAsync(long id)
+        {
+            var entity = await gaProgettiJobsUndertakingsStatesRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ProgettiJobUndertakingStateDto, ProgettiJobUndertakingState>();
+            return dto;
+        }
+
+        public async Task<long> AddGaProgettiJobUndertakingStateAsync(ProgettiJobUndertakingStateDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobUndertakingState, ProgettiJobUndertakingStateDto>();
+            await gaProgettiJobsUndertakingsStatesRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaProgettiJobUndertakingStateAsync(ProgettiJobUndertakingStateDto dto)
+        {
+            var entity = dto.ToEntity<ProgettiJobUndertakingState, ProgettiJobUndertakingStateDto>();
+            gaProgettiJobsUndertakingsStatesRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaProgettiJobUndertakingStateAsync(long id)
+        {
+            var entity = await gaProgettiJobsUndertakingsStatesRepo.GetByIdAsync(id);
+            gaProgettiJobsUndertakingsStatesRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaProgettiJobUndertakingStateAsync(long id, string descrizione)
+        {
+            var entity = await gaProgettiJobsUndertakingsStatesRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGaProgettiJobUndertakingStateAsync(long id)
+        {
+            var entity = await gaProgettiJobsUndertakingsStatesRepo.GetByIdAsync(id);
+            if (entity.Disabled)
+            {
+                entity.Disabled = false;
+                gaProgettiJobsUndertakingsStatesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Disabled = true;
+                gaProgettiJobsUndertakingsStatesRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+        #endregion
+
         #endregion
 
         #region Common

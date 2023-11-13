@@ -431,6 +431,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ProgettiJobAllegato>, GenericRepository<TResourcesDbContext, ProgettiJobAllegato>>();
             services.AddTransient<IGenericRepository<ProgettiJobTask>, GenericRepository<TResourcesDbContext, ProgettiJobTask>>();
             services.AddTransient<IGenericRepository<ProgettiWorkSetting>, GenericRepository<TResourcesDbContext, ProgettiWorkSetting>>();
+            services.AddTransient<IGenericRepository<ProgettiJobUndertaking>, GenericRepository<TResourcesDbContext, ProgettiJobUndertaking>>();
+            services.AddTransient<IGenericRepository<ProgettiJobUndertakingState>, GenericRepository<TResourcesDbContext, ProgettiJobUndertakingState>>();
+            services.AddTransient<IGenericRepository<ProgettiJobUndertakingAllegato >, GenericRepository<TResourcesDbContext, ProgettiJobUndertakingAllegato>>();
 
             services.AddTransient<IGenericRepository<ViewGaProgettiJobs>, GenericRepository<TResourcesDbContext, ViewGaProgettiJobs>>();
 

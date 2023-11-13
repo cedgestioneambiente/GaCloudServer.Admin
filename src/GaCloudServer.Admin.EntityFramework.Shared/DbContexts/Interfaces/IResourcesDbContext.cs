@@ -415,6 +415,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ProgettiJobAllegato> GaProgettiJobAllegati { get; set; }
         DbSet<ProgettiJobTask> GaProgettiJobTask { get; set; }
         DbSet<ProgettiWorkSetting> GaProgettiWorkSettings { get; set; }
+        DbSet<ProgettiJobUndertaking> GaProgettiJobsUndertakings { get; set; }
+        DbSet<ProgettiJobUndertakingState> GaProgettiJobsUndertakingsStates { get; set; }
+        DbSet<ProgettiJobUndertakingAllegato> GaProgettiJobsUndertakingsAllegati { get; set; }
+
 
         #region Views
         DbSet<ViewGaProgettiJobs> ViewGaProgettiJobs { get; set; }

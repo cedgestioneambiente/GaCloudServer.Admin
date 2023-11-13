@@ -43,6 +43,26 @@ namespace GaCloudServer.Resources.Api.Mappers.Progetti
             CreateMap<ProgettiWorkSettingsDto, ProgettiWorkSettingsApiDto>(MemberList.Destination)
                 .ReverseMap();
 
+            //ProgettiJobsUndertakings
+            CreateMap<ProgettiJobUndertakingDto, ProgettiJobUndertakingApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ProgettiJobsUndertakingsDto, ProgettiJobsUndertakingsApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //ProgettiJobsUndertakingsStates
+            CreateMap<ProgettiJobUndertakingStateDto, ProgettiJobUndertakingStateApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ProgettiJobsUndertakingsStatesDto, ProgettiJobsUndertakingsStatesApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            //ProgettiJobsUndertakingsAllegati
+            CreateMap<ProgettiJobUndertakingAllegatoDto, ProgettiJobUndertakingAllegatoApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<ProgettiJobsUndertakingsAllegatiDto, ProgettiJobsUndertakingsAllegatiApiDto>(MemberList.Destination)
+                .ReverseMap();
 
         }
     }
