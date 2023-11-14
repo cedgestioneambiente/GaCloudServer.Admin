@@ -61,10 +61,10 @@ namespace GaCloudServer.BusinessLogic.Mappers.Progetti
                 .ReverseMap();
 
             //ProgettiJobsUndertakingsAllegati
-            CreateMap<ProgettiJobUndertaking, ProgettiJobUndertakingDto>(MemberList.Destination)
+            CreateMap<ProgettiJobUndertakingAllegato, ProgettiJobUndertakingAllegatoDto>(MemberList.Destination)
                 .ReverseMap();
 
-            CreateMap<PagedList<ProgettiJobUndertaking>, ProgettiJobsUndertakingsDto>(MemberList.Destination)
+            CreateMap<PagedList<ProgettiJobUndertakingAllegato>, ProgettiJobsUndertakingsAllegatiDto>(MemberList.Destination)
                 .ReverseMap();
 
 

@@ -878,7 +878,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpGet("GetGaProgettiJobsUndertakingsByJobIdAsync/{jobId}")]
-        public async Task<ActionResult<ApiResponse>> GetGaProgettiJobsUndertakingsByWorkIdAsync(long jobId)
+        public async Task<ActionResult<ApiResponse>> GetGaProgettiJobsUndertakingsByJobIdAsync(long jobId)
         {
             try
             {
