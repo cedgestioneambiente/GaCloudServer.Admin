@@ -8,6 +8,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<string> DownloadAsync(FtpDownloadDto fileName);
         Task<string> DownloadAndUploadAsync(FtpDownloadAndUploadDto fileName);
         Task<string> MoveAsync(FtpMoveDto dto);
+        Task<List<string>> ReadFolderAsync(FtpFolderDto dto);
 
     }
 }

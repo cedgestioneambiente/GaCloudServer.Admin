@@ -71,5 +71,24 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             return dp[str1.Length, str2.Length];
         }
+
+        public static string FTPNormalizeFileName(string input)
+        {
+            // Trova l'indice dell'ultimo spazio
+            int lastSpaceIndex = input.LastIndexOf(' ');
+
+            if (lastSpaceIndex != -1)
+            {
+                // Ottieni la parte di stringa dopo l'ultimo spazio
+                string result = input.Substring(lastSpaceIndex + 1);
+
+                return result;
+            }
+            else
+            {
+                Console.WriteLine("Nessuno spazio trovato nella stringa.");
+                return "";
+            }
+        }
     }
 }

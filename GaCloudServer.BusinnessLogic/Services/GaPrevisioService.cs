@@ -180,6 +180,12 @@ namespace GaCloudServer.BusinnessLogic.Services
             var view = await viewPrevisioOdsLettureRepo.GetAllAsync();
             return view;
         }
+
+        public async Task<ViewGaPrevisioOdsLetture> GetViewGaPrevisioOdsLettureByFileNameAsync(string fileName)
+        {
+            var entityView = await viewPrevisioOdsLettureRepo.GetWithFilterAsync(x => x.FileName == fileName);
+            return entityView.Data.FirstOrDefault();
+        }
         #endregion
 
         #endregion

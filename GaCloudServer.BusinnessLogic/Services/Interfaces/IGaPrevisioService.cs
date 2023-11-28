@@ -26,6 +26,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         Task<PagedList<ViewGaPrevisioOdsLetture>> GetViewGaPrevisioOdsLettureAsync();
+        Task<ViewGaPrevisioOdsLetture> GetViewGaPrevisioOdsLettureByFileNameAsync(string fileName);
         #endregion
 
         #endregion
