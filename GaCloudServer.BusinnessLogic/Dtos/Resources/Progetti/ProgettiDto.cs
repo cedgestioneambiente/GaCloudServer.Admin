@@ -90,6 +90,50 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti
     }
     #endregion
 
+    #region ProgettiJobsUndertakings
+
+    public class ProgettiJobUndertakingDto : GenericDto
+    {
+        public string Title { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public long ProgettiJobId { get; set; }
+        public string Resources { get; set; }
+        public string? Info { get; set; }
+        public long ProgettiJobUndertakingStateId { get; set; }
+    }
+
+    public class ProgettiJobsUndertakingsDto : GenericPagedListDto<ProgettiJobUndertakingDto>
+    {
+    }
+    #endregion
+
+    #region ProgettiJobsUndertakingsStates
+
+    public class ProgettiJobUndertakingStateDto : GenericListDto
+    {
+
+    }
+
+    public class ProgettiJobsUndertakingsStatesDto : GenericPagedListDto<ProgettiJobUndertakingStateDto>
+    {
+    }
+    #endregion
+
+    #region ProgettiJobsUndertakingsAllegati
+
+    public class ProgettiJobUndertakingAllegatoDto : GenericFileDto
+    {
+        public string Descrizione { get; set; }
+        public long ProgettiJobUndertakingId { get; set; }
+
+    }
+
+    public class ProgettiJobsUndertakingsAllegatiDto : GenericPagedListDto<ProgettiJobUndertakingAllegatoDto>
+    {
+    }
+    #endregion
+
     #region Internal
 
     #endregion

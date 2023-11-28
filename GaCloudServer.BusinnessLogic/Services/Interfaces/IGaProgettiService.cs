@@ -89,5 +89,50 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region GaProgettiJobUndertakings
+        Task<ProgettiJobsUndertakingsDto> GetGaProgettiJobsUndertakingsAsync(int page = 1, int pageSize = 0);
+        Task<ProgettiJobUndertakingDto> GetGaProgettiJobUndertakingByIdAsync(long id);
+        Task<ProgettiJobsUndertakingsDto> GetGaProgettiJobsUndertakingsByJobIdAsync(long jobId);
+
+        Task<long> AddGaProgettiJobUndertakingAsync(ProgettiJobUndertakingDto dto);
+        Task<long> UpdateGaProgettiJobUndertakingAsync(ProgettiJobUndertakingDto dto);
+
+        Task<bool> DeleteGaProgettiJobUndertakingAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaProgettiJobUndertakingAsync(long id, string descrizione, long jobId);
+        Task<bool> ChangeStatusGaProgettiJobUndertakingAsync(long id);
+        #endregion
+
+        #endregion
+
+        #region GaProgettiJobsUndertakingAllegati
+        Task<ProgettiJobsUndertakingsAllegatiDto> GetGaProgettiJobsUndertakingsAllegatiByUndertakingIdAsync(long undertakingId);
+        Task<ProgettiJobUndertakingAllegatoDto> GetGaProgettiJobUndertakingAllegatoByIdAsync(long id);
+
+        Task<long> AddGaProgettiJobUndertakingAllegatoAsync(ProgettiJobUndertakingAllegatoDto dto);
+        Task<long> UpdateGaProgettiJobUndertakingAllegatoAsync(ProgettiJobUndertakingAllegatoDto dto);
+
+        Task<bool> DeleteGaProgettiJobUndertakingAllegatoAsync(long id);
+
+
+        #endregion
+
+        #region GaProgettiJobUndertakingsStates
+        Task<ProgettiJobsUndertakingsStatesDto> GetGaProgettiJobsUndertakingsStatesAsync(int page = 1, int pageSize = 0);
+        Task<ProgettiJobUndertakingStateDto> GetGaProgettiJobUndertakingStateByIdAsync(long id);
+
+        Task<long> AddGaProgettiJobUndertakingStateAsync(ProgettiJobUndertakingStateDto dto);
+        Task<long> UpdateGaProgettiJobUndertakingStateAsync(ProgettiJobUndertakingStateDto dto);
+
+        Task<bool> DeleteGaProgettiJobUndertakingStateAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaProgettiJobUndertakingStateAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGaProgettiJobUndertakingStateAsync(long id);
+        #endregion
+
+        #endregion
+
     }
 }

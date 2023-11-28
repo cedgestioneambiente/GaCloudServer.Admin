@@ -57,7 +57,6 @@ namespace GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti
     }
     #endregion
 
-
     #region ProgettiJobTasks
     public class ProgettiJobTaskApiDto : GenericApiDto
     {
@@ -88,4 +87,49 @@ namespace GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti
     {
     }
     #endregion
+
+    #region ProgettiJobsUndertakings
+
+    public class ProgettiJobUndertakingApiDto : GenericApiDto
+    {
+        public string Title { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public long ProgettiJobId { get; set; }
+        public string Resources { get; set; }
+        public string? Info { get; set; }
+        public long ProgettiJobUndertakingStateId { get; set; }
+    }
+
+    public class ProgettiJobsUndertakingsApiDto : GenericPagedListApiDto<ProgettiJobUndertakingApiDto>
+    {
+    }
+    #endregion
+
+    #region ProgettiJobsUndertakingsStates
+
+    public class ProgettiJobUndertakingStateApiDto : GenericListApiDto
+    {
+
+    }
+
+    public class ProgettiJobsUndertakingsStatesApiDto : GenericPagedListApiDto<ProgettiJobUndertakingStateApiDto>
+    {
+    }
+    #endregion
+
+    #region ProgettiJobsUndertakingsAllegati
+
+    public class ProgettiJobUndertakingAllegatoApiDto : GenericFileApiDto
+    {
+        public string Descrizione { get; set; }
+        public long ProgettiJobUndertakingId { get; set; }
+
+    }
+
+    public class ProgettiJobsUndertakingsAllegatiApiDto : GenericPagedListApiDto<ProgettiJobUndertakingAllegatoApiDto>
+    {
+    }
+    #endregion
+
 }
