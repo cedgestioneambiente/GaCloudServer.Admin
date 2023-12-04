@@ -52,6 +52,9 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Ftp
         public string? extraPath { get; set; }
         public string fileName { get; set; }
 
+        public bool customRoot {  get; set; }
+        public string customRootPath { get; set; }
+
         public bool usePassive { get; set; }
         public bool useBinary { get; set; }
         public bool keepAlive { get; set; }

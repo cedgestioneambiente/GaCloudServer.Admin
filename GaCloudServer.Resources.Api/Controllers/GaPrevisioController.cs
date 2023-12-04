@@ -36,10 +36,15 @@ namespace GaCloudServer.Resources.Api.Controllers
         private readonly string _userId;
 
         private static readonly string fileSvuotamentiFtpRoot = "20.82.78.5/";
+        private static readonly string fileSvuotamentiFtpEmzRoot = "20.82.78.5/";
+
         private static readonly NetworkCredential fileSvuotamentiFtpCredentials = new NetworkCredential("srtgaadmin", "K8cAqARVH8*RExtL9VvD7_yU722-WQ");
 
         private static readonly string nasLettureFtpRoot = "gads-novi.myds.me/";
         private static readonly NetworkCredential nasLettureFtpCredentials = new NetworkCredential("csgroup", "QDS6bNPq*gH5^mZW");
+
+        private static readonly string emzLettureFtpRoot = "gads-novi.myds.me/";
+        private static readonly NetworkCredential emzLettureFtpCredentials = new NetworkCredential("emz", "nx*@TYHv8L6HJ9q7");
 
         public GaPrevisioController(
             IGaPrevisioService gaPrevisioService
@@ -499,6 +504,115 @@ namespace GaCloudServer.Resources.Api.Controllers
                 return new ApiResponse(true);
 
                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+
+                throw new ApiException(ex.Message);
+            }
+
+
+        }
+
+        [HttpGet("TestEmzPrevisioOdsLettureUploadAsync")]
+        public async Task<ActionResult<ApiResponse>> TestEmzPrevisioOdsLettureUploadAsync()
+        {
+            try
+            {
+
+                FtpFolderDto folderDto = new FtpFolderDto();
+                folderDto.serverUri = emzLettureFtpRoot;
+                folderDto.filePath = "emz//conferimenti";
+                folderDto.credentials = emzLettureFtpCredentials;
+                folderDto.useBinary = true;
+                folderDto.usePassive = true;
+                folderDto.keepAlive = true;
+
+                var fileList = await _ftpService.ReadFolderAsync(folderDto);
+
+                if (fileList != null)
+                {
+
+                    FtpDownloadAndUploadDto dto = new FtpDownloadAndUploadDto();
+                    dto.serverDownloadUri = emzLettureFtpRoot;
+                    dto.extraPath = "/emz/conferimenti/";
+                    dto.serverUploadUri = fileSvuotamentiFtpEmzRoot;
+                    dto.filePath = "";
+                    dto.fileName = "";
+                    dto.downloadCredentials = emzLettureFtpCredentials;
+                    dto.uploadCredentials = fileSvuotamentiFtpCredentials;
+                    dto.useBinary = true;
+                    dto.usePassive = true;
+                    dto.keepAlive = true;
+                    dto.customRoot = true;
+                    dto.customRootPath = "emz";
+
+                    foreach (string file in fileList)
+                    {
+                        dto.fileName = file;
+                        PrevisioOdsLetturaDto apiDto = new PrevisioOdsLetturaDto();
+                        apiDto.IdServizio = "EMZ";
+                        apiDto.Descrizione = "EMZ";
+                        apiDto.Elaborato = true;
+                        apiDto.FileName = dto.fileName;
+                        apiDto.Id = 0;
+                        apiDto.Retry = 0;
+                        apiDto.Disabled = false;
+
+                        try
+                        {
+                            dto.filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "LocalLibrary", "Download");
+
+                            var response = await _ftpService.DownloadAndUploadAsync(dto);
+
+                            if (response.Split("/")[0] != null && response.Split("/")[0] == "550 ")
+                            {
+                                apiDto.Elaborato = false;
+                                apiDto.ErrDescription = response;
+                                await _gaPrevisioService.AddOrUpdateGaPrevisioOdsLetturaAsync(apiDto);
+                            }
+                            else
+                            {
+                                apiDto.ProcDescription = response;
+                                await _gaPrevisioService.AddOrUpdateGaPrevisioOdsLetturaAsync(apiDto);
+
+                                var ftpMove = new FtpMoveDto();
+                                ftpMove.serverUri = emzLettureFtpRoot;
+                                ftpMove.fileName = dto.fileName;
+                                ftpMove.sourcefilePath = "/emz/conferimenti";
+                                ftpMove.destinationfilePath = "/emz/archivio_conferimenti/";
+                                ftpMove.credentials = emzLettureFtpCredentials;
+                                ftpMove.useBinary = true;
+                                ftpMove.usePassive = true;
+                                ftpMove.keepAlive = true;
+
+                                await _ftpService.MoveAsync(ftpMove);
+
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            apiDto.ErrDescription = ex.Message;
+                            await _gaPrevisioService.AddOrUpdateGaPrevisioOdsLetturaAsync(apiDto);
+
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    return new ApiResponse("Nessun file da elaborare.");
+                }
+
+
+
+                return new ApiResponse(true);
+
+
             }
             catch (Exception ex)
             {

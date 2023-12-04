@@ -114,7 +114,17 @@ namespace GaCloudServer.BusinnessLogic.Services
                     Directory.CreateDirectory(dto.filePath);
                 }
 
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://" + dto.serverUploadUri + dto.fileName);
+                FtpWebRequest request = null;
+
+                if (dto.customRoot && dto.customRootPath.Length > 0)
+                {
+                    request = (FtpWebRequest)WebRequest.Create(@"ftp://" + dto.serverUploadUri +"//"+ dto.customRootPath + "//" + dto.fileName);
+                }
+                else
+                {
+                    request = (FtpWebRequest)WebRequest.Create(@"ftp://" + dto.serverUploadUri + dto.fileName);
+                }
+                    
 
 
                 request.Credentials = dto.uploadCredentials;
@@ -127,9 +137,13 @@ namespace GaCloudServer.BusinnessLogic.Services
 
                 Uri uri;
 
-                if (dto.extraPath != null && dto.extraPath.Length > 0)
+                if (dto.extraPath != null && !dto.customRoot && dto.extraPath.Length > 0)
                 {
-                    uri = new Uri(@"ftp://" + dto.serverDownloadUri + "/Letture/"+dto.extraPath + dto.fileName);
+                    uri = new Uri(@"ftp://" + dto.serverDownloadUri + "/Letture/" + dto.extraPath + dto.fileName);
+                }
+                else if (dto.extraPath != null && dto.customRoot && dto.extraPath.Length > 0)
+                {
+                    uri = new Uri(@"ftp://" + dto.serverDownloadUri+dto.extraPath+dto.fileName);
                 }
                 else
                 {
