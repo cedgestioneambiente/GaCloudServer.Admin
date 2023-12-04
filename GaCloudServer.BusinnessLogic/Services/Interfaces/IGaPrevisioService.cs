@@ -39,9 +39,24 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaPrevisioOdsServiziReport>> GetViewGaPrevisioOdsServiziReportByDateAsync(DateTime dateStart, DateTime dateEnd);
         #endregion
 
-
         #region DetailedEventReport
         Task<PagedList<DetailedEventsType>> GetDetailedEventsTypeAsync(string userId,List<EventsType> events);
+        #endregion
+
+        #region PrevisioAnomalieLetture
+        Task<PrevisioAnomalieLettureDto> GetGaPrevisioAnomalieLettureAsync(int page = 1, int pageSize = 0);
+        Task<PrevisioAnomaliaLetturaDto> GetGaPrevisioAnomaliaLetturaByIdAsync(long id);
+
+        Task<long> AddGaPrevisioAnomaliaLetturaAsync(PrevisioAnomaliaLetturaDto dto);
+        Task<long> UpdateGaPrevisioAnomaliaLetturaAsync(PrevisioAnomaliaLetturaDto dto);
+
+        Task<bool> DeleteGaPrevisioAnomaliaLetturaAsync(long id);
+
+        #region Functions
+        Task<bool> ValidateGaPrevisioAnomaliaLetturaAsync(long id, string descrizione);
+        Task<bool> ChangeStatusGestitoGaPrevisioAnomaliaLetturaAsync(long id);
+        #endregion
+
         #endregion
 
 

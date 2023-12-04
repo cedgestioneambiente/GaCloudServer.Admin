@@ -396,6 +396,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region GaPrevisio
         public DbSet<PrevisioOdsLettura> GaPrevisioOdsLetture { get; set; }
+        public DbSet<PrevisioAnomaliaLettura> GaPrevisioAnomalieLetture { get; set; }
         public DbSet<ViewGaPrevisioOdsReport> ViewGaPrevisioOdsReport { get; set; }
         public DbSet<ViewGaPrevisioOdsServiziReport> ViewGaPrevisioOdsServiziReport { get; set; }
         public DbSet<ViewGaPrevisioOdsLetture> ViewGaPrevisioOdsLetture { get; set; }

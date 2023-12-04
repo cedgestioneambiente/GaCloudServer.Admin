@@ -386,6 +386,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Previsio
             #region Previsio
             services.AddTransient<IGenericRepository<PrevisioOdsLettura>, GenericRepository<TResourcesDbContext, PrevisioOdsLettura>>();
+            services.AddTransient<IGenericRepository<PrevisioAnomaliaLettura>, GenericRepository<TResourcesDbContext, PrevisioAnomaliaLettura>>();
 
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsReport>>();
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsServiziReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsServiziReport>>();
@@ -765,6 +766,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             //Previsio
             #region Previsio
             services.AddTransient<IGenericRepository<PrevisioOdsLettura>, GenericRepository<TResourcesDbContext, PrevisioOdsLettura>>();
+            services.AddTransient<IGenericRepository<PrevisioAnomaliaLettura>, GenericRepository<TResourcesDbContext, PrevisioAnomaliaLettura>>();
 
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsReport>>();
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsServiziReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsServiziReport>>();

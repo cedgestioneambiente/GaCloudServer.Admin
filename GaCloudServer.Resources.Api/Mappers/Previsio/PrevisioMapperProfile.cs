@@ -15,6 +15,13 @@ namespace GaCloudServer.Resources.Api.Mappers.Previsio
             CreateMap<PrevisioOdsLettureDto, PrevisioOdsLettureApiDto>(MemberList.Destination)
                 .ReverseMap();
 
+            //PrevisioAnomalieLetture
+            CreateMap<PrevisioAnomaliaLetturaDto, PrevisioAnomaliaLetturaApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PrevisioAnomalieLettureDto, PrevisioAnomalieLettureApiDto>(MemberList.Destination)
+                .ReverseMap();
+
         }
     }
 }

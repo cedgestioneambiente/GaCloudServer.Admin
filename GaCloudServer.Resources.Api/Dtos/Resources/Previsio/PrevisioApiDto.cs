@@ -20,4 +20,30 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.Previsio
     }
 
     #endregion
+
+    # region PrevisioAnomalieLetture
+    public class PrevisioAnomaliaLetturaApiDto : GenericApiDto
+    {
+        public string? NoteSegnalazione { get; set; }
+        public string? NoteGestione { get; set; }
+        public bool Gestito { get; set; }
+        public string? Evento { get; set; }
+        public string? Matricola { get; set; }
+        public string? Tag { get; set; }
+        public string? TipoCont { get; set; }
+        public string? Contratto { get; set; }
+        public string? Partita { get; set; }
+        public string? Utenza { get; set; }
+        public string? Comune { get; set; }
+        public string? Indirizzo { get; set; }
+        public DateTime DataEvento { get; set; }
+        public double? Longitudine { get; set; }
+        public double? Latitudine { get; set; }
+    }
+
+    public class PrevisioAnomalieLettureApiDto : GenericPagedListApiDto<PrevisioAnomaliaLetturaApiDto>
+    {
+    }
+
+    #endregion
 }

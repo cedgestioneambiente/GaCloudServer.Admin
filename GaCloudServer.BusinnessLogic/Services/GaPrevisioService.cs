@@ -24,6 +24,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IQueryManager _queryManager;
 
         protected readonly IGenericRepository<PrevisioOdsLettura> gaPrevisioOdsLettureRepo;
+        protected readonly IGenericRepository<PrevisioAnomaliaLettura> gaPrevisioAnomalieLettureRepo;
 
         protected readonly IGenericRepository<ViewGaPrevisioOdsReport> viewPrevisioOdsReportRepo;
         protected readonly IGenericRepository<ViewGaPrevisioOdsServiziReport> viewPrevisioOdsServiziReportRepo;
@@ -42,6 +43,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IQueryManager queryManager,
 
             IGenericRepository<PrevisioOdsLettura> gaPrevisioOdsLettureRepo,
+            IGenericRepository<PrevisioAnomaliaLettura> gaPrevisioAnomalieLettureRepo,
 
             IGenericRepository<ViewGaPrevisioOdsReport> viewPrevisioOdsReportRepo,
             IGenericRepository<ViewGaPrevisioOdsServiziReport> viewPrevisioOdsServiziReportRepo,
@@ -57,6 +59,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this._queryManager = queryManager;
 
             this.gaPrevisioOdsLettureRepo = gaPrevisioOdsLettureRepo;
+            this.gaPrevisioAnomalieLettureRepo = gaPrevisioAnomalieLettureRepo;
 
             this.viewPrevisioOdsReportRepo = viewPrevisioOdsReportRepo;
             this.viewPrevisioOdsServiziReportRepo = viewPrevisioOdsServiziReportRepo;
@@ -406,6 +409,109 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
+        #region PrevisioAnomalieLetture
+        public async Task<PrevisioAnomalieLettureDto> GetGaPrevisioAnomalieLettureAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaPrevisioAnomalieLettureRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<PrevisioAnomalieLettureDto, PagedList<PrevisioAnomaliaLettura>>();
+            return dtos;
+        }
+
+        public async Task<PrevisioAnomaliaLetturaDto> GetGaPrevisioAnomaliaLetturaByIdAsync(long id)
+        {
+            var entity = await gaPrevisioAnomalieLettureRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<PrevisioAnomaliaLetturaDto, PrevisioAnomaliaLettura>();
+            return dto;
+        }
+
+        public async Task<long> AddGaPrevisioAnomaliaLetturaAsync(PrevisioAnomaliaLetturaDto dto)
+        {
+            var entity = dto.ToEntity<PrevisioAnomaliaLettura, PrevisioAnomaliaLetturaDto>();
+            await gaPrevisioAnomalieLettureRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        //public async Task<long> AddOrUpdateGaPrevisioAnomaliaLetturaAsync(PrevisioAnomaliaLetturaDto dto)
+        //{
+        //    var entity = await gaPrevisioAnomalieLettureRepo.GetSingleWithFilter(x => x.FileName == dto.FileName);
+        //    if (entity != null)
+        //    {
+        //        entity.ProcDescription = string.Concat(entity.ProcDescription, " | ", dto.ProcDescription);
+        //        entity.ErrDescription = string.Concat(entity.ErrDescription, " | ", dto.ErrDescription);
+        //        entity.DateUpdated = DateTime.Now;
+        //        entity.Retry += 1;
+        //        gaPrevisioAnomalieLettureRepo.Update(entity);
+        //        await SaveChanges();
+        //        return entity.Id;
+        //    }
+        //    else
+        //    {
+        //        entity = dto.ToEntity<PrevisioAnomaliaLettura, PrevisioAnomaliaLetturaDto>();
+        //        entity.DateCreated = DateTime.Now;
+        //        await gaPrevisioAnomalieLettureRepo.AddAsync(entity);
+        //        await SaveChanges();
+        //        return entity.Id;
+        //    }
+        //}
+
+        public async Task<long> UpdateGaPrevisioAnomaliaLetturaAsync(PrevisioAnomaliaLetturaDto dto)
+        {
+            var entity = dto.ToEntity<PrevisioAnomaliaLettura, PrevisioAnomaliaLetturaDto>();
+            gaPrevisioAnomalieLettureRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaPrevisioAnomaliaLetturaAsync(long id)
+        {
+            var entity = await gaPrevisioAnomalieLettureRepo.GetByIdAsync(id);
+            gaPrevisioAnomalieLettureRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ValidateGaPrevisioAnomaliaLetturaAsync(long id, string descrizione)
+        {
+            var entity = await gaPrevisioAnomalieLettureRepo.GetWithFilterAsync(x => x.Evento == descrizione && x.Id != id);
+
+            if (entity.Data.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public async Task<bool> ChangeStatusGestitoGaPrevisioAnomaliaLetturaAsync(long id)
+        {
+            var entity = await gaPrevisioAnomalieLettureRepo.GetByIdAsync(id);
+            if (entity.Gestito)
+            {
+                entity.Gestito = false;
+                gaPrevisioAnomalieLettureRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+            else
+            {
+                entity.Gestito = true;
+                gaPrevisioAnomalieLettureRepo.Update(entity);
+                await SaveChanges();
+                return true;
+            }
+
+        }
+
+        #endregion
+
+        #endregion
 
         #region Common
         private async Task<long> SaveChanges()

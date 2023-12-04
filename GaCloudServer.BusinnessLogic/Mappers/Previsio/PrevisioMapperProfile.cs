@@ -16,6 +16,13 @@ namespace GaCloudServer.BusinessLogic.Mappers.Previsio
             CreateMap<PagedList<PrevisioOdsLettura>, PrevisioOdsLettureDto>(MemberList.Destination)
                 .ReverseMap();
 
+            //PrevisioAnomalieLetture
+            CreateMap<PrevisioAnomaliaLettura, PrevisioAnomaliaLetturaDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<PrevisioAnomaliaLettura>, PrevisioAnomalieLettureDto>(MemberList.Destination)
+                .ReverseMap();
+
         }
     }
 }

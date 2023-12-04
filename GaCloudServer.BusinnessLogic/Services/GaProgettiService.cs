@@ -617,7 +617,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
-        #region ProgettiJobUndertakingsAllegati
+        #region ProgettiJobsUndertakingsAllegati
         public async Task<ProgettiJobsUndertakingsAllegatiDto> GetGaProgettiJobsUndertakingsAllegatiByUndertakingIdAsync(long undertakingId)
         {
             var entities = await gaProgettiJobsUndertakingsAllegatiRepo.GetWithFilterAsync(x => x.ProgettiJobUndertakingId == undertakingId);
