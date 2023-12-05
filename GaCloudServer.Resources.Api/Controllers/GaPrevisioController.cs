@@ -931,6 +931,33 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        //[HttpPost("AddGaPrevisioAnomaliaLetturaAsync")]
+        //public async Task<ActionResult<ApiResponse>> AddOrUpdateGaPrevisioAnomaliaLetturaAsync([FromBody] PrevisioAnomaliaLetturaApiDto apiDto)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new ApiProblemDetailsException(ModelState);
+        //        }
+        //        var dto = apiDto.ToDto<DetailedEventsType, PrevisioAnomaliaLetturaApiDto>();
+        //        var response = await _gaPrevisioService.AddOrUpdateGaPrevisioAnomaliaLetturaAsync(dto);
+
+        //        return new ApiResponse(response);
+        //    }
+        //    catch (ApiProblemDetailsException ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw ex;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        throw new ApiException(ex);
+        //    }
+
+        //}
+
         //[HttpGet("TestGaPrevisioAnomalieLettureUploadAsync")]
         //public async Task<ActionResult<ApiResponse>> TestGaPrevisioAnomalieLettureUploadAsync()
         //{

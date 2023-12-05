@@ -410,18 +410,10 @@ namespace GaCloudServer.Jobs.Jobs
                             {
                                 return Task.CompletedTask;
                             }
-
-
-
-                            return Task.CompletedTask;
-
-
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogError(ex.Message, ex);
-
-                            throw new ApiException(ex.Message);
+                            return Task.CompletedTask;
                         }
 
                     }

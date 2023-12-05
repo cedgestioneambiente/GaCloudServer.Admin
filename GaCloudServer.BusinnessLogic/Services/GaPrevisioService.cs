@@ -432,28 +432,34 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entity.Id;
         }
 
-        //public async Task<long> AddOrUpdateGaPrevisioAnomaliaLetturaAsync(PrevisioAnomaliaLetturaDto dto)
-        //{
-        //    var entity = await gaPrevisioAnomalieLettureRepo.GetSingleWithFilter(x => x.FileName == dto.FileName);
-        //    if (entity != null)
-        //    {
-        //        entity.ProcDescription = string.Concat(entity.ProcDescription, " | ", dto.ProcDescription);
-        //        entity.ErrDescription = string.Concat(entity.ErrDescription, " | ", dto.ErrDescription);
-        //        entity.DateUpdated = DateTime.Now;
-        //        entity.Retry += 1;
-        //        gaPrevisioAnomalieLettureRepo.Update(entity);
-        //        await SaveChanges();
-        //        return entity.Id;
-        //    }
-        //    else
-        //    {
-        //        entity = dto.ToEntity<PrevisioAnomaliaLettura, PrevisioAnomaliaLetturaDto>();
-        //        entity.DateCreated = DateTime.Now;
-        //        await gaPrevisioAnomalieLettureRepo.AddAsync(entity);
-        //        await SaveChanges();
-        //        return entity.Id;
-        //    }
-        //}
+        public async Task<long> AddOrUpdateGaPrevisioAnomaliaLetturaAsync(DetailedEventsType dto)
+        {
+            var entity = await gaPrevisioAnomalieLettureRepo.GetSingleWithFilter(x => x.Id == dto.id);
+            if (entity != null)
+            {
+                entity.Tag = dto.tag;
+                entity.Matricola = dto.matricola;
+                entity.DataEvento = dto.dateTime;
+                entity.TipoCont = dto.tipoContenitore;
+                entity.Partita = dto.partita;
+                entity.Contratto = dto.numCon;
+                entity.Comune = dto.comune;
+                entity.Latitudine = dto.xcoord;
+                entity.Longitudine = dto.ycoord;
+                entity.Indirizzo = dto.indirizzo;
+                entity.Utenza = dto.utenza;
+                gaPrevisioAnomalieLettureRepo.Update(entity);
+                await SaveChanges();
+                return entity.Id;
+            }
+            else
+            {
+                entity = dto.ToEntity<PrevisioAnomaliaLettura, DetailedEventsType>();
+                await gaPrevisioAnomalieLettureRepo.AddAsync(entity);
+                await SaveChanges();
+                return entity.Id;
+            }
+        }
 
         public async Task<long> UpdateGaPrevisioAnomaliaLetturaAsync(PrevisioAnomaliaLetturaDto dto)
         {
@@ -508,6 +514,51 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        //public async Task<bool> AddOrUpdateGaPrevisioAnomaliaLetturaAsync(DetailedEventsType model)
+        //{
+
+        //    try
+        //    {
+        //        var entities = await gaPrevisioAnomalieLettureRepo.GetWithFilterAsync(x => x.Id == model.id);
+        //        if (entities.Data.Count > 0)
+        //        {
+        //            foreach (var itm in entities.Data)
+        //            {
+        //                gaPrevisioAnomalieLettureRepo.Remove(itm);
+        //            }
+        //            await SaveChanges();
+        //        }
+
+        //        var ripartizioni = await gaPrevisioAnomalieLettureRepo.GetWithFilterAsync(x => x.Id == model.id);
+
+        //        foreach (var itm in ripartizioni.Data)
+        //        {
+        //            PrevisioAnomaliaLettura entity = new PrevisioAnomaliaLettura();
+        //            entity.Id = 0;
+        //            entity.Tag = model.tag;
+        //            entity.DataEvento = model.dateTime;
+        //            entity.Matricola = model.matricola;
+        //            //entity.Percentuale = itm.Percentuale;
+        //            //entity.Peso = (Convert.ToDouble(model.PesoTotale) / 100.00) * Convert.ToDouble(itm.Percentuale);
+        //            //entity.CsrProduttoreId = itm.CsrProduttoreId;
+        //            //entity.CsrRegistrazioneId = model.Id;
+        //            //entity.CsrTrasportatoreId = model.CsrTrasportatoreId;
+
+        //            await gaPrevisioAnomalieLettureRepo.AddAsync(entity);
+        //        }
+
+        //        await SaveChanges();
+
+
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await SaveChanges();
+        //        throw;
+        //    }
+        //}
 
         #endregion
 
