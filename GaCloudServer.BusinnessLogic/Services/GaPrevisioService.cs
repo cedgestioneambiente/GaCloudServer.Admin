@@ -224,11 +224,11 @@ namespace GaCloudServer.BusinnessLogic.Services
             DownloadProgressDto progress = new DownloadProgressDto();
 
 
-            foreach (var item in events)
+            foreach (var item in events.Where(x=>x.description== "Lettura UHF EPC" && x.info.Contains("Code:3")))
             {
                 index++;
-                progress.message = string.Format("Elaborazione Eventi {0}/{1}", index, events.Count());
-                progress.progress = (Int32)(((Double)index / (Double)events.Count()) * 100);
+                progress.message = string.Format("Elaborazione Eventi {0}/{1}", index, events.Where(x=>x.description== "Lettura UHF EPC" && x.info.Contains("Code:3")).Count());
+                progress.progress = (Int32)(((Double)index / (Double)events.Where(x => x.description == "Lettura UHF EPC" && x.info.Contains("Code:3")).Count()) * 100);
 
                 await hub.Clients.Groups(userId).DownloadProgress(progress);
                 if (item.description == "Lettura UHF EPC" && item.info.Contains("Code:3"))
@@ -483,7 +483,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #region Functions
         public async Task<bool> ValidateGaPrevisioAnomaliaLetturaAsync(long id, string tag)
         {
-            var entity = await gaPrevisioAnomalieLettureRepo.GetWithFilterAsync(x => x.Tag == tag && x.Id != id);
+            var entity = await gaPrevisioAnomalieLettureRepo.GetWithFilterAsync(x => x.Tag == tag && x.Gestito==false);
 
             if (entity.Data.Count > 0)
             {
