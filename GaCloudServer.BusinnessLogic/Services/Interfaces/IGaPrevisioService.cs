@@ -53,7 +53,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteGaPrevisioAnomaliaLetturaAsync(long id);
 
         #region Functions
-        Task<bool> ValidateGaPrevisioAnomaliaLetturaAsync(long id, string tag);
+        Task<bool> ValidateGaPrevisioAnomaliaLetturaAsync(string tag);
         Task<bool> ChangeStatusGestitoGaPrevisioAnomaliaLetturaAsync(long id);
         Task<long> AddOrUpdateGaPrevisioAnomaliaLetturaAsync(DetailedEventsType dto);
         #endregion

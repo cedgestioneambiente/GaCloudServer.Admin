@@ -1,0 +1,12 @@
+﻿SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[ViewGaBackOfficeUtenzeZone]
+AS
+SELECT CAST(0 AS BIGINT) AS Id,CAST('false' AS bit) AS Disabled,COMUNE,INDIRIZZO,DESCRI
+FROM [20.82.75.6].[SUPPORT].[dbo].[ViewGaBackOfficeUtenzeZone]
+
+GO

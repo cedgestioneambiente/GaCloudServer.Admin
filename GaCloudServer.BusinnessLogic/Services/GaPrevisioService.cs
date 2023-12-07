@@ -481,7 +481,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateGaPrevisioAnomaliaLetturaAsync(long id, string tag)
+        public async Task<bool> ValidateGaPrevisioAnomaliaLetturaAsync(string tag)
         {
             var entity = await gaPrevisioAnomalieLettureRepo.GetWithFilterAsync(x => x.Tag == tag && x.Gestito==false);
 

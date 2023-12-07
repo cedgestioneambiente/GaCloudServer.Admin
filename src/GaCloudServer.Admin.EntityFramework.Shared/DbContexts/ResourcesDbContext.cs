@@ -186,6 +186,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaBackOfficeUtenzePartiteDetail> ViewGaBackOfficeUtenzePartiteDetail { get; set; }
         public DbSet<ViewGaBackOfficeUtenzePartiteGrp> ViewGaBackOfficeUtenzePartiteGrp { get; set; }
         public DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzeZone> ViewGaBackOfficeUtenzeZone { get; set; }
         #endregion
 
         #region Sp
@@ -803,6 +804,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewGaBackOfficeUtenze))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzeZone>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzeZone))
                 .HasNoKey();
             });
 

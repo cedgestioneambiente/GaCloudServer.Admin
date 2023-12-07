@@ -182,6 +182,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteGrp>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeDispositivi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeDispositivi>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeTipCon>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeTipCon>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeZone>>();
 
             //Sp
             services.AddTransient<IProcedureManager<SpGaBackOfficeUtenze>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenze>>();
@@ -751,6 +752,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeContenitoriLetture>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeContenitoriLetture>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeZone>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenze>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenze>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeZone>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartite>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartite>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteDetail>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteGrp>>();

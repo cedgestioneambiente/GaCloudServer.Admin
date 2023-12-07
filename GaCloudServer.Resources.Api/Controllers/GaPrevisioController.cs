@@ -899,12 +899,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateGaPrevisioAnomaliaLetturaAsync/{id}/{tag}")]
-        public async Task<ActionResult<ApiResponse>> ValidateGaPrevisioAnomaliaLetturaAsync(long id, string tag)
+        [HttpGet("ValidateGaPrevisioAnomaliaLetturaAsync/{tag}")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaPrevisioAnomaliaLetturaAsync(string tag)
         {
             try
             {
-                var response = await _gaPrevisioService.ValidateGaPrevisioAnomaliaLetturaAsync(id, tag);
+                var response = await _gaPrevisioService.ValidateGaPrevisioAnomaliaLetturaAsync(tag);
                 return new ApiResponse(response);
             }
             catch (Exception ex)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio
 {
-    public class PrevisioAnomaliaLettura : GenericEntity
+    public class PrevisioAnomaliaLettura : GenericAuditableEntity
     {
         public string NoteSegnalazione { get; set; }
         public string NoteGestione { get; set; }

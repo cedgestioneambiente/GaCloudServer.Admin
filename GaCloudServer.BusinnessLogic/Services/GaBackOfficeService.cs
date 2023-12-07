@@ -34,6 +34,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail> viewGaBackOfficeUtenzePartiteDetailRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeUtenzeZone> viewGaBackOfficeUtenzeZoneRepo;
 
         protected readonly IGenericRepository<ViewGaBackOfficeZone> viewGaBackOfficeZoneRepo;
 
@@ -59,6 +60,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail> viewGaBackOfficeUtenzePartiteDetailRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
+            IGenericRepository<ViewGaBackOfficeUtenzeZone> viewGaBackOfficeUtenzeZoneRepo,
 
             IGenericRepository<ViewGaBackOfficeZone> viewGaBackOfficeZoneRepo,
 
@@ -86,6 +88,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaBackOfficeUtenzePartiteDetailRepo = viewGaBackOfficeUtenzePartiteDetailRepo;
             this.viewGaBackOfficeUtenzePartiteGrpRepo = viewGaBackOfficeUtenzePartiteGrpRepo;
             this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
+            this.viewGaBackOfficeUtenzeZoneRepo = viewGaBackOfficeUtenzeZoneRepo;
 
             this.viewGaBackOfficeZoneRepo = viewGaBackOfficeZoneRepo;
 
@@ -250,6 +253,19 @@ namespace GaCloudServer.BusinnessLogic.Services
             && x.NumCon == numCon && x.Partita==partita
             , 1, 0, "Partita");
             return view;
+        }
+
+        public async Task<PagedList<ViewGaBackOfficeUtenzeZone>> GetViewGaBackOfficeUtenzeZoneAsync()
+        {
+            try
+            {
+                return await viewGaBackOfficeUtenzeZoneRepo.GetAllAsync(1, 0);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
         }
         #endregion
 

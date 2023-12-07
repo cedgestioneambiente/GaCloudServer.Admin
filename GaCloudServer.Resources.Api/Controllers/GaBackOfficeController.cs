@@ -172,6 +172,21 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("GetViewGaBackOfficeUtenzeZoneAsync")]
+        public async Task<ApiResponse> GetViewGaBackOfficeUtenzeZoneAsync()
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeUtenzeZoneAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
         #endregion
 
         #region Sp
