@@ -27,6 +27,7 @@ using GaCloudServer.BusinnessLogic.Mappers.PrenotazioneLocali;
 using GaCloudServer.BusinessLogic.Mappers.Dispositivi;
 using GaCloudServer.BusinessLogic.Mappers.SmartCity;
 using GaCloudServer.BusinessLogic.Mappers.Previsio;
+using GaCloudServer.BusinessLogic.Mappers.Preventivi;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -64,6 +65,7 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new DispositiviMapperProfile(),
             new SmartCityMapperProfile(),
             new PrevisioMapperProfile(),
+            new PreventiviMapperProfile(),
         };
 
         static GenericMapper() {

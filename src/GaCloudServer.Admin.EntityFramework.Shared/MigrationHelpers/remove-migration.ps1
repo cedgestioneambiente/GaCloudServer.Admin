@@ -47,7 +47,7 @@ foreach ($provider in $dpProviders.Keys) {
                     $migrationPath = $targetContexts[$context];
 
                     Write-Host "Migrating context " $context
-                    dotnet ef migrations remove -c $context -p $projectPath
+                    dotnet-ef migrations remove -c $context -p $projectPath
                     }
 
 

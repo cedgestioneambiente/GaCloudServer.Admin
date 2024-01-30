@@ -38,6 +38,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Prenotazione
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
@@ -549,6 +551,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<SmartCityPermission>, GenericRepository<TResourcesDbContext, SmartCityPermission>>();
 
             services.AddTransient<IGenericRepository<ViewGaSmartCityPermissions>, GenericRepository<TResourcesDbContext, ViewGaSmartCityPermissions>>();
+
+            #endregion
+
+            //Preventivi
+            #region Preventivi
+
+            services.AddTransient<IGenericRepository<PreventiviAnticipoTipologia>, GenericRepository<TResourcesDbContext, PreventiviAnticipoTipologia>>();
+            services.AddTransient<IGenericRepository<PreventiviAnticipoPagamento>, GenericRepository<TResourcesDbContext, PreventiviAnticipoPagamento>>();
+            services.AddTransient<IGenericRepository<PreventiviAnticipo>, GenericRepository<TResourcesDbContext, PreventiviAnticipo>>();
+            services.AddTransient<IGenericRepository<PreventiviAnticipoAllegato>, GenericRepository<TResourcesDbContext, PreventiviAnticipoAllegato>>();
+
+            services.AddTransient<IGenericRepository<ViewGaPreventiviAnticipi>, GenericRepository<TResourcesDbContext, ViewGaPreventiviAnticipi>>();
+
 
             #endregion
 

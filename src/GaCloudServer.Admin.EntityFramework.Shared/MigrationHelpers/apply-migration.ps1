@@ -45,12 +45,12 @@ foreach ($provider in $dpProviders.Keys) {
                     if($migration -eq 'Default')
                     {
                         Write-Host "Applying last migration " $context
-                        dotnet ef database update -c $context  -p $projectPath
+                        dotnet-ef database update -c $context  -p $projectPath
                     }
                     else
                     {
                         Write-Host "Applying migration: " $migration " - " $context
-                        dotnet ef database update $migration -c $context  -p $projectPath
+                        dotnet-ef database update $migration -c $context  -p $projectPath
                     }
 
                 }

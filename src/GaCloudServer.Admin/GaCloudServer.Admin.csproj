@@ -89,13 +89,10 @@
 	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Scripts\Previsio\CREATE_ViewGaPrevisio_V4.sql">
+	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="Scripts\Previsio\CREATE_ViewGaPrevisio_V3.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Previsio\DROP_ViewGaPrevisio_V3.sql">
+	  <None Update="Scripts\Preventivi\DROP_ViewGaPreventivi.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\SmartCity\CREATE_ViewGaSmartCity.sql">
@@ -372,12 +369,6 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Presenze\DROP_ViewGaPresenze_V4.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Previsio\CREATE_ViewGaPrevisio_V2.sql">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Scripts\Previsio\DROP_ViewGaPrevisio_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Progetti\CREATE_ViewGaProgetti.sql">

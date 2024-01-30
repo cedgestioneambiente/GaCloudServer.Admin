@@ -17,6 +17,7 @@ using GaCloudServer.Resources.Api.Mappers.Personale;
 using GaCloudServer.Resources.Api.Mappers.PrenotazioneAuto;
 using GaCloudServer.Resources.Api.Mappers.PrenotazioneLocali;
 using GaCloudServer.Resources.Api.Mappers.Presenze;
+using GaCloudServer.Resources.Api.Mappers.Preventivi;
 using GaCloudServer.Resources.Api.Mappers.Previsio;
 using GaCloudServer.Resources.Api.Mappers.Progetti;
 using GaCloudServer.Resources.Api.Mappers.QueryBuilder;
@@ -63,6 +64,7 @@ namespace GaCloudServer.Resources.Api.Mappers
             new DispositiviMapperProfile(),
             new SmartCityMapperProfile(),
             new PrevisioMapperProfile(),
+            new PreventiviMapperProfile(),
         };
 
         static GenericMapper() {
