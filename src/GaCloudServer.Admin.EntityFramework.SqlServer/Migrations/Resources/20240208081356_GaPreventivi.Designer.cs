@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20240129151904_GaPreventiviAnticipi")]
-    partial class GaPreventiviAnticipi
+    [Migration("20240208081356_GaPreventivi")]
+    partial class GaPreventivi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -10172,6 +10172,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<double?>("Anticipo")
+                        .HasColumnType("float");
+
                     b.Property<string>("Causale")
                         .HasColumnType("nvarchar(max)");
 
@@ -10187,7 +10190,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<DateTime?>("DataPagamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataPreventivo")
+                    b.Property<DateTime?>("DataPreventivo")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Disabled")
@@ -10195,6 +10198,12 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.Property<bool>("Fatturato")
                         .HasColumnType("bit");
+
+                    b.Property<double?>("ImportoTotale")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Incasato")
+                        .HasColumnType("float");
 
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -10223,11 +10232,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("RagioneSociale")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("ValoreIncassato")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ValorePrevisto")
-                        .HasColumnType("float");
+                    b.Property<bool>("RegistratoContabilita")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -10407,7 +10413,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<double?>("ValoreIncassato")
                         .HasColumnType("float");
 
-                    b.Property<double>("ValorePrevisto")
+                    b.Property<double?>("ValorePrevisto")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
