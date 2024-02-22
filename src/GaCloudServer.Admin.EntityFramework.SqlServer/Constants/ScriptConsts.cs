@@ -224,5 +224,10 @@
         public const string CREATE_ViewGaSmartCity = "CREATE_ViewGaSmartCity.sql";
         public const string DROP_ViewGaSmartCity = "DROP_ViewGaSmartCity.sql";
 
+        //Preventivi
+        public const string GaPreventivi = @".\Scripts\Preventivi\";
+        public const string CREATE_ViewGaPreventivi = "CREATE_ViewGaPreventivi.sql";
+        public const string DROP_ViewGaPreventivi = "DROP_ViewGaPreventivi.sql";
+
     }
 }

@@ -58,6 +58,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
 using Microsoft.AspNetCore.Http;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -567,6 +569,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 
         #region Views
         DbSet<ViewGaSmartCityPermissions> ViewGaSmartCityPermissions { get; set; }
+        #endregion
+        #endregion
+
+        #region Preventivi
+        DbSet<PreventiviAnticipoTipologia> GaPreventiviAnticipiTipologie { get; set; }
+        DbSet<PreventiviAnticipoPagamento> GaPreventiviAnticipiPagamenti { get; set; }
+        DbSet<PreventiviAnticipo> GaPreventiviAnticipi { get; set; }
+        DbSet<PreventiviAnticipoAllegato> GaPreventiviAnticipiAllegati { get; set; }
+        #region Views
+        DbSet<ViewGaPreventiviAnticipi> ViewGaPreventiviAnticipi { get; set; }
         #endregion
         #endregion
 

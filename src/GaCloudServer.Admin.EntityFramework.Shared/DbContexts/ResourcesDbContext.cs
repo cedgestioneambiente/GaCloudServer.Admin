@@ -60,6 +60,8 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Vi
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
 using Microsoft.AspNetCore.Http;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
@@ -570,6 +572,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         #region Views
         public DbSet<ViewGaSmartCityPermissions> ViewGaSmartCityPermissions { get; set; }
+        #endregion
+        #endregion
+
+        #region Preventivi
+        public DbSet<PreventiviAnticipoTipologia> GaPreventiviAnticipiTipologie { get; set; }
+        public DbSet<PreventiviAnticipoPagamento> GaPreventiviAnticipiPagamenti { get; set; }
+        public DbSet<PreventiviAnticipo> GaPreventiviAnticipi { get; set; }
+        public DbSet<PreventiviAnticipoAllegato> GaPreventiviAnticipiAllegati { get; set; }
+
+        #region Views
+        public DbSet<ViewGaPreventiviAnticipi> ViewGaPreventiviAnticipi { get; set; }
         #endregion
         #endregion
 
@@ -1568,6 +1581,17 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .ToView(nameof(ViewGaSmartCityPermissions))
                 .HasNoKey();
             });
+            #endregion
+
+            #region Preventivi
+
+            builder.Entity<ViewGaPreventiviAnticipi>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPreventiviAnticipi))
+                .HasKey(x => x.Id);
+            });
+
             #endregion
 
 

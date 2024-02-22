@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240208081356_GaPreventivi")]
+    partial class GaPreventivi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +72,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("AutorizzazioniDocumentoId");
 
-                    b.ToTable("GaAutorizzazioniAllegati", (string)null);
+                    b.ToTable("GaAutorizzazioniAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniDocumento", b =>
@@ -124,7 +126,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("AutorizzazioniTipoId");
 
-                    b.ToTable("GaAutorizzazioniDocumenti", (string)null);
+                    b.ToTable("GaAutorizzazioniDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniTipo", b =>
@@ -155,7 +157,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaAutorizzazioniTipi", (string)null);
+                    b.ToTable("GaAutorizzazioniTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views.ViewGaAutorizzazioniDocumenti", b =>
@@ -219,7 +221,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaAziendeListe", (string)null);
+                    b.ToTable("GaAziendeListe");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.BackOfficeMargine", b =>
@@ -265,7 +267,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaBackOfficeMargini", (string)null);
+                    b.ToTable("GaBackOfficeMargini");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.BackOfficeParametroOnCategoria", b =>
@@ -335,7 +337,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaBackOfficeParametriOnCategorie", (string)null);
+                    b.ToTable("GaBackOfficeParametriOnCategorie");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.BackOfficeStatoTicket", b =>
@@ -354,7 +356,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaBackOfficeStatiTickets", (string)null);
+                    b.ToTable("GaBackOfficeStatiTickets");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.BackOfficeTicket", b =>
@@ -404,7 +406,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("BackOfficeTipoTicketId");
 
-                    b.ToTable("GaBackOfficeTickets", (string)null);
+                    b.ToTable("GaBackOfficeTickets");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.BackOfficeTipoTicket", b =>
@@ -423,7 +425,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaBackOfficeTipiTickets", (string)null);
+                    b.ToTable("GaBackOfficeTipiTickets");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.BackOfficeZona", b =>
@@ -457,7 +459,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaBackOfficeZone", (string)null);
+                    b.ToTable("GaBackOfficeZone");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp.SpGaBackOfficeLettureEmz", b =>
@@ -1582,7 +1584,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCdrCentri", (string)null);
+                    b.ToTable("GaCdrCentri");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCer", b =>
@@ -1628,7 +1630,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCdrCers", (string)null);
+                    b.ToTable("GaCdrCers");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCerDettaglio", b =>
@@ -1667,7 +1669,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrCerId");
 
-                    b.ToTable("GaCdrCersDettagli", (string)null);
+                    b.ToTable("GaCdrCersDettagli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrCerOnCentro", b =>
@@ -1706,7 +1708,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrCerId");
 
-                    b.ToTable("GaCdrCersOnCentri", (string)null);
+                    b.ToTable("GaCdrCersOnCentri");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrComune", b =>
@@ -1737,7 +1739,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCdrComuni", (string)null);
+                    b.ToTable("GaCdrComuni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrComuneOnCentro", b =>
@@ -1775,7 +1777,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrComuneId");
 
-                    b.ToTable("GaCdrComuniOnCentri", (string)null);
+                    b.ToTable("GaCdrComuniOnCentri");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrConferimento", b =>
@@ -1860,7 +1862,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrCerId");
 
-                    b.ToTable("GaCdrConferimenti", (string)null);
+                    b.ToTable("GaCdrConferimenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrRichiestaViaggio", b =>
@@ -1922,7 +1924,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrStatoRichiestaId");
 
-                    b.ToTable("GaCdrRichiesteViaggi", (string)null);
+                    b.ToTable("GaCdrRichiesteViaggi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrStatoRichiesta", b =>
@@ -1953,7 +1955,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCdrStatiRichieste", (string)null);
+                    b.ToTable("GaCdrStatiRichieste");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.CdrUtente", b =>
@@ -2004,7 +2006,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CdrComuneId");
 
-                    b.ToTable("GaCdrUtenti", (string)null);
+                    b.ToTable("GaCdrUtenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views.ViewGaCdrCersOnCentri", b =>
@@ -2266,7 +2268,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaComunicatiDocumenti", (string)null);
+                    b.ToTable("GaComunicatiDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioCer", b =>
@@ -2312,7 +2314,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConsorzioCers", (string)null);
+                    b.ToTable("ConsorzioCers");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioComune", b =>
@@ -2355,7 +2357,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConsorzioComuni", (string)null);
+                    b.ToTable("ConsorzioComuni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioDestinatario", b =>
@@ -2397,7 +2399,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ConsorzioComuneId");
 
-                    b.ToTable("ConsorzioDestinatari", (string)null);
+                    b.ToTable("ConsorzioDestinatari");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioImportTask", b =>
@@ -2464,7 +2466,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConsorzioImportsTasks", (string)null);
+                    b.ToTable("ConsorzioImportsTasks");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioOperazione", b =>
@@ -2500,7 +2502,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ConsorzioSmaltimentoId");
 
-                    b.ToTable("ConsorzioOperazioni", (string)null);
+                    b.ToTable("ConsorzioOperazioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioPeriodo", b =>
@@ -2534,7 +2536,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConsorzioPeriodi", (string)null);
+                    b.ToTable("ConsorzioPeriodi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioProduttore", b =>
@@ -2576,7 +2578,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ConsorzioComuneId");
 
-                    b.ToTable("ConsorzioProduttori", (string)null);
+                    b.ToTable("ConsorzioProduttori");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioRegistrazione", b =>
@@ -2655,7 +2657,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ConsorzioTrasportatoreId");
 
-                    b.ToTable("ConsorzioRegistrazioni", (string)null);
+                    b.ToTable("ConsorzioRegistrazioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioRegistrazioneAllegato", b =>
@@ -2706,7 +2708,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ConsorzioRegistrazioneId");
 
-                    b.ToTable("ConsorzioRegistrazioniAllegati", (string)null);
+                    b.ToTable("ConsorzioRegistrazioniAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioSmaltimento", b =>
@@ -2737,7 +2739,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("ConsorzioSmaltimenti", (string)null);
+                    b.ToTable("ConsorzioSmaltimenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioTrasportatore", b =>
@@ -2779,7 +2781,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ConsorzioComuneId");
 
-                    b.ToTable("ConsorzioTrasportatori", (string)null);
+                    b.ToTable("ConsorzioTrasportatori");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views.ViewConsorzioCers", b =>
@@ -3083,7 +3085,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContactCenterAllegati", (string)null);
+                    b.ToTable("GaContactCenterAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterComune", b =>
@@ -3117,7 +3119,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContactCenterComuni", (string)null);
+                    b.ToTable("GaContactCenterComuni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterMail", b =>
@@ -3151,7 +3153,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContactCenterMails", (string)null);
+                    b.ToTable("GaContactCenterMails");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterMailOnTicket", b =>
@@ -3195,7 +3197,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ContactCenterTicketId");
 
-                    b.ToTable("GaContactCenterMailsOnTickets", (string)null);
+                    b.ToTable("GaContactCenterMailsOnTickets");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterPrintTemplate", b =>
@@ -3229,7 +3231,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactCenterPrintTemplates", (string)null);
+                    b.ToTable("ContactCenterPrintTemplates");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterProvenienza", b =>
@@ -3260,7 +3262,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContactCenterProvenienze", (string)null);
+                    b.ToTable("GaContactCenterProvenienze");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterStatoRichiesta", b =>
@@ -3291,7 +3293,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContactCenterStatiRichieste", (string)null);
+                    b.ToTable("GaContactCenterStatiRichieste");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterTicket", b =>
@@ -3413,7 +3415,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ContactCenterTipoRichiestaId");
 
-                    b.ToTable("GaContactCenterTickets", (string)null);
+                    b.ToTable("GaContactCenterTickets");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.ContactCenterTipoRichiesta", b =>
@@ -3477,7 +3479,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContactCenterTipiRichieste", (string)null);
+                    b.ToTable("GaContactCenterTipiRichieste");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views.ViewFoContactCenterTickets", b =>
@@ -3771,7 +3773,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ContrattiSoggettoId");
 
-                    b.ToTable("GaContrattiDocumenti", (string)null);
+                    b.ToTable("GaContrattiDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiDocumentoAllegato", b =>
@@ -3822,7 +3824,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ContrattiDocumentoId");
 
-                    b.ToTable("GaContrattiDocumentiAllegati", (string)null);
+                    b.ToTable("GaContrattiDocumentiAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiModalita", b =>
@@ -3853,7 +3855,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContrattiModalitas", (string)null);
+                    b.ToTable("GaContrattiModalitas");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiPermesso", b =>
@@ -3884,7 +3886,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContrattiPermessi", (string)null);
+                    b.ToTable("GaContrattiPermessi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiServizio", b =>
@@ -3915,7 +3917,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContrattiServizi", (string)null);
+                    b.ToTable("GaContrattiServizi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiSoggetto", b =>
@@ -3973,7 +3975,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContrattiSoggetti", (string)null);
+                    b.ToTable("GaContrattiSoggetti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiTipologia", b =>
@@ -4004,7 +4006,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaContrattiTipologie", (string)null);
+                    b.ToTable("GaContrattiTipologie");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.ContrattiUtenteOnPermesso", b =>
@@ -4040,7 +4042,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ContrattiPermessoId");
 
-                    b.ToTable("GaContrattiUtentiOnPermessi", (string)null);
+                    b.ToTable("GaContrattiUtentiOnPermessi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.SpGaContrattiNumeratore", b =>
@@ -4532,7 +4534,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CrmEventStateId");
 
-                    b.ToTable("GaCrmEvents", (string)null);
+                    b.ToTable("GaCrmEvents");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmEventArea", b =>
@@ -4569,7 +4571,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCrmEventAreas", (string)null);
+                    b.ToTable("GaCrmEventAreas");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmEventComune", b =>
@@ -4606,7 +4608,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCrmEventComuni", (string)null);
+                    b.ToTable("GaCrmEventComuni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmEventDevice", b =>
@@ -4667,7 +4669,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCrmEventDevices", (string)null);
+                    b.ToTable("GaCrmEventDevices");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmEventState", b =>
@@ -4698,7 +4700,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCrmEventStates", (string)null);
+                    b.ToTable("GaCrmEventStates");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmTicket", b =>
@@ -4815,7 +4817,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CrmEventComuneId");
 
-                    b.ToTable("GaCrmTickets", (string)null);
+                    b.ToTable("GaCrmTickets");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmTicketAllegato", b =>
@@ -4864,7 +4866,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCrmTicketAllegati", (string)null);
+                    b.ToTable("GaCrmTicketAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.CrmTicketTag", b =>
@@ -4895,7 +4897,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCrmTicketTags", (string)null);
+                    b.ToTable("GaCrmTicketTags");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmCalendarTickets", b =>
@@ -5667,7 +5669,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCsrCodiciCers", (string)null);
+                    b.ToTable("GaCsrCodiciCers");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.CsrComune", b =>
@@ -5698,7 +5700,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCsrComuni", (string)null);
+                    b.ToTable("GaCsrComuni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.CsrDestinatario", b =>
@@ -5732,7 +5734,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCsrDestinatari", (string)null);
+                    b.ToTable("GaCsrDestinatari");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.CsrProduttore", b =>
@@ -5766,7 +5768,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCsrProduttori", (string)null);
+                    b.ToTable("GaCsrProduttori");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.CsrRegistrazione", b =>
@@ -5823,7 +5825,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CsrTrasportatoreId");
 
-                    b.ToTable("GaCsrRegistrazioni", (string)null);
+                    b.ToTable("GaCsrRegistrazioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.CsrRegistrazionePeso", b =>
@@ -5885,7 +5887,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CsrTrasportatoreId");
 
-                    b.ToTable("GaCsrRegistrazioniPesi", (string)null);
+                    b.ToTable("GaCsrRegistrazioniPesi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.CsrRipartizionePercentuale", b =>
@@ -5926,7 +5928,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("CsrProduttoreId");
 
-                    b.ToTable("GaCsrRipartizioniPercentuali", (string)null);
+                    b.ToTable("GaCsrRipartizioniPercentuali");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.CsrTrasportatore", b =>
@@ -5960,7 +5962,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaCsrTrasportatori", (string)null);
+                    b.ToTable("GaCsrTrasportatori");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views.ViewGaCsrCodiciCers", b =>
@@ -6218,7 +6220,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("DashboardTypeId");
 
-                    b.ToTable("DashboardItems", (string)null);
+                    b.ToTable("DashboardItems");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.DashboardSection", b =>
@@ -6237,7 +6239,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("DashboardSections", (string)null);
+                    b.ToTable("DashboardSections");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.DashboardStore", b =>
@@ -6264,7 +6266,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("DashboardItemId");
 
-                    b.ToTable("DashboardStores", (string)null);
+                    b.ToTable("DashboardStores");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.DashboardType", b =>
@@ -6286,7 +6288,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("DashboardTypes", (string)null);
+                    b.ToTable("DashboardTypes");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views.ViewDashboardItems", b =>
@@ -6394,7 +6396,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaDispositiviCategorie", (string)null);
+                    b.ToTable("GaDispositiviCategorie");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviClasse", b =>
@@ -6413,7 +6415,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaDispositiviClassi", (string)null);
+                    b.ToTable("GaDispositiviClassi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviItem", b =>
@@ -6452,7 +6454,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("DispositiviTipologiaId");
 
-                    b.ToTable("GaDispositiviItems", (string)null);
+                    b.ToTable("GaDispositiviItems");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviMarca", b =>
@@ -6471,7 +6473,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaDispositiviMarche", (string)null);
+                    b.ToTable("GaDispositiviMarche");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviModello", b =>
@@ -6490,7 +6492,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaDispositiviModelli", (string)null);
+                    b.ToTable("GaDispositiviModelli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviModulo", b =>
@@ -6535,7 +6537,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleDipendenteId");
 
-                    b.ToTable("GaDispositiviModuli", (string)null);
+                    b.ToTable("GaDispositiviModuli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviOnDipendente", b =>
@@ -6567,7 +6569,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleDipendenteId");
 
-                    b.ToTable("GaDispositiviOnDipendenti", (string)null);
+                    b.ToTable("GaDispositiviOnDipendenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviOnModulo", b =>
@@ -6593,7 +6595,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("DispositiviOnDipendenteId");
 
-                    b.ToTable("GaDispositiviOnModuli", (string)null);
+                    b.ToTable("GaDispositiviOnModuli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviStock", b =>
@@ -6637,7 +6639,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("DispositiviItemId");
 
-                    b.ToTable("GaDispositiviStocks", (string)null);
+                    b.ToTable("GaDispositiviStocks");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.DispositiviTipologia", b =>
@@ -6656,7 +6658,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaDispositiviTipologie", (string)null);
+                    b.ToTable("GaDispositiviTipologie");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views.ViewGaDispositiviItems", b =>
@@ -6848,7 +6850,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GlobalCentriCosti", (string)null);
+                    b.ToTable("GlobalCentriCosti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalSede", b =>
@@ -6867,7 +6869,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GlobalSedi", (string)null);
+                    b.ToTable("GlobalSedi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global.GlobalSettore", b =>
@@ -6886,7 +6888,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GlobalSettori", (string)null);
+                    b.ToTable("GlobalSettori");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail.MailJob", b =>
@@ -6959,7 +6961,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("MailJobs", (string)null);
+                    b.ToTable("MailJobs");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziAlimentazione", b =>
@@ -6990,7 +6992,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziAlimentazioni", (string)null);
+                    b.ToTable("GaMezziAlimentazioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziClasse", b =>
@@ -7021,7 +7023,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziClassi", (string)null);
+                    b.ToTable("GaMezziClassi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziDocumento", b =>
@@ -7072,7 +7074,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("MezziVeicoloId");
 
-                    b.ToTable("GaMezziDocumenti", (string)null);
+                    b.ToTable("GaMezziDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziPatente", b =>
@@ -7103,7 +7105,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziPatenti", (string)null);
+                    b.ToTable("GaMezziPatenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziPeriodoScadenza", b =>
@@ -7134,7 +7136,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziPeriodiScadenze", (string)null);
+                    b.ToTable("GaMezziPeriodiScadenze");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziProprietario", b =>
@@ -7165,7 +7167,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziProprietari", (string)null);
+                    b.ToTable("GaMezziProprietari");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziScadenza", b =>
@@ -7227,7 +7229,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("MezziVeicoloId");
 
-                    b.ToTable("GaMezziScadenze", (string)null);
+                    b.ToTable("GaMezziScadenze");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziScadenzaTipo", b =>
@@ -7258,7 +7260,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziScadenzeTipi", (string)null);
+                    b.ToTable("GaMezziScadenzeTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziTipo", b =>
@@ -7289,7 +7291,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaMezziTipi", (string)null);
+                    b.ToTable("GaMezziTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.MezziVeicolo", b =>
@@ -7403,7 +7405,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("MezziTipoId");
 
-                    b.ToTable("GaMezziVeicoli", (string)null);
+                    b.ToTable("GaMezziVeicoli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views.ViewGaMezziDocumenti", b =>
@@ -7590,7 +7592,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("NotificationApps", (string)null);
+                    b.ToTable("NotificationApps");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.NotificationEvent", b =>
@@ -7632,7 +7634,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("NotificationAppId");
 
-                    b.ToTable("NotificationEvents", (string)null);
+                    b.ToTable("NotificationEvents");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.NotificationRoleOnApp", b =>
@@ -7656,7 +7658,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("NotificationAppId");
 
-                    b.ToTable("NotificationRolesOnApps", (string)null);
+                    b.ToTable("NotificationRolesOnApps");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.NotificationUserOnApp", b =>
@@ -7680,7 +7682,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("NotificationAppId");
 
-                    b.ToTable("NotificationUsersOnApps", (string)null);
+                    b.ToTable("NotificationUsersOnApps");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views.ViewNotificationEvents", b =>
@@ -7898,7 +7900,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleDipendenteId");
 
-                    b.ToTable("GaPersonaleAbilitazioni", (string)null);
+                    b.ToTable("GaPersonaleAbilitazioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAbilitazioneTipo", b =>
@@ -7929,7 +7931,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleAbilitazioniTipi", (string)null);
+                    b.ToTable("GaPersonaleAbilitazioniTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticolo", b =>
@@ -7972,7 +7974,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleArticoloTipologiaId");
 
-                    b.ToTable("GaPersonaleArticoli", (string)null);
+                    b.ToTable("GaPersonaleArticoli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloDpi", b =>
@@ -8009,7 +8011,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleArticoliDpis", (string)null);
+                    b.ToTable("GaPersonaleArticoliDpis");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloModello", b =>
@@ -8040,7 +8042,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleArticoliModelli", (string)null);
+                    b.ToTable("GaPersonaleArticoliModelli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleArticoloTipologia", b =>
@@ -8071,7 +8073,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleArticoliTipologie", (string)null);
+                    b.ToTable("GaPersonaleArticoliTipologie");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleAssunzione", b =>
@@ -8102,7 +8104,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleAssunzioni", (string)null);
+                    b.ToTable("GaPersonaleAssunzioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleDipendente", b =>
@@ -8164,7 +8166,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleQualificaId");
 
-                    b.ToTable("GaPersonaleDipendenti", (string)null);
+                    b.ToTable("GaPersonaleDipendenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleQualifica", b =>
@@ -8195,7 +8197,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleQualifiche", (string)null);
+                    b.ToTable("GaPersonaleQualifiche");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleRetributivo", b =>
@@ -8254,7 +8256,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleRetributivoTipoId");
 
-                    b.ToTable("GaPersonaleRetributivi", (string)null);
+                    b.ToTable("GaPersonaleRetributivi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleRetributivoTipo", b =>
@@ -8285,7 +8287,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleRetributiviTipi", (string)null);
+                    b.ToTable("GaPersonaleRetributiviTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzione", b =>
@@ -8349,7 +8351,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleSanzioneMotivoId");
 
-                    b.ToTable("GaPersonaleSanzioni", (string)null);
+                    b.ToTable("GaPersonaleSanzioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzioneDescrizione", b =>
@@ -8380,7 +8382,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleSanzioniDescrizioni", (string)null);
+                    b.ToTable("GaPersonaleSanzioniDescrizioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSanzioneMotivo", b =>
@@ -8411,7 +8413,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleSanzioniMotivi", (string)null);
+                    b.ToTable("GaPersonaleSanzioniMotivi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenza", b =>
@@ -8472,7 +8474,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleScadenzaTipoId");
 
-                    b.ToTable("GaPersonaleScadenze", (string)null);
+                    b.ToTable("GaPersonaleScadenze");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenzaDettaglio", b =>
@@ -8503,7 +8505,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleScadenzeDettagli", (string)null);
+                    b.ToTable("GaPersonaleScadenzeDettagli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleScadenzaTipo", b =>
@@ -8534,7 +8536,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPersonaleScadenzeTipi", (string)null);
+                    b.ToTable("GaPersonaleScadenzeTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSchedaConsegna", b =>
@@ -8588,7 +8590,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleDipendenteId");
 
-                    b.ToTable("GaPersonaleSchedeConsegne", (string)null);
+                    b.ToTable("GaPersonaleSchedeConsegne");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.PersonaleSchedaConsegnaDettaglio", b =>
@@ -8632,7 +8634,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleSchedaConsegnaId");
 
-                    b.ToTable("GaPersonaleSchedeConsegneDettagli", (string)null);
+                    b.ToTable("GaPersonaleSchedeConsegneDettagli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views.ViewGaPersonaleAbilitazioni", b =>
@@ -9067,7 +9069,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PrenotazioneAutoVeicoloId");
 
-                    b.ToTable("GaPrenotazioneAutoRegistrazioni", (string)null);
+                    b.ToTable("GaPrenotazioneAutoRegistrazioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.PrenotazioneAutoSede", b =>
@@ -9086,7 +9088,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPrenotazioneAutoSedi", (string)null);
+                    b.ToTable("GaPrenotazioneAutoSedi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.PrenotazioneAutoVeicolo", b =>
@@ -9119,7 +9121,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PrenotazioneAutoSedeId");
 
-                    b.ToTable("GaPrenotazioneAutoVeicoli", (string)null);
+                    b.ToTable("GaPrenotazioneAutoVeicoli");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views.ViewGaPrenotazioneAutoRegistrazioni", b =>
@@ -9224,7 +9226,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PrenotazioneLocaliUfficioId");
 
-                    b.ToTable("GaPrenotazioneLocaliRegistrazioni", (string)null);
+                    b.ToTable("GaPrenotazioneLocaliRegistrazioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.PrenotazioneLocaliSede", b =>
@@ -9243,7 +9245,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPrenotazioneLocaliSedi", (string)null);
+                    b.ToTable("GaPrenotazioneLocaliSedi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.PrenotazioneLocaliUfficio", b =>
@@ -9270,7 +9272,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PrenotazioneLocaliSedeId");
 
-                    b.ToTable("GaPrenotazioneLocaliUffici", (string)null);
+                    b.ToTable("GaPrenotazioneLocaliUffici");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views.ViewGaPrenotazioneLocaliRegistrazioni", b =>
@@ -9371,7 +9373,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PresenzeRichiestaId");
 
-                    b.ToTable("GaPresenzeBancheOreUtilizzi", (string)null);
+                    b.ToTable("GaPresenzeBancheOreUtilizzi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeDataEsclusa", b =>
@@ -9402,7 +9404,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPresenzeDateEscluse", (string)null);
+                    b.ToTable("GaPresenzeDateEscluse");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeDipendente", b =>
@@ -9469,7 +9471,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PresenzeProfiloId");
 
-                    b.ToTable("GaPresenzeDipendenti", (string)null);
+                    b.ToTable("GaPresenzeDipendenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeOrario", b =>
@@ -9500,7 +9502,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPresenzeOrari", (string)null);
+                    b.ToTable("GaPresenzeOrari");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeOrarioGiornata", b =>
@@ -9548,7 +9550,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PresenzeOrarioId");
 
-                    b.ToTable("GaPresenzeOrariGiornate", (string)null);
+                    b.ToTable("GaPresenzeOrariGiornate");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeProfilo", b =>
@@ -9585,7 +9587,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPresenzeProfili", (string)null);
+                    b.ToTable("GaPresenzeProfili");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeResponsabile", b =>
@@ -9618,7 +9620,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PersonaleDipendenteId");
 
-                    b.ToTable("GaPresenzeResponsabili", (string)null);
+                    b.ToTable("GaPresenzeResponsabili");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeResponsabileOnSettore", b =>
@@ -9656,7 +9658,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PresenzeResponsabileId");
 
-                    b.ToTable("GaPresenzeResponsabiliOnSettori", (string)null);
+                    b.ToTable("GaPresenzeResponsabiliOnSettori");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeRichiesta", b =>
@@ -9708,7 +9710,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("PresenzeTipoOraId");
 
-                    b.ToTable("GaPresenzeRichieste", (string)null);
+                    b.ToTable("GaPresenzeRichieste");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeStatoRichiesta", b =>
@@ -9739,7 +9741,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPresenzeStatiRichieste", (string)null);
+                    b.ToTable("GaPresenzeStatiRichieste");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.PresenzeTipoOra", b =>
@@ -9776,7 +9778,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPresenzeTipiOre", (string)null);
+                    b.ToTable("GaPresenzeTipiOre");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views.ViewGaPresenzeDipendenti", b =>
@@ -10360,9 +10362,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<double?>("Anticipo")
-                        .HasColumnType("float");
-
                     b.Property<string>("Causale")
                         .HasColumnType("nvarchar(max)");
 
@@ -10372,7 +10371,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<DateTime?>("DataPagamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataPreventivo")
+                    b.Property<DateTime>("DataPreventivo")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Disabled")
@@ -10380,12 +10379,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.Property<bool>("Fatturato")
                         .HasColumnType("bit");
-
-                    b.Property<double?>("ImportoTotale")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Incasato")
-                        .HasColumnType("float");
 
                     b.Property<string>("NoteContabili")
                         .HasColumnType("nvarchar(max)");
@@ -10408,9 +10401,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("RagioneSociale")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("RegistratoContabilita")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Saldo")
                         .HasColumnType("nvarchar(max)");
 
@@ -10419,6 +10409,12 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.Property<string>("TipoPagamento")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("ValoreIncassato")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ValorePrevisto")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -10495,7 +10491,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPrevisioAnomalieLetture", (string)null);
+                    b.ToTable("GaPrevisioAnomalieLetture");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.PrevisioOdsLettura", b =>
@@ -10538,7 +10534,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaPrevisioOdsLetture", (string)null);
+                    b.ToTable("GaPrevisioOdsLetture");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views.ViewGaPrevisioOdsLetture", b =>
@@ -10862,7 +10858,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ProgettiWorkId");
 
-                    b.ToTable("GaProgettiJobs", (string)null);
+                    b.ToTable("GaProgettiJobs");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.ProgettiJobAllegato", b =>
@@ -10913,7 +10909,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ProgettiJobId");
 
-                    b.ToTable("GaProgettiJobAllegati", (string)null);
+                    b.ToTable("GaProgettiJobAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.ProgettiJobTask", b =>
@@ -10952,7 +10948,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ProgettiJobId");
 
-                    b.ToTable("GaProgettiJobTask", (string)null);
+                    b.ToTable("GaProgettiJobTask");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.ProgettiJobUndertaking", b =>
@@ -11003,7 +10999,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ProgettiJobUndertakingStateId");
 
-                    b.ToTable("GaProgettiJobsUndertakings", (string)null);
+                    b.ToTable("GaProgettiJobsUndertakings");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.ProgettiJobUndertakingAllegato", b =>
@@ -11054,7 +11050,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ProgettiJobUndertakingId");
 
-                    b.ToTable("GaProgettiJobsUndertakingsAllegati", (string)null);
+                    b.ToTable("GaProgettiJobsUndertakingsAllegati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.ProgettiJobUndertakingState", b =>
@@ -11085,7 +11081,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaProgettiJobsUndertakingsStates", (string)null);
+                    b.ToTable("GaProgettiJobsUndertakingsStates");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.ProgettiWork", b =>
@@ -11122,7 +11118,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaProgettiWorks", (string)null);
+                    b.ToTable("GaProgettiWorks");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.ProgettiWorkSetting", b =>
@@ -11170,7 +11166,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ProgettiWorkId");
 
-                    b.ToTable("GaProgettiWorkSettings", (string)null);
+                    b.ToTable("GaProgettiWorkSettings");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views.ViewGaProgettiJobs", b =>
@@ -11274,7 +11270,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("QueryBuilderScriptId");
 
-                    b.ToTable("QueryBuilderParamOnScripts", (string)null);
+                    b.ToTable("QueryBuilderParamOnScripts");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.QueryBuilderParamType", b =>
@@ -11299,7 +11295,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("QueryBuilderParamTypes", (string)null);
+                    b.ToTable("QueryBuilderParamTypes");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.QueryBuilderScript", b =>
@@ -11329,7 +11325,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("QueryBuilderSectionId");
 
-                    b.ToTable("QueryBuilderScripts", (string)null);
+                    b.ToTable("QueryBuilderScripts");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.QueryBuilderSection", b =>
@@ -11348,7 +11344,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("QueryBuilderSections", (string)null);
+                    b.ToTable("QueryBuilderSections");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views.ViewQueryBuilderParamOnScripts", b =>
@@ -11496,7 +11492,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ReclamiTipoAzioneId");
 
-                    b.ToTable("GaReclamiAzioni", (string)null);
+                    b.ToTable("GaReclamiAzioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiDocumento", b =>
@@ -11582,7 +11578,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ReclamiTipoOrigineId");
 
-                    b.ToTable("GaReclamiDocumenti", (string)null);
+                    b.ToTable("GaReclamiDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiMittente", b =>
@@ -11613,7 +11609,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaReclamiMittenti", (string)null);
+                    b.ToTable("GaReclamiMittenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiStato", b =>
@@ -11644,7 +11640,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaReclamiStati", (string)null);
+                    b.ToTable("GaReclamiStati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTempoRisposta", b =>
@@ -11678,7 +11674,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaReclamiTempiRisposte", (string)null);
+                    b.ToTable("GaReclamiTempiRisposte");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTipoAzione", b =>
@@ -11712,7 +11708,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaReclamiTipiAzioni", (string)null);
+                    b.ToTable("GaReclamiTipiAzioni");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.ReclamiTipoOrigine", b =>
@@ -11746,7 +11742,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaReclamiTipiOrigini", (string)null);
+                    b.ToTable("GaReclamiTipiOrigini");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views.ViewGaReclamiAzioni", b =>
@@ -11949,7 +11945,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("SegnalazioniTipoId");
 
-                    b.ToTable("EcSegnalazioniDocumenti", (string)null);
+                    b.ToTable("EcSegnalazioniDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniDocumentoImmagine", b =>
@@ -11985,7 +11981,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("SegnalazioniDocumentoId");
 
-                    b.ToTable("EcSegnalazioniDocumentiImmagini", (string)null);
+                    b.ToTable("EcSegnalazioniDocumentiImmagini");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniStato", b =>
@@ -12004,7 +12000,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("EcSegnalazioniStati", (string)null);
+                    b.ToTable("EcSegnalazioniStati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec.EcSegnalazioniTipo", b =>
@@ -12023,7 +12019,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("EcSegnalazioniTipi", (string)null);
+                    b.ToTable("EcSegnalazioniTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniDocumento", b =>
@@ -12091,7 +12087,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("SegnalazioniTipoId");
 
-                    b.ToTable("GaSegnalazioniDocumenti", (string)null);
+                    b.ToTable("GaSegnalazioniDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniDocumentoImmagine", b =>
@@ -12139,7 +12135,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("SegnalazioniDocumentoId");
 
-                    b.ToTable("GaSegnalazioniDocumentiImmagini", (string)null);
+                    b.ToTable("GaSegnalazioniDocumentiImmagini");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniStato", b =>
@@ -12170,7 +12166,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaSegnalazioniStati", (string)null);
+                    b.ToTable("GaSegnalazioniStati");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.SegnalazioniTipo", b =>
@@ -12201,7 +12197,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaSegnalazioniTipi", (string)null);
+                    b.ToTable("GaSegnalazioniTipi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views.ViewEcSegnalazioniDocumenti", b =>
@@ -12351,7 +12347,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("ShortcutLinkId");
 
-                    b.ToTable("ShortcutItems", (string)null);
+                    b.ToTable("ShortcutItems");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.ShortcutLink", b =>
@@ -12376,7 +12372,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShortcutLinks", (string)null);
+                    b.ToTable("ShortcutLinks");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views.ViewShortcutItems", b =>
@@ -12431,7 +12427,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("GaSmartCityPermissions", (string)null);
+                    b.ToTable("GaSmartCityPermissions");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views.ViewGaSmartCityPermissions", b =>
@@ -12485,7 +12481,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("SystemVersions", (string)null);
+                    b.ToTable("SystemVersions");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.TasksAction", b =>
@@ -12515,7 +12511,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasIndex("TasksItemId");
 
-                    b.ToTable("TasksActions", (string)null);
+                    b.ToTable("TasksActions");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.TasksItem", b =>
@@ -12564,7 +12560,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("TasksItems", (string)null);
+                    b.ToTable("TasksItems");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.TasksTag", b =>
@@ -12583,7 +12579,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.HasKey("Id");
 
-                    b.ToTable("TasksTags", (string)null);
+                    b.ToTable("TasksTags");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views.ViewTasks", b =>
