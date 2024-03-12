@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
-    public partial class GaPreventivi : Migration
+    public partial class GaPreventivi_V1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,7 +56,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     DataPreventivo = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DataPagamento = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CfPiva = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Incasato = table.Column<double>(type: "float", nullable: true),
+                    Incassato = table.Column<double>(type: "float", nullable: true),
                     ImportoTotale = table.Column<double>(type: "float", nullable: true),
                     Anticipo = table.Column<double>(type: "float", nullable: true),
                     NoteContabili = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -81,7 +81,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.PreventiviAnticipoTipologiaId,
                         principalTable: "GaPreventiviAnticipiTipologie",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,7 +111,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         column: x => x.PreventiviAnticipoId,
                         principalTable: "GaPreventiviAnticipi",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -123,28 +123,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                 name: "IX_GaPreventiviAnticipiAllegati_PreventiviAnticipoId",
                 table: "GaPreventiviAnticipiAllegati",
                 column: "PreventiviAnticipoId");
-
-            migrationBuilder.InsertData(
-                           table: "GaPreventiviAnticipiTipologie",
-                           columns: new[] { "Id", "Descrizione", "Disabled" },
-                           values: new object[,]
-                           {
-                                            { 1,"PREVENTIVO" ,false},
-                                            { 2,"COMPOSTIERA" ,false},
-                                            { 3,"LUCCHETTI" ,false},
-                                            { 4,"NON TROVATO" ,false},
-                                            { 5,"ALTRO - SPECIFICARE NELLE NOTE" ,false},
-                           });
-
-            migrationBuilder.InsertData(
-                           table: "GaPreventiviAnticipiPagamenti",
-                           columns: new[] { "Id", "Descrizione", "Disabled" },
-                           values: new object[,]
-                           {
-                                            { 1,"BONIFICO" ,false},
-                                            { 2,"POS" ,false},
-                                            { 3,"CONTANTI" ,false},
-                           });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

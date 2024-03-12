@@ -68,6 +68,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<string> GetGaBackOfficeZoneZonaAsync(string comune, string via, string civico);
         #endregion
 
+        #region BackOfficeInsolutoTariNovi
+        Task<PagedList<ViewGaBackOfficeInsolutoTariNovi>> GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(string filter);
+        #endregion
+
 
     }
 }

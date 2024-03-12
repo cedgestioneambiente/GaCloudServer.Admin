@@ -185,6 +185,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeDispositivi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeDispositivi>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeTipCon>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeTipCon>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeZone>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeInsolutoTariNovi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeInsolutoTariNovi>>();
 
             //Sp
             services.AddTransient<IProcedureManager<SpGaBackOfficeUtenze>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenze>>();
@@ -773,6 +774,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteGrp>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeDispositivi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeDispositivi>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeTipCon>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeTipCon>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeInsolutoTariNovi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeInsolutoTariNovi>>();
 
             //Sp
             services.AddTransient<IProcedureManager<SpGaBackOfficeUtenze>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenze>>();

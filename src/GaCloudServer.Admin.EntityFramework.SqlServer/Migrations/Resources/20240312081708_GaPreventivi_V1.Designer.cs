@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    [Migration("20240208142622_AppViews_V43")]
-    partial class AppViews_V43
+    [Migration("20240312081708_GaPreventivi_V1")]
+    partial class GaPreventivi_V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -964,6 +964,56 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.ToView("ViewGaBackOfficeContenitoriLetture");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views.ViewGaBackOfficeInsolutoTariNovi", b =>
+                {
+                    b.Property<int>("AnnoRif")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodCli")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodFis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodTributo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DaPagare")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DtFat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Indirizzo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumAvviso")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumCont")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumFat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Pagato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RagSo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Saldo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("ViewGaBackOfficeInsolutoTariNovi");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views.ViewGaBackOfficeNdUtenze", b =>
@@ -10202,7 +10252,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<double?>("ImportoTotale")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Incasato")
+                    b.Property<double?>("Incassato")
                         .HasColumnType("float");
 
                     b.Property<DateTime?>("ModifiedAt")

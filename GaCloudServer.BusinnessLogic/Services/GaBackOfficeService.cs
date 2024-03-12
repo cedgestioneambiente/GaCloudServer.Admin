@@ -35,6 +35,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeZone> viewGaBackOfficeUtenzeZoneRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeInsolutoTariNovi> viewGaBackOfficeInsolutoTariNoviRepo;
 
         protected readonly IGenericRepository<ViewGaBackOfficeZone> viewGaBackOfficeZoneRepo;
 
@@ -61,6 +62,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeZone> viewGaBackOfficeUtenzeZoneRepo,
+            IGenericRepository<ViewGaBackOfficeInsolutoTariNovi> viewGaBackOfficeInsolutoTariNoviRepo,
 
             IGenericRepository<ViewGaBackOfficeZone> viewGaBackOfficeZoneRepo,
 
@@ -89,6 +91,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaBackOfficeUtenzePartiteGrpRepo = viewGaBackOfficeUtenzePartiteGrpRepo;
             this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
             this.viewGaBackOfficeUtenzeZoneRepo = viewGaBackOfficeUtenzeZoneRepo;
+            this.viewGaBackOfficeInsolutoTariNoviRepo = viewGaBackOfficeInsolutoTariNoviRepo;
 
             this.viewGaBackOfficeZoneRepo = viewGaBackOfficeZoneRepo;
 
@@ -181,10 +184,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         public async Task<PagedList<ViewGaBackOfficeUtenze>> GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(string cpAzi, string filter)
         {
-            var view = await viewGaBackOfficeUtenzeRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi 
-            && (EF.Functions.Like(x.RagSo, filter.toWildcardString()) || EF.Functions.Like(x.CodFis, filter.toWildcardString())) ||
+            var view = await viewGaBackOfficeUtenzeRepo.GetWithFilterAsync(x => x.CpAzi.Trim() == cpAzi.Trim() 
+            && ((EF.Functions.Like(x.RagSo, filter.toWildcardString()) || EF.Functions.Like(x.CodFis, filter.toWildcardString())) ||
             EF.Functions.Like(x.Piva, filter.toWildcardString()) || EF.Functions.Like(x.CodCli, filter.toWildcardString()) ||
-            EF.Functions.Like(x.NumCon, filter.toWildcardString())
+            EF.Functions.Like(x.NumCon, filter.toWildcardString()))
             , 1, 0, "RagSo");
             return view;
         }
@@ -401,6 +404,19 @@ namespace GaCloudServer.BusinnessLogic.Services
             var result = await viewGaBackOfficeZoneRepo.GetWithFilterAsync(x => x.Comune == comune && x.Via == via && x.Civico == civico);
             return (from x in result.Data
                     select x.Zona).FirstOrDefault();
+        }
+        #endregion
+
+        #region BackOfficeInsolutoTariNovi
+        public async Task<PagedList<ViewGaBackOfficeInsolutoTariNovi>> GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(string filter)
+        {
+            var view = await viewGaBackOfficeInsolutoTariNoviRepo.GetWithFilterAsync(
+                x => EF.Functions.Like(x.CodCli, filter.toWildcardString()) ||
+                EF.Functions.Like(x.RagSo, filter.toWildcardString()) ||
+                EF.Functions.Like(x.CodFis, filter.toWildcardString()) ||
+                EF.Functions.Like(x.NumCont, filter.toWildcardString()));
+
+            return view;
         }
         #endregion
 

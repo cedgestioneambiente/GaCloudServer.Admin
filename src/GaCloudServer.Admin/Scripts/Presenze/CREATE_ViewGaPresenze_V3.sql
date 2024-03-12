@@ -23,7 +23,7 @@ INNER JOIN GaPersonaleDipendenti C ON B.PersonaleDipendenteId=C.Id
 INNER JOIN IdentityServerAdmin.dbo.Users D ON C.UserId=D.Id
 INNER JOIN GlobalSettori E ON E.Id=C.GlobalSettoreId
 INNER JOIN GaPresenzeTipiOre F ON F.Id=A.PresenzeTipoOraId
-WHERE C.PersonaleQualificaId='3') A
+WHERE C.PersonaleQualificaId='3' AND A.PresenzeStatoRichiestaId='2') A
 WHERE Oggi=1 OR Domani=1
 GROUP BY Personale, Settore, PresenzeTipoOraId,TipoOre
 GO

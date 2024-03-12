@@ -351,6 +351,29 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+        #region BackOfficeInsolutoNovi
+
+        #region Views
+        [HttpGet("GetViewGaBackOfficeInsolutoTariNoviByFilterAsync/{filter}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(string filter)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(filter);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        #endregion
+
+        #endregion
+
         #region BackOfficeZone
         [HttpGet("GetGaBackOfficeZoneComuniAsync")]
         public async Task<ActionResult<ApiResponse>> GetGaBackOfficeZoneComuniAsync()

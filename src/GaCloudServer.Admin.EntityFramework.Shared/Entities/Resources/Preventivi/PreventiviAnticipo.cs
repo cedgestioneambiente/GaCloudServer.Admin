@@ -10,7 +10,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         public DateTime? DataPreventivo { get; set; }
         public DateTime? DataPagamento { get; set; }
         public string? CfPiva { get; set; }
-        public double? Incasato { get; set; }
+        public double? Incassato { get; set; }
         public double? ImportoTotale { get; set; }
         public double? Anticipo { get; set; }
         public string? NoteContabili { get; set; }
