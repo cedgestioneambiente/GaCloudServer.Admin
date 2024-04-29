@@ -36,7 +36,8 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<bool> DeleteGaProgettiJobAsync(long id);
 
         #region Functions
-        Task<bool> ValidateGaProgettiJobAsync(long id, string descrizione,long workId,long parentId);
+        Task<long> ValidateGaProgettiJobAsync(ProgettiJobDto dto);
+        Task<bool> ValidateDeleteGaProgettiJobAsync(long id);
         Task<bool> ChangeStatusGaProgettiJobAsync(long id);
         Task<bool> AddGaProgettiJobLinkAsync(long sourceId, long targetId);
         #endregion

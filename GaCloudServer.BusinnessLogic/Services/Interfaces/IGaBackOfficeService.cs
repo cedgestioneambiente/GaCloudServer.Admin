@@ -1,8 +1,10 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Contratti;
+using GaCloudServer.BusinnessLogic.Mappers;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<ViewGaBackOfficeUtenze> GetViewGaBackOfficeUtenzaByCpAziAndNumConAsync(string cpAzi, string numCon);
         Task<PagedList<ViewGaBackOfficeUtenze>> GetViewGaBackOfficeUtenzeByCpAziAndFilterAsync(string cpAzi, string filter);
         Task<PagedList<ViewGaBackOfficeUtenzePartite>> GetViewGaBackOfficeUtenzePartiteByCpAziAndNumConAsync(string cpAzi, string numCon);
+        Task<PagedList<ViewGaBackOfficeUtenzePartiteVariazioni>> GetViewGaBackOfficeUtenzePartiteVariazioniByCpAziAndNumConAndPartitaAsync(string cpAzi, string numCon, string partita);
         Task<PagedList<ViewGaBackOfficeUtenzePartiteDetail>> GetViewGaBackOfficeUtenzePartiteByCpAziAndIndirizzoAsync(string cpAzi,string via, int startNumCiv,int endNumCiv);
         Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAsync(string cpAzi, string numCon);
         Task<PagedList<ViewGaBackOfficeUtenzeDispositivi>> GetViewGaBackOfficeUtenzeDispositiviByCpAziAndNumConAndPartitaAsync(string cpAzi, string numCon, string partita);
@@ -68,8 +71,28 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<string> GetGaBackOfficeZoneZonaAsync(string comune, string via, string civico);
         #endregion
 
+        #region BackOfficeNovi
+        Task<PagedList<ViewGaBackOfficeUtenzeNovi>> GetViewGaBackOfficeUtenzeNoviAsync(string filter);
+        #endregion
+
+        #region BackOfficeRecipes
+        Task<BackOfficeDocRecipesDto> GetGaBackOfficeDocRecipesAsync(int page = 1, int pageSize = 0);
+        Task<BackOfficeDocReceiptDto> GetGaBackOfficeDocRecipesByIdAsync(long id);
+        Task<BackOfficeDocRecipesDto> GetGaBackOfficeDocRecipesByCodCliAndNumConAsync(string codCli,string numCon);
+        Task<long> AddGaBackOfficeDocReceiptAsync(BackOfficeDocReceiptDto dto);
+        Task<long> UpdateGaBeckOfficeDocReceiptAsync(BackOfficeDocReceiptDto dto);
+        Task<bool> DeleteGaBackOfficeDocReceiptAsync(long id);
+
+        #endregion
+
         #region BackOfficeInsolutoTariNovi
-        Task<PagedList<ViewGaBackOfficeInsolutoTariNovi>> GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(string filter);
+        Task<PagedList<ViewGaBackOfficeInsolutoTariNovi>> GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(string codCli, string numCon);
+
+        #endregion
+
+        #region BackOfficeCli
+        Task<PagedList<ViewGaBackOfficeUtenzeCliFat>> GetViewGaBackOfficeUtenzaCliFatByFilterAsync(string codCli);
+        Task<PagedList<ViewGaBackOfficeUtenzeCliSed>> GetViewGaBackOfficeUtenzaCliSedByFilterAsync(string codCli);
         #endregion
 
 

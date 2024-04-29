@@ -11,6 +11,7 @@
 	<ItemGroup>
 		<PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.2" />
 		<PackageReference Include="AutoMapper" Version="11.0.0" />
+		<PackageReference Include="Azure.Identity" Version="1.11.0" />
 		<PackageReference Include="EPPlus" Version="6.0.8" />
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.7" />
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.9" />
@@ -65,10 +66,31 @@
 	  <None Update="Scripts\Autorizzazioni\DROP_ViewGaAutorizzazioniDocumenti.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V11.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V6.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V10.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V9.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\CREATE_ViewGaBackOffice_V8.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V11.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V10.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V9.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\BackOffice\DROP_ViewGaBackOffice_V8.sql">
@@ -96,6 +118,12 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Preventivi\DROP_ViewGaPreventivi.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Progetti\CREATE_ViewGaProgetti_V3.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Progetti\CREATE_ViewGaProgetti_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\SmartCity\CREATE_ViewGaSmartCity.sql">

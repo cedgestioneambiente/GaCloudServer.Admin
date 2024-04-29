@@ -2,17 +2,14 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice;
 using GaCloudServer.BusinnessLogic.Extensions;
+using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using nh = GaCloudServer.BusinnessLogic.Helpers.NumberHelper;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -22,6 +19,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<BackOfficeParametroOnCategoria> gaBackOfficeParametroOnCategoriaRepo;
         protected readonly IGenericRepository<BackOfficeMargine> gaBackOfficeMarginiRepo;
         protected readonly IGenericRepository<BackOfficeZona> gaBackOfficeZoneRepo;
+        protected readonly IGenericRepository<BackOfficeDocReceipt> gaBackOfficeDocRecipesRepo;
 
 
         protected readonly IGenericRepository<ViewGaBackOfficeComuni> viewGaBackOfficeComuniRepo;
@@ -31,11 +29,15 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaBackOfficeContenitoriLetture> viewGaBackOfficeContenitoriLettureRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenze> viewGaBackOfficeUtenzeRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartite> viewGaBackOfficeUtenzePartiteRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteVariazioni> viewGaBackOfficeUtenzePartiteVariazioniRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail> viewGaBackOfficeUtenzePartiteDetailRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeUtenzeZone> viewGaBackOfficeUtenzeZoneRepo;
         protected readonly IGenericRepository<ViewGaBackOfficeInsolutoTariNovi> viewGaBackOfficeInsolutoTariNoviRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeUtenzeNovi> viewGaBackOfficeUtenzeNoviRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeUtenzeCliFat> viewGaBackOfficeUtenzeCliFatRepo;
+        protected readonly IGenericRepository<ViewGaBackOfficeUtenzeCliSed> viewGaBackOfficeUtenzeCliSedRepo;
 
         protected readonly IGenericRepository<ViewGaBackOfficeZone> viewGaBackOfficeZoneRepo;
 
@@ -50,6 +52,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<BackOfficeParametroOnCategoria> gaBackOfficeParametroOnCategoriaRepo,
             IGenericRepository<BackOfficeMargine> gaBackOfficeMarginiRepo,
             IGenericRepository<BackOfficeZona> gaBackOfficeZoneRepo,
+            IGenericRepository<BackOfficeDocReceipt> gaBackOfficeDocRecipesRepo,
 
             IGenericRepository<ViewGaBackOfficeComuni> viewGaBackOfficeComuniRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeGrouped> viewGaBackOfficeUtenzeGroupedRepo,
@@ -58,11 +61,15 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeContenitoriLetture> viewGaBackOfficeContenitoriLettureRepo,
             IGenericRepository<ViewGaBackOfficeUtenze> viewGaBackOfficeUtenzeRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartite> viewGaBackOfficeUtenzePartiteRepo,
+            IGenericRepository<ViewGaBackOfficeUtenzePartiteVariazioni> viewGaBackOfficeUtenzePartiteVariazioniRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartiteDetail> viewGaBackOfficeUtenzePartiteDetailRepo,
             IGenericRepository<ViewGaBackOfficeUtenzePartiteGrp> viewGaBackOfficeUtenzePartiteGrpRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
             IGenericRepository<ViewGaBackOfficeUtenzeZone> viewGaBackOfficeUtenzeZoneRepo,
             IGenericRepository<ViewGaBackOfficeInsolutoTariNovi> viewGaBackOfficeInsolutoTariNoviRepo,
+            IGenericRepository<ViewGaBackOfficeUtenzeNovi> viewGaBackOfficeUtenzeNoviRepo,
+            IGenericRepository<ViewGaBackOfficeUtenzeCliFat> viewGaBackOfficeUtenzeCliFatRepo,
+            IGenericRepository<ViewGaBackOfficeUtenzeCliSed> viewGaBackOfficeUtenzeCliSedRepo,
 
             IGenericRepository<ViewGaBackOfficeZone> viewGaBackOfficeZoneRepo,
 
@@ -76,6 +83,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaBackOfficeParametroOnCategoriaRepo = gaBackOfficeParametroOnCategoriaRepo;
             this.gaBackOfficeMarginiRepo = gaBackOfficeMarginiRepo;
             this.gaBackOfficeZoneRepo = gaBackOfficeZoneRepo;
+            this.gaBackOfficeDocRecipesRepo = gaBackOfficeDocRecipesRepo;
 
             this.viewGaBackOfficeUtenzeGroupedRepo = viewGaBackOfficeUtenzeGroupedRepo;
             this.viewGaBackOfficeNdUtenzeRepo = viewGaBackOfficeNdUtenzeRepo;
@@ -87,11 +95,15 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.viewGaBackOfficeUtenzeRepo = viewGaBackOfficeUtenzeRepo;
             this.viewGaBackOfficeUtenzePartiteRepo = viewGaBackOfficeUtenzePartiteRepo;
+            this.viewGaBackOfficeUtenzePartiteVariazioniRepo = viewGaBackOfficeUtenzePartiteVariazioniRepo;
             this.viewGaBackOfficeUtenzePartiteDetailRepo = viewGaBackOfficeUtenzePartiteDetailRepo;
             this.viewGaBackOfficeUtenzePartiteGrpRepo = viewGaBackOfficeUtenzePartiteGrpRepo;
             this.viewGaBackOfficeUtenzeDispositiviRepo = viewGaBackOfficeUtenzeDispositiviRepo;
             this.viewGaBackOfficeUtenzeZoneRepo = viewGaBackOfficeUtenzeZoneRepo;
             this.viewGaBackOfficeInsolutoTariNoviRepo = viewGaBackOfficeInsolutoTariNoviRepo;
+            this.viewGaBackOfficeUtenzeNoviRepo = viewGaBackOfficeUtenzeNoviRepo;
+            this.viewGaBackOfficeUtenzeCliFatRepo = viewGaBackOfficeUtenzeCliFatRepo;
+            this.viewGaBackOfficeUtenzeCliSedRepo = viewGaBackOfficeUtenzeCliSedRepo;
 
             this.viewGaBackOfficeZoneRepo = viewGaBackOfficeZoneRepo;
 
@@ -198,6 +210,14 @@ namespace GaCloudServer.BusinnessLogic.Services
             var view = await viewGaBackOfficeUtenzePartiteRepo.GetWithFilterAsync(x => x.CpAzi == cpAzi
             && x.NumCon==numCon
             , 1, 0, "Partita");
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaBackOfficeUtenzePartiteVariazioni>> GetViewGaBackOfficeUtenzePartiteVariazioniByCpAziAndNumConAndPartitaAsync(string cpAzi, string numCon,string partita)
+        {
+            var view = await viewGaBackOfficeUtenzePartiteVariazioniRepo.GetWithFilterAsync(x => x.CodAzi == cpAzi
+            && x.NumCon == numCon && x.Partita==partita
+            , 1, 0, "DtIni","OrderByDescending");
             return view;
         }
 
@@ -407,14 +427,95 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+        #region BackOfficeNovi
+        public async Task<PagedList<ViewGaBackOfficeUtenzeNovi>> GetViewGaBackOfficeUtenzeNoviAsync(string filter)
+        {
+            var view = await viewGaBackOfficeUtenzeNoviRepo.GetWithFilterAsync(x =>
+            EF.Functions.Like(x.CodCli, filter.toWildcardString())
+            || EF.Functions.Like(x.RagSo, filter.toWildcardString())
+            || EF.Functions.Like(x.NumCon, filter.toWildcardString())
+            || EF.Functions.Like(x.CodFis,filter.toWildcardString()));
+
+            return view;
+        }
+        #endregion
+
+        #region BackOfficeDocRecipes
+        public async Task<BackOfficeDocRecipesDto> GetGaBackOfficeDocRecipesAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await gaBackOfficeDocRecipesRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<BackOfficeDocRecipesDto, PagedList<BackOfficeDocReceipt>>();
+            return dtos;
+        }
+
+
+        public async Task<BackOfficeDocReceiptDto> GetGaBackOfficeDocRecipesByIdAsync(long id)
+        {
+            var entity = await gaBackOfficeDocRecipesRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<BackOfficeDocReceiptDto, BackOfficeDocReceipt>();
+            return dto;
+        }
+
+        public async Task<BackOfficeDocRecipesDto> GetGaBackOfficeDocRecipesByCodCliAndNumConAsync(string codCli,string numCon)
+        {
+            var entities = await gaBackOfficeDocRecipesRepo.GetWithFilterAsync(x=>x.CodCli==codCli && x.NumCon==numCon);
+            var dtos = entities.ToDto<BackOfficeDocRecipesDto, PagedList<BackOfficeDocReceipt>>();
+            return dtos;
+        }
+
+
+        public async Task<long> AddGaBackOfficeDocReceiptAsync(BackOfficeDocReceiptDto dto)
+        {
+            var entity = dto.ToEntity<BackOfficeDocReceipt, BackOfficeDocReceiptDto>();
+            await gaBackOfficeDocRecipesRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaBeckOfficeDocReceiptAsync(BackOfficeDocReceiptDto dto)
+        {
+            var entity = dto.ToEntity<BackOfficeDocReceipt, BackOfficeDocReceiptDto>();
+            gaBackOfficeDocRecipesRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaBackOfficeDocReceiptAsync(long id)
+        {
+            var entity = await gaBackOfficeDocRecipesRepo.GetByIdAsync(id);
+            gaBackOfficeDocRecipesRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+        #endregion
+
         #region BackOfficeInsolutoTariNovi
-        public async Task<PagedList<ViewGaBackOfficeInsolutoTariNovi>> GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(string filter)
+        public async Task<PagedList<ViewGaBackOfficeInsolutoTariNovi>> GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(string codCli,string numCon)
         {
             var view = await viewGaBackOfficeInsolutoTariNoviRepo.GetWithFilterAsync(
-                x => EF.Functions.Like(x.CodCli, filter.toWildcardString()) ||
-                EF.Functions.Like(x.RagSo, filter.toWildcardString()) ||
-                EF.Functions.Like(x.CodFis, filter.toWildcardString()) ||
-                EF.Functions.Like(x.NumCont, filter.toWildcardString()));
+                x => x.CodCli==codCli &&
+                x.NumCont==numCon,1,0,"AnnoRif");
+
+            return view;
+        }
+        #endregion
+
+        #region BackOfficeCli
+        public async Task<PagedList<ViewGaBackOfficeUtenzeCliFat>> GetViewGaBackOfficeUtenzaCliFatByFilterAsync(string codCli)
+        {
+            var view = await viewGaBackOfficeUtenzeCliFatRepo.GetWithFilterAsync(
+                x => x.CodCli.Trim() == codCli,1,0);
+
+            return view;
+        }
+
+        public async Task<PagedList<ViewGaBackOfficeUtenzeCliSed>> GetViewGaBackOfficeUtenzaCliSedByFilterAsync(string codCli)
+        {
+            var view = await viewGaBackOfficeUtenzeCliSedRepo.GetWithFilterAsync(
+                x => x.CodCli.Trim() == codCli, 1, 0);
 
             return view;
         }

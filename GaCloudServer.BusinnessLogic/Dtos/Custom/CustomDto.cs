@@ -29,6 +29,10 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Custom
         public bool? Completed { get; set; }
         public bool? Approved { get; set; }
         public string? Info { get; set; }
+        public double? WorkedDays { get; set; }
+        public double? TotalDays { get; set; }
+        public string? ProgressDays { get; set; }
+        public double ProgressByDays { get; set; }
     }
 
     public class DownloadProgressDto

@@ -1,0 +1,137 @@
+
+@font-face {
+    font-family: 'OCR-B';
+    src: url(https://cdn.jsdelivr.net/gh/raisty/OCR-B/dist/OCR-B.ttf) format("truetype"), url(https://cdn.jsdelivr.net/gh/raisty/OCR-B/dist/OCR-B.otf) format("opentype");
+}
+
+body {
+    font-family: 'OCR-B';
+}
+
+.cf-table {
+    border-collapse: collapse;
+    width: 397px;
+    position:absolute;
+    top:130px;
+    left:186px;
+}
+.cf-table-2 {
+    border-collapse: collapse;
+    width: 397px;
+    position: absolute;
+    top: 838px;
+    left: 186px;
+}
+.cf-table-td {
+    border-collapse:collapse;
+    width: 24px;
+    height: 20px;
+    text-align: center;
+}
+
+.pag-table {
+    border-collapse: collapse;
+    position: absolute;
+    top: 327px;
+    left: 40px;
+    width: 930px;
+    height: 218px;
+    font-size:13px;
+}
+
+
+
+.pag-table tr {
+    height:18px !important;
+    line-height:18px !important;
+}
+
+    .pag-table tr td {
+        
+        height: 18px;
+        line-height:18px;
+        text-align: center;
+        border-collapse:collapse;
+    }
+
+.pag-table-c1 {
+    width: 30px;
+}
+.pag-table-c2 {
+    width: 29px;
+}
+.pag-table-c3 {
+    width: 16px;
+}
+.pag-table-c4 {
+    width: 61px;
+}
+.pag-table-c5 {
+    width: 7px;
+}
+.pag-table-c6 {
+    width: 70px;
+    letter-spacing:6px;
+}
+.pag-table-c7 {
+    width: 186px;
+}
+.pag-table-c8 {
+    width: 60px;
+}
+.pag-table-c9 {
+    width: 6px;
+}
+.pag-table-c10 {
+    width: 60px;
+}
+.pag-table-c11 {
+    width: 104px;
+}
+.pag-table-c12 {
+    width: 135px;
+    text-align:end !important;
+}
+.pag-table-c13 {
+    width: auto;
+}
+
+.pag-total {
+    font-size:13px;
+    position:absolute;
+    top:535px;
+    right:28px;
+    height:20px;
+    line-height:20px;
+}
+
+.pag-table-2 {
+    border-collapse: collapse;
+    position: absolute;
+    top: 1033px;
+    left: 40px;
+    width: 930px;
+    height: 218px;
+    font-size: 13px;
+}
+
+.pag-table-2 tr {
+    height: 18px !important;
+    line-height: 18px !important;
+}
+
+    .pag-table-2 tr td {
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        border-collapse: collapse;
+    }
+
+.pag-total-2 {
+    font-size: 13px;
+    position: absolute;
+    top: 1245px;
+    right: 28px;
+    height: 20px;
+    line-height: 20px;
+}

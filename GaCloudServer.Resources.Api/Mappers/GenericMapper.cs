@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GaCloudServer.Resources.Api.Mappers.Autorizzazioni;
 using GaCloudServer.Resources.Api.Mappers.Aziende;
+using GaCloudServer.Resources.Api.Mappers.BackOffice;
 using GaCloudServer.Resources.Api.Mappers.Cdr;
 using GaCloudServer.Resources.Api.Mappers.Comunicati;
 using GaCloudServer.Resources.Api.Mappers.Consorzio;
@@ -65,6 +66,7 @@ namespace GaCloudServer.Resources.Api.Mappers
             new SmartCityMapperProfile(),
             new PrevisioMapperProfile(),
             new PreventiviMapperProfile(),
+            new BackOfficeMapperProfile()
         };
 
         static GenericMapper() {

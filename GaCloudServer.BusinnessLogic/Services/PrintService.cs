@@ -38,7 +38,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
-        public async Task<string> PrintMerged(dynamic dtos)
+        public async Task<string> PrintMerged(dynamic dtos, string? alternativePath = null,int? copies=2,MarginSettings margin=null)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     fileName = dto.FileName;
                     filePath= dto.FilePath;
 
-                    var htmlContent= (string)mi.Invoke(this, new object[] { dto });
+                    var htmlContent= (string)mi.Invoke(this, new object[] { dto,alternativePath });
 
                     pages.Add(new ObjectSettings()
                     {
@@ -66,7 +66,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 }
                 
 
-                return _localFileService.UploadMergedOnServerPrint(fileName,filePath,pages,2);
+                return _localFileService.UploadMergedOnServerPrint(fileName,filePath,pages,copies.GetValueOrDefault(),Orientation.Portrait,margin);
             }
             catch (Exception ex)
             {

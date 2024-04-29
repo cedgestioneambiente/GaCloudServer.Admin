@@ -185,6 +185,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaBackOfficeUtenzePartiteGrp> ViewGaBackOfficeUtenzePartiteGrp { get; set; }
         DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
         DbSet<ViewGaBackOfficeUtenzeZone> ViewGaBackOfficeUtenzeZone { get; set; }
+        DbSet<ViewGaBackOfficeUtenzeCliFat> ViewGaBackOfficeUtenzeCliFat { get; set; }
+        DbSet<ViewGaBackOfficeUtenzeCliSed> ViewGaBackOfficeUtenzeCliSed { get; set; }
+        DbSet<ViewGaBackOfficeUtenzePartiteVariazioni> ViewGaBackOfficeUtenzePartiteVariazioni { get; set; }
         #endregion
 
         #region Sp

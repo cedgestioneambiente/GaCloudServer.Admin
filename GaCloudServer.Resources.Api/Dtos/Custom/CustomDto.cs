@@ -20,5 +20,9 @@ namespace GaCloudServer.Resources.Api.Dtos.Custom
 
     public class FileApiDto:GenericFileApiDto { 
     }
-   
+
+    public class CDataApiDto
+    { 
+        public string CData { get; set; }
+    }
 }

@@ -16,6 +16,7 @@
 	  <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.2" />
 	  <PackageReference Include="AutoMapper" Version="11.0.1" />
 	  <PackageReference Include="AutoWrapper.Core" Version="4.5.0" />
+	  <PackageReference Include="Azure.Identity" Version="1.11.0" />
 	  <PackageReference Include="EPPlus" Version="6.0.8" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.1" />
 	  <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.1" />
@@ -105,6 +106,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Template\CrmEventsDailyReport\assets\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\BackOfficeF24\assets\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\BackOfficeF24\assets\template.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Template\CrmTicketDefault\assets\styles.css">

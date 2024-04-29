@@ -1,4 +1,5 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Progetti;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti;
@@ -369,12 +370,13 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpGet("ValidateGaProgettiJobAsync/{id}/{descrizione}/{workId}/{parentId}")]
-        public async Task<ActionResult<ApiResponse>> ValidateGaProgettiJobAsync(long id, string descrizione, long workId,long parentId)
+        [HttpPost("ValidateGaProgettiJobAsync")]
+        public async Task<ActionResult<ApiResponse>> ValidateGaProgettiJobAsync([FromBody] ProgettiJobApiDto apiDto)
         {
             try
             {
-                var response = await _gaProgettiService.ValidateGaProgettiJobAsync(id, descrizione,workId,parentId);
+                var dto = apiDto.ToDto<ProgettiJobDto, ProgettiJobApiDto>();
+                var response = await _gaProgettiService.ValidateGaProgettiJobAsync(dto);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -391,6 +393,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var response = await _gaProgettiService.ChangeStatusGaProgettiJobAsync(id);
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ValidateDeleteGaProgettiJobAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> ValidateDeleteGaProgettiJobAsync(long id)
+        {
+            try
+            {
+                var response = await _gaProgettiService.ValidateDeleteGaProgettiJobAsync(id);
                 return new ApiResponse(response);
             }
             catch (Exception ex)

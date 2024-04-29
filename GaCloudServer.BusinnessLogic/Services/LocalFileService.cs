@@ -87,7 +87,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             return MakeWebPath(Path.Combine(_webPath, _path, _fileName));
         }
 
-        public dynamic UploadMergedOnServerPrint(string _fileName, string _path, List<ObjectSettings> pages, int copies, Orientation orientation = Orientation.Portrait)
+        public dynamic UploadMergedOnServerPrint(string _fileName, string _path, List<ObjectSettings> pages, int copies, Orientation orientation = Orientation.Portrait, MarginSettings? margin=null)
         {
             string filePath = Path.Combine(_webRootPath, _path, _fileName);
 
@@ -96,7 +96,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 ColorMode = ColorMode.Color,
                 Orientation = orientation,
                 PaperSize = PaperKind.A4,
-                Margins = new MarginSettings { Top = 10 },
+                Margins = margin!=null?margin: new MarginSettings { Top = 10 },
                 DocumentTitle = "PDF Report",
                 Copies = copies,
                 Out = filePath

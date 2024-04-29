@@ -171,6 +171,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<BackOfficeParametroOnCategoria>, GenericRepository<TResourcesDbContext, BackOfficeParametroOnCategoria>>();
             services.AddTransient<IGenericRepository<BackOfficeMargine>, GenericRepository<TResourcesDbContext, BackOfficeMargine>>();
             services.AddTransient<IGenericRepository<BackOfficeZona>, GenericRepository<TResourcesDbContext, BackOfficeZona>>();
+            services.AddTransient<IGenericRepository<BackOfficeDocReceipt>, GenericRepository<TResourcesDbContext, BackOfficeDocReceipt>>();
 
             services.AddTransient<IGenericRepository<ViewGaBackOfficeComuni>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeComuni>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeGrouped>>();
@@ -186,6 +187,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeTipCon>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeTipCon>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeZone>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeZone>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeInsolutoTariNovi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeInsolutoTariNovi>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeNovi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeNovi>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeCliFat>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeCliFat>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeCliSed>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeCliSed>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteVariazioni>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteVariazioni>>();
 
             //Sp
             services.AddTransient<IProcedureManager<SpGaBackOfficeUtenze>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenze>>();
@@ -760,6 +765,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<BackOfficeParametroOnCategoria>, GenericRepository<TResourcesDbContext, BackOfficeParametroOnCategoria>>();
             services.AddTransient<IGenericRepository<BackOfficeMargine>, GenericRepository<TResourcesDbContext, BackOfficeMargine>>();
             services.AddTransient<IGenericRepository<BackOfficeZona>, GenericRepository<TResourcesDbContext, BackOfficeZona>>();
+            services.AddTransient<IGenericRepository<BackOfficeDocReceipt>, GenericRepository<TResourcesDbContext, BackOfficeDocReceipt>>();
 
             services.AddTransient<IGenericRepository<ViewGaBackOfficeComuni>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeComuni>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeGrouped>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeGrouped>>();
@@ -775,6 +781,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeDispositivi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeDispositivi>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeTipCon>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeTipCon>>();
             services.AddTransient<IGenericRepository<ViewGaBackOfficeInsolutoTariNovi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeInsolutoTariNovi>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeNovi>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeNovi>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeCliFat>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeCliFat>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzeCliSed>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzeCliSed>>();
+            services.AddTransient<IGenericRepository<ViewGaBackOfficeUtenzePartiteVariazioni>, GenericRepository<TResourcesDbContext, ViewGaBackOfficeUtenzePartiteVariazioni>>();
+
 
             //Sp
             services.AddTransient<IProcedureManager<SpGaBackOfficeUtenze>, ProcedureManager<TResourcesDbContext, SpGaBackOfficeUtenze>>();

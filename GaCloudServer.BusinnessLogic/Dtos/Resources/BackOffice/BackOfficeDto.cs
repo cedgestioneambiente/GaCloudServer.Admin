@@ -1,4 +1,5 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice
@@ -43,6 +44,26 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice
     public class BackOfficeTicketsDto:GenericPagedListDto<BackOfficeTicketDto>
     {
         
+    }
+    #endregion
+
+    #region BackOfficeDocRecipt
+    public class BackOfficeDocReceiptDto : GenericDto
+    {
+        public string DocType { get; set; }
+        public DateTime OpDate { get; set; }
+        public string NumCon { get; set; }
+        public string CodCli { get; set; }
+        public string AnnoRif { get; set; }
+        public string Note {  get; set; }
+        public string Note2 { get; set; }
+
+        public string CData { get; set; }
+    }
+
+    public class BackOfficeDocRecipesDto : GenericPagedListDto<BackOfficeDocReceiptDto>
+    {
+
     }
     #endregion
 

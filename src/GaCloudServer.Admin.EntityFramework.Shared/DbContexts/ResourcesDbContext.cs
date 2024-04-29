@@ -172,6 +172,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<BackOfficeStatoTicket> GaBackOfficeStatiTickets { get; set; }
         public DbSet<BackOfficeTipoTicket> GaBackOfficeTipiTickets { get; set; }
         public DbSet<BackOfficeTicket> GaBackOfficeTickets { get; set; }
+        public DbSet<BackOfficeDocReceipt> GaBackOfficeRecipes { get; set; }
 
         #region Views
         public DbSet<ViewGaBackOfficeNdUtenze> ViewGaBackOfficeNdUtenze { get; set; }
@@ -190,6 +191,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaBackOfficeUtenzeDispositivi> ViewGaBackOfficeUtenzeDispositivi { get; set; }
         public DbSet<ViewGaBackOfficeUtenzeZone> ViewGaBackOfficeUtenzeZone { get; set; }
         public DbSet<ViewGaBackOfficeInsolutoTariNovi> ViewGaBackOfficeInsolutoTariNovi { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzeNovi> ViewGaBackOfficeUtenzeNovi { get; set; }
+
+        public DbSet<ViewGaBackOfficeUtenzeCliFat> ViewGaBackOfficeUtenzeCliFat { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzeCliSed> ViewGaBackOfficeUtenzeCliSed { get; set; }
+        public DbSet<ViewGaBackOfficeUtenzePartiteVariazioni> ViewGaBackOfficeUtenzePartiteVariazioni { get; set; }
         #endregion
 
         #region Sp
@@ -860,6 +866,34 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewGaBackOfficeInsolutoTariNovi))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzeNovi>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzeNovi))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzeCliFat>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzeCliFat))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzeCliSed>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzeCliSed))
+                .HasNoKey();
+            });
+
+            builder.Entity<ViewGaBackOfficeUtenzePartiteVariazioni>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaBackOfficeUtenzePartiteVariazioni))
                 .HasNoKey();
             });
 

@@ -90,5 +90,24 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 return "";
             }
         }
+
+        public static char[] GenerateCharArrayForCodFis(string input)
+        {
+            char[] charArray = new char[16]; // Array di caratteri di lunghezza fissa
+
+            // Copia i primi 16 caratteri dalla stringa di input, se disponibili
+            for (int i = 0; i < Math.Min(input.Length, 16); i++)
+            {
+                charArray[i] = input[i];
+            }
+
+            // Aggiungi caratteri vuoti se la stringa di input è più corta di 16 caratteri
+            for (int i = input.Length; i < 16; i++)
+            {
+                charArray[i] = ' ';
+            }
+
+            return charArray;
+        }
     }
 }

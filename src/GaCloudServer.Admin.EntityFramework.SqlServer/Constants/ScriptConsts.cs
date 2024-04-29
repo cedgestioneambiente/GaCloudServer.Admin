@@ -49,6 +49,9 @@
         public const string CREATE_ViewGaBackOffice_V6 = "CREATE_ViewGaBackOffice_V6.sql";
         public const string CREATE_ViewGaBackOffice_V7 = "CREATE_ViewGaBackOffice_V7.sql";
         public const string CREATE_ViewGaBackOffice_V8 = "CREATE_ViewGaBackOffice_V8.sql";
+        public const string CREATE_ViewGaBackOffice_V9 = "CREATE_ViewGaBackOffice_V9.sql";
+        public const string CREATE_ViewGaBackOffice_V10 = "CREATE_ViewGaBackOffice_V10.sql";
+        public const string CREATE_ViewGaBackOffice_V11 = "CREATE_ViewGaBackOffice_V11.sql";
         public const string DROP_ViewGaBackOffice = "DROP_ViewGaBackOffice.sql";
         public const string DROP_ViewGaBackOffice_V2 = "DROP_ViewGaBackOffice_V2.sql";
         public const string DROP_ViewGaBackOffice_V3 = "DROP_ViewGaBackOffice_V3.sql";
@@ -57,6 +60,9 @@
         public const string DROP_ViewGaBackOffice_V6 = "DROP_ViewGaBackOffice_V6.sql";
         public const string DROP_ViewGaBackOffice_V7 = "DROP_ViewGaBackOffice_V7.sql";
         public const string DROP_ViewGaBackOffice_V8 = "DROP_ViewGaBackOffice_V8.sql";
+        public const string DROP_ViewGaBackOffice_V9 = "DROP_ViewGaBackOffice_V9.sql";
+        public const string DROP_ViewGaBackOffice_V10 = "DROP_ViewGaBackOffice_V10.sql";
+        public const string DROP_ViewGaBackOffice_V11 = "DROP_ViewGaBackOffice_V11.sql";
 
         //PrenotazioneAuto
         public const string GaPrenotazioneAutoMigration = @".\Scripts\PrenotazioneAuto\";
@@ -160,6 +166,8 @@
         //Progetti
         public const string Progetti = @".\Scripts\Progetti\";
         public const string CREATE_ViewProgetti = "CREATE_ViewGaProgetti.sql";
+        public const string CREATE_ViewProgetti_V2 = "CREATE_ViewGaProgetti_V2.sql";
+        public const string CREATE_ViewProgetti_V3 = "CREATE_ViewGaProgetti_V3.sql";
         public const string DROP_ViewProgetti = "DROP_ViewGaProgetti.sql";
 
         //Dashboard

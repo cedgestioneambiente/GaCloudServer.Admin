@@ -37,6 +37,12 @@ namespace GaCloudServer.Resources.Api.ApiDtos.Resources.Progetti
         public bool? Completed { get; set; }
         public bool? Approved { get; set; }
         public string? Info { get; set; }
+
+        public double? TotalDays { get; set; }
+        public double? WorkedDays { get; set; }
+        public bool? CountDays { get; set; }
+        public bool? Internal { get; set; }
+        public double? MaxDays { get; set; }
     }
 
     public class ProgettiJobsApiDto : GenericPagedListApiDto<ProgettiJobApiDto>

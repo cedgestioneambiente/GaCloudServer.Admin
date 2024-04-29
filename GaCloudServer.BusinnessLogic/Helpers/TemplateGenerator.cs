@@ -1404,5 +1404,88 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
         }
 
+        public static string BackOfficeF24(BackOfficeF24TemplateDto dto, string? alternativePath = null)
+        {
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            char[] codFis = StringHelper.GenerateCharArrayForCodFis(dto.CodFis);
+
+
+            var filePath = Path.Combine(currentDirectory, "Template/BackOfficeF24/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+
+            string table_row = "";
+            double tot = 0.0;
+            foreach (var row in dto.Rows)
+            {
+                double valore = Double.Parse(row.Valore);
+                string[] part = valore.ToString("0.00").Split(",");
+                string risultato = $"{part[0]} {part[1]}";
+
+                table_row += string.Format(@"<tr>
+                            <td class=""pag-table-c1"">{0}</td>
+                            <td class=""pag-table-c2"">{1}</td>
+                            <td class=""pag-table-c3""> </td>
+                            <td class=""pag-table-c4"">{2}</td>
+                            <td class=""pag-table-c5""> </td>
+                            <td class=""pag-table-c6"">{3}</td>
+                            <td class=""pag-table-c7""> </td>
+                            <td class=""pag-table-c8"">{4}</td>
+                            <td class=""pag-table-c9""> </td>
+                            <td class=""pag-table-c10"">{5}</td>
+                            <td class=""pag-table-c11""></td>
+                            <td class=""pag-table-c12"">{6}</td>
+                            <td class=""pag-table-c13""> </td>
+                        </tr>",row.Sezione,row.Sezione2,row.Tipo,row.CodEnte,row.Rata,row.Anno,risultato);
+                tot += valore;
+            }
+
+            int fixed_row = 16;
+            for (int i = dto.Rows.Count; i < 16; i++)
+            {
+                table_row += "<tr></tr>";
+            }
+
+            string[] partTot = tot.ToString("0.00").Split(",");
+            string risultatoTot = $"{partTot[0]} {partTot[1]}";
+
+
+            var sb = new StringBuilder();
+            sb.AppendFormat(@fileContent
+                ,codFis[0]
+                ,codFis[1]
+                ,codFis[2]
+                ,codFis[3]
+                ,codFis[4]
+                ,codFis[5]
+                ,codFis[6]
+                ,codFis[7]
+                ,codFis[8]
+                ,codFis[9]
+                ,codFis[10]
+                ,codFis[11]
+                ,codFis[12]
+                ,codFis[13]
+                ,codFis[14]
+                ,codFis[15]
+                ,dto.Cognome
+                ,dto.Nome
+                ,table_row
+                ,risultatoTot
+                );
+
+            
+            return sb.ToString();
+        }
+
     }
 }

@@ -206,18 +206,49 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Functions
-        public async Task<bool> ValidateGaProgettiJobAsync(long id, string descrizione,long workId,long parentId)
+        public async Task<long> ValidateGaProgettiJobAsync(ProgettiJobDto dto)
         {
-            var entity = await gaProgettiJobsRepo.GetWithFilterAsync(x => x.Title == descrizione && x.ProgettiWorkId==workId && x.ParentId== parentId && x.Id != id);
+            var entity = await gaProgettiJobsRepo.GetWithFilterAsync(x => x.Title == dto.Title && x.ProgettiWorkId==dto.ProgettiWorkId && x.ParentId== dto.ParentId && x.Id != dto.Id);
 
             if (entity.Data.Count > 0)
             {
+                return -1;
+            }
+
+            if (dto.TotalDays < dto.WorkedDays)
+            {
+                return -2;
+            }
+
+            var entities = await gaProgettiJobsRepo.GetWithFilterAsync(x => x.ParentId == dto.ParentId);
+            var parent = await gaProgettiJobsRepo.GetByIdAsync(dto.ParentId);
+
+            var totalDays = (from x in entities.Data.Where(x=>x.Id!=dto.Id)
+                             select x.TotalDays
+                             ).ToList().Sum(x=>x.GetValueOrDefault(0));
+
+            var maxDays = parent == null ? 0 : parent.MaxDays;
+
+            if (totalDays+dto.TotalDays > maxDays)
+            {
+                return -3;
+            }
+
+            return 0;
+        }
+
+        public async Task<bool> ValidateDeleteGaProgettiJobAsync(long id)
+        {
+            var entities = await gaProgettiJobsRepo.GetWithFilterAsync(x=>x.ParentId==id);
+
+            if (entities != null && entities.Data.Count>0)
+            {
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
+
+            
         }
 
         public async Task<bool> ChangeStatusGaProgettiJobAsync(long id)
@@ -350,6 +381,10 @@ namespace GaCloudServer.BusinnessLogic.Services
                 obj.Completed = itm.Completed;
                 obj.Approved = itm.Approved;
                 obj.Info = itm.Info;
+                obj.WorkedDays = itm.WorkedDays;
+                obj.TotalDays = itm.TotalDays;
+                obj.ProgressDays = itm.ProgressDays;
+                obj.ProgressByDays = itm.ProgressByDays;
 
                 nestedObjects.Add(obj);
             }

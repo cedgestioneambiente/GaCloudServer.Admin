@@ -2,6 +2,7 @@
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
+using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -159,6 +160,34 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         //public string Note { get; set; }
         public List<dynamic> Dispositivi { get; set; }
 
+    }
+
+    public class BackOfficeF24TemplateDto : GenericPrintDto
+    { 
+        public string CodFis {  get; set; }
+        public string Cognome { get; set; }
+        public string Nome { get; set; }
+        public List<BackOfficeF24RowTemplateDto> Rows { get; set; }
+        public string Totale { get; set; }
+        public string TemplateName { get; set; }
+    }
+
+    public class BackOfficeF24RowTemplateDto
+    {
+        public string Sezione { get; set; }
+        public string Sezione2 { get; set; }
+        public string CodEnte { get; set; }
+        public string Tipo { get; set; }
+        public string Rata { get; set; }
+        public string Valore { get; set; }
+        public string Anno { get; set; }
+    }
+
+    public class BackOfficeF24RataTemplateDto
+    { 
+        public string CodTributo { get; set; }
+        public double Totale { get; set; }
+        public string Rata { get; set; }
     }
 
 

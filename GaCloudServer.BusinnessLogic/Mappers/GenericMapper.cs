@@ -66,6 +66,7 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new SmartCityMapperProfile(),
             new PrevisioMapperProfile(),
             new PreventiviMapperProfile(),
+            new BackOfficeMapperProfile()
         };
 
         static GenericMapper() {
