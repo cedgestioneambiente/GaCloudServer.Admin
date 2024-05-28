@@ -206,6 +206,7 @@
         public const string CREATE_ViewGaCrm_V5 = "CREATE_ViewGaCrm_V5.sql";
         public const string CREATE_ViewGaCrm_V6 = "CREATE_ViewGaCrm_V6.sql";
         public const string CREATE_ViewGaCrm_V7 = "CREATE_ViewGaCrm_V7.sql";
+        public const string CREATE_ViewGaCrm_V8 = "CREATE_ViewGaCrm_V8.sql";
         public const string DROP_ViewGaCrm = "DROP_ViewGaCrm.sql";
         public const string DROP_ViewGaCrm_V2 = "DROP_ViewGaCrm_V2.sql";
         public const string DROP_ViewGaCrm_V3 = "DROP_ViewGaCrm_V3.sql";
@@ -213,6 +214,7 @@
         public const string DROP_ViewGaCrm_V5 = "DROP_ViewGaCrm_V5.sql";
         public const string DROP_ViewGaCrm_V6 = "DROP_ViewGaCrm_V6.sql";
         public const string DROP_ViewGaCrm_V7 = "DROP_ViewGaCrm_V7.sql";
+        public const string DROP_ViewGaCrm_V8 = "DROP_ViewGaCrm_V8.sql";
 
         //PrenotazioneLocali
         public const string GaPrenotazioneLocaliMigration = @".\Scripts\PrenotazioneLocali\";
@@ -238,6 +240,8 @@
         public const string GaPreventivi = @".\Scripts\Preventivi\";
         public const string CREATE_ViewGaPreventivi = "CREATE_ViewGaPreventivi.sql";
         public const string DROP_ViewGaPreventivi = "DROP_ViewGaPreventivi.sql";
+        public const string CREATE_ViewGaPreventivi_V2 = "CREATE_ViewGaPreventivi_V2.sql";
+        public const string DROP_ViewGaPreventivi_V2 = "DROP_ViewGaPreventivi_V2.sql";
 
     }
 }

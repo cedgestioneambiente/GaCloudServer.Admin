@@ -7,6 +7,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.S
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Common;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
@@ -71,6 +72,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
         public static IServiceCollection AddResourcesRepository<TResourcesDbContext>(this IServiceCollection services)
             where TResourcesDbContext : DbContext,IResourcesDbContext
         {
+            //Common
+            #region Common
+            services.AddTransient<IGenericRepository<Gauge>, GenericRepository<TResourcesDbContext, Gauge>>();
+            services.AddTransient<IGenericRepository<IvaCode>, GenericRepository<TResourcesDbContext, IvaCode>>();
+            #endregion
+
             //Global
             #region Global
             services.AddTransient<IGenericRepository<GlobalSede>, GenericRepository<TResourcesDbContext, GlobalSede>>();
@@ -503,6 +510,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaCrmCausaliTypes>, GenericRepository<TResourcesDbContext, ViewGaCrmCausaliTypes>>();
             services.AddTransient<IGenericRepository<ViewGaCrmState>, GenericRepository<TResourcesDbContext, ViewGaCrmState>>();
             services.AddTransient<IGenericRepository<ViewGaCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmTickets>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmCommercialeTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmCommercialeTickets>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCalendarTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmCalendarTickets>>();
             services.AddTransient<IGenericRepository<ViewGaCrmEventJobs>, GenericRepository<TResourcesDbContext, ViewGaCrmEventJobs>>();
             services.AddTransient<IGenericRepository<ViewGaCrmGarbageUtenze>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageUtenze>>();
@@ -567,8 +575,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PreventiviAnticipoPagamento>, GenericRepository<TResourcesDbContext, PreventiviAnticipoPagamento>>();
             services.AddTransient<IGenericRepository<PreventiviAnticipo>, GenericRepository<TResourcesDbContext, PreventiviAnticipo>>();
             services.AddTransient<IGenericRepository<PreventiviAnticipoAllegato>, GenericRepository<TResourcesDbContext, PreventiviAnticipoAllegato>>();
+            services.AddTransient<IGenericRepository<PreventiviObject>, GenericRepository<TResourcesDbContext, PreventiviObject>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectAttachment>, GenericRepository<TResourcesDbContext, PreventiviObjectAttachment>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectStatus>, GenericRepository<TResourcesDbContext, PreventiviObjectStatus>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectType>, GenericRepository<TResourcesDbContext, PreventiviObjectType>>();
+            services.AddTransient<IGenericRepository<PreventiviAction>, GenericRepository<TResourcesDbContext, PreventiviAction>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspection>, GenericRepository<TResourcesDbContext, PreventiviObjectInspection>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspectionMode>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionMode>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspectionAttachment>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionAttachment>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspectionImage>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionImage>>();
 
             services.AddTransient<IGenericRepository<ViewGaPreventiviAnticipi>, GenericRepository<TResourcesDbContext, ViewGaPreventiviAnticipi>>();
+            services.AddTransient<IGenericRepository<ViewGaPreventiviCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaPreventiviCrmTickets>>();
 
 
             #endregion
@@ -729,6 +747,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaCrmCausaliTypes>, GenericRepository<TResourcesDbContext, ViewGaCrmCausaliTypes>>();
             services.AddTransient<IGenericRepository<ViewGaCrmState>, GenericRepository<TResourcesDbContext, ViewGaCrmState>>();
             services.AddTransient<IGenericRepository<ViewGaCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmTickets>>();
+            services.AddTransient<IGenericRepository<ViewGaCrmCommercialeTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmCommercialeTickets>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCalendarTickets>, GenericRepository<TResourcesDbContext, ViewGaCrmCalendarTickets>>();
             services.AddTransient<IGenericRepository<ViewGaCrmEventJobs>, GenericRepository<TResourcesDbContext, ViewGaCrmEventJobs>>();
             services.AddTransient<IGenericRepository<ViewGaCrmGarbageUtenze>, GenericRepository<TResourcesDbContext, ViewGaCrmGarbageUtenze>>();

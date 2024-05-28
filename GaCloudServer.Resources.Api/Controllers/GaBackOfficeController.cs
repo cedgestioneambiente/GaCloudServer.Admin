@@ -26,20 +26,23 @@ namespace GaCloudServer.Resources.Api.Controllers
     [ApiController]
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
-    [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
+    [Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
     public class GaBackOfficeController : Controller
     {
         private readonly IGaBackOfficeService _gaBackOfficeService;
+        private readonly IQueryBuilderService _queryBuilderService;
         private readonly ILogger<GaMezziController> _logger;
         private readonly IPrintService _printService;
 
         public GaBackOfficeController(
             IGaBackOfficeService gaBackOfficeService
+            , IQueryBuilderService queryBuilderService
             ,ILogger<GaMezziController> logger,
             IPrintService printService)
         {
 
             _gaBackOfficeService = gaBackOfficeService;
+            _queryBuilderService=queryBuilderService;
             _logger = logger;
             _printService = printService;
         }
@@ -397,6 +400,25 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        #region Views
+        [HttpGet("GetViewGaBackOfficeUtenzeNoviByAddressAsync/{via}/{startNumCiv}/{endNumCiv}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaBackOfficeUtenzeNoviByAddressAsync(string via,int startNumCiv,int endNumCiv)
+        {
+            try
+            {
+                var view = await _gaBackOfficeService.GetViewGaBackOfficeUtenzeNoviByAddressAsync(via, startNumCiv, endNumCiv);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+        #endregion
+
         #endregion
 
         #endregion
@@ -644,6 +666,25 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 var view = await _gaBackOfficeService.GetViewGaBackOfficeInsolutoTariNoviByFilterAsync(codCli,numCon);
                 return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetBackOfficeTariNoviFinancialPositionAsync/{codCli}")]
+        public async Task<ActionResult<ApiResponse>> GetBackOfficeTariNoviFinancialPositionAsync(string codCli)
+        {
+            try
+            {
+                var query= System.IO.File.ReadAllText(@".\Query\BackOffice\TariNoviFinancialPosition.sql");
+                query = string.Format(query, codCli);
+
+                var response = await _queryBuilderService.GetFromQueryAsync(query);
+                return new ApiResponse(response);
             }
             catch (Exception ex)
             {

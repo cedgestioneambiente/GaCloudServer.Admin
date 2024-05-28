@@ -111,6 +111,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public DateTime DataTicket { get; set; }
         public DateTime DataRichiesta { get; set; }
         public long CrmEventComuneId { get; set; }
+        public string? ComuneAlt { get; set; }
         public string Utente { get; set; }
         public string CodCli { get; set; }
         public string NumCon { get; set; }

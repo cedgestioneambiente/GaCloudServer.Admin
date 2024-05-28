@@ -130,6 +130,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Views
         PagedList<ViewGaCrmTickets> GetViewGaCrmTicketsByAssigneeQueryable(GridOperationsModel filterParams, string[]? assignee);
+        PagedList<ViewGaCrmCommercialeTickets> GetViewGaCrmCommercialeTicketsQueryable(GridOperationsModel filterParams);
         Task<ViewGaCrmTickets> GetViewGaCrmTicketByIdAsync(long id);
 
         Task<PagedList<ViewGaCrmCalendarTickets>> GetViewGaCrmCalendarTicketAsync();

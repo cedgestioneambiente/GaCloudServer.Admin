@@ -1,13 +1,9 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.AuditLogging.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 {
@@ -15,7 +11,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         where TDbContext : DbContext, IResourcesDbContext
         where TEntity :  GenericEntity
     {
-        public GenericRepository(TDbContext context,IAuditEventLogger auditEventLogger) : base(context,auditEventLogger) { }
+        public GenericRepository(TDbContext context,ILogger<Repository<TDbContext,TEntity>> logger, IHttpContextAccessor httpContextAccessor) : base(context,logger,httpContextAccessor) { }
     }
 
 }

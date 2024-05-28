@@ -1,5 +1,6 @@
 ﻿using DinkToPdf;
 using GaCloudServer.BusinnessLogic.Constants;
+using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Models;
@@ -321,6 +322,203 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
                 
+        }
+
+        public async Task<UploadFileResponseModel> Upload(CommonFileUploadDto fileModel)
+        {
+            try
+            {
+                fileModel.FileName = fh.GenerateFileName(fileModel.FileName);
+                IFormFile fileToUpload = fileModel.FileDetails;
+                Stream ms = new MemoryStream();
+
+                var subfolder = fileModel.FilePath.Split("/").Count();
+
+                DriveItem uploadedFile = null;
+                var auth = Authenticate();
+                var driveRoot = await auth.Drive.Request().GetAsync();
+                var driveFolder = await auth.Drive.Root.Children.Request().GetAsync();
+
+                DriveItem? targetFolder = null;
+
+                if (subfolder > 1)
+                {
+                    DriveItem? parentFolder = null;
+                    for (int i = 0; i < subfolder; i++)
+                    {
+
+                        if (i == 0)
+                        {
+                            parentFolder = (from x in driveFolder
+                                            where x.Name == fileModel.FilePath.Split("/")[i].ToString()
+                                            select x).FirstOrDefault();
+                            if (parentFolder == null)
+                            {
+                                var _folder = new DriveItem
+                                {
+                                    Name = fileModel.FilePath.Split("/")[i].ToString(),
+                                    Folder = new Folder()
+                                };
+
+                                var createFolder = await auth
+                                    .Sites["root"]
+                                    .Drives[driveRoot.Id]
+                                    .Root
+                                    .Children
+                                    .Request()
+                                    .AddAsync(_folder);
+
+                                parentFolder = createFolder;
+                            }
+                        }
+                        else
+                        {
+                            var parentChildren = await auth
+                           .Sites["root"]
+                           .Drives[driveRoot.Id]
+                           .Items[parentFolder.Id]
+                           .Children
+                           .Request()
+                           .Filter($"name eq '{fileModel.FilePath.Split("/")[i].ToString()}'")
+                           .GetAsync();
+
+                            var childrenFolder = (from x in parentChildren
+                                                  where x.Name == fileModel.FilePath.Split("/")[i].ToString()
+                                                  select x).FirstOrDefault();
+
+                            if (childrenFolder == null)
+                            {
+                                var _folder = new DriveItem
+                                {
+                                    Name = fileModel.FilePath.Split("/")[i].ToString(),
+                                    Folder = new Folder()
+                                };
+
+                                var createFolder = await auth
+                                    .Sites["root"]
+                                    .Drives[driveRoot.Id]
+                                    .Items[parentFolder.Id]
+                                    .Children
+                                    .Request()
+                                    .AddAsync(_folder);
+                                parentFolder = createFolder;
+                                targetFolder = createFolder;
+                            }
+                            else
+                            {
+                                parentFolder = childrenFolder;
+                                targetFolder = childrenFolder;
+                            }
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    targetFolder = (from x in driveFolder
+                                    where x.Name == fileModel.FilePath
+                                    select x).FirstOrDefault();
+
+                    if (targetFolder == null)
+                    {
+                        var _folder = new DriveItem
+                        {
+                            Name = fileModel.FilePath,
+                            Folder = new Folder()
+                        };
+
+                        var createFolder = await auth
+                            .Sites["root"]
+                            .Drives[driveRoot.Id]
+                            .Root
+                            .Children
+                            .Request()
+                            .AddAsync(_folder);
+
+                        targetFolder = createFolder;
+
+                    }
+                }
+
+
+                using (ms = new MemoryStream())
+                {
+                    await fileToUpload.CopyToAsync(ms);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    var buf2 = new byte[ms.Length];
+                    ms.Read(buf2, 0, buf2.Length);
+
+                    ms.Position = 0; // Very important!! to set the position at the beginning of the stream
+
+                    if (fileToUpload.Length <= 4000 * 1024)
+                    {
+                        uploadedFile = (
+                        auth
+                        .Sites["root"]
+                        .Drives[driveRoot.Id]
+                        .Items[targetFolder.Id]
+                        .ItemWithPath(fileModel.FileName)
+                        .Content.Request()
+                        .PutAsync<DriveItem>(ms)).Result;
+
+                        return new UploadFileResponseModel() { id = uploadedFile.Id, fileName = fileModel.FileName };
+                    }
+                    else
+                    {
+                        var uploadSession = await auth
+                        .Sites["root"]
+                        .Drives[driveRoot.Id]
+                        .Items[targetFolder.Id]
+                        .ItemWithPath(fileModel.FileName)
+                        .CreateUploadSession().Request().PostAsync();
+
+                        var maxChunkSize = 320 * 1024;
+                        var provider = new ChunkedUploadProvider(uploadSession, auth, ms, maxChunkSize);
+
+                        // Setup the chunk request necessities
+                        var chunkRequests = provider.GetUploadChunkRequests();
+                        var readBuffer = new byte[maxChunkSize];
+                        var trackedExceptions = new List<Exception>();
+                        DriveItem itemResult = null;
+
+                        //upload the chunks
+                        foreach (var request in chunkRequests)
+                        {
+                            // Do your updates here: update progress bar, etc.
+                            // ...
+                            // Send chunk request
+                            var result = await provider.GetChunkRequestResponseAsync(request, readBuffer, trackedExceptions);
+
+                            if (result.UploadSucceeded)
+                            {
+                                itemResult = result.ItemResponse;
+                            }
+                        }
+
+                        // Check that upload succeeded
+                        if (itemResult == null)
+                        {
+                            // Retry the upload
+                            // ...
+                            return null;
+                        }
+                        else
+                        {
+                            return new UploadFileResponseModel() { id = itemResult.Id, fileName = fileModel.FileName };
+                        }
+                    }
+
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+
         }
 
         public async Task<UploadFileResponseModel> UploadStream(MemoryStream stream, string folder, string fileName)

@@ -95,6 +95,20 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             return Mapper.Map<TEntity>(item);
         }
 
+        public static TModel ToModel<TModel>(this object item)
+            where TModel : class
+        {
+            return Mapper.Map<TModel>(item);
+
+        }
+
+        public static TEntity ToEntity<TEntity>(this object item)
+            where TEntity : class
+        {
+            return Mapper.Map<TEntity>(item);
+
+        }
+
 
     }
 }

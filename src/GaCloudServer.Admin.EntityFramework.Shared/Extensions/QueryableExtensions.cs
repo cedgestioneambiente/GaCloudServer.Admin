@@ -1,4 +1,8 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Models;
+﻿using Community.OData.Linq;
+using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.Shared;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OData.Edm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +16,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 {
     public static class QueryableExtensions
     {
+
+        #region OLD
+        [Obsolete("Method deprecated")]
         public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, bool>> predicate)
         {
             return condition
@@ -621,6 +628,56 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
                 );
             var lambda = Expression.Lambda<Func<T, bool>>(body, param);
             return lambda;
+        }
+
+        #endregion
+
+        public static IQueryable<T> Expand<T>(this IQueryable<T> query, string expand) where T : class
+        {
+            if (expand != null && !string.IsNullOrEmpty(expand))
+            {
+                var pathList = expand.Split(',');
+                foreach (var path in pathList)
+                {
+                    query = query.Include(path.Trim().Replace('/', '.'));
+                }
+                query = query.AsSingleQuery();
+            }
+
+            return query;
+        }
+
+        public static ODataQuery<T> GetODataQuery<T>(this IQueryable<T> query, PageRequest request, IEdmModel edmModel = null) where T : class
+        {
+            var odataQuery = query
+                .Expand(request?.Expand)
+                .OData(edmModel: edmModel);
+
+            if (!string.IsNullOrEmpty(request?.Filter))
+            {
+                odataQuery = odataQuery.Filter(request.Filter);
+            }
+            if (!string.IsNullOrEmpty(request?.OrderBy))
+            {
+                odataQuery = odataQuery.OrderBy(request.OrderBy);
+            }
+
+            return odataQuery;
+        }
+
+        public static IQueryable<T> GetPage<T>(this IQueryable<T> query, PageRequest request) where T : class
+        {
+            if (request.Skip.HasValue)
+            {
+                query = query.Skip(request.Skip.Value);
+            }
+
+            if (request.Take.HasValue)
+            {
+                query = query.Take(request.Take.Value);
+            }
+
+            return query;
         }
     }
 }

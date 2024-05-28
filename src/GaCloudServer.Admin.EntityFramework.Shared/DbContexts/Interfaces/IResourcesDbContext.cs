@@ -60,6 +60,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
 using Microsoft.AspNetCore.Http;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Common;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -67,10 +68,16 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
     {
         IHttpContextAccessor httpContextAccessor { get; set; }
 
+        #region Common
+        DbSet<Gauge> CommonGauges { get; set; }
+        DbSet<IvaCode> CommonIvaCodes { get; set; }
+        #endregion
+
         #region GaGlobal Tables
         DbSet<GlobalSede> GlobalSedi { get; set; }
         DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }
         DbSet<GlobalSettore> GlobalSettori { get; set; }
+
         #endregion
 
         #region GaAutorizzazioni Tables
@@ -513,6 +520,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaCrmCausaliTypes> ViewGaCrmCausaliTypes { get; set; }
         DbSet<ViewGaCrmState> ViewGaCrmState { get; set; }
         DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
+        DbSet<ViewGaCrmCommercialeTickets> ViewGaCrmCommercialeTickets { get; set; }
         DbSet<ViewGaCrmCalendarTickets> ViewGaCrmCalendarTickets { get; set; }
         DbSet<ViewGaCrmEventJobs> ViewGaCrmEventJobs { get; set; }
         DbSet<ViewGaCrmGarbageUtenze> ViewGaCrmGarbageUtenze { get; set; }
@@ -580,8 +588,21 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PreventiviAnticipoPagamento> GaPreventiviAnticipiPagamenti { get; set; }
         DbSet<PreventiviAnticipo> GaPreventiviAnticipi { get; set; }
         DbSet<PreventiviAnticipoAllegato> GaPreventiviAnticipiAllegati { get; set; }
+
+        DbSet<PreventiviObject> GaPreventiviObjects { get; set; }
+        DbSet<PreventiviObjectAttachment> GaPreventiviObjectAttachments { get; set; }
+        DbSet<PreventiviObjectStatus> GaPreventiviObjectStatuses { get; set; }
+        DbSet<PreventiviObjectType> GaPreventiviObjectTypes { get; set; }
+        DbSet<PreventiviAction> GaPreventiviActions { get; set; }
+        DbSet<PreventiviObjectInspection> GaPreventiviObjectInspections { get; set; }
+        DbSet<PreventiviObjectInspectionMode> GaPreventiviObjectInspectionModes { get; set; }
+        DbSet<PreventiviObjectInspectionAttachment> GaPreventiviObjectInspectionAttachments { get; set; }
+        DbSet<PreventiviObjectInspectionImage> GaPreventiviObjectInspectionImages { get; set; }
+
+
         #region Views
         DbSet<ViewGaPreventiviAnticipi> ViewGaPreventiviAnticipi { get; set; }
+        DbSet<ViewGaPreventiviCrmTickets> ViewGaPreventiviCrmTickets { get; set; }
         #endregion
         #endregion
 

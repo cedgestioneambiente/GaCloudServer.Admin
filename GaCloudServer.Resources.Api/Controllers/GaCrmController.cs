@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
@@ -9,7 +8,6 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Ftp;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
-using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Constants;
@@ -20,7 +18,6 @@ using GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
-using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -1532,6 +1529,21 @@ namespace GaCloudServer.Resources.Api.Controllers
                 //assignee = assignee == "NaN" ? "0" : assignee;
                 assignee = assignee == "ARRAY" ? filter.extraFilter.ToString() : "0";
                 var entities = _gaCrmService.GetViewGaCrmTicketsByAssigneeQueryable(filter, assignee.ToString().Split(",").ToArray());
+                return new ApiResponse(entities);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpPost("GetViewGaCrmCommercialeTicketsQueryable")]
+        public ApiResponse GetViewGaCrmCommercialeTicketsQueryable(GridOperationsModel filter)
+        {
+            try
+            {
+                var entities = _gaCrmService.GetViewGaCrmCommercialeTicketsQueryable(filter);
                 return new ApiResponse(entities);
 
             }

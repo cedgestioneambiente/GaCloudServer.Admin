@@ -1,6 +1,7 @@
 ﻿using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.Resources.Api.Dtos.Custom;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace GaCloudServer.Resources.Api.Helpers
 {
@@ -32,6 +33,19 @@ namespace GaCloudServer.Resources.Api.Helpers
             return input ?? "";
         }
 
+        public static int GetIntegerFromString(string input)
+        {
+            // Utilizza espressione regolare per trovare tutti i numeri interi nella stringa
+            MatchCollection matches = Regex.Matches(input, @"\d+");
+
+            // Se non ci sono corrispondenze, restituisce 1
+            if (matches.Count == 0)
+                return 1;
+
+            // Se ci sono corrispondenze, restituisce il primo numero intero trovato
+            return int.Parse(matches[0].Value);
+        }
+
         public static string[] ConvertPropertyToColumn(object obj)
         {
             if (obj == null)
@@ -50,5 +64,6 @@ namespace GaCloudServer.Resources.Api.Helpers
 
             return propertyNames;
         }
+
     }
 }

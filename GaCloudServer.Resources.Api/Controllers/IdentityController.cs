@@ -89,6 +89,25 @@ namespace GaCloudServer.Resources.Api.Controllers
             return Ok(usersDto);
         }
 
+        [HttpPost("GetRolesUsersAsync")]
+        public async Task<ActionResult<TUsersDto>> GetRolesUsersAsync([FromBody] string[] roles)
+        {
+
+            List<TUsersDto> users = new List<TUsersDto>();
+            foreach (var role in roles)
+            {
+                var rolesFound = await _identityService.GetRolesAsync(role.ToString());
+                if (rolesFound.TotalCount > 0)
+                {
+                    var result = await _identityService.GetRoleUsersAsync(rolesFound.Roles.Where(x=>x.Name==role).FirstOrDefault().Id.ToString(), null);
+                    users.Add(result);
+                }
+            }
+
+            return Ok(users.Distinct());
+
+        }
+
 
 
 

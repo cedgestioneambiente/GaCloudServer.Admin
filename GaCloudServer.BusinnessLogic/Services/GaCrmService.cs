@@ -39,6 +39,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo;
         protected readonly IGenericRepository<ViewGaCrmEventJobs> viewGaCrmEventJobsRepo;
         protected readonly IGenericRepository<ViewGaCrmTickets> viewGaCrmTicketsRepo;
+        protected readonly IGenericRepository<ViewGaCrmCommercialeTickets> viewGaCrmCommercialeTicketsRepo;
         protected readonly IGenericRepository<ViewGaCrmCalendarTickets> viewGaCrmCalendarTicketsRepo;
 
         protected readonly IGenericRepository<ViewGaCrmGarbageUtenze> viewGaCrmGarbageUtenzeRepo;
@@ -73,6 +74,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaBackOfficeUtenzeDispositivi> viewGaBackOfficeUtenzeDispositiviRepo,
             IGenericRepository<ViewGaCrmEventJobs> viewGaCrmEventJobsRepo,
             IGenericRepository<ViewGaCrmTickets> viewGaCrmTicketsRepo,
+            IGenericRepository<ViewGaCrmCommercialeTickets> viewGaCrmCommercialeTicketsRepo,
             IGenericRepository<ViewGaCrmCalendarTickets> viewGaCrmCalendarTicketsRepo,
 
             IGenericRepository<ViewGaCrmTickets> viewGaCrmMasterRepo,
@@ -110,6 +112,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewGaCrmEventJobsRepo = viewGaCrmEventJobsRepo;
             this.viewGaCrmMasterRepo = viewGaCrmMasterRepo;
             this.viewGaCrmTicketsRepo = viewGaCrmTicketsRepo;
+            this.viewGaCrmCommercialeTicketsRepo = viewGaCrmCommercialeTicketsRepo;
             this.viewGaCrmCalendarTicketsRepo = viewGaCrmCalendarTicketsRepo;
 
             this.viewGaCrmGarbageUtenzeRepo= viewGaCrmGarbageUtenzeRepo;
@@ -1167,6 +1170,26 @@ namespace GaCloudServer.BusinnessLogic.Services
                     var filterResult = viewGaCrmTicketsRepo.GetWithFilterQueryableV2(x => assignee.Contains(x.Assignee), filterParams);
                     return filterResult;
                 }
+            }
+
+        }
+
+        public PagedList<ViewGaCrmCommercialeTickets> GetViewGaCrmCommercialeTicketsQueryable(GridOperationsModel filterParams)
+        {
+
+            if (!string.IsNullOrWhiteSpace(filterParams.quickFilter))
+            {
+
+                var filterResult = viewGaCrmCommercialeTicketsRepo.GetAllQueryableV2WithQuickFilter(filterParams, filterParams.quickFilter);
+                return filterResult;
+
+            }
+            else
+            {
+
+                var filterResult = viewGaCrmCommercialeTicketsRepo.GetAllQueryableV2(filterParams);
+                return filterResult;
+                
             }
 
         }

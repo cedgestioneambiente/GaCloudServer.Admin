@@ -2,11 +2,11 @@
 using AutoWrapper.Wrappers;
 using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.QueryBuilder;
-using GaCloudServer.BusinnessLogic.Hub.Interfaces;
 using GaCloudServer.BusinnessLogic.Hub;
-using GaCloudServer.BusinnessLogic.Services;
+using GaCloudServer.BusinnessLogic.Hub.Interfaces;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Dtos.Custom;
 using GaCloudServer.Resources.Api.Dtos.Resources.QueryBuilder;
 using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Reflection;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
-using GaCloudServer.Resources.Api.Dtos.Custom;
 
 namespace GaCloudServer.Resources.Api.Controllers
 {

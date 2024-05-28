@@ -1,8 +1,10 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.Shared;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces
@@ -10,6 +12,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces
     public interface IRepository<TEntity> :IDisposable
         where TEntity : class 
     {
+
+        #region OLD
         #region CRUD
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
@@ -44,6 +48,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces
 
         //Async
         Task<TEntity> GetByIdAsync(long id);
+        [Obsolete("Method is deprecated, use GetAsync(string id, GetRequest request)")]
         Task<PagedList<TEntity>> GetAllAsync(int page = 1, int pageSize = 0, string orderField = "Id", string orderType = "OrderBy");
         Task<PagedList<TEntity>> GetWithFilterAsync(Expression<Func<TEntity, bool>> predicate, int page = 1, int pageSize = 0, string orderField = "Id", string orderType = "OrderBy");
         Task<PagedList<TEntity>> GetWithFilterAsNoTrakingAsync(Expression<Func<TEntity, bool>> predicate, int page = 1, int pageSize = 0, string orderField = "Id", string orderType = "OrderBy");
@@ -55,5 +60,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces
         Task<bool> CheckIsUnique(Expression<Func<TEntity, bool>> predicate);
         Task<bool> CheckIfExist(Expression<Func<TEntity, bool>> predicate);
         #endregion
+
+        #endregion
+
+        Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task<TEntity> GetAsync(long id, GetRequest request, CancellationToken cancellationToken = default);
+        Task<PageResponse<TEntity>> GetAsync(PageRequest request, CancellationToken cancellationToken = default);
+        Task DeleteAsync(long id, CancellationToken cancellationToken = default);
+
     }
 }

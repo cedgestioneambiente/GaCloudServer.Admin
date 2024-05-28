@@ -5,6 +5,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.V
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.BackOffice;
 using GaCloudServer.BusinnessLogic.Extensions;
+using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.Data.SqlClient;
@@ -438,6 +439,64 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             return view;
         }
+
+        public async Task<PagedList<ViewGaBackOfficeUtenzeNovi>> GetViewGaBackOfficeUtenzeNoviByAddressAsync(string via, int startNumCiv,int endNumCiv)
+        {
+            var result = await viewGaBackOfficeUtenzeNoviRepo.GetWithFilterAsync(x => (EF.Functions.Like(x.Via, via.toWildcardString())));
+
+            PagedList<ViewGaBackOfficeUtenzeNovi> view = new PagedList<ViewGaBackOfficeUtenzeNovi>();
+
+            if (via.Length > 0 && startNumCiv != 0 && endNumCiv != 0)
+            {
+
+                foreach (var item in result.Data)
+                {
+                    if (NumberHelper.ConvertStringToNumber(item.NumCiv) >= startNumCiv && NumberHelper.ConvertStringToNumber(item.NumCiv) <= endNumCiv) 
+                    { view.Data.Add(item); }
+                    
+                }
+                view.TotalCount = view.Data.Count();
+                return view;
+            }
+            else if (via.Length > 0 && startNumCiv != 0)
+            {
+                foreach (var item in result.Data)
+                {
+                    if (NumberHelper.ConvertStringToNumber(item.NumCiv) >= startNumCiv)
+                    { view.Data.Add(item); }
+
+                }
+                view.TotalCount = view.Data.Count();
+                return view;
+            }
+            else if (via.Length > 0 && endNumCiv != 0)
+            {
+                foreach (var item in result.Data)
+                {
+                    if (NumberHelper.ConvertStringToNumber(item.NumCiv) <= endNumCiv)
+                    { view.Data.Add(item); }
+
+                }
+                view.TotalCount = view.Data.Count();
+                return view;
+            }
+            else if (via.Length > 0)
+            {
+                foreach (var item in result.Data)
+                {
+                     view.Data.Add(item); 
+
+                }
+                view.TotalCount = view.Data.Count();
+                return view;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+       
         #endregion
 
         #region BackOfficeDocRecipes

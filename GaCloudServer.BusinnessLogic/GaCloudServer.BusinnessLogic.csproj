@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\GaCloudServer.Admin.EntityFramework.Shared\GaCloudServer.Admin.EntityFramework.Shared.csproj" />
+    <ProjectReference Include="..\src\GaCloudServer.Shared\GaCloudServer.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,14 +3,17 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
 using GaCloudServer.Admin.EntityFramework.Shared.Extensions;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
+using GaCloudServer.Shared;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Skoruba.AuditLogging.Services;
+using Microsoft.Extensions.Logging;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
@@ -21,16 +24,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
     {
         protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _entities;
-        protected readonly IAuditEventLogger auditEventLogger;
+        private readonly ILogger<Repository<TDbContext,TEntity>> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public Repository(TDbContext context,IAuditEventLogger auditEventLogger)
+        public Repository(TDbContext context,ILogger<Repository<TDbContext,TEntity>> logger, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _entities = context.Set<TEntity>();
-            //this.auditEventLogger = auditEventLogger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
 
         }
 
+        #region OLD
         #region CRUD
         public virtual void Add(TEntity entity)
         {
@@ -604,6 +610,108 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
         }
         #endregion
 
+        #endregion
+        public Task<TEntity> GetAsync(long id, GetRequest request, CancellationToken cancellationToken = default)
+        {
+            var query = _context.Set<TEntity>().AsNoTracking();
+            query = query.Expand(request?.Expand);
+            return query.FirstOrDefaultAsync(e => e.Id == id, cancellationToken: cancellationToken);
+        }
 
+        public async Task<PageResponse<TEntity>> GetAsync(PageRequest request, CancellationToken cancellationToken = default)
+        {
+            request = request ?? throw new ArgumentNullException(nameof(request));
+            request.OrderBy ??= nameof(GenericEntity.Id);
+
+            var query = _context.Set<TEntity>().AsNoTracking();
+            var odataQuery = query.GetODataQuery(request);
+
+            query = odataQuery.Inner as IQueryable<TEntity>;
+
+            int? count = request.Take.HasValue || request.Skip.HasValue ? await query.CountAsync(cancellationToken).ConfigureAwait(false) : null;
+
+            var page = query.GetPage(request);
+
+            var items = await page.ToListAsync(cancellationToken).ConfigureAwait(false);
+
+            return new PageResponse<TEntity>
+            {
+                Count = count ?? items.Count,
+                Items = items
+            };
+        }
+        public async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            entity = entity ?? throw new ArgumentNullException(nameof(entity));
+
+            if (entity is GenericAuditableEntity  auditable)
+            {
+                auditable.CreatedAt = DateTime.UtcNow;
+                auditable.CreatedBy = _httpContextAccessor?.HttpContext?.User?.Claims?.Where(x => x.Type == "sub").FirstOrDefault().Value ?? "system";
+            }
+
+            if (entity is GenericListAuditableEntity auditableList)
+            {
+                auditableList.CreatedAt = DateTime.UtcNow;
+                auditableList.CreatedBy = _httpContextAccessor?.HttpContext?.User?.Claims?.Where(x => x.Type == "sub").FirstOrDefault().Value ?? "system";
+            }
+
+            if (entity is GenericFileAuditableEntity auditableFile)
+            {
+                auditableFile.CreatedAt = DateTime.UtcNow;
+                auditableFile.CreatedBy = _httpContextAccessor?.HttpContext?.User?.Claims?.Where(x => x.Type == "sub").FirstOrDefault().Value ?? "system";
+            }
+            await _context.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+            await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            _logger.LogInformation("Entity {EntityId} created", entity.Id);
+            return entity;
+        }
+        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            entity = entity ?? throw new ArgumentNullException(nameof(entity));
+            var storedEntity = await _context.Set<TEntity>()
+                .Where(e => e.Id == entity.Id)
+                .FirstOrDefaultAsync(cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+            if (storedEntity == null)
+            {
+                throw new DbUpdateException($"Entity type {typeof(TEntity).Name} at id {entity.Id} is not found");
+            }
+
+            if (entity is GenericAuditableEntity auditable)
+            {
+                auditable.ModifiedAt = DateTime.UtcNow;
+                auditable.ModifiedBy = _httpContextAccessor?.HttpContext?.User?.Claims?.Where(x => x.Type == "sub").FirstOrDefault().Value ?? "system";
+            }
+
+            if (entity is GenericListAuditableEntity auditableList)
+            {
+                auditableList.ModifiedAt = DateTime.UtcNow;
+                auditableList.ModifiedBy = _httpContextAccessor?.HttpContext?.User?.Claims?.Where(x => x.Type == "sub").FirstOrDefault().Value ?? "system";
+            }
+
+            if (entity is GenericFileAuditableEntity auditableFile)
+            {
+                auditableFile.ModifiedAt = DateTime.UtcNow;
+                auditableFile.ModifiedBy = _httpContextAccessor?.HttpContext?.User?.Claims?.Where(x => x.Type == "sub").FirstOrDefault().Value ?? "system";
+            }
+
+            entity.Copy(storedEntity);
+            await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            _logger.LogInformation("Entity {EntityId} updated", entity.Id);
+            return entity;
+        }
+
+        public async Task DeleteAsync(long id, CancellationToken cancellationToken = default)
+        {
+            var entity = await _context.Set<TEntity>().FindAsync(new object[] { id }, cancellationToken).ConfigureAwait(false);
+            if (entity == null)
+            {
+                return;
+            }
+            _context.Remove(entity);
+            await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            _logger.LogInformation("Entity {EntityId} deleted", entity.Id);
+        }
     }
 }

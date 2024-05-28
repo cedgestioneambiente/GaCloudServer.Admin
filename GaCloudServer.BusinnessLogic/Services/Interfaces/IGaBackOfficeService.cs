@@ -73,6 +73,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region BackOfficeNovi
         Task<PagedList<ViewGaBackOfficeUtenzeNovi>> GetViewGaBackOfficeUtenzeNoviAsync(string filter);
+        Task<PagedList<ViewGaBackOfficeUtenzeNovi>> GetViewGaBackOfficeUtenzeNoviByAddressAsync(string via,int startNumciv,int endNumCiv);
         #endregion
 
         #region BackOfficeRecipes

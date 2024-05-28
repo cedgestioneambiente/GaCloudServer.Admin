@@ -1,7 +1,12 @@
-﻿using GaCloudServer.BusinnessLogic.DTOs.Base;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
+using GaCloudServer.BusinnessLogic.DTOs.Base;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
 {
+    #region OLD
     #region PreventiviAnticipiTipologie
     public class PreventiviAnticipoTipologiaDto : GenericListDto
     {
@@ -62,5 +67,187 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
     {
     }
 
+    #endregion
+    #endregion
+
+    #region PreventiviObject
+    public class PreventiviObjectDto : GenericDto
+    {
+        public string ObjectNumber { get; set; }
+        public DateTime DataInserimento { get; set; }
+        public string CodComune { get; set; }
+        public string Comune { get; set; }
+        public string CodCliente { get; set; }
+        public string Cliente { get; set; }
+        public string CfPiva { get; set; }
+        public string Telefono { get; set; }
+        public string Cellulare { get; set; }
+        public string Email { get; set; }
+        public string EmailPec { get; set; }
+        public string Via { get; set; }
+        public string NumCiv { get; set; }
+        public long TypeId { get; set; }
+        public long StatusId { get; set; }
+        public string AssigneeId { get; set; }
+        public DateTime DataCompletamento { get; set; }
+        public bool Completed { get; set; }
+        public string NoteCrm { get; set; }
+        public string NoteOperative { get; set; }
+
+        public bool? FinancialLock { get; set; }
+        public bool? FinancialForcedLock { get; set; }
+        public string? FinancialLockDetail { get; set; }
+        public DateTime? FinancialUnlockDate { get; set; }
+        public string? FinancialUnlockUserId { get; set; }
+        public string? FinancialUnlockUserName { get; set; }
+
+        public DateTime? FinancialUnlockRequestDate { get; set; }
+        public string? FinancialUnlockRequestUserId { get; set; }
+        public string? FinancialUnlockRequestUserName { get; set; }
+
+        public int Priority { get; set; }
+        public string PriorityDesc { get; set; }
+
+
+
+        public string AssigneeMail { get; set; }
+        public string CreatorId { get; set; }
+        public string CreatorName { get; set; }
+        public bool? SendEmail { get; set; }
+        public bool? SendNotify { get; set; }
+
+
+    }
+
+    public class PreventiviObjectStatusDto : GenericListDto
+    {
+    }
+
+    public class PreventiviObjectTypeDto : GenericListDto
+    {
+    }
+
+    public class PreventiviActionDto : GenericDto
+    {
+        public string Descrizione { get; set; }
+        public string UserId { get; set; }
+        public DateTime Data { get; set; }
+        public string Link { get; set; }
+        public long ObjectId { get; set; }
+
+    }
+
+    public class PreventiviObjectAttachmentDto : GenericFileDto
+    {
+        public long ObjectId { get; set; }
+        public string Descrizione { get; set; }
+        public IFormFile? File { get; set; }
+        public bool uploadFile { get; set; }
+        public bool deleteFile { get; set; }
+    }
+
+    public class PreventiviObjectInspectionDto : GenericDto
+    {
+        public long ObjectId { get; set; }
+        public DateTime? DateInspection { get; set; }
+        public DateTime? DateExecution { get; set; }
+        public string AssigneeId { get; set; }
+        public long ModeId { get; set; }
+        public long StatusId { get; set; }
+        public string Note { get; set; }
+        public string NoteInspection { get; set; }
+
+    }
+
+    public class PreventiviObjectInspectionAttachmentDto : GenericFileDto
+    {
+        public long ObjectInspectionId { get; set; }
+        public string Descrizione { get; set; }
+        public IFormFile? File { get; set; }
+        public bool uploadFile { get; set; }
+        public bool deleteFile { get; set; }
+    }
+
+    public class PreventiviObjectInspectionImageDto : GenericFileDto
+    {
+        public long ObjectInspectionId { get; set; }
+        public string Descrizione { get; set; }
+        public IFormFile? File { get; set; }
+        public bool uploadFile { get; set; }
+        public bool deleteFile { get; set; }
+    }
+
+    public class PreventiviObjectInspectionModeDto : GenericListDto
+    {
+    }
+
+    #endregion
+
+    #region Extras
+    public class PreventiviObjectAssignementDto : GenericDto
+    {
+        public string CodComune { get; set; }
+        public string Comune { get; set; }
+        public string CodCliente { get; set; }
+        public string Cliente { get; set; }
+        public string CfPiva { get; set; }
+        public string Telefono { get; set; }
+        public string Cellulare { get; set; }
+        public string Email { get; set; }
+        public string EmailPec { get; set; }
+        public string Via { get; set; }
+        public string NumCiv { get; set; }
+        public long TypeId { get; set; }
+        public long? StatusId { get; set; }
+        public string AssigneeId { get; set; }
+        public string? AssigneeMail { get; set; }
+        public string? NoteCrm { get; set; }
+        public string? NoteOperative { get; set; }
+
+        public long Inspection {  get; set; }
+        public string? InspectionAssigneeId { get; set; }
+        public string? InspectionAssigneeMail { get; set; }
+        public string? InspectionNotes { get; set; }
+
+        public bool? Attachments {  get; set; }
+        public bool? SendNotify { get; set; }
+        public bool? SendEmail { get; set; }
+        public long? CrmTicketId { get; set; }
+        public string CreatorId { get; set; }
+        public string CreatorName { get; set; }
+
+
+    }
+
+    public class PreventiviObjectInspectionStatementDto
+    { 
+        public long Id { get; set; }
+        public string ObjectNumber { get; set; }
+        public string AssigneeMail { get; set; }
+        public string AssigneeId { get; set; }
+        public string InspectionAssigneeMail { get; set; }
+        public string InspectionAssigneeId { get; set; }
+        public string CreatorName { get; set; }
+        public string CreatorId { get; set; }
+        public string Note {  get; set; }
+
+        public bool? SendManager { get; set; }
+        public bool? SendInspector { get; set;}
+
+    }
+
+    public class PreventiviSubjectFinancialDto
+    {
+        public long Id { get; set; }
+        public string ObjectNumber { get; set; }
+        public string AssigneeMail { get; set; }
+        public string AssigneeId { get; set; }
+        public string InspectionAssigneeMail { get; set; }
+        public string InspectionAssigneeId { get; set; }
+        public string CreatorName { get; set; }
+        public string CreatorId { get; set; }
+        public string Note { get; set; }
+
+    }
     #endregion
 }

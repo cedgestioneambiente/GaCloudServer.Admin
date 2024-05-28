@@ -21,5 +21,7 @@ namespace GaCloudServer.Resources.Api.Constants
         public const string PrenotazioneAutoInfo = "Ricevi notifiche relative all'App Prenotazione Auto";
         public const string Crm = "Crm";
         public const string CrmInfo = "Ricevi notifiche relativa all'App CRM";
+        public const string Preventivi = "Preventivi";
+        public const string PreventiviInfo = "Ricevi notifiche relative all'App Preventivi";
     }
 }

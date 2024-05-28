@@ -1,72 +1,77 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
-using Microsoft.EntityFrameworkCore;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Sp;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Common;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Global;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mezzi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneAuto.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Ec;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Presenze.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Ost.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Segnalazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dashboard;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.PrenotazioneLocali.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Emz.Views;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Dispositivi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Views;
-using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Previsio;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using Microsoft.AspNetCore.Http;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
+using Microsoft.EntityFrameworkCore;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
     public class ResourcesDbContext : DbContext, IResourcesDbContext
     {
+        #region Common Tables
+        public DbSet<Gauge> CommonGauges { get; set; }
+        public DbSet<IvaCode> CommonIvaCodes { get; set; }
+        #endregion
+
         #region GaGlobal Tables
         public DbSet<GlobalSede> GlobalSedi { get; set; }
         public DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }
@@ -516,6 +521,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaCrmCausaliTypes> ViewGaCrmCausaliTypes { get; set; }
         public DbSet<ViewGaCrmState> ViewGaCrmState { get; set; }
         public DbSet<ViewGaCrmTickets> ViewGaCrmTickets { get; set; }
+        public DbSet<ViewGaCrmCommercialeTickets> ViewGaCrmCommercialeTickets { get; set; }
         public DbSet<ViewGaCrmCalendarTickets> ViewGaCrmCalendarTickets { get; set; }
         public DbSet<ViewGaCrmEventJobs> ViewGaCrmEventJobs { get; set; }
         public DbSet<ViewGaCrmGarbageUtenze> ViewGaCrmGarbageUtenze { get; set; }
@@ -588,8 +594,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PreventiviAnticipo> GaPreventiviAnticipi { get; set; }
         public DbSet<PreventiviAnticipoAllegato> GaPreventiviAnticipiAllegati { get; set; }
 
+        public DbSet<PreventiviObject> GaPreventiviObjects { get; set; }
+        public DbSet<PreventiviObjectAttachment> GaPreventiviObjectAttachments { get; set; }
+        public DbSet<PreventiviObjectStatus> GaPreventiviObjectStatuses { get; set; }
+        public DbSet<PreventiviObjectType> GaPreventiviObjectTypes { get; set; }
+        public DbSet<PreventiviAction> GaPreventiviActions { get; set; }
+        public DbSet<PreventiviObjectInspection> GaPreventiviObjectInspections { get; set; }
+        public DbSet<PreventiviObjectInspectionMode> GaPreventiviObjectInspectionModes { get; set; }
+        public DbSet<PreventiviObjectInspectionAttachment> GaPreventiviObjectInspectionAttachments { get; set; }
+        public DbSet<PreventiviObjectInspectionImage> GaPreventiviObjectInspectionImages { get; set; }
+
         #region Views
         public DbSet<ViewGaPreventiviAnticipi> ViewGaPreventiviAnticipi { get; set; }
+        public DbSet<ViewGaPreventiviCrmTickets> ViewGaPreventiviCrmTickets { get; set; }
         #endregion
         #endregion
 
@@ -1492,6 +1509,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasKey(x => x.Id);
             });
 
+            builder.Entity<ViewGaCrmCommercialeTickets>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaCrmCommercialeTickets))
+                .HasKey(x => x.Id);
+            });
+
 
             builder.Entity<ViewGaCrmCalendarTickets>(entity =>
             {
@@ -1631,6 +1655,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewGaPreventiviAnticipi))
+                .HasKey(x => x.Id);
+            });
+
+
+            builder.Entity<ViewGaPreventiviCrmTickets>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPreventiviCrmTickets))
                 .HasKey(x => x.Id);
             });
 

@@ -1,6 +1,8 @@
 ﻿using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
+using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.Models;
+using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.ExceptionHandling;
@@ -28,6 +30,8 @@ namespace GaCloudServer.Resources.Api.Controllers
 
             _fileService = fileService;
         }
+
+        #region OLD
 
         [HttpGet("DownloadByIdAsync/{fileId}")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
@@ -78,7 +82,30 @@ namespace GaCloudServer.Resources.Api.Controllers
             var response = await _fileService.GetFolderContentById(folderId,path);
             return new ApiResponse("GetFolderContentById", response, code.Status200OK);
         }
+        #endregion
 
+        
+        [HttpPost("OpenFileAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(typeof(byte[]), code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        [AutoWrapIgnore]
+        public async Task<IActionResult> OpenFileAsync(CommonFileDownloadRequestDto request)
+        {
+            try
+            {
+                var downloadFileModel = await _fileService.DownloadById(request.fileId);
+
+                var mimeType = MimeTypeMap.GetMimeType(Path.GetExtension(downloadFileModel.fileName));
+
+                return File(downloadFileModel.stream, mimeType, downloadFileModel.fileName);
+            }
+            catch (Exception ex)
+            {
+                // log errors
+                return BadRequest(); // Or what you need
+            }
+        }
 
 
 

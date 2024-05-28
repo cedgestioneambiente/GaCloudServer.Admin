@@ -1,14 +1,28 @@
 ﻿using AutoWrapper.Wrappers;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Notification;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi;
+using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
+using GaCloudServer.Resources.Api.Constants;
 using GaCloudServer.Resources.Api.Dtos.Resources.Preventivi;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
+using GaCloudServer.Shared;
+using GaCloudServer.Shared.Dtos.Extended;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Services.Interfaces;
+using System.Drawing.Text;
+using blfh = GaCloudServer.BusinnessLogic.Helpers.FileHelper;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
+using System.IO;
 
 
 namespace GaCloudServer.Resources.Api.Controllers
@@ -20,22 +34,34 @@ namespace GaCloudServer.Resources.Api.Controllers
     [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
     public class GaPreventiviController : Controller
     {
+        private readonly string basePath = "GaCloud/Preventivi";
+
         private readonly IGaPreventiviService _gaPreventiviService;
         private readonly ILogger<GaPreventiviController> _logger;
         private readonly IFileService _fileService;
+        private readonly IMailService _mailService;
+        private readonly INotificationService _notificationService;
+        private readonly IQueryBuilderService _queryBuilderService;
 
         public GaPreventiviController(
             IGaPreventiviService gaPreventiviService
             , IFileService fileService
+            , IMailService mailService
+            ,INotificationService notificationService
+            , IQueryBuilderService queryBuilderService
             , ILogger<GaPreventiviController> logger)
         {
 
             _gaPreventiviService = gaPreventiviService;
             _fileService = fileService;
+            _mailService = mailService;
+            _notificationService = notificationService;
+            _queryBuilderService = queryBuilderService;
             _logger = logger;
             
         }
 
+        #region OLD
 
         #region PreventiviAnticipiTipologie
         [HttpGet("GetGaPreventiviAnticipiTipologieAsync/{page}/{pageSize}")]
@@ -99,7 +125,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("UpdateGaPreventiviAnticipoTipologiaAsync")]
+        [HttpPut("UpdateGaPreventiviAnticipoTipologiaAsync")]
         public async Task<ActionResult<ApiResponse>> UpdateGaPreventiviAnticipoTipologiaAsync([FromBody] PreventiviAnticipoTipologiaApiDto apiDto)
         {
             try
@@ -236,7 +262,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("UpdateGaPreventiviAnticipoPagamentoAsync")]
+        [HttpPut("UpdateGaPreventiviAnticipoPagamentoAsync")]
         public async Task<ActionResult<ApiResponse>> UpdateGaPreventiviAnticipoPagamentoAsync([FromBody] PreventiviAnticipoPagamentoApiDto apiDto)
         {
             try
@@ -373,7 +399,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("UpdateGaPreventiviAnticipoAsync")]
+        [HttpPut("UpdateGaPreventiviAnticipoAsync")]
         public async Task<ActionResult<ApiResponse>> UpdateGaPreventiviAnticipoAsync([FromBody] PreventiviAnticipoApiDto apiDto)
         {
             try
@@ -556,7 +582,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpPost("UpdateGaPreventiviAnticipoAllegatoAsync")]
+        [HttpPut("UpdateGaPreventiviAnticipoAllegatoAsync")]
         public async Task<ActionResult<ApiResponse>> UpdateGaPreventiviAnticipoAllegatoAsync([FromForm] PreventiviAnticipoAllegatoApiDto apiDto)
         {
             try
@@ -678,5 +704,1384 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #endregion
+
+        #endregion
+
+        #region TicketCrm
+        [HttpPost("GetViewPreventiviCrmTicketsAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetViewPreventiviCrmTicketsAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetViewPreventiviCrmTicketsAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectFromCrmTicketAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectFromCrmTicketAsync(PreventiviObjectAssignementDto model)
+        {
+            try
+            {
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Preventivi, AppConsts.PreventiviInfo);
+                var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+                
+                var query = System.IO.File.ReadAllText(@".\Query\Preventivi\FinancialPosition.sql");
+                query = string.Format(query, model.CfPiva,model.CfPiva);
+                var saldo = await _gaPreventiviService.CheckPreventiviFinancialPositionAsync(query);
+                
+                var response = await _gaPreventiviService.CreatePreventiviObjectFromCrmTicketAsync(model,saldo);
+
+                if (model.SendEmail.GetValueOrDefault())
+                {
+
+                    #region Assignee Communication
+                    await sendMail(response.Id, response.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, model.CreatorId);
+                    if (model.SendNotify.GetValueOrDefault()) { await sendNotification(response.Id, response.ObjectNumber, model.AssigneeId,TextConsts.objectManage); }
+
+                    #endregion
+
+                    if (model.Inspection == 2)
+                    {
+                        await sendMail(response.Id, response.ObjectNumber, model.InspectionAssigneeMail, TextConsts.inspectionManage, model.NoteCrm, model.CreatorName, model.CreatorId);
+                        if (model.SendNotify.GetValueOrDefault()) { await sendNotification(response.Id, response.ObjectNumber, model.InspectionAssigneeId,TextConsts.inspectionManage); }
+
+                    }
+                }
+
+                
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+
+        #endregion
+
+        #region Object
+        [HttpPost("GetPreventiviObjectsAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectsAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectsAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectAsync(PreventiviObjectDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectAsync(long id, [FromBody]PreventiviObjectDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectAsync(id,model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviObjectAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        #region Functions
+        [HttpPut("UpdatePreventiviObjectAssigneeAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectAssigneeAsync(long id, [FromBody] PreventiviObjectDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectAssigneeAsync(id, model);
+
+                if (model.SendEmail.GetValueOrDefault()) { await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, model.CreatorId); }
+                if (model.SendNotify.GetValueOrDefault()) { await sendNotification(model.Id, model.ObjectNumber, model.AssigneeId, TextConsts.objectManage); }
+
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectDetailsAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectDetailsAsync(long id, [FromBody] PreventiviObjectDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectDetailsAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region ObjectAttachment
+        [HttpPost("GetPreventiviObjectAttachmentsAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectAttachmentsAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectAttachmentsAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectAttachmentByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectAttachmentByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectAttachmentByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectAttachmentAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectAttachmentAsync([FromForm]PreventiviObjectAttachmentDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectAttachmentAsync(model);
+
+                if (model.uploadFile)
+                {
+                    var fileModel = model.ToCreateFileModel(response, model.FileName, basePath, "Object");
+
+                    var fileData = blfh.CreateFileData(fileModel.File, response.ToString(), fileModel.FileFolder);
+                    var fileUploadResponse = await _fileService.Upload(fileData);
+
+                    if (fileUploadResponse!=null)
+                    {
+                        fileModel.FileId = fileUploadResponse.id;
+                        await _gaPreventiviService.UpdatePreventiviObjectAttachmentAsync(fileModel.Id, fileModel);
+                        return Ok(new { Code = code.Status201Created, Response = response });
+                    }
+                    else
+                    {
+                        return Ok(new { Code = code.Status206PartialContent, Response = response });
+                    }
+
+
+                }
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectAttachmentAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status207MultiStatus)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectAttachmentAsync(long id, [FromForm] PreventiviObjectAttachmentDto model)
+        {
+            try
+            {
+                bool failureDelete = false;
+                var response = await _gaPreventiviService.UpdatePreventiviObjectAttachmentAsync(id, model);
+
+
+
+                if (model.deleteFile)
+                {
+                    var fileData = blfh.DeleteFileData(model.FileId, model.FileFolder);
+                    var fileDeleteResponse = await _fileService.Remove(model.FileId);
+
+                    var fileModel = model.ToDeleteFileModel<PreventiviObjectAttachmentDto>();
+
+                    if (fileDeleteResponse)
+                    {
+                        await _gaPreventiviService.UpdatePreventiviObjectAttachmentAsync(fileModel.Id, fileModel);
+                    }
+                    else
+                    {
+                        failureDelete = true;
+                    }
+                }
+
+                if (model.uploadFile)
+                {
+                    var fileModel = model.ToCreateFileModel<PreventiviObjectAttachmentDto>(response, model.FileName, basePath, "ObjectInspection");
+
+                    var fileData = blfh.CreateFileData(fileModel.File, id.ToString(), fileModel.FileFolder);
+                    var fileUploadResponse = await _fileService.Upload(fileData);
+
+                    if (fileUploadResponse!=null)
+                    {
+                        fileModel.FileId = fileUploadResponse.id;
+                        await _gaPreventiviService.UpdatePreventiviObjectAttachmentAsync(fileModel.Id, fileModel);
+                        if (failureDelete)
+                        {
+                            return Ok(new { Code = code.Status207MultiStatus, Response = response });
+                        }
+                        else
+                        {
+                            return Ok(new { Code = code.Status204NoContent, Response = response });
+                        }
+
+                    }
+                    else
+                    {
+                        return Ok(new { Code = code.Status206PartialContent, Response = response });
+                    }
+                }
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectAttachmentAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectAttachmentAsync(long id)
+        {
+            try
+            {
+                var model=await _gaPreventiviService.GetPreventiviObjectAttachmentByIdAsync(id);
+                var fileDeleteResponse = await _fileService.Remove(model.FileId);
+                if (fileDeleteResponse)
+                {
+                    var response = await _gaPreventiviService.DeletePreventiviObjectAttachmentAsync(id);
+
+                    return Ok(new { Code = code.Status200OK, Response = response });
+                }
+                else
+                {
+                    var response = await _gaPreventiviService.DeletePreventiviObjectAttachmentAsync(id);
+
+                    return Ok(new { Code = code.Status206PartialContent, Response = response });
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region ObjectType
+        [HttpPost("GetPreventiviObjectTypesAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectTypesAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectTypesAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectTypeByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectTypeByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectTypeByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectTypeAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectTypeAsync(PreventiviObjectTypeDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectTypeAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectTypeAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectTypeAsync(long id, [FromBody] PreventiviObjectTypeDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectTypeAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectTypeAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectTypeAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviObjectTypeAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region ObjectStatuses
+        [HttpPost("GetPreventiviObjectStatusesAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectStatusesAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectStatusesAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectStatusByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectStatusByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectStatusByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectStatusAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectStatusAsync(PreventiviObjectStatusDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectStatusAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectStatusAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectStatusAsync(long id, [FromBody] PreventiviObjectStatusDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectStatusAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectStatusAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectStatusAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviObjectStatusAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region ObjectInspectionMode
+        [HttpPost("GetPreventiviObjectInspectionModesAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionModesAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionModesAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectInspectionModeByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionModeByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionModeByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectInspectionModeAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectInspectionModeAsync(PreventiviObjectInspectionModeDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectInspectionModeAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectInspectionModeAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectInspectionModeAsync(long id, [FromBody] PreventiviObjectInspectionModeDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectInspectionModeAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectInspectionModeAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectInspectionModeAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviObjectInspectionModeAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region ObjectInspection
+        [HttpPost("GetPreventiviObjectInspectionsAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionsAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionsAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectInspectionByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectInspectionAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectInspectionAsync(PreventiviObjectInspectionDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectInspectionAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectInspectionAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectInspectionAsync(long id, [FromBody] PreventiviObjectInspectionDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectInspectionAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectInspectionAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectInspectionAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviObjectInspectionAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+
+        #region Functions
+        [HttpPut("UpdatePreventiviObjectInspectionStatementAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectInspectionStatementAsync(long id, [FromBody] PreventiviObjectInspectionStatementDto model)
+        {
+            try
+            {
+                if (model.SendManager.GetValueOrDefault())
+                {
+                    await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.inspectionUpdated, model.Note, model.CreatorName, model.CreatorId);
+                    await sendNotification(model.Id, model.ObjectNumber, model.AssigneeId, TextConsts.inspectionUpdated);
+                }
+
+                if (model.SendInspector.GetValueOrDefault())
+                {
+                    await sendMail(model.Id, model.ObjectNumber, model.InspectionAssigneeMail, TextConsts.inspectionUpdated, model.Note, model.CreatorName, model.CreatorId);
+                    await sendNotification(model.Id, model.ObjectNumber, model.InspectionAssigneeId, TextConsts.inspectionUpdated);
+                }
+
+
+                return Ok(new { Code = code.Status204NoContent, Response = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region ObjectInspectionAttachment
+        [HttpPost("GetPreventiviObjectInspectionAttachmentsAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionAttachmentsAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionAttachmentsAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectInspectionAttachmentByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionAttachmentByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionAttachmentByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectInspectionAttachmentAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectInspectionAttachmentAsync([FromForm] PreventiviObjectInspectionAttachmentDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectInspectionAttachmentAsync(model);
+
+                if (model.uploadFile)
+                {
+                    var fileModel = model.ToCreateFileModel(response, model.FileName, basePath, "ObjectInspection");
+
+                    var fileData = blfh.CreateFileData(fileModel.File, response.ToString(), fileModel.FileFolder);
+                    var fileUploadResponse = await _fileService.Upload(fileData);
+
+                    if (fileUploadResponse != null)
+                    {
+                        fileModel.FileId = fileUploadResponse.id;
+                        await _gaPreventiviService.UpdatePreventiviObjectInspectionAttachmentAsync(fileModel.Id, fileModel);
+                        return Ok(new { Code = code.Status201Created, Response = response });
+                    }
+                    else
+                    {
+                        return Ok(new { Code = code.Status206PartialContent, Response = response });
+                    }
+
+
+                }
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectInspectionAttachmentAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status207MultiStatus)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectInspectionAttachmentAsync(long id, [FromForm] PreventiviObjectInspectionAttachmentDto model)
+        {
+            try
+            {
+                bool failureDelete = false;
+                var response = await _gaPreventiviService.UpdatePreventiviObjectInspectionAttachmentAsync(id, model);
+
+
+
+                if (model.deleteFile)
+                {
+                    var fileData = blfh.DeleteFileData(model.FileId, model.FileFolder);
+                    var fileDeleteResponse = await _fileService.Remove(model.FileId);
+
+                    var fileModel = model.ToDeleteFileModel<PreventiviObjectInspectionAttachmentDto>();
+
+                    if (fileDeleteResponse)
+                    {
+                        await _gaPreventiviService.UpdatePreventiviObjectInspectionAttachmentAsync(fileModel.Id, fileModel);
+                    }
+                    else
+                    {
+                        failureDelete = true;
+                    }
+                }
+
+                if (model.uploadFile)
+                {
+                    var fileModel = model.ToCreateFileModel<PreventiviObjectInspectionAttachmentDto>(response, model.FileName, basePath, "ObjectInspection");
+
+                    var fileData = blfh.CreateFileData(fileModel.File, id.ToString(), fileModel.FileFolder);
+                    var fileUploadResponse = await _fileService.Upload(fileData);
+
+                    if (fileUploadResponse != null)
+                    {
+                        fileModel.FileId = fileUploadResponse.id;
+                        await _gaPreventiviService.UpdatePreventiviObjectInspectionAttachmentAsync(fileModel.Id, fileModel);
+                        if (failureDelete)
+                        {
+                            return Ok(new { Code = code.Status207MultiStatus, Response = response });
+                        }
+                        else
+                        {
+                            return Ok(new { Code = code.Status204NoContent, Response = response });
+                        }
+
+                    }
+                    else
+                    {
+                        return Ok(new { Code = code.Status206PartialContent, Response = response });
+                    }
+                }
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectInspectionAttachmentAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectInspectionAttachmentAsync(long id)
+        {
+            try
+            {
+                var model = await _gaPreventiviService.GetPreventiviObjectInspectionAttachmentByIdAsync(id);
+                var fileDeleteResponse = await _fileService.Remove(model.FileId);
+                if (fileDeleteResponse)
+                {
+                    var response = await _gaPreventiviService.DeletePreventiviObjectInspectionAttachmentAsync(id);
+
+                    return Ok(new { Code = code.Status200OK, Response = response });
+                }
+                else
+                {
+                    var response = await _gaPreventiviService.DeletePreventiviObjectInspectionAttachmentAsync(id);
+
+                    return Ok(new { Code = code.Status206PartialContent, Response = response });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region ObjectInspectionImage
+        [HttpPost("GetPreventiviObjectInspectionImagesAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionImagesAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionImagesAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectInspectionImageByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionImageByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionImageByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectInspectionImageAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectInspectionImageAsync([FromForm] PreventiviObjectInspectionImageDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectInspectionImageAsync(model);
+
+                if (model.uploadFile)
+                {
+                    var fileModel = model.ToCreateFileModel(response, model.FileName, basePath, "ObjectInspection");
+
+                    var fileData = blfh.CreateFileData(fileModel.File, response.ToString(), fileModel.FileFolder);
+                    var fileUploadResponse = await _fileService.Upload(fileData);
+
+                    if (fileUploadResponse != null)
+                    {
+                        fileModel.FileId = fileUploadResponse.id;
+                        await _gaPreventiviService.UpdatePreventiviObjectInspectionImageAsync(fileModel.Id, fileModel);
+                        return Ok(new { Code = code.Status201Created, Response = response });
+                    }
+                    else
+                    {
+                        return Ok(new { Code = code.Status206PartialContent, Response = response });
+                    }
+
+
+                }
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectInspectionImageAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status207MultiStatus)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectInspectionImageAsync(long id, [FromForm] PreventiviObjectInspectionImageDto model)
+        {
+            try
+            {
+                bool failureDelete = false;
+                var response = await _gaPreventiviService.UpdatePreventiviObjectInspectionImageAsync(id, model);
+
+
+
+                if (model.deleteFile)
+                {
+                    var fileData = blfh.DeleteFileData(model.FileId, model.FileFolder);
+                    var fileDeleteResponse = await _fileService.Remove(model.FileId);
+
+                    var fileModel = model.ToDeleteFileModel<PreventiviObjectInspectionImageDto>();
+
+                    if (fileDeleteResponse)
+                    {
+                        await _gaPreventiviService.UpdatePreventiviObjectInspectionImageAsync(fileModel.Id, fileModel);
+                    }
+                    else
+                    {
+                        failureDelete = true;
+                    }
+                }
+
+                if (model.uploadFile)
+                {
+                    var fileModel = model.ToCreateFileModel<PreventiviObjectInspectionImageDto>(response, model.FileName, basePath, "ObjectInspection");
+
+                    var fileData = blfh.CreateFileData(fileModel.File, id.ToString(), fileModel.FileFolder);
+                    var fileUploadResponse = await _fileService.Upload(fileData);
+
+                    if (fileUploadResponse != null)
+                    {
+                        fileModel.FileId = fileUploadResponse.id;
+                        await _gaPreventiviService.UpdatePreventiviObjectInspectionImageAsync(fileModel.Id, fileModel);
+                        if (failureDelete)
+                        {
+                            return Ok(new { Code = code.Status207MultiStatus, Response = response });
+                        }
+                        else
+                        {
+                            return Ok(new { Code = code.Status204NoContent, Response = response });
+                        }
+
+                    }
+                    else
+                    {
+                        return Ok(new { Code = code.Status206PartialContent, Response = response });
+                    }
+                }
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectInspectionImageAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status206PartialContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectInspectionImageAsync(long id)
+        {
+            try
+            {
+                var model = await _gaPreventiviService.GetPreventiviObjectInspectionImageByIdAsync(id);
+                var fileDeleteResponse = await _fileService.Remove(model.FileId);
+                if (fileDeleteResponse)
+                {
+                    var response = await _gaPreventiviService.DeletePreventiviObjectInspectionImageAsync(id);
+
+                    return Ok(new { Code = code.Status200OK, Response = response });
+                }
+                else
+                {
+                    var response = await _gaPreventiviService.DeletePreventiviObjectInspectionImageAsync(id);
+
+                    return Ok(new { Code = code.Status206PartialContent, Response = response });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region Financial
+        [HttpGet("GetPreventiviSubjectFinancialPositionAsync/{cf}/{piva}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviSubjectFinancialPositionAsync(string cf,string piva)
+        {
+            try
+            {
+                var query= System.IO.File.ReadAllText(@".\Query\Preventivi\FinancialPosition.sql");
+                query = string.Format(query, cf, piva);
+
+                var response = await _queryBuilderService.GetFromQueryAsync(query);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("RequestPreventiviSubjectFinancialUnlockAsync")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> RequestPreventiviSubjectFinancialUnlockAsync(PreventiviSubjectFinancialDto model)
+        {
+            try
+            {
+                await _gaPreventiviService.RequestPreventiviSubjectFinancialUnlockAsync(model);
+                await sendMail(model.Id,model.ObjectNumber, "federico.laigueglia@gestioneambiente.net", TextConsts.financialUnlockRequest,"", model.CreatorName, model.CreatorId);
+
+                return Ok(new { Code = code.Status204NoContent, Response = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("ExecPreventiviSubjectFinancialUnlockAsync")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> ExecPreventiviSubjectFinancialUnlockAsync(PreventiviSubjectFinancialDto model)
+        {
+            try
+            {
+                await _gaPreventiviService.ExecPreventiviSubjectFinancialUnlockAsync(model);
+                await sendMail(model.Id,model.ObjectNumber, model.AssigneeMail, TextConsts.financialUnlockExec, "", model.CreatorName, model.CreatorId);
+
+                return Ok(new { Code = code.Status204NoContent, Response = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("ExecPreventiviSubjectFinancialLockAsync")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> ExecPreventiviSubjectFinancialLockAsync(PreventiviSubjectFinancialDto model)
+        {
+            try
+            {
+                await _gaPreventiviService.ExecPreventiviSubjectFinancialLockAsync(model);
+                await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.financialLockExec, "", model.CreatorName, model.CreatorId);
+
+                return Ok(new { Code = code.Status204NoContent, Response = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region Action
+        [HttpPost("GetPreventiviActionsAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviActionsAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviActionsAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviActionByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviActionByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviActionByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviActionAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviActionAsync(PreventiviActionDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviActionAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviActionAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviActionAsync(long id, [FromBody] PreventiviActionDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviActionAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviActionAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviActionAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviActionAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region Helpers
+        private async Task<bool> sendMail(long id, string number,string mail, string type, string note,string creator,string creatorId)
+        {
+            var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Preventivi, AppConsts.PreventiviInfo);
+            var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+            var mailJob = await _mailService.AddMailJobAsync(new MailJob()
+            {
+                Id = 0,
+                Description = "Assegnazione Preventivo N° " + number,
+                DateScheduled = DateTime.Now,
+                Title = "Preventivo N° " + number,
+                MailingTo = mail,
+                MailCc = "",
+                Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Preventivi),
+                Content = HtmlHelpers.GenerateText(type+"<br>Note:" + note + "<br>" + creator + ""),
+                Link = true,
+                LinkHref = String.Format("https://cloud.gestioneambiente.net/preventivi/tab/object/{0}", id),
+                LinkDescription = "Vai al preventivo",
+                Template = "DefaultMailWithLinkJob.html",
+                UserId = creatorId,
+                OkMessage = String.Format("L'assegnazione del Preventivo N° {0} è stata inoltrata correttamente.", number),
+                KoMessage = String.Format("Si è verificato un problema durante l'invio dell'assegnazione del Preventivo N° {0}.", number),
+                Attachment = false,
+                AttachmentPath = null
+            });
+
+            return true;
+
+        }
+
+        private async Task<bool> sendNotification(long id,string number,string assigneeId,string type)
+        {
+            var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Preventivi, AppConsts.PreventiviInfo);
+            var assigneeNotification = _notificationService.GetViewViewNotificationUsersOnAppsByUserIdAsync(assigneeId).Result;
+            if ((from x in assigneeNotification.Data where x.AppId == notificationApp.Id && x.Enabled select x).ToList().Count > 0)
+            {
+                var notification = _notificationService.AddNotificationEventAsync(new NotificationEventDto()
+                {
+                    Id = 0,
+                    DateEvent = DateTime.Now,
+                    UserId = assigneeId,
+                    NotificationAppId = notificationApp.Id,
+                    Title = "Preventivo N° " + number,
+                    Message = type,
+                    Read = false,
+                    Routing = false,
+                    Link = String.Format("/preventivi/tab/object/{0}", id),
+                    Disabled = false
+                }).Result;
+            }
+
+            return true;
+
+        }
+        #endregion
+
+    }
+
+    static class TextConsts
+    {
+        public const string objectManage = "Ti è stato assegnato un Preventivo.";
+        public const string inspectionManage = "Ti è stato assegnato un Sopralluogo.";
+
+        public const string inspectionUpdated = "Sono stati aggiornati i dati su un sopralluogo.";
+
+        public const string financialUnlockRequest = "É stato rischiesto lo sblocco del cliente per poter procedere il lavoro sul preventivo in oggetto";
+        public const string financialUnlockExec = "É stato sbloccato il cliente sul Preventivo in oggetto, è ora possibile procedere con l'elaborazione";
+        public const string financialLockExec = "É stato bloccato il cliente sul Preventivo in oggetto, non è pertanto possibile procedere con l'avanzamento dei lavori";
+
     }
 }
+
+
+

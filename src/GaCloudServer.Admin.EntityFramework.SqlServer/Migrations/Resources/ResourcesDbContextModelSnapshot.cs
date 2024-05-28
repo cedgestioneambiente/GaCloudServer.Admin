@@ -1797,8 +1797,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("CodAzi")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CpRowNum")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CpRowNum")
+                        .HasColumnType("int");
 
                     b.Property<string>("DesAzi")
                         .HasColumnType("nvarchar(max)");
@@ -1821,11 +1821,11 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<bool>("Disabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("DtFin")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("DtFin")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("DtFin1")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("DtIni")
+                        .HasColumnType("datetime2");
 
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -1836,7 +1836,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("NumCon")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Sospeso")
+                    b.Property<string>("Partita")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Superfic")
@@ -2574,6 +2574,56 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.ToView("ViewGaCdrUtenti");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Common.Gauge", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescrizioneBreve")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommonGauges");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Common.IvaCode", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescrizioneBreve")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Split")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Valore")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommonIvaCodes");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Comunicati.ComunicatiDocumento", b =>
@@ -3774,6 +3824,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("CodArera")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Commerciale")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("ContactCenter")
                         .HasColumnType("bit");
 
@@ -3803,6 +3856,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.Property<string>("Group")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Important")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("Ingombranti")
                         .HasColumnType("bit");
@@ -5074,6 +5130,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("CodZona")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ComuneAlt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("ContactCenterProvenienzaId")
                         .HasColumnType("bigint");
 
@@ -5447,6 +5506,144 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasKey("Id");
 
                     b.ToView("ViewGaCrmCausaliTypes");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmCommercialeTickets", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Assignee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssigneeDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CanaleDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CanaleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Cellulare")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CfPiva")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodCli")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodZona")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ComuneCod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ComuneDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ComuneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("ContactCenterCalendar")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Creator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatorDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataChiusura")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataProgrammazione")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataRichiesta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataTicket")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("Duration")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailPec")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Fatturazione")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Magazzino")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MagazzinoCalendar")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NoteCrm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteOperatore")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumCiv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumCon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Numero")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Partita")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Prg")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("PrintTemplate")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StatoDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StatoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TipoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Tributo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Utente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Via")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToView("ViewGaCrmCommercialeTickets");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views.ViewGaCrmEventJobs", b =>
@@ -10509,6 +10706,51 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToView("WidgetGaPresenzeSchedule");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviAction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ObjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ObjectId");
+
+                    b.ToTable("GaPreventiviActions");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviAnticipo", b =>
                 {
                     b.Property<long>("Id")
@@ -10698,6 +10940,456 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasKey("Id");
 
                     b.ToTable("GaPreventiviAnticipiTipologie");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObject", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("AssigneeId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cellulare")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CfPiva")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cliente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodCliente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodComune")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Comune")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CrmTicketId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DataCompletamento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInserimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataScadenza")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailPec")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("FinancialForcedLock")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FinancialLock")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FinancialLockDetail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FinancialUnlockDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FinancialUnlockRequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FinancialUnlockRequestUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FinancialUnlockRequestUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FinancialUnlockUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FinancialUnlockUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteCrm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteOperative")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumCiv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ObjectNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PriorityDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Via")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("GaPreventiviObjects");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectAttachment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ObjectId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ObjectId");
+
+                    b.ToTable("GaPreventiviObjectAttachments");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspection", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("AssigneeId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateExecution")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateInspection")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ModeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoteInspection")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ObjectId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModeId");
+
+                    b.HasIndex("ObjectId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("GaPreventiviObjectInspections");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspectionAttachment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ObjectInspectionId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ObjectInspectionId");
+
+                    b.ToTable("GaPreventiviObjectInspectionAttachments");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspectionImage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FileFolder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ObjectInspectionId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ObjectInspectionId");
+
+                    b.ToTable("GaPreventiviObjectInspectionImages");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspectionMode", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPreventiviObjectInspectionModes");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectStatus", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPreventiviObjectStatuses");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPreventiviObjectTypes");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views.ViewGaPreventiviAnticipi", b =>
@@ -14138,6 +14830,17 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Navigation("PresenzeTipoOra");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviAction", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObject", "Object")
+                        .WithMany()
+                        .HasForeignKey("ObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Object");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviAnticipo", b =>
                 {
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviAnticipoTipologia", "PreventiviAnticipoTipologia")
@@ -14158,6 +14861,85 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .IsRequired();
 
                     b.Navigation("PreventiviAnticipo");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObject", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+
+                    b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectAttachment", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObject", "Object")
+                        .WithMany()
+                        .HasForeignKey("ObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Object");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspection", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspectionMode", "Mode")
+                        .WithMany()
+                        .HasForeignKey("ModeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObject", "Object")
+                        .WithMany()
+                        .HasForeignKey("ObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mode");
+
+                    b.Navigation("Object");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspectionAttachment", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspection", "ObjectInspection")
+                        .WithMany()
+                        .HasForeignKey("ObjectInspectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ObjectInspection");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspectionImage", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspection", "ObjectInspection")
+                        .WithMany()
+                        .HasForeignKey("ObjectInspectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ObjectInspection");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.ProgettiJob", b =>

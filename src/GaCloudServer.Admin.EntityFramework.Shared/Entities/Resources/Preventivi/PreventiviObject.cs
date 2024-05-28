@@ -1,0 +1,57 @@
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi
+{
+    public class PreventiviObject:GenericAuditableEntity
+    {
+        public string ObjectNumber { get; set; }
+        public DateTime DataInserimento { get; set; }
+        public string CodComune { get; set; }
+        public string Comune { get; set; }
+        public string CodCliente { get; set; }
+        public string Cliente { get; set; }
+        public string CfPiva { get; set; }
+        public string Telefono { get; set; }
+        public string Cellulare { get; set; }
+        public string Email { get; set; }
+        public string EmailPec { get; set; }
+        public string Via { get; set; }
+        public string NumCiv { get; set; }
+        [ForeignKey("Type")]
+        public long TypeId { get; set; }
+        [ForeignKey("Status")]
+        public long StatusId { get; set; }
+        public string AssigneeId { get; set; }
+        public DateTime DataCompletamento { get; set; }
+        public bool Completed { get; set; }
+
+        public string NoteCrm { get; set; }
+        public string NoteOperative { get; set; }
+
+        public long CrmTicketId { get; set; }
+        public bool FinancialLock { get; set; }
+        public bool FinancialForcedLock { get; set; }
+        public string FinancialLockDetail { get; set; }
+        public DateTime? FinancialUnlockDate { get; set; }
+        public string FinancialUnlockUserId { get; set; }
+        public string FinancialUnlockUserName { get; set; }
+
+        public DateTime? FinancialUnlockRequestDate { get; set; }
+        public string? FinancialUnlockRequestUserId { get; set; }
+        public string? FinancialUnlockRequestUserName { get; set; }
+
+        public DateTime? DataScadenza { get; set; }
+        public int Priority { get; set; }
+        public string PriorityDesc { get; set; }
+
+
+
+        //Navigation Props
+        public PreventiviObjectStatus Status { get; set; }
+        public PreventiviObjectType Type { get; set; }
+
+    }
+
+}
