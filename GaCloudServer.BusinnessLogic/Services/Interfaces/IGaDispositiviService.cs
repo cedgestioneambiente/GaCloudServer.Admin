@@ -158,7 +158,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region GaDispositiviModuli
-        Task<DispositiviModuliDto> GetGaDispositiviModuliByDipendenteIdAsync(long dipendenteId);
+        Task<DispositiviModuliDto> GetGaDispositiviModuliByDipendenteIdAsync(long dispositiviDipendenteid);
         Task<DispositiviModuloDto> GetGaDispositiviModuloByIdAsync(long id);
 
         Task<long> AddGaDispositiviModuloAsync(DispositiviModuloDto dto);

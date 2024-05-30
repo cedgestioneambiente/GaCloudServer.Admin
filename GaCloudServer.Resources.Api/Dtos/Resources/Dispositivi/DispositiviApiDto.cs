@@ -149,7 +149,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Dispositivi
     public class DispositiviModuloApiDto : GenericFileApiDto
     {
         public DateTime Data { get; set; }
-        public string Numero { get; set; }
+        public string? Numero { get; set; }
         public string? Note { get; set; }
         public long PersonaleDipendenteId { get; set; }
     }

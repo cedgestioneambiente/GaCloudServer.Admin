@@ -1313,13 +1313,12 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region DispositiviModuli
-
-        [HttpGet("GetGaDispositiviModuliByDipendenteIdAsync/{dipendenteId}")]
-        public async Task<ActionResult<ApiResponse>> GetGaDispositiviModuliByDipendenteIdAsync(long dipendenteId)
+        [HttpGet("GetGaDispositiviModuliByDipendenteIdAsync/{dispositiviDipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetGaDispositiviModuliByDipendenteIdAsync(long dispositiviDipendenteid)
         {
             try
             {
-                var dtos = await _gaDispositiviService.GetGaDispositiviModuliByDipendenteIdAsync(dipendenteId);
+                var dtos = await _gaDispositiviService.GetGaDispositiviModuliByDipendenteIdAsync(dispositiviDipendenteid);
                 var apiDtos = dtos.ToApiDto<DispositiviModuliApiDto, DispositiviModuliDto>();
                 return new ApiResponse(apiDtos);
             }
@@ -1349,7 +1348,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         [HttpPost("AddGaDispositiviModuloAsync")]
-        public async Task<ActionResult<ApiResponse>> AddGaDispositiviModuloAsync([FromBody] DispositiviModuloNewApiDto apiDto)
+        public async Task<ActionResult<ApiResponse>> AddGaDispositiviModuloAsync([FromForm] DispositiviModuloApiDto apiDto)
         {
             try
             {
@@ -1357,28 +1356,20 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-
-                var dto = new DispositiviModuloDto();
-                dto.Id = 0;
-                dto.Disabled = false;
-                dto.Numero = apiDto.Numero;
-                dto.PersonaleDipendenteId = apiDto.PersonaleDipendenteId;
-                dto.Data = apiDto.Data;
-
+                string fileFolder = "GaCloud/Dispositivi";
+                var dto = apiDto.ToDto<DispositiviModuloDto, DispositiviModuloApiDto>();
                 var response = await _gaDispositiviService.AddGaDispositiviModuloAsync(dto);
-                foreach (var itm in apiDto.Items)
+                if (apiDto.uploadFile)
                 {
-                    var dettaglio = new DispositiviOnDipendenteDto();
-                    dettaglio.Id = 0;
-                    dettaglio.Disabled = false;
-                    dettaglio.PersonaleDipendenteId = response;
-                    dettaglio.DispositiviStockId = itm.Id;
-                    dettaglio.DataConsegna = itm.DataConsegna;
-                    dettaglio.DataRitiro = itm.DataRitiro;
-
-
-                    var insertDettagli = await _gaDispositiviService.AddGaDispositiviOnDipendenteAsync(dettaglio);
+                    var fileUploadResponse = await _fileService.Upload(apiDto.File, fileFolder, apiDto.File.FileName);
+                    dto.Id = response;
+                    dto.FileFolder = fileFolder;
+                    dto.FileName = fileUploadResponse.fileName;
+                    dto.FileSize = apiDto.File.Length.ToString();
+                    dto.FileType = apiDto.File.ContentType;
+                    dto.FileId = fileUploadResponse.id;
                     var updateFileResponse = await _gaDispositiviService.UpdateGaDispositiviModuloAsync(dto);
+                    return new ApiResponse("CreatedWithFile", response, code.Status201Created);
                 }
 
                 return new ApiResponse(response);
@@ -1395,7 +1386,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
-       
+
         [HttpPost("UpdateGaDispositiviModuloAsync")]
         public async Task<ActionResult<ApiResponse>> UpdateGaDispositiviModuloAsync([FromForm] DispositiviModuloApiDto apiDto)
         {
@@ -1405,12 +1396,10 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     throw new ApiProblemDetailsException(ModelState);
                 }
-
                 string fileFolder = "GaCloud/Dispositivi";
                 var dto = apiDto.ToDto<DispositiviModuloDto, DispositiviModuloApiDto>();
                 var response = await _gaDispositiviService.UpdateGaDispositiviModuloAsync(dto);
                 bool failureDelete = false;
-
                 if (apiDto.deleteFile)
                 {
                     var deleteResponse = await _fileService.Remove(apiDto.FileId);
@@ -1499,42 +1488,6 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
-
-        #region Functions
-        [HttpGet("PrintGaDispositiviModuloById/{id}")]
-        public async Task<ActionResult<ApiResponse>> PrintGaDispositiviModuloById(long id)
-        {
-            try
-            {
-                var view = await _gaDispositiviService.GetViewGaDispositiviOnModuloByIdAsync(id);
-                var modulo = await _gaDispositiviService.GetGaDispositiviModuloByIdAsync(id);
-                var dipendente = await _gaPersonaleService.GetViewGaPersonaleDipendenteByIdAsync(modulo.PersonaleDipendenteId);
-                DispositiviModuloTemplateDto dto = new DispositiviModuloTemplateDto();
-                dto.FileName = "DispositiviModulo.pdf";
-                dto.FilePath = @"Print/Dispositivi";
-                dto.Title = "Dispositivi Consegnati";
-                dto.Css = "DispositiviModulo";
-
-                dto.Nominativo = view.Data.FirstOrDefault().Nominativo;
-                dto.Data = view.Data.FirstOrDefault().Data.ToString("dd/MM/yyyy");
-                //dto.Note = view.Data.FirstOrDefault().Note;
-                dto.Dispositivi = new List<dynamic>();
-                foreach (var itm in view.Data)
-                {
-                    dto.Dispositivi.Add(itm);
-                }
-
-                var response = await _printService.Print("DispositiviModulo", dto);
-                return new ApiResponse(response);
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-                throw new ApiException(ex.Message);
-            }
-        }
-        #endregion
 
         #endregion
     }

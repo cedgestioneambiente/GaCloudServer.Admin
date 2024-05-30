@@ -151,7 +151,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Dispositivi
     public class DispositiviModuloDto : GenericFileDto
     {
         public DateTime Data { get; set; }
-        public string Numero { get; set; }
+        public string? Numero { get; set; }
         public string? Note { get; set; }
         public long PersonaleDipendenteId { get; set; }
     }
