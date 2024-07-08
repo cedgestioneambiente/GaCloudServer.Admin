@@ -743,9 +743,9 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #region DispositiviModuli
 
-        public async Task<DispositiviModuliDto> GetGaDispositiviModuliByDipendenteIdAsync(long dipendenteId)
+        public async Task<DispositiviModuliDto> GetGaDispositiviModuliByDipendenteIdAsync(long dispositiviDipendenteid)
         {
-            var entities = await gaDispositiviModuliRepo.GetWithFilterAsync(x => x.PersonaleDipendenteId == dipendenteId);
+            var entities = await gaDispositiviModuliRepo.GetWithFilterAsync(x => x.PersonaleDipendenteId == dispositiviDipendenteid);
             var dtos = entities.ToDto<DispositiviModuliDto, PagedList< DispositiviModulo >>();
             return dtos;
         }
