@@ -15,6 +15,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
 
         //Navigation Props
         public PreventiviObject Object { get; set; }
+
+        public PreventiviAction(string descrizione) { 
+            this.Descrizione = descrizione;
+        }
     }
 
 }

@@ -33,7 +33,7 @@ CASE WHEN CAST(TOTFAT AS FLOAT)=0 THEN 1 ELSE CAST(TOTFAT AS FLOAT) END
 AS FLOAT) PrcInsoluto,
 'Cliente Tariffa' TipCli
 FROM [20.82.75.6].TARI.dbo.ViewBackOfficeIncassatoInsoluto
-WHERE CODFIS='{0}' OR PIVA ='{1}'
+WHERE (CODFIS='{0}' OR PIVA ='{1}') OR (CODFIS='{2}' OR PIVA ='{3}')
 UNION
 SELECT 
 [CODCLI] CodCli
@@ -70,7 +70,7 @@ CASE WHEN CAST(TOTFAT AS FLOAT)=0 THEN 1 ELSE CAST(TOTFAT AS FLOAT) END
 AS FLOAT) PrcInsoluto,
 'Cliente Privato' TipCli
 FROM [20.82.75.6].TARI.dbo.ViewBackOfficeIncassatoInsolutoC90
-WHERE CODFIS='{0}' OR PIVA ='{1}'
+WHERE (CODFIS='{0}' OR PIVA ='{1}') OR (CODFIS='{2}' OR PIVA ='{3}')
 UNION
 SELECT 
 [CODCLI] CodCli
@@ -107,4 +107,4 @@ CASE WHEN CAST(TOTFAT AS FLOAT)=0 THEN 1 ELSE CAST(TOTFAT AS FLOAT) END
 AS FLOAT) PrcInsoluto,
 'Cliente Tari' TipCli
 FROM [20.82.75.6].TARI.dbo.ViewBackOfficeIncassatoInsolutoC19
-WHERE CODFIS='{0}' OR PIVA ='{1}'
+WHERE (CODFIS='{0}' OR PIVA ='{1}') OR (CODFIS='{2}' OR PIVA ='{3}')

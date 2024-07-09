@@ -1,5 +1,6 @@
 ﻿using GaCloudServer.BusinnessLogic.Dtos.Template;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace GaCloudServer.BusinnessLogic.Helpers
@@ -1485,6 +1486,186 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             
             return sb.ToString();
+        }
+
+        public static string PreventiviObjectDefault(PreventiviObjectTemplateDto dto, string? alternativePath = null)
+        {
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/PreventiviObjectDefault/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+
+            var subTitle = dto.preventiviObjectInspection != null && dto.preventiviObjectInspection.ModeId == 2 ?
+                $"Facendo seguito alla Vs. richiesta e alla verifica effettuata in data {dto.preventiviObjectInspection.DateExecution.GetValueOrDefault().ToString("dd/MM/yyyy")}, con la presente Vi sottoponiamo le condizioni tecniche ed economiche per il servizio di raccolta e trasporto rifiuti." :
+                $"Facendo seguito alla Vs. richiesta, con la presente Vi sottoponiamo le condizioni tecniche ed economiche per il servizio di raccolta e trasporto rifiuti.";
+
+
+            var serviceTable = "";
+            double objectTotal = 0.0;
+            double objectTotalNoTax = 0.0;
+            double objectTax = 0.0;
+
+            #region Section Builder
+
+            foreach (var section in dto.preventiviObjectSections)
+            {
+                string sectionHeader = "<div class=\"border\" style=\"border-radius:4px;margin-top:4px;padding:4px\">";
+                long[] garbages = (section.Garbages == null || section.Garbages=="") ? new long[0] : section.Garbages.Split(",").Select(long.Parse).ToArray();
+
+                var garbagesObject = dto.preventiviGarbages
+                    .Where(x => garbages.Contains(x.Id))
+                    .Select(x => $"<b>{x.Code}</b> - {x.Descrizione}");
+
+                foreach (var garbage in garbagesObject)
+                {
+                    sectionHeader += $"<div class=\"w-100\">{garbage}</div>";
+                }
+
+                sectionHeader +=section.DestinationOnPrint && !section.Destination.Ignore? $"<div><b>Destinatario</b> {section.Destination.Descrizione}</div>":"";
+                sectionHeader += "</div>";
+
+
+                var sectionServices = "<table class=\"table table-bordered\"><tbody>";
+                foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
+                {
+                    var _objectTotalNoTax = service.CostUnit * service.Amount;
+                    var _objectTotalTax = (service.CostUnit * service.Amount) * (service.IvaCode.Valore / 100);
+                    var _objectTotal= _objectTotalNoTax + _objectTotalTax; ;
+
+                    objectTax += _objectTotalTax;
+                    objectTotalNoTax += _objectTotalNoTax;
+                    objectTotal += _objectTotal;
+
+                    sectionServices += "<tr>";
+                    sectionServices += $"<th class=\"p-1\">{service.ServiceType.Descrizione} - {service.ServiceTypeDetail.Descrizione}</th>";
+                    sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x=>x.Id==service.ServiceTypeDetail.GaugeId).FirstOrDefault().Descrizione}</th>";
+                    sectionServices += service.ShowAmountOnPrint? $"<td class=\"p-1\">Qta.: {service.Amount}</td>":$"<td style=\"border-left:none !imposrtant\"></td>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(service.CostUnit)}</th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{service.IvaCode.DescrizioneBreve}</th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(service.CostTotal)}</th>";
+                    sectionServices += "</tr>";
+
+                    
+
+                }
+
+                sectionServices += "</tbody></table>";
+
+                var producerRow = "";
+                if (!section.Producer.Ignore)
+                {
+                    producerRow += "<div class=\"row\">" +
+                               "<div class=\"col-4\">PRODUTTORE</div>" +
+                               $"<div class=\"col-8 font-weight-bold\">{section.Producer.Descrizione}</div>" +
+                           "</div>";
+                }
+
+
+                serviceTable += $"" +
+                    $"<div id='section-{section.Id}' class=\"w-100 pt-2\">" +
+                        $"{producerRow}"+
+                        "<div class=\"row\">" +
+                            "<div class=\"col-4\">TIPO DI SERVIZIO</div>" +
+                            $"<div class=\"col-8 font-weight-bold\">{section.Descrizione}</div>" +
+                        "</div>" +
+                        $"{sectionHeader}" +
+                        $"{sectionServices}" +
+                    "</div>";
+            }
+
+            #endregion
+
+            #region Condition Builder
+            var conditionTable = "<div>";
+            foreach (var condition in dto.preventiviObjectConditions)
+            {
+                conditionTable += $"<p>{condition.Descrizione}</p>";
+            }
+            conditionTable += "</div>";
+            #endregion
+
+            sb.AppendFormat(@fileContent
+                , dto.preventiviObject.ObjectNumber //0
+                , DateTime.Now.ToString("dd/MM/yyyy")
+                , dto.preventiviObjectPayout.DateValid.ToString("dd/MM/yyyy")
+                , NumberHelper.ConvertToCurrencyString(objectTotal)
+                , dto.preventiviObject.Cliente
+                , dto.preventiviObject.ClienteIndirizzo
+                , dto.preventiviObject.ClienteComune //6
+                , $"{dto.preventiviObject.Type.Descrizione} - {dto.preventiviObject.TypeDesc}"
+                , subTitle
+                , dto.preventiviObject.IndirizzoFattura
+                , dto.preventiviObject.IndirizzoSede //10
+                , dto.preventiviObject.ClienteCfPiva //11
+                , dto.preventiviObject.ClienteCodSdi //12
+                , dto.preventiviObject.Intestatario //13
+                , dto.preventiviObject.IntestatarioIndirizzo //14
+                , dto.preventiviObject.IntestatarioComune //15
+                , dto.preventiviObject.IntestatarioCfPiva //16
+                , dto.preventiviObject.Telefono //17
+                , dto.preventiviObject.Cellulare //18
+                , dto.preventiviObject.Email //19
+                , dto.preventiviObject.EmailPec //20
+
+
+                , dto.preventiviObjectPayout.DateValid.ToString("dd/MM/yyyy") //21
+                , dto.preventiviObjectPayout.Period.Descrizione //22
+                , dto.preventiviObjectPayout.Descrizione //23
+                , dto.preventiviObjectPayout.BankAccount.Iban //24
+                , serviceTable //25
+                , conditionTable //26
+                );
+            return sb.ToString();
+
+
+        }
+
+        public static string PreventiviObjectInspectionDefault(PreventiviObjectTemplateDto dto, string? alternativePath = null)
+        {
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/PreventiviObjectInspectionDefault/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            sb.AppendFormat(@fileContent
+                , dto.preventiviObject.ObjectNumber
+                , dto.preventiviObjectInspection.DateInspection
+                , dto.preventiviObjectInspection.DateExecution
+                , dto.preventiviObjectInspection.AssigneeId
+                , dto.preventiviObject.TypeDesc
+                , dto.preventiviObject.Cliente
+                , dto.preventiviObject.CodCliente
+                , dto.preventiviObject.IndirizzoSede
+                , dto.preventiviObject.IndirizzoFattura
+                , $"{dto.preventiviObject.ClienteIndirizzo} - {dto.preventiviObject.ClienteComune}"
+                , dto.preventiviObject.ClienteCfPiva
+                , dto.preventiviObject.CodCliente
+                );
+            return sb.ToString();
+
+
         }
 
     }

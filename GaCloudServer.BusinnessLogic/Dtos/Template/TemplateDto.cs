@@ -1,7 +1,9 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi;
 using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
@@ -188,6 +190,19 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
         public string CodTributo { get; set; }
         public double Totale { get; set; }
         public string Rata { get; set; }
+    }
+
+    public class PreventiviObjectTemplateDto: GenericPrintDto
+    { 
+        public PreventiviObjectDto preventiviObject {  get; set; }
+        public PreventiviObjectInspectionDto preventiviObjectInspection {  get; set; }
+        public PreventiviObjectPayoutDto preventiviObjectPayout { get; set; }
+
+        public List<PreventiviObjectSectionDto> preventiviObjectSections { get; set; }
+        public List<PreventiviObjectServiceDto> preventiviObjectServices {  get; set; }
+        public List<PreventiviObjectConditionDto> preventiviObjectConditions {  get; set; }
+        public List<PreventiviGarbageDto> preventiviGarbages { get; set; }
+        public List<CommonGaugeDto> commonGauges { get; set; }
     }
 
 

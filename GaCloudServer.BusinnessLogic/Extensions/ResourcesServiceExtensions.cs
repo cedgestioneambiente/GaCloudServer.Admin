@@ -46,6 +46,8 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IGaSmartCityService, GaSmartCityService>();
             services.AddTransient<IGaPreventiviService, GaPreventiviService>();
 
+            services.AddTransient<ICommonService,CommonService>();
+
             services.AddTransient<IFileService, FileService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddTransient<IPrintService, PrintService>();

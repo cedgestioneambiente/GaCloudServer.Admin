@@ -120,10 +120,22 @@
 	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi_V4.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi_V3.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Preventivi\DROP_ViewGaPreventivi_V4.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Preventivi\DROP_ViewGaPreventivi_V3.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Preventivi\DROP_ViewGaPreventivi_V2.sql">

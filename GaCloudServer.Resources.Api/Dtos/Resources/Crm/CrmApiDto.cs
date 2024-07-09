@@ -136,6 +136,11 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
         public string? NoteOperatore { get; set; }
         public string? Tributo { get; set; }
         public string? Tags { get; set; }
+
+        public string? Intestatario { get; set; }
+        public string? IntestatarioComune { get; set; }
+        public string? IntestatarioIndirizzo { get; set; }
+        public string? IntestatarioCfPiva { get; set; }
     }
 
     public class CrmTicketsApiDto : GenericPagedListApiDto<CrmTicketApiDto>

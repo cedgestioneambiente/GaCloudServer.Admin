@@ -70,6 +70,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Common Tables
         public DbSet<Gauge> CommonGauges { get; set; }
         public DbSet<IvaCode> CommonIvaCodes { get; set; }
+        public DbSet<BankAccount> CommonBankAccounts { get; set; }
         #endregion
 
         #region GaGlobal Tables
@@ -603,6 +604,19 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PreventiviObjectInspectionMode> GaPreventiviObjectInspectionModes { get; set; }
         public DbSet<PreventiviObjectInspectionAttachment> GaPreventiviObjectInspectionAttachments { get; set; }
         public DbSet<PreventiviObjectInspectionImage> GaPreventiviObjectInspectionImages { get; set; }
+        public DbSet<PreventiviObjectServiceType> GaPreventiviObjectServiceTypes { get; set; }
+        public DbSet<PreventiviObjectServiceTypeDetail> GaPreventiviObjectServiceTypeDetails { get; set; }
+        public DbSet<PreventiviObjectService> GaPreventiviObjectServices { get; set; }
+        public DbSet<PreventiviObjectSection> GaPreventiviObjectSections { get; set; }
+        public DbSet<PreventiviGarbage> GaPreventiviGarbages { get; set; }
+        public DbSet<PreventiviServiceNoteTemplate> GaPreventiviServiceNoteTemplates{ get; set; }
+        public DbSet<PreventiviConditionTemplate> GaPreventiviConditionTemplates { get; set; }
+        public DbSet<PreventiviObjectPeriod> GaPreventiviPeriods { get; set; }
+        public DbSet<PreventiviObjectPayout> GaPreventiviObjectPayouts { get; set; }
+        public DbSet<PreventiviObjectCondition> GaPreventiviObjectConditions { get; set; }
+        public DbSet<PreventiviProducer> GaPreventiviProducers { get; set; }
+        public DbSet<PreventiviDestination> GaPreventiviDestinations { get; set; }
+
 
         #region Views
         public DbSet<ViewGaPreventiviAnticipi> ViewGaPreventiviAnticipi { get; set; }

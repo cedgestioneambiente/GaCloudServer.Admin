@@ -242,6 +242,10 @@
         public const string DROP_ViewGaPreventivi = "DROP_ViewGaPreventivi.sql";
         public const string CREATE_ViewGaPreventivi_V2 = "CREATE_ViewGaPreventivi_V2.sql";
         public const string DROP_ViewGaPreventivi_V2 = "DROP_ViewGaPreventivi_V2.sql";
+        public const string CREATE_ViewGaPreventivi_V3 = "CREATE_ViewGaPreventivi_V3.sql";
+        public const string DROP_ViewGaPreventivi_V3 = "DROP_ViewGaPreventivi_V3.sql";
+        public const string CREATE_ViewGaPreventivi_V4 = "CREATE_ViewGaPreventivi_V4.sql";
+        public const string DROP_ViewGaPreventivi_V4 = "DROP_ViewGaPreventivi_V4.sql";
 
     }
 }

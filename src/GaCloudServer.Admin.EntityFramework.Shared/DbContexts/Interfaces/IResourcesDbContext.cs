@@ -71,6 +71,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         #region Common
         DbSet<Gauge> CommonGauges { get; set; }
         DbSet<IvaCode> CommonIvaCodes { get; set; }
+        DbSet<BankAccount> CommonBankAccounts { get; set; }
         #endregion
 
         #region GaGlobal Tables
@@ -588,7 +589,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PreventiviAnticipoPagamento> GaPreventiviAnticipiPagamenti { get; set; }
         DbSet<PreventiviAnticipo> GaPreventiviAnticipi { get; set; }
         DbSet<PreventiviAnticipoAllegato> GaPreventiviAnticipiAllegati { get; set; }
-
         DbSet<PreventiviObject> GaPreventiviObjects { get; set; }
         DbSet<PreventiviObjectAttachment> GaPreventiviObjectAttachments { get; set; }
         DbSet<PreventiviObjectStatus> GaPreventiviObjectStatuses { get; set; }
@@ -598,6 +598,18 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PreventiviObjectInspectionMode> GaPreventiviObjectInspectionModes { get; set; }
         DbSet<PreventiviObjectInspectionAttachment> GaPreventiviObjectInspectionAttachments { get; set; }
         DbSet<PreventiviObjectInspectionImage> GaPreventiviObjectInspectionImages { get; set; }
+        DbSet<PreventiviObjectServiceType> GaPreventiviObjectServiceTypes { get; set; }
+        DbSet<PreventiviObjectServiceTypeDetail> GaPreventiviObjectServiceTypeDetails { get; set; }
+        DbSet<PreventiviObjectService> GaPreventiviObjectServices { get; set; }
+        DbSet<PreventiviObjectSection> GaPreventiviObjectSections { get; set; }
+        DbSet<PreventiviGarbage> GaPreventiviGarbages { get; set; }
+        DbSet<PreventiviServiceNoteTemplate> GaPreventiviServiceNoteTemplates { get; set; }
+        DbSet<PreventiviConditionTemplate> GaPreventiviConditionTemplates { get; set; }
+        DbSet<PreventiviObjectPeriod> GaPreventiviPeriods { get; set; }
+        DbSet<PreventiviObjectPayout> GaPreventiviObjectPayouts { get; set; }
+        DbSet<PreventiviObjectCondition> GaPreventiviObjectConditions { get; set; }
+        DbSet<PreventiviProducer> GaPreventiviProducers { get; set; }
+        DbSet<PreventiviDestination> GaPreventiviDestinations { get; set; }
 
 
         #region Views

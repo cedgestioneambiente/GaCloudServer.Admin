@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Shared;
-using Microsoft.Graph;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
-using gh = GaCloudServer.BusinnessLogic.Helpers.GenericHelper;
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -34,8 +33,21 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PreventiviObjectAttachment> gaPreventiviObjectAttachmentsRepo;
         protected readonly IGenericRepository<PreventiviObjectInspectionAttachment> gaPreventiviObjectInspectionAttachmentsRepo;
         protected readonly IGenericRepository<PreventiviObjectInspectionImage> gaPreventiviObjectInspectionImagesRepo;
+        protected readonly IGenericRepository<PreventiviObjectServiceType> gaPreventiviObjectServiceTypesRepo;
+        protected readonly IGenericRepository<PreventiviObjectServiceTypeDetail> gaPreventiviObjectServiceTypeDetailsRepo;
+        protected readonly IGenericRepository<PreventiviObjectService> gaPreventiviObjectServicesRepo;
+        protected readonly IGenericRepository<PreventiviObjectSection> gaPreventiviObjectSectionsRepo;
+        protected readonly IGenericRepository<PreventiviGarbage> gaPreventiviGarbagesRepo;
+        protected readonly IGenericRepository<PreventiviServiceNoteTemplate> gaPreventiviServiceNoteTemplatesRepo;
+        protected readonly IGenericRepository<PreventiviConditionTemplate> gaPreventiviConditionTemplatesRepo;
+        protected readonly IGenericRepository<PreventiviObjectPeriod> gaPreventiviObjectPeriodsRepo;
+        protected readonly IGenericRepository<PreventiviObjectPayout> gaPreventiviObjectPayoutsRepo;
+        protected readonly IGenericRepository<PreventiviObjectCondition> gaPreventiviObjectConditionsRepo;
+        protected readonly IGenericRepository<PreventiviProducer> gaPreventiviProducersRepo;
+        protected readonly IGenericRepository<PreventiviDestination> gaPreventiviDestinationsRepo;
 
         protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo;
+        protected readonly IGenericRepository<CrmEventComune> gaCrmEventComuniRepo;
 
         protected readonly IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo;
 
@@ -61,11 +73,28 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<PreventiviObjectInspectionAttachment> gaPreventiviObjectInspectionAttachmentsRepo,
             IGenericRepository<PreventiviObjectInspectionImage> gaPreventiviObjectInspectionImagesRepo,
 
+            IGenericRepository<PreventiviObjectServiceType> gaPreventiviObjectServiceTypesRepo,
+            IGenericRepository<PreventiviObjectServiceTypeDetail> gaPreventiviObjectServiceTypeDetailsRepo,
+            IGenericRepository<PreventiviObjectService> gaPreventiviObjectServicesRepo,
+            IGenericRepository<PreventiviObjectSection> gaPreventiviObjectSectionsRepo,
+            IGenericRepository<PreventiviGarbage> gaPreventiviGarbagesRepo,
+
+            IGenericRepository<PreventiviServiceNoteTemplate> gaPreventiviServiceNoteTemplatesRepo,
+            IGenericRepository<PreventiviConditionTemplate> gaPreventiviConditionTemplatesRepo,
+            IGenericRepository<PreventiviObjectPeriod> gaPreventiviObjectPeriodsRepo,
+            IGenericRepository<PreventiviObjectPayout> gaPreventiviObjectPayoutsRepo,
+            IGenericRepository<PreventiviObjectCondition> gaPreventiviObjectConditionsRepo,
+            IGenericRepository<PreventiviProducer> gaPreventiviProducersRepo,
+            IGenericRepository<PreventiviDestination> gaPreventiviDestinationsRepo,
+
             IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo,
+            IGenericRepository<CrmEventComune> gaCrmEventComuniRepo,
 
             IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo,
 
             IGenericRepository<ViewGaPreventiviAnticipi> viewGaPreventiviAnticipiRepo,
+
+            
 
             IUnitOfWork unitOfWork)
         {
@@ -89,8 +118,21 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaPreventiviObjectAttachmentsRepo = gaPreventiviObjectAttachmentsRepo;
             this.gaPreventiviObjectInspectionAttachmentsRepo = gaPreventiviObjectInspectionAttachmentsRepo;
             this.gaPreventiviObjectInspectionImagesRepo = gaPreventiviObjectInspectionImagesRepo;
+            this.gaPreventiviObjectServiceTypesRepo = gaPreventiviObjectServiceTypesRepo;
+            this.gaPreventiviObjectServiceTypeDetailsRepo = gaPreventiviObjectServiceTypeDetailsRepo;
+            this.gaPreventiviObjectServicesRepo= gaPreventiviObjectServicesRepo;
+            this.gaPreventiviObjectSectionsRepo= gaPreventiviObjectSectionsRepo;
+            this.gaPreventiviGarbagesRepo = gaPreventiviGarbagesRepo;
+            this.gaPreventiviServiceNoteTemplatesRepo= gaPreventiviServiceNoteTemplatesRepo;
+            this.gaPreventiviConditionTemplatesRepo= gaPreventiviConditionTemplatesRepo;
+            this.gaPreventiviObjectPeriodsRepo= gaPreventiviObjectPeriodsRepo;
+            this.gaPreventiviObjectPayoutsRepo = gaPreventiviObjectPayoutsRepo;
+            this.gaPreventiviObjectConditionsRepo= gaPreventiviObjectConditionsRepo;
+            this.gaPreventiviProducersRepo = gaPreventiviProducersRepo;
+            this.gaPreventiviDestinationsRepo = gaPreventiviDestinationsRepo;
 
             this.gaCrmTicketAttachmentsRepo= gaCrmTicketAttachmentsRepo;
+            this.gaCrmEventComuniRepo = gaCrmEventComuniRepo;
 
             this.viewGaPreventiviCrmTicketsRepo = viewGaPreventiviCrmTicketsRepo;
 
@@ -467,6 +509,13 @@ namespace GaCloudServer.BusinnessLogic.Services
             return view;
         }
 
+        public async Task<PageResponse<CrmEventComuneDto>> GetPreventiviCrmComuniAsync(PageRequest request)
+        {
+            var entities = await gaCrmEventComuniRepo.GetAsync(request);
+            return entities.ToModel<PageResponse<CrmEventComuneDto>>();
+        }
+
+
         public async Task<PreventiviObjectDto> CreatePreventiviObjectFromCrmTicketAsync(PreventiviObjectAssignementDto dto,double saldo)
         {
             var config = new MapperConfiguration(cfg =>
@@ -538,7 +587,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<PreventiviObjectDto> GetPreventiviObjectByIdAsync(long id)
         {
-            var entity = await gaPreventiviObjectsRepo.GetAsync(id,new GetRequest());
+            var entity = await gaPreventiviObjectsRepo.GetAsync(id,new GetRequest() { Expand="Status,Type"});
             var dto = entity.ToModel<PreventiviObjectDto>();
             return dto;
         }
@@ -575,14 +624,41 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
-        public async Task<bool> UpdatePreventiviObjectDetailsAsync(long id, PreventiviObjectDto dto)
+        public async Task<bool> UpdatePreventiviObjectContactDetailsAsync(long id, PreventiviObjectDto dto)
         {
             var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
             entity.Telefono = dto.Telefono;
             entity.Cellulare = dto.Cellulare;
             entity.Email = dto.Email;
             entity.EmailPec = dto.EmailPec;
+            entity.IndirizzoFattura = dto.IndirizzoFattura;
+            entity.IndirizzoSede = dto.IndirizzoSede;
+            entity.ClienteCodSdi=dto.ClienteCodSdi;
+            entity.Intestatario = dto.Intestatario;
+            entity.IntestatarioCfPiva = dto.IntestatarioCfPiva;
+            entity.IntestatarioComune = dto.IntestatarioComune;
+            entity.IntestatarioIndirizzo = dto.IntestatarioIndirizzo;
+
+            var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
+            return true;
+
+        }
+
+        public async Task<bool> UpdatePreventiviObjectOperativeDetailsAsync(long id, PreventiviObjectDto dto)
+        {
+            var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
             entity.NoteOperative = dto.NoteOperative;
+            entity.CausalePag770s = dto.CausalePag770s;
+            var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
+            return true;
+
+        }
+
+        public async Task<bool> UpdatePreventiviObjectTypeDetailsAsync(long id, PreventiviObjectDto dto)
+        {
+            var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
+            entity.TypeId = dto.TypeId;
+            entity.TypeDesc = dto.TypeDesc;
             var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
             return true;
 
@@ -900,6 +976,552 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             return true;
         }
+
+        #endregion
+
+        #region ObjectSections
+        public async Task<PageResponse<PreventiviObjectSectionDto>> GetPreventiviObjectSectionsAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectSectionsRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviObjectSectionDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectSectionDto> GetPreventiviObjectSectionByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectSectionsRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectSectionDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectSectionAsync(PreventiviObjectSectionDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectSection>();
+            var reponse = await gaPreventiviObjectSectionsRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectSectionAsync(long id, PreventiviObjectSectionDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectSection>();
+            var response = await gaPreventiviObjectSectionsRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectSectionAsync(long id)
+        {
+            await gaPreventiviObjectSectionsRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ChangeOrderPreventiviObjectSectionAsync(List<PreventiviObjectSectionDto> model)
+        {
+            if (model.Count > 0)
+            {
+                int index = 0;
+                foreach (var item in model)
+                {
+                    var entity = await gaPreventiviObjectSectionsRepo.GetAsync(item.Id, new GetRequest());
+                    entity.Order = index;
+                    await gaPreventiviObjectSectionsRepo.UpdateAsync(entity);
+                    index++;
+                }
+
+                return true;
+
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+        #endregion
+
+        #endregion
+
+        #region ObjectServiceTypes
+        public async Task<PageResponse<PreventiviObjectServiceTypeDto>> GetPreventiviObjectServiceTypesAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectServiceTypesRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviObjectServiceTypeDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectServiceTypeDto> GetPreventiviObjectServiceTypeByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectServiceTypesRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectServiceTypeDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectServiceTypeAsync(PreventiviObjectServiceTypeDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectServiceType>();
+            var reponse = await gaPreventiviObjectServiceTypesRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectServiceTypeAsync(long id, PreventiviObjectServiceTypeDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectServiceType>();
+            var response = await gaPreventiviObjectServiceTypesRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectServiceTypeAsync(long id)
+        {
+            await gaPreventiviObjectServiceTypesRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region ObjectServiceTypeDetails
+        public async Task<PageResponse<PreventiviObjectServiceTypeDetailDto>> GetPreventiviObjectServiceTypeDetailsAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectServiceTypeDetailsRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviObjectServiceTypeDetailDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectServiceTypeDetailDto> GetPreventiviObjectServiceTypeDetailByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectServiceTypeDetailsRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectServiceTypeDetailDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectServiceTypeDetailAsync(PreventiviObjectServiceTypeDetailDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectServiceTypeDetail>();
+            var reponse = await gaPreventiviObjectServiceTypeDetailsRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectServiceTypeDetailAsync(long id, PreventiviObjectServiceTypeDetailDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectServiceTypeDetail>();
+            var response = await gaPreventiviObjectServiceTypeDetailsRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectServiceTypeDetailAsync(long id)
+        {
+            await gaPreventiviObjectServiceTypeDetailsRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region ObjectServices
+        public async Task<PageResponse<PreventiviObjectServiceDto>> GetPreventiviObjectServicesAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectServicesRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviObjectServiceDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectServiceDto> GetPreventiviObjectServiceByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectServicesRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectServiceDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectServiceAsync(PreventiviObjectServiceDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectService>();
+            var reponse = await gaPreventiviObjectServicesRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectServiceAsync(long id, PreventiviObjectServiceDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectService>();
+            var response = await gaPreventiviObjectServicesRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectServiceAsync(long id)
+        {
+            await gaPreventiviObjectServicesRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ChangeOrderPreventiviObjectServiceAsync(List<PreventiviObjectServiceDto> model)
+        {
+            if (model.Count > 0)
+            {
+                int index = 0;
+                foreach (var item in model)
+                {
+                    var entity = await gaPreventiviObjectServicesRepo.GetAsync(item.Id,new GetRequest());
+                    entity.Order = index;
+                    await gaPreventiviObjectServicesRepo.UpdateAsync(entity);
+                    index++;
+                }
+
+                return true;
+
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Garbages
+        public async Task<PageResponse<PreventiviGarbageDto>> GetPreventiviGarbagesAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviGarbagesRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviGarbageDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviGarbageDto> GetPreventiviGarbageByIdAsync(long id)
+        {
+            var entity = await gaPreventiviGarbagesRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviGarbageDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviGarbageAsync(PreventiviGarbageDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviGarbage>();
+            var reponse = await gaPreventiviGarbagesRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviGarbageAsync(long id, PreventiviGarbageDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviGarbage>();
+            var response = await gaPreventiviGarbagesRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviGarbageAsync(long id)
+        {
+            await gaPreventiviGarbagesRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region ServiceNoteTemplates
+        public async Task<PageResponse<PreventiviServiceNoteTemplateDto>> GetPreventiviServiceNoteTemplatesAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviServiceNoteTemplatesRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviServiceNoteTemplateDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviServiceNoteTemplateDto> GetPreventiviServiceNoteTemplateByIdAsync(long id)
+        {
+            var entity = await gaPreventiviServiceNoteTemplatesRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviServiceNoteTemplateDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviServiceNoteTemplateAsync(PreventiviServiceNoteTemplateDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviServiceNoteTemplate>();
+            var reponse = await gaPreventiviServiceNoteTemplatesRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviServiceNoteTemplateAsync(long id, PreventiviServiceNoteTemplateDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviServiceNoteTemplate>();
+            var response = await gaPreventiviServiceNoteTemplatesRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviServiceNoteTemplateAsync(long id)
+        {
+            await gaPreventiviServiceNoteTemplatesRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region ConditionTemplates
+        public async Task<PageResponse<PreventiviConditionTemplateDto>> GetPreventiviConditionTemplatesAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviConditionTemplatesRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviConditionTemplateDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviConditionTemplateDto> GetPreventiviConditionTemplateByIdAsync(long id)
+        {
+            var entity = await gaPreventiviConditionTemplatesRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviConditionTemplateDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviConditionTemplateAsync(PreventiviConditionTemplateDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviConditionTemplate>();
+            var reponse = await gaPreventiviConditionTemplatesRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviConditionTemplateAsync(long id, PreventiviConditionTemplateDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviConditionTemplate>();
+            var response = await gaPreventiviConditionTemplatesRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviConditionTemplateAsync(long id)
+        {
+            await gaPreventiviConditionTemplatesRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region ObjectPeriods
+        public async Task<PageResponse<PreventiviObjectPeriodDto>> GetPreventiviObjectPeriodsAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectPeriodsRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviObjectPeriodDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectPeriodDto> GetPreventiviObjectPeriodByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectPeriodsRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectPeriodDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectPeriodAsync(PreventiviObjectPeriodDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectPeriod>();
+            var reponse = await gaPreventiviObjectPeriodsRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectPeriodAsync(long id, PreventiviObjectPeriodDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectPeriod>();
+            var response = await gaPreventiviObjectPeriodsRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectPeriodAsync(long id)
+        {
+            await gaPreventiviObjectPeriodsRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region ObjectPayouts
+        public async Task<PageResponse<PreventiviObjectPayoutDto>> GetPreventiviObjectPayoutsAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectPayoutsRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviObjectPayoutDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectPayoutDto> GetPreventiviObjectPayoutByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectPayoutsRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectPayoutDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectPayoutAsync(PreventiviObjectPayoutDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectPayout>();
+            var reponse = await gaPreventiviObjectPayoutsRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectPayoutAsync(long id, PreventiviObjectPayoutDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectPayout>();
+            var response = await gaPreventiviObjectPayoutsRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectPayoutAsync(long id)
+        {
+            await gaPreventiviObjectPayoutsRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region Producers
+        public async Task<PageResponse<PreventiviProducerDto>> GetPreventiviProducersAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviProducersRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviProducerDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviProducerDto> GetPreventiviProducerByIdAsync(long id)
+        {
+            var entity = await gaPreventiviProducersRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviProducerDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviProducerAsync(PreventiviProducerDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviProducer>();
+            var reponse = await gaPreventiviProducersRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviProducerAsync(long id, PreventiviProducerDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviProducer>();
+            var response = await gaPreventiviProducersRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviProducerAsync(long id)
+        {
+            await gaPreventiviProducersRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region Destinations
+        public async Task<PageResponse<PreventiviDestinationDto>> GetPreventiviDestinationsAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviDestinationsRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviDestinationDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviDestinationDto> GetPreventiviDestinationByIdAsync(long id)
+        {
+            var entity = await gaPreventiviDestinationsRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviDestinationDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviDestinationAsync(PreventiviDestinationDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviDestination>();
+            var reponse = await gaPreventiviDestinationsRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviDestinationAsync(long id, PreventiviDestinationDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviDestination>();
+            var response = await gaPreventiviDestinationsRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviDestinationAsync(long id)
+        {
+            await gaPreventiviDestinationsRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #endregion
+
+        #region ObjectConditions
+        public async Task<PageResponse<PreventiviObjectConditionDto>> GetPreventiviObjectConditionsAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectConditionsRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviObjectConditionDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectConditionDto> GetPreventiviObjectConditionByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectConditionsRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectConditionDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectConditionAsync(PreventiviObjectConditionDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectCondition>();
+            var reponse = await gaPreventiviObjectConditionsRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectConditionAsync(long id, PreventiviObjectConditionDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectCondition>();
+            var response = await gaPreventiviObjectConditionsRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectConditionAsync(long id)
+        {
+            await gaPreventiviObjectConditionsRepo.DeleteAsync(id);
+
+            return true;
+        }
+
+        #region Functions
+        public async Task<bool> ChangeOrderPreventiviObjectConditionAsync(List<PreventiviObjectConditionDto> model)
+        {
+            if (model.Count > 0)
+            {
+                int index = 0;
+                foreach (var item in model)
+                {
+                    var entity = await gaPreventiviObjectConditionsRepo.GetAsync(item.Id, new GetRequest());
+                    entity.Order = index;
+                    await gaPreventiviObjectConditionsRepo.UpdateAsync(entity);
+                    index++;
+                }
+
+                return true;
+
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+        #endregion
 
         #endregion
 

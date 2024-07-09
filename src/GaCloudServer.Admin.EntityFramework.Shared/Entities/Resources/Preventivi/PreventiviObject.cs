@@ -9,18 +9,24 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         public string ObjectNumber { get; set; }
         public DateTime DataInserimento { get; set; }
         public string CodComune { get; set; }
-        public string Comune { get; set; }
+        public string ClienteComune { get; set; }
         public string CodCliente { get; set; }
         public string Cliente { get; set; }
-        public string CfPiva { get; set; }
+        public string ClienteIndirizzo { get; set; }
+        public string ClienteCfPiva { get; set; }
+        public string ClienteCodSdi { get; set; }
+        public string Intestatario { get; set; }
+        public string IntestatarioComune { get; set; }
+        public string IntestatarioIndirizzo { get; set; }
+        public string IntestatarioCfPiva { get; set; }
         public string Telefono { get; set; }
         public string Cellulare { get; set; }
         public string Email { get; set; }
         public string EmailPec { get; set; }
-        public string Via { get; set; }
-        public string NumCiv { get; set; }
+
         [ForeignKey("Type")]
         public long TypeId { get; set; }
+        public string TypeDesc { get; set; }
         [ForeignKey("Status")]
         public long StatusId { get; set; }
         public string AssigneeId { get; set; }
@@ -46,7 +52,9 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         public int Priority { get; set; }
         public string PriorityDesc { get; set; }
 
-
+        public string IndirizzoSede { get; set; }
+        public string IndirizzoFattura { get; set; }
+        public bool CausalePag770s {  get; set; } 
 
         //Navigation Props
         public PreventiviObjectStatus Status { get; set; }

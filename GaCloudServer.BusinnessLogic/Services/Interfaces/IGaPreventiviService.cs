@@ -1,5 +1,7 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi;
 using GaCloudServer.Shared;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
@@ -84,6 +86,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region TicketCrm
         public Task<PageResponse<ViewGaPreventiviCrmTickets>> GetViewPreventiviCrmTicketsAsync(PageRequest request);
+        public Task<PageResponse<CrmEventComuneDto>> GetPreventiviCrmComuniAsync(PageRequest request);
         public Task<PreventiviObjectDto> CreatePreventiviObjectFromCrmTicketAsync(PreventiviObjectAssignementDto model, double saldo);
         #endregion
 
@@ -96,7 +99,9 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         public Task<bool> UpdatePreventiviObjectAssigneeAsync(long id, PreventiviObjectDto model);
-        public Task<bool> UpdatePreventiviObjectDetailsAsync(long id, PreventiviObjectDto model);
+        public Task<bool> UpdatePreventiviObjectContactDetailsAsync(long id, PreventiviObjectDto model);
+        public Task<bool> UpdatePreventiviObjectOperativeDetailsAsync(long id, PreventiviObjectDto model);
+        public Task<bool> UpdatePreventiviObjectTypeDetailsAsync(long id, PreventiviObjectDto model);
         #endregion
         #endregion
 
@@ -162,6 +167,114 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         public Task<long> CreatePreventiviActionAsync(PreventiviActionDto model);
         public Task<long> UpdatePreventiviActionAsync(long id, PreventiviActionDto model);
         public Task<bool> DeletePreventiviActionAsync(long id);
+        #endregion
+
+        #region ObjectSections
+        public Task<PageResponse<PreventiviObjectSectionDto>> GetPreventiviObjectSectionsAsync(PageRequest request);
+        public Task<PreventiviObjectSectionDto> GetPreventiviObjectSectionByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectSectionAsync(PreventiviObjectSectionDto model);
+        public Task<long> UpdatePreventiviObjectSectionAsync(long id, PreventiviObjectSectionDto model);
+        public Task<bool> DeletePreventiviObjectSectionAsync(long id);
+
+        #region Functions
+        public Task<bool> ChangeOrderPreventiviObjectSectionAsync(List<PreventiviObjectSectionDto> model);
+        #endregion
+        #endregion
+
+        #region ObjectServiceTypes
+        public Task<PageResponse<PreventiviObjectServiceTypeDto>> GetPreventiviObjectServiceTypesAsync(PageRequest request);
+        public Task<PreventiviObjectServiceTypeDto> GetPreventiviObjectServiceTypeByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectServiceTypeAsync(PreventiviObjectServiceTypeDto model);
+        public Task<long> UpdatePreventiviObjectServiceTypeAsync(long id, PreventiviObjectServiceTypeDto model);
+        public Task<bool> DeletePreventiviObjectServiceTypeAsync(long id);
+        #endregion
+
+        #region ObjectServiceTypeDetails
+        public Task<PageResponse<PreventiviObjectServiceTypeDetailDto>> GetPreventiviObjectServiceTypeDetailsAsync(PageRequest request);
+        public Task<PreventiviObjectServiceTypeDetailDto> GetPreventiviObjectServiceTypeDetailByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectServiceTypeDetailAsync(PreventiviObjectServiceTypeDetailDto model);
+        public Task<long> UpdatePreventiviObjectServiceTypeDetailAsync(long id, PreventiviObjectServiceTypeDetailDto model);
+        public Task<bool> DeletePreventiviObjectServiceTypeDetailAsync(long id);
+        #endregion
+
+        #region ObjectServices
+        public Task<PageResponse<PreventiviObjectServiceDto>> GetPreventiviObjectServicesAsync(PageRequest request);
+        public Task<PreventiviObjectServiceDto> GetPreventiviObjectServiceByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectServiceAsync(PreventiviObjectServiceDto model);
+        public Task<long> UpdatePreventiviObjectServiceAsync(long id, PreventiviObjectServiceDto model);
+        public Task<bool> DeletePreventiviObjectServiceAsync(long id);
+
+        #region Functions
+        public Task<bool> ChangeOrderPreventiviObjectServiceAsync(List<PreventiviObjectServiceDto> model);
+        #endregion
+        #endregion
+
+        #region Garbages
+        public Task<PageResponse<PreventiviGarbageDto>> GetPreventiviGarbagesAsync(PageRequest request);
+        public Task<PreventiviGarbageDto> GetPreventiviGarbageByIdAsync(long id);
+        public Task<long> CreatePreventiviGarbageAsync(PreventiviGarbageDto model);
+        public Task<long> UpdatePreventiviGarbageAsync(long id, PreventiviGarbageDto model);
+        public Task<bool> DeletePreventiviGarbageAsync(long id);
+        #endregion
+
+        #region ServiceNoteTemplates
+        public Task<PageResponse<PreventiviServiceNoteTemplateDto>> GetPreventiviServiceNoteTemplatesAsync(PageRequest request);
+        public Task<PreventiviServiceNoteTemplateDto> GetPreventiviServiceNoteTemplateByIdAsync(long id);
+        public Task<long> CreatePreventiviServiceNoteTemplateAsync(PreventiviServiceNoteTemplateDto model);
+        public Task<long> UpdatePreventiviServiceNoteTemplateAsync(long id, PreventiviServiceNoteTemplateDto model);
+        public Task<bool> DeletePreventiviServiceNoteTemplateAsync(long id);
+        #endregion
+
+        #region ConditionTemplates
+        public Task<PageResponse<PreventiviConditionTemplateDto>> GetPreventiviConditionTemplatesAsync(PageRequest request);
+        public Task<PreventiviConditionTemplateDto> GetPreventiviConditionTemplateByIdAsync(long id);
+        public Task<long> CreatePreventiviConditionTemplateAsync(PreventiviConditionTemplateDto model);
+        public Task<long> UpdatePreventiviConditionTemplateAsync(long id, PreventiviConditionTemplateDto model);
+        public Task<bool> DeletePreventiviConditionTemplateAsync(long id);
+        #endregion
+
+        #region ObjectPeriods
+        public Task<PageResponse<PreventiviObjectPeriodDto>> GetPreventiviObjectPeriodsAsync(PageRequest request);
+        public Task<PreventiviObjectPeriodDto> GetPreventiviObjectPeriodByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectPeriodAsync(PreventiviObjectPeriodDto model);
+        public Task<long> UpdatePreventiviObjectPeriodAsync(long id, PreventiviObjectPeriodDto model);
+        public Task<bool> DeletePreventiviObjectPeriodAsync(long id);
+        #endregion
+
+        #region ObjectPayouts
+        public Task<PageResponse<PreventiviObjectPayoutDto>> GetPreventiviObjectPayoutsAsync(PageRequest request);
+        public Task<PreventiviObjectPayoutDto> GetPreventiviObjectPayoutByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectPayoutAsync(PreventiviObjectPayoutDto model);
+        public Task<long> UpdatePreventiviObjectPayoutAsync(long id, PreventiviObjectPayoutDto model);
+        public Task<bool> DeletePreventiviObjectPayoutAsync(long id);
+        #endregion
+
+        #region ObjectConditions
+        public Task<PageResponse<PreventiviObjectConditionDto>> GetPreventiviObjectConditionsAsync(PageRequest request);
+        public Task<PreventiviObjectConditionDto> GetPreventiviObjectConditionByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectConditionAsync(PreventiviObjectConditionDto model);
+        public Task<long> UpdatePreventiviObjectConditionAsync(long id, PreventiviObjectConditionDto model);
+        public Task<bool> DeletePreventiviObjectConditionAsync(long id);
+
+        #region Functions
+        public Task<bool> ChangeOrderPreventiviObjectConditionAsync(List<PreventiviObjectConditionDto> model);
+        #endregion
+        #endregion
+
+        #region Producers
+        public Task<PageResponse<PreventiviProducerDto>> GetPreventiviProducersAsync(PageRequest request);
+        public Task<PreventiviProducerDto> GetPreventiviProducerByIdAsync(long id);
+        public Task<long> CreatePreventiviProducerAsync(PreventiviProducerDto model);
+        public Task<long> UpdatePreventiviProducerAsync(long id, PreventiviProducerDto model);
+        public Task<bool> DeletePreventiviProducerAsync(long id);
+        #endregion
+
+        #region Destinations
+        public Task<PageResponse<PreventiviDestinationDto>> GetPreventiviDestinationsAsync(PageRequest request);
+        public Task<PreventiviDestinationDto> GetPreventiviDestinationByIdAsync(long id);
+        public Task<long> CreatePreventiviDestinationAsync(PreventiviDestinationDto model);
+        public Task<long> UpdatePreventiviDestinationAsync(long id, PreventiviDestinationDto model);
+        public Task<bool> DeletePreventiviDestinationAsync(long id);
         #endregion
 
         #region Financial

@@ -76,6 +76,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Common
             services.AddTransient<IGenericRepository<Gauge>, GenericRepository<TResourcesDbContext, Gauge>>();
             services.AddTransient<IGenericRepository<IvaCode>, GenericRepository<TResourcesDbContext, IvaCode>>();
+            services.AddTransient<IGenericRepository<BankAccount>, GenericRepository<TResourcesDbContext, BankAccount>>();
             #endregion
 
             //Global
@@ -584,6 +585,20 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PreventiviObjectInspectionMode>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionMode>>();
             services.AddTransient<IGenericRepository<PreventiviObjectInspectionAttachment>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionAttachment>>();
             services.AddTransient<IGenericRepository<PreventiviObjectInspectionImage>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionImage>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectServiceType>, GenericRepository<TResourcesDbContext, PreventiviObjectServiceType>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectServiceTypeDetail>, GenericRepository<TResourcesDbContext, PreventiviObjectServiceTypeDetail>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectService>, GenericRepository<TResourcesDbContext, PreventiviObjectService>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectSection>, GenericRepository<TResourcesDbContext, PreventiviObjectSection>>();
+            services.AddTransient<IGenericRepository<PreventiviGarbage>, GenericRepository<TResourcesDbContext, PreventiviGarbage>>();
+            services.AddTransient<IGenericRepository<PreventiviServiceNoteTemplate>, GenericRepository<TResourcesDbContext, PreventiviServiceNoteTemplate>>();
+            services.AddTransient<IGenericRepository<PreventiviConditionTemplate>, GenericRepository<TResourcesDbContext, PreventiviConditionTemplate>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectPeriod>, GenericRepository<TResourcesDbContext, PreventiviObjectPeriod>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectPayout>, GenericRepository<TResourcesDbContext, PreventiviObjectPayout>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectCondition>, GenericRepository<TResourcesDbContext, PreventiviObjectCondition>>();
+            services.AddTransient<IGenericRepository<PreventiviDestination>, GenericRepository<TResourcesDbContext, PreventiviDestination>>();
+            services.AddTransient<IGenericRepository<PreventiviProducer>, GenericRepository<TResourcesDbContext, PreventiviProducer>>();
+
+
 
             services.AddTransient<IGenericRepository<ViewGaPreventiviAnticipi>, GenericRepository<TResourcesDbContext, ViewGaPreventiviAnticipi>>();
             services.AddTransient<IGenericRepository<ViewGaPreventiviCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaPreventiviCrmTickets>>();

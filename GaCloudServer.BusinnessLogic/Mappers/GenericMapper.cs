@@ -28,6 +28,7 @@ using GaCloudServer.BusinessLogic.Mappers.Dispositivi;
 using GaCloudServer.BusinessLogic.Mappers.SmartCity;
 using GaCloudServer.BusinessLogic.Mappers.Previsio;
 using GaCloudServer.BusinessLogic.Mappers.Preventivi;
+using GaCloudServer.BusinessLogic.Mappers.Common;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -66,7 +67,8 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new SmartCityMapperProfile(),
             new PrevisioMapperProfile(),
             new PreventiviMapperProfile(),
-            new BackOfficeMapperProfile()
+            new BackOfficeMapperProfile(),
+            new CommonMapperProfile()
         };
 
         static GenericMapper() {
