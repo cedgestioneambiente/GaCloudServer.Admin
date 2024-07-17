@@ -1738,6 +1738,32 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpGet("ExportFilteredContactCenterTicketsQueryable")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public IActionResult ExportFilteredContactCenterTicketsQueryable(GridOperationsModel filter)
+        {
+
+            try
+            {
+                var entities = _gaContactCenterService.GetViewGaContactCenterTicketsQueryableNoSkip(filter);
+                string title = "Lista Ticket";
+                string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Utente","TelefonoMail","TipoTicket","Materiali",
+                                "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl"};
+                byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "TICKET_CONTACT_CENTER", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Ticket_ContactCenter.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+        }
+
         [HttpGet("ExportFoContactCenterTicketsQueryable")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
