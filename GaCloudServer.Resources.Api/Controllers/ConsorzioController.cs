@@ -2288,6 +2288,11 @@ namespace GaCloudServer.Resources.Api.Controllers
                         var comuneDest = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.DESTINATARIO_ISTAT_COMUNE)).FirstOrDefault(new ConsorzioComuneDto());
                         var comuneTrasp = listComuni.Data.Where(x => Convert.ToInt32(x.Istat) == Convert.ToInt32(dto.TRASPORTATORE_ISTAT_COMUNE)).FirstOrDefault(new ConsorzioComuneDto());
 
+                        dto.PRODUTTORE_CFPIVA = dto.PRODUTTORE_CFPIVA.Length < 11 && dto.PRODUTTORE_CFPIVA.All(char.IsDigit) ? dto.PRODUTTORE_CFPIVA.PadLeft(11, '0') : dto.PRODUTTORE_CFPIVA;
+                        dto.DESTINATARIO_CFPIVA = dto.DESTINATARIO_CFPIVA.Length < 11 && dto.DESTINATARIO_CFPIVA.All(char.IsDigit) ? dto.DESTINATARIO_CFPIVA.PadLeft(11, '0') : dto.DESTINATARIO_CFPIVA;
+                        dto.TRASPORTATORE_CFPIVA = dto.TRASPORTATORE_CFPIVA.Length < 11 && dto.TRASPORTATORE_CFPIVA.All(char.IsDigit) ? dto.TRASPORTATORE_CFPIVA.PadLeft(11, '0') : dto.TRASPORTATORE_CFPIVA;
+
+
 
                         var checkCer = listCer.Data.Where(x => x.Codice == dto.CER && gh.ConvertNullToString(x.CodiceRaggruppamento) == dto.RAGGRUPPAMENTO_CER).Count();
 
@@ -2298,7 +2303,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         var checkDest = listDest.Data.Where(x => x.Descrizione == dto.DESTINATARIO_RAGSO
                         && x.Indirizzo == dto.DESTINATARIO_INDIRIZZO
-                        && x.CfPiva == dto.DESTINATARIO_CFPIVA
+                        && x.CfPiva ==dto.DESTINATARIO_CFPIVA
                         && x.ConsorzioComuneId == comuneDest.Id).Count();
 
 
@@ -2313,6 +2318,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         
                         item = dto;
+
                         if (checkCer == 0)
                         {
                             errorList.Add("CER non presente sul database.");
@@ -2321,7 +2327,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                         if (checkProd == 0)
                         {
                             var validatePercent = await _consorzioService.ValidatePercentConsorzioProduttoreAsync(0,
-                                dto.PRODUTTORE_CFPIVA.Length<11 && dto.PRODUTTORE_CFPIVA.All(char.IsDigit)? dto.PRODUTTORE_CFPIVA.PadLeft(11,'0'):dto.PRODUTTORE_RAGSO  ,
+                                dto.PRODUTTORE_CFPIVA,
                                 dto.PRODUTTORE_INDIRIZZO, dto.PRODUTTORE_RAGSO, comuneProd.Id);
 
                             if (joinSimilar && validatePercent.percent>0.8)
@@ -2342,7 +2348,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                                         soggetto.Descrizione = dto.PRODUTTORE_RAGSO;
                                         soggetto.Indirizzo = dto.PRODUTTORE_INDIRIZZO;
                                         soggetto.ConsorzioComuneId = comuneProd.Id;
-                                        soggetto.CfPiva = dto.PRODUTTORE_CFPIVA.Length < 11 && dto.PRODUTTORE_CFPIVA.All(char.IsDigit) ? dto.PRODUTTORE_CFPIVA.PadLeft(11, '0') : dto.PRODUTTORE_RAGSO;
+                                        soggetto.CfPiva = dto.PRODUTTORE_CFPIVA;
 
                                         var responseSoggetto = await _consorzioService.AddConsorzioProduttoreAsync(soggetto);
                                         if (responseSoggetto <= 0)
