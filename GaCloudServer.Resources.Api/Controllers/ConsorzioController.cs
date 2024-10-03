@@ -2320,7 +2320,9 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         if (checkProd == 0)
                         {
-                            var validatePercent = await _consorzioService.ValidatePercentConsorzioProduttoreAsync(0, dto.PRODUTTORE_CFPIVA, dto.PRODUTTORE_INDIRIZZO, dto.PRODUTTORE_RAGSO, comuneProd.Id);
+                            var validatePercent = await _consorzioService.ValidatePercentConsorzioProduttoreAsync(0,
+                                dto.PRODUTTORE_CFPIVA.Length<11 && dto.PRODUTTORE_CFPIVA.All(char.IsDigit)? dto.PRODUTTORE_CFPIVA.PadLeft(11,'0'):dto.PRODUTTORE_RAGSO  ,
+                                dto.PRODUTTORE_INDIRIZZO, dto.PRODUTTORE_RAGSO, comuneProd.Id);
 
                             if (joinSimilar && validatePercent.percent>0.8)
                             {

@@ -12,7 +12,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AK.System.Linq.Dynamic" Version="1.1.33" />
-		<PackageReference Include="Azure.Identity" Version="1.11.0" />
+		<PackageReference Include="Azure.Identity" Version="1.12.1" />
 		<PackageReference Include="Community.OData.Linq" Version="2.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.1" />
 		<PackageReference Include="Skoruba.AuditLogging.EntityFramework" Version="1.0.0" />

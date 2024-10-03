@@ -1738,19 +1738,21 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
-        [HttpGet("ExportFilteredContactCenterTicketsQueryable")]
+        [HttpGet("ExportAllFilteredContactCenterTicketsAsync")]
         [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
         [AutoWrapIgnore]
-        public IActionResult ExportFilteredContactCenterTicketsQueryable(GridOperationsModel filter)
+        public IActionResult ExportAllFilteredContactCenterTicketsAsync([FromBody] long[] ids)
         {
 
             try
             {
-                var entities = _gaContactCenterService.GetViewGaContactCenterTicketsQueryableNoSkip(filter);
+                var entities = _gaContactCenterService.ExportGaContactCenterTicketsAsync(ids).Result.Data.ToList();
+
+
                 string title = "Lista Ticket";
-                string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Utente","TelefonoMail","TipoTicket","Materiali",
-                                "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl"};
+                string[] columns = { "Id", "DataTicket", "Comune","Indirizzo","Zona","RagioneSociale","TelefonoMail","TipoTicket","Materiali",
+                                "DataEsecuzione","Note1","Note2","Note3","StatoTicket","Cantiere","Richiedente","Reclamo","Stato","EseguitoIl","DaFatturare"};
                 byte[] filecontent = ExporterHelper.ExportExcel(entities, title, "", "", "TICKET_CONTACT_CENTER", true, columns);
 
                 return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
