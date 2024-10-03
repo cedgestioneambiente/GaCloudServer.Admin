@@ -2342,7 +2342,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                                         soggetto.Descrizione = dto.PRODUTTORE_RAGSO;
                                         soggetto.Indirizzo = dto.PRODUTTORE_INDIRIZZO;
                                         soggetto.ConsorzioComuneId = comuneProd.Id;
-                                        soggetto.CfPiva = dto.PRODUTTORE_CFPIVA;
+                                        soggetto.CfPiva = dto.PRODUTTORE_CFPIVA.Length < 11 && dto.PRODUTTORE_CFPIVA.All(char.IsDigit) ? dto.PRODUTTORE_CFPIVA.PadLeft(11, '0') : dto.PRODUTTORE_RAGSO;
 
                                         var responseSoggetto = await _consorzioService.AddConsorzioProduttoreAsync(soggetto);
                                         if (responseSoggetto <= 0)
