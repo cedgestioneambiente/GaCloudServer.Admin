@@ -3059,6 +3059,22 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("GetViewGaPersonaleSchedeConsegneByDipendenteAsync/{personaleDipendenteId}")]
+        public async Task<ActionResult<ApiResponse>> GetViewGaPersonaleSchedeConsegneByDipendenteAsync(long personaleDipendenteId)
+        {
+            try
+            {
+                var view = await _gaPersonaleService.GetViewGaPersonaleSchedeConsegneByDipendenteAsync(personaleDipendenteId);
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #endregion

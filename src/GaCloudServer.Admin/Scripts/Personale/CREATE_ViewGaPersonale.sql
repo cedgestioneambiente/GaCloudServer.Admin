@@ -82,11 +82,14 @@ GO
 
 CREATE VIEW [dbo].[ViewGaPersonaleSchedeConsegne]
 AS
-SELECT        dbo.GaPersonaleSchedeConsegneDettagli.Id, dbo.GaPersonaleSchedeConsegne.Id AS SchedaConsegnaId, dbo.GaPersonaleSchedeConsegne.Data, dbo.GaPersonaleSchedeConsegne.PersonaleDipendenteId AS DipendenteId, 
+SELECT   dbo.GaPersonaleSchedeConsegneDettagli.Id, dbo.GaPersonaleSchedeConsegne.Id AS SchedaConsegnaId, dbo.GaPersonaleSchedeConsegne.Data, 
+                         dbo.GaPersonaleSchedeConsegne.PersonaleDipendenteId AS DipendenteId, 
                          dbo.PrivateViewIdentityServerAdminUserList.FirstName + N' ' + dbo.PrivateViewIdentityServerAdminUserList.LastName AS Dipendente, dbo.GlobalSedi.Descrizione AS Sede, 
-                         dbo.GaPersonaleArticoliTipologie.Descrizione + ' - ' + dbo.GaPersonaleArticoliModelli.Descrizione AS Articolo, dbo.GaPersonaleArticoliDpis.Descrizione AS Dpi, dbo.GaPersonaleSchedeConsegneDettagli.Taglia, 
-                         dbo.GaPersonaleSchedeConsegneDettagli.Qta, dbo.GaPersonaleSchedeConsegne.Numero, dbo.GaPersonaleDipendenti.Disabled
-FROM            dbo.GaPersonaleSchedeConsegneDettagli INNER JOIN
+                         dbo.GaPersonaleArticoliTipologie.Descrizione + ' - ' + dbo.GaPersonaleArticoliModelli.Descrizione AS Articolo, dbo.GaPersonaleArticoliDpis.Descrizione AS Dpi, 
+                         dbo.GaPersonaleSchedeConsegneDettagli.Taglia, dbo.GaPersonaleSchedeConsegneDettagli.Qta, dbo.GaPersonaleSchedeConsegne.Numero, dbo.GaPersonaleDipendenti.Disabled, 
+                         dbo.GaPersonaleSchedeConsegne.FileId, dbo.GaPersonaleSchedeConsegne.FileFolder, dbo.GaPersonaleSchedeConsegne.FileName, dbo.GaPersonaleSchedeConsegne.FileType, 
+                         dbo.GaPersonaleSchedeConsegne.FileSize
+FROM         dbo.GaPersonaleSchedeConsegneDettagli INNER JOIN
                          dbo.GaPersonaleSchedeConsegne ON dbo.GaPersonaleSchedeConsegneDettagli.PersonaleSchedaConsegnaId = dbo.GaPersonaleSchedeConsegne.Id INNER JOIN
                          dbo.GaPersonaleDipendenti ON dbo.GaPersonaleSchedeConsegne.PersonaleDipendenteId = dbo.GaPersonaleDipendenti.Id INNER JOIN
                          dbo.GlobalSedi ON dbo.GaPersonaleDipendenti.GlobalSedeId = dbo.GlobalSedi.Id INNER JOIN

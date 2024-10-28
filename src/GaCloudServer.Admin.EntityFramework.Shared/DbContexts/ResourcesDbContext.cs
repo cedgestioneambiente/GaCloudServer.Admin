@@ -493,6 +493,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ConsorzioPeriodo> ConsorzioPeriodi { get; set; }
         public DbSet<ConsorzioOperazione> ConsorzioOperazioni { get; set; }
         public DbSet<ConsorzioImportTask> ConsorzioImportsTasks { get; set; }
+        public DbSet<ConsorzioComuneDemografia> ConsorzioComuniDemografie { get; set; }
 
         #region Views
         public DbSet<ViewConsorzioCers> ViewConsorzioCers { get; set; }
@@ -502,6 +503,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewConsorzioRegistrazioni> ViewConsorzioRegistrazioni { get; set; }
         public DbSet<ViewConsorzioComuni> ViewConsorzioComuni { get; set; }
         public DbSet<ViewConsorzioImportsTasks> ViewConsorzioImportsTasks { get; set; }
+        public DbSet<ViewConsorzioComuniDemografie> ViewConsorzioComuniDemografie { get; set; }
         #endregion
 
         #endregion
@@ -1481,6 +1483,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
             {
                 entity
                 .ToView(nameof(ViewConsorzioImportsTasks))
+                .HasKey(x => x.Id);
+            });
+
+            builder.Entity<ViewConsorzioComuniDemografie>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewConsorzioComuniDemografie))
                 .HasKey(x => x.Id);
             });
 

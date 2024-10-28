@@ -485,6 +485,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ConsorzioPeriodo>, GenericRepository<TResourcesDbContext, ConsorzioPeriodo>>();
             services.AddTransient<IGenericRepository<ConsorzioOperazione>, GenericRepository<TResourcesDbContext, ConsorzioOperazione>>();
             services.AddTransient<IGenericRepository<ConsorzioImportTask>, GenericRepository<TResourcesDbContext, ConsorzioImportTask>>();
+            services.AddTransient<IGenericRepository<ConsorzioComuneDemografia>, GenericRepository<TResourcesDbContext, ConsorzioComuneDemografia>>();
 
             services.AddTransient<IGenericRepository<ViewConsorzioCers>, GenericRepository<TResourcesDbContext, ViewConsorzioCers>>();
             services.AddTransient<IGenericRepository<ViewConsorzioDestinatari>, GenericRepository<TResourcesDbContext, ViewConsorzioDestinatari>>();
@@ -493,6 +494,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewConsorzioRegistrazioni>, GenericRepository<TResourcesDbContext, ViewConsorzioRegistrazioni>>();
             services.AddTransient<IGenericRepository<ViewConsorzioComuni>, GenericRepository<TResourcesDbContext, ViewConsorzioComuni>>();
             services.AddTransient<IGenericRepository<ViewConsorzioImportsTasks>, GenericRepository<TResourcesDbContext, ViewConsorzioImportsTasks>>();
+            services.AddTransient<IGenericRepository<ViewConsorzioComuniDemografie>, GenericRepository<TResourcesDbContext, ViewConsorzioComuniDemografie>>();
             #endregion
 
             //Crm
