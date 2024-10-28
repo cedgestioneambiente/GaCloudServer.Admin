@@ -53,6 +53,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Resources.ContactCenter
         public int? GiorniGestione { get; set; }
         public bool Commerciale { get; set; }
         public bool Important { get; set; }
+        public bool Reclamo { get; set; }
     }
 
     public class ContactCenterTipiRichiesteApiDto : GenericPagedListApiDto<ContactCenterTipoRichiestaApiDto>

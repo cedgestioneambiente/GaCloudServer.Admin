@@ -44,7 +44,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Note", "Note", "{EA4133D4-A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaCloudServer.AI.Core", "GaCloudServer.AI.Core\GaCloudServer.AI.Core.csproj", "{90839F3F-ABBF-4FD4-8A1F-D58C9EC4C9D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaCloudServer.AI.Web", "GaCloudServer.AI.Web\GaCloudServer.AI.Web.csproj", "{C3A3F6D2-A80B-4BD7-9D5E-1399990C9012}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GaCloudServer.AI.Web", "GaCloudServer.AI.Web\GaCloudServer.AI.Web.csproj", "{C3A3F6D2-A80B-4BD7-9D5E-1399990C9012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -224,6 +226,18 @@ Global
 		{C3A3F6D2-A80B-4BD7-9D5E-1399990C9012}.Release|x64.Build.0 = Release|Any CPU
 		{C3A3F6D2-A80B-4BD7-9D5E-1399990C9012}.Release|x86.ActiveCfg = Release|Any CPU
 		{C3A3F6D2-A80B-4BD7-9D5E-1399990C9012}.Release|x86.Build.0 = Release|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Debug|x64.Build.0 = Debug|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Debug|x86.Build.0 = Debug|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Release|x64.ActiveCfg = Release|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Release|x64.Build.0 = Release|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Release|x86.ActiveCfg = Release|Any CPU
+		{DD6B86C6-CB79-443D-A881-ACA1BBB59CE0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

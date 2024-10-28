@@ -9,6 +9,7 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using GaCloudServer.Shared;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -24,6 +25,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo;
         protected readonly IGenericRepository<CrmTicket> gaCrmTicketsRepo;
         protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAllegatiRepo;
+        protected readonly IGenericRepository<CrmTicketAzione> gaCrmTicketAzioniRepo;
         protected readonly IGenericRepository<CrmTicketTag> gaCrmTicketTagsRepo;
 
         private readonly IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo;
@@ -62,6 +64,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<CrmEventDevice> gaCrmEventDevicesRepo,
             IGenericRepository<CrmTicket> gaCrmTicketsRepo,
             IGenericRepository<CrmTicketAllegato> gaCrmTicketAllegatiRepo,
+            IGenericRepository<CrmTicketAzione> gaCrmTicketAzioniRepo,
             IGenericRepository<CrmTicketTag> gaCrmTicketTagsRepo,
 
             IGenericRepository<ContactCenterProvenienza> gaCrmProvenienzeTicketRepo,
@@ -98,6 +101,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaCrmEventDevicesRepo = gaCrmEventDevicesRepo;
             this.gaCrmTicketsRepo = gaCrmTicketsRepo;
             this.gaCrmTicketAllegatiRepo = gaCrmTicketAllegatiRepo;
+            this.gaCrmTicketAzioniRepo = gaCrmTicketAzioniRepo;
             this.gaCrmTicketTagsRepo = gaCrmTicketTagsRepo;
 
             this.gaCrmProvenienzeTicketRepo = gaCrmProvenienzeTicketRepo;
@@ -989,6 +993,10 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         public async Task<long> AddGaCrmTicketAsync(CrmTicketDto dto)
         {
+            var tipologia = gaCrmTipiTicketRepo.GetWithFilterAsync(x => x.Id == dto.ContactCenterTipoRichiestaId).Result.Data.FirstOrDefault();
+            if (tipologia!.Reclamo)
+                dto.NumReclamo = await GenerateNumReclamoAsync(dto.DataRichiesta.Year);
+
             var entity = dto.ToEntity<CrmTicket, CrmTicketDto>();
             await gaCrmTicketsRepo.AddAsync(entity);
             await SaveChanges();
@@ -1294,6 +1302,91 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         #endregion
 
+
+        #region CrmTicketAzioni
+        public async Task<CrmTicketAzioniDto> GetGaCrmTicketAzioniByTicketIdAsync(long crmTicketId)
+        {
+            var entities = await gaCrmTicketAzioniRepo.GetWithFilterAsync(x => x.CrmTicketId == crmTicketId);
+            var dtos = entities.ToDto<CrmTicketAzioniDto, PagedList<CrmTicketAzione>>();
+            return dtos;
+        }
+
+        public async Task<CrmTicketAzioneDto> GetGaCrmTicketAzioneByIdAsync(long id)
+        {
+            var entity = await gaCrmTicketAzioniRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<CrmTicketAzioneDto, CrmTicketAzione>();
+            return dto;
+        }
+
+        public async Task<long> AddGaCrmTicketAzioneAsync(CrmTicketAzioneDto dto)
+        {
+            var entity = dto.ToEntity<CrmTicketAzione, CrmTicketAzioneDto>();
+            await gaCrmTicketAzioniRepo.AddAsync(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateGaCrmTicketAzioneAsync(CrmTicketAzioneDto dto)
+        {
+            var entity = dto.ToEntity<CrmTicketAzione, CrmTicketAzioneDto>();
+            gaCrmTicketAzioniRepo.Update(entity);
+            await SaveChanges();
+            DetachEntity(entity);
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteGaCrmTicketAzioneAsync(long id)
+        {
+            var entity = await gaCrmTicketAzioniRepo.GetByIdAsync(id);
+            gaCrmTicketAzioniRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Functions
+        //public async Task<bool> ValidateGaContactCenterAllegatoAsync(long id, string descrizione)
+        //{
+        //    var entity = await gaContactCenterAllegatiRepo.GetWithFilterAsync(x => x.Descrizione == descrizione && x.Id != id);
+
+        //    if (entity.Data.Count > 0)
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+        //}
+
+        //public async Task<bool> ChangeStatusGaContactCenterAllegatoAsync(long id)
+        //{
+        //    var entity = await gaContactCenterAllegatiRepo.GetByIdAsync(id);
+        //    if (entity.Disabled)
+        //    {
+        //        entity.Disabled = false;
+        //        gaContactCenterAllegatiRepo.Update(entity);
+        //        await SaveChanges();
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        entity.Disabled = true;
+        //        gaContactCenterAllegatiRepo.Update(entity);
+        //        await SaveChanges();
+        //        return true;
+        //    }
+
+        //}
+        #endregion
+
+        #endregion
+
+
         #region CrmTicketTags
         public async Task<CrmTicketTagsDto> GetGaCrmTicketTagsAsync(int page = 1, int pageSize = 0)
         {
@@ -1408,6 +1501,69 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<PagedList<ViewGaCrmGarbageTicketMagazzino>> GetViewGaCrmGarbageTicketMagazzinoAsync()
         {
             return await viewGaCrmGarbageTicketMagazzinoRepo.GetAllAsync();
+        }
+        #endregion
+
+        #region Reclami
+        public async Task<string> GenerateNumReclamoAsync(int year)
+        {
+            // Formattazione delle date come stringhe OData in formato ISO 8601
+            string startDate = new DateTime(year, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToString("yyyy-MM-ddTHH:mm:ssZ");
+            string endDate = new DateTime(year, 12, 31, 23, 59, 59, DateTimeKind.Utc).ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+
+            PageRequest request = new PageRequest();
+            request.Filter = $"DataRichiesta ge {startDate} and DataRichiesta le {endDate} and " +
+                $"ContactCenterTipoRichiesta/Reclamo eq true and " +
+                $"NumReclamo ne null and NumReclamo ne ''"; // Assicurati di usare le convenzioni corrette per OData\r\n    request.Expand = \"ContactCenterTipoRichiesta\";
+            request.Expand = "ContactCenterTipoRichiesta";
+            var entities = await gaCrmTicketsRepo.GetAsync(request);
+
+            // Verifica se ci sono entità che soddisfano i criteri
+            if (entities != null && entities.Items.Any())
+            {
+                // Estrai i valori di NumReclamo e filtra
+                var numeriReclamo = entities.Items
+                    .Where(e => !string.IsNullOrEmpty(e.NumReclamo)) // Assicurati che NumReclamo non sia null o vuoto
+                    .Select(e => e.NumReclamo.Split('/')[0]) // Prendi solo la parte numerica
+                    .Select(int.Parse) // Converti a intero
+                    .ToList();
+
+                // Se ci sono numeri di reclamo, trova il massimo e incrementa
+                if (numeriReclamo.Any())
+                {
+                    int maxNumero = numeriReclamo.Max();
+                    int nuovoNumero = maxNumero + 1; // Incrementa il numero
+                    return $"{nuovoNumero}/{year}"; // Restituisci il nuovo numero di reclamo con l'anno
+                }
+            }
+
+            // Se non ci sono record soddisfacenti, restituisci 1/anno
+            return $"1/{year}";
+        }
+
+        public async Task<PageResponse<CrmTicket>> GetCrmReclamiAsync(PageRequest request)
+        {
+            request.Filter = $"ContactCenterTipoRichiesta/Reclamo eq true and " +
+               $"NumReclamo ne null and NumReclamo ne ''"; // Assicurati di usare le convenzioni corrette per OData\r\n    request.Expand = \"ContactCenterTipoRichiesta\";
+            var entities = await gaCrmTicketsRepo.GetAsync(request);
+            return entities.ToModel<PageResponse<CrmTicket>>();
+        }
+
+        public async Task<bool> ChangeFondatoGaCrmTicketAsync(long id)
+        {
+            try
+            {
+                var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
+                entity.ReclamoFondato = !entity.ReclamoFondato;
+                await SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         #endregion
 

@@ -58,6 +58,13 @@ namespace GaCloudServer.BusinessLogic.Mappers.Crm
             CreateMap<PagedList<CrmTicketAllegato>, CrmTicketAllegatiDto>(MemberList.Destination)
                 .ReverseMap();
 
+            //CrmTicketAzioni
+            CreateMap<CrmTicketAzione, CrmTicketAzioneDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<CrmTicketAzione>, CrmTicketAzioniDto>(MemberList.Destination)
+                .ReverseMap();
+
             //CrmTicketTags
             CreateMap<CrmTicketTag, CrmTicketTagDto>(MemberList.Destination)
                 .ReverseMap();

@@ -1,10 +1,12 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.BackOffice.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
+using GaCloudServer.Shared;
 using Microsoft.Graph;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
@@ -154,6 +156,22 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #endregion
 
+        #region GaCrmTicketAzioni
+        Task<CrmTicketAzioniDto> GetGaCrmTicketAzioniByTicketIdAsync(long CrmTicketTicketId);
+        Task<CrmTicketAzioneDto> GetGaCrmTicketAzioneByIdAsync(long id);
+
+        Task<long> AddGaCrmTicketAzioneAsync(CrmTicketAzioneDto dto);
+        Task<long> UpdateGaCrmTicketAzioneAsync(CrmTicketAzioneDto dto);
+
+        Task<bool> DeleteGaCrmTicketAzioneAsync(long id);
+
+        #region Functions
+        //Task<bool> ValidateGaCrmTicketAllegatoAsync(long id, string descrizione);
+        //Task<bool> ChangeStatusGaCrmTicketAllegatoAsync(long id);
+        #endregion
+
+        #endregion
+
         #region CrmTicketTags
         Task<CrmTicketTagsDto> GetGaCrmTicketTagsAsync(int page = 1, int pageSize = 0);
         Task<CrmTicketTagDto> GetGaCrmTicketTagByIdAsync(long id);
@@ -185,7 +203,14 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<PagedList<ViewGaCrmGarbageStati>> GetViewGaCrmGarbageStatiAsync();
         Task<PagedList<ViewGaCrmGarbageTicketContactCenter>> GetViewGaCrmGarbageTicketContactCenterAsync();
         Task<PagedList<ViewGaCrmGarbageTicketMagazzino>> GetViewGaCrmGarbageTicketMagazzinoAsync();
-        
+
+        #endregion
+
+        #region Reclami
+        Task<string> GenerateNumReclamoAsync(int year);
+        Task<PageResponse<CrmTicket>> GetCrmReclamiAsync(PageRequest request);
+
+        Task<bool> ChangeFondatoGaCrmTicketAsync(long id);
         #endregion
 
         #region Shared Data Table

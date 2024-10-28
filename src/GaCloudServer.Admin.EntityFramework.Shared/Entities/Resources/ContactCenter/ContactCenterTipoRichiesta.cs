@@ -22,5 +22,6 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactC
         public int? GiorniGestione { get; set; }
         public bool Commerciale { get; set; }
         public bool Important { get; set; }
+        public bool Reclamo { get; set; }
     }
 }

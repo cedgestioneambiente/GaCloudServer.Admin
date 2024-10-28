@@ -45,6 +45,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
         public string IntestatarioIndirizzo { get; set; }
         public string IntestatarioCfPiva { get; set; }
 
+        public string? NumReclamo { get; set; }
+        public bool? ReclamoFondato { get; set; }
         public CrmEventComune CrmEventComune { get; set; }
         public ContactCenterProvenienza ContactCenterProvenienza { get; set; }
         public ContactCenterTipoRichiesta ContactCenterTipoRichiesta { get; set; }

@@ -515,6 +515,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<CrmTicket> GaCrmTickets { get; set; }
         public DbSet<CrmTicketTag> GaCrmTicketTags { get; set; }
         public DbSet<CrmTicketAllegato> GaCrmTicketAllegati { get; set; }
+        public DbSet<CrmTicketAzione> GaCrmTicketAzioni { get; set; }
 
         #region Views
         public DbSet<ViewGaCrmCanali> ViewGaCrmCanali { get; set; }

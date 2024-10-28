@@ -142,6 +142,9 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string IntestatarioComune { get; set; }
         public string IntestatarioIndirizzo { get; set; }
         public string IntestatarioCfPiva { get; set; }
+
+        public string? NumReclamo { get; set; }
+        public bool? ReclamoFondato { get; set; }
     }
 
     public class CrmTicketsDto : GenericPagedListDto<CrmTicketDto>
@@ -158,6 +161,21 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
     }
 
     public class CrmTicketAllegatiDto : GenericPagedListDto<CrmTicketAllegatoDto>
+    {
+    }
+
+    #endregion
+
+    #region CrmTicketAzioneDto
+    public class CrmTicketAzioneDto : GenericFileDto
+    {
+        public long CrmTicketId { get; set; }
+        public string Descrizione { get; set; }
+        public DateTime Data {  get; set; }
+        public bool Risposta { get; set; }
+    }
+
+    public class CrmTicketAzioniDto : GenericPagedListDto<CrmTicketAzioneDto>
     {
     }
 

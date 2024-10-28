@@ -505,6 +505,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<CrmTicket>, GenericRepository<TResourcesDbContext, CrmTicket>>();
             services.AddTransient<IGenericRepository<CrmTicketTag>, GenericRepository<TResourcesDbContext, CrmTicketTag>>();
             services.AddTransient<IGenericRepository<CrmTicketAllegato>, GenericRepository<TResourcesDbContext, CrmTicketAllegato>>();
+            services.AddTransient<IGenericRepository<CrmTicketAzione>, GenericRepository<TResourcesDbContext, CrmTicketAzione>>();
 
             services.AddTransient<IGenericRepository<ViewGaCrmCanali>, GenericRepository<TResourcesDbContext, ViewGaCrmCanali>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCausali>, GenericRepository<TResourcesDbContext, ViewGaCrmCausali>>();
@@ -756,6 +757,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<CrmTicket>, GenericRepository<TResourcesDbContext, CrmTicket>>();
             services.AddTransient<IGenericRepository<CrmTicketTag>, GenericRepository<TResourcesDbContext, CrmTicketTag>>();
             services.AddTransient<IGenericRepository<CrmTicketAllegato>, GenericRepository<TResourcesDbContext, CrmTicketAllegato>>();
+            services.AddTransient<IGenericRepository<CrmTicketAzione>, GenericRepository<TResourcesDbContext, CrmTicketAzione>>();
 
             services.AddTransient<IGenericRepository<ViewGaCrmCanali>, GenericRepository<TResourcesDbContext, ViewGaCrmCanali>>();
             services.AddTransient<IGenericRepository<ViewGaCrmCausali>, GenericRepository<TResourcesDbContext, ViewGaCrmCausali>>();
