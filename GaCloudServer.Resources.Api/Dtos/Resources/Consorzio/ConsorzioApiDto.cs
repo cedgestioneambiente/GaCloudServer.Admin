@@ -166,6 +166,23 @@ namespace GaCloudServer.BusinnessLogic.Api.Dtos.Resources.Consorzio
 
     #endregion
 
+    #region ConsorzioComuniDemografie
+    public class ConsorzioComuneDemografiaApiDto : GenericApiDto
+    {
+        public long ConsorzioComuneId { get; set; }
+        public int? Anno2022 { get; set; }
+        public int? Anno2023 { get; set; }
+        public int? Anno2024 { get; set; }
+        public int? Anno2025 { get; set; }
+        public int? Anno2026 { get; set; }
+        public int? Anno2027 { get; set; }
+    }
+
+    public class ConsorzioComuniDemografieApiDto : GenericPagedListApiDto<ConsorzioComuneDemografiaApiDto>
+    {
+    }
+
+    #endregion
 
     //Internal
     public class ConsorzioRegistrazioniFilterApiDto

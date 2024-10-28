@@ -7,6 +7,7 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Hub.Interfaces;
+using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Custom;
@@ -2936,6 +2937,131 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         #endregion
 
+
+        #endregion
+
+        #region ConsorzioComuniDemografie
+        [HttpGet("GetConsorzioComuniDemografieAsync/{page}/{pageSize}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioComuniDemografieAsync(int page = 1, int pageSize = 0)
+        {
+            try
+            {
+                var dtos = await _consorzioService.GetConsorzioComuniDemografieAsync(page, pageSize);
+                var apiDtos = dtos.ToApiDto<ConsorzioComuniDemografieApiDto, ConsorzioComuniDemografieDto>();
+                return new ApiResponse(apiDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("GetConsorzioComuneDemografiaByIdAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> GetConsorzioComuneDemografiaByIdAsync(long id)
+        {
+            try
+            {
+                var dto = await _consorzioService.GetConsorzioComuneDemografiaByIdAsync(id);
+                var apiDto = dto.ToApiDto<ConsorzioComuneDemografiaApiDto, ConsorzioComuneDemografiaDto>();
+                return new ApiResponse(apiDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpPost("AddConsorzioComuneDemografiaAsync")]
+        public async Task<ActionResult<ApiResponse>> AddConsorzioComuneDemografiaAsync([FromBody] ConsorzioComuneDemografiaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioComuneDemografiaDto, ConsorzioComuneDemografiaApiDto>();
+                var response = await _consorzioService.AddConsorzioComuneDemografiaAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (ApiProblemDetailsException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex);
+            }
+
+        }
+
+        [HttpPost("UpdateConsorzioComuneDemografiaAsync")]
+        public async Task<ActionResult<ApiResponse>> UpdateConsorzioComuneDemografiaAsync([FromBody] ConsorzioComuneDemografiaApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioComuneDemografiaDto, ConsorzioComuneDemografiaApiDto>();
+                var response = await _consorzioService.UpdateConsorzioComuneDemografiaAsync(dto);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpDelete("DeleteConsorzioComuneDemografiaAsync/{id}")]
+        public async Task<ActionResult<ApiResponse>> DeleteConsorzioComuneDemografiaAsync(long id)
+        {
+            try
+            {
+                var response = await _consorzioService.DeleteConsorzioComuneDemografiaAsync(id);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+
+        #region Views
+        [HttpGet("GetViewConsorzioComuniDemografieAsync")]
+        public async Task<ActionResult<ApiResponse>> GetViewConsorzioComuniDemografieAsync()
+        {
+            try
+            {
+                var view = await _consorzioService.GetViewConsorzioComuniDemografieAsync();
+                return new ApiResponse(view);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+
+
+        #endregion
 
         #endregion
     }

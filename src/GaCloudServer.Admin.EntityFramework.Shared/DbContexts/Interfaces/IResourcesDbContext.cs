@@ -492,6 +492,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ConsorzioPeriodo> ConsorzioPeriodi { get; set; }
         DbSet<ConsorzioOperazione> ConsorzioOperazioni { get; set; }
         DbSet<ConsorzioImportTask> ConsorzioImportsTasks { get; set; }
+        DbSet<ConsorzioComuneDemografia> ConsorzioComuniDemografie { get; set; }
 
         #region Views
         DbSet<ViewConsorzioCers> ViewConsorzioCers { get; set; }
@@ -501,6 +502,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewConsorzioRegistrazioni> ViewConsorzioRegistrazioni { get; set; }
         DbSet<ViewConsorzioComuni> ViewConsorzioComuni { get; set; }
         DbSet<ViewConsorzioImportsTasks> ViewConsorzioImportsTasks { get; set; }
+        DbSet<ViewConsorzioComuniDemografie> ViewConsorzioComuniDemografie { get; set; }
         #endregion
 
         #endregion

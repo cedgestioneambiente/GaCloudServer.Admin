@@ -1521,6 +1521,20 @@ namespace GaCloudServer.BusinnessLogic.Services
                 throw;
             }
         }
+
+        public async Task<PagedList<ViewGaPersonaleSchedeConsegne>> GetViewGaPersonaleSchedeConsegneByDipendenteAsync(long personaleDipendenteId)
+        {
+
+            try
+            {
+                return await viewGaPersonaleSchedeConsegneRepo.GetWithFilterAsync(x => x.DipendenteId == personaleDipendenteId);
+            }
+            catch (Exception ex)
+            {
+                await SaveChanges();
+                throw;
+            }
+        }
         #endregion
 
         #endregion

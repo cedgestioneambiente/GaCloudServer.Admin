@@ -1,5 +1,6 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Custom;
@@ -26,6 +27,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ConsorzioOperazione> consorzioOperazioniRepo;
         protected readonly IGenericRepository<ConsorzioPeriodo> consorzioPeriodiRepo;
         protected readonly IGenericRepository<ConsorzioImportTask> consorzioImportsTasksRepo;
+        protected readonly IGenericRepository<ConsorzioComuneDemografia> consorzioComuniDemografieRepo;
 
         protected readonly IGenericRepository<ViewConsorzioCers> viewConsorzioCersRepo;
         protected readonly IGenericRepository<ViewConsorzioProduttori> viewConsorzioProduttoriRepo;
@@ -34,6 +36,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewConsorzioRegistrazioni> viewConsorzioRegistrazioniRepo;
         protected readonly IGenericRepository<ViewConsorzioComuni> viewConsorzioComuniRepo;
         protected readonly IGenericRepository<ViewConsorzioImportsTasks> viewConsorzioImportsTasksRepo;
+        protected readonly IGenericRepository<ViewConsorzioComuniDemografie> viewConsorzioComuniDemografieRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -50,6 +53,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ConsorzioOperazione> consorzioOperazioniRepo,
             IGenericRepository<ConsorzioPeriodo> consorzioPeriodiRepo,
             IGenericRepository<ConsorzioImportTask> consorzioImportsTasksRepo,
+            IGenericRepository<ConsorzioComuneDemografia> consorzioComuniDemografieRepo,
 
             IGenericRepository<ViewConsorzioCers> viewConsorzioCersRepo,
             IGenericRepository<ViewConsorzioProduttori> viewConsorzioProduttoriRepo,
@@ -58,6 +62,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewConsorzioRegistrazioni> viewConsorzioRegistrazioniRepo,
             IGenericRepository<ViewConsorzioComuni> viewConsorzioComuniRepo,
             IGenericRepository<ViewConsorzioImportsTasks> viewConsorzioImportsTasksRepo,
+            IGenericRepository<ViewConsorzioComuniDemografie> viewConsorzioComuniDemografieRepo,
 
             IUnitOfWork unitOfWork)
         {
@@ -72,6 +77,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.consorzioOperazioniRepo = consorzioOperazioniRepo;
             this.consorzioPeriodiRepo = consorzioPeriodiRepo;
             this.consorzioImportsTasksRepo = consorzioImportsTasksRepo;
+            this.consorzioComuniDemografieRepo = consorzioComuniDemografieRepo;
 
             this.viewConsorzioCersRepo = viewConsorzioCersRepo;
             this.viewConsorzioProduttoriRepo = viewConsorzioProduttoriRepo;
@@ -80,6 +86,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.viewConsorzioComuniRepo = viewConsorzioComuniRepo;
             this.viewConsorzioRegistrazioniRepo = viewConsorzioRegistrazioniRepo;
             this.viewConsorzioImportsTasksRepo = viewConsorzioImportsTasksRepo;
+            this.viewConsorzioComuniDemografieRepo = viewConsorzioComuniDemografieRepo;
 
 
             this.unitOfWork = unitOfWork;
@@ -1426,6 +1433,58 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
         #endregion
 
+
+        #endregion
+
+        #region ConsorzioComuniDemografie
+        public async Task<ConsorzioComuniDemografieDto> GetConsorzioComuniDemografieAsync(int page = 1, int pageSize = 0)
+        {
+            var entities = await consorzioComuniDemografieRepo.GetAllAsync(page, pageSize);
+            var dtos = entities.ToDto<ConsorzioComuniDemografieDto, PagedList<ConsorzioComuneDemografia>>();
+            return dtos;
+        }
+
+        public async Task<ConsorzioComuneDemografiaDto> GetConsorzioComuneDemografiaByIdAsync(long id)
+        {
+            var entity = await consorzioComuniDemografieRepo.GetByIdAsync(id);
+            var dto = entity.ToDto<ConsorzioComuneDemografiaDto, ConsorzioComuneDemografia>();
+            return dto;
+        }
+
+        public async Task<long> AddConsorzioComuneDemografiaAsync(ConsorzioComuneDemografiaDto dto)
+        {
+            var entity = dto.ToEntity<ConsorzioComuneDemografia, ConsorzioComuneDemografiaDto>();
+            await consorzioComuniDemografieRepo.AddAsync(entity);
+            await SaveChanges();
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateConsorzioComuneDemografiaAsync(ConsorzioComuneDemografiaDto dto)
+        {
+            var entity = dto.ToEntity<ConsorzioComuneDemografia, ConsorzioComuneDemografiaDto>();
+            consorzioComuniDemografieRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
+
+        public async Task<bool> DeleteConsorzioComuneDemografiaAsync(long id)
+        {
+            var entity = await consorzioComuniDemografieRepo.GetByIdAsync(id);
+            consorzioComuniDemografieRepo.Remove(entity);
+            await SaveChanges();
+
+            return true;
+        }
+
+        #region Views
+        public async Task<PagedList<ViewConsorzioComuniDemografie>> GetViewConsorzioComuniDemografieAsync()
+        {
+            var view = await viewConsorzioComuniDemografieRepo.GetAllAsync();
+            return view;
+        }
+        #endregion
 
         #endregion
 

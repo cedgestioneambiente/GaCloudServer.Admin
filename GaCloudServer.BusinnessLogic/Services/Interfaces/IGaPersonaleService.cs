@@ -1,6 +1,7 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Personale.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Personale;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+using System.Threading.Tasks;
 
 namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 {
@@ -278,6 +279,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Views
         Task<PagedList<ViewGaPersonaleNuoveSchede>> GetViewGaPersonaleNuoveSchedeAsync();
         Task<PagedList<ViewGaPersonaleSchedeConsegne>> GetViewGaPersonaleSchedeConsegneAsync(long schedaId);
+        Task<PagedList<ViewGaPersonaleSchedeConsegne>> GetViewGaPersonaleSchedeConsegneByDipendenteAsync(long personaleDipendenteId);
         #endregion
 
         #endregion

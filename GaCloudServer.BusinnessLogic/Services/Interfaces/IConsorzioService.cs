@@ -223,5 +223,20 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #endregion
+
+        #region ConsorzioComuniDemografie
+        Task<ConsorzioComuniDemografieDto> GetConsorzioComuniDemografieAsync(int page = 1, int pageSize = 0);
+        Task<ConsorzioComuneDemografiaDto> GetConsorzioComuneDemografiaByIdAsync(long id);
+
+        Task<long> AddConsorzioComuneDemografiaAsync(ConsorzioComuneDemografiaDto dto);
+        Task<long> UpdateConsorzioComuneDemografiaAsync(ConsorzioComuneDemografiaDto dto);
+
+        Task<bool> DeleteConsorzioComuneDemografiaAsync(long id);
+
+        #region Views
+        Task<PagedList<ViewConsorzioComuniDemografie>> GetViewConsorzioComuniDemografieAsync();
+        #endregion
+
+        #endregion
     }
 }
