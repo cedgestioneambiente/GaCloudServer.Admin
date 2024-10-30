@@ -87,6 +87,14 @@ namespace GaCloudServer.BusinessLogic.Mappers.Consorzio
             CreateMap<PagedList<ConsorzioImportTask>, ConsorzioImportsTasksDto>(MemberList.Destination)
                 .ReverseMap();
 
+
+            //ConsorzioComuniDemografie
+            CreateMap<ConsorzioComuneDemografia, ConsorzioComuneDemografiaDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<PagedList<ConsorzioComuneDemografia>, ConsorzioComuniDemografieDto>(MemberList.Destination)
+                .ReverseMap();
+
         }
     }
 }

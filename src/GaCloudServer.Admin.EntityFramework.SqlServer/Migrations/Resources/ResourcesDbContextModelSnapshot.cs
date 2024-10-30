@@ -2795,6 +2795,57 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.ToTable("ConsorzioComuni");
                 });
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioComuneDemografia", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("Anno2022")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Anno2023")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Anno2024")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Anno2025")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Anno2026")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Anno2027")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ConsorzioComuneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsorzioComuneId");
+
+                    b.ToTable("ConsorzioComuniDemografie");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioDestinatario", b =>
                 {
                     b.Property<long>("Id")
@@ -14663,6 +14714,17 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .IsRequired();
 
                     b.Navigation("CdrComune");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioComuneDemografia", b =>
+                {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioComune", "ConsorzioComune")
+                        .WithMany()
+                        .HasForeignKey("ConsorzioComuneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ConsorzioComune");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzio.ConsorzioDestinatario", b =>
