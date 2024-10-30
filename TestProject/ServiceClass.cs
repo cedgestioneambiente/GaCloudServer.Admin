@@ -6,13 +6,35 @@ namespace TestProject
 {
     public class AnagraficaServiceStandalone
     {
+        private readonly double indirizzoWeight;
+        private readonly double ragSoWeight;
+        private readonly double similarityThreshold;
+
+        public AnagraficaServiceStandalone(double indirizzoWeight = 0.5, double ragSoWeight = 0.5, double similarityThreshold = 0.65)
+        {
+            // Normalizza i pesi
+            double totalWeight = indirizzoWeight + ragSoWeight;
+            this.indirizzoWeight = indirizzoWeight / totalWeight;
+            this.ragSoWeight = ragSoWeight / totalWeight;
+
+            // Soglia di similarità dinamica
+            this.similarityThreshold = similarityThreshold;
+        }
+
+
         public Task<PercentValidateDto> ValidateConsistentRegistryAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
         {
             // Dati di test hardcoded
             var aziendePredefinite = new[]
             {
-                new { CfPiva = "1492290067", Indirizzo = "EX S.S. 35 DEI GIOVI 42, 15057 TORTONA (AL)", Descrizione = "GESTIONE AMBIENTE S.p.A.", ComuneId = 1196 }
+                new { Id=1, CfPiva = "1492290067", Indirizzo = "EX S.S. 35 DEI GIOVI 42, 15057 TORTONA (AL)", Descrizione = "GESTIONE AMBIENTE S.p.A.", ComuneId = 1196 },
+                new { Id=2,CfPiva = "03083200109", Indirizzo = "STRADA SAVONESA, 8 - 15057 TORTONA (AL)", Descrizione = "RELIFE RECYCLING S.P.L.", ComuneId = 1196 },
+                new { Id=3,CfPiva = "03083200109", Indirizzo = "STRADA SAVONESA, 8 - 15057 TORTONA (AL)", Descrizione = "RELIFE RECYCLING S.R.L.", ComuneId = 1196 }
             };
+
+            PercentValidateDto bestMatch = new PercentValidateDto { foundId = -1, percent = 0, Message = "Nessun soggetto simile trovato",Subject="" };
+
+            //double totalScore = new List<double>() { indirizzoSimilarityScore, ragSoSimilarityScore }.Average();
 
             // Controllo per soggetti simili
             foreach (var azienda in aziendePredefinite)
@@ -22,25 +44,25 @@ namespace TestProject
                     double indirizzoSimilarityScore = CalculateSimilarity(azienda.Indirizzo, indirizzo);
                     double ragSoSimilarityScore = CalculateSimilarity(azienda.Descrizione, ragSo);
 
-                    // Soglie di similarità
-                    if (indirizzoSimilarityScore >= 0.7 && ragSoSimilarityScore >= 0.7) // Modifica la soglia in base ai requisiti
+                    // Calcola la media ponderata
+                    double weightedAverage = (indirizzoSimilarityScore * indirizzoWeight) + (ragSoSimilarityScore * ragSoWeight);
+
+
+                    // Controlla se la media ponderata supera la soglia impostata
+                    if (weightedAverage > similarityThreshold && weightedAverage > bestMatch.percent)
                     {
-                        return Task.FromResult(new PercentValidateDto
+                        bestMatch = new PercentValidateDto
                         {
-                            foundId = 1, // ID fittizio
-                            percent = Math.Max(indirizzoSimilarityScore, ragSoSimilarityScore), // Percentuale di similarità
-                            Message = "Trovato soggetto simile"
-                        });
+                            foundId = azienda.Id, // ID fittizio
+                            percent = weightedAverage,
+                            Message = "Trovato soggetto simile",
+                            Subject=String.Concat(azienda.Descrizione,"-",azienda.CfPiva,"-",azienda.Indirizzo)
+                        };
                     }
                 }
             }
 
-            return Task.FromResult(new PercentValidateDto
-            {
-                foundId = -1,
-                percent = 0,
-                Message = "Nessun soggetto simile trovato"
-            });
+            return Task.FromResult(bestMatch);
         }
 
         private double CalculateSimilarity(string str1, string str2)

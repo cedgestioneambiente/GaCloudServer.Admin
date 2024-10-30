@@ -11,16 +11,16 @@ public class AnagraficaServiceStandaloneTests
         var service = new AnagraficaServiceStandalone();
 
         // Dati di test per soggetto simile
-        string cfPiva = "1492290067";
-        string indirizzo = "EX STRADA STATALE 35 DEI GIOVI, 42 - 15057 Novi ligure (AL)";
-        string ragSo = "Campione AMBIENTE srl";
+        string cfPiva = "03083200109";
+        string indirizzo = "STRADA SAVONESA, 8 - 15057 TORTONA (AL)";
+        string ragSo = "RELIFE RECYCLING S.R.L.";
         long comuneId = 1196;
 
         // Act: Test soggetto simile
         var result = await service.ValidateConsistentRegistryAsync(0, cfPiva, indirizzo, ragSo, comuneId);
 
         // Log dettagli
-        Console.WriteLine($"Test soggetto simile: {result.Message}, Percentuale: {result.percent}");
+        Console.WriteLine($"Test soggetto simile: {result.Message}, Percentuale: {result.percent}, Soggetto:{result.Subject}");
 
         // Assert
         Assert.NotNull(result);

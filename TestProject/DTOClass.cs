@@ -11,6 +11,7 @@ namespace TestProject
         public double percent { get; set; }
         public long foundId { get; set; }
         public string Message { get; set; }  // Messaggio per i risultati
+        public string Subject { get; set; }
     }
 
     public static class SimilarityHelper
