@@ -38,6 +38,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewConsorzioImportsTasks> viewConsorzioImportsTasksRepo;
         protected readonly IGenericRepository<ViewConsorzioComuniDemografie> viewConsorzioComuniDemografieRepo;
 
+        private readonly double indirizzoWeight = 0.5;
+        private readonly double ragSoWeight = 0.5;
+        private readonly double similarityThreshold = 0.65;
+
         protected readonly IUnitOfWork unitOfWork;
 
         public ConsorzioService(
@@ -504,6 +508,61 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
+
+        public async Task<PercentValidateDto> ValidatePercentConsorzioProduttoreV2Async(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        {
+            var entity = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.ConsorzioComuneId == comuneId && x.Descrizione == ragSo && x.Id != id && x.Disabled == false);
+
+            if (entity.Data.Count > 0)
+            {
+                return new PercentValidateDto() { foundId = entity.Data.FirstOrDefault().Id, percent = 1, obj = entity.Data.FirstOrDefault() };
+            }
+            else
+            {
+                var entityCf = await consorzioProduttoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Id != id && x.Disabled == false);
+                if (entityCf.Data.Count > 0)
+                {
+                    PercentValidateDto bestMatch = new PercentValidateDto { foundId = -1, percent = 0 };
+
+                    // Controllo per soggetti simili
+                    foreach (var azienda in entityCf.Data)
+                    {
+                        if (azienda.CfPiva == cfPiva && azienda.ConsorzioComuneId == comuneId)
+                        {
+                            double indirizzoSimilarityScore = sh.CalculateSimilarityV2(azienda.Indirizzo, indirizzo);
+                            double ragSoSimilarityScore = sh.CalculateSimilarityV2(azienda.Descrizione, ragSo);
+
+                            // Calcola la media ponderata
+                            double weightedAverage = (indirizzoSimilarityScore * indirizzoWeight) + (ragSoSimilarityScore * ragSoWeight);
+
+
+                            // Controlla se la media ponderata supera la soglia impostata
+                            if (weightedAverage > similarityThreshold && weightedAverage > bestMatch.percent)
+                            {
+                                bestMatch = new PercentValidateDto
+                                {
+                                    foundId = azienda.Id, // ID fittizio
+                                    percent = weightedAverage,
+                                    obj=azienda
+                                    //Message = "Trovato soggetto simile",
+                                    //Subject = String.Concat(azienda.Descrizione, "-", azienda.CfPiva, "-", azienda.Indirizzo)
+                                };
+                            }
+                        }
+
+
+
+                    }
+                    return bestMatch;
+                }
+                else
+                {
+                    return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                }
+
+            }
+        }
+
         public async Task<bool> ChangeStatusConsorzioProduttoreAsync(long id)
         {
             var entity = await consorzioProduttoriRepo.GetByIdAsync(id);
@@ -666,6 +725,62 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
         }
 
+
+        public async Task<PercentValidateDto> ValidatePercentConsorzioDestinatarioV2Async(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        {
+            var entity = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.ConsorzioComuneId == comuneId && x.Descrizione == ragSo && x.Id != id && x.Disabled == false);
+
+            if (entity.Data.Count > 0)
+            {
+                return new PercentValidateDto() { foundId = entity.Data.FirstOrDefault().Id, percent = 1, obj = entity.Data.FirstOrDefault() };
+            }
+            else
+            {
+                var entityCf = await consorzioDestinatariRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Id != id && x.Disabled == false);
+                if (entityCf.Data.Count > 0)
+                {
+                    PercentValidateDto bestMatch = new PercentValidateDto { foundId = -1, percent = 0 };
+
+                    // Controllo per soggetti simili
+                    foreach (var azienda in entityCf.Data)
+                    {
+                        if (azienda.CfPiva == cfPiva && azienda.ConsorzioComuneId == comuneId)
+                        {
+                            double indirizzoSimilarityScore = sh.CalculateSimilarityV2(azienda.Indirizzo, indirizzo);
+                            double ragSoSimilarityScore = sh.CalculateSimilarityV2(azienda.Descrizione, ragSo);
+
+                            // Calcola la media ponderata
+                            double weightedAverage = (indirizzoSimilarityScore * indirizzoWeight) + (ragSoSimilarityScore * ragSoWeight);
+
+
+                            // Controlla se la media ponderata supera la soglia impostata
+                            if (weightedAverage > similarityThreshold && weightedAverage > bestMatch.percent)
+                            {
+                                bestMatch = new PercentValidateDto
+                                {
+                                    foundId = azienda.Id, // ID fittizio
+                                    percent = weightedAverage,
+                                    obj = azienda
+                                    //Message = "Trovato soggetto simile",
+                                    //Subject = String.Concat(azienda.Descrizione, "-", azienda.CfPiva, "-", azienda.Indirizzo)
+                                };
+                            }
+                        }
+
+
+
+                    }
+                    return bestMatch;
+                }
+                else
+                {
+                    return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                }
+
+            }
+        }
+
+
         public async Task<bool> ChangeStatusConsorzioDestinatarioAsync(long id)
         {
             var entity = await consorzioDestinatariRepo.GetByIdAsync(id);
@@ -819,6 +934,60 @@ namespace GaCloudServer.BusinnessLogic.Services
                     }
 
 
+                }
+                else
+                {
+                    return new PercentValidateDto() { foundId = -1, percent = 0, obj = null };
+                }
+
+            }
+        }
+
+        public async Task<PercentValidateDto> ValidatePercentConsorzioTrasportatoreV2Async(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        {
+            var entity = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.Indirizzo == indirizzo && x.ConsorzioComuneId == comuneId && x.Descrizione == ragSo && x.Id != id && x.Disabled == false);
+
+            if (entity.Data.Count > 0)
+            {
+                return new PercentValidateDto() { foundId = entity.Data.FirstOrDefault().Id, percent = 1, obj = entity.Data.FirstOrDefault() };
+            }
+            else
+            {
+                var entityCf = await consorzioTrasportatoriRepo.GetWithFilterAsync(x => x.CfPiva == cfPiva && x.ConsorzioComuneId == comuneId && x.Id != id && x.Disabled == false);
+                if (entityCf.Data.Count > 0)
+                {
+                    PercentValidateDto bestMatch = new PercentValidateDto { foundId = -1, percent = 0 };
+
+                    // Controllo per soggetti simili
+                    foreach (var azienda in entityCf.Data)
+                    {
+                        if (azienda.CfPiva == cfPiva && azienda.ConsorzioComuneId == comuneId)
+                        {
+                            double indirizzoSimilarityScore = sh.CalculateSimilarityV2(azienda.Indirizzo, indirizzo);
+                            double ragSoSimilarityScore = sh.CalculateSimilarityV2(azienda.Descrizione, ragSo);
+
+                            // Calcola la media ponderata
+                            double weightedAverage = (indirizzoSimilarityScore * indirizzoWeight) + (ragSoSimilarityScore * ragSoWeight);
+
+
+                            // Controlla se la media ponderata supera la soglia impostata
+                            if (weightedAverage > similarityThreshold && weightedAverage > bestMatch.percent)
+                            {
+                                bestMatch = new PercentValidateDto
+                                {
+                                    foundId = azienda.Id, // ID fittizio
+                                    percent = weightedAverage,
+                                    obj = azienda
+                                    //Message = "Trovato soggetto simile",
+                                    //Subject = String.Concat(azienda.Descrizione, "-", azienda.CfPiva, "-", azienda.Indirizzo)
+                                };
+                            }
+                        }
+
+
+
+                    }
+                    return bestMatch;
                 }
                 else
                 {

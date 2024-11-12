@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GaCloudServer.BusinnessLogic.Helpers
@@ -109,5 +110,57 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             return charArray;
         }
+
+        #region SimilarityV2
+        public static double CalculateSimilarityV2(string str1, string str2)
+        {
+            // Normalizza le stringhe
+            str1 = NormalizeString(str1);
+            str2 = NormalizeString(str2);
+
+            // Calcola la distanza di Levenshtein
+            int distance = LevenshteinDistance(str1, str2);
+            int maxLength = Math.Max(str1.Length, str2.Length);
+
+            // Ritorna il punteggio di similarità normalizzato
+            return (maxLength - distance) / (double)maxLength;
+        }
+
+        private static string NormalizeString(string input)
+        {
+            // Rimuove caratteri speciali, spazi extra e converte in minuscolo
+            if (string.IsNullOrEmpty(input)) return string.Empty;
+
+            input = Regex.Replace(input, @"[^\w\s]", ""); // Rimuove caratteri speciali
+            input = Regex.Replace(input, @"\s+", " "); // Sostituisce spazi multipli con uno singolo
+            return input.Trim().ToLower(); // Converte in minuscolo
+        }
+
+        private static int LevenshteinDistance(string s, string t)
+        {
+            // Algoritmo per calcolare la distanza di Levenshtein
+            int n = s.Length;
+            int m = t.Length;
+            var d = new int[n + 1, m + 1];
+
+            for (int i = 0; i <= n; i++) d[i, 0] = i; // Deletion
+            for (int j = 0; j <= m; j++) d[0, j] = j; // Insertion
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= m; j++)
+                {
+                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
+
+                    d[i, j] = Math.Min(Math.Min(
+                        d[i - 1, j] + 1,    // Deletion
+                        d[i, j - 1] + 1),   // Insertion
+                        d[i - 1, j - 1] + cost); // Substitution
+                }
+            }
+
+            return d[n, m];
+        }
+        #endregion
     }
 }

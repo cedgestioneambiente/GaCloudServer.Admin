@@ -2327,7 +2327,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         if (checkProd == 0)
                         {
-                            var validatePercent = await _consorzioService.ValidatePercentConsorzioProduttoreAsync(0,
+                            var validatePercent = await _consorzioService.ValidatePercentConsorzioProduttoreV2Async(0,
                                 dto.PRODUTTORE_CFPIVA,
                                 dto.PRODUTTORE_INDIRIZZO, dto.PRODUTTORE_RAGSO, comuneProd.Id);
 
@@ -2381,7 +2381,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                         if (checkDest == 0)
                         {
 
-                            var validatePercent = await _consorzioService.ValidatePercentConsorzioDestinatarioAsync(0, dto.DESTINATARIO_CFPIVA, dto.DESTINATARIO_INDIRIZZO, dto.DESTINATARIO_RAGSO, comuneProd.Id);
+                            var validatePercent = await _consorzioService.ValidatePercentConsorzioDestinatarioV2Async(0, dto.DESTINATARIO_CFPIVA, dto.DESTINATARIO_INDIRIZZO, dto.DESTINATARIO_RAGSO, comuneProd.Id);
 
                             if (joinSimilar && validatePercent.percent > 0.8)
                             {
@@ -2431,7 +2431,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         if (checkTrasp == 0)
                         {
-                            var validatePercent = await _consorzioService.ValidatePercentConsorzioTrasportatoreAsync(0, dto.TRASPORTATORE_CFPIVA, dto.TRASPORTATORE_INDIRIZZO, dto.TRASPORTATORE_RAGSO, comuneProd.Id);
+                            var validatePercent = await _consorzioService.ValidatePercentConsorzioTrasportatoreV2Async(0, dto.TRASPORTATORE_CFPIVA, dto.TRASPORTATORE_INDIRIZZO, dto.TRASPORTATORE_RAGSO, comuneProd.Id);
 
                             if (joinSimilar && validatePercent.percent > 0.8)
                             {
