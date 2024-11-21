@@ -2331,7 +2331,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                                 dto.PRODUTTORE_CFPIVA,
                                 dto.PRODUTTORE_INDIRIZZO, dto.PRODUTTORE_RAGSO, comuneProd.Id);
 
-                            if (joinSimilar && validatePercent.percent>0.8)
+                            if (joinSimilar && validatePercent.percent>0.65)
                             {
                                 item.PRODUTTORE_RAGSO = validatePercent.obj.Descrizione;
                                 item.PRODUTTORE_INDIRIZZO = validatePercent.obj.Indirizzo;
@@ -2381,9 +2381,9 @@ namespace GaCloudServer.Resources.Api.Controllers
                         if (checkDest == 0)
                         {
 
-                            var validatePercent = await _consorzioService.ValidatePercentConsorzioDestinatarioV2Async(0, dto.DESTINATARIO_CFPIVA, dto.DESTINATARIO_INDIRIZZO, dto.DESTINATARIO_RAGSO, comuneProd.Id);
+                            var validatePercent = await _consorzioService.ValidatePercentConsorzioDestinatarioV2Async(0, dto.DESTINATARIO_CFPIVA, dto.DESTINATARIO_INDIRIZZO, dto.DESTINATARIO_RAGSO, comuneDest.Id);
 
-                            if (joinSimilar && validatePercent.percent > 0.8)
+                            if (joinSimilar && validatePercent.percent > 0.65)
                             {
                                 item.DESTINATARIO_RAGSO = validatePercent.obj.Descrizione;
                                 item.DESTINATARIO_INDIRIZZO = validatePercent.obj.Indirizzo;
@@ -2431,9 +2431,9 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                         if (checkTrasp == 0)
                         {
-                            var validatePercent = await _consorzioService.ValidatePercentConsorzioTrasportatoreV2Async(0, dto.TRASPORTATORE_CFPIVA, dto.TRASPORTATORE_INDIRIZZO, dto.TRASPORTATORE_RAGSO, comuneProd.Id);
+                            var validatePercent = await _consorzioService.ValidatePercentConsorzioTrasportatoreV2Async(0, dto.TRASPORTATORE_CFPIVA, dto.TRASPORTATORE_INDIRIZZO, dto.TRASPORTATORE_RAGSO, comuneTrasp.Id);
 
-                            if (joinSimilar && validatePercent.percent > 0.8)
+                            if (joinSimilar && validatePercent.percent > 0.65)
                             {
                                 item.TRASPORTATORE_RAGSO = validatePercent.obj.Descrizione;
                                 item.TRASPORTATORE_INDIRIZZO = validatePercent.obj.Indirizzo;
