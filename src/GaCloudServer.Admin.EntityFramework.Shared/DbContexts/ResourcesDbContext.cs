@@ -619,6 +619,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PreventiviObjectCondition> GaPreventiviObjectConditions { get; set; }
         public DbSet<PreventiviProducer> GaPreventiviProducers { get; set; }
         public DbSet<PreventiviDestination> GaPreventiviDestinations { get; set; }
+        public DbSet<PreventiviObjectHistory> GaPreventiviObjectHistories { get; set; }
 
 
         #region Views
