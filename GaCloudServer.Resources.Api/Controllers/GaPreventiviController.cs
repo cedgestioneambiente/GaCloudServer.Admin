@@ -760,6 +760,15 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var saldo = await _gaPreventiviService.CheckPreventiviFinancialPositionAsync(query);
                 
                 var response = await _gaPreventiviService.CreatePreventiviObjectFromCrmTicketAsync(model,saldo);
+                var history = new PreventiviObjectHistoryDto();
+                history.ObjectId = response.Id;
+                history.AssigneeId = model.AssigneeId;
+                history.AssigneeDesc = model.AssigneeMail;
+                history.DateStart = DateTime.Now;
+                history.StatusId = response.StatusId;
+
+
+                var regHistory = await _gaPreventiviService.CreatePreventiviObjectHistoryAsync(history);
 
                 if (model.SendEmail.GetValueOrDefault())
                 {
@@ -839,6 +848,16 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 var response = await _gaPreventiviService.CreatePreventiviObjectAsync(model);
 
+                var history = new PreventiviObjectHistoryDto();
+                history.ObjectId = response;
+                history.AssigneeId = model.AssigneeId;
+                history.AssigneeDesc = model.AssigneeMail;
+                history.DateStart = DateTime.Now;
+                history.Status = model.Status;
+
+
+                var regHistory = await _gaPreventiviService.CreatePreventiviObjectHistoryAsync(history);
+
                 return Ok(new { Code = code.Status201Created, Response = response });
             }
             catch (Exception ex)
@@ -856,6 +875,8 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var response = await _gaPreventiviService.UpdatePreventiviObjectAsync(id,model);
+
+
 
                 return Ok(new { Code = code.Status204NoContent, Response = response });
             }
@@ -892,7 +913,27 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
+                var requestLast = new PageRequest();
+                requestLast.Filter = $"ObjectId eq {model.Id}";
+                requestLast.OrderBy = "DateStart desc";
+                requestLast.Take = 1;
+                var historyLast = _gaPreventiviService.GetPreventiviObjectHistoriesAsync(requestLast).Result.Items.FirstOrDefault();
+                historyLast.DateEnd = DateTime.Now;
+                await _gaPreventiviService.UpdatePreventiviObjectHistoryAsync(historyLast.Id,historyLast);
+
                 var response = await _gaPreventiviService.UpdatePreventiviObjectAssigneeAsync(id, model);
+
+                var history = new PreventiviObjectHistoryDto();
+                history.ObjectId = model.Id;
+                history.AssigneeId = model.AssigneeId;
+                history.AssigneeDesc = model.AssigneeMail;
+                history.DateStart = DateTime.Now;
+                history.StatusId = model.StatusId;
+
+
+                var regHistory = await _gaPreventiviService.CreatePreventiviObjectHistoryAsync(history);
+
+
 
                 if (model.SendEmail.GetValueOrDefault()) { await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, model.CreatorId); }
                 if (model.SendNotify.GetValueOrDefault()) { await sendNotification(model.Id, model.ObjectNumber, model.AssigneeId, TextConsts.objectManage); }
@@ -3345,6 +3386,98 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var response = await _gaPreventiviService.DeletePreventiviProducerAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
+        #region ObjectHistories
+        [HttpPost("GetPreventiviObjectHistoriesAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectHistoriesAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectHistoriesAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectHistoryByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectHistoryByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectHistoryByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectHistoryAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectHistoryAsync(PreventiviObjectHistoryDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectHistoryAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectHistoryAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectHistoryAsync(long id, [FromBody] PreventiviObjectHistoryDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectHistoryAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectHistoryAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectHistoryAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviObjectHistoryAsync(id);
 
                 return Ok(new { Code = code.Status200OK, Response = response });
             }

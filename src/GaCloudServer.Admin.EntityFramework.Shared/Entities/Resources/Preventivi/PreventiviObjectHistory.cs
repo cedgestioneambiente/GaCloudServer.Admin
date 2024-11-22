@@ -11,6 +11,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         public DateTime DateStart { get; set; }
         public DateTime? DateEnd { get; set; }
         public string AssigneeId { get; set; }
+        public string AssigneeDesc { get; set; }
 
         [ForeignKey("Status")]
         public long StatusId { get; set; }

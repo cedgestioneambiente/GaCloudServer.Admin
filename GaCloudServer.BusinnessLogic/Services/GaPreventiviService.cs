@@ -45,6 +45,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PreventiviObjectCondition> gaPreventiviObjectConditionsRepo;
         protected readonly IGenericRepository<PreventiviProducer> gaPreventiviProducersRepo;
         protected readonly IGenericRepository<PreventiviDestination> gaPreventiviDestinationsRepo;
+        protected readonly IGenericRepository<PreventiviObjectHistory> gaPreventiviObjectHistoriesRepo;
+
 
         protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo;
         protected readonly IGenericRepository<CrmEventComune> gaCrmEventComuniRepo;
@@ -90,6 +92,8 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo,
             IGenericRepository<CrmEventComune> gaCrmEventComuniRepo,
 
+            IGenericRepository<PreventiviObjectHistory> gaPreventiviObjectHistoriesRepo,
+
             IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo,
 
             IGenericRepository<ViewGaPreventiviAnticipi> viewGaPreventiviAnticipiRepo,
@@ -133,6 +137,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.gaCrmTicketAttachmentsRepo= gaCrmTicketAttachmentsRepo;
             this.gaCrmEventComuniRepo = gaCrmEventComuniRepo;
+
+            this.gaPreventiviObjectHistoriesRepo= gaPreventiviObjectHistoriesRepo;
 
             this.viewGaPreventiviCrmTicketsRepo = viewGaPreventiviCrmTicketsRepo;
 
@@ -619,6 +625,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entity = await  gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
             entity.AssigneeId= dto.AssigneeId;
+            entity.StatusId = dto.StatusId;
             var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
             return true;
 
@@ -1572,6 +1579,44 @@ namespace GaCloudServer.BusinnessLogic.Services
             entity.FinancialForcedLock = true;
 
             var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
+            return true;
+        }
+        #endregion
+
+        #region ObjectHistory
+        public async Task<PageResponse<PreventiviObjectHistoryDto>> GetPreventiviObjectHistoriesAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectHistoriesRepo.GetAsync(request);
+            var dtos= entities.ToModel<PageResponse<PreventiviObjectHistoryDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectHistoryDto> GetPreventiviObjectHistoryByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectHistoriesRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectHistoryDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectHistoryAsync(PreventiviObjectHistoryDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectHistory>();
+            var reponse = await gaPreventiviObjectHistoriesRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectHistoryAsync(long id, PreventiviObjectHistoryDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectHistory>();
+            var response = await gaPreventiviObjectHistoriesRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectHistoryAsync(long id)
+        {
+            await gaPreventiviObjectHistoriesRepo.DeleteAsync(id);
+
             return true;
         }
         #endregion

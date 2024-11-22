@@ -127,6 +127,12 @@ namespace GaCloudServer.BusinessLogic.Mappers.Preventivi
             CreateMap<CrmEventComuneDto, CrmEventComune>(MemberList.Destination).ReverseMap();
             CreateMap<PageResponse<CrmEventComuneDto>, PageResponse<CrmEventComune>>(MemberList.Destination).ReverseMap();
 
+            CreateMap<PreventiviObjectHistoryDto, PreventiviObjectHistory>(MemberList.Destination)
+               .ForMember(dest => dest.Status, opt => opt.Ignore())
+               .ForMember(dest => dest.Object, opt => opt.Ignore())
+               .ReverseMap();
+            CreateMap<PageResponse<PreventiviObjectHistoryDto>, PageResponse<PreventiviObjectHistory>>(MemberList.Destination).ReverseMap();
+
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi;
+using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.Shared;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
@@ -283,6 +285,18 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         public Task<bool> ExecPreventiviSubjectFinancialUnlockAsync(PreventiviSubjectFinancialDto model);
         public Task<bool> ExecPreventiviSubjectFinancialLockAsync(PreventiviSubjectFinancialDto model);
 
+        #endregion
+
+        #region ObjectHistory
+        public Task<PageResponse<PreventiviObjectHistoryDto>> GetPreventiviObjectHistoriesAsync(PageRequest request);
+
+        public  Task<PreventiviObjectHistoryDto> GetPreventiviObjectHistoryByIdAsync(long id);
+
+        public Task<long> CreatePreventiviObjectHistoryAsync(PreventiviObjectHistoryDto dto);
+
+        public Task<long> UpdatePreventiviObjectHistoryAsync(long id, PreventiviObjectHistoryDto dto);
+
+        public  Task<bool> DeletePreventiviObjectHistoryAsync(long id);
         #endregion
 
 

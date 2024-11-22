@@ -1,4 +1,5 @@
-﻿using GaCloudServer.BusinnessLogic.Dtos.Common;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
+using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -300,6 +301,23 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string Telefono { get; set; }
         public string Email { get; set; }
         public bool Ignore { get; set; }
+    }
+
+    public class PreventiviObjectHistoryDto:GenericDto {
+        public long ObjectId { get; set; }
+        public DateTime DateStart { get; set; }
+        public DateTime? DateEnd { get; set; }
+        public string AssigneeId { get; set; }
+        public string AssigneeDesc { get; set; }
+
+
+        public long StatusId { get; set; }
+        public string Note { get; set; }
+
+        //Navigation Props
+        public PreventiviObjectDto Object { get; set; }
+        public PreventiviObjectStatusDto Status { get; set; }
+
     }
     #endregion
 
