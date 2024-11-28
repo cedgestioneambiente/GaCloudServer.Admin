@@ -15,6 +15,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Cdr
         public double PesoDestino { get; set; }
         public string Note { get; set; }
         public bool Inviata { get; set; }
+        public string CdrRichiestaId { get; set; }
 
         public CdrCer CdrCer { get; set; }
         public CdrStatoRichiesta CdrStatoRichiesta { get; set; }

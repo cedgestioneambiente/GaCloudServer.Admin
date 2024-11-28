@@ -144,6 +144,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Cdr
         public double PesoDestino { get; set; }
         public string? Note { get; set; }
         public bool Inviata { get; set; }
+        public string CdrRichiestaId { get; set; }
     }
 
     public class CdrRichiesteViaggiApiDto : GenericPagedListApiDto<CdrRichiestaViaggioApiDto>

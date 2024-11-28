@@ -718,6 +718,9 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> AddGaCdrRichiestaViaggioAsync(CdrRichiestaViaggioDto dto)
         {
             var entity = dto.ToEntity<CdrRichiestaViaggio, CdrRichiestaViaggioDto>();
+
+            entity.CdrRichiestaId = CreateCdrRichiestaId(entity.Data);
+
             await gaCdrRichiesteViaggiRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
@@ -934,6 +937,49 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             unitOfWork.DetachEntity(entity);
         }
+
+        #endregion
+
+        #region Helpers
+        public string CreateCdrRichiestaId(DateTime date)
+        {
+            // Filtra i record per l'anno specificato
+            var list = gaCdrRichiesteViaggiRepo
+                .GetWithFilter(x => x.Data != null && x.Data.Year == date.Year)
+                .ToList();
+
+            // Logica per calcolare il numero progressivo
+            int num = 0;
+            if (list.Any())
+            {
+                // Filtra e analizza solo i CdrRichiestaId validi
+                var validIds = list
+                    .Where(x => !string.IsNullOrEmpty(x.CdrRichiestaId) && x.CdrRichiestaId.Contains("/" + date.Year))
+                    .Select(x =>
+                    {
+                        try
+                        {
+                            // Estrarre il numero progressivo
+                            return int.Parse(x.CdrRichiestaId.Replace("/" + date.Year.ToString(), ""));
+                        }
+                        catch
+                        {
+                            return 0; // Ignora record non validi
+                        }
+                    })
+                    .ToList();
+
+                if (validIds.Any())
+                {
+                    num = validIds.Max(); // Ottieni il massimo numero progressivo
+                }
+            }
+
+            // Genera il nuovo CdrRichiestaId
+            string cdrRichiestaId = $"{num + 1}/{date.Year}";
+            return cdrRichiestaId;
+        }
+
 
         #endregion
 

@@ -1228,7 +1228,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                     };
 
 
-
+                //sostituire richiestaViaggio.Numero con richiestaViaggio.CdrRichiestaId
 
                 var response = await _mailService.AddMailJobAsync(new Admin.EntityFramework.Shared.Entities.Resources.Mail.MailJob
                 { 
