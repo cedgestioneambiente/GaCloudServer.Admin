@@ -643,8 +643,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             entity.ClienteCodSdi=dto.ClienteCodSdi;
             entity.Intestatario = dto.Intestatario;
             entity.IntestatarioCfPiva = dto.IntestatarioCfPiva;
+            entity.IntestatarioPiva = dto.IntestatarioPiva;
             entity.IntestatarioComune = dto.IntestatarioComune;
             entity.IntestatarioIndirizzo = dto.IntestatarioIndirizzo;
+            entity.IntestatarioIndirizzoOperativo = dto.IntestatarioIndirizzoOperativo;
 
             var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
             return true;
