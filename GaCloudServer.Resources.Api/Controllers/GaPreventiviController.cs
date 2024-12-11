@@ -772,7 +772,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 var condition = await _gaPreventiviService.GetPreventiviConditionTemplateByIdAsync(1);
                 var objectCondition = new PreventiviObjectConditionDto();
-                objectCondition.Descrizione = condition.Descrizione;
+                objectCondition.Descrizione = condition.Content;
                 objectCondition.ObjectId = response.Id;
                 objectCondition.Order = 1;
                 var responseCondition = await _gaPreventiviService.CreatePreventiviObjectConditionAsync(objectCondition);
