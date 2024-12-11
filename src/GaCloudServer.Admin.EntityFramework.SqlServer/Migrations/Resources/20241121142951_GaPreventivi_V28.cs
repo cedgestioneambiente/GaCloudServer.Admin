@@ -9,11 +9,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 9b02bcbe8b0814e5b135af3214f2ec726e113281
 
             migrationBuilder.CreateTable(
                 name: "GaPreventiviObjectHistories",
@@ -64,10 +60,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-<<<<<<< HEAD
-=======
-
->>>>>>> 9b02bcbe8b0814e5b135af3214f2ec726e113281
 
             migrationBuilder.DropTable(
                 name: "GaPreventiviObjectHistories");
