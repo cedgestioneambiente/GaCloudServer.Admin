@@ -141,6 +141,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Cdr
         public double PesoDestino { get; set; }
         public string Note { get; set; }
         public bool Inviata { get; set; }
+        public string CdrRichiestaId { get; set; }
     }
 
     public class CdrRichiesteViaggiDto : GenericPagedListDto<CdrRichiestaViaggioDto>

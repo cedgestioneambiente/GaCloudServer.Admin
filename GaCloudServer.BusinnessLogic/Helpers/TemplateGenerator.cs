@@ -1626,6 +1626,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 , dto.preventiviObjectPayout.BankAccount.Iban //24
                 , serviceTable //25
                 , conditionTable //26
+                , dto.preventiviObject.IntestatarioPiva //27
                 );
             return sb.ToString();
 

@@ -18,8 +18,10 @@
         public const string GaCdrMigration = @".\Scripts\Cdr\";
         public const string CREATE_ViewGaCdr = "CREATE_ViewGaCdr.sql";
         public const string CREATE_ViewGaCdr_V1 = "CREATE_ViewGaCdr_V1.sql";
+        public const string CREATE_ViewGaCdr_V2 = "CREATE_ViewGaCdr_V2.sql";
         public const string DROP_ViewGaCdr = "DROP_ViewGaCdr.sql";
         public const string DROP_ViewGaCdr_V1 = "DROP_ViewGaCdr_V1.sql";
+        public const string DROP_ViewGaCdr_V2 = "DROP_ViewGaCdr_V2.sql";
 
         //Contratti
         public const string GaContrattiMigration = @".\Scripts\Contratti\";
@@ -250,6 +252,8 @@
         public const string DROP_ViewGaPreventivi_V3 = "DROP_ViewGaPreventivi_V3.sql";
         public const string CREATE_ViewGaPreventivi_V4 = "CREATE_ViewGaPreventivi_V4.sql";
         public const string DROP_ViewGaPreventivi_V4 = "DROP_ViewGaPreventivi_V4.sql";
+        public const string CREATE_ViewGaPreventivi_V5 = "CREATE_ViewGaPreventivi_V5.sql";
+        public const string DROP_ViewGaPreventivi_V5 = "DROP_ViewGaPreventivi_V5.sql";
 
     }
 }

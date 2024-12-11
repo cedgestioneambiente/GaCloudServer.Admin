@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241202080825_GaCrm_V30")]
+    partial class GaCrm_V30
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -11423,9 +11425,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("IntestatarioIndirizzoOperativo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IntestatarioPiva")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -12401,9 +12400,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IntestatarioIndirizzo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IntestatarioIndirizzoOperativo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NoteCrm")

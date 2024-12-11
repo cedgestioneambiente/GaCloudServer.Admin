@@ -85,7 +85,9 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string Intestatario { get; set; }
         public string IntestatarioComune { get; set; }
         public string IntestatarioIndirizzo { get; set; }
+        public string? IntestatarioIndirizzoOperativo { get; set; }
         public string IntestatarioCfPiva { get; set; }
+        public string IntestatarioPiva { get; set; }
         public string Telefono { get; set; }
         public string Cellulare { get; set; }
         public string Email { get; set; }
@@ -334,7 +336,9 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string Intestatario { get; set; }
         public string IntestatarioComune { get; set; }
         public string IntestatarioIndirizzo { get; set; }
+        public string? IntestatarioIndirizzoOperativo { get; set; }
         public string IntestatarioCfPiva { get; set; }
+        public string IntestatarioPiva { get; set; }
         public string Telefono { get; set; }
         public string Cellulare { get; set; }
         public string Email { get; set; }

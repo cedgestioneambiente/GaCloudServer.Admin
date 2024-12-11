@@ -141,6 +141,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string Intestatario { get; set; }
         public string IntestatarioComune { get; set; }
         public string IntestatarioIndirizzo { get; set; }
+        public string? IntestatarioIndirizzoOperativo { get; set; }
         public string IntestatarioCfPiva { get; set; }
 
         public string? NumReclamo { get; set; }
