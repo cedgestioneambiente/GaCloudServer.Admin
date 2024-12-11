@@ -126,6 +126,9 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public bool? SendEmail { get; set; }
         public bool? SendNotify { get; set; }
 
+        //Campo note per passaggio note assegnazione
+        public string Note { get; set; }
+
         //Navigation Props
         public PreventiviObjectStatusDto Status { get; set; }
         public PreventiviObjectTypeDto Type { get; set; }

@@ -770,6 +770,13 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 var regHistory = await _gaPreventiviService.CreatePreventiviObjectHistoryAsync(history);
 
+                var condition = await _gaPreventiviService.GetPreventiviConditionTemplateByIdAsync(1);
+                var objectCondition = new PreventiviObjectConditionDto();
+                objectCondition.Descrizione = condition.Descrizione;
+                objectCondition.ObjectId = response.Id;
+                objectCondition.Order = 1;
+                var responseCondition = await _gaPreventiviService.CreatePreventiviObjectConditionAsync(objectCondition);
+
                 if (model.SendEmail.GetValueOrDefault())
                 {
 
@@ -929,6 +936,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 history.AssigneeDesc = model.AssigneeMail;
                 history.DateStart = DateTime.Now;
                 history.StatusId = model.StatusId;
+                history.Note = model.Note;
 
 
                 var regHistory = await _gaPreventiviService.CreatePreventiviObjectHistoryAsync(history);

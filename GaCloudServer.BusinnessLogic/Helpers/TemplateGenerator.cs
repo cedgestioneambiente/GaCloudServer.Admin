@@ -1551,10 +1551,11 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     sectionServices += "<tr>";
                     sectionServices += $"<th class=\"p-1\">{service.ServiceType.Descrizione} - {service.ServiceTypeDetail.Descrizione}</th>";
                     sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x=>x.Id==service.ServiceTypeDetail.GaugeId).FirstOrDefault().Descrizione}</th>";
-                    sectionServices += service.ShowAmountOnPrint? $"<td class=\"p-1\">Qta.: {service.Amount}</td>":$"<td style=\"border-left:none !imposrtant\"></td>";
+                    sectionServices += service.ShowAmountOnPrint? $"<td class=\"p-1\">Qta.: {service.Amount}</td>":$"<td style=\"border-left:none !important\"></td>";
                     sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(service.CostUnit)}</th>";
                     sectionServices += $"<td class=\"p-1 text-right\">{service.IvaCode.DescrizioneBreve}</th>";
-                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(service.CostTotal)}</th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(_objectTotalNoTax)}</th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(_objectTotalNoTax+_objectTotalTax)}</th>";
                     sectionServices += "</tr>";
 
                     
