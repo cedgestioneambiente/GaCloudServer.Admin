@@ -1059,16 +1059,31 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                var _object=await _gaPreventiviService.GetPreventiviObjectByIdAsync(id);
+                var _object = await _gaPreventiviService.GetPreventiviObjectByIdAsync(id);
                 var _objectInspection = await _gaPreventiviService.GetPreventiviObjectInspectionsAsync(new PageRequest() { Filter = $"objectId eq {id}" });
-                var _objectPayout = await _gaPreventiviService.GetPreventiviObjectPayoutsAsync(new PageRequest() { Filter = $"objectId eq {id}",Expand="Period,BankAccount" });
+                var _objectPayout = await _gaPreventiviService.GetPreventiviObjectPayoutsAsync(new PageRequest() { Filter = $"objectId eq {id}", Expand = "Period,BankAccount" });
                 var _objectSections = await _gaPreventiviService.GetPreventiviObjectSectionsAsync(new PageRequest() { Filter = $"objectId eq {id}", Expand = "Producer,Destination" });
                 var _objectService = await _gaPreventiviService.GetPreventiviObjectServicesAsync(new PageRequest() { Filter = $"objectId eq {id}", Expand = "ServiceType,ServiceTypeDetail,IvaCode" });
-                var _objectConditions = await _gaPreventiviService.GetPreventiviObjectConditionsAsync(new PageRequest() { Filter = $"objectId eq {id}"});
+                var _objectConditions = await _gaPreventiviService.GetPreventiviObjectConditionsAsync(new PageRequest() { Filter = $"objectId eq {id}" });
                 var _garbages = await _gaPreventiviService.GetPreventiviGarbagesAsync(new PageRequest());
                 var _gauges = await _commonService.GetCommonGaugesAsync(new PageRequest());
 
-                var dto = await generatePreventiviObjectTemplate(_object,
+                // Verifica la presenza di dati obbligatori
+                if (_object == null ||
+                    !_objectInspection.Items.Any() ||  // Usa .Any() per controllare se la lista è vuota
+                    !_objectPayout.Items.Any() ||
+                    !_objectSections.Items.Any() ||
+                    !_objectService.Items.Any() ||
+                    !_objectConditions.Items.Any() ||
+                    !_garbages.Items.Any() ||
+                    !_gauges.Items.Any())
+                {
+                    return BadRequest(new { Code = code.Status400BadRequest, Response = "Dati mancanti" });
+                }
+
+                // Genera il template con i dati
+                var dto = await generatePreventiviObjectTemplate(
+                    _object,
                     _objectInspection.Items.FirstOrDefault(),
                     _objectPayout.Items.FirstOrDefault(),
                     _objectSections.Items.ToList(),
@@ -1076,7 +1091,10 @@ namespace GaCloudServer.Resources.Api.Controllers
                     _objectConditions.Items.ToList(),
                     _garbages.Items.ToList(),
                     _gauges.Items.ToList(),
-                    "Preventivo");
+                    "Preventivo"
+                );
+
+                // Stampa il documento
                 var response = await _printService.Print("PreventiviObjectDefault", dto);
 
                 return Ok(new { Code = code.Status200OK, Response = response });
@@ -1085,9 +1103,11 @@ namespace GaCloudServer.Resources.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+                return BadRequest(new { Code = code.Status400BadRequest, Response = "Si è verificato un errore interno" });
             }
         }
+
+
         #endregion
 
         #endregion

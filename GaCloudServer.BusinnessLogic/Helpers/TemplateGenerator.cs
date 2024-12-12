@@ -1628,6 +1628,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 , serviceTable //25
                 , conditionTable //26
                 , dto.preventiviObject.IntestatarioPiva //27
+                , dto.preventiviObject.IntestatarioIndirizzoOperativo //28
                 );
             return sb.ToString();
 
