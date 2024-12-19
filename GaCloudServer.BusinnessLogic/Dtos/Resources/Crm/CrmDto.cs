@@ -171,9 +171,10 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
     public class CrmTicketAzioneDto : GenericFileDto
     {
         public long CrmTicketId { get; set; }
-        public string Descrizione { get; set; }
+        public string? Descrizione { get; set; }
         public DateTime Data {  get; set; }
         public bool Risposta { get; set; }
+        public long CrmTicketTipoAzioneId { get; set; }
     }
 
     public class CrmTicketAzioniDto : GenericPagedListDto<CrmTicketAzioneDto>

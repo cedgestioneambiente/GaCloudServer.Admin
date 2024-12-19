@@ -170,9 +170,10 @@ namespace GaCloudServer.Resources.Api.Dtos.Crm
     public class CrmTicketAzioneApiDto : GenericFileApiDto
     {
         public long CrmTicketId { get; set; }
-        public string Descrizione { get; set; }
+        public string? Descrizione { get; set; }
         public DateTime Data {  get; set; }
         public bool Risposta { get; set; }
+        public long CrmTicketTipoAzioneId { get; set; }
     }
 
     public class CrmTicketAzioniApiDto : GenericPagedListDto<CrmTicketAzioneApiDto>
