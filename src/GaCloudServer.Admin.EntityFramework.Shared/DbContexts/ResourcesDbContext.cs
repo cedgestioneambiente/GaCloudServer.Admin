@@ -625,6 +625,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #region Views
         public DbSet<ViewGaPreventiviAnticipi> ViewGaPreventiviAnticipi { get; set; }
         public DbSet<ViewGaPreventiviCrmTickets> ViewGaPreventiviCrmTickets { get; set; }
+        public DbSet<ViewGaPreventiviIsmartDocumenti> ViewGaPreventiviIsmartDocumenti { get; set; }
         #endregion
         #endregion
 
