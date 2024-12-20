@@ -14,19 +14,20 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         public string Numfat { get; set; }
         public DateTime Dtfat { get; set; }
         public string Tipdoc { get; set; }
-        public string Prgfat { get; set; }
+        public int Prgfat { get; set; }
         public string Codclised { get; set; }
         public string Controllata { get; set; }
         public string Ragfat { get; set; }
-        public string SplitPayment { get; set; }
+        public decimal SplitPayment { get; set; }
         public decimal Ritenute { get; set; }
         public decimal ImportoFatt { get; set; }
         public string FileXmlFattura { get; set; }
         public decimal Anticipo { get; set; }
-        public bool Archivio { get; set; }
+        public string Archivio { get; set; }
         public string PdfFile { get; set; }
         public string IdDocumento { get; set; }
         public DateTime DataDocCorr { get; set; }
+        public decimal Pagato { get; set; }
         public string NumItem { get; set; }
 
     }

@@ -299,6 +299,10 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         public  Task<bool> DeletePreventiviObjectHistoryAsync(long id);
         #endregion
 
+        #region Ismart Documenti
+        public Task<PageResponse<ViewGaPreventiviIsmartDocumenti>> GetViewPreventiviIsmartDocumentiAsync(PageRequest request);
+        #endregion
+
 
     }
 }

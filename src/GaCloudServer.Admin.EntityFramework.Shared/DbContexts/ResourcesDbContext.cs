@@ -1692,6 +1692,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
                 .HasKey(x => x.Id);
             });
 
+            builder.Entity<ViewGaPreventiviIsmartDocumenti>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewGaPreventiviIsmartDocumenti))
+                .HasKey(x => x.Id);
+            });
+
             #endregion
 
 

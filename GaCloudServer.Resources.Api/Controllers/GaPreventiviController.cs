@@ -3517,6 +3517,25 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #region Ismart Documenti
+        [HttpPost("GetViewPreventiviIsmartDocumentiAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetViewPreventiviIsmartDocumentiAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetViewPreventiviIsmartDocumentiAsync(request);
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
         #region Helpers
         private async Task<bool> sendMail(long id, string number,string mail, string type, string note,string creator,string creatorId)
         {

@@ -54,6 +54,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo;
 
         protected readonly IGenericRepository<ViewGaPreventiviAnticipi> viewGaPreventiviAnticipiRepo;
+        protected readonly IGenericRepository<ViewGaPreventiviIsmartDocumenti> viewGaPreventiviIsmartDocumentiRepo;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -97,8 +98,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo,
 
             IGenericRepository<ViewGaPreventiviAnticipi> viewGaPreventiviAnticipiRepo,
+            IGenericRepository<ViewGaPreventiviIsmartDocumenti> viewGaPreventiviIsmartDocumentiRepo,
 
-            
+
+
 
             IUnitOfWork unitOfWork)
         {
@@ -141,7 +144,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaPreventiviObjectHistoriesRepo= gaPreventiviObjectHistoriesRepo;
 
             this.viewGaPreventiviCrmTicketsRepo = viewGaPreventiviCrmTicketsRepo;
-
+            this.viewGaPreventiviIsmartDocumentiRepo = viewGaPreventiviIsmartDocumentiRepo;
 
             this.unitOfWork = unitOfWork;
         }
@@ -1621,6 +1624,15 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             return true;
         }
+        #endregion
+
+        #region Ismart Documenti
+        public async Task<PageResponse<ViewGaPreventiviIsmartDocumenti>> GetViewPreventiviIsmartDocumentiAsync(PageRequest request)
+        {
+            var view = await viewGaPreventiviIsmartDocumentiRepo.GetAsync(request);
+            return view;
+        }
+
         #endregion
 
         #region Functions

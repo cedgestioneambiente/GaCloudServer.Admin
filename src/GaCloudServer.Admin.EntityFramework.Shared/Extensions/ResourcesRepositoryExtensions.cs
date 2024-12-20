@@ -606,6 +606,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             services.AddTransient<IGenericRepository<ViewGaPreventiviAnticipi>, GenericRepository<TResourcesDbContext, ViewGaPreventiviAnticipi>>();
             services.AddTransient<IGenericRepository<ViewGaPreventiviCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaPreventiviCrmTickets>>();
+            services.AddTransient<IGenericRepository<ViewGaPreventiviIsmartDocumenti>, GenericRepository<TResourcesDbContext, ViewGaPreventiviIsmartDocumenti>>();
 
 
             #endregion
