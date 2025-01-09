@@ -601,6 +601,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PreventiviDestination>, GenericRepository<TResourcesDbContext, PreventiviDestination>>();
             services.AddTransient<IGenericRepository<PreventiviProducer>, GenericRepository<TResourcesDbContext, PreventiviProducer>>();
             services.AddTransient<IGenericRepository<PreventiviObjectHistory>, GenericRepository<TResourcesDbContext, PreventiviObjectHistory>>();
+            services.AddTransient<IGenericRepository<PreventiviPaymentTerm>, GenericRepository<TResourcesDbContext, PreventiviPaymentTerm>>();
 
 
 

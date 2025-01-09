@@ -299,6 +299,14 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         public  Task<bool> DeletePreventiviObjectHistoryAsync(long id);
         #endregion
 
+        #region PaymentTerms
+        public Task<PageResponse<PreventiviPaymentTermDto>> GetPreventiviPaymentTermsAsync(PageRequest request);
+        public Task<PreventiviPaymentTermDto> GetPreventiviPaymentTermByIdAsync(long id);
+        public Task<long> CreatePreventiviPaymentTermAsync(PreventiviPaymentTermDto model);
+        public Task<long> UpdatePreventiviPaymentTermAsync(long id, PreventiviPaymentTermDto model);
+        public Task<bool> DeletePreventiviPaymentTermAsync(long id);
+        #endregion
+
         #region Ismart Documenti
         public Task<PageResponse<ViewGaPreventiviIsmartDocumenti>> GetViewPreventiviIsmartDocumentiAsync(PageRequest request);
         #endregion

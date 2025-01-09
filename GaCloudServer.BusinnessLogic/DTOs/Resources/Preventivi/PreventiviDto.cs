@@ -270,17 +270,27 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string Descrizione { get; set; }
         public int DayValid { get; set; }
     }
+
+    public class PreventiviPaymentTermDto : GenericDto
+    {
+        public string Descrizione { get; set; }
+        public string Code { get; set; }
+    }
     public class PreventiviObjectPayoutDto : GenericDto
     {
         public long ObjectId { get; set; }
+        public long PaymentTermId { get; set; }
         public string Descrizione { get; set; }
         public DateTime DateValid { get; set; }
         public string Notes { get; set; }
         public long BankAccountId { get; set; }
         public long PeriodId { get; set; }
+        public double Deposit {  get; set; }
+        public string Note { get; set; }
 
         public PreventiviObjectPeriodDto Period { get; set; }
         public CommonBankAccountDto BankAccount { get; set; }
+        public PreventiviPaymentTermDto PaymentTerm { get; set; }
     }
     public class PreventiviObjectConditionDto:GenericDto
     {

@@ -31,6 +31,12 @@ namespace GaCloudServer.Resources.Api.ExceptionHandling
 
         private void ProcessException(ExceptionContext context)
         {
+            // Se il risultato è già impostato, preservalo
+            if (context.Result != null)
+            {
+                return;
+            }
+
             var problemDetails = new ValidationProblemDetails(context.ModelState)
             {
                 Title = "One or more model validation errors occurred.",

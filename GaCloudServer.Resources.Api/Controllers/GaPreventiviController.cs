@@ -1068,18 +1068,27 @@ namespace GaCloudServer.Resources.Api.Controllers
                 var _garbages = await _gaPreventiviService.GetPreventiviGarbagesAsync(new PageRequest());
                 var _gauges = await _commonService.GetCommonGaugesAsync(new PageRequest());
 
-                // Verifica la presenza di dati obbligatori
-                if (_object == null ||
-                    !_objectInspection.Items.Any() ||  // Usa .Any() per controllare se la lista è vuota
-                    !_objectPayout.Items.Any() ||
-                    !_objectSections.Items.Any() ||
-                    !_objectService.Items.Any() ||
-                    !_objectConditions.Items.Any() ||
-                    !_garbages.Items.Any() ||
-                    !_gauges.Items.Any())
+                // Validazione dei dati
+                var validationErrors = new List<string>();
+                if (_object == null) validationErrors.Add("Oggetto principale non definito.");
+                if (!_objectInspection.Items.Any()) validationErrors.Add("Sopralluogo mancante.");
+                if (!_objectPayout.Items.Any()) validationErrors.Add("Condizioni di pagamento mancanti.");
+                if (!_objectSections.Items.Any()) validationErrors.Add("Servizio mancante.");
+                if (!_objectService.Items.Any()) validationErrors.Add("Dettagli servizi mancanti.");
+                if (!_objectConditions.Items.Any()) validationErrors.Add("Condizioni contrattuali mancanti.");
+
+                if (validationErrors.Any())
                 {
-                    return BadRequest(new { Code = code.Status400BadRequest, Response = "Dati mancanti" });
+                    var res = new
+                    {
+                        Code = code.Status409Conflict, // Assicurati che sia un valore numerico
+                        Response = string.Join(" ; ", validationErrors.Where(x => x != null && x.Any()).ToList())
+                        
+                    };
+
+                    return Ok(res);
                 }
+
 
                 // Genera il template con i dati
                 var dto = await generatePreventiviObjectTemplate(
@@ -3517,6 +3526,98 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #region PaymentTerms
+        [HttpPost("GetPreventiviPaymentTermsAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviPaymentTermsAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviPaymentTermsAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviPaymentTermByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviPaymentTermByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviPaymentTermByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviPaymentTermAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviPaymentTermAsync(PreventiviPaymentTermDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviPaymentTermAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviPaymentTermAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviPaymentTermAsync(long id, [FromBody] PreventiviPaymentTermDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviPaymentTermAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviPaymentTermAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviPaymentTermAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviPaymentTermAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
+
         #region Ismart Documenti
         [HttpPost("GetViewPreventiviIsmartDocumentiAsync")]
         [ProducesResponseType(code.Status200OK)]
@@ -3535,6 +3636,8 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
         #endregion
+
+
 
         #region Helpers
         private async Task<bool> sendMail(long id, string number,string mail, string type, string note,string creator,string creatorId)

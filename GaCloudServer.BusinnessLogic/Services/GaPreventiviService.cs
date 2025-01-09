@@ -46,6 +46,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PreventiviProducer> gaPreventiviProducersRepo;
         protected readonly IGenericRepository<PreventiviDestination> gaPreventiviDestinationsRepo;
         protected readonly IGenericRepository<PreventiviObjectHistory> gaPreventiviObjectHistoriesRepo;
+        protected readonly IGenericRepository<PreventiviPaymentTerm> gaPreventiviPaymentTermsRepo;
 
 
         protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo;
@@ -95,6 +96,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<PreventiviObjectHistory> gaPreventiviObjectHistoriesRepo,
 
+            IGenericRepository<PreventiviPaymentTerm> gaPreventiviPaymentTermsRepo,
+
             IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo,
 
             IGenericRepository<ViewGaPreventiviAnticipi> viewGaPreventiviAnticipiRepo,
@@ -142,6 +145,9 @@ namespace GaCloudServer.BusinnessLogic.Services
             this.gaCrmEventComuniRepo = gaCrmEventComuniRepo;
 
             this.gaPreventiviObjectHistoriesRepo= gaPreventiviObjectHistoriesRepo;
+
+            this.gaPreventiviPaymentTermsRepo = gaPreventiviPaymentTermsRepo;
+
 
             this.viewGaPreventiviCrmTicketsRepo = viewGaPreventiviCrmTicketsRepo;
             this.viewGaPreventiviIsmartDocumentiRepo = viewGaPreventiviIsmartDocumentiRepo;
@@ -1624,6 +1630,45 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             return true;
         }
+        #endregion
+
+        #region PaymentTerms
+        public async Task<PageResponse<PreventiviPaymentTermDto>> GetPreventiviPaymentTermsAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviPaymentTermsRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviPaymentTermDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviPaymentTermDto> GetPreventiviPaymentTermByIdAsync(long id)
+        {
+            var entity = await gaPreventiviPaymentTermsRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviPaymentTermDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviPaymentTermAsync(PreventiviPaymentTermDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviPaymentTerm>();
+            var reponse = await gaPreventiviPaymentTermsRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviPaymentTermAsync(long id, PreventiviPaymentTermDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviPaymentTerm>();
+            var response = await gaPreventiviPaymentTermsRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviPaymentTermAsync(long id)
+        {
+            await gaPreventiviPaymentTermsRepo.DeleteAsync(id);
+
+            return true;
+        }
+
         #endregion
 
         #region Ismart Documenti
