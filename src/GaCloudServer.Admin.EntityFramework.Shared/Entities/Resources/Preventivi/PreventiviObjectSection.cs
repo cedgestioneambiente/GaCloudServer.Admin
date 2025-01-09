@@ -15,6 +15,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         [ForeignKey("Destination")]
         public long DestinationId { get; set; }
         public bool DestinationOnPrint { get; set; }
+        public bool TotalOnPrint { get; set; }
         public string Garbages { get; set; }
 
         public bool Accepted { get; set; }

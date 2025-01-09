@@ -168,6 +168,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public long StatusId { get; set; }
         public string Note { get; set; }
         public string NoteInspection { get; set; }
+        public bool Canceled { get; set; }
 
     }
     public class PreventiviObjectInspectionAttachmentDto : GenericFileDto
@@ -237,6 +238,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public long ProducerId { get; set; }
         public long DestinationId { get; set; }
         public bool DestinationOnPrint { get; set; }
+        public bool TotalOnPrint { get; set; }
         public string Garbages { get; set; }
         public bool Accepted { get; set; }
 
@@ -389,6 +391,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string CreatorName { get; set; }
         public string CreatorId { get; set; }
         public string Note {  get; set; }
+        public string NoteInspection { get; set; }
 
         public bool? SendManager { get; set; }
         public bool? SendInspector { get; set;}

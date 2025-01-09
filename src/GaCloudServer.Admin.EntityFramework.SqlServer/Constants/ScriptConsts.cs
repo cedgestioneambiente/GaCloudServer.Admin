@@ -236,6 +236,8 @@
         public const string GaDispositivi = @".\Scripts\Dispositivi\";
         public const string CREATE_ViewGaDispositivi = "CREATE_ViewGaDispositivi.sql";
         public const string DROP_ViewGaDispositivi = "DROP_ViewGaDispositivi.sql";
+        public const string CREATE_ViewGaDispositivi_V2 = "CREATE_ViewGaDispositivi_V2.sql";
+        public const string DROP_ViewGaDispositivi_V2 = "DROP_ViewGaDispositivi_V2.sql";
 
         //SmartCity
         public const string GaSmartCity = @".\Scripts\SmartCity\";

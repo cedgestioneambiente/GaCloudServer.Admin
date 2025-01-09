@@ -10,6 +10,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Disposit
 		public long PersonaleDipendenteId { get; set; }
 		public DateTime DataConsegna { get; set; }
 		public DateTime? DataRitiro { get; set; }
+		public string Note { get; set; }
 
 		public DispositiviStock DispositiviStock { get; set; }
 		public PersonaleDipendente PersonaleDipendente { get; set; }

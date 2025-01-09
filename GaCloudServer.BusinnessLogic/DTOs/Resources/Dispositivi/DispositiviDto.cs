@@ -119,8 +119,9 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Dispositivi
         public long PersonaleDipendenteId { get; set; }
         public DateTime DataConsegna { get; set; }
         public DateTime? DataRitiro { get; set; }
+        public string? Note { get; set; }
 
-        
+
     }
 
     public class DispositiviOnDipendentiDto : GenericPagedListDto<DispositiviOnDipendenteDto>

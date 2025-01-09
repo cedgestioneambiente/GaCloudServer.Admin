@@ -19,7 +19,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
 
         public string Note {  get; set; }
         public string NoteInspection { get; set; }
-       
+        public bool Canceled { get; set; }
+
 
         //Navigation Props
         public PreventiviObject Object { get; set; }
