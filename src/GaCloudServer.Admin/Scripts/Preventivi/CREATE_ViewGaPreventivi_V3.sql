@@ -40,7 +40,7 @@ INNER JOIN IdentityServerAdmin.dbo.Roles G ON A.Assignee=G.Id
 LEFT OUTER JOIN GaPreventiviObjects H ON H.CrmTicketId=A.Id
 LEFT OUTER JOIN GaPreventiviObjectStatuses I ON H.StatusId=I.Id
 LEFT OUTER JOIN IdentityServerAdmin.dbo.Users L ON H.AssigneeId=L.Id
-WHERE G.Name='AppCrmCommerciale'
+WHERE G.Name='AppCrmCommerciale' OR D.Commerciale=1
 GO
 
 

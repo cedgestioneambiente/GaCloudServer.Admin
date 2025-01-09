@@ -44,7 +44,7 @@ LEFT OUTER JOIN GaPreventiviObjects H ON H.CrmTicketId=A.Id
 LEFT OUTER JOIN GaPreventiviObjectStatuses I ON H.StatusId=I.Id
 LEFT OUTER JOIN IdentityServerAdmin.dbo.Users L ON H.AssigneeId=L.Id
 LEFT OUTER JOIN IdentityServerAdmin.dbo.Users M ON A.Creator=M.Id
-WHERE G.Name='AppCrmCommerciale'
+WHERE G.Name='AppCrmCommerciale' OR D.Commerciale=1
 GO
 
 
