@@ -781,14 +781,14 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
 
                     #region Assignee Communication
-                    await sendMail(response.Id, response.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, model.CreatorId);
+                    await sendMail(response.Id, response.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, "", model.CreatorId);
                     if (model.SendNotify.GetValueOrDefault()) { await sendNotification(response.Id, response.ObjectNumber, model.AssigneeId,TextConsts.objectManage); }
 
                     #endregion
 
                     if (model.Inspection == 2)
                     {
-                        await sendMail(response.Id, response.ObjectNumber, model.InspectionAssigneeMail, TextConsts.inspectionManage, model.NoteCrm, model.CreatorName, model.CreatorId);
+                        await sendMail(response.Id, response.ObjectNumber, model.InspectionAssigneeMail, TextConsts.inspectionManage, model.NoteCrm, model.CreatorName, "", model.CreatorId);
                         if (model.SendNotify.GetValueOrDefault()) { await sendNotification(response.Id, response.ObjectNumber, model.InspectionAssigneeId,TextConsts.inspectionManage); }
 
                     }
@@ -943,7 +943,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
 
 
-                if (model.SendEmail.GetValueOrDefault()) { await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, model.CreatorId); }
+                if (model.SendEmail.GetValueOrDefault()) { await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, "", model.CreatorId); }
                 if (model.SendNotify.GetValueOrDefault()) { await sendNotification(model.Id, model.ObjectNumber, model.AssigneeId, TextConsts.objectManage); }
 
 
@@ -1666,13 +1666,13 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 if (model.SendManager.GetValueOrDefault())
                 {
-                    await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.inspectionUpdated, model.Note, model.CreatorName, model.CreatorId);
+                    await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.inspectionUpdated, model.Note, model.NoteInspection, model.CreatorName, model.CreatorId);
                     await sendNotification(model.Id, model.ObjectNumber, model.AssigneeId, TextConsts.inspectionUpdated);
                 }
 
                 if (model.SendInspector.GetValueOrDefault())
                 {
-                    await sendMail(model.Id, model.ObjectNumber, model.InspectionAssigneeMail, TextConsts.inspectionUpdated, model.Note, model.CreatorName, model.CreatorId);
+                    await sendMail(model.Id, model.ObjectNumber, model.InspectionAssigneeMail, TextConsts.inspectionUpdated, model.Note, model.NoteInspection, model.CreatorName, model.CreatorId);
                     await sendNotification(model.Id, model.ObjectNumber, model.InspectionAssigneeId, TextConsts.inspectionUpdated);
                 }
 
@@ -2103,7 +2103,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 await _gaPreventiviService.RequestPreventiviSubjectFinancialUnlockAsync(model);
-                await sendMail(model.Id,model.ObjectNumber, "federico.laigueglia@gestioneambiente.net", TextConsts.financialUnlockRequest,"", model.CreatorName, model.CreatorId);
+                await sendMail(model.Id,model.ObjectNumber, "federico.laigueglia@gestioneambiente.net", TextConsts.financialUnlockRequest,"", model.CreatorName,"",model.CreatorId);
 
                 return Ok(new { Code = code.Status204NoContent, Response = true });
             }
@@ -2122,7 +2122,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 await _gaPreventiviService.ExecPreventiviSubjectFinancialUnlockAsync(model);
-                await sendMail(model.Id,model.ObjectNumber, model.AssigneeMail, TextConsts.financialUnlockExec, "", model.CreatorName, model.CreatorId);
+                await sendMail(model.Id,model.ObjectNumber, model.AssigneeMail, TextConsts.financialUnlockExec, "", model.CreatorName, "", model.CreatorId);
 
                 return Ok(new { Code = code.Status204NoContent, Response = true });
             }
@@ -2141,7 +2141,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 await _gaPreventiviService.ExecPreventiviSubjectFinancialLockAsync(model);
-                await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.financialLockExec, "", model.CreatorName, model.CreatorId);
+                await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.financialLockExec, "", model.CreatorName, "", model.CreatorId);
 
                 return Ok(new { Code = code.Status204NoContent, Response = true });
             }
@@ -3537,7 +3537,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         #endregion
 
         #region Helpers
-        private async Task<bool> sendMail(long id, string number,string mail, string type, string note,string creator,string creatorId)
+        private async Task<bool> sendMail(long id, string number,string mail, string type, string note, string noteIspection,string creator,string creatorId)
         {
             var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Preventivi, AppConsts.PreventiviInfo);
             var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
@@ -3551,7 +3551,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 MailingTo = mail,
                 MailCc = "",
                 Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Preventivi),
-                Content = HtmlHelpers.GenerateText(type+"<br>Note:" + note + "<br>" + creator + ""),
+                Content = HtmlHelpers.GenerateText(type+"<br>Note Preliminari: " + note + "<br>"  +"Note Sopralluogo: " + noteIspection + "<br>" + creator + ""),
                 Link = true,
                 LinkHref = String.Format("https://cloud.gestioneambiente.net/preventivi/tab/object/{0}", id),
                 LinkDescription = "Vai al preventivo",

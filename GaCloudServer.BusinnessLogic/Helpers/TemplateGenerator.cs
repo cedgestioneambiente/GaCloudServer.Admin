@@ -1657,14 +1657,25 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 , dto.preventiviObjectInspection.DateInspection
                 , dto.preventiviObjectInspection.DateExecution
                 , dto.preventiviObjectInspection.AssigneeId
-                , dto.preventiviObject.TypeDesc
-                , dto.preventiviObject.Cliente
-                , dto.preventiviObject.CodCliente
-                , dto.preventiviObject.IndirizzoSede
-                , dto.preventiviObject.IndirizzoFattura
-                , $"{dto.preventiviObject.ClienteIndirizzo} - {dto.preventiviObject.ClienteComune}"
-                , dto.preventiviObject.ClienteCfPiva
-                , dto.preventiviObject.CodCliente
+                , dto.preventiviObject.TypeDesc //4
+                , dto.preventiviObject.Cliente //5
+                , dto.preventiviObject.CodCliente //6
+                , dto.preventiviObject.IndirizzoSede //7
+                , dto.preventiviObject.IndirizzoFattura //8
+                , $"{dto.preventiviObject.ClienteIndirizzo} - {dto.preventiviObject.ClienteComune}" //9
+                , dto.preventiviObject.ClienteCfPiva //10
+                , dto.preventiviObject.CodCliente // 11
+                , dto.preventiviObject.Cellulare //12
+                , dto.preventiviObject.Telefono //13
+                , dto.preventiviObject.Intestatario //14
+                , dto.preventiviObject.IntestatarioCfPiva //15
+                , dto.preventiviObject.IntestatarioPiva //16
+                , $"{dto.preventiviObject.IntestatarioIndirizzo} - {dto.preventiviObject.IntestatarioComune}" //17
+                , dto.preventiviObject.Email //18
+                , dto.preventiviObject.EmailPec //19
+                , dto.preventiviObject.IntestatarioIndirizzoOperativo //20
+
+
                 );
             return sb.ToString();
 
