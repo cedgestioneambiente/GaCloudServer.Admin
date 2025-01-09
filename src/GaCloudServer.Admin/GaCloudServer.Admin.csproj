@@ -132,6 +132,12 @@
 	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Dispositivi\CREATE_ViewGaDispositivi_V2.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Dispositivi\DROP_ViewGaDispositivi_V2.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi_V6.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

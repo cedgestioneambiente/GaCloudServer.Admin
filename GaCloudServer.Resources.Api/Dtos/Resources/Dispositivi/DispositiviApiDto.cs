@@ -119,6 +119,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Dispositivi
         public long PersonaleDipendenteId { get; set; }
         public DateTime DataConsegna { get; set; }
         public DateTime? DataRitiro { get; set; }
+        public string? Note { get; set; }
     }
 
     public class DispositiviOnDipendentiApiDto : GenericPagedListApiDto<DispositiviOnDipendenteApiDto>
@@ -152,6 +153,7 @@ namespace GaCloudServer.Resources.Api.Dtos.Dispositivi
         public string? Numero { get; set; }
         public string? Note { get; set; }
         public long PersonaleDipendenteId { get; set; }
+
     }
 
     public class DispositiviModuliApiDto : GenericPagedListApiDto<DispositiviModuloApiDto>
