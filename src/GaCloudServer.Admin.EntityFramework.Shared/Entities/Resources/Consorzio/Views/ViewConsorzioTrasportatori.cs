@@ -9,6 +9,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Consorzi
         public string Indirizzo { get; set; }
         public string CfPiva { get; set; }
         public string IndirizzoEsteso { get; set; }
+        public long? ConsorzioInternalId { get; set; }
 
     }
 }
