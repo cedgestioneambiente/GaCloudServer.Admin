@@ -50,6 +50,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
         public long ConsorzioComuneId { get; set; }
         public string Indirizzo { get; set; }
         public string CfPiva { get; set; }
+        public long? ConsorzioInternalId { get; set; }
     }
 
     public class ConsorzioDestinatariDto : GenericPagedListDto<ConsorzioDestinatarioDto>
@@ -64,6 +65,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
         public long ConsorzioComuneId { get; set; }
         public string Indirizzo { get; set; }
         public string CfPiva { get; set; }
+        public long? ConsorzioInternalId { get; set; }
     }
 
     public class ConsorzioProduttoriDto : GenericPagedListDto<ConsorzioProduttoreDto>
@@ -78,6 +80,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio
         public long ConsorzioComuneId { get; set; }
         public string Indirizzo { get; set; }
         public string CfPiva { get; set; }
+        public long? ConsorzioInternalId { get; set; }
     }
 
     public class ConsorzioTrasportatoriDto : GenericPagedListDto<ConsorzioTrasportatoreDto>

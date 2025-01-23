@@ -2866,6 +2866,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<long>("ConsorzioComuneId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("ConsorzioInternalId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -3043,6 +3046,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ConsorzioComuneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ConsorzioInternalId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -3246,6 +3252,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ConsorzioComuneId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ConsorzioInternalId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("CreatedAt")

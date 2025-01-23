@@ -14,8 +14,10 @@ using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Shared;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System;
 using blfh = GaCloudServer.BusinnessLogic.Helpers.FileHelper;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -27,18 +29,21 @@ namespace GaCloudServer.Resources.Api.Controllers
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
     [Authorize(Policy = AuthorizationConsts.AdminOrUserPolicy)]
-    public class GaPreventiviController : Controller
+    public class GaPreventiviController<TUser,TKey> : ControllerBase
+        where TUser: IdentityUser<TKey>
+        where TKey : IEquatable<TKey>
     {
         private readonly string basePath = "GaCloud/Preventivi";
 
         private readonly IGaPreventiviService _gaPreventiviService;
         private readonly ICommonService _commonService;
-        private readonly ILogger<GaPreventiviController> _logger;
+        private readonly ILogger<GaPreventiviController<TUser,TKey>> _logger;
         private readonly IFileService _fileService;
         private readonly IMailService _mailService;
         private readonly IPrintService _printService;
         private readonly INotificationService _notificationService;
         private readonly IQueryBuilderService _queryBuilderService;
+        private readonly UserManager<TUser> _userManager;
 
         public GaPreventiviController(
             IGaPreventiviService gaPreventiviService
@@ -48,7 +53,8 @@ namespace GaCloudServer.Resources.Api.Controllers
             , IPrintService printService
             , INotificationService notificationService
             , IQueryBuilderService queryBuilderService
-            , ILogger<GaPreventiviController> logger)
+            , UserManager<TUser> userManager
+            , ILogger<GaPreventiviController<TUser,TKey>> logger)
         {
 
             _gaPreventiviService = gaPreventiviService;
@@ -58,6 +64,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             _printService = printService;
             _notificationService = notificationService;
             _queryBuilderService = queryBuilderService;
+            _userManager = userManager;
             _logger = logger;
             
         }
@@ -1703,10 +1710,14 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 var _object = await _gaPreventiviService.GetPreventiviObjectByIdAsync(id);
-                var _objectInspection = await _gaPreventiviService.GetPreventiviObjectInspectionsAsync(new PageRequest() { Filter = $"objectId eq {id}" }); 
+                var _objectInspection = _gaPreventiviService.GetPreventiviObjectInspectionsAsync(new PageRequest() { Filter = $"objectId eq {id}" }).Result.Items.FirstOrDefault();
+
+                var user = await _userManager.FindByIdAsync(_objectInspection.AssigneeId);
+
+                _objectInspection.AssigneeId = user.NormalizedUserName.Replace(".", " ");
 
                 var dto = await generatePreventiviObjectTemplate(_object,
-                    _objectInspection.Items.FirstOrDefault(),
+                    _objectInspection,
                     null,
                     null,
                     null,

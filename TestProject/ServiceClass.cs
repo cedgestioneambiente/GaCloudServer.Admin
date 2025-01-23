@@ -27,9 +27,8 @@ namespace TestProject
             // Dati di test hardcoded
             var aziendePredefinite = new[]
             {
-                new { Id=1, CfPiva = "1492290067", Indirizzo = "EX S.S. 35 DEI GIOVI 42, 15057 TORTONA (AL)", Descrizione = "GESTIONE AMBIENTE S.p.A.", ComuneId = 1196 },
-                new { Id=2,CfPiva = "03083200109", Indirizzo = "STRADA SAVONESA, 8 - 15057 TORTONA (AL)", Descrizione = "RELIFE RECYCLING S.P.L.", ComuneId = 1196 },
-                new { Id=3,CfPiva = "03083200109", Indirizzo = "STRADA SAVONESA, 8 - 15057 TORTONA (AL)", Descrizione = "RELIFE RECYCLING S.R.L.", ComuneId = 1196 }
+                new { Id=1, CfPiva = "00443150065", Indirizzo = "VIA ROMA, 81 - 15050 MOLINO DEI TORTI (AL)", Descrizione = "COMUNE DI MOLINO DEI TORTI", ComuneId = 945 },
+               
             };
 
             PercentValidateDto bestMatch = new PercentValidateDto { foundId = -1, percent = 0, Message = "Nessun soggetto simile trovato",Subject="" };
@@ -113,6 +112,53 @@ namespace TestProject
             }
 
             return d[n, m];
+        }
+
+        public double CalculateSimilarityV2(
+        string ragioneSociale1, string indirizzo1, string piva1, int comuneId1,
+        string ragioneSociale2, string indirizzo2, string piva2, int comuneId2)
+        {
+            // Funzione per calcolare la similitudine tra stringhe
+            double StringSimilarity(string s1, string s2)
+            {
+                // Normalizzazione e confronto case insensitive
+                s1 = s1?.ToLowerInvariant().Trim() ?? string.Empty;
+                s2 = s2?.ToLowerInvariant().Trim() ?? string.Empty;
+
+                // Se sono identiche, massimo punteggio
+                if (s1 == s2) return 1.0;
+
+                // Calcolo approssimativo usando il numero di caratteri comuni
+                int commonChars = 0;
+                int maxLength = Math.Max(s1.Length, s2.Length);
+
+                foreach (char c in s1)
+                    if (s2.Contains(c)) commonChars++;
+
+                return (double)commonChars / maxLength;
+            }
+
+            // Confronto dei campi
+            double ragioneSocialeScore = StringSimilarity(ragioneSociale1, ragioneSociale2);
+            double indirizzoScore = StringSimilarity(indirizzo1, indirizzo2);
+            double pivaScore = piva1 == piva2 ? 1.0 : 0.0;
+            double comuneIdScore = comuneId1 == comuneId2 ? 1.0 : 0.0;
+
+            // Pesi per ogni campo (aggiusta in base alle priorità)
+            double ragioneSocialeWeight = 0.4;
+            double indirizzoWeight = 0.3;
+            double pivaWeight = 0.2;
+            double comuneIdWeight = 0.1;
+
+            // Calcolo della percentuale finale
+            double similarity =
+                (ragioneSocialeScore * ragioneSocialeWeight) +
+                (indirizzoScore * indirizzoWeight) +
+                (pivaScore * pivaWeight) +
+                (comuneIdScore * comuneIdWeight);
+
+            // Converti in percentuale
+            return similarity * 100;
         }
     }
 }

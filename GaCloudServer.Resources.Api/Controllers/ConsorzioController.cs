@@ -7,7 +7,6 @@ using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Extensions;
 using GaCloudServer.BusinnessLogic.Hub;
 using GaCloudServer.BusinnessLogic.Hub.Interfaces;
-using GaCloudServer.BusinnessLogic.Services;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.Dtos.Custom;
@@ -19,7 +18,6 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using OfficeOpenXml.Packaging.Ionic.Zlib;
-using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Dtos.Log;
 using System.Data;
 using System.Reflection;
 using System.Text;
@@ -667,6 +665,28 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpPut("SetConsorzioProduttoreInternalIdAsync/{internalId}")]
+        public async Task<ActionResult<ApiResponse>> SetConsorzioProduttoreInternalIdAsync([FromRoute] long internalId,[FromBody] ConsorzioProduttoreApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioProduttoreDto, ConsorzioProduttoreApiDto>();
+                var response = await _consorzioService.SetConsorzioProduttoreInternalIdAsync(dto,internalId);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
         #endregion
 
         #region Views
@@ -839,6 +859,29 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpPut("SetConsorzioDestinatarioInternalIdAsync/{internalId}")]
+        public async Task<ActionResult<ApiResponse>> SetConsorzioDestinatarioInternalIdAsync([FromRoute] long internalId, [FromBody] ConsorzioDestinatarioApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioDestinatarioDto, ConsorzioDestinatarioApiDto>();
+                var response = await _consorzioService.SetConsorzioDestinatarioInternalIdAsync(dto, internalId);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #region Views
@@ -1011,6 +1054,29 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpPut("SetConsorzioTrasportatoreInternalIdAsync/{internalId}")]
+        public async Task<ActionResult<ApiResponse>> SetConsorzioTrasportatoreInternalIdAsync([FromRoute] long internalId, [FromBody] ConsorzioTrasportatoreApiDto apiDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new ApiProblemDetailsException(ModelState);
+                }
+                var dto = apiDto.ToDto<ConsorzioTrasportatoreDto, ConsorzioTrasportatoreApiDto>();
+                var response = await _consorzioService.SetConsorzioTrasportatoreInternalIdAsync(dto, internalId);
+
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
         #endregion
 
         #region Views
@@ -2331,11 +2397,11 @@ namespace GaCloudServer.Resources.Api.Controllers
                                 dto.PRODUTTORE_CFPIVA,
                                 dto.PRODUTTORE_INDIRIZZO, dto.PRODUTTORE_RAGSO, comuneProd.Id);
 
-                            if (joinSimilar && validatePercent.percent>0.65)
+                            if (joinSimilar && validatePercent.percent>0.60)
                             {
                                 item.PRODUTTORE_RAGSO = validatePercent.obj.Descrizione;
                                 item.PRODUTTORE_INDIRIZZO = validatePercent.obj.Indirizzo;
-                                operationList.Add("Produttore sostituito per similitudine in base alle impostazioni di import. ");
+                                operationList.Add($"Produttore sostituito per similitudine in base alle impostazioni di import. (% similitudine{validatePercent.percent})");
                             }
                             else
                             {
@@ -2360,7 +2426,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                                         else
                                         {
                                             listProd = await _consorzioService.GetConsorzioProduttoriAsync(1, 0);
-                                            operationList.Add("Il Produttore non presente sul database è stato aggiunto automaticamente. ");
+                                            operationList.Add($"Il Produttore non presente sul database è stato aggiunto automaticamente. (similitudine migliore %{validatePercent.percent})");
                                         }
                                     }
                                     catch (Exception ex)
@@ -2383,11 +2449,11 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                             var validatePercent = await _consorzioService.ValidatePercentConsorzioDestinatarioV2Async(0, dto.DESTINATARIO_CFPIVA, dto.DESTINATARIO_INDIRIZZO, dto.DESTINATARIO_RAGSO, comuneDest.Id);
 
-                            if (joinSimilar && validatePercent.percent > 0.65)
+                            if (joinSimilar && validatePercent.percent > 0.60)
                             {
                                 item.DESTINATARIO_RAGSO = validatePercent.obj.Descrizione;
                                 item.DESTINATARIO_INDIRIZZO = validatePercent.obj.Indirizzo;
-                                operationList.Add("Destinatario sostituito per similitudine in base alle impostazioni di import. ");
+                                operationList.Add($"Destinatario sostituito per similitudine in base alle impostazioni di import. (% similitudine{validatePercent.percent})");
                             }
                             else
                             {
@@ -2412,7 +2478,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                                         else
                                         {
                                             listDest = await _consorzioService.GetConsorzioDestinatariAsync(1, 0);
-                                            operationList.Add("Il Destinatario non presente sul database è stato aggiunto automaticamente. ");
+                                            operationList.Add($"Il Destinatario non presente sul database è stato aggiunto automaticamente. (similitudine migliore %{validatePercent.percent})");
                                         }
                                     }
                                     catch (Exception ex)
@@ -2433,11 +2499,11 @@ namespace GaCloudServer.Resources.Api.Controllers
                         {
                             var validatePercent = await _consorzioService.ValidatePercentConsorzioTrasportatoreV2Async(0, dto.TRASPORTATORE_CFPIVA, dto.TRASPORTATORE_INDIRIZZO, dto.TRASPORTATORE_RAGSO, comuneTrasp.Id);
 
-                            if (joinSimilar && validatePercent.percent > 0.65)
+                            if (joinSimilar && validatePercent.percent > 0.60)
                             {
                                 item.TRASPORTATORE_RAGSO = validatePercent.obj.Descrizione;
                                 item.TRASPORTATORE_INDIRIZZO = validatePercent.obj.Indirizzo;
-                                operationList.Add("Trasportatore sostituito per similitudine in base alle impostazioni di import. ");
+                                operationList.Add($"Trasportatore sostituito per similitudine in base alle impostazioni di import. (% similitudine {validatePercent.percent})");
                             }
                             else
                             {
@@ -2462,7 +2528,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                                         else
                                         {
                                             listTrasp = await _consorzioService.GetConsorzioTrasportatoriAsync(1, 0);
-                                            operationList.Add("Il Trasportatore non presente sul database è stato aggiunto automaticamente. ");
+                                            operationList.Add($"Il Trasportatore non presente sul database è stato aggiunto automaticamente. (similitudine migliore %{validatePercent.percent})");
                                         }
                                     }
                                     catch (Exception ex)

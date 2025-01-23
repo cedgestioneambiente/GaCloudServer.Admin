@@ -40,7 +40,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         private readonly double indirizzoWeight = 0.5;
         private readonly double ragSoWeight = 0.5;
-        private readonly double similarityThreshold = 0.65;
+        private readonly double similarityThreshold = 0.60;
 
         protected readonly IUnitOfWork unitOfWork;
 
@@ -410,6 +410,8 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
+
+
         public async Task<bool> DeleteConsorzioProduttoreAsync(long id)
         {
             var entity = await consorzioProduttoriRepo.GetByIdAsync(id);
@@ -580,6 +582,17 @@ namespace GaCloudServer.BusinnessLogic.Services
                 await SaveChanges();
                 return true;
             }
+
+        }
+
+        public async Task<long> SetConsorzioProduttoreInternalIdAsync(ConsorzioProduttoreDto dto, long internalId)
+        {
+            var entity = dto.ToEntity<ConsorzioProduttore, ConsorzioProduttoreDto>();
+            entity.ConsorzioInternalId = internalId;
+            consorzioProduttoriRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
 
         }
         #endregion
@@ -800,6 +813,17 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
         }
+
+        public async Task<long> SetConsorzioDestinatarioInternalIdAsync(ConsorzioDestinatarioDto dto, long internalId)
+        {
+            var entity = dto.ToEntity<ConsorzioDestinatario, ConsorzioDestinatarioDto>();
+            entity.ConsorzioInternalId = internalId;
+            consorzioDestinatariRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
+
+        }
         #endregion
 
         #region Views
@@ -1014,6 +1038,17 @@ namespace GaCloudServer.BusinnessLogic.Services
                 await SaveChanges();
                 return true;
             }
+
+        }
+
+        public async Task<long> SetConsorzioTrasportatoreInternalIdAsync(ConsorzioTrasportatoreDto dto, long internalId)
+        {
+            var entity = dto.ToEntity<ConsorzioTrasportatore, ConsorzioTrasportatoreDto>();
+            entity.ConsorzioInternalId = internalId;
+            consorzioTrasportatoriRepo.Update(entity);
+            await SaveChanges();
+
+            return entity.Id;
 
         }
         #endregion

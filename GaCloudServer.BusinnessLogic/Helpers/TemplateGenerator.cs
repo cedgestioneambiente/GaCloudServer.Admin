@@ -1517,10 +1517,19 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             double objectTotalNoTax = 0.0;
             double objectTax = 0.0;
 
+            double sectionTotal = 0.0;
+            double sectionTotalNoTax = 0.0;
+            double sectionTax = 0.0;
+
             #region Section Builder
 
             foreach (var section in dto.preventiviObjectSections)
             {
+
+                sectionTotal = 0.0;
+                sectionTotalNoTax = 0.0;
+                sectionTax = 0.0;
+
                 string sectionHeader = "<div class=\"border\" style=\"border-radius:4px;margin-top:4px;padding:4px\">";
                 long[] garbages = (section.Garbages == null || section.Garbages=="") ? new long[0] : section.Garbages.Split(",").Select(long.Parse).ToArray();
 
@@ -1533,9 +1542,11 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     sectionHeader += $"<div class=\"w-100\">{garbage}</div>";
                 }
 
-                sectionHeader +=section.DestinationOnPrint && !section.Destination.Ignore? $"<div><b>Destinatario</b> {section.Destination.Descrizione}</div>":"";
+                sectionHeader +=section.DestinationOnPrint && !section.Destination.Ignore? $"<div><b>Destinatario</b> {section.Destination.Descrizione} - {section.Destination.Indirizzo}</div>":"";
                 sectionHeader += "</div>";
 
+
+                
 
                 var sectionServices = "<table class=\"table table-bordered\"><tbody>";
                 foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
@@ -1548,8 +1559,26 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     objectTotalNoTax += _objectTotalNoTax;
                     objectTotal += _objectTotal;
 
+                    sectionTax += _objectTotalTax;
+                    sectionTotalNoTax += _objectTotalNoTax;
+                    sectionTotal += _objectTotal;
+
                     sectionServices += "<tr>";
-                    sectionServices += $"<th class=\"p-1\">{service.ServiceType.Descrizione} - {service.ServiceTypeDetail.Descrizione}</th>";
+                    sectionServices += $"<td class=\"p-1\">{service.ServiceType.Descrizione} - {service.ServiceTypeDetail.Descrizione}";
+
+                    if (!string.IsNullOrEmpty(service.NotesExtra))
+                    {
+                        sectionServices += $"<br> - {service.NotesExtra}";
+                    }
+
+                    if (!string.IsNullOrEmpty(service.AnalysisDesc))
+                    {
+                        sectionServices += $"<br> - {service.AnalysisDesc}";
+                    }
+
+                    sectionServices += "</td>";
+
+
                     sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x=>x.Id==service.ServiceTypeDetail.GaugeId).FirstOrDefault().Descrizione}</th>";
                     sectionServices += service.ShowAmountOnPrint? $"<td class=\"p-1\">Qta.: {service.Amount}</td>":$"<td style=\"border-left:none !important\"></td>";
                     sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(service.CostUnit)}</th>";
@@ -1558,8 +1587,21 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(_objectTotalNoTax+_objectTotalTax)}</th>";
                     sectionServices += "</tr>";
 
-                    
+                }
 
+                
+
+                if (section.TotalOnPrint)
+                {
+                    sectionServices+= "<tr>";
+                    sectionServices+= $"<td class=\"p-1\">TOTALE</th>";
+                    sectionServices += "<td class=\"p-1 text-right\"></th>";
+                    sectionServices += "<td class=\"p-1 text-right\"></th>";
+                    sectionServices += "<td class=\"p-1 text-right\"></th>";
+                    sectionServices += "<td class=\"p-1 text-right\"></th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(sectionTotalNoTax)}</th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(sectionTotalNoTax + sectionTax)}</th>";
+                    sectionServices += "</tr>";
                 }
 
                 sectionServices += "</tbody></table>";
