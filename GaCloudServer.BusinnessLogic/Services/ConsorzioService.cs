@@ -588,7 +588,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> SetConsorzioProduttoreInternalIdAsync(ConsorzioProduttoreDto dto, long internalId)
         {
             var entity = dto.ToEntity<ConsorzioProduttore, ConsorzioProduttoreDto>();
-            entity.ConsorzioInternalId = internalId;
+            entity.ConsorzioInternalId = internalId==0?null:internalId;
             consorzioProduttoriRepo.Update(entity);
             await SaveChanges();
 
@@ -817,7 +817,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> SetConsorzioDestinatarioInternalIdAsync(ConsorzioDestinatarioDto dto, long internalId)
         {
             var entity = dto.ToEntity<ConsorzioDestinatario, ConsorzioDestinatarioDto>();
-            entity.ConsorzioInternalId = internalId;
+            entity.ConsorzioInternalId = internalId == 0 ? null : internalId;
             consorzioDestinatariRepo.Update(entity);
             await SaveChanges();
 
@@ -1044,7 +1044,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> SetConsorzioTrasportatoreInternalIdAsync(ConsorzioTrasportatoreDto dto, long internalId)
         {
             var entity = dto.ToEntity<ConsorzioTrasportatore, ConsorzioTrasportatoreDto>();
-            entity.ConsorzioInternalId = internalId;
+            entity.ConsorzioInternalId = internalId == 0 ? null : internalId;
             consorzioTrasportatoriRepo.Update(entity);
             await SaveChanges();
 
