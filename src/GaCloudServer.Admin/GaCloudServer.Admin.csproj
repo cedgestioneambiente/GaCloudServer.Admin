@@ -108,6 +108,9 @@
 	  <None Update="Scripts\Cdr\DROP_ViewGaCdr_V2.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Consorzio\CREATE_ViewConsorzio_V11.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Consorzio\CREATE_ViewConsorzio_V10.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
