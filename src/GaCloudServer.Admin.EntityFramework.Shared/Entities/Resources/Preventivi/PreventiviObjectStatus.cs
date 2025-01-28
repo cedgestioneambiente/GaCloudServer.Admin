@@ -4,6 +4,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
 {
     public class PreventiviObjectStatus:GenericListAuditableEntity
     {
+        public int? Order { get; set; }
     }
 
 }

@@ -1440,6 +1440,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
+                model.Order = 999;
                 var response = await _gaPreventiviService.CreatePreventiviObjectStatusAsync(model);
 
                 return Ok(new { Code = code.Status201Created, Response = response });

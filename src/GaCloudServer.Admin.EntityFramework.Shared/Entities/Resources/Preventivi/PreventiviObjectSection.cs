@@ -19,6 +19,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         public string Garbages { get; set; }
 
         public bool Accepted { get; set; }
+        public string Note { get; set; }
 
         //Navigation Props
         public PreventiviProducer Producer { get; set; }

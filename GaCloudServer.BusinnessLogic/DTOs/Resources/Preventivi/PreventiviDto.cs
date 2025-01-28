@@ -2,6 +2,7 @@
 using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
@@ -137,6 +138,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
     }
     public class PreventiviObjectStatusDto : GenericListDto
     {
+        public int? Order { get; set; }
     }
     public class PreventiviObjectTypeDto : GenericListDto
     {
@@ -235,6 +237,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public int Order { get; set; }
         public long ObjectId { get; set; }
         public string Descrizione { get; set; }
+        public string? Note { get; set; }
         public long ProducerId { get; set; }
         public long DestinationId { get; set; }
         public bool DestinationOnPrint { get; set; }
