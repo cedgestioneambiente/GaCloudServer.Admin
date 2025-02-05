@@ -97,6 +97,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string TypeDesc {  get; set; }
         public long StatusId { get; set; }
         public string AssigneeId { get; set; }
+        public string AssigneeDesc { get; set; }
         public DateTime DataCompletamento { get; set; }
         public bool Completed { get; set; }
         public string NoteCrm { get; set; }

@@ -1539,7 +1539,9 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
                 foreach (var garbage in garbagesObject)
                 {
-                    sectionHeader += $"<div class=\"w-100\">{garbage}</div>";
+                    sectionHeader += $"<div class=\"w-100\">{garbage}";
+                    sectionHeader += string.IsNullOrEmpty(section.Note) ? "" : $" ({section.Note})";
+                    sectionHeader += "</div>";
                 }
 
                 sectionHeader +=section.DestinationOnPrint && !section.Destination.Ignore? $"<div><b>Destinatario</b> {section.Destination.Descrizione} - {section.Destination.Indirizzo}</div>":"";
@@ -1548,7 +1550,17 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
                 
 
-                var sectionServices = "<table class=\"table table-bordered\"><tbody>";
+                var sectionServices = "<table class=\"table table-bordered\">" +
+                    "<thead>" +
+                    "<th></th>" +
+                    "<th></th>" +
+                    "<th></th>" +
+                    "<th style='text-align:right'>Costo Unitario</th>" +
+                    "<th style='text-align:right'>IVA</th>" +
+                    "<th style='text-align:right'>Imponibile</th>" +
+                    "<th style='text-align:right'>Costo Ivato</th>" +
+                    "</thead>"+
+                    "<tbody>";
                 foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
                 {
                     var _objectTotalNoTax = service.CostUnit * service.Amount;
@@ -1563,6 +1575,8 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     sectionTotalNoTax += _objectTotalNoTax;
                     sectionTotal += _objectTotal;
 
+
+                    
                     sectionServices += "<tr>";
                     sectionServices += $"<td class=\"p-1\">{service.ServiceType.Descrizione} - {service.ServiceTypeDetail.Descrizione}";
 
@@ -1579,7 +1593,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     sectionServices += "</td>";
 
 
-                    sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x=>x.Id==service.ServiceTypeDetail.GaugeId).FirstOrDefault().Descrizione}</th>";
+                    sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x=>x.Id==service.ServiceTypeDetail.GaugeId).FirstOrDefault().Descrizione}</td>";
                     sectionServices += service.ShowAmountOnPrint? $"<td class=\"p-1\">Qta.: {service.Amount}</td>":$"<td style=\"border-left:none !important\"></td>";
                     sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(service.CostUnit)}</th>";
                     sectionServices += $"<td class=\"p-1 text-right\">{service.IvaCode.DescrizioneBreve}</th>";

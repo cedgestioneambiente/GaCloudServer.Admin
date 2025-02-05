@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using blfh = GaCloudServer.BusinnessLogic.Helpers.FileHelper;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
@@ -824,7 +825,20 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
+                var userList = await _userManager.Users.ToListAsync();
+                // Crea un dictionary per mappare UserId a FullName per accesso rapido
+                var userDictionary = userList.ToDictionary(user => user.Id.ToString(), user => $"{user.UserName}");
+
                 var response = await _gaPreventiviService.GetPreventiviObjectsAsync(request);
+
+                // Aggiorna AssigneeDesc con il FullName corrispondente
+                foreach (var item in response.Items)
+                {
+                    if (item.AssigneeId != null && userDictionary.ContainsKey(item.AssigneeId))
+                    {
+                        item.AssigneeDesc = userDictionary[item.AssigneeId];
+                    }
+                }
 
                 return Ok(new { Code = code.Status200OK, Response = response });
             }

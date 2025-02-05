@@ -129,11 +129,23 @@
 	  <None Update="Scripts\Consorzio\DROP_ViewConsorzio_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="Scripts\Crm\CREATE_ViewGaCrm_V10.sql">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Crm\CREATE_ViewGaCrm_V9.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Scripts\Crm\CREATE_ViewGaCrm_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Crm\CREATE_ViewGaCrm_V8.sql">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V10.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V9.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Crm\DROP_ViewGaCrm_V8.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -145,6 +157,9 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Dispositivi\DROP_ViewGaDispositivi_V2.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi_V6.sql">
@@ -163,6 +178,9 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Preventivi\CREATE_ViewGaPreventivi.sql">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Scripts\Preventivi\DROP_ViewGaPreventivi_V7.sql">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	  <None Update="Scripts\Preventivi\DROP_ViewGaPreventivi_V6.sql">
