@@ -137,6 +137,8 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
 
 
     }
+
+
     public class PreventiviObjectStatusDto : GenericListDto
     {
         public int? Order { get; set; }
@@ -382,6 +384,15 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string CreatorName { get; set; }
 
 
+    }
+
+    public class PreventiviObjectCopyAssignementDto : PreventiviObjectAssignementDto
+    {
+        public bool? CopyInspection { get; set; }
+        public bool? CopyServices { get; set; }
+        public bool? CopyCondition { get; set; }
+        public bool? CopyPayout { get; set; }
+        public long PreventiviObjectCopyId { get; set; }
     }
 
     public class PreventiviObjectInspectionStatementDto

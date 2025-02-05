@@ -1,5 +1,6 @@
 ﻿using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
@@ -13,11 +14,13 @@ using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Shared;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Graph;
 using System;
 using blfh = GaCloudServer.BusinnessLogic.Helpers.FileHelper;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
@@ -803,6 +806,162 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
 
                 
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectFromCopyAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectFromCopyAsync(PreventiviObjectCopyAssignementDto model)
+        {
+            try
+            {
+                var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Preventivi, AppConsts.PreventiviInfo);
+                var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+                var query = System.IO.File.ReadAllText(@".\Query\Preventivi\FinancialPosition.sql");
+                query = string.Format(query, model.ClienteCfPiva, model.ClienteCfPiva, model.IntestatarioCfPiva, model.IntestatarioCfPiva);
+                var saldo = await _gaPreventiviService.CheckPreventiviFinancialPositionAsync(query);
+
+                var response = await _gaPreventiviService.CreatePreventiviObjectFromCopyAsync(model, saldo);
+                var history = new PreventiviObjectHistoryDto();
+                history.ObjectId = response.Id;
+                history.AssigneeId = model.AssigneeId;
+                history.AssigneeDesc = model.AssigneeMail;
+                history.DateStart = DateTime.Now;
+                history.StatusId = response.StatusId;
+
+
+                var regHistory = await _gaPreventiviService.CreatePreventiviObjectHistoryAsync(history);
+
+                #region Inspection
+
+                var inspection = new PreventiviObjectInspectionDto();
+
+                if (model.CopyInspection != null && model.CopyInspection == true)
+                {
+                    var inspectionCopy = _gaPreventiviService.GetPreventiviObjectInspectionsAsync(new PageRequest() { Filter = $"ObjectId eq {model.PreventiviObjectCopyId}" }).Result.Items.FirstOrDefault();
+
+                    if (inspectionCopy != null)
+                    {
+                        inspectionCopy.Id = 0;
+                        inspectionCopy.ObjectId = response.Id;
+                        var responseInspectionCopy = await _gaPreventiviService.CreatePreventiviObjectInspectionAsync(inspectionCopy);
+                    }
+
+
+                }
+                else
+                {
+                    inspection.Id = 0;
+                    inspection.Disabled = false;
+                    inspection.StatusId = 1;
+                    inspection.AssigneeId = model.InspectionAssigneeId;
+                    inspection.ModeId = model.Inspection;
+                    inspection.ObjectId = response.Id;
+                    inspection.NoteInspection = model.InspectionNotes;
+                    await _gaPreventiviService.CreatePreventiviObjectInspectionAsync(inspection);
+
+                }
+
+                #endregion
+
+                #region Services
+
+                if (model.CopyServices != null && model.CopyServices == true)
+                {
+                    var sectionsCopy = await _gaPreventiviService.GetPreventiviObjectSectionsAsync(new PageRequest() { Filter = $"ObjectId eq {model.PreventiviObjectCopyId}" });
+
+                    foreach (var section in sectionsCopy.Items)
+                    {
+                        var servicesCopy = await _gaPreventiviService.GetPreventiviObjectServicesAsync(new PageRequest() { Filter = $"SectionId eq {section.Id}" });
+
+                        section.Id = 0;
+                        section.ObjectId = response.Id;
+
+                        var sectionResponse = await _gaPreventiviService.CreatePreventiviObjectSectionAsync(section);
+
+
+                        foreach (var service in servicesCopy.Items)
+                        {
+                            service.Id = 0;
+                            service.ObjectId = response.Id;
+                            service.SectionId = sectionResponse;
+
+                            var serviceResponse = await _gaPreventiviService.CreatePreventiviObjectServiceAsync(service);
+                        }
+                    }
+                }
+
+                #endregion
+
+
+                #region Payout
+                if (model.CopyPayout != null && model.CopyPayout == true)
+                {
+                    var payoutCopy = await _gaPreventiviService.GetPreventiviObjectPayoutsAsync(new PageRequest() { Filter = $"ObjectId eq {model.PreventiviObjectCopyId}" });
+
+                    foreach (var item in payoutCopy.Items)
+                    {
+                        item.Id = 0;
+                        item.ObjectId = response.Id;
+                        var responsePayoutCopy = await _gaPreventiviService.CreatePreventiviObjectPayoutAsync(item);
+                    }
+
+                }
+                
+                #endregion
+
+                #region Condition
+                if (model.CopyCondition!=null && model.CopyCondition==true)
+                {
+                    var conditionCopy = await _gaPreventiviService.GetPreventiviObjectConditionsAsync( new PageRequest() { Filter=$"ObjectId eq {model.PreventiviObjectCopyId}"} );
+
+                    foreach (var item in conditionCopy.Items)
+                    {
+                        item.Id = 0;
+                        item.ObjectId = response.Id;
+                        var responseConditionCopy = await _gaPreventiviService.CreatePreventiviObjectConditionAsync(item);
+                    }
+
+                }
+                else
+                {
+                    var condition = await _gaPreventiviService.GetPreventiviConditionTemplateByIdAsync(1);
+                    var objectCondition = new PreventiviObjectConditionDto();
+                    objectCondition.Descrizione = condition.Content;
+                    objectCondition.ObjectId = response.Id;
+                    objectCondition.Order = 1;
+                    var responseCondition = await _gaPreventiviService.CreatePreventiviObjectConditionAsync(objectCondition);
+                }
+                #endregion
+
+
+                if (model.SendEmail.GetValueOrDefault())
+                {
+
+                    #region Assignee Communication
+                    await sendMail(response.Id, response.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, "", model.CreatorId);
+                    if (model.SendNotify.GetValueOrDefault()) { await sendNotification(response.Id, response.ObjectNumber, model.AssigneeId, TextConsts.objectManage); }
+
+                    #endregion
+
+                    if (model.Inspection == 2)
+                    {
+                        await sendMail(response.Id, response.ObjectNumber, model.InspectionAssigneeMail, TextConsts.inspectionManage, model.NoteCrm, model.CreatorName, "", model.CreatorId);
+                        if (model.SendNotify.GetValueOrDefault()) { await sendNotification(response.Id, response.ObjectNumber, model.InspectionAssigneeId, TextConsts.inspectionManage); }
+
+                    }
+                }
+
+
 
                 return Ok(new { Code = code.Status201Created, Response = response });
             }

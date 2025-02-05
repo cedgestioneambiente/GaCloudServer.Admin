@@ -590,6 +590,27 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entity.ToModel<PreventiviObjectDto>();
 
         }
+
+        public async Task<PreventiviObjectDto> CreatePreventiviObjectFromCopyAsync(PreventiviObjectCopyAssignementDto dto, double saldo)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<PreventiviObjectAssignementDto, PreventiviObject>(MemberList.Destination);
+            });
+            IMapper mapper = config.CreateMapper();
+
+            var entity = mapper.Map<PreventiviObject>(dto);
+
+            entity.ObjectNumber = await GetObjectNumberAsync();
+            entity.DataInserimento = DateTime.Now;
+            entity.FinancialLock = saldo > 0 ? true : false;
+            entity.StatusId = 1;
+
+            var reponse = await gaPreventiviObjectsRepo.CreateAsync(entity);
+
+            return entity.ToModel<PreventiviObjectDto>();
+
+        }
         #endregion
 
         #region Objects

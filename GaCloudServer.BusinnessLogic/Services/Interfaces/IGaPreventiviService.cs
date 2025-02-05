@@ -90,6 +90,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         public Task<PageResponse<ViewGaPreventiviCrmTickets>> GetViewPreventiviCrmTicketsAsync(PageRequest request);
         public Task<PageResponse<CrmEventComuneDto>> GetPreventiviCrmComuniAsync(PageRequest request);
         public Task<PreventiviObjectDto> CreatePreventiviObjectFromCrmTicketAsync(PreventiviObjectAssignementDto model, double saldo);
+        public Task<PreventiviObjectDto> CreatePreventiviObjectFromCopyAsync(PreventiviObjectCopyAssignementDto model, double saldo);
         #endregion
 
         #region Objects
