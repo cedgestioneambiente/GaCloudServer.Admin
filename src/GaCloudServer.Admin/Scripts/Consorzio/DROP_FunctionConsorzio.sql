@@ -1,0 +1,7 @@
+﻿DROP FUNCTION  [dbo].[CsrCalcPercMonth]
+DROP FUNCTION  [dbo].[CsrCalcTotKgMonth]
+DROP FUNCTION  [dbo].[CsrCalcTotKgMonthDiff]
+DROP FUNCTION  [dbo].[CsrCalcTotKgMonthInDiff]
+DROP FUNCTION  [dbo].[CsrCalcTotKgMonthProCap]
+DROP FUNCTION  [dbo].[CsrCalcTotKgMonthProCapDiff]
+DROP FUNCTION  [dbo].[CsrCalcTotKgMonthProCapInDiff]
