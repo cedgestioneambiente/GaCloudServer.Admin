@@ -20,11 +20,19 @@ GO
 DROP FUNCTION IF EXISTS [dbo].[CsrCalcTotKgMonthProCapInDiff]
 GO
 
+USE [GaCloud]
+GO
+/****** Object:  UserDefinedFunction [dbo].[CsrCalcPercMonth]    Script Date: 25/02/2025 11:38:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
 CREATE FUNCTION [dbo].[CsrCalcPercMonth]
 (
     @Month INT,
-    @Year INT
+    @Year INT,
+	@Produttore nvarchar(255)
 )
 RETURNS FLOAT
 AS
@@ -76,26 +84,22 @@ BEGIN
     INNER JOIN dbo.ConsorzioOperazioni
         ON dbo.ConsorzioRegistrazioni.ConsorzioOperazioneId = dbo.ConsorzioOperazioni.Id
     INNER JOIN dbo.ConsorzioSmaltimenti
-        ON dbo.ConsorzioOperazioni.ConsorzioSmaltimentoId = dbo.ConsorzioSmaltimenti.Id
-    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year;
+        ON dbo.ConsorzioOperazioni.ConsorzioSmaltimentoId = dbo.ConsorzioSmaltimenti.Id inner join ConsorzioProduttori on ConsorzioRegistrazioni.ConsorzioProduttoreId=ConsorzioProduttori.Id
+    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year and ConsorzioProduttori.Descrizione=@Produttore
 
     RETURN @PERCENTUALE_DIFF_MESE;
 END;
 GO
-/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonth]    Script Date: 21/02/2025 11:27:55 ******/
+/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonth]    Script Date: 25/02/2025 11:38:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date, ,>
--- Description:	<Description, ,>
--- =============================================
 CREATE FUNCTION [dbo].[CsrCalcTotKgMonth]
 (
 	@Month int,
-	@Year int
+	@Year int,
+	@Produttore nvarchar(255)
 
 )
 RETURNS Float
@@ -114,14 +118,16 @@ BEGIN
         2
     )
 	FROM ConsorzioRegistrazioni
-	WHERE YEAR(DataRegistrazione)=@Year
+	inner join ConsorzioProduttori on ConsorzioRegistrazioni.ConsorzioProduttoreId=ConsorzioProduttori.Id
+	WHERE YEAR(DataRegistrazione)=@Year and ConsorzioProduttori.Descrizione=@Produttore
+
 
 	-- Return the result of the function
 	RETURN @TOTALE_KG_RIFIUTI_MESE
 
 END
 GO
-/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthDiff]    Script Date: 21/02/2025 11:27:55 ******/
+/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthDiff]    Script Date: 25/02/2025 11:38:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -129,7 +135,8 @@ GO
 CREATE FUNCTION [dbo].[CsrCalcTotKgMonthDiff]
 (
     @Month INT,
-    @Year INT
+    @Year INT,
+	@Produttore nvarchar(255)
 )
 RETURNS FLOAT
 AS
@@ -155,12 +162,13 @@ BEGIN
         ON dbo.ConsorzioRegistrazioni.ConsorzioOperazioneId = dbo.ConsorzioOperazioni.Id
     INNER JOIN dbo.ConsorzioSmaltimenti
         ON dbo.ConsorzioOperazioni.ConsorzioSmaltimentoId = dbo.ConsorzioSmaltimenti.Id
-    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year;
+   inner join ConsorzioProduttori on ConsorzioRegistrazioni.ConsorzioProduttoreId=ConsorzioProduttori.Id
+	WHERE YEAR(DataRegistrazione)=@Year and ConsorzioProduttori.Descrizione=@Produttore
 
     RETURN @TOTALE_KG_RIFIUTI_MESE_DIFF;
 END;
 GO
-/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthInDiff]    Script Date: 21/02/2025 11:27:55 ******/
+/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthInDiff]    Script Date: 25/02/2025 11:38:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -169,7 +177,8 @@ GO
 CREATE FUNCTION [dbo].[CsrCalcTotKgMonthInDiff]
 (
     @Month INT,
-    @Year INT
+    @Year INT,
+	@Produttore nvarchar(255)
 )
 RETURNS FLOAT
 AS
@@ -195,12 +204,13 @@ BEGIN
         ON dbo.ConsorzioRegistrazioni.ConsorzioOperazioneId = dbo.ConsorzioOperazioni.Id
     INNER JOIN dbo.ConsorzioSmaltimenti
         ON dbo.ConsorzioOperazioni.ConsorzioSmaltimentoId = dbo.ConsorzioSmaltimenti.Id
-    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year;
+    inner join ConsorzioProduttori on ConsorzioRegistrazioni.ConsorzioProduttoreId=ConsorzioProduttori.Id
+	WHERE YEAR(DataRegistrazione)=@Year and ConsorzioProduttori.Descrizione=@Produttore
 
     RETURN @TOTALE_KG_RIFIUTI_MESE_INDIFF;
 END;
 GO
-/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthProCap]    Script Date: 21/02/2025 11:27:55 ******/
+/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthProCap]    Script Date: 25/02/2025 11:38:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -208,7 +218,8 @@ GO
 CREATE FUNCTION [dbo].[CsrCalcTotKgMonthProCap]
 (
     @Month INT,
-    @Year INT
+    @Year INT,
+	@Produttore nvarchar(255)
 )
 RETURNS FLOAT
 AS
@@ -239,12 +250,13 @@ BEGIN
         ON dbo.ConsorzioProduttori.ConsorzioComuneId = dbo.ConsorzioComuni.Id
     INNER JOIN dbo.ConsorzioComuniDemografie
         ON dbo.ConsorzioComuniDemografie.ConsorzioComuneId = dbo.ConsorzioComuni.Id
-    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year;
+   
+	WHERE YEAR(DataRegistrazione)=@Year and ConsorzioProduttori.Descrizione=@Produttore
 
     RETURN @TOTALE_KG_RIFIUTI_MESE_PROCAP;
 END;
 GO
-/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthProCapDiff]    Script Date: 21/02/2025 11:27:55 ******/
+/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthProCapDiff]    Script Date: 25/02/2025 11:38:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -253,7 +265,9 @@ GO
 CREATE FUNCTION [dbo].[CsrCalcTotKgMonthProCapDiff]
 (
     @Month INT,
-    @Year INT
+    @Year INT,
+	@Produttore nvarchar(255)
+
 )
 RETURNS FLOAT
 AS
@@ -288,12 +302,12 @@ INNER JOIN dbo.ConsorzioOperazioni
         ON dbo.ConsorzioProduttori.ConsorzioComuneId = dbo.ConsorzioComuni.Id
     INNER JOIN dbo.ConsorzioComuniDemografie
         ON dbo.ConsorzioComuniDemografie.ConsorzioComuneId = dbo.ConsorzioComuni.Id
-    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year;
+    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year and ConsorzioProduttori.Descrizione=@Produttore
 
     RETURN @TOTALE_KG_RIFIUTI_MESE_PROCAP_DIFF;
 END;
 GO
-/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthProCapInDiff]    Script Date: 21/02/2025 11:27:55 ******/
+/****** Object:  UserDefinedFunction [dbo].[CsrCalcTotKgMonthProCapInDiff]    Script Date: 25/02/2025 11:38:50 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -303,7 +317,8 @@ GO
 CREATE FUNCTION [dbo].[CsrCalcTotKgMonthProCapInDiff]
 (
     @Month INT,
-    @Year INT
+    @Year INT,
+	@Produttore nvarchar(255)
 )
 RETURNS FLOAT
 AS
@@ -338,7 +353,7 @@ INNER JOIN dbo.ConsorzioOperazioni
         ON dbo.ConsorzioProduttori.ConsorzioComuneId = dbo.ConsorzioComuni.Id
     INNER JOIN dbo.ConsorzioComuniDemografie
         ON dbo.ConsorzioComuniDemografie.ConsorzioComuneId = dbo.ConsorzioComuni.Id
-    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year;
+    WHERE YEAR(dbo.ConsorzioRegistrazioni.DataRegistrazione) = @Year and ConsorzioProduttori.Descrizione=@Produttore
 
     RETURN @TOTALE_KG_RIFIUTI_MESE_PROCAP_INDIFF;
 END;
