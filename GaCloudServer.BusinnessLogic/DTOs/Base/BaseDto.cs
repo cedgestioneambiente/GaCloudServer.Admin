@@ -56,6 +56,8 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Base
         public Orientation Orientation { get; set; }
         public HeaderSettings HeaderSettings { get; set; }
         public FooterSettings FooterSettings { get; set; }
+        public WebSettings WebSettings { get; set; }
+        public MarginSettings MarginSettings { get; set; }
         public int Copies { get; set; }
 
         public GenericPrintDto()

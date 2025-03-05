@@ -2,6 +2,11 @@
 {
     public static class ScriptConsts
     {
+        //Identity
+        public const string IdentityMigration = @".\Scripts\Identity\";
+        public const string CREATE_ViewIdentity = "CREATE_ViewIdentity.sql";
+        public const string DROP_ViewIdentity = "DROP_ViewIdentity.sql";
+
         //Global
         public const string GlobalMigration = @".\Scripts\Global\";
         public const string CREATE_ViewGlobal = "CREATE_ViewGlobal.sql";

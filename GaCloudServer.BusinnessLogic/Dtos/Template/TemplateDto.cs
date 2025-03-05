@@ -206,5 +206,20 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Template
     }
 
 
+    public class PreventiviObjectPreviewTemplateDto : GenericPrintDto
+    {
+        public PreventiviObjectDto preventiviObject { get; set; }
+        public PreventiviObjectInspectionDto preventiviObjectInspection { get; set; }
+        public PreventiviObjectPayoutDto preventiviObjectPayout { get; set; }
+
+        public List<PreventiviObjectSectionDto> preventiviObjectSections { get; set; }
+        public List<PreventiviObjectServiceDto> preventiviObjectServices { get; set; }
+        public List<PreventiviObjectConditionDto> preventiviObjectConditions { get; set; }
+        public List<PreventiviGarbageDto> preventiviGarbages { get; set; }
+        public List<CommonGaugeDto> commonGauges { get; set; }
+    }
+
+
+
 
 }

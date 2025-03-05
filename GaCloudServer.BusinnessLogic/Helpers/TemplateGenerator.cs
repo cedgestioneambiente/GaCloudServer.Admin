@@ -1,7 +1,9 @@
 ﻿using GaCloudServer.BusinnessLogic.Dtos.Template;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace GaCloudServer.BusinnessLogic.Helpers
 {
@@ -1523,14 +1525,14 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             #region Section Builder
 
-            foreach (var section in dto.preventiviObjectSections)
+            foreach (var section in dto.preventiviObjectSections.OrderBy(x=>x.Order))
             {
 
                 sectionTotal = 0.0;
                 sectionTotalNoTax = 0.0;
                 sectionTax = 0.0;
 
-                string sectionHeader = "<div class=\"border\" style=\"border-radius:4px;margin-top:4px;padding:4px\">";
+                string sectionHeader = "<div class=\"border\" >";
                 long[] garbages = (section.Garbages == null || section.Garbages=="") ? new long[0] : section.Garbages.Split(",").Select(long.Parse).ToArray();
 
                 var garbagesObject = dto.preventiviGarbages
@@ -1539,28 +1541,38 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
                 foreach (var garbage in garbagesObject)
                 {
-                    sectionHeader += $"<div class=\"w-100\">{garbage}";
+                    sectionHeader += $"<div class=\"w-100\" style=\"padding:5px\">{garbage}";
                     sectionHeader += string.IsNullOrEmpty(section.Note) ? "" : $" ({section.Note})";
                     sectionHeader += "</div>";
                 }
 
-                sectionHeader +=section.DestinationOnPrint && !section.Destination.Ignore? $"<div><b>Destinatario</b> {section.Destination.Descrizione} - {section.Destination.Indirizzo}</div>":"";
+                sectionHeader +=section.DestinationOnPrint && !section.Destination.Ignore? $"<div style=\"padding:5px\"><b>Destinatario</b> {section.Destination.Descrizione} - {section.Destination.Indirizzo}</div>":"";
                 sectionHeader += "</div>";
 
+                // Verifica se tutte le colonne sono vuote per applicare larghezza 0
+                bool allColumnsEmpty = dto.preventiviObjectServices
+                    .Where(x => x.SectionId == section.Id)
+                    .All(x => !x.ShowAmountOnPrint);
 
-                
 
-                var sectionServices = "<table class=\"table table-bordered\">" +
-                    "<thead>" +
+
+                var sectionServices = $"<table class=\"table table-bordered\">";
+                if (dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).Count()>0 )
+                {
+                    sectionServices += "<thead>" +
                     "<th></th>" +
-                    "<th></th>" +
-                    "<th></th>" +
-                    "<th style='text-align:right'>Costo Unitario</th>" +
+                    "<th></th>";
+
+                    sectionServices += allColumnsEmpty ? "<th style=\"width:0px !important;padding:0px !important;\"></th>" : "<th></th>";
+                    sectionServices += "<th style='text-align:right'>Costo Unitario</th>" +
                     "<th style='text-align:right'>IVA</th>" +
                     "<th style='text-align:right'>Imponibile</th>" +
                     "<th style='text-align:right'>Costo Ivato</th>" +
-                    "</thead>"+
-                    "<tbody>";
+                    "</thead>";
+                }
+
+
+                sectionServices += "<tbody>";
                 foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
                 {
                     var _objectTotalNoTax = service.CostUnit * service.Amount;
@@ -1594,7 +1606,10 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
                     sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x=>x.Id==service.ServiceTypeDetail.GaugeId).FirstOrDefault().Descrizione}</td>";
-                    sectionServices += service.ShowAmountOnPrint? $"<td class=\"p-1\">Qta.: {service.Amount}</td>":$"<td style=\"border-left:none !important\"></td>";
+                    // Gestione della colonna per la quantità
+                    sectionServices += service.ShowAmountOnPrint
+                        ? $"<td class=\"p-1\">Qta.: {service.Amount}</td>"
+                        : $"<td class=\"p-0\"></td>";
                     sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(service.CostUnit)}</th>";
                     sectionServices += $"<td class=\"p-1 text-right\">{service.IvaCode.DescrizioneBreve}</th>";
                     sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(_objectTotalNoTax)}</th>";
@@ -1608,13 +1623,13 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 if (section.TotalOnPrint)
                 {
                     sectionServices+= "<tr>";
-                    sectionServices+= $"<td class=\"p-1\">TOTALE</th>";
-                    sectionServices += "<td class=\"p-1 text-right\"></th>";
-                    sectionServices += "<td class=\"p-1 text-right\"></th>";
-                    sectionServices += "<td class=\"p-1 text-right\"></th>";
-                    sectionServices += "<td class=\"p-1 text-right\"></th>";
-                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(sectionTotalNoTax)}</th>";
-                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(sectionTotalNoTax + sectionTax)}</th>";
+                    sectionServices+= $"<td class=\"p-1\">TOTALE</td>";
+                    sectionServices += "<td class=\"p-1 text-right\"></td>";
+                    sectionServices += allColumnsEmpty ? "<td style=\"width:0px !important;padding:0px !important;\"></td>" : "<td></td>";
+                    sectionServices += "<td class=\"p-1 text-right\"></td>";
+                    sectionServices += "<td class=\"p-1 text-right\"></td>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(sectionTotalNoTax)}</td>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(sectionTotalNoTax + sectionTax)}</td>";
                     sectionServices += "</tr>";
                 }
 
@@ -1640,6 +1655,77 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                         $"{sectionHeader}" +
                         $"{sectionServices}" +
                     "</div>";
+            }
+
+            #endregion
+
+            #region Recap Builder
+            var recapSection = "";
+            if (dto.preventiviObject.PrintRecap)
+            {
+                var tableTotalNoTax=0.0;
+                var tableTotalTax = 0.0;
+                string recapTable = $"<table class=\"table table-bordered\">";
+                recapTable += "<thead>" +
+                    "<th></th>" +
+                    "<th class=\"p-1 text-right\">IMPONIBILE</th>" +
+                    "<th class=\"p-1 text-right\">IVATO</th>" +
+                    "</thead>";
+
+                recapTable += "<tbody>";
+
+
+                foreach (var section in dto.preventiviObjectSections.OrderBy(x => x.Order))
+                {
+                    long[] garbages = (section.Garbages == null || section.Garbages == "") ? new long[0] : section.Garbages.Split(",").Select(long.Parse).ToArray();
+
+                    var garbagesObject = dto.preventiviGarbages
+                        .Where(x => garbages.Contains(x.Id))
+                        .Select(x => $"<b>{x.Code}</b> - {x.Descrizione}").ToList();
+
+                    // Se la lista è vuota, mostra section.Descrizione
+                    string garbagesHtml = garbagesObject.Any()
+                        ? string.Join("<br>", garbagesObject)
+                        : section.Descrizione;
+
+                    var rowTax = 0.0;
+                    var rowNoTax = 0.0;
+
+                    foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
+                    {
+                        var _objectTotalNoTax = service.CostUnit * service.Amount;
+                        var _objectTotalTax = (service.CostUnit * service.Amount) * (service.IvaCode.Valore / 100);
+                        var _objectTotal = _objectTotalNoTax + _objectTotalTax; ;
+
+                        rowTax += _objectTotal;
+                        rowNoTax += _objectTotalNoTax;
+
+                        tableTotalTax += _objectTotal;
+                        tableTotalNoTax += _objectTotalNoTax;
+                    }
+
+                    recapTable += "<tr>";
+                    recapTable += $"<td>{garbagesHtml}</td>";
+                    recapTable += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(rowNoTax)}</td>";
+                    recapTable += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(rowTax)}</td>";
+
+
+                }
+
+                recapTable+="<tr>";
+                recapTable += $"<td class=\"p-1\"></td>";
+                recapTable += $"<td class=\"p-1 text-right\"><b>{NumberHelper.ConvertToCurrencyString(tableTotalNoTax)}</b></td>";
+                recapTable += $"<td class=\"p-1 text-right\"><b>{NumberHelper.ConvertToCurrencyString(tableTotalTax)}</b></td>";
+                recapTable += "</tr>";
+                recapTable += "</tbody></table>";
+
+                recapSection += $"<div style=\"page-break-after:always !important\"></div>" +
+                    $"<h6 class=\"font-weight-bold\" style=\"margin-top:4px;\">Riepilogo Totali</h6>" +
+                    $"<div>" +
+                    $"<div class=\"col-4\">TOTALE</div>" +
+                    $"{recapTable}" +
+                    "</div>";
+
             }
 
             #endregion
@@ -1682,9 +1768,274 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 , dto.preventiviObjectPayout.Descrizione //23
                 , dto.preventiviObjectPayout.BankAccount.Iban //24
                 , serviceTable //25
-                , conditionTable //26
-                , dto.preventiviObject.IntestatarioPiva //27
-                , dto.preventiviObject.IntestatarioIndirizzoOperativo //28
+                , recapSection //26
+                , conditionTable //27
+                , dto.preventiviObject.IntestatarioPiva //28
+                , dto.preventiviObject.IntestatarioIndirizzoOperativo //29
+                );
+            return sb.ToString();
+
+
+        }
+
+        public static string PreventiviObjectPreview(PreventiviObjectPreviewTemplateDto dto, string? alternativePath = null)
+        {
+            string currentDirectory = "";
+
+            if (alternativePath == null)
+            {
+                currentDirectory = Directory.GetCurrentDirectory();
+            }
+            else
+            {
+                currentDirectory = alternativePath;
+            }
+
+            var filePath = Path.Combine(currentDirectory, "Template/PreventiviObjectPreview/assets/", "template.html");
+            var fileContent = @File.ReadAllText(filePath);
+            var sb = new StringBuilder();
+
+            string table = "";
+
+            var subTitle = dto.preventiviObjectInspection != null && dto.preventiviObjectInspection.ModeId == 2 ?
+                $"Facendo seguito alla Vs. richiesta e alla verifica effettuata in data {dto.preventiviObjectInspection.DateExecution.GetValueOrDefault().ToString("dd/MM/yyyy")}, con la presente Vi sottoponiamo le condizioni tecniche ed economiche per il servizio di raccolta e trasporto rifiuti." :
+                $"Facendo seguito alla Vs. richiesta, con la presente Vi sottoponiamo le condizioni tecniche ed economiche per il servizio di raccolta e trasporto rifiuti.";
+
+
+            var serviceTable = "";
+            double objectTotal = 0.0;
+            double objectTotalNoTax = 0.0;
+            double objectTax = 0.0;
+
+            double sectionTotal = 0.0;
+            double sectionTotalNoTax = 0.0;
+            double sectionTax = 0.0;
+
+            #region Section Builder
+
+            foreach (var section in dto.preventiviObjectSections.OrderBy(x => x.Order))
+            {
+
+                sectionTotal = 0.0;
+                sectionTotalNoTax = 0.0;
+                sectionTax = 0.0;
+
+                string sectionHeader = "<div class=\"border\" >";
+                long[] garbages = (section.Garbages == null || section.Garbages == "") ? new long[0] : section.Garbages.Split(",").Select(long.Parse).ToArray();
+
+                var garbagesObject = dto.preventiviGarbages
+                    .Where(x => garbages.Contains(x.Id))
+                    .Select(x => $"<b>{x.Code}</b> - {x.Descrizione}");
+
+                foreach (var garbage in garbagesObject)
+                {
+                    sectionHeader += $"<div class=\"w-100\" style=\"padding:5px\">{garbage}";
+                    sectionHeader += string.IsNullOrEmpty(section.Note) ? "" : $" ({section.Note})";
+                    sectionHeader += "</div>";
+                }
+
+                sectionHeader += section.DestinationOnPrint && !section.Destination.Ignore ? $"<div style=\"padding:5px\"><b>Destinatario</b> {section.Destination.Descrizione} - {section.Destination.Indirizzo}</div>" : "";
+                sectionHeader += "</div>";
+
+                // Verifica se tutte le colonne sono vuote per applicare larghezza 0
+                bool allColumnsEmpty = dto.preventiviObjectServices
+                    .Where(x => x.SectionId == section.Id)
+                    .All(x => !x.ShowAmountOnPrint);
+
+
+
+                var sectionServices = $"<table class=\"table table-bordered\">";
+                if (dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).Count() > 0)
+                {
+                    sectionServices += "<thead>" +
+                    "<th></th>" +
+                    "<th></th>";
+
+                    sectionServices += allColumnsEmpty ? "<th style=\"width:0px !important;padding:0px !important;\"></th>" : "<th></th>";
+                    sectionServices += "<th style='text-align:right'>Costo Unitario</th>" +
+                    "<th style='text-align:right'>IVA</th>" +
+                    "<th style='text-align:right'>Imponibile</th>" +
+                    "<th style='text-align:right'>Costo Ivato</th>" +
+                    "</thead>";
+                }
+
+
+                sectionServices += "<tbody>";
+                foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
+                {
+                    var _objectTotalNoTax = service.CostUnit * service.Amount;
+                    var _objectTotalTax = (service.CostUnit * service.Amount) * (service.IvaCode.Valore / 100);
+                    var _objectTotal = _objectTotalNoTax + _objectTotalTax; ;
+
+                    objectTax += _objectTotalTax;
+                    objectTotalNoTax += _objectTotalNoTax;
+                    objectTotal += _objectTotal;
+
+                    sectionTax += _objectTotalTax;
+                    sectionTotalNoTax += _objectTotalNoTax;
+                    sectionTotal += _objectTotal;
+
+
+
+                    sectionServices += "<tr>";
+                    sectionServices += $"<td class=\"p-1\">{service.ServiceType.Descrizione} - {service.ServiceTypeDetail.Descrizione}";
+
+                    if (!string.IsNullOrEmpty(service.NotesExtra))
+                    {
+                        sectionServices += $"<br> - {service.NotesExtra}";
+                    }
+
+                    if (!string.IsNullOrEmpty(service.AnalysisDesc))
+                    {
+                        sectionServices += $"<br> - {service.AnalysisDesc}";
+                    }
+
+                    sectionServices += "</td>";
+
+
+                    sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x => x.Id == service.ServiceTypeDetail.GaugeId).FirstOrDefault().Descrizione}</td>";
+                    // Gestione della colonna per la quantità
+                    sectionServices += service.ShowAmountOnPrint
+                        ? $"<td class=\"p-1\">Qta.: {service.Amount}</td>"
+                        : $"<td class=\"p-0\"></td>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(service.CostUnit)}</th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{service.IvaCode.DescrizioneBreve}</th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(_objectTotalNoTax)}</th>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(_objectTotalNoTax + _objectTotalTax)}</th>";
+                    sectionServices += "</tr>";
+
+                }
+
+
+
+                if (section.TotalOnPrint)
+                {
+                    sectionServices += "<tr>";
+                    sectionServices += $"<td class=\"p-1\">TOTALE</td>";
+                    sectionServices += "<td class=\"p-1 text-right\"></td>";
+                    sectionServices += allColumnsEmpty ? "<td style=\"width:0px !important;padding:0px !important;\"></td>" : "<td></td>";
+                    sectionServices += "<td class=\"p-1 text-right\"></td>";
+                    sectionServices += "<td class=\"p-1 text-right\"></td>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(sectionTotalNoTax)}</td>";
+                    sectionServices += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(sectionTotalNoTax + sectionTax)}</td>";
+                    sectionServices += "</tr>";
+                }
+
+                sectionServices += "</tbody></table>";
+
+                var producerRow = "";
+                if (!section.Producer.Ignore)
+                {
+                    producerRow += "<div class=\"row\">" +
+                               "<div class=\"col-4\">PRODUTTORE</div>" +
+                               $"<div class=\"col-8 font-weight-bold\">{section.Producer.Descrizione}</div>" +
+                           "</div>";
+                }
+
+
+                serviceTable += $"" +
+                    $"<div id='section-{section.Id}' class=\"w-100 pt-2\">" +
+                        $"{producerRow}" +
+                        "<div class=\"row\">" +
+                            "<div class=\"col-4\">TIPO DI SERVIZIO</div>" +
+                            $"<div class=\"col-8 font-weight-bold\">{section.Descrizione}</div>" +
+                        "</div>" +
+                        $"{sectionHeader}" +
+                        $"{sectionServices}" +
+                    "</div>";
+            }
+
+            #endregion
+
+            #region Recap Builder
+            var recapSection = "";
+            if (dto.preventiviObject.PrintRecap)
+            {
+                var tableTotalNoTax = 0.0;
+                var tableTotalTax = 0.0;
+                string recapTable = $"<table class=\"table table-bordered\">";
+                recapTable += "<thead>" +
+                    "<th></th>" +
+                    "<th class=\"p-1 text-right\">IMPONIBILE</th>" +
+                    "<th class=\"p-1 text-right\">IVATO</th>" +
+                    "</thead>";
+
+                recapTable += "<tbody>";
+
+
+                foreach (var section in dto.preventiviObjectSections.OrderBy(x => x.Order))
+                {
+                    long[] garbages = (section.Garbages == null || section.Garbages == "") ? new long[0] : section.Garbages.Split(",").Select(long.Parse).ToArray();
+
+                    var garbagesObject = dto.preventiviGarbages
+                        .Where(x => garbages.Contains(x.Id))
+                        .Select(x => $"<b>{x.Code}</b> - {x.Descrizione}").ToList();
+
+                    // Se la lista è vuota, mostra section.Descrizione
+                    string garbagesHtml = garbagesObject.Any()
+                        ? string.Join("<br>", garbagesObject)
+                        : section.Descrizione;
+
+                    var rowTax = 0.0;
+                    var rowNoTax = 0.0;
+
+                    foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
+                    {
+                        var _objectTotalNoTax = service.CostUnit * service.Amount;
+                        var _objectTotalTax = (service.CostUnit * service.Amount) * (service.IvaCode.Valore / 100);
+                        var _objectTotal = _objectTotalNoTax + _objectTotalTax; ;
+
+                        rowTax += _objectTotal;
+                        rowNoTax += _objectTotalNoTax;
+
+                        tableTotalTax += _objectTotal;
+                        tableTotalNoTax += _objectTotalNoTax;
+                    }
+
+                    recapTable += "<tr>";
+                    recapTable += $"<td>{garbagesHtml}</td>";
+                    recapTable += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(rowNoTax)}</td>";
+                    recapTable += $"<td class=\"p-1 text-right\">{NumberHelper.ConvertToCurrencyString(rowTax)}</td>";
+
+
+                }
+
+                recapTable += "<tr>";
+                recapTable += $"<td class=\"p-1\"></td>";
+                recapTable += $"<td class=\"p-1 text-right\"><b>{NumberHelper.ConvertToCurrencyString(tableTotalNoTax)}</b></td>";
+                recapTable += $"<td class=\"p-1 text-right\"><b>{NumberHelper.ConvertToCurrencyString(tableTotalTax)}</b></td>";
+                recapTable += "</tr>";
+                recapTable += "</tbody></table>";
+
+                recapSection += $"<div style=\"page-break-after:always !important\"></div>" +
+                    $"<h6 class=\"font-weight-bold\" style=\"margin-top:4px;\">Riepilogo Totali</h6>" +
+                    $"<div>" +
+                    $"<div class=\"col-4\">TOTALE</div>" +
+                    $"{recapTable}" +
+                    "</div>";
+
+            }
+
+            #endregion
+
+            sb.AppendFormat(@fileContent
+                , dto.preventiviObject.ObjectNumber //0
+                , DateTime.Now.ToString("dd/MM/yyyy") //1
+                , dto.preventiviObject.Intestatario //2
+                , dto.preventiviObject.IntestatarioIndirizzo //3
+                , dto.preventiviObject.IntestatarioComune //4
+                , $"{dto.preventiviObject.Type.Descrizione} - {dto.preventiviObject.TypeDesc}" //5
+                , subTitle //6
+                , dto.preventiviObject.IntestatarioIndirizzoOperativo //7
+                , dto.preventiviObject.IntestatarioCfPiva //8
+                , dto.preventiviObject.IntestatarioPiva //9
+                , dto.preventiviObject.ClienteCodSdi //10
+                , dto.preventiviObject.Telefono //11
+                , dto.preventiviObject.Cellulare //12
+                , dto.preventiviObject.Email //13
+                , dto.preventiviObject.EmailPec //14
+                , serviceTable //15
+                , recapSection //16
                 );
             return sb.ToString();
 
@@ -1709,7 +2060,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             var sb = new StringBuilder();
 
             sb.AppendFormat(@fileContent
-                , dto.preventiviObject.ObjectNumber
+                , dto.preventiviObject.ObjectNumber //0
                 , dto.preventiviObjectInspection.DateInspection
                 , dto.preventiviObjectInspection.DateExecution
                 , dto.preventiviObjectInspection.AssigneeId
@@ -1730,6 +2081,9 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 , dto.preventiviObject.Email //18
                 , dto.preventiviObject.EmailPec //19
                 , dto.preventiviObject.IntestatarioIndirizzoOperativo //20
+                , dto.preventiviObject.NoteCrm //21
+                , dto.preventiviObjectInspection.Note //22
+                , dto.preventiviObjectInspection.NoteInspection //23
 
 
                 );

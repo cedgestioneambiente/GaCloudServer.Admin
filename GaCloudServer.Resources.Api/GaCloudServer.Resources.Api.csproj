@@ -114,6 +114,12 @@
     <None Update="Template\CrmEventCloseRecipt\assets\template.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Template\PreventiviObjectPreview\assets\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\PreventiviObjectPreview\assets\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Template\PreventiviObjectInspectionDefault\assets\styles.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

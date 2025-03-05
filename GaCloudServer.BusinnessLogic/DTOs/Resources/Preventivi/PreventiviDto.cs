@@ -1,6 +1,8 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -130,10 +132,12 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
 
         //Campo note per passaggio note assegnazione
         public string Note { get; set; }
+        public bool PrintRecap { get; set; }
 
         //Navigation Props
         public PreventiviObjectStatusDto Status { get; set; }
         public PreventiviObjectTypeDto Type { get; set; }
+        public ViewUserIdentity Assignee {  get; set; }
 
 
     }
@@ -264,6 +268,11 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public bool Analysis { get; set; }
     }
     public class PreventiviServiceNoteTemplateDto : GenericDto
+    {
+        public string Descrizione { get; set; }
+        public string Content { get; set; }
+    }
+    public class PreventiviObjectInspectionNotePreliminariTemplateDto : GenericDto
     {
         public string Descrizione { get; set; }
         public string Content { get; set; }

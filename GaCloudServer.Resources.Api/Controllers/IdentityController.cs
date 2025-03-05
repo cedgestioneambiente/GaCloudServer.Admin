@@ -92,14 +92,14 @@ namespace GaCloudServer.Resources.Api.Controllers
         [HttpPost("GetRolesUsersAsync")]
         public async Task<ActionResult<TUsersDto>> GetRolesUsersAsync([FromBody] string[] roles)
         {
-
+            //Estendere selezione a + di 10 persone
             List<TUsersDto> users = new List<TUsersDto>();
             foreach (var role in roles)
             {
-                var rolesFound = await _identityService.GetRolesAsync(role.ToString());
+                var rolesFound = await _identityService.GetRolesAsync(role.ToString(),1,100);
                 if (rolesFound.TotalCount > 0)
                 {
-                    var result = await _identityService.GetRoleUsersAsync(rolesFound.Roles.Where(x=>x.Name==role).FirstOrDefault().Id.ToString(), null);
+                    var result = await _identityService.GetRoleUsersAsync(rolesFound.Roles.Where(x=>x.Name==role).FirstOrDefault().Id.ToString(), null,1,100);
                     users.Add(result);
                 }
             }

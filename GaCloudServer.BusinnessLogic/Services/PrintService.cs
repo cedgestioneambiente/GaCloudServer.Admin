@@ -30,7 +30,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
                 string htmlContent = (string)mi.Invoke(this, new object[] { dto,alternativePath});
 
-                return _localFileService.UploadOnServerPrint(dto.FileName,dto.FilePath,htmlContent,dto.HeaderSettings,dto.FooterSettings,dto.Copies, dto.Title,dto.Css,dto.Orientation,alternativePath);
+                return _localFileService.UploadOnServerPrint(dto.FileName,dto.FilePath,htmlContent,dto.HeaderSettings,dto.FooterSettings,dto.Copies, dto.Title,dto.Css,dto.Orientation,alternativePath,dto.MarginSettings);
             }
             catch (Exception ex)
             {

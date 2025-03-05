@@ -655,11 +655,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             if (!string.IsNullOrEmpty(request?.Filter))
             {
-                odataQuery = odataQuery.Filter(request.Filter);
+                odataQuery = odataQuery.Filter(request.Filter.Replace(".","/"));
             }
             if (!string.IsNullOrEmpty(request?.OrderBy))
             {
-                odataQuery = odataQuery.OrderBy(request.OrderBy);
+                odataQuery = odataQuery.OrderBy(request.OrderBy.Replace(".","/"));
             }
 
             return odataQuery;

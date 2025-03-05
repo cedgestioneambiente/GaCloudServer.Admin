@@ -105,6 +105,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         public Task<bool> UpdatePreventiviObjectContactDetailsAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectOperativeDetailsAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectTypeDetailsAsync(long id, PreventiviObjectDto model);
+        public Task<bool> UpdatePreventiviObjectPrintModeAsync(long id, PreventiviObjectDto model);
         #endregion
         #endregion
 
@@ -310,6 +311,14 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Ismart Documenti
         public Task<PageResponse<ViewGaPreventiviIsmartDocumenti>> GetViewPreventiviIsmartDocumentiAsync(PageRequest request);
+        #endregion
+
+        #region InspectionNotePreliminariTemplates
+        public Task<PageResponse<PreventiviObjectInspectionNotePreliminariTemplateDto>> GetPreventiviObjectInspectionNotePreliminariTemplatesAsync(PageRequest request);
+        public Task<PreventiviObjectInspectionNotePreliminariTemplateDto> GetPreventiviObjectInspectionNotePreliminariTemplateByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectInspectionNotePreliminariTemplateAsync(PreventiviObjectInspectionNotePreliminariTemplateDto model);
+        public Task<long> UpdatePreventiviObjectInspectionNotePreliminariTemplateAsync(long id, PreventiviObjectInspectionNotePreliminariTemplateDto model);
+        public Task<bool> DeletePreventiviObjectInspectionNotePreliminariTemplateAsync(long id);
         #endregion
 
 

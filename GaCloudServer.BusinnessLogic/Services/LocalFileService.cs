@@ -33,7 +33,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             _converter = converter;
         }
 
-        public dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, HeaderSettings headerSettings,FooterSettings footerSettings, int copies, string title = "", string css = "", Orientation orientation = Orientation.Portrait,string? alternativePath=null)
+        public dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, HeaderSettings headerSettings,FooterSettings footerSettings, int copies, string title = "", string css = "", Orientation orientation = Orientation.Portrait,string? alternativePath=null,MarginSettings? marginSettings=null)
         {
             string filePath = "";
             string currentDirectory = "";
@@ -53,7 +53,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 ColorMode = ColorMode.Color,
                 Orientation = orientation,
                 PaperSize = PaperKind.A4,
-                Margins = new MarginSettings { Top = 10 },
+                Margins = marginSettings==null? new MarginSettings { Top = 10 }:marginSettings,
                 DocumentTitle = "PDF Report",
                 Copies=copies,
                 Out = Path.Combine(filePath,_fileName)

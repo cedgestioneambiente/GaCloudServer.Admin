@@ -22,6 +22,37 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views.ViewUserIdentity", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToView("ViewUserIdentity");
+                });
+
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.AutorizzazioniAllegato", b =>
                 {
                     b.Property<long>("Id")
@@ -11342,7 +11373,7 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("AssigneeId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("CausalePag770s")
                         .HasColumnType("bit");
@@ -11467,6 +11498,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("ObjectNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("PrintRecap")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
@@ -11486,6 +11520,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssigneeId");
 
                     b.HasIndex("StatusId");
 
@@ -11844,6 +11880,40 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasKey("Id");
 
                     b.ToTable("GaPreventiviObjectInspectionModes");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectInspectionNotePreliminariTemplate", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GaPreventiviObjectInspectionNotePreliminariTemplates");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectPayout", b =>
@@ -16037,6 +16107,10 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObject", b =>
                 {
+                    b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views.ViewUserIdentity", "Assignee")
+                        .WithMany()
+                        .HasForeignKey("AssigneeId");
+
                     b.HasOne("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObjectStatus", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
@@ -16048,6 +16122,8 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Assignee");
 
                     b.Navigation("Status");
 
