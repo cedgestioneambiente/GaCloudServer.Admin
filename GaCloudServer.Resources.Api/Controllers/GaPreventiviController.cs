@@ -1130,18 +1130,18 @@ namespace GaCloudServer.Resources.Api.Controllers
                 {
                     var inspectionData = await _gaPreventiviService.GetPreventiviObjectInspectionsAsync(new PageRequest() { Filter = $"ObjectId eq {model.Id}" });
                     message += $"Stato Avanzamento: {model.Status.Descrizione}</br>" +
-                        $"Note Avanzamento: {model.Note} </br>" +
+                        $"Note Avanzamento: {model.Note??""} </br>" +
                         $"<b>Sopralluogo</b> </br>" +
-                        $"Note Ticket Crm: {model.NoteCrm} </br>" +
-                        $"Note Preliminari: {HttpUtility.HtmlDecode(Regex.Replace(inspectionData.Items.FirstOrDefault().Note,"<.*?>",""))} </br>" +
-                        $"Note Sopralluogo: {inspectionData.Items.FirstOrDefault().NoteInspection}</br>" +
+                        $"Note Ticket Crm: {model.NoteCrm??""} </br>" +
+                        $"Note Preliminari: {HttpUtility.HtmlDecode(Regex.Replace(inspectionData.Items.FirstOrDefault().Note??"","<.*?>",""))} </br>" +
+                        $"Note Sopralluogo: {inspectionData.Items.FirstOrDefault().NoteInspection??""}</br>" +
                         $"Richiedente: {model.CreatorName} </br>";
                 }
                 else
                 { 
                     message+= $"Stato Avanzamento: {model.Status.Descrizione}</br>" +
-                        $"Note Avanzamento: {model.Note} </br>" +
-                        $"Note Ticket Crm: {model.NoteCrm} </br>" +
+                        $"Note Avanzamento: {model.Note??""} </br>" +
+                        $"Note Ticket Crm: {model.NoteCrm??""} </br>" +
                         $"Richiedente: {model.CreatorName} </br>";
                 }
 
@@ -1150,6 +1150,25 @@ namespace GaCloudServer.Resources.Api.Controllers
                 if (model.SendEmail.GetValueOrDefault()) { await sendAssigneeMail(model.Id, model.ObjectNumber, model.AssigneeMail, message, model.CreatorId); }
                 if (model.SendNotify.GetValueOrDefault()) { await sendNotification(model.Id, model.ObjectNumber, model.AssigneeId, TextConsts.objectManage); }
 
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("UpdatePreventiviObjectModeAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectModeAsync(long id)
+        {
+            try
+            {
+
+                var response = await _gaPreventiviService.UpdatePreventiviObjectModeAsync(id);
 
                 return Ok(new { Code = code.Status204NoContent, Response = response });
             }
@@ -1231,6 +1250,53 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
             }
         }
+
+        [HttpGet("CopyPreventiviObjectServicesAsync/{sourceId}/{destId}")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CopyPreventiviObjectServicesAsync(long sourceId,long destId)
+        {
+            try
+            {
+                #region Services
+
+
+                var sectionsCopy = await _gaPreventiviService.GetPreventiviObjectSectionsAsync(new PageRequest() { Filter = $"ObjectId eq {sourceId}" });
+
+                foreach (var section in sectionsCopy.Items)
+                {
+                    var servicesCopy = await _gaPreventiviService.GetPreventiviObjectServicesAsync(new PageRequest() { Filter = $"SectionId eq {section.Id}" });
+
+                    section.Id = 0;
+                    section.ObjectId = destId;
+
+                    var sectionResponse = await _gaPreventiviService.CreatePreventiviObjectSectionAsync(section);
+
+
+                    foreach (var service in servicesCopy.Items)
+                    {
+                        service.Id = 0;
+                        service.ObjectId = destId;
+                        service.SectionId = sectionResponse;
+
+                        var serviceResponse = await _gaPreventiviService.CreatePreventiviObjectServiceAsync(service);
+                    }
+                }
+                
+
+                #endregion
+
+
+                return Ok(new { Code = code.Status201Created, Response = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+
 
         [HttpGet("GetPreventiviObjectCliSedAsync/{codCom}/{codCli}")]
         [ProducesResponseType(code.Status200OK)]

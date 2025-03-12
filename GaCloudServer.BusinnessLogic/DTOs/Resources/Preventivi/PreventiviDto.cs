@@ -133,6 +133,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         //Campo note per passaggio note assegnazione
         public string Note { get; set; }
         public bool PrintRecap { get; set; }
+        public bool SpotMode { get; set; }
 
         //Navigation Props
         public PreventiviObjectStatusDto Status { get; set; }
@@ -249,6 +250,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public long DestinationId { get; set; }
         public bool DestinationOnPrint { get; set; }
         public bool TotalOnPrint { get; set; }
+        public bool OmitLabelTypeOnPrint { get; set; }
         public string Garbages { get; set; }
         public bool Accepted { get; set; }
 

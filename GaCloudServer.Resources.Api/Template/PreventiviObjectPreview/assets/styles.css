@@ -245,7 +245,12 @@ svg:not(:root) {
 
 table {
     border-collapse: collapse;
+
 }
+div[id^="section"] {
+    page-break-inside: avoid;
+}
+
 
 caption {
     padding-top: 0.75rem;

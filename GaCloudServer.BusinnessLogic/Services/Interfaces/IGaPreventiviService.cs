@@ -102,6 +102,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         public Task<bool> UpdatePreventiviObjectAssigneeAsync(long id, PreventiviObjectDto model);
+        public Task<bool> UpdatePreventiviObjectModeAsync(long id);
         public Task<bool> UpdatePreventiviObjectContactDetailsAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectOperativeDetailsAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectTypeDetailsAsync(long id, PreventiviObjectDto model);

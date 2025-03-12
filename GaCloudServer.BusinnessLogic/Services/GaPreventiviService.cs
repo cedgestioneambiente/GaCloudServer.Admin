@@ -664,6 +664,15 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
+        public async Task<bool> UpdatePreventiviObjectModeAsync(long id)
+        {
+            var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
+            entity.SpotMode = entity.SpotMode==null?false:!entity.SpotMode;
+            var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
+            return entity.SpotMode;
+
+        }
+
         public async Task<bool> UpdatePreventiviObjectContactDetailsAsync(long id, PreventiviObjectDto dto)
         {
             var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());

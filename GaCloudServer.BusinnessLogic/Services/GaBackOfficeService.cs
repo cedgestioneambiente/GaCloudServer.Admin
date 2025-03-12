@@ -588,7 +588,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             dto.CodCategoria = utenza.Categ;
             dto.DescCategoria = utenza.DescriCat;
 
-            var zona = zone.Data.Where(x => x.Descrizione.Contains(utenza.Comune.Trim()) && x.Descrizione.Contains(utenza.DescriCat.Trim())).FirstOrDefault();
+            var zona = zone.Data.Where(x => x.Descrizione.Contains(utenza.Comune.Trim()) && x.Descrizione.Contains(utenza.CodZona.Trim())).FirstOrDefault();
             if (zona == null)
             {
                 zona = zone.Data.Where(x => x.Descrizione == "ZONA STANDARD").FirstOrDefault();

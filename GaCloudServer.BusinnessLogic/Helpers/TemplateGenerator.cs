@@ -1542,7 +1542,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 foreach (var garbage in garbagesObject)
                 {
                     sectionHeader += $"<div class=\"w-100\" style=\"padding:5px\">{garbage}";
-                    sectionHeader += string.IsNullOrEmpty(section.Note) ? "" : $" ({section.Note})";
+                    sectionHeader += string.IsNullOrEmpty(section.Note) ? "" : $"<br/> <b>[{section.Note}]</b>";
                     sectionHeader += "</div>";
                 }
 
@@ -1557,17 +1557,17 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
                 var sectionServices = $"<table class=\"table table-bordered\">";
-                if (dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).Count()>0 )
+                if (dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).Count() > 0)
                 {
                     sectionServices += "<thead>" +
                     "<th></th>" +
-                    "<th></th>";
+                    "<th style='text-align:right;width:70px !important;'></th>";
 
-                    sectionServices += allColumnsEmpty ? "<th style=\"width:0px !important;padding:0px !important;\"></th>" : "<th></th>";
-                    sectionServices += "<th style='text-align:right'>Costo Unitario</th>" +
-                    "<th style='text-align:right'>IVA</th>" +
-                    "<th style='text-align:right'>Imponibile</th>" +
-                    "<th style='text-align:right'>Costo Ivato</th>" +
+                    sectionServices += allColumnsEmpty ? "<th style=\"width:0px !important;padding:0px !important;\"></th>" : "<th style='text-align:right;width:70px !important;'></th>";
+                    sectionServices += "<th style='text-align:right;width:100px !important;'>Costo Unitario</th>" +
+                    "<th style='text-align:right;width:70px !important;'>IVA</th>" +
+                    "<th style='text-align:right;width:100px !important;'>Imponibile</th>" +
+                    "<th style='text-align:right;width:100px !important;'>Costo Ivato</th>" +
                     "</thead>";
                 }
 
@@ -1646,15 +1646,15 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
                 serviceTable += $"" +
-                    $"<div id='section-{section.Id}' class=\"w-100 pt-2\">" +
-                        $"{producerRow}"+
-                        "<div class=\"row\">" +
-                            "<div class=\"col-4\">TIPO DI SERVIZIO</div>" +
-                            $"<div class=\"col-8 font-weight-bold\">{section.Descrizione}</div>" +
-                        "</div>" +
-                        $"{sectionHeader}" +
-                        $"{sectionServices}" +
-                    "</div>";
+                                $"<div id='section-{section.Id}' class=\"w-100 pt-2\">" +
+                                    $"{producerRow}" +
+                                    "<div class=\"row\">" +
+                                        $"<div class=\"col-4\">{(section.OmitLabelTypeOnPrint ? "" : "TIPOSERVIZIO")}</div>" +
+                                        $"<div class=\"col-8 font-weight-bold\">{section.Descrizione}</div>" +
+                                    "</div>" +
+                                    $"{sectionHeader}" +
+                                    $"{sectionServices}" +
+                                "</div>";
             }
 
             #endregion
@@ -1732,7 +1732,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             #region Condition Builder
             var conditionTable = "<div>";
-            foreach (var condition in dto.preventiviObjectConditions)
+            foreach (var condition in dto.preventiviObjectConditions.OrderBy(x=>x.Order))
             {
                 conditionTable += $"<p>{condition.Descrizione}</p>";
             }
@@ -1772,6 +1772,8 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 , conditionTable //27
                 , dto.preventiviObject.IntestatarioPiva //28
                 , dto.preventiviObject.IntestatarioIndirizzoOperativo //29
+                , dto.preventiviObject.IndirizzoFattura //29
+
                 );
             return sb.ToString();
 
@@ -1830,9 +1832,11 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 foreach (var garbage in garbagesObject)
                 {
                     sectionHeader += $"<div class=\"w-100\" style=\"padding:5px\">{garbage}";
-                    sectionHeader += string.IsNullOrEmpty(section.Note) ? "" : $" ({section.Note})";
+                    sectionHeader += string.IsNullOrEmpty(section.Note) ? "" : $"<br/> <b>[{section.Note}]</b>";
                     sectionHeader += "</div>";
                 }
+
+                // aggiungere Note servizio se presenti anche senza cer condizione se garbage è vuoto ma note not empty
 
                 sectionHeader += section.DestinationOnPrint && !section.Destination.Ignore ? $"<div style=\"padding:5px\"><b>Destinatario</b> {section.Destination.Descrizione} - {section.Destination.Indirizzo}</div>" : "";
                 sectionHeader += "</div>";
@@ -1849,13 +1853,13 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 {
                     sectionServices += "<thead>" +
                     "<th></th>" +
-                    "<th></th>";
+                    "<th style='text-align:right;width:70px !important;'></th>";
 
-                    sectionServices += allColumnsEmpty ? "<th style=\"width:0px !important;padding:0px !important;\"></th>" : "<th></th>";
-                    sectionServices += "<th style='text-align:right'>Costo Unitario</th>" +
-                    "<th style='text-align:right'>IVA</th>" +
-                    "<th style='text-align:right'>Imponibile</th>" +
-                    "<th style='text-align:right'>Costo Ivato</th>" +
+                    sectionServices += allColumnsEmpty ? "<th style=\"width:0px !important;padding:0px !important;\"></th>" : "<th style='text-align:right;width:70px !important;'></th>";
+                    sectionServices += "<th style='text-align:right;width:100px !important;'>Costo Unitario</th>" +
+                    "<th style='text-align:right;width:70px !important;'>IVA</th>" +
+                    "<th style='text-align:right;width:100px !important;'>Imponibile</th>" +
+                    "<th style='text-align:right;width:100px !important;'>Costo Ivato</th>" +
                     "</thead>";
                 }
 
@@ -1893,7 +1897,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     sectionServices += "</td>";
 
 
-                    sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x => x.Id == service.ServiceTypeDetail.GaugeId).FirstOrDefault().Descrizione}</td>";
+                    sectionServices += $"<td class=\"p-1\" style=\"bodrer-left:solid 1px\">€/{dto.commonGauges.Where(x => x.Id == service.ServiceTypeDetail.GaugeId).FirstOrDefault().DescrizioneBreve}</td>";
                     // Gestione della colonna per la quantità
                     sectionServices += service.ShowAmountOnPrint
                         ? $"<td class=\"p-1\">Qta.: {service.Amount}</td>"
@@ -1937,7 +1941,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                     $"<div id='section-{section.Id}' class=\"w-100 pt-2\">" +
                         $"{producerRow}" +
                         "<div class=\"row\">" +
-                            "<div class=\"col-4\">TIPO DI SERVIZIO</div>" +
+                            $"<div class=\"col-4\">{(section.OmitLabelTypeOnPrint ? "" : "TIPOSERVIZIO")}</div>" +
                             $"<div class=\"col-8 font-weight-bold\">{section.Descrizione}</div>" +
                         "</div>" +
                         $"{sectionHeader}" +
@@ -2036,6 +2040,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 , dto.preventiviObject.EmailPec //14
                 , serviceTable //15
                 , recapSection //16
+                ,dto.preventiviObject.IndirizzoFattura //17
                 );
             return sb.ToString();
 
@@ -2084,6 +2089,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
                 , dto.preventiviObject.NoteCrm //21
                 , dto.preventiviObjectInspection.Note //22
                 , dto.preventiviObjectInspection.NoteInspection //23
+                , dto.preventiviObject.DataInserimento.ToString("dd/MM/yyyy")//24
 
 
                 );
