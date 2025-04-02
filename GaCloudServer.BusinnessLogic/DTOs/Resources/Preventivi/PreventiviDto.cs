@@ -103,6 +103,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public DateTime DataCompletamento { get; set; }
         public bool Completed { get; set; }
         public string NoteCrm { get; set; }
+        public long? CrmTicketId { get; set; }
         public string NoteOperative { get; set; }
 
         public bool? FinancialLock { get; set; }
@@ -436,6 +437,14 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string CreatorId { get; set; }
         public string Note { get; set; }
 
+    }
+
+    public class PreventiviObjectCrmDto
+    { 
+        public long Id { get; set; }
+        public string NoteCrm { get; set; }
+        public string CreatorId { get; set; } 
+        public string CreatorName { get; set; }
     }
     #endregion
 }

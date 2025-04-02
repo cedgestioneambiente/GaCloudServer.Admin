@@ -52,6 +52,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo;
         protected readonly IGenericRepository<CrmEventComune> gaCrmEventComuniRepo;
+        protected readonly IGenericRepository<CrmTicket> gaCrmTicketsRepo;
 
         protected readonly IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo;
 
@@ -94,6 +95,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo,
             IGenericRepository<CrmEventComune> gaCrmEventComuniRepo,
+            IGenericRepository<CrmTicket> gaCrmTicketsRepo,
 
             IGenericRepository<PreventiviObjectHistory> gaPreventiviObjectHistoriesRepo,
 
@@ -145,6 +147,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.gaCrmTicketAttachmentsRepo= gaCrmTicketAttachmentsRepo;
             this.gaCrmEventComuniRepo = gaCrmEventComuniRepo;
+            this.gaCrmTicketsRepo = gaCrmTicketsRepo;
 
             this.gaPreventiviObjectHistoriesRepo= gaPreventiviObjectHistoriesRepo;
 
@@ -614,6 +617,22 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entity.ToModel<PreventiviObjectDto>();
 
         }
+
+        public async Task<bool> UpdateCrmTicketStatusAsync(long id, long status)
+        {
+            try
+            {
+                var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
+                entity.ContactCenterStatoRichiestaId = status;
+                var response = await gaCrmTicketsRepo.UpdateAsync(entity);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
         #endregion
 
         #region Objects
@@ -668,6 +687,15 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
             entity.SpotMode = entity.SpotMode==null?false:!entity.SpotMode;
+            var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
+            return entity.SpotMode;
+
+        }
+
+        public async Task<bool> UpdatePreventiviObjectCrmAsync(PreventiviObjectCrmDto dto)
+        {
+            var entity = await gaPreventiviObjectsRepo.GetAsync(dto.Id, new GetRequest());
+            entity.NoteCrm = dto.NoteCrm;
             var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
             return entity.SpotMode;
 

@@ -91,6 +91,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         public Task<PageResponse<CrmEventComuneDto>> GetPreventiviCrmComuniAsync(PageRequest request);
         public Task<PreventiviObjectDto> CreatePreventiviObjectFromCrmTicketAsync(PreventiviObjectAssignementDto model, double saldo);
         public Task<PreventiviObjectDto> CreatePreventiviObjectFromCopyAsync(PreventiviObjectCopyAssignementDto model, double saldo);
+        public Task<bool> UpdateCrmTicketStatusAsync(long id, long status);
         #endregion
 
         #region Objects
@@ -103,6 +104,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Functions
         public Task<bool> UpdatePreventiviObjectAssigneeAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectModeAsync(long id);
+        public Task<bool> UpdatePreventiviObjectCrmAsync(PreventiviObjectCrmDto dto);
         public Task<bool> UpdatePreventiviObjectContactDetailsAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectOperativeDetailsAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectTypeDetailsAsync(long id, PreventiviObjectDto model);

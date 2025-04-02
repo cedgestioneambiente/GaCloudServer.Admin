@@ -1525,7 +1525,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             #region Section Builder
 
-            foreach (var section in dto.preventiviObjectSections.OrderBy(x=>x.Order))
+            foreach (var section in dto.preventiviObjectSections.Where(x=>x.Accepted==true).OrderBy(x=>x.Order))
             {
 
                 sectionTotal = 0.0;
@@ -1557,7 +1557,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
                 var sectionServices = $"<table class=\"table table-bordered\">";
-                if (dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).Count() > 0)
+                if (dto.preventiviObjectServices.Where(x => x.SectionId == section.Id && x.Accepted==true).Count() > 0)
                 {
                     sectionServices += "<thead>" +
                     "<th></th>" +
@@ -1573,7 +1573,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
                 sectionServices += "<tbody>";
-                foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
+                foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id && x.Accepted==true).OrderBy(x => x.Order))
                 {
                     var _objectTotalNoTax = service.CostUnit * service.Amount;
                     var _objectTotalTax = (service.CostUnit * service.Amount) * (service.IvaCode.Valore / 100);
@@ -1815,7 +1815,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             #region Section Builder
 
-            foreach (var section in dto.preventiviObjectSections.OrderBy(x => x.Order))
+            foreach (var section in dto.preventiviObjectSections.Where(x=>x.Accepted==true).OrderBy(x => x.Order))
             {
 
                 sectionTotal = 0.0;
@@ -1849,7 +1849,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
                 var sectionServices = $"<table class=\"table table-bordered\">";
-                if (dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).Count() > 0)
+                if (dto.preventiviObjectServices.Where(x => x.SectionId == section.Id && x.Accepted == true).Count() > 0)
                 {
                     sectionServices += "<thead>" +
                     "<th></th>" +
@@ -1865,7 +1865,7 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
 
                 sectionServices += "<tbody>";
-                foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id).OrderBy(x => x.Order))
+                foreach (var service in dto.preventiviObjectServices.Where(x => x.SectionId == section.Id && x.Accepted==true).OrderBy(x => x.Order))
                 {
                     var _objectTotalNoTax = service.CostUnit * service.Amount;
                     var _objectTotalTax = (service.CostUnit * service.Amount) * (service.IvaCode.Valore / 100);

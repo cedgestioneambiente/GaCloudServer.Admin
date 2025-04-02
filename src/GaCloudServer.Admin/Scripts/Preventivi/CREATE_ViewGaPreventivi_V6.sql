@@ -31,7 +31,7 @@ SELECT cast(0 as bigint) as Id,TRIM(A.[CODCLI]) Codcli
       ,[ARCHIVIA] Archivio
       ,[PDF_FILE] PdfFile
 	  ,B.IDDOCUMENTO IdDocumento
-	  ,B.DATA DataDocCorr
+	  ,ISNULL(B.DATA,CAST('19700101' AS date)) DataDocCorr
 	  ,B.NUMITEM NumItem
 	  ,ISNULL(C.INCRIM,0.0) Pagato
       ,cast(0 as bit) [Disabled]

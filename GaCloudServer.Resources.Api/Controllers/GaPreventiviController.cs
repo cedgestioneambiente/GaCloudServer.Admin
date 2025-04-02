@@ -969,7 +969,23 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpGet("UpdateCrmTicketStatusAsync/{id}/{status}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdateCrmTicketStatusAsync(long id, long status)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdateCrmTicketStatusAsync(id, status);
 
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
 
         #endregion
 
@@ -1169,6 +1185,31 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
 
                 var response = await _gaPreventiviService.UpdatePreventiviObjectModeAsync(id);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("UpdatePreventiviCrmAsync")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectCrmAsync([FromBody] PreventiviObjectCrmDto model)
+        {
+            try
+            {
+
+                var response = await _gaPreventiviService.UpdatePreventiviObjectCrmAsync(model);
+                var preventiviObject = _gaPreventiviService.GetPreventiviObjectsAsync(new PageRequest() { Filter=$"Id eq {model.Id}",Take=1,Expand="Assignee"}).Result.Items.FirstOrDefault();
+
+                var message = $"Note Ticket Crm: {model.NoteCrm ?? ""} </br>" +
+                        $"Richiedente: {model.CreatorName} </br>";
+
+                var sendMailResponse = await sendCrmMail(model.Id,preventiviObject.ObjectNumber,preventiviObject.Assignee.Email,message,model.CreatorId);
 
                 return Ok(new { Code = code.Status204NoContent, Response = response });
             }
@@ -4166,6 +4207,36 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        private async Task<bool> sendCrmMail(long id, string number, string mail, string message, string creatorId)
+        {
+            var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Preventivi, AppConsts.PreventiviInfo);
+            var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+            var mailJob = await _mailService.AddMailJobAsync(new MailJob()
+            {
+                Id = 0,
+                Description = "Modifica Dati CRM su Preventivo N° " + number,
+                DateScheduled = DateTime.Now,
+                Title = "Modifica Dati CRM su Preventivo N° " + number,
+                MailingTo = mail,
+                MailCc = "",
+                Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Preventivi),
+                Content = HtmlHelpers.GenerateText(message),
+                Link = true,
+                LinkHref = String.Format("https://cloud.gestioneambiente.net/preventivi/tab/object/{0}", id),
+                LinkDescription = "Vai al preventivo",
+                Template = "DefaultMailWithLinkJob.html",
+                UserId = creatorId,
+                OkMessage = String.Format("Le modifiche sul Preventivo N° {0} sono state inoltrate correttamente.", number),
+                KoMessage = String.Format("Si è verificato un problema durante l'invio delle modifiche sul Preventivo N° {0}.", number),
+                Attachment = false,
+                AttachmentPath = null
+            });
+
+            return true;
+
+        }
+
         private async Task<PreventiviObjectTemplateDto> generatePreventiviObjectTemplate(
             PreventiviObjectDto preventiviObject,
             PreventiviObjectInspectionDto preventiviObjectInspection,
@@ -4183,7 +4254,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 FilePath = @"Print/Preventivi",
                 Title = title,
                 Css = css,
-                HeaderSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, HtmUrl = "https://storage.gestioneambiente.net/resources/print/ci-header.html" },
+                HeaderSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, HtmUrl = "https://storage.gestioneambiente.net/resources/print/ci-header.html",Right="Prova" },
                 FooterSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, HtmUrl = "https://storage.gestioneambiente.net/resources/print/ci-footer.html" },
                 Copies = 1,
                 MarginSettings = new DinkToPdf.MarginSettings { Top = 20,Bottom=30 },
