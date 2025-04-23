@@ -70,7 +70,8 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new PrevisioMapperProfile(),
             new PreventiviMapperProfile(),
             new BackOfficeMapperProfile(),
-            new CommonMapperProfile()
+            new CommonMapperProfile(),
+            new CreDebMapperProfile()
         };
 
         static GenericMapper() {

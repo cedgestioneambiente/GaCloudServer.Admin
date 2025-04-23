@@ -9,6 +9,7 @@ using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
+using System.Text;
 using fh = GaCloudServer.BusinnessLogic.Helpers.FileHelper;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -706,6 +707,156 @@ namespace GaCloudServer.BusinnessLogic.Services
             }
 
 
+        }
+        public async Task<UploadFileResponseModel> UploadText(string content, string folder, string fileName)
+        {
+            try
+            {
+                fileName = fh.GenerateFileName(fileName);
+                var auth = Authenticate();
+                var driveRoot = await auth.Drive.Request().GetAsync();
+                var driveFolder = await auth.Drive.Root.Children.Request().GetAsync();
+
+                var subfolders = folder.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                DriveItem? targetFolder = null;
+                DriveItem? parentFolder = null;
+
+                // Crea eventuali sottocartelle
+                for (int i = 0; i < subfolders.Length; i++)
+                {
+                    string currentFolderName = subfolders[i];
+
+                    if (i == 0)
+                    {
+                        parentFolder = driveFolder.FirstOrDefault(x => x.Name == currentFolderName);
+
+                        if (parentFolder == null)
+                        {
+                            var newFolder = new DriveItem
+                            {
+                                Name = currentFolderName,
+                                Folder = new Folder()
+                            };
+
+                            parentFolder = await auth
+                                .Sites["root"]
+                                .Drives[driveRoot.Id]
+                                .Root
+                                .Children
+                                .Request()
+                                .AddAsync(newFolder);
+                        }
+                    }
+                    else
+                    {
+                        var children = await auth
+                            .Sites["root"]
+                            .Drives[driveRoot.Id]
+                            .Items[parentFolder.Id]
+                            .Children
+                            .Request()
+                            .Filter($"name eq '{currentFolderName}'")
+                            .GetAsync();
+
+                        var existing = children.FirstOrDefault(x => x.Name == currentFolderName);
+
+                        if (existing == null)
+                        {
+                            var newFolder = new DriveItem
+                            {
+                                Name = currentFolderName,
+                                Folder = new Folder()
+                            };
+
+                            var created = await auth
+                                .Sites["root"]
+                                .Drives[driveRoot.Id]
+                                .Items[parentFolder.Id]
+                                .Children
+                                .Request()
+                                .AddAsync(newFolder);
+
+                            parentFolder = created;
+                            targetFolder = created;
+                        }
+                        else
+                        {
+                            parentFolder = existing;
+                            targetFolder = existing;
+                        }
+                    }
+                }
+
+                // Se nessuna sottocartella, target è root o unica cartella
+                if (subfolders.Length == 1 || targetFolder == null)
+                {
+                    targetFolder = parentFolder;
+                }
+
+                // Prepara lo stream dalla stringa
+                using var ms = new MemoryStream(Encoding.UTF8.GetBytes(content));
+                ms.Position = 0;
+
+                DriveItem uploadedFile = null;
+
+                if (ms.Length <= 4 * 1024 * 1024)
+                {
+                    // Upload diretto
+                    uploadedFile = await auth
+                        .Sites["root"]
+                        .Drives[driveRoot.Id]
+                        .Items[targetFolder.Id]
+                        .ItemWithPath(fileName)
+                        .Content
+                        .Request()
+                        .PutAsync<DriveItem>(ms);
+                }
+                else
+                {
+                    // Upload chunked
+                    var uploadSession = await auth
+                        .Sites["root"]
+                        .Drives[driveRoot.Id]
+                        .Items[targetFolder.Id]
+                        .ItemWithPath(fileName)
+                        .CreateUploadSession()
+                        .Request()
+                        .PostAsync();
+
+                    var maxChunkSize = 320 * 1024;
+                    var provider = new ChunkedUploadProvider(uploadSession, auth, ms, maxChunkSize);
+                    var chunkRequests = provider.GetUploadChunkRequests();
+                    var readBuffer = new byte[maxChunkSize];
+                    var trackedExceptions = new List<Exception>();
+                    DriveItem itemResult = null;
+
+                    foreach (var request in chunkRequests)
+                    {
+                        var result = await provider.GetChunkRequestResponseAsync(request, readBuffer, trackedExceptions);
+                        if (result.UploadSucceeded)
+                        {
+                            itemResult = result.ItemResponse;
+                        }
+                    }
+
+                    if (itemResult == null)
+                    {
+                        return null;
+                    }
+
+                    uploadedFile = itemResult;
+                }
+
+                return new UploadFileResponseModel
+                {
+                    id = uploadedFile.Id,
+                    fileName = fileName
+                };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<DriveItem> UploadImage(MemoryStream stream, string _mainFolder, string _targetFolder, string fileName)

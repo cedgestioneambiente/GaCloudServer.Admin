@@ -16,6 +16,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.CreDeb;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
@@ -641,6 +642,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaPreventiviIsmartDocumenti> ViewGaPreventiviIsmartDocumenti { get; set; }
         #endregion
         #endregion
+
+        #region CreDeb
+        public DbSet<CreDebCanale> GaCreDebCanali { get; set; }
+        public DbSet<CreDebConto> GaCreDebConti { get; set; }
+        public DbSet<CreDebIncassiInObject> GaCreDebObjects { get; set; }
+        public DbSet<CreDebIncassiInObjectDetail> GaCreDebObjectDetails { get; set; }
+        #endregion  
 
         public IHttpContextAccessor httpContextAccessor { get; set; }
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options,IHttpContextAccessor httpContextAccessor) : base(options)

@@ -62,6 +62,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Common;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.CreDeb;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -633,6 +634,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaPreventiviIsmartDocumenti> ViewGaPreventiviIsmartDocumenti { get; set; }
         #endregion
         #endregion
+
+        #region CreDeb
+        DbSet<CreDebCanale> GaCreDebCanali { get; set; }
+        DbSet<CreDebConto> GaCreDebConti { get; set; }
+        DbSet<CreDebIncassiInObject> GaCreDebObjects { get; set; }
+        DbSet<CreDebIncassiInObjectDetail> GaCreDebObjectDetails { get; set; }
+        #endregion  
 
     }
 }

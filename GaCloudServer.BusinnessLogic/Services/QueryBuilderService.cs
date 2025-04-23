@@ -61,6 +61,35 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entities;
         }
 
+        public async Task<List<T>> GetFromQueryAsync<T>(string query) where T : class, new()
+        {
+            var results = await GetFromQueryAsync(query); // usa quello esistente
+            var list = new List<T>();
+
+            foreach (IDictionary<string, object> item in results)
+            {
+                var obj = new T();
+                foreach (var prop in typeof(T).GetProperties())
+                {
+                    if (item.TryGetValue(prop.Name, out var value) && value != null)
+                    {
+                        try
+                        {
+                            var safeValue = Convert.ChangeType(value, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                            prop.SetValue(obj, safeValue);
+                        }
+                        catch
+                        {
+                            // Logga se necessario
+                        }
+                    }
+                }
+                list.Add(obj);
+            }
+
+            return list;
+        }
+
         #region QueryBuilderParamTypes
         public async Task<QueryBuilderParamTypesDto> GetQueryBuilderParamTypesAsync(int page = 1, int pageSize = 0)
         {

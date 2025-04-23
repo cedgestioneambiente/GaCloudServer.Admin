@@ -15,6 +15,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         Task<UploadFileResponseModel> Upload(IFormFile file, string folder, string fileName);
         Task<UploadFileResponseModel> Upload(CommonFileUploadDto fileModel);
         Task<UploadFileResponseModel> UploadStream(MemoryStream stream, string folder, string fileName);
+        Task<UploadFileResponseModel> UploadText(string content, string folder, string fileName);
         Task<DriveItem> UploadImage(MemoryStream stream, string _mainFolder, string _targetFolder, string fileName);
         Task<bool> Remove(string fileId);
         Task<string> CreateSharedLink(string fileId);

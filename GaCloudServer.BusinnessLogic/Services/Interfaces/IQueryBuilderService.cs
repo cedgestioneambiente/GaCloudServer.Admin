@@ -7,6 +7,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
     public interface IQueryBuilderService
     {
         Task<List<object>> GetFromQueryAsync(string query);
+        Task<List<T>> GetFromQueryAsync<T>(string query) where T : class, new();
 
         #region QueryBuilderParamTypes
         Task<QueryBuilderParamTypesDto> GetQueryBuilderParamTypesAsync(int page = 1, int pageSize = 0);

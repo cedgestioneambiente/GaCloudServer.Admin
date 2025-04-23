@@ -16,6 +16,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.CreDeb;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
@@ -618,7 +619,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             #endregion
 
+            //CreDeb
+            #region CreDeb
 
+            services.AddTransient<IGenericRepository<CreDebCanale>, GenericRepository<TResourcesDbContext, CreDebCanale>>();
+            services.AddTransient<IGenericRepository<CreDebConto>, GenericRepository<TResourcesDbContext, CreDebConto>>();
+            services.AddTransient<IGenericRepository<CreDebIncassiInObject>, GenericRepository<TResourcesDbContext, CreDebIncassiInObject>>();
+            services.AddTransient<IGenericRepository<CreDebIncassiInObjectDetail>, GenericRepository<TResourcesDbContext, CreDebIncassiInObjectDetail>>();
+
+            #endregion
 
 
             return services; 
