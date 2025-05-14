@@ -209,8 +209,12 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #region Reclami
         Task<string> GenerateNumReclamoAsync(int year);
         Task<PageResponse<CrmTicket>> GetCrmReclamiAsync(PageRequest request);
+        Task<PageResponse<CrmTicket>> GetCrmReclamiRegistroAsync(PageRequest request, int year);
+        Task<PageResponse<CrmReclamoApiDto>> GetCrmReclamiApiAsync(PageRequest request);
+        Task<PageResponse<CrmReclamoApiDto>> GetExportCrmReclamiApiAsync(PageRequest request);
 
         Task<bool> ChangeFondatoGaCrmTicketAsync(long id);
+        Task<List<int>> GetCrmReclamiAnniAsync();
         #endregion
 
         #region Shared Data Table

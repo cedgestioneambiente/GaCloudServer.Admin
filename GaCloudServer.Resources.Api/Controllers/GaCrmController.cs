@@ -3,6 +3,7 @@ using AutoWrapper.Filters;
 using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
@@ -35,6 +36,7 @@ namespace GaCloudServer.Resources.Api.Controllers
     public class GaCrmController : Controller
     {
         private readonly IGaCrmService _gaCrmService;
+        private readonly IGaReclamiService _gaReclamiService;
         private readonly ILogger<GaCrmController> _logger;
         private readonly IPrintService _printService;
         private readonly IMailService _mailService;
@@ -44,6 +46,7 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         public GaCrmController(
             IGaCrmService gaCrmService
+            , IGaReclamiService gaReclamiService
             , IMailService mailService
             , INotificationService notificationService
             , IPrintService printService
@@ -53,6 +56,7 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
 
             _gaCrmService = gaCrmService;
+            _gaReclamiService = gaReclamiService;
             _printService = printService;
             _mailService = mailService;
             _notificationService = notificationService;
@@ -1720,8 +1724,9 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpDelete("DeleteGaCrmTicketAllegatoAsync/{id}")]
         [HttpDelete("DeleteGaCrmTicketAllegatoAsync/{id}/{fileId}")]
-        public async Task<ActionResult<ApiResponse>> DeleteGaCrmTicketAllegatoAsync(long id, string fileId)
+        public async Task<ActionResult<ApiResponse>> DeleteGaCrmTicketAllegatoAsync(long id, string? fileId=null)
         {
             try
             {
@@ -1793,6 +1798,20 @@ namespace GaCloudServer.Resources.Api.Controllers
             {
                 var dtos = await _gaCrmService.GetGaCrmTicketAzioniByTicketIdAsync(CrmTicketTicketId);
                 var apiDtos = dtos.ToApiDto<CrmTicketAzioniApiDto, CrmTicketAzioniDto>();
+
+                var tipiAzioni = await _gaReclamiService.GetGaReclamiTipiAzioniAsync();
+
+                // Mappatura ID → Descrizione per lookup rapido
+                var tipoAzioneLookup = tipiAzioni.Data.ToDictionary(x => x.Id, x => x.DescrizioneBreve);
+
+                foreach (var item in apiDtos.Data)
+                {
+                    if (tipoAzioneLookup.TryGetValue(item.CrmTicketTipoAzioneId, out var descrizione))
+                    {
+                        item.CrmTicketTipoAzioneDesc = descrizione;
+                    }
+                }
+
                 return new ApiResponse(apiDtos);
             }
             catch (Exception ex)
@@ -1800,8 +1819,8 @@ namespace GaCloudServer.Resources.Api.Controllers
                 _logger.LogError(ex.Message, ex);
                 throw new ApiException(ex.Message);
             }
-
         }
+
 
         [HttpGet("GetGaCrmTicketAzioneByIdAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> GetGaCrmTicketAzioneByIdAsync(long id)
@@ -2628,6 +2647,24 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpPost("GetCrmReclamiApiAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetCrmReclamiApiAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaCrmService.GetCrmReclamiApiAsync(request);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
         [HttpGet("ChangeFondatoGaCrmTicketAsync/{id}")]
         public async Task<ActionResult<ApiResponse>> ChangeFondatoGaCrmTicketAsync(long id)
         {
@@ -2643,6 +2680,110 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
 
         }
+
+        [HttpGet("GetCrmReclamiAnniAsync")]
+        public async Task<ActionResult<ApiResponse>> GetCrmReclamiAnniAsync()
+        {
+            try
+            {
+                var response = await _gaCrmService.GetCrmReclamiAnniAsync();
+                return new ApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+
+        }
+
+        [HttpGet("ExportGaCrmReclamiAsync")]
+        [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestObjectResult), 400)]
+        [AutoWrapIgnore]
+        public async Task<IActionResult> ExportGaCrmReclamiAsync()
+        {
+            try
+            {
+                var reclami = await _gaCrmService.GetExportCrmReclamiApiAsync(new PageRequest());
+
+                string title = "Export Reclami";
+                string[] columns = {
+                    "NumReclamo", "OrigineReclamo", "DataOrigine", "Mittente", "Oggetto", "RispostaEntro",
+                    "RispostaInviata", "RispostaDefinitiva", "Fondato", "Infondato", "Stato", "Cantiere", "Suddivisione"
+                };
+
+                byte[] filecontent = ExporterHelper.ExportExcel(reclami.Items.ToList(), title, "", "", "EXPORT_RECLAMI", true, columns);
+
+                return new FileContentResult(filecontent, ExporterHelper.ExcelContentType)
+                {
+                    FileDownloadName = "Export_Reclami.xlsx"
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(ex.Message);
+            }
+        }
+
+        [HttpGet("PrintGaCrmReclamiRegistro/{anno}")]
+        public async Task<ApiResponse> PrintGaCrmReclamiRegistro(int anno)
+        {
+            try
+            {
+                var registro = await _gaCrmService.GetCrmReclamiRegistroAsync(new PageRequest(),anno);
+                var registro_stampa = new List<CrmReclamiRegistroTemplateDto>();
+                var tipiAzioni = await _gaReclamiService.GetGaReclamiTipiAzioniAsync();
+
+                foreach (var itm in registro.Items)
+                {
+                    var reclamo = new CrmReclamiRegistroTemplateDto();
+                    List<string> strAzioniList= new List<string>();
+                    string strAzioni = "";
+                    var azioni = await _gaCrmService.GetGaCrmTicketAzioniByTicketIdAsync(itm.Id);
+                    DateTime? risposta=null;
+                    DateTime? rispostaDefinitiva=null;
+                    foreach (var azione in azioni.Data)
+                    {
+                        strAzioniList.Add($"{tipiAzioni.Data.Where(x=>x.Id==azione.CrmTicketTipoAzioneId).FirstOrDefault().DescrizioneBreve}: {azione.Descrizione}");
+                        if (azione.Risposta)
+                            risposta = azione.Data;
+
+                        if (azione.RispostaDefinitiva)
+                            rispostaDefinitiva = azione.Data;
+                    }
+
+                    strAzioni= string.Join(";",strAzioniList);
+
+                    reclamo.Numeratore = itm.NumReclamo;
+                    reclamo.Data = itm.DataRichiesta;
+                    reclamo.AzioniIntraprese = strAzioni;
+                    reclamo.RispostaEntro = itm.DataRichiesta.AddDays(30);
+                    reclamo.Cliente = itm.Utente;
+                    reclamo.Motivo = itm.NoteCrm;
+                    reclamo.Fondato = itm.ReclamoFondato.GetValueOrDefault();
+                    reclamo.Infondato = itm.NoteOperatore;
+                    reclamo.RispostaInviata = risposta??null;
+                    reclamo.RispostaDefinitiva = rispostaDefinitiva??null;
+
+                    registro_stampa.Add(reclamo);
+                }
+
+                var dto = GenerateCrmReclamiRegistroItemsTemplate(registro_stampa, anno.ToString());
+                var response = await _printService.Print("ReclamiRegistro", dto);
+
+                return new ApiResponse(response);
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApiProblemDetailsException(code.Status400BadRequest);
+            }
+
+        }
+
         #endregion
 
         #region Shared Data Table
@@ -2870,7 +3011,41 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        private ReclamiRegistroItemsTemplateDto GenerateCrmReclamiRegistroItemsTemplate(List<CrmReclamiRegistroTemplateDto> items, string anno)
+        {
+            var dto = new ReclamiRegistroItemsTemplateDto()
+            {
+                FileName = "ReclamiRegistro.pdf",
+                FilePath = @"Print/Reclami",
+                Title = "Reclami Registro",
+                Css = "ReclamiRegistro",
+                Orientation = DinkToPdf.Orientation.Landscape,
+                Anno = anno,
+                Items = new List<ReclamiRegistroItemTemplateDto>()
+            };
 
+            List<ReclamiRegistroItemTemplateDto> dtos = new List<ReclamiRegistroItemTemplateDto>();
+            foreach (var item in items)
+            {
+
+                dto.Items.Add(new ReclamiRegistroItemTemplateDto()
+                {
+                    Numeratore = item.Numeratore,
+                    Data = item.Data.ToString("dd-MM-yyyy"),
+                    Cliente = item.Cliente,
+                    Motivo = item.Motivo,
+                    RispostaEntro = item.RispostaEntro.ToString("dd-MM-yyyy"),
+                    RispostaInviata = item.RispostaInviata != null ? item.RispostaInviata.GetValueOrDefault().ToString("dd-MM-yyyy") : "/",
+                    AzioniIntraprese = item.AzioniIntraprese,
+                    Fondato = item.Fondato ? "SI" : "NO",
+                    Infondato = item.Infondato,
+                    RispostaDefinitiva = item.RispostaDefinitiva != null ? item.RispostaDefinitiva.GetValueOrDefault().ToString("dd-MM-yyyy") : "/"
+                });
+
+            }
+
+            return dto;
+        }
 
         #endregion
 
