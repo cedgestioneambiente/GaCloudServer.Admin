@@ -58,7 +58,7 @@ namespace GaCloudServer.Jobs.Jobs
 
 
 
-                        FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://gads-novi.myds.me//emz//whitelist_tortona/" + fileName.Replace("Storage\\",""));
+                        FtpWebRequest request = (FtpWebRequest)WebRequest.Create(@"ftp://20.82.78.5//emz//whitelist_tortona/" + fileName.Replace("Storage\\",""));
 
                         request.Credentials = new NetworkCredential("emz", "nx*@TYHv8L6HJ9q7");
                         request.Method = WebRequestMethods.Ftp.UploadFile;
