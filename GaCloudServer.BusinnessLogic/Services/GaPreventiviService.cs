@@ -47,10 +47,12 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PreventiviDestination> gaPreventiviDestinationsRepo;
         protected readonly IGenericRepository<PreventiviObjectHistory> gaPreventiviObjectHistoriesRepo;
         protected readonly IGenericRepository<PreventiviPaymentTerm> gaPreventiviPaymentTermsRepo;
+        protected readonly IGenericRepository<PreventiviObjectInspectionNotePreliminariTemplate> gaPreventiviObjectInspectionNotePreliminariRepo;
 
 
         protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo;
         protected readonly IGenericRepository<CrmEventComune> gaCrmEventComuniRepo;
+        protected readonly IGenericRepository<CrmTicket> gaCrmTicketsRepo;
 
         protected readonly IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo;
 
@@ -93,10 +95,12 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo,
             IGenericRepository<CrmEventComune> gaCrmEventComuniRepo,
+            IGenericRepository<CrmTicket> gaCrmTicketsRepo,
 
             IGenericRepository<PreventiviObjectHistory> gaPreventiviObjectHistoriesRepo,
 
             IGenericRepository<PreventiviPaymentTerm> gaPreventiviPaymentTermsRepo,
+            IGenericRepository<PreventiviObjectInspectionNotePreliminariTemplate> gaPreventiviObjectInspectionNotePreliminariRepo,
 
             IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo,
 
@@ -143,10 +147,12 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.gaCrmTicketAttachmentsRepo= gaCrmTicketAttachmentsRepo;
             this.gaCrmEventComuniRepo = gaCrmEventComuniRepo;
+            this.gaCrmTicketsRepo = gaCrmTicketsRepo;
 
             this.gaPreventiviObjectHistoriesRepo= gaPreventiviObjectHistoriesRepo;
 
             this.gaPreventiviPaymentTermsRepo = gaPreventiviPaymentTermsRepo;
+            this.gaPreventiviObjectInspectionNotePreliminariRepo = gaPreventiviObjectInspectionNotePreliminariRepo;
 
 
             this.viewGaPreventiviCrmTicketsRepo = viewGaPreventiviCrmTicketsRepo;
@@ -611,6 +617,22 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entity.ToModel<PreventiviObjectDto>();
 
         }
+
+        public async Task<bool> UpdateCrmTicketStatusAsync(long id, long status)
+        {
+            try
+            {
+                var entity = await gaCrmTicketsRepo.GetByIdAsync(id);
+                entity.ContactCenterStatoRichiestaId = status;
+                var response = await gaCrmTicketsRepo.UpdateAsync(entity);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
         #endregion
 
         #region Objects
@@ -661,6 +683,24 @@ namespace GaCloudServer.BusinnessLogic.Services
 
         }
 
+        public async Task<bool> UpdatePreventiviObjectModeAsync(long id)
+        {
+            var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
+            entity.SpotMode = entity.SpotMode==null?false:!entity.SpotMode;
+            var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
+            return entity.SpotMode;
+
+        }
+
+        public async Task<bool> UpdatePreventiviObjectCrmAsync(PreventiviObjectCrmDto dto)
+        {
+            var entity = await gaPreventiviObjectsRepo.GetAsync(dto.Id, new GetRequest());
+            entity.NoteCrm = dto.NoteCrm;
+            var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
+            return entity.SpotMode;
+
+        }
+
         public async Task<bool> UpdatePreventiviObjectContactDetailsAsync(long id, PreventiviObjectDto dto)
         {
             var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
@@ -698,6 +738,15 @@ namespace GaCloudServer.BusinnessLogic.Services
             var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
             entity.TypeId = dto.TypeId;
             entity.TypeDesc = dto.TypeDesc;
+            var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
+            return true;
+
+        }
+
+        public async Task<bool> UpdatePreventiviObjectPrintModeAsync(long id, PreventiviObjectDto dto)
+        {
+            var entity = await gaPreventiviObjectsRepo.GetAsync(id, new GetRequest());
+            entity.PrintRecap = dto.PrintRecap;
             var response = await gaPreventiviObjectsRepo.UpdateAsync(entity);
             return true;
 
@@ -1697,6 +1746,45 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var view = await viewGaPreventiviIsmartDocumentiRepo.GetAsync(request);
             return view;
+        }
+
+        #endregion
+
+        #region InspectionNotePreliminariTemplate
+        public async Task<PageResponse<PreventiviObjectInspectionNotePreliminariTemplateDto>> GetPreventiviObjectInspectionNotePreliminariTemplatesAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviObjectInspectionNotePreliminariRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviObjectInspectionNotePreliminariTemplateDto>>();
+            return dtos;
+        }
+
+        public async Task<PreventiviObjectInspectionNotePreliminariTemplateDto> GetPreventiviObjectInspectionNotePreliminariTemplateByIdAsync(long id)
+        {
+            var entity = await gaPreventiviObjectInspectionNotePreliminariRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<PreventiviObjectInspectionNotePreliminariTemplateDto>();
+            return dto;
+        }
+
+        public async Task<long> CreatePreventiviObjectInspectionNotePreliminariTemplateAsync(PreventiviObjectInspectionNotePreliminariTemplateDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectInspectionNotePreliminariTemplate>();
+            var reponse = await gaPreventiviObjectInspectionNotePreliminariRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePreventiviObjectInspectionNotePreliminariTemplateAsync(long id, PreventiviObjectInspectionNotePreliminariTemplateDto dto)
+        {
+            var entity = dto.ToEntity<PreventiviObjectInspectionNotePreliminariTemplate>();
+            var response = await gaPreventiviObjectInspectionNotePreliminariRepo.UpdateAsync(entity);
+            return response.Id;
+
+        }
+
+        public async Task<bool> DeletePreventiviObjectInspectionNotePreliminariTemplateAsync(long id)
+        {
+            await gaPreventiviObjectInspectionNotePreliminariRepo.DeleteAsync(id);
+
+            return true;
         }
 
         #endregion

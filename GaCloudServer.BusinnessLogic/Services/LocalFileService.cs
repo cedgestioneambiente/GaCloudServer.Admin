@@ -1,5 +1,6 @@
 ﻿using DinkToPdf;
 using DinkToPdf.Contracts;
+using DinkToPdf.EventDefinitions;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,9 +32,15 @@ namespace GaCloudServer.BusinnessLogic.Services
             _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
             _httpContextAccessor = httpContextAccessor;
             _converter = converter;
+            _converter.Error += (sender, e) => Console.WriteLine($"ERRORE: {e.Message}");
+            _converter.Warning += (sender, e) => Console.WriteLine($"AVVISO: {e.Message}");
+            _converter.PhaseChanged += (sender, e) => Console.WriteLine($"Fase: {e.Description}");
+            _converter.ProgressChanged += (sender, e) => Console.WriteLine($"Progresso: {e}%");
+            _converter.Finished += (sender, e) => Console.WriteLine("Conversione completata");
+
         }
 
-        public dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, HeaderSettings headerSettings,FooterSettings footerSettings, int copies, string title = "", string css = "", Orientation orientation = Orientation.Portrait,string? alternativePath=null)
+        public dynamic UploadOnServerPrint(string _fileName, string _path, string _htmlContent, HeaderSettings headerSettings,FooterSettings footerSettings, int copies, string title = "", string css = "", Orientation orientation = Orientation.Portrait,string? alternativePath=null,MarginSettings? marginSettings=null)
         {
             string filePath = "";
             string currentDirectory = "";
@@ -53,9 +60,10 @@ namespace GaCloudServer.BusinnessLogic.Services
                 ColorMode = ColorMode.Color,
                 Orientation = orientation,
                 PaperSize = PaperKind.A4,
-                Margins = new MarginSettings { Top = 10 },
+                Margins = marginSettings==null? new MarginSettings { Top = 10 }:marginSettings,
                 DocumentTitle = "PDF Report",
                 Copies=copies,
+
                 Out = Path.Combine(filePath,_fileName)
             };
 
@@ -81,8 +89,15 @@ namespace GaCloudServer.BusinnessLogic.Services
                 Directory.CreateDirectory(filePath);
             }
 
+            try
+            {
 
-            var result = _converter.Convert(pdf);
+                var result = _converter.Convert(pdf);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             return MakeWebPath(Path.Combine(_webPath, _path, _fileName));
         }
@@ -99,6 +114,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 Margins = margin!=null?margin: new MarginSettings { Top = 10 },
                 DocumentTitle = "PDF Report",
                 Copies = copies,
+                UseCompression = true,
                 Out = filePath
             };
 
@@ -120,8 +136,15 @@ namespace GaCloudServer.BusinnessLogic.Services
                 Directory.CreateDirectory(Path.Combine(_webRootPath, _path));
             }
 
+            try
+            {
+                var result = _converter.Convert(pdf);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-            var result = _converter.Convert(pdf);
 
             return MakeWebPath(Path.Combine(_webPath, _path, _fileName));
         }
@@ -156,6 +179,10 @@ namespace GaCloudServer.BusinnessLogic.Services
             return path;
         }
 
+        private void ReportWarn(WarningArgs args)
+        {
+            Console.WriteLine($"AVVISO: {args.Message}");
+        }
 
     }
 }

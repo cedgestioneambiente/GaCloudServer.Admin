@@ -11,6 +11,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm
         public string Descrizione { get; set; }
         public DateTime Data {  get; set; }
         public bool Risposta { get; set; }
+        public bool RispostaDefinitiva { get; set; }
 
         [ForeignKey("ReclamiTipoAzione")]
         public long CrmTicketTipoAzioneId { get; set; }

@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
@@ -15,6 +16,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.CreDeb;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
@@ -62,11 +64,18 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 {
     public class ResourcesDbContext : DbContext, IResourcesDbContext
     {
+        #region Identity
+        #region Views
+        public DbSet<ViewUserIdentity> ViewUserIdentity { get; set; }
+        #endregion
+        #endregion
+
         #region Common Tables
         public DbSet<Gauge> CommonGauges { get; set; }
         public DbSet<IvaCode> CommonIvaCodes { get; set; }
@@ -77,6 +86,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<GlobalSede> GlobalSedi { get; set; }
         public DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }
         public DbSet<GlobalSettore> GlobalSettori { get; set; }
+
+
         #endregion
 
         #region GaAutorizzazioni Tables
@@ -621,6 +632,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PreventiviDestination> GaPreventiviDestinations { get; set; }
         public DbSet<PreventiviObjectHistory> GaPreventiviObjectHistories { get; set; }
         public DbSet<PreventiviPaymentTerm> GaPreventiviPaymentTerms { get; set; }
+        public DbSet<PreventiviObjectInspectionNotePreliminariTemplate> GaPreventiviObjectInspectionNotePreliminariTemplates { get; set; }
+
 
 
         #region Views
@@ -629,6 +642,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<ViewGaPreventiviIsmartDocumenti> ViewGaPreventiviIsmartDocumenti { get; set; }
         #endregion
         #endregion
+
+        #region CreDeb
+        public DbSet<CreDebCanale> GaCreDebCanali { get; set; }
+        public DbSet<CreDebConto> GaCreDebConti { get; set; }
+        public DbSet<CreDebIncassiInObject> GaCreDebObjects { get; set; }
+        public DbSet<CreDebIncassiInObjectDetail> GaCreDebObjectDetails { get; set; }
+        #endregion  
 
         public IHttpContextAccessor httpContextAccessor { get; set; }
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options,IHttpContextAccessor httpContextAccessor) : base(options)
@@ -639,7 +659,22 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            #region Identity
 
+            builder.Entity<ViewUserIdentity>(entity =>
+            {
+                entity
+                .ToView(nameof(ViewUserIdentity))
+                .HasKey(x => x.UserId);
+            });
+
+            // Configura la relazione tra PreventiviObject e ViewUserIdentity
+            builder.Entity<PreventiviObject>()
+                .HasOne(p => p.Assignee)
+                .WithMany()  // Nessuna navigazione inversa
+                .HasForeignKey(p => p.AssigneeId)
+                .HasPrincipalKey(u => u.UserId);  // Il campo UserId della vista è il riferimento
+            #endregion
 
             #region Autorizzazioni
 

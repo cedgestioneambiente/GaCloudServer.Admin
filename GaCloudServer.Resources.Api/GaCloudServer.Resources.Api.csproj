@@ -87,6 +87,9 @@
     <None Update="Query\BackOffice\TariNoviFinancialPosition.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Query\CreDeb\ExtractPagamentiInDefault.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Query\Preventivi\ObjectCliSped.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -112,6 +115,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Template\CrmEventCloseRecipt\assets\template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\PreventiviObjectPreview\assets\styles.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\PreventiviObjectPreview\assets\template.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Template\PreventiviObjectInspectionDefault\assets\styles.css">

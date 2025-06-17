@@ -136,6 +136,10 @@ namespace GaCloudServer.BusinessLogic.Mappers.Preventivi
             CreateMap<PreventiviPaymentTermDto, PreventiviPaymentTerm>(MemberList.Destination).ReverseMap();
             CreateMap<PageResponse<PreventiviPaymentTermDto>, PageResponse<PreventiviPaymentTerm>>(MemberList.Destination).ReverseMap();
 
+            CreateMap<PreventiviObjectInspectionNotePreliminariTemplateDto, PreventiviObjectInspectionNotePreliminariTemplate>(MemberList.Destination).ReverseMap();
+            CreateMap<PageResponse<PreventiviObjectInspectionNotePreliminariTemplateDto>, PageResponse<PreventiviObjectInspectionNotePreliminariTemplate>>(MemberList.Destination).ReverseMap();
+
+
         }
     }
 }

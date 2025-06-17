@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -57,10 +58,14 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         public string IndirizzoSede { get; set; }
         public string IndirizzoFattura { get; set; }
         public bool CausalePag770s {  get; set; } 
+        public bool PrintRecap { get; set; }
+        public bool SpotMode { get; set; }
+
 
         //Navigation Props
         public PreventiviObjectStatus Status { get; set; }
         public PreventiviObjectType Type { get; set; }
+        public ViewUserIdentity Assignee { get; set; }
 
     }
 

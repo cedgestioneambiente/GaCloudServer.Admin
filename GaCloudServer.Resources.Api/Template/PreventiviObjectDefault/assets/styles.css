@@ -247,6 +247,11 @@ table {
     border-collapse: collapse;
 }
 
+div[id^="section"] {
+    page-break-inside: avoid;
+}
+
+
 caption {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
@@ -9658,7 +9663,7 @@ a.text-dark:hover, a.text-dark:focus {
         .table td,
         .table th {
             background-color: #fff !important;
-            text-align:right;
+            text-align: right;
         }
 
     .table-bordered th,
@@ -9673,7 +9678,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 
 .custom-ul > ul {
-    margin-left:-15px;
+    margin-left: -15px;
 }
 
 .page-break {

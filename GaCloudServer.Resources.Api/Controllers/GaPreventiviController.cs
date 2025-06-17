@@ -1,6 +1,5 @@
 ﻿using AutoWrapper.Wrappers;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
-using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Notification;
 using GaCloudServer.BusinnessLogic.Dtos.Template;
@@ -14,14 +13,12 @@ using GaCloudServer.Resources.Api.ExceptionHandling;
 using GaCloudServer.Resources.Api.Helpers;
 using GaCloudServer.Resources.Api.Mappers;
 using GaCloudServer.Shared;
-using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Graph;
-using System;
+using System.Text.RegularExpressions;
+using System.Web;
 using blfh = GaCloudServer.BusinnessLogic.Helpers.FileHelper;
 using code = Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -972,7 +969,23 @@ namespace GaCloudServer.Resources.Api.Controllers
             }
         }
 
+        [HttpGet("UpdateCrmTicketStatusAsync/{id}/{status}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdateCrmTicketStatusAsync(long id, long status)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdateCrmTicketStatusAsync(id, status);
 
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
 
         #endregion
 
@@ -984,20 +997,20 @@ namespace GaCloudServer.Resources.Api.Controllers
         {
             try
             {
-                var userList = await _userManager.Users.ToListAsync();
-                // Crea un dictionary per mappare UserId a FullName per accesso rapido
-                var userDictionary = userList.ToDictionary(user => user.Id.ToString(), user => $"{user.UserName}");
+                //var userList = await _userManager.Users.ToListAsync();
+                //// Crea un dictionary per mappare UserId a FullName per accesso rapido
+                //var userDictionary = userList.ToDictionary(user => user.Id.ToString(), user => $"{user.UserName}");
 
                 var response = await _gaPreventiviService.GetPreventiviObjectsAsync(request);
 
-                // Aggiorna AssigneeDesc con il FullName corrispondente
-                foreach (var item in response.Items)
-                {
-                    if (item.AssigneeId != null && userDictionary.ContainsKey(item.AssigneeId))
-                    {
-                        item.AssigneeDesc = userDictionary[item.AssigneeId];
-                    }
-                }
+                //// Aggiorna AssigneeDesc con il FullName corrispondente
+                //foreach (var item in response.Items)
+                //{
+                //    if (item.AssigneeId != null && userDictionary.ContainsKey(item.AssigneeId))
+                //    {
+                //        item.AssigneeDesc = userDictionary[item.AssigneeId];
+                //    }
+                //}
 
                 return Ok(new { Code = code.Status200OK, Response = response });
             }
@@ -1093,13 +1106,20 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
 
         #region Functions
-        [HttpPut("UpdatePreventiviObjectAssigneeAsync/{id}")]
+        [HttpPut("UpdatePreventiviObjectAssigneeAsync/{id}/{inspection}")]
         [ProducesResponseType(code.Status204NoContent)]
         [ProducesResponseType(code.Status400BadRequest)]
-        public async Task<IActionResult> UpdatePreventiviObjectAssigneeAsync(long id, [FromBody] PreventiviObjectDto model)
+        public async Task<IActionResult> UpdatePreventiviObjectAssigneeAsync(long id,bool inspection, [FromBody] PreventiviObjectDto model)
         {
             try
             {
+                //var creatorId=User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                //var userList = await _userManager.Users.ToListAsync();
+                ////// Crea un dictionary per mappare UserId a FullName per accesso rapido
+                //var userDictionary = userList.ToDictionary(user => user.Id.ToString(), user => $"{user.UserName}");
+                //var creator = userList.Where(x => x.Id.ToString() == creatorId);
+
+
                 var requestLast = new PageRequest();
                 requestLast.Filter = $"ObjectId eq {model.Id}";
                 requestLast.OrderBy = "DateStart desc";
@@ -1121,11 +1141,75 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 var regHistory = await _gaPreventiviService.CreatePreventiviObjectHistoryAsync(history);
 
+                string message = "";
+                if (inspection)
+                {
+                    var inspectionData = await _gaPreventiviService.GetPreventiviObjectInspectionsAsync(new PageRequest() { Filter = $"ObjectId eq {model.Id}" });
+                    message += $"Stato Avanzamento: {model.Status.Descrizione}</br>" +
+                        $"Note Avanzamento: {model.Note??""} </br>" +
+                        $"<b>Sopralluogo</b> </br>" +
+                        $"Note Ticket Crm: {model.NoteCrm??""} </br>" +
+                        $"Note Preliminari: {HttpUtility.HtmlDecode(Regex.Replace(inspectionData.Items.FirstOrDefault().Note??"","<.*?>",""))} </br>" +
+                        $"Note Sopralluogo: {inspectionData.Items.FirstOrDefault().NoteInspection??""}</br>" +
+                        $"Richiedente: {model.CreatorName} </br>";
+                }
+                else
+                { 
+                    message+= $"Stato Avanzamento: {model.Status.Descrizione}</br>" +
+                        $"Note Avanzamento: {model.Note??""} </br>" +
+                        $"Note Ticket Crm: {model.NoteCrm??""} </br>" +
+                        $"Richiedente: {model.CreatorName} </br>";
+                }
 
 
-                if (model.SendEmail.GetValueOrDefault()) { await sendMail(model.Id, model.ObjectNumber, model.AssigneeMail, TextConsts.objectManage, model.NoteCrm, model.CreatorName, "", model.CreatorId); }
+
+                if (model.SendEmail.GetValueOrDefault()) { await sendAssigneeMail(model.Id, model.ObjectNumber, model.AssigneeMail, message, model.CreatorId); }
                 if (model.SendNotify.GetValueOrDefault()) { await sendNotification(model.Id, model.ObjectNumber, model.AssigneeId, TextConsts.objectManage); }
 
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("UpdatePreventiviObjectModeAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectModeAsync(long id)
+        {
+            try
+            {
+
+                var response = await _gaPreventiviService.UpdatePreventiviObjectModeAsync(id);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("UpdatePreventiviCrmAsync")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectCrmAsync([FromBody] PreventiviObjectCrmDto model)
+        {
+            try
+            {
+
+                var response = await _gaPreventiviService.UpdatePreventiviObjectCrmAsync(model);
+                var preventiviObject = _gaPreventiviService.GetPreventiviObjectsAsync(new PageRequest() { Filter=$"Id eq {model.Id}",Take=1,Expand="Assignee"}).Result.Items.FirstOrDefault();
+
+                var message = $"Note Ticket Crm: {model.NoteCrm ?? ""} </br>" +
+                        $"Richiedente: {model.CreatorName} </br>";
+
+                var sendMailResponse = await sendCrmMail(model.Id,preventiviObject.ObjectNumber,preventiviObject.Assignee.Email,message,model.CreatorId);
 
                 return Ok(new { Code = code.Status204NoContent, Response = response });
             }
@@ -1189,6 +1273,71 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
             }
         }
+
+        [HttpPut("UpdatePreventiviObjectPrintModeAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectPrintModeAsync(long id, [FromBody] PreventiviObjectDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectPrintModeAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("CopyPreventiviObjectServicesAsync/{sourceId}/{destId}")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CopyPreventiviObjectServicesAsync(long sourceId,long destId)
+        {
+            try
+            {
+                #region Services
+
+
+                var sectionsCopy = await _gaPreventiviService.GetPreventiviObjectSectionsAsync(new PageRequest() { Filter = $"ObjectId eq {sourceId}" });
+
+                foreach (var section in sectionsCopy.Items)
+                {
+                    var servicesCopy = await _gaPreventiviService.GetPreventiviObjectServicesAsync(new PageRequest() { Filter = $"SectionId eq {section.Id}" });
+
+                    section.Id = 0;
+                    section.ObjectId = destId;
+
+                    var sectionResponse = await _gaPreventiviService.CreatePreventiviObjectSectionAsync(section);
+
+
+                    foreach (var service in servicesCopy.Items)
+                    {
+                        service.Id = 0;
+                        service.ObjectId = destId;
+                        service.SectionId = sectionResponse;
+
+                        var serviceResponse = await _gaPreventiviService.CreatePreventiviObjectServiceAsync(service);
+                    }
+                }
+                
+
+                #endregion
+
+
+                return Ok(new { Code = code.Status201Created, Response = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+
 
         [HttpGet("GetPreventiviObjectCliSedAsync/{codCom}/{codCli}")]
         [ProducesResponseType(code.Status200OK)]
@@ -1285,6 +1434,64 @@ namespace GaCloudServer.Resources.Api.Controllers
 
                 // Stampa il documento
                 var response = await _printService.Print("PreventiviObjectDefault", dto);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest(new { Code = code.Status400BadRequest, Response = "Si è verificato un errore interno" });
+            }
+        }
+
+        [HttpGet("PrintPreventiviObjectPreviewByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> PrintPreventiviObjectPreviewByIdAsync(long id)
+        {
+            try
+            {
+                var _object = await _gaPreventiviService.GetPreventiviObjectByIdAsync(id);
+                var _objectInspection = await _gaPreventiviService.GetPreventiviObjectInspectionsAsync(new PageRequest() { Filter = $"objectId eq {id}" });
+                var _objectSections = await _gaPreventiviService.GetPreventiviObjectSectionsAsync(new PageRequest() { Filter = $"objectId eq {id}", Expand = "Producer,Destination" });
+                var _objectService = await _gaPreventiviService.GetPreventiviObjectServicesAsync(new PageRequest() { Filter = $"objectId eq {id}", Expand = "ServiceType,ServiceTypeDetail,IvaCode" });
+                var _garbages = await _gaPreventiviService.GetPreventiviGarbagesAsync(new PageRequest());
+                var _gauges = await _commonService.GetCommonGaugesAsync(new PageRequest());
+
+                // Validazione dei dati
+                var validationErrors = new List<string>();
+                if (_object == null) validationErrors.Add("Oggetto principale non definito.");
+                if (!_objectInspection.Items.Any()) validationErrors.Add("Sopralluogo mancante.");
+                if (!_objectSections.Items.Any()) validationErrors.Add("Servizio mancante.");
+                if (!_objectService.Items.Any()) validationErrors.Add("Dettagli servizi mancanti.");
+
+                if (validationErrors.Any())
+                {
+                    var res = new
+                    {
+                        Code = code.Status409Conflict, // Assicurati che sia un valore numerico
+                        Response = string.Join(" ; ", validationErrors.Where(x => x != null && x.Any()).ToList())
+
+                    };
+
+                    return Ok(res);
+                }
+
+
+                // Genera il template con i dati
+                var dto = await generatePreventiviObjectPreviewTemplate(
+                    _object,
+                    _objectInspection.Items.FirstOrDefault(),
+                    _objectSections.Items.ToList(),
+                    _objectService.Items.ToList(),
+                    _garbages.Items.ToList(),
+                    _gauges.Items.ToList(),
+                    "Anteprima Preventivo"
+                );
+
+                // Stampa il documento
+                var response = await _printService.Print("PreventiviObjectPreview", dto);
 
                 return Ok(new { Code = code.Status200OK, Response = response });
 
@@ -2297,7 +2504,7 @@ namespace GaCloudServer.Resources.Api.Controllers
             try
             {
                 await _gaPreventiviService.RequestPreventiviSubjectFinancialUnlockAsync(model);
-                await sendMail(model.Id,model.ObjectNumber, "federico.laigueglia@gestioneambiente.net", TextConsts.financialUnlockRequest,"", model.CreatorName,"",model.CreatorId);
+                await sendMail(model.Id,model.ObjectNumber, "recupero.crediti@gestioneambiente.net", TextConsts.financialUnlockRequest,"", model.CreatorName,"",model.CreatorId);
 
                 return Ok(new { Code = code.Status204NoContent, Response = true });
             }
@@ -3822,7 +4029,97 @@ namespace GaCloudServer.Resources.Api.Controllers
         }
         #endregion
 
+        #region InspectionNotePreliminariTemplate
+        [HttpPost("GetPreventiviObjectInspectionNotePreliminariTemplatesAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionNotePreliminariTemplatesAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionNotePreliminariTemplatesAsync(request);
 
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpGet("GetPreventiviObjectInspectionNotePreliminariTemplateByIdAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviObjectInspectionNotePreliminariTemplateByIdAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviObjectInspectionNotePreliminariTemplateByIdAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPost("CreatePreventiviObjectInspectionNotePreliminariTemplateAsync")]
+        [ProducesResponseType(code.Status201Created)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> CreatePreventiviObjectInspectionNotePreliminariTemplateAsync(PreventiviObjectInspectionNotePreliminariTemplateDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.CreatePreventiviObjectInspectionNotePreliminariTemplateAsync(model);
+
+                return Ok(new { Code = code.Status201Created, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpPut("UpdatePreventiviObjectInspectionNotePreliminariTemplateAsync/{id}")]
+        [ProducesResponseType(code.Status204NoContent)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> UpdatePreventiviObjectInspectionNotePreliminariTemplateAsync(long id, [FromBody] PreventiviObjectInspectionNotePreliminariTemplateDto model)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.UpdatePreventiviObjectInspectionNotePreliminariTemplateAsync(id, model);
+
+                return Ok(new { Code = code.Status204NoContent, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+
+        [HttpDelete("DeletePreventiviObjectInspectionNotePreliminariTemplateAsync/{id}")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> DeletePreventiviObjectInspectionNotePreliminariTemplateAsync(long id)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.DeletePreventiviObjectInspectionNotePreliminariTemplateAsync(id);
+
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
+        #endregion
 
         #region Helpers
         private async Task<bool> sendMail(long id, string number,string mail, string type, string note, string noteIspection,string creator,string creatorId)
@@ -3840,6 +4137,36 @@ namespace GaCloudServer.Resources.Api.Controllers
                 MailCc = "",
                 Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Preventivi),
                 Content = HtmlHelpers.GenerateText(type+"<br>Note Preliminari: " + note + "<br>"  +"Note Sopralluogo: " + noteIspection + "<br>" + creator + ""),
+                Link = true,
+                LinkHref = String.Format("https://cloud.gestioneambiente.net/preventivi/tab/object/{0}", id),
+                LinkDescription = "Vai al preventivo",
+                Template = "DefaultMailWithLinkJob.html",
+                UserId = creatorId,
+                OkMessage = String.Format("L'assegnazione del Preventivo N° {0} è stata inoltrata correttamente.", number),
+                KoMessage = String.Format("Si è verificato un problema durante l'invio dell'assegnazione del Preventivo N° {0}.", number),
+                Attachment = false,
+                AttachmentPath = null
+            });
+
+            return true;
+
+        }
+
+        private async Task<bool> sendAssigneeMail(long id, string number, string mail, string message, string creatorId)
+        {
+            var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Preventivi, AppConsts.PreventiviInfo);
+            var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+            var mailJob = await _mailService.AddMailJobAsync(new MailJob()
+            {
+                Id = 0,
+                Description = "Assegnazione Preventivo N° " + number,
+                DateScheduled = DateTime.Now,
+                Title = "Preventivo N° " + number,
+                MailingTo = mail,
+                MailCc = "",
+                Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Preventivi),
+                Content = HtmlHelpers.GenerateText(message),
                 Link = true,
                 LinkHref = String.Format("https://cloud.gestioneambiente.net/preventivi/tab/object/{0}", id),
                 LinkDescription = "Vai al preventivo",
@@ -3880,6 +4207,36 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
+        private async Task<bool> sendCrmMail(long id, string number, string mail, string message, string creatorId)
+        {
+            var notificationApp = await _notificationService.GetNotificationAppByDescrizioneAsync(AppConsts.Preventivi, AppConsts.PreventiviInfo);
+            var notifications = await _notificationService.GetViewViewNotificationUsersOnAppsByAppIdAsync(notificationApp.Id);
+
+            var mailJob = await _mailService.AddMailJobAsync(new MailJob()
+            {
+                Id = 0,
+                Description = "Modifica Dati CRM su Preventivo N° " + number,
+                DateScheduled = DateTime.Now,
+                Title = "Modifica Dati CRM su Preventivo N° " + number,
+                MailingTo = mail,
+                MailCc = "",
+                Application = String.Format("{0}|{1}", notificationApp.Id, AppConsts.Preventivi),
+                Content = HtmlHelpers.GenerateText(message),
+                Link = true,
+                LinkHref = String.Format("https://cloud.gestioneambiente.net/preventivi/tab/object/{0}", id),
+                LinkDescription = "Vai al preventivo",
+                Template = "DefaultMailWithLinkJob.html",
+                UserId = creatorId,
+                OkMessage = String.Format("Le modifiche sul Preventivo N° {0} sono state inoltrate correttamente.", number),
+                KoMessage = String.Format("Si è verificato un problema durante l'invio delle modifiche sul Preventivo N° {0}.", number),
+                Attachment = false,
+                AttachmentPath = null
+            });
+
+            return true;
+
+        }
+
         private async Task<PreventiviObjectTemplateDto> generatePreventiviObjectTemplate(
             PreventiviObjectDto preventiviObject,
             PreventiviObjectInspectionDto preventiviObjectInspection,
@@ -3897,17 +4254,49 @@ namespace GaCloudServer.Resources.Api.Controllers
                 FilePath = @"Print/Preventivi",
                 Title = title,
                 Css = css,
-                HeaderSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Right = $"#{preventiviObject.ObjectNumber}", Line = true },
-                FooterSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, Center = "Gestione Ambiente S.p.A." },
+                HeaderSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, HtmUrl = "https://storage.gestioneambiente.net/resources/print/ci-header.html",Right="Prova" },
+                FooterSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, HtmUrl = "https://storage.gestioneambiente.net/resources/print/ci-footer.html" },
                 Copies = 1,
+                MarginSettings = new DinkToPdf.MarginSettings { Top = 20,Bottom=30 },
                 preventiviObject = preventiviObject,
-                preventiviObjectInspection= preventiviObjectInspection,
-                preventiviObjectPayout=preventiviObjectPayout,
-                preventiviObjectSections= preventiviObjectSections,
-                preventiviObjectServices= preventiviObjectServices,
-                preventiviObjectConditions= preventiviObjectConditions,
+                preventiviObjectInspection = preventiviObjectInspection,
+                preventiviObjectPayout = preventiviObjectPayout,
+                preventiviObjectSections = preventiviObjectSections,
+                preventiviObjectServices = preventiviObjectServices,
+                preventiviObjectConditions = preventiviObjectConditions,
                 preventiviGarbages = preventiviGarbages,
-                commonGauges= commonGauges
+                commonGauges = commonGauges
+
+            };
+
+            return dto;
+        }
+
+        private async Task<PreventiviObjectPreviewTemplateDto> generatePreventiviObjectPreviewTemplate(
+           PreventiviObjectDto preventiviObject,
+           PreventiviObjectInspectionDto preventiviObjectInspection,
+           List<PreventiviObjectSectionDto> preventiviObjectSections,
+           List<PreventiviObjectServiceDto> preventiviObjectServices,
+           List<PreventiviGarbageDto> preventiviGarbages,
+           List<CommonGaugeDto> commonGauges,
+           string title, string fileName = "PreventiviObjectPreview.pdf", string css = "PreventiviObjectPreview")
+        {
+            var dto = new PreventiviObjectPreviewTemplateDto()
+            {
+                FileName = fileName,
+                FilePath = @"Print/PreventiviPreview",
+                Title = title,
+                Css = css,
+                HeaderSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, HtmUrl = "https://storage.gestioneambiente.net/resources/print/ci-header.html" },
+                FooterSettings = { FontName = "Arial, Helvetica, sans-serif", FontSize = 9, Line = true, HtmUrl = "https://storage.gestioneambiente.net/resources/print/ci-footer.html" },
+                Copies = 1,
+                MarginSettings = new DinkToPdf.MarginSettings { Top = 20, Bottom = 30 },
+                preventiviObject = preventiviObject,
+                preventiviObjectInspection = preventiviObjectInspection,
+                preventiviObjectSections = preventiviObjectSections,
+                preventiviObjectServices = preventiviObjectServices,
+                preventiviGarbages = preventiviGarbages,
+                commonGauges = commonGauges
 
             };
 

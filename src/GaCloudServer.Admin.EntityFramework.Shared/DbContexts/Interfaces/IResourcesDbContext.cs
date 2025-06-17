@@ -61,12 +61,20 @@ using Microsoft.AspNetCore.Http;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Common;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.CreDeb;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
     public interface IResourcesDbContext
     {
         IHttpContextAccessor httpContextAccessor { get; set; }
+
+        #region Identity
+        #region View
+        DbSet<ViewUserIdentity> ViewUserIdentity { get; set; }
+        #endregion
+        #endregion
 
         #region Common
         DbSet<Gauge> CommonGauges { get; set; }
@@ -78,6 +86,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<GlobalSede> GlobalSedi { get; set; }
         DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }
         DbSet<GlobalSettore> GlobalSettori { get; set; }
+
+
 
         #endregion
 
@@ -615,6 +625,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<PreventiviDestination> GaPreventiviDestinations { get; set; }
         DbSet<PreventiviObjectHistory> GaPreventiviObjectHistories { get; set; }
         DbSet<PreventiviPaymentTerm> GaPreventiviPaymentTerms { get; set; }
+        DbSet<PreventiviObjectInspectionNotePreliminariTemplate> GaPreventiviObjectInspectionNotePreliminariTemplates { get; set; }
 
 
         #region Views
@@ -623,6 +634,13 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewGaPreventiviIsmartDocumenti> ViewGaPreventiviIsmartDocumenti { get; set; }
         #endregion
         #endregion
+
+        #region CreDeb
+        DbSet<CreDebCanale> GaCreDebCanali { get; set; }
+        DbSet<CreDebConto> GaCreDebConti { get; set; }
+        DbSet<CreDebIncassiInObject> GaCreDebObjects { get; set; }
+        DbSet<CreDebIncassiInObjectDetail> GaCreDebObjectDetails { get; set; }
+        #endregion  
 
     }
 }

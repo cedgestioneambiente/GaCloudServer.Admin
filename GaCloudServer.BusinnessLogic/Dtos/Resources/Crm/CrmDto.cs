@@ -1,6 +1,8 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Base;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Reclami;
 
 namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
 {
@@ -174,7 +176,9 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public string? Descrizione { get; set; }
         public DateTime Data {  get; set; }
         public bool Risposta { get; set; }
+        public bool RispostaDefinitiva { get; set; }
         public long CrmTicketTipoAzioneId { get; set; }
+        public ReclamiTipoAzioneDto ReclamiTipoAzione { get; set; }
     }
 
     public class CrmTicketAzioniDto : GenericPagedListDto<CrmTicketAzioneDto>
@@ -193,6 +197,7 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
     }
 
     #endregion
+
     public class CrmChangeEventStateDto
     { 
         public long id { get; set; }
@@ -200,6 +205,43 @@ namespace GaCloudServer.BusinnessLogic.Dtos.Resources.Crm
         public long state { get; set; }
     }
 
+    #region Reclami
+    public class CrmReclamiRegistroTemplateDto : GenericEntity
+    {
+        public string Numeratore { get; set; }
+        public DateTime Data { get; set; }
+        public string Cliente { get; set; }
+        public string Motivo { get; set; }
+        public DateTime RispostaEntro { get; set; }
+        public DateTime? RispostaInviata { get; set; }
+        public DateTime? RispostaDefinitiva { get; set; }
+        public bool Fondato { get; set; }
+        public string Infondato { get; set; }
+        public string StatoReclamo { get; set; }
+        public string Note { get; set; }
+        public string AzioniIntraprese { get; set; }
+        public string Avanzamento { get; set; }
+    }
+
+    public class CrmReclamoApiDto
+    {
+        public long Id { get; set; } 
+        public string NumReclamo { get; set; }
+        public string Cantiere { get; set; }
+        public string Suddivisione { get; set; }
+        public string OrigineReclamo { get; set; } // ContactCenterProvenienza.Descrizione
+        public DateTime DataOrigine { get; set; }  // DataRichiesta
+        public string Mittente { get; set; }       // Utente
+        public string Oggetto { get; set; }        // NoteCrm
+        public bool? Fondato { get; set; }         // ReclamoFondato
+        public string Infondato { get; set; }      // NoteOperatore
+        public string Stato { get; set; }          // ContactCenterStatoRichiesta.Descrizione
+        public DateTime RispostaEntro { get; set; } // DataRichiesta + 30 gg
+        public string RispostaInviata { get; set; } // null per ora
+        public string RispostaDefinitiva { get; set; } // null per ora
+        public string Gestito { get; set; }   // false per ora
+    }
+    #endregion
 }
 
 

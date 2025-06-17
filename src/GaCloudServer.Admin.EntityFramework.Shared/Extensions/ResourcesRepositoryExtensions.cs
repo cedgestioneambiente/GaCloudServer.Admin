@@ -1,4 +1,5 @@
 ﻿using GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Autorizzazioni.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Aziende;
@@ -15,6 +16,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCente
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.ContactCenter.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Contratti.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.CreDeb;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Crm.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Csr;
@@ -72,6 +74,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
         public static IServiceCollection AddResourcesRepository<TResourcesDbContext>(this IServiceCollection services)
             where TResourcesDbContext : DbContext,IResourcesDbContext
         {
+            //Identity
+            services.AddTransient<IGenericRepository<ViewUserIdentity>, GenericRepository<TResourcesDbContext, ViewUserIdentity>>();
             //Common
             #region Common
             services.AddTransient<IGenericRepository<Gauge>, GenericRepository<TResourcesDbContext, Gauge>>();
@@ -84,6 +88,8 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<GlobalSede>, GenericRepository<TResourcesDbContext, GlobalSede>>();
             services.AddTransient<IGenericRepository<GlobalCentroCosto>, GenericRepository<TResourcesDbContext, GlobalCentroCosto>>();
             services.AddTransient<IGenericRepository<GlobalSettore>, GenericRepository<TResourcesDbContext, GlobalSettore>>();
+
+
             #endregion
 
             //Autorizzazioni
@@ -602,6 +608,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PreventiviProducer>, GenericRepository<TResourcesDbContext, PreventiviProducer>>();
             services.AddTransient<IGenericRepository<PreventiviObjectHistory>, GenericRepository<TResourcesDbContext, PreventiviObjectHistory>>();
             services.AddTransient<IGenericRepository<PreventiviPaymentTerm>, GenericRepository<TResourcesDbContext, PreventiviPaymentTerm>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspectionNotePreliminariTemplate>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionNotePreliminariTemplate>>();
 
 
 
@@ -612,7 +619,15 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             #endregion
 
+            //CreDeb
+            #region CreDeb
 
+            services.AddTransient<IGenericRepository<CreDebCanale>, GenericRepository<TResourcesDbContext, CreDebCanale>>();
+            services.AddTransient<IGenericRepository<CreDebConto>, GenericRepository<TResourcesDbContext, CreDebConto>>();
+            services.AddTransient<IGenericRepository<CreDebIncassiInObject>, GenericRepository<TResourcesDbContext, CreDebIncassiInObject>>();
+            services.AddTransient<IGenericRepository<CreDebIncassiInObjectDetail>, GenericRepository<TResourcesDbContext, CreDebIncassiInObjectDetail>>();
+
+            #endregion
 
 
             return services; 

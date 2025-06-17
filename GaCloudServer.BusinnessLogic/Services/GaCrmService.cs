@@ -7,10 +7,12 @@ using GaCloudServer.Admin.EntityFramework.Shared.Models;
 using GaCloudServer.BusinnessLogic.Constants;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.ContactCenter;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
+using GaCloudServer.BusinnessLogic.Helpers;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Shared;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
+using System.Linq.Dynamic.Core; // Namespace necessario
 
 namespace GaCloudServer.BusinnessLogic.Services
 {
@@ -1321,6 +1323,20 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> AddGaCrmTicketAzioneAsync(CrmTicketAzioneDto dto)
         {
             var entity = dto.ToEntity<CrmTicketAzione, CrmTicketAzioneDto>();
+
+            // Prima dell'inserimento, se Risposta o RispostaDefinitiva sono true, resetta le altre
+            if (dto.Risposta || dto.RispostaDefinitiva)
+            {
+                var existing = await gaCrmTicketAzioniRepo.GetWithFilterAsync(x =>
+                    x.CrmTicketId == dto.CrmTicketId && x.Id != dto.Id);
+
+                foreach (var azione in existing.Data)
+                {
+                    if (dto.Risposta) azione.Risposta = false;
+                    if (dto.RispostaDefinitiva) azione.RispostaDefinitiva = false;
+                }
+            }
+
             await gaCrmTicketAzioniRepo.AddAsync(entity);
             await SaveChanges();
             DetachEntity(entity);
@@ -1331,12 +1347,24 @@ namespace GaCloudServer.BusinnessLogic.Services
         public async Task<long> UpdateGaCrmTicketAzioneAsync(CrmTicketAzioneDto dto)
         {
             var entity = dto.ToEntity<CrmTicketAzione, CrmTicketAzioneDto>();
+
+            if (dto.Risposta || dto.RispostaDefinitiva)
+            {
+                var existing = await gaCrmTicketAzioniRepo.GetWithFilterAsync(x =>
+                    x.CrmTicketId == dto.CrmTicketId && x.Id != dto.Id);
+
+                foreach (var azione in existing.Data)
+                {
+                    if (dto.Risposta) azione.Risposta = false;
+                    if (dto.RispostaDefinitiva) azione.RispostaDefinitiva = false;
+                }
+            }
+
             gaCrmTicketAzioniRepo.Update(entity);
             await SaveChanges();
             DetachEntity(entity);
 
             return entity.Id;
-
         }
 
         public async Task<bool> DeleteGaCrmTicketAzioneAsync(long id)
@@ -1550,6 +1578,191 @@ namespace GaCloudServer.BusinnessLogic.Services
             return entities.ToModel<PageResponse<CrmTicket>>();
         }
 
+        public async Task<PageResponse<CrmReclamoApiDto>> GetCrmReclamiApiAsync(PageRequest request)
+        {
+
+            string postFilter = request.Filter;
+            request.Filter = $"ContactCenterTipoRichiesta/Reclamo eq true and NumReclamo ne null and NumReclamo ne ''";
+            request.Expand = "ContactCenterTipoRichiesta,ContactCenterProvenienza,ContactCenterStatoRichiesta";
+
+            var entities = await gaCrmTicketsRepo.GetAsync(request);
+
+            var mapped = new List<CrmReclamoApiDto>();
+
+            foreach (var ticket in entities.Items)
+            {
+                var cantiereList = new List<string>();
+                var suddivisioneList = new List<string>();
+
+                if (!string.IsNullOrEmpty(ticket.Tags))
+                {
+                    var tags = ticket.Tags.Split(',').Select(t => t.Trim().ToUpperInvariant());
+
+                    foreach (var tag in tags)
+                    {
+                        if (tag == "CANTIERE NOVI") cantiereList.Add("NOVI L.");
+                        if (tag == "CANTIERE TORTONA") cantiereList.Add("TORTONA");
+                        if (tag == "FORMULA AMBIENTE") suddivisioneList.Add("F");
+                        if (tag == "GESTIONE AMBIENTE") suddivisioneList.Add("GA");
+                    }
+                }
+
+                var azioni = await gaCrmTicketAzioniRepo.GetWithFilterAsync(x=>x.CrmTicketId==ticket.Id);
+
+                DateTime? risposta = null;
+                DateTime? rispostaDefinitiva = null;
+
+                foreach (var azione in azioni.Data)
+                {
+                    if (azione.Risposta)
+                        risposta = azione.Data;
+
+                    if (azione.RispostaDefinitiva)
+                        rispostaDefinitiva = azione.Data;
+                }
+
+                var rispostaEntro = ticket.DataRichiesta.AddDays(30);
+
+                string gestito = "G";
+                if (risposta.HasValue)
+                {
+                    gestito = risposta.Value <= rispostaEntro ? "V" : "R";
+                }
+
+
+                mapped.Add(new CrmReclamoApiDto
+                {
+                    Id=ticket.Id,
+                    NumReclamo = ticket.NumReclamo,
+                    Cantiere = string.Join(", ", cantiereList.Distinct()),
+                    Suddivisione = string.Join(", ", suddivisioneList.Distinct()),
+                    OrigineReclamo = ticket.ContactCenterProvenienza?.Descrizione,
+                    DataOrigine = ticket.DataRichiesta,
+                    Mittente = ticket.Utente,
+                    Oggetto = ticket.NoteCrm,
+                    Fondato = ticket.ReclamoFondato,
+                    Infondato = ticket.NoteOperatore,
+                    Stato = ticket.ContactCenterStatoRichiesta?.Descrizione,
+                    RispostaEntro = rispostaEntro,
+                    RispostaInviata = risposta?.ToString("yyyy-MM-dd"), // o DateTime?
+                    RispostaDefinitiva = rispostaDefinitiva?.ToString("yyyy-MM-dd"),
+                    Gestito = gestito
+                });
+            }
+
+            // 🔍 Filtro post-mapping su DTO calcolato
+            var filtered = mapped.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(postFilter))
+            {
+                try
+                {
+                    var dynamicFilter = ODataFilterConverter.ConvertToDynamicLinq(postFilter);
+                    filtered = filtered.Where(dynamicFilter); // <-- es. contains(gestito,'R')
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return new PageResponse<CrmReclamoApiDto>
+            {
+                Items = filtered,
+                Count = filtered.Count()
+            };
+        }
+
+        public async Task<PageResponse<CrmReclamoApiDto>> GetExportCrmReclamiApiAsync(PageRequest request)
+        {
+
+            request.Filter = $"ContactCenterTipoRichiesta/Reclamo eq true and NumReclamo ne null and NumReclamo ne ''";
+            request.Expand = "ContactCenterTipoRichiesta,ContactCenterProvenienza,ContactCenterStatoRichiesta";
+
+            var entities = await gaCrmTicketsRepo.GetAsync(request);
+
+            var mapped = new List<CrmReclamoApiDto>();
+
+            foreach (var ticket in entities.Items)
+            {
+                var cantiereList = new List<string>();
+                var suddivisioneList = new List<string>();
+
+                if (!string.IsNullOrEmpty(ticket.Tags))
+                {
+                    var tags = ticket.Tags.Split(',').Select(t => t.Trim().ToUpperInvariant());
+
+                    foreach (var tag in tags)
+                    {
+                        if (tag == "CANTIERE NOVI") cantiereList.Add("NOVI L.");
+                        if (tag == "CANTIERE TORTONA") cantiereList.Add("TORTONA");
+                        if (tag == "FORMULA AMBIENTE") suddivisioneList.Add("F");
+                        if (tag == "GESTIONE AMBIENTE") suddivisioneList.Add("GA");
+                    }
+                }
+
+                var azioni = await gaCrmTicketAzioniRepo.GetWithFilterAsync(x => x.CrmTicketId == ticket.Id);
+
+                DateTime? risposta = null;
+                DateTime? rispostaDefinitiva = null;
+
+                foreach (var azione in azioni.Data)
+                {
+                    if (azione.Risposta)
+                        risposta = azione.Data;
+
+                    if (azione.RispostaDefinitiva)
+                        rispostaDefinitiva = azione.Data;
+                }
+
+                var rispostaEntro = ticket.DataRichiesta.AddDays(30);
+
+                string gestito = "G";
+                if (risposta.HasValue)
+                {
+                    gestito = risposta.Value <= rispostaEntro ? "V" : "R";
+                }
+
+
+                mapped.Add(new CrmReclamoApiDto
+                {
+                    NumReclamo = ticket.NumReclamo,
+                    Cantiere = string.Join(", ", cantiereList.Distinct()),
+                    Suddivisione = string.Join(", ", suddivisioneList.Distinct()),
+                    OrigineReclamo = ticket.ContactCenterProvenienza?.Descrizione,
+                    DataOrigine = ticket.DataRichiesta,
+                    Mittente = ticket.Utente,
+                    Oggetto = ticket.NoteCrm,
+                    Fondato = ticket.ReclamoFondato,
+                    Infondato = ticket.NoteOperatore,
+                    Stato = ticket.ContactCenterStatoRichiesta?.Descrizione,
+                    RispostaEntro = rispostaEntro,
+                    RispostaInviata = risposta?.ToString("yyyy-MM-dd"), // o DateTime?
+                    RispostaDefinitiva = rispostaDefinitiva?.ToString("yyyy-MM-dd"),
+                    Gestito = gestito
+                });
+            }
+
+
+            return new PageResponse<CrmReclamoApiDto>
+            {
+                Items = mapped,
+                Count = mapped.Count()
+            };
+        }
+
+        public async Task<PageResponse<CrmTicket>> GetCrmReclamiRegistroAsync(PageRequest request,int year)
+        {
+            // Formattazione delle date come stringhe OData in formato ISO 8601
+            string startDate = new DateTime(year, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToString("yyyy-MM-ddTHH:mm:ssZ");
+            string endDate = new DateTime(year, 12, 31, 23, 59, 59, DateTimeKind.Utc).ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+            request.Filter = $"ContactCenterTipoRichiesta/Reclamo eq true and " +
+               $"DataRichiesta ge {startDate} and DataRichiesta le {endDate}"; // Assicurati di usare le convenzioni corrette per OData\r\n    request.Expand = \"ContactCenterTipoRichiesta\";
+            var entities = await gaCrmTicketsRepo.GetAsync(request);
+            return entities.ToModel<PageResponse<CrmTicket>>();
+        }
+
         public async Task<bool> ChangeFondatoGaCrmTicketAsync(long id)
         {
             try
@@ -1564,6 +1777,31 @@ namespace GaCloudServer.BusinnessLogic.Services
             {
                 return false;
             }
+        }
+
+        public async Task<List<int>> GetCrmReclamiAnniAsync()
+        {
+            // Creiamo una PageRequest con i filtri necessari per ottenere solo i reclami
+            var request = new PageRequest
+            {
+                Filter = "ContactCenterTipoRichiesta/Reclamo eq true and NumReclamo ne null and NumReclamo ne ''",
+                Expand = "ContactCenterTipoRichiesta",
+                // Qui puoi decidere se limitare il numero di record (es. 1000), oppure lasciare null per ottenere tutto
+                Take = null
+            };
+
+            // Recupero i reclami
+            var entities = await gaCrmTicketsRepo.GetAsync(request);
+
+            // Estrai gli anni distinti da DataRichiesta, assumendo che non sia null
+            var anni = entities.Items
+                .Where(e => e.DataRichiesta!=null)
+                .Select(e => e.DataRichiesta.Year)
+                .Distinct()
+                .OrderBy(y => y)
+                .ToList();
+
+            return anni;
         }
         #endregion
 

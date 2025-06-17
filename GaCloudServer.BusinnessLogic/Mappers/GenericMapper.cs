@@ -29,6 +29,7 @@ using GaCloudServer.BusinessLogic.Mappers.SmartCity;
 using GaCloudServer.BusinessLogic.Mappers.Previsio;
 using GaCloudServer.BusinessLogic.Mappers.Preventivi;
 using GaCloudServer.BusinessLogic.Mappers.Common;
+using GaCloudServer.BusinnessLogic.Mappers.Identity;
 
 namespace GaCloudServer.BusinnessLogic.Mappers
 {
@@ -38,6 +39,7 @@ namespace GaCloudServer.BusinnessLogic.Mappers
 
         internal static List<Profile> profiles = new List<Profile>()
         {
+            new IdentityMapperProfile(),
             new AutorizzazioniMapperProfile(),
             new ContrattiMapperProfile(),
             new CdrMapperProfile(),
@@ -68,7 +70,8 @@ namespace GaCloudServer.BusinnessLogic.Mappers
             new PrevisioMapperProfile(),
             new PreventiviMapperProfile(),
             new BackOfficeMapperProfile(),
-            new CommonMapperProfile()
+            new CommonMapperProfile(),
+            new CreDebMapperProfile()
         };
 
         static GenericMapper() {

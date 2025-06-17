@@ -1,6 +1,8 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi;
 using GaCloudServer.BusinnessLogic.Dtos.Common;
 using GaCloudServer.BusinnessLogic.DTOs.Base;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -101,6 +103,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public DateTime DataCompletamento { get; set; }
         public bool Completed { get; set; }
         public string NoteCrm { get; set; }
+        public long? CrmTicketId { get; set; }
         public string NoteOperative { get; set; }
 
         public bool? FinancialLock { get; set; }
@@ -130,10 +133,13 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
 
         //Campo note per passaggio note assegnazione
         public string Note { get; set; }
+        public bool PrintRecap { get; set; }
+        public bool SpotMode { get; set; }
 
         //Navigation Props
         public PreventiviObjectStatusDto Status { get; set; }
         public PreventiviObjectTypeDto Type { get; set; }
+        public ViewUserIdentity Assignee {  get; set; }
 
 
     }
@@ -245,6 +251,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public long DestinationId { get; set; }
         public bool DestinationOnPrint { get; set; }
         public bool TotalOnPrint { get; set; }
+        public bool OmitLabelTypeOnPrint { get; set; }
         public string Garbages { get; set; }
         public bool Accepted { get; set; }
 
@@ -264,6 +271,11 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public bool Analysis { get; set; }
     }
     public class PreventiviServiceNoteTemplateDto : GenericDto
+    {
+        public string Descrizione { get; set; }
+        public string Content { get; set; }
+    }
+    public class PreventiviObjectInspectionNotePreliminariTemplateDto : GenericDto
     {
         public string Descrizione { get; set; }
         public string Content { get; set; }
@@ -425,6 +437,14 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
         public string CreatorId { get; set; }
         public string Note { get; set; }
 
+    }
+
+    public class PreventiviObjectCrmDto
+    { 
+        public long Id { get; set; }
+        public string NoteCrm { get; set; }
+        public string CreatorId { get; set; } 
+        public string CreatorName { get; set; }
     }
     #endregion
 }

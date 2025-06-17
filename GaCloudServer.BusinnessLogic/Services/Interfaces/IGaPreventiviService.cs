@@ -91,6 +91,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         public Task<PageResponse<CrmEventComuneDto>> GetPreventiviCrmComuniAsync(PageRequest request);
         public Task<PreventiviObjectDto> CreatePreventiviObjectFromCrmTicketAsync(PreventiviObjectAssignementDto model, double saldo);
         public Task<PreventiviObjectDto> CreatePreventiviObjectFromCopyAsync(PreventiviObjectCopyAssignementDto model, double saldo);
+        public Task<bool> UpdateCrmTicketStatusAsync(long id, long status);
         #endregion
 
         #region Objects
@@ -102,9 +103,12 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Functions
         public Task<bool> UpdatePreventiviObjectAssigneeAsync(long id, PreventiviObjectDto model);
+        public Task<bool> UpdatePreventiviObjectModeAsync(long id);
+        public Task<bool> UpdatePreventiviObjectCrmAsync(PreventiviObjectCrmDto dto);
         public Task<bool> UpdatePreventiviObjectContactDetailsAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectOperativeDetailsAsync(long id, PreventiviObjectDto model);
         public Task<bool> UpdatePreventiviObjectTypeDetailsAsync(long id, PreventiviObjectDto model);
+        public Task<bool> UpdatePreventiviObjectPrintModeAsync(long id, PreventiviObjectDto model);
         #endregion
         #endregion
 
@@ -310,6 +314,14 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
 
         #region Ismart Documenti
         public Task<PageResponse<ViewGaPreventiviIsmartDocumenti>> GetViewPreventiviIsmartDocumentiAsync(PageRequest request);
+        #endregion
+
+        #region InspectionNotePreliminariTemplates
+        public Task<PageResponse<PreventiviObjectInspectionNotePreliminariTemplateDto>> GetPreventiviObjectInspectionNotePreliminariTemplatesAsync(PageRequest request);
+        public Task<PreventiviObjectInspectionNotePreliminariTemplateDto> GetPreventiviObjectInspectionNotePreliminariTemplateByIdAsync(long id);
+        public Task<long> CreatePreventiviObjectInspectionNotePreliminariTemplateAsync(PreventiviObjectInspectionNotePreliminariTemplateDto model);
+        public Task<long> UpdatePreventiviObjectInspectionNotePreliminariTemplateAsync(long id, PreventiviObjectInspectionNotePreliminariTemplateDto model);
+        public Task<bool> DeletePreventiviObjectInspectionNotePreliminariTemplateAsync(long id);
         #endregion
 
 

@@ -16,6 +16,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventi
         public long DestinationId { get; set; }
         public bool DestinationOnPrint { get; set; }
         public bool TotalOnPrint { get; set; }
+        public bool OmitLabelTypeOnPrint { get; set; }
         public string Garbages { get; set; }
 
         public bool Accepted { get; set; }
