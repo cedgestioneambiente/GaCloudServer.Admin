@@ -609,6 +609,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<PreventiviObjectHistory>, GenericRepository<TResourcesDbContext, PreventiviObjectHistory>>();
             services.AddTransient<IGenericRepository<PreventiviPaymentTerm>, GenericRepository<TResourcesDbContext, PreventiviPaymentTerm>>();
             services.AddTransient<IGenericRepository<PreventiviObjectInspectionNotePreliminariTemplate>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionNotePreliminariTemplate>>();
+            services.AddTransient<IGenericRepository<PreventiviIsmartDocumento>, GenericRepository<TResourcesDbContext, PreventiviIsmartDocumento>>();
 
 
 
@@ -858,6 +859,49 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsServiziReport>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsServiziReport>>();
             services.AddTransient<IGenericRepository<ViewGaPrevisioOdsLetture>, GenericRepository<TResourcesDbContext, ViewGaPrevisioOdsLetture>>();
             #endregion
+
+            //Preventivi
+            #region Preventivi
+
+            services.AddTransient<IGenericRepository<PreventiviAnticipoTipologia>, GenericRepository<TResourcesDbContext, PreventiviAnticipoTipologia>>();
+            services.AddTransient<IGenericRepository<PreventiviAnticipoPagamento>, GenericRepository<TResourcesDbContext, PreventiviAnticipoPagamento>>();
+            services.AddTransient<IGenericRepository<PreventiviAnticipo>, GenericRepository<TResourcesDbContext, PreventiviAnticipo>>();
+            services.AddTransient<IGenericRepository<PreventiviAnticipoAllegato>, GenericRepository<TResourcesDbContext, PreventiviAnticipoAllegato>>();
+            services.AddTransient<IGenericRepository<PreventiviObject>, GenericRepository<TResourcesDbContext, PreventiviObject>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectAttachment>, GenericRepository<TResourcesDbContext, PreventiviObjectAttachment>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectStatus>, GenericRepository<TResourcesDbContext, PreventiviObjectStatus>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectType>, GenericRepository<TResourcesDbContext, PreventiviObjectType>>();
+            services.AddTransient<IGenericRepository<PreventiviAction>, GenericRepository<TResourcesDbContext, PreventiviAction>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspection>, GenericRepository<TResourcesDbContext, PreventiviObjectInspection>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspectionMode>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionMode>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspectionAttachment>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionAttachment>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspectionImage>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionImage>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectServiceType>, GenericRepository<TResourcesDbContext, PreventiviObjectServiceType>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectServiceTypeDetail>, GenericRepository<TResourcesDbContext, PreventiviObjectServiceTypeDetail>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectService>, GenericRepository<TResourcesDbContext, PreventiviObjectService>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectSection>, GenericRepository<TResourcesDbContext, PreventiviObjectSection>>();
+            services.AddTransient<IGenericRepository<PreventiviGarbage>, GenericRepository<TResourcesDbContext, PreventiviGarbage>>();
+            services.AddTransient<IGenericRepository<PreventiviServiceNoteTemplate>, GenericRepository<TResourcesDbContext, PreventiviServiceNoteTemplate>>();
+            services.AddTransient<IGenericRepository<PreventiviConditionTemplate>, GenericRepository<TResourcesDbContext, PreventiviConditionTemplate>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectPeriod>, GenericRepository<TResourcesDbContext, PreventiviObjectPeriod>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectPayout>, GenericRepository<TResourcesDbContext, PreventiviObjectPayout>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectCondition>, GenericRepository<TResourcesDbContext, PreventiviObjectCondition>>();
+            services.AddTransient<IGenericRepository<PreventiviDestination>, GenericRepository<TResourcesDbContext, PreventiviDestination>>();
+            services.AddTransient<IGenericRepository<PreventiviProducer>, GenericRepository<TResourcesDbContext, PreventiviProducer>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectHistory>, GenericRepository<TResourcesDbContext, PreventiviObjectHistory>>();
+            services.AddTransient<IGenericRepository<PreventiviPaymentTerm>, GenericRepository<TResourcesDbContext, PreventiviPaymentTerm>>();
+            services.AddTransient<IGenericRepository<PreventiviObjectInspectionNotePreliminariTemplate>, GenericRepository<TResourcesDbContext, PreventiviObjectInspectionNotePreliminariTemplate>>();
+            services.AddTransient<IGenericRepository<PreventiviIsmartDocumento>, GenericRepository<TResourcesDbContext, PreventiviIsmartDocumento>>();
+
+
+
+            services.AddTransient<IGenericRepository<ViewGaPreventiviAnticipi>, GenericRepository<TResourcesDbContext, ViewGaPreventiviAnticipi>>();
+            services.AddTransient<IGenericRepository<ViewGaPreventiviCrmTickets>, GenericRepository<TResourcesDbContext, ViewGaPreventiviCrmTickets>>();
+            services.AddTransient<IGenericRepository<ViewGaPreventiviIsmartDocumenti>, GenericRepository<TResourcesDbContext, ViewGaPreventiviIsmartDocumenti>>();
+
+
+            #endregion
+
 
             //QueryBuilder
             #region QueryBuilder

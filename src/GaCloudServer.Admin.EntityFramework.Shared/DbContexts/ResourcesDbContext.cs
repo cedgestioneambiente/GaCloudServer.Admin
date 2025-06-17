@@ -633,8 +633,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<PreventiviObjectHistory> GaPreventiviObjectHistories { get; set; }
         public DbSet<PreventiviPaymentTerm> GaPreventiviPaymentTerms { get; set; }
         public DbSet<PreventiviObjectInspectionNotePreliminariTemplate> GaPreventiviObjectInspectionNotePreliminariTemplates { get; set; }
-
-
+        public DbSet<PreventiviIsmartDocumento> GaPreventiviIsmartDocumenti { get; set; }
 
         #region Views
         public DbSet<ViewGaPreventiviAnticipi> ViewGaPreventiviAnticipi { get; set; }

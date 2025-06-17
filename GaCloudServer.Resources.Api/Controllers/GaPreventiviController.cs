@@ -4027,6 +4027,23 @@ namespace GaCloudServer.Resources.Api.Controllers
                 throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
             }
         }
+
+        [HttpPost("GetPreventiviIsmartDocumentiAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<IActionResult> GetPreventiviIsmartDocumentiAsync(PageRequest request)
+        {
+            try
+            {
+                var response = await _gaPreventiviService.GetPreventiviIsmartDocumentiAsync(request);
+                return Ok(new { Code = code.Status200OK, Response = response });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
+            }
+        }
         #endregion
 
         #region InspectionNotePreliminariTemplate

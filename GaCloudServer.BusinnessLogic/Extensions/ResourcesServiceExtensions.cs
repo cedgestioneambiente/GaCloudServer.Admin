@@ -93,6 +93,7 @@ namespace GaCloudServer.BusinnessLogic.Extensions
             services.AddTransient<IGaContactCenterService, GaContactCenterService>();
             services.AddTransient<IGaBackOfficeService, GaBackOfficeService>();
             services.AddTransient<IGaPrevisioService, GaPrevisioService>();
+            services.AddTransient<IGaPreventiviService, GaPreventiviService>();
 
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<IPrintService,PrintService>();

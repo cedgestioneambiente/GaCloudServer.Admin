@@ -48,6 +48,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         protected readonly IGenericRepository<PreventiviObjectHistory> gaPreventiviObjectHistoriesRepo;
         protected readonly IGenericRepository<PreventiviPaymentTerm> gaPreventiviPaymentTermsRepo;
         protected readonly IGenericRepository<PreventiviObjectInspectionNotePreliminariTemplate> gaPreventiviObjectInspectionNotePreliminariRepo;
+        protected readonly IGenericRepository<PreventiviIsmartDocumento> gaPreventiviIsmartDocumentiRepo;
 
 
         protected readonly IGenericRepository<CrmTicketAllegato> gaCrmTicketAttachmentsRepo;
@@ -101,8 +102,9 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             IGenericRepository<PreventiviPaymentTerm> gaPreventiviPaymentTermsRepo,
             IGenericRepository<PreventiviObjectInspectionNotePreliminariTemplate> gaPreventiviObjectInspectionNotePreliminariRepo,
+            IGenericRepository<PreventiviIsmartDocumento> gaPreventiviIsmartDocumentiRepo,
 
-            IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo,
+        IGenericRepository<ViewGaPreventiviCrmTickets> viewGaPreventiviCrmTicketsRepo,
 
             IGenericRepository<ViewGaPreventiviAnticipi> viewGaPreventiviAnticipiRepo,
             IGenericRepository<ViewGaPreventiviIsmartDocumenti> viewGaPreventiviIsmartDocumentiRepo,
@@ -153,6 +155,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
             this.gaPreventiviPaymentTermsRepo = gaPreventiviPaymentTermsRepo;
             this.gaPreventiviObjectInspectionNotePreliminariRepo = gaPreventiviObjectInspectionNotePreliminariRepo;
+            this.gaPreventiviIsmartDocumentiRepo = gaPreventiviIsmartDocumentiRepo;
 
 
             this.viewGaPreventiviCrmTicketsRepo = viewGaPreventiviCrmTicketsRepo;
@@ -1742,6 +1745,50 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Ismart Documenti
+        public async Task<PageResponse<PreventiviIsmartDocumentoDto>> GetPreventiviIsmartDocumentiAsync(PageRequest request)
+        {
+            var entities = await gaPreventiviIsmartDocumentiRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<PreventiviIsmartDocumentoDto>>();
+            return dtos;
+        }
+        public async Task<bool> ExistsPreventiviIsmartDocumentiAsync(string codcli, int prgfat, string iddoc)
+        {
+            var entities = await gaPreventiviIsmartDocumentiRepo.GetAsync(new PageRequest() { Filter = $"CodCli eq {codcli} and Prgfat eq {prgfat} and IdDocumento eq {iddoc}" });
+
+            return entities.Count > 0 ? true : false;
+        }
+
+        public async Task<long> CreatePreventiviIsmartDocumentoAsync(PreventiviIsmartDocumento entity)
+        {
+            await gaPreventiviIsmartDocumentiRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePagamentoPreventivoAsync(long id, decimal pagato, DateTime? dataPagamento)
+        {
+            var entity = await gaPreventiviIsmartDocumentiRepo.GetByIdAsync(id);
+            if (entity == null) return -1;
+
+            entity.Pagato = pagato;
+            entity.DataPagamento = dataPagamento;
+            entity.Gestito = true;
+            entity.DataGestione = DateTime.UtcNow;
+
+            await gaPreventiviIsmartDocumentiRepo.UpdateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdatePagamentoPreventivoMailAsync(long id, bool sended)
+        {
+            var entity = await gaPreventiviIsmartDocumentiRepo.GetByIdAsync(id);
+            if (entity == null) return -1;
+
+            entity.EmailInviata = sended;
+
+            await gaPreventiviIsmartDocumentiRepo.UpdateAsync(entity);
+            return entity.Id;
+        }
+
         public async Task<PageResponse<ViewGaPreventiviIsmartDocumenti>> GetViewPreventiviIsmartDocumentiAsync(PageRequest request)
         {
             var view = await viewGaPreventiviIsmartDocumentiRepo.GetAsync(request);

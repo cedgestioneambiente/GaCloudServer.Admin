@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="LocalLibrary\Print\ContactCenter\" />
+    <Folder Include="Scripts\Preventivi\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="libwkhtmltox.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Preventivi\PreventiviIsmartDocumentiGetter.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Preventivi\PreventiviIsmartDocumentiPayment.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Template\ContactCenterTicketIng\assets\styles.css">

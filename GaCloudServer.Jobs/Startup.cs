@@ -106,6 +106,8 @@ namespace GaCloudServer.Jobs
             services.AddScoped<LettureJobs.PrevisioOdsLettureGAJob>();
             services.AddScoped<LettureJobs.PrevisioOdsLettureFAJob>();
             services.AddScoped<LettureJobs.PrevisioOdsLettureEMZJob>();
+            services.AddScoped<PreventiviJobs.PreventiviImportJob>();
+            services.AddScoped<PreventiviJobs.PreventiviPagamentiJob>();
 
 
 
@@ -201,7 +203,9 @@ namespace GaCloudServer.Jobs
                         typeof(CrmJobs.CrmCessazioniReportJob),
                         typeof(LettureJobs.PrevisioOdsLettureGAJob),
                         typeof(LettureJobs.PrevisioOdsLettureFAJob),
-                        typeof(LettureJobs.PrevisioOdsLettureEMZJob)
+                        typeof(LettureJobs.PrevisioOdsLettureEMZJob),
+                        typeof(PreventiviJobs.PreventiviImportJob),
+                        typeof(PreventiviJobs.PreventiviPagamentiJob)
                     }
                 }
                 );

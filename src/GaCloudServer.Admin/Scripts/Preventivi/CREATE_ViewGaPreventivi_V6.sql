@@ -8,7 +8,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [dbo].ViewGaPreventiviIsmartDocumenti
+CREATE VIEW [dbo].[ViewGaPreventiviIsmartDocumenti]
 AS
 SELECT cast(0 as bigint) as Id,TRIM(A.[CODCLI]) Codcli
       ,TRIM([BRANCH]) Branch
@@ -17,7 +17,7 @@ SELECT cast(0 as bigint) as Id,TRIM(A.[CODCLI]) Codcli
       ,TRIM([CODPAG]) Codpag
       ,TRIM([CODSEZ]) Codsez
       ,TRIM(a.[NUMFAT]) Numfat
-      ,[DTFAT] Dtfat
+      ,isnull([DTFAT], CAST('19700101' AS date)) Dtfat
       ,TRIM([TIPDOC]) Tipdoc
       ,A.[PRGFAT] Prgfat
       ,a.[CODCLISED] Codclised

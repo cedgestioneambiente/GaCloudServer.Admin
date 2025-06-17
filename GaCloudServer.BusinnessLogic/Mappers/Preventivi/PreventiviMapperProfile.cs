@@ -139,6 +139,8 @@ namespace GaCloudServer.BusinessLogic.Mappers.Preventivi
             CreateMap<PreventiviObjectInspectionNotePreliminariTemplateDto, PreventiviObjectInspectionNotePreliminariTemplate>(MemberList.Destination).ReverseMap();
             CreateMap<PageResponse<PreventiviObjectInspectionNotePreliminariTemplateDto>, PageResponse<PreventiviObjectInspectionNotePreliminariTemplate>>(MemberList.Destination).ReverseMap();
 
+            CreateMap<PreventiviIsmartDocumentoDto, PreventiviIsmartDocumento>(MemberList.Destination).ReverseMap();
+            CreateMap<PageResponse<PreventiviIsmartDocumentoDto>, PageResponse<PreventiviIsmartDocumento>>(MemberList.Destination).ReverseMap();
 
         }
     }

@@ -313,6 +313,11 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Ismart Documenti
+        public Task<PageResponse<PreventiviIsmartDocumentoDto>> GetPreventiviIsmartDocumentiAsync(PageRequest request);
+        public Task<bool> ExistsPreventiviIsmartDocumentiAsync(string codcli, int prgfat, string iddoc);
+        public Task<long> CreatePreventiviIsmartDocumentoAsync(PreventiviIsmartDocumento entity);
+        public Task<long> UpdatePagamentoPreventivoAsync(long id, decimal pagato, DateTime? dataPagamento);
+        public Task<long> UpdatePagamentoPreventivoMailAsync(long id, bool sended);
         public Task<PageResponse<ViewGaPreventiviIsmartDocumenti>> GetViewPreventiviIsmartDocumentiAsync(PageRequest request);
         #endregion
 

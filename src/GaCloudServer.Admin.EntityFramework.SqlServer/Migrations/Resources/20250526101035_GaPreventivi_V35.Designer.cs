@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250526101035_GaPreventivi_V35")]
+    partial class GaPreventivi_V35
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -11581,79 +11583,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasKey("Id");
 
                     b.ToTable("GaPreventiviGarbages");
-                });
-
-            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviIsmartDocumento", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Codcli")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Codsez")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DataGestione")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataInserimento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataPagamento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("Dtfat")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("EmailInviata")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Gestito")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("IdDocumento")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Numfat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Numprev")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Pagato")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long?>("PreventiviObjectId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Prgfat")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Ragsoc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GaPreventiviIsmartDocumenti");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.PreventiviObject", b =>

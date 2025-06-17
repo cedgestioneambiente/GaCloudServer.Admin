@@ -4,6 +4,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 {
     [DbContext(typeof(ResourcesDbContext))]
-    partial class ResourcesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250526134625_GaPreventivi_V38")]
+    partial class GaPreventivi_V38
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -11641,9 +11643,6 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
 
                     b.Property<decimal?>("Pagato")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<long?>("PreventiviObjectId")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("Prgfat")
                         .HasColumnType("int");
