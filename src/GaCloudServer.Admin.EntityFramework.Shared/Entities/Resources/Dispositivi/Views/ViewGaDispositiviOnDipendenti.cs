@@ -10,6 +10,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Disposit
         public string Serial { get; set; }
         public string AltriDati { get; set; }
         public string Note { get; set; }
+        public string NoteAssegnazione { get; set; }
         public DateTime DataConsegna { get; set; }
         public DateTime? DataRitiro { get; set; }
     }
