@@ -18,7 +18,7 @@ namespace GaCloudServer.Jobs.Services
         public MailJobService(IWebHostEnvironment env,IMailService mailService,IConfiguration configuration)
         {
             sender = "helpdesk@gestioneambiente.net";
-            senderPassword = "Husa9919";
+            senderPassword = "P/245790196356uh";
             _env = env;
             _mailService = mailService;
             _configuration = configuration;

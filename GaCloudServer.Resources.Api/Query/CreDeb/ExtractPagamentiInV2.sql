@@ -1,4 +1,4 @@
-SELECT DTREG AS DataRegistrazione,
+SELECT DT_AVPAG AS DataRegistrazione,
 DATFAT AS DataDocumento,
 CONCAT(CASE WHEN A.TIPOCANALE IN ('GA','G1','G2') THEN 'ANTICIPO IN DATA ' ELSE 'INCASSO IN DATA ' END,FORMAT(DT_AVPAG,'dd/MM/yyyy','it-IT'),' SU FATTURA ',TRIM(NUMFAT), ' DEL ',FORMAT(DATFAT,'ddMMyyyy','it-IT')) DescrizioneMovimento,
 ISNULL(B.ContoNeta,'AC02007817') ContoClienteFornitore,

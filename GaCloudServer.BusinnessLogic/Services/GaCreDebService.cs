@@ -203,7 +203,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region Export
-        public async Task<string> GenerateCreDebRecordTextFileAsync(long id, List<CreDebIncassiExportResponseApiDto> defaultRecord, List<CreDebIncassiExportResponseApiDto> ritenuteRecord)
+        public async Task<string> GenerateCreDebRecordTextFileAsync(long id, List<CreDebIncassiExportResponseApiDto> defaultRecord, List<CreDebIncassiExportResponseApiDto> ritenuteRecord, bool newProcedure = false)
         {
             int i = 1;
             List<CreDebRecordDto> records = new List<CreDebRecordDto>();
@@ -223,7 +223,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     PROTOCOLLO_IVA = "0000000000",
 
                     // Imposta i valori letti dal database
-                    DATA_REGISTRAZIONE = item.DataRegistrazione,
+                    DATA_REGISTRAZIONE = newProcedure?item.DataValuta: item.DataRegistrazione,
                     DATA_DOCUMENTO = item.DataDocumento,
                     DESCRIZIONE_MOVIMENTO = item.DescrizioneMovimento,
                     CONTO_CLIENTE_FORNITORE = item.ContoClienteFornitore,
@@ -240,7 +240,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     NUMERO_REGISTRAZIONE = i,
                     PROGRESSIVO_RIGA = 1,
                     SEGNO = "A",
-                    DATA_REGISTRAZIONE =item.DataRegistrazione,
+                    DATA_REGISTRAZIONE =newProcedure?item.DataValuta: item.DataRegistrazione,
                     DATA_VALUTA =item.DataValuta,
                     DESCRIZIONE_RIGA = item.DescrizioneMovimento + " - " + item.Nota,
                     CONTO = item.ContoClienteFornitore,
@@ -255,7 +255,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     NUMERO_REGISTRAZIONE = i,
                     PROGRESSIVO_RIGA = 1,
                     SEGNO = "D",
-                    DATA_REGISTRAZIONE = item.DataRegistrazione,
+                    DATA_REGISTRAZIONE = newProcedure? item.DataValuta: item.DataRegistrazione,
                     DATA_VALUTA = item.DataValuta,
                     DESCRIZIONE_RIGA = item.DescrizioneMovimento + " - " + item.Nota,
                     CONTO = item.ContoPagamento,
@@ -276,7 +276,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     NumFat = item.NumFat,
                     DtFat = item.DataDocumento,
                     DtAvPag = item.DataValuta,
-                    DtReg = item.DataRegistrazione,
+                    DtReg = newProcedure ? item.DataValuta : item.DataRegistrazione,
                     ContoC = item.ContoC,
                     Canale = item.Canale,
                     Incrim = double.Parse(item.TotaleOperazione,CultureInfo.InvariantCulture),
@@ -307,7 +307,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     PROTOCOLLO_IVA = "0000000000",
 
                     // Imposta i valori letti dal database
-                    DATA_REGISTRAZIONE = item.DataRegistrazione,
+                    DATA_REGISTRAZIONE = newProcedure ? item.DataValuta : item.DataRegistrazione,
                     DATA_DOCUMENTO = item.DataDocumento,
                     DESCRIZIONE_MOVIMENTO = item.DescrizioneMovimento,
                     CONTO_CLIENTE_FORNITORE = item.ContoClienteFornitore,
@@ -324,7 +324,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     NUMERO_REGISTRAZIONE = i,
                     PROGRESSIVO_RIGA = 1,
                     SEGNO = "A",
-                    DATA_REGISTRAZIONE = item.DataRegistrazione,
+                    DATA_REGISTRAZIONE = newProcedure ? item.DataValuta : item.DataRegistrazione,
                     DATA_VALUTA = item.DataValuta,
                     DESCRIZIONE_RIGA = item.DescrizioneMovimento + " - " + item.Nota,
                     CONTO = item.ContoPagamento,
@@ -339,7 +339,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     NUMERO_REGISTRAZIONE = i,
                     PROGRESSIVO_RIGA = 1,
                     SEGNO = "D",
-                    DATA_REGISTRAZIONE = item.DataRegistrazione,
+                    DATA_REGISTRAZIONE = newProcedure ? item.DataValuta : item.DataRegistrazione,
                     DATA_VALUTA = item.DataValuta,
                     DESCRIZIONE_RIGA = item.DescrizioneMovimento + " - " + item.Nota,
                     CONTO = item.ContoClienteFornitore,
@@ -360,7 +360,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     NumFat = item.NumFat,
                     DtFat = item.DataDocumento,
                     DtAvPag = item.DataValuta,
-                    DtReg = item.DataRegistrazione,
+                    DtReg = newProcedure ? item.DataValuta : item.DataRegistrazione,
                     ContoC = item.ContoC,
                     Canale = item.Canale,
                     Incrim = double.Parse(item.TotaleOperazione, CultureInfo.InvariantCulture),

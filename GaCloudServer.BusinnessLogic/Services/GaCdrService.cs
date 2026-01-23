@@ -550,7 +550,7 @@ namespace GaCloudServer.BusinnessLogic.Services
             //3: Limite Inerti 170107(id 8)-Superato
             if (dto.CdrCerId == 8)
             {
-                var limite170107 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && x.CdrCentroId == dto.CdrCentroId && x.CdrCerId == 8 && x.Data.Year == dto.Data.Year);
+                var limite170107 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && dto.CdrComuneId == x.CdrComuneId && x.CdrCentroId == dto.CdrCentroId && x.CdrCerId == 8  && x.Data.Year == dto.Data.Year);
 
                 if (limite170107.Data.Count == 3)
                 {
@@ -574,7 +574,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 var dateStart = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
                 var dateEnd = DateTime.Now.EndOfWeek(DayOfWeek.Sunday);
 
-                var limite200301 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && x.CdrCerId == 31 && (x.Data >= dateStart && x.Data <= dateEnd));
+                var limite200301 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && dto.CdrComuneId == x.CdrComuneId && x.CdrCerId == 31 && (x.Data >= dateStart && x.Data <= dateEnd));
                 if (limite200301.Data.Count > 0)
                 {
                     return 4;
@@ -586,7 +586,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                 //5: Limite Pneumatici 160103 - Alert(id:7)
                 //6: Limite Pneumatici 160103 - Raggiunto(id:7)
                 //7: Limite Pneumatici 160103 - Superato(id:7)
-                var limite160103 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && x.CdrCerId == 7 && x.Data.Year == dto.Data.Year);
+                var limite160103 = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.CdrUtenteId == dto.CdrUtenteId && dto.CdrComuneId == x.CdrComuneId && x.CdrCerId == 7 && x.Data.Year == dto.Data.Year);
 
                 if (limite160103.Data.Count > 0)
                 {
@@ -639,7 +639,7 @@ namespace GaCloudServer.BusinnessLogic.Services
                     return 10;
                 }
 
-                var limiteAccessiUtente = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.Data.Year == dto.Data.Year && x.CdrCentroId == dto.CdrCentroId && (x.Targa != "" && x.CdrUtenteId == dto.CdrUtenteId) && x.Noleggio == false);
+                var limiteAccessiUtente = await gaCdrConferimentiRepo.GetWithFilterAsync(x => x.Data.Year == dto.Data.Year && x.CdrCentroId == dto.CdrCentroId && (x.Targa != "" && x.CdrUtenteId == dto.CdrUtenteId && dto.CdrComuneId == x.CdrComuneId) && x.Noleggio == false);
                 var accessiUtente = (from x in limiteAccessiUtente.Data
                                      select x.Data.ToString("dd/MM/yyyy")).Distinct();
 

@@ -20,15 +20,15 @@ namespace GaCloudServer.Jobs.Jobs
 
     public static class LettureJobs
     {
-        private static readonly string fileSvuotamentiFtpRoot = "20.82.78.5/";
-        private static readonly string fileSvuotamentiFtpEmzRoot = "20.82.78.5/";
+        private static readonly string fileSvuotamentiFtpRoot = "20.82.78.5/LETTURE/";
+        private static readonly string fileSvuotamentiFtpEmzRoot = "20.82.78.5/LETTURE/";
         private static readonly NetworkCredential fileSvuotamentiFtpCredentials = new NetworkCredential("srtgaadmin", "K8cAqARVH8*RExtL9VvD7_yU722-WQ");
 
-        private static readonly string nasLettureFtpRoot = "gads-novi.myds.me/";
-        private static readonly NetworkCredential nasLettureFtpCredentials = new NetworkCredential("csgroup", "QDS6bNPq*gH5^mZW");
+        private static readonly string nasLettureFtpRoot = "20.82.78.5/";
+        private static readonly NetworkCredential nasLettureFtpCredentials = new NetworkCredential("srtgaadmin", "K8cAqARVH8*RExtL9VvD7_yU722-WQ");
 
-        private static readonly string emzLettureFtpRoot = "gads-novi.myds.me/";
-        private static readonly NetworkCredential emzLettureFtpCredentials = new NetworkCredential("emz", "nx*@TYHv8L6HJ9q7");
+        private static readonly string emzLettureFtpRoot = "20.82.78.5/";
+        private static readonly NetworkCredential emzLettureFtpCredentials = new NetworkCredential("srtgaadmin", "K8cAqARVH8*RExtL9VvD7_yU722-WQ");
 
 
         [PersistJobDataAfterExecution]
@@ -56,7 +56,7 @@ namespace GaCloudServer.Jobs.Jobs
 
                             FtpFolderDto folderDto = new FtpFolderDto();
                             folderDto.serverUri = nasLettureFtpRoot;
-                            folderDto.filePath = "Letture";
+                            folderDto.filePath = "FORMULA";
                             folderDto.credentials = nasLettureFtpCredentials;
                             folderDto.useBinary = true;
                             folderDto.usePassive = true;
@@ -72,6 +72,8 @@ namespace GaCloudServer.Jobs.Jobs
                                 dto.serverUploadUri = fileSvuotamentiFtpRoot;
                                 dto.filePath = "";
                                 dto.fileName = "";
+                                dto.extraPath = "FORMULA/";
+                                dto.customRoot = true;
                                 dto.downloadCredentials = nasLettureFtpCredentials;
                                 dto.uploadCredentials = fileSvuotamentiFtpCredentials;
                                 dto.useBinary = true;
@@ -113,8 +115,8 @@ namespace GaCloudServer.Jobs.Jobs
                                                 var ftpMove = new FtpMoveDto();
                                                 ftpMove.serverUri = nasLettureFtpRoot;
                                                 ftpMove.fileName = dto.fileName;
-                                                ftpMove.sourcefilePath = "/Letture";
-                                                ftpMove.destinationfilePath = "/Letture/ELABORATE_GA/";
+                                                ftpMove.sourcefilePath = "/FORMULA";
+                                                ftpMove.destinationfilePath = "/FORMULA/ELABORATE_GA/";
                                                 ftpMove.credentials = nasLettureFtpCredentials;
                                                 ftpMove.useBinary = true;
                                                 ftpMove.usePassive = true;
@@ -201,7 +203,7 @@ namespace GaCloudServer.Jobs.Jobs
                         {
                             FtpFolderDto folderDto = new FtpFolderDto();
                             folderDto.serverUri = nasLettureFtpRoot;
-                            folderDto.filePath = "Letture//lettureFA";
+                            folderDto.filePath = "FORMULA//lettureFA";
                             folderDto.credentials = nasLettureFtpCredentials;
                             folderDto.useBinary = true;
                             folderDto.usePassive = true;
@@ -214,7 +216,8 @@ namespace GaCloudServer.Jobs.Jobs
 
                                 FtpDownloadAndUploadDto dto = new FtpDownloadAndUploadDto();
                                 dto.serverDownloadUri = nasLettureFtpRoot;
-                                dto.extraPath = "/lettureFA/";
+                                dto.extraPath = "/FORMULA//lettureFA/";
+                                dto.customRoot = true;
                                 dto.serverUploadUri = fileSvuotamentiFtpRoot;
                                 dto.filePath = "";
                                 dto.fileName = "";
@@ -256,8 +259,8 @@ namespace GaCloudServer.Jobs.Jobs
                                             var ftpMove = new FtpMoveDto();
                                             ftpMove.serverUri = nasLettureFtpRoot;
                                             ftpMove.fileName = dto.fileName;
-                                            ftpMove.sourcefilePath = "/Letture/lettureFA";
-                                            ftpMove.destinationfilePath = "/Letture/lettureFA/ELABORATE_FA/" + dto.fileName.Substring(0, 4);
+                                            ftpMove.sourcefilePath = "/FORMULA/lettureFA";
+                                            ftpMove.destinationfilePath = "/FORMULA/lettureFA/ELABORATE_FA/" + dto.fileName.Substring(0, 4)+"/";
                                             ftpMove.credentials = nasLettureFtpCredentials;
                                             ftpMove.useBinary = true;
                                             ftpMove.usePassive = true;
@@ -326,7 +329,7 @@ namespace GaCloudServer.Jobs.Jobs
 
                             FtpFolderDto folderDto = new FtpFolderDto();
                             folderDto.serverUri = emzLettureFtpRoot;
-                            folderDto.filePath = "emz//conferimenti";
+                            folderDto.filePath = "EMZ//conferimenti";
                             folderDto.credentials = emzLettureFtpCredentials;
                             folderDto.useBinary = true;
                             folderDto.usePassive = true;
@@ -339,7 +342,7 @@ namespace GaCloudServer.Jobs.Jobs
 
                                 FtpDownloadAndUploadDto dto = new FtpDownloadAndUploadDto();
                                 dto.serverDownloadUri = emzLettureFtpRoot;
-                                dto.extraPath = "/emz/conferimenti/";
+                                dto.extraPath = "/EMZ/conferimenti/";
                                 dto.serverUploadUri = fileSvuotamentiFtpEmzRoot;
                                 dto.filePath = "";
                                 dto.fileName = "";
@@ -383,8 +386,8 @@ namespace GaCloudServer.Jobs.Jobs
                                             var ftpMove = new FtpMoveDto();
                                             ftpMove.serverUri = emzLettureFtpRoot;
                                             ftpMove.fileName = dto.fileName;
-                                            ftpMove.sourcefilePath = "/emz/conferimenti";
-                                            ftpMove.destinationfilePath = "/emz/archivio_conferimenti/";
+                                            ftpMove.sourcefilePath = "/EMZ/conferimenti";
+                                            ftpMove.destinationfilePath = "/EMZ/archivio_conferimenti/";
                                             ftpMove.credentials = emzLettureFtpCredentials;
                                             ftpMove.useBinary = true;
                                             ftpMove.usePassive = true;

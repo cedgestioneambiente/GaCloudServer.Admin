@@ -504,6 +504,7 @@ namespace GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi
     {
         public DateTime DtStart { get; set; }
         public DateTime DtEnd { get; set; }
+        public bool NewProcedure { get; set; }
     }
 
     #endregion

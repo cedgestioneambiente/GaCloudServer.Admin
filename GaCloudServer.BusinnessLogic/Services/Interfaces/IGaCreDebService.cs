@@ -46,7 +46,7 @@ namespace GaCloudServer.BusinnessLogic.Services.Interfaces
         #endregion
 
         #region Export
-        public Task<string> GenerateCreDebRecordTextFileAsync(long id, List<CreDebIncassiExportResponseApiDto> defaultRecord, List<CreDebIncassiExportResponseApiDto> ritenuteRecord);
+        public Task<string> GenerateCreDebRecordTextFileAsync(long id, List<CreDebIncassiExportResponseApiDto> defaultRecord, List<CreDebIncassiExportResponseApiDto> ritenuteRecord, bool newProcedure=false);
         #endregion
     }
 }

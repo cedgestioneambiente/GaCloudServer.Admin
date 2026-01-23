@@ -511,7 +511,7 @@ namespace GaCloudServer.Resources.Api.Controllers
                 });
                 var objectId= await _gaCreDebService.CreateCreDebIncassiInObjectAsync(obj);
 
-                var fileContent = await _gaCreDebService.GenerateCreDebRecordTextFileAsync(objectId, responseDefault, responseRitenute);
+                var fileContent = await _gaCreDebService.GenerateCreDebRecordTextFileAsync(objectId, responseDefault, responseRitenute,request.NewProcedure);
 
                 string folder = "IncassiExport"; 
                 string fileName = $"incassi_{DateTime.Now:yyyyMMdd_HHmmss}.txt";

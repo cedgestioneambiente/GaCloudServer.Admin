@@ -294,6 +294,12 @@ namespace GaCloudServer.BusinnessLogic.Services
                 {
                     return -3;
                 }
+
+                if (dto.richiesta.Id!=0 && entities.Data.FirstOrDefault().PresenzeStatoRichiestaId == 2 && dto.richiesta.PresenzeStatoRichiestaId == 3
+                    && !dto.profiloUtente.ResponsabileSettori.Contains(dto.profiloUtente.SettoreId))
+                {
+                    return -5;
+                }
             }
 
             if (bancaOre)
@@ -301,6 +307,8 @@ namespace GaCloudServer.BusinnessLogic.Services
                 var validateBancaOre = await ValidateBancaOre(dto.richiesta);
                 if (!validateBancaOre) { return -4; }
             }
+
+
 
 
             return 0;

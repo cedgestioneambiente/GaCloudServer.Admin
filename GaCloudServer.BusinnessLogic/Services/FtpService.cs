@@ -116,7 +116,7 @@ namespace GaCloudServer.BusinnessLogic.Services
 
                 FtpWebRequest request = null;
 
-                if (dto.customRoot && dto.customRootPath.Length > 0)
+                if (dto.customRoot && dto.customRootPath?.Length > 0)
                 {
                     request = (FtpWebRequest)WebRequest.Create(@"ftp://" + dto.serverUploadUri +"//"+ dto.customRootPath + "//" + dto.fileName);
                 }

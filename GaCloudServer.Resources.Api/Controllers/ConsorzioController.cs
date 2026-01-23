@@ -634,12 +634,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ValidatePercentConsorzioProduttoreAsync/{id}/{cfPiva}/{indirizzo}/{ragso}/{comuneId}")]
-        public async Task<ActionResult<ApiResponse>> ValidatePercentConsorzioProduttoreAsync(long id, string cfPiva, string indirizzo,string ragSo,long comuneId)
+        [HttpPost("ValidatePercentConsorzioProduttoreAsync")]
+        public async Task<ActionResult<ApiResponse>> ValidatePercentConsorzioProduttoreAsync([FromBody] ConsorzioProduttoreApiDto apiDto )
         {
             try
             {
-                var response = await _consorzioService.ValidatePercentConsorzioProduttoreAsync(id, cfPiva, indirizzo,ragSo,comuneId);
+                var response = await _consorzioService.ValidatePercentConsorzioProduttoreAsync(apiDto.Id,apiDto.CfPiva,apiDto.Indirizzo,apiDto.Descrizione, apiDto.ConsorzioComuneId);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -828,12 +828,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ValidatePercentConsorzioDestinatarioAsync/{id}/{cfPiva}/{indirizzo}/{ragso}/{comuneId}")]
-        public async Task<ActionResult<ApiResponse>> ValidatePercentConsorzioDestinatarioAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        [HttpPost("ValidatePercentConsorzioDestinatarioAsync")]
+        public async Task<ActionResult<ApiResponse>> ValidatePercentConsorzioDestinatarioAsync(ConsorzioDestinatarioApiDto apiDto)
         {
             try
             {
-                var response = await _consorzioService.ValidatePercentConsorzioDestinatarioAsync(id, cfPiva, indirizzo, ragSo, comuneId);
+                var response = await _consorzioService.ValidatePercentConsorzioDestinatarioAsync(apiDto.Id,apiDto.CfPiva,apiDto.Indirizzo,apiDto.Descrizione,apiDto.ConsorzioComuneId);
                 return new ApiResponse(response);
             }
             catch (Exception ex)
@@ -1023,12 +1023,12 @@ namespace GaCloudServer.Resources.Api.Controllers
 
         }
 
-        [HttpGet("ValidatePercentConsorzioTrasportatoreAsync/{id}/{cfPiva}/{indirizzo}/{ragso}/{comuneId}")]
-        public async Task<ActionResult<ApiResponse>> ValidatePercentConsorzioTrasportatoreAsync(long id, string cfPiva, string indirizzo, string ragSo, long comuneId)
+        [HttpPost("ValidatePercentConsorzioTrasportatoreAsync")]
+        public async Task<ActionResult<ApiResponse>> ValidatePercentConsorzioTrasportatoreAsync(ConsorzioTrasportatoreApiDto apiDto)
         {
             try
             {
-                var response = await _consorzioService.ValidatePercentConsorzioTrasportatoreAsync(id, cfPiva, indirizzo, ragSo, comuneId);
+                var response = await _consorzioService.ValidatePercentConsorzioTrasportatoreAsync(apiDto.Id, apiDto.CfPiva, apiDto.Indirizzo, apiDto.Descrizione, apiDto.ConsorzioComuneId);
                 return new ApiResponse(response);
             }
             catch (Exception ex)

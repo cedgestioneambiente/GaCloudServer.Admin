@@ -1199,8 +1199,10 @@ namespace GaCloudServer.Resources.Api.Controllers
                 toMails.Add("carlo.candia@gestioneambiente.net");
                 toMails.Add("roberto.fago@gestioneambiente.net");
                 toMails.Add("lorenzo.repetti@gestioneambiente.net");
+                toMails.Add("alberto.squenna@gestioneambiente.net");
 
-                if (richiestaViaggio.CentroId == 5 || richiestaViaggio.CentroId == 10 || richiestaViaggio.CentroId == 14)
+
+                if (richiestaViaggio.CentroId == 5 || richiestaViaggio.CentroId == 10 || richiestaViaggio.CentroId == 14 || richiestaViaggio.CentroId == 12)
                 {
                     toMails.Add("optortona@gestioneambiente.net");
                 }
