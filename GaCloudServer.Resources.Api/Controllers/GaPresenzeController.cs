@@ -234,11 +234,11 @@ namespace GaCloudServer.Resources.Api.Controllers
                 }
 
                 //var offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);//apiDto.DataInizio.ToUniversalTime()
-                
+
                 //apiDto.DataInizio = apiDto.DataInizio.Add(offset);
                 //apiDto.DataFine = apiDto.DataFine.Add(offset);
 
-                var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Rome");
+                var tz = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
                 apiDto.DataInizio = TimeZoneInfo.ConvertTimeFromUtc(apiDto.DataInizio, tz);
                 apiDto.DataFine = TimeZoneInfo.ConvertTimeFromUtc(apiDto.DataFine, tz);
 

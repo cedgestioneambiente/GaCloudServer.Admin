@@ -1197,7 +1197,6 @@ namespace GaCloudServer.Resources.Api.Controllers
                 List<string> ccMails = new List<string>();
 
                 toMails.Add("carlo.candia@gestioneambiente.net");
-                toMails.Add("roberto.fago@gestioneambiente.net");
                 toMails.Add("lorenzo.repetti@gestioneambiente.net");
                 toMails.Add("alberto.squenna@gestioneambiente.net");
 
@@ -1207,7 +1206,6 @@ namespace GaCloudServer.Resources.Api.Controllers
                     toMails.Add("optortona@gestioneambiente.net");
                 }
 
-                ccMails.Add("ced@gestioneambiente.net");
                 ccMails.Add("callcenter@gestioneambiente.net");
 
                 string mailTo = string.Join(";",toMails);
