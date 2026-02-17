@@ -1,0 +1,1 @@
+This file according to the ftp connection test of the emz egate web portal. The connection test was successful. This file is neither mandatory, or necessary, you can delete this file anytime.

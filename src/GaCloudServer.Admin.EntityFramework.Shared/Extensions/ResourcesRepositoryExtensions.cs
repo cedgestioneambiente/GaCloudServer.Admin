@@ -49,6 +49,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Progetti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.QueryBuilder.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Quicklinks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Reclami.Views;
@@ -420,8 +421,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             #region Shortcuts
             services.AddTransient<IGenericRepository<ShortcutLink>, GenericRepository<TResourcesDbContext, ShortcutLink>>();
             services.AddTransient<IGenericRepository<ShortcutItem>, GenericRepository<TResourcesDbContext, ShortcutItem>>();
+            services.AddTransient<IGenericRepository<QuickLink>, GenericRepository<TResourcesDbContext, QuickLink>>();
+
 
             services.AddTransient<IGenericRepository<ViewShortcutItems>, GenericRepository<TResourcesDbContext, ViewShortcutItems>>();
+            
             #endregion
 
             //QueryBuilder

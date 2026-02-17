@@ -18,9 +18,39 @@ $dpProviders = @{
 }
 
 #Fix issue when the tools is not installed and the nuget package does not work see https://github.com/MicrosoftDocs/azure-docs/issues/40048
-Write-Host "Updating donet ef tools"
-$env:Path += "	% USERPROFILE % /.dotnet/tools";
-dotnet tool update --global dotnet-ef
+# Required EF Tools version (match your project EF Core major)
+$requiredEfVersion = "8.0.11"
+
+Write-Host "Checking dotnet-ef tools version..."
+$efInstalled = $false
+$efVersion = $null
+
+try {
+    $efVersionOutput = dotnet ef --version 2>$null
+    if ($LASTEXITCODE -eq 0 -and $efVersionOutput) {
+        $efInstalled = $true
+        $efVersion = $efVersionOutput.Trim()
+    }
+}
+catch {
+    $efInstalled = $false
+}
+
+if (-not $efInstalled) {
+    Write-Host "dotnet-ef not installed. Installing version $requiredEfVersion"
+    dotnet tool install --global dotnet-ef --version $requiredEfVersion
+}
+else {
+    Write-Host "dotnet-ef installed version: $efVersion"
+
+    if ($efVersion -notlike "$requiredEfVersion*") {
+        Write-Host "Updating dotnet-ef to required version $requiredEfVersion"
+        dotnet tool update --global dotnet-ef --version $requiredEfVersion
+    }
+    else {
+        Write-Host "dotnet-ef version is correct."
+    }
+}
 
 Write-Host "Start migrate projects"
 foreach ($provider in $dpProviders.Keys) {

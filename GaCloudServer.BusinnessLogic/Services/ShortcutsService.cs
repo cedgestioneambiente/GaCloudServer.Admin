@@ -1,9 +1,13 @@
-﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
+﻿using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Quicklinks;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Shortcuts.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Infrastructure.Interfaces;
+using GaCloudServer.BusinnessLogic.Dtos.Resources.Crm;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Shortcuts;
+using GaCloudServer.BusinnessLogic.DTOs.Resources.Preventivi;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using GaCloudServer.Shared;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 
 namespace GaCloudServer.BusinnessLogic.Services
@@ -13,6 +17,7 @@ namespace GaCloudServer.BusinnessLogic.Services
     {
         protected readonly IGenericRepository<ShortcutLink> shortcutLinksRepo;
         protected readonly IGenericRepository<ShortcutItem> shortcutItemsRepo;
+        protected readonly IGenericRepository<QuickLink> quickLinksRepo;
 
         protected readonly IGenericRepository<ViewShortcutItems> viewShortcutItemsRepo;
 
@@ -21,6 +26,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         public ShortcutsService(
             IGenericRepository<ShortcutLink> shortcutLinksRepo,
             IGenericRepository<ShortcutItem> shortcutItemsRepo,
+            IGenericRepository<QuickLink> quickLinksRepo,
 
             IGenericRepository<ViewShortcutItems> viewShortcutItemsRepo,
 
@@ -28,6 +34,7 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             this.shortcutLinksRepo = shortcutLinksRepo;
             this.shortcutItemsRepo = shortcutItemsRepo;
+            this.quickLinksRepo = quickLinksRepo;
 
             this.viewShortcutItemsRepo = viewShortcutItemsRepo;
 
@@ -36,54 +43,73 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region ShortcutLinks
-        public async Task<ShortcutLinksDto> GetShortcutLinksAsync(int page = 1, int pageSize = 0)
+        public async Task<PageResponse<ShortcutLinkDto>> GetShortcutLinksAsync(PageRequest request)
         {
-            var entities = await shortcutLinksRepo.GetAllAsync(page,pageSize);
-            var dtos= entities.ToDto<ShortcutLinksDto, PagedList<ShortcutLink>>();
-            return dtos;
+            var entity = await shortcutLinksRepo.GetAsync(new PageRequest() { });
+            var dto = entity.ToModel<PageResponse<ShortcutLinkDto>>();
+            return dto;
         }
-
-        public async Task<ShortcutLinksDto> GetShortcutLinksByRolesAsync(string roles)
+        public async Task<PageResponse<ShortcutLinkDto>> GetShortcutLinksByRolesAsync(string roles)
         {
-            var masterSet=new HashSet<string>(roles.Split(","));
-            string[] keyword = roles.Split(new char[] { ',' });
-
-            string[] rolesArray = roles.Split(",");
-            var links = await shortcutLinksRepo.GetWithFilterAsync(x => x.Disabled==false);
-
-            ShortcutLinksDto dtos = new ShortcutLinksDto();
-            List<ShortcutLinkDto> list = new List<ShortcutLinkDto>();
-            foreach (var itm in links.Data)
+            // Protezione input
+            if (string.IsNullOrWhiteSpace(roles))
             {
-                if (itm.Roles.Split(",").Any(x => keyword.Contains(x)))
+                return new PageResponse<ShortcutLinkDto>
                 {
-                    list.Add(itm.ToDto<ShortcutLinkDto,ShortcutLink>());
-                }
+                    Items = Enumerable.Empty<ShortcutLinkDto>(),
+                    Count = 0
+                };
             }
-            dtos.Data.AddRange(list);
-            dtos.TotalCount = list.Count;
-            dtos.PageSize = 0;
-            return dtos;
+
+            // HashSet per lookup O(1)
+            var roleSet = roles
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(r => r.Trim())
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            // Recupero dati
+            var links = await shortcutLinksRepo.GetWithFilterAsync(x => !x.Disabled);
+
+            // Filtraggio + mapping in un unico passaggio
+            var filtered = links.Data
+                .Where(link =>
+                    !string.IsNullOrWhiteSpace(link.Roles) &&
+                    link.Roles
+                        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(r => r.Trim())
+                        .Any(roleSet.Contains)
+                )
+                .Select(link => link.ToDto<ShortcutLinkDto, ShortcutLink>())
+                .ToList();
+
+            // Costruzione response corretta
+            return new PageResponse<ShortcutLinkDto>
+            {
+                Items = filtered,
+                Count = filtered.Count
+            };
         }
+
 
         public async Task<ShortcutLinkDto> GetShortcutLinkByIdAsync(long id)
         {
-            var entity = await shortcutLinksRepo.GetByIdAsync(id);
-            var dto = entity.ToDto<ShortcutLinkDto, ShortcutLink>();
+            var entity = await shortcutLinksRepo.GetAsync(id, new PageRequest() { });
+            var dto = entity.ToModel<ShortcutLinkDto>();
             return dto;
         }
 
-        public async Task<long> AddShortcutLinkAsync(ShortcutLinkDto dto)
+        public async Task<long> CreateShortcutLinkAsync(ShortcutLinkDto model)
         {
-            var entity = dto.ToEntity<ShortcutLink, ShortcutLinkDto>();
+            var entity = model.ToEntity<ShortcutLink, ShortcutLinkDto>();
             await shortcutLinksRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
         }
 
-        public async Task<long> UpdateShortcutLinkAsync(ShortcutLinkDto dto)
+        public async Task<long> UpdateShortcutLinkAsync(long id, ShortcutLinkDto model)
         {
-            var entity = dto.ToEntity<ShortcutLink, ShortcutLinkDto>();
+            var entity = model.ToEntity<ShortcutLink, ShortcutLinkDto>();
+            entity.Id = id;
             shortcutLinksRepo.Update(entity);
             await SaveChanges();
 
@@ -139,10 +165,10 @@ namespace GaCloudServer.BusinnessLogic.Services
         #endregion
 
         #region ShortcutItems
-        public async Task<ShortcutItemsDto> GetShortcutItemsAsync(int page = 1, int pageSize = 0)
+        public async Task<PageResponse<ShortcutItemDto>> GetShortcutItemsAsync(PageRequest request)
         {
-            var entities = await shortcutItemsRepo.GetAllAsync(page, pageSize);
-            var dtos = entities.ToDto<ShortcutItemsDto, PagedList<ShortcutItem>>();
+            var entities = await shortcutItemsRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<ShortcutItemDto>>();
             return dtos;
         }
 
@@ -153,17 +179,18 @@ namespace GaCloudServer.BusinnessLogic.Services
             return dto;
         }
 
-        public async Task<long> AddShortcutItemAsync(ShortcutItemDto dto)
+        public async Task<long> CreateShortcutItemAsync(ShortcutItemDto model)
         {
-            var entity = dto.ToEntity<ShortcutItem, ShortcutItemDto>();
+            var entity = model.ToEntity<ShortcutItem, ShortcutItemDto>();
             await shortcutItemsRepo.AddAsync(entity);
             await SaveChanges();
             return entity.Id;
         }
 
-        public async Task<long> UpdateShortcutItemAsync(ShortcutItemDto dto)
+        public async Task<long> UpdateShortcutItemAsync(long id, ShortcutItemDto model)
         {
-            var entity = dto.ToEntity<ShortcutItem, ShortcutItemDto>();
+            var entity = model.ToEntity<ShortcutItem, ShortcutItemDto>();
+            entity.Id = id;
             shortcutItemsRepo.Update(entity);
             await SaveChanges();
 
@@ -181,13 +208,50 @@ namespace GaCloudServer.BusinnessLogic.Services
         }
 
         #region Views
-        public async Task<PagedList<ViewShortcutItems>> GetViewShortcutByUserIdAsync(string userId)
+        public async Task<PageResponse<ViewShortcutItems>> GetViewShortcutByUserIdAsync(string userId)
         {
-            var view = await viewShortcutItemsRepo.GetWithFilterAsync(x=>x.UserId==userId);
+            var view = await viewShortcutItemsRepo.GetAsync(new PageRequest() { Filter=$"UserId eq '{userId}'"});
             return view;
         }
         #endregion
 
+        #endregion
+
+        #region QuickLinks
+        public async Task<PageResponse<QuickLinkDto>> GetQuickLinksAsync(PageRequest request)
+        {
+            var entities = await quickLinksRepo.GetAsync(request);
+            var dtos = entities.ToModel<PageResponse<QuickLinkDto>>();
+            return dtos;
+        }
+
+        public async Task<QuickLinkDto> GetQuickLinkByIdAsync(long id)
+        {
+            var entity = await quickLinksRepo.GetAsync(id, new GetRequest());
+            var dto = entity.ToModel<QuickLinkDto>();
+            return dto;
+        }
+
+        public async Task<long> CreateQuickLinkAsync(QuickLinkDto model)
+        {
+            var entity = model.ToEntity<QuickLink, QuickLinkDto>();
+            var response = await quickLinksRepo.CreateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<long> UpdateQuickLinkAsync(long id, QuickLinkDto model)
+        {
+            var entity = model.ToEntity<QuickLink, QuickLinkDto>();
+            entity.Id = id;
+            var response = await quickLinksRepo.UpdateAsync(entity);
+            return entity.Id;
+        }
+
+        public async Task<bool> DeleteQuickLinkAsync(long id)
+        {
+            await quickLinksRepo.DeleteAsync(id);
+            return true;
+        }
         #endregion
 
         #region Common
@@ -200,6 +264,8 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             unitOfWork.DetachEntity(entity);
         }
+
+
         #endregion
 
     }

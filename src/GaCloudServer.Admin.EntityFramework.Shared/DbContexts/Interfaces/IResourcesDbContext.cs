@@ -63,6 +63,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Preventivi.V
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Common;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Identity.Views;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.CreDeb;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Quicklinks;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
 {
@@ -433,6 +434,10 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts.Interfaces
         DbSet<ViewShortcutItems> ViewShortcutItems { get; set; }
         #endregion
 
+        #endregion
+
+        #region Quicklinks
+        DbSet<QuickLink> QuickLinks { get; set; }
         #endregion
 
         #region Progetti

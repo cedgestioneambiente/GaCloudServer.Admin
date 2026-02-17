@@ -62,6 +62,7 @@ using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.SmartCity.Vi
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.System;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Tasks.Views;
+using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Quicklinks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -87,6 +88,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         public DbSet<GlobalCentroCosto> GlobalCentriCosti { get; set; }
         public DbSet<GlobalSettore> GlobalSettori { get; set; }
 
+
+        #endregion
+
+        #region Utility Tables
+        public DbSet<QuickLink> QuickLinks { get; set; }
 
         #endregion
 
@@ -650,6 +656,7 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.DbContexts
         #endregion  
 
         public IHttpContextAccessor httpContextAccessor { get; set; }
+
         public ResourcesDbContext(DbContextOptions<ResourcesDbContext> options,IHttpContextAccessor httpContextAccessor) : base(options)
         {
             this.httpContextAccessor = httpContextAccessor;

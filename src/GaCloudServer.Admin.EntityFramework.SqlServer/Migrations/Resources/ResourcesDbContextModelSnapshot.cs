@@ -7764,6 +7764,9 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NoteAssegnazione")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("PersonaleDipendenteId")
                         .HasColumnType("bigint");
 
@@ -13993,6 +13996,52 @@ namespace GaCloudServer.Admin.EntityFramework.SqlServer.Migrations.Resources
                     b.HasKey("Id");
 
                     b.ToView("ViewQueryBuilderScripts");
+                });
+
+            modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Quicklinks.QuickLink", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descrizione")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subtitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuickLinks");
                 });
 
             modelBuilder.Entity("GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Recapiti.Views.ViewGaRecapitiContatti", b =>

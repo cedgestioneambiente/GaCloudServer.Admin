@@ -20,6 +20,13 @@ namespace GaCloudServer.Resources.Api.Mappers.Shortcuts
 
             CreateMap<ShortcutItemsDto, ShortcutItemsApiDto>(MemberList.Destination)
                 .ReverseMap();
+
+            // QuickLinks
+            CreateMap<QuickLinkDto, QuickLinkApiDto>(MemberList.Destination)
+                .ReverseMap();
+
+            CreateMap<QuickLinksDto, QuickLinksApiDto>(MemberList.Destination)
+                .ReverseMap();
         }
 
     }
