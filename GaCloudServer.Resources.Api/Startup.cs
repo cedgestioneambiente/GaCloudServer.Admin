@@ -22,6 +22,10 @@ using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Extensions;
 using Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity.Extensions;
 using Skoruba.Duende.IdentityServer.Shared.Configuration.Helpers;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace GaCloudServer.Resources.Api
 {
@@ -103,9 +107,38 @@ namespace GaCloudServer.Resources.Api
                 IdentityUserClaimsDto, IdentityUserProviderDto, IdentityUserProvidersDto, IdentityUserChangePasswordDto,
                 IdentityRoleClaimsDto, IdentityUserClaimDto, IdentityRoleClaimDto>();
 
+            // API Versioning
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new HeaderApiVersionReader("x-api-version"));
+            });
+
+            // Versioned API explorer
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV"; // e.g. v1, v2
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+            // Swagger - create one doc per discovered API version
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc(resourcesApiConfiguration.ApiVersion, new OpenApiInfo { Title = resourcesApiConfiguration.ApiName, Version = resourcesApiConfiguration.ApiVersion });
+                // temporary provider to enumerate versions
+                var provider = services.BuildServiceProvider().GetService<IApiVersionDescriptionProvider>();
+                if (provider != null)
+                {
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerDoc(description.GroupName, new OpenApiInfo
+                        {
+                            Title = resourcesApiConfiguration.ApiName,
+                            Version = description.ApiVersion.ToString()
+                        });
+                    }
+                }
 
                 options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -122,7 +155,16 @@ namespace GaCloudServer.Resources.Api
                         }
                     }
                 });
+
                 options.OperationFilter<AuthorizeCheckOperationFilter>();
+
+                // Ensure swagger only includes actions for the target version/group
+                options.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    if (apiDesc.GroupName == null) return false;
+                    return apiDesc.GroupName == docName;
+                });
+
             });
 
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
@@ -152,7 +194,7 @@ namespace GaCloudServer.Resources.Api
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ResourcesApiConfiguration resourcesApiConfiguration, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ResourcesApiConfiguration resourcesApiConfiguration, ILoggerFactory loggerFactory, IApiVersionDescriptionProvider provider)
         {
             app.AddForwardHeaders();
 
@@ -164,7 +206,11 @@ namespace GaCloudServer.Resources.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"{resourcesApiConfiguration.ApiBaseUrl}/swagger/v1/swagger.json", resourcesApiConfiguration.ApiName);
+                // add an endpoint for each discovered API version
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    c.SwaggerEndpoint($"{resourcesApiConfiguration.ApiBaseUrl}/swagger/{description.GroupName}/swagger.json", $"{resourcesApiConfiguration.ApiName} {description.GroupName}");
+                }
 
                 c.OAuthClientId(resourcesApiConfiguration.OidcSwaggerUIClientId);
                 c.OAuthAppName(resourcesApiConfiguration.ApiName);
