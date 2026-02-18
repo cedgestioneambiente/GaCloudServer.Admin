@@ -361,21 +361,48 @@ namespace GaCloudServer.Resources.Api.Helpers
                 switch (databaseProvider.ProviderType)
                 {
                     case DatabaseProviderType.SqlServer:
-                        healthChecksBuilder
-                            .AddSqlServer(configurationDbConnectionString, name: "ConfigurationDb",
-                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{configurationTableName}]")
-                            .AddSqlServer(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
-                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{persistedGrantTableName}]")
-                            .AddSqlServer(identityDbConnectionString, name: "IdentityDb",
-                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{identityTableName}]")
-                            .AddSqlServer(logDbConnectionString, name: "LogDb",
-                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{logTableName}]")
-                            .AddSqlServer(auditLogDbConnectionString, name: "AuditLogDb",
-                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{auditLogTableName}]")
-                            .AddSqlServer(dataProtectionDbConnectionString, name: "DataProtectionDb",
-                            healthQuery: $"SELECT TOP 1 * FROM dbo.[{dataProtectionTableName}]")
-                            .AddSqlServer(resourcesDbConnectionString, name: "ResourcesDb",
+                        // Add SQL Server health checks only when table/view names are available
+                        if (!string.IsNullOrWhiteSpace(configurationTableName))
+                        {
+                            healthChecksBuilder = healthChecksBuilder.AddSqlServer(configurationDbConnectionString, name: "ConfigurationDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{configurationTableName}]");
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(persistedGrantTableName))
+                        {
+                            healthChecksBuilder = healthChecksBuilder.AddSqlServer(persistedGrantsDbConnectionString, name: "PersistentGrantsDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{persistedGrantTableName}]");
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(identityTableName))
+                        {
+                            healthChecksBuilder = healthChecksBuilder.AddSqlServer(identityDbConnectionString, name: "IdentityDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{identityTableName}]");
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(logTableName))
+                        {
+                            healthChecksBuilder = healthChecksBuilder.AddSqlServer(logDbConnectionString, name: "LogDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{logTableName}]");
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(auditLogTableName))
+                        {
+                            healthChecksBuilder = healthChecksBuilder.AddSqlServer(auditLogDbConnectionString, name: "AuditLogDb",
+                                healthQuery: $"SELECT TOP 1 * FROM dbo.[{auditLogTableName}]");
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(dataProtectionTableName))
+                        {
+                            healthChecksBuilder = healthChecksBuilder.AddSqlServer(dataProtectionDbConnectionString, name: "DataProtectionDb",
+                            healthQuery: $"SELECT TOP 1 * FROM dbo.[{dataProtectionTableName}]");
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(ResourcesTableName))
+                        {
+                            healthChecksBuilder = healthChecksBuilder.AddSqlServer(resourcesDbConnectionString, name: "ResourcesDb",
                             healthQuery: $"SELECT TOP 1 * FROM dbo.[{ResourcesTableName}]");
+                        }
                         break;
                     case DatabaseProviderType.PostgreSQL:
                         healthChecksBuilder

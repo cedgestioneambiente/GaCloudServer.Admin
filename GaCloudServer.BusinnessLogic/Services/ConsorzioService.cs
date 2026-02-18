@@ -7,6 +7,7 @@ using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.BusinnessLogic.Dtos.Resources.Consorzio;
 using GaCloudServer.BusinnessLogic.Mappers;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
+using GaCloudServer.Shared;
 using Skoruba.Duende.IdentityServer.Admin.EntityFramework.Extensions.Common;
 using System.IO.Compression;
 using System.Text;
@@ -1165,6 +1166,12 @@ namespace GaCloudServer.BusinnessLogic.Services
         {
             var entities = all ? await viewConsorzioRegistrazioniRepo.GetAllAsync(1, 0) : await viewConsorzioRegistrazioniRepo.GetWithFilterAsync(x => x.Disabled == false);
             return entities;
+        }
+
+        public async Task<PageResponse<ViewConsorzioRegistrazioni>> GetViewConsorzioRegistrazioniAsync(PageRequest request)
+        {
+            var view = await viewConsorzioRegistrazioniRepo.GetAsync(request);
+            return view;
         }
 
         public async Task<PagedList<ViewConsorzioRegistrazioni>> GetViewConsorzioRegistrazioneByRolesAsync(string roles)

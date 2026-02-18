@@ -1,11 +1,11 @@
 using AutoWrapper.Wrappers;
-using GaCloudServer.BusinnessLogic.Dtos.Custom;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
 using GaCloudServer.Resources.Api.Configuration.Constants;
 using GaCloudServer.Resources.Api.ExceptionHandling;
+using GaCloudServer.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using code = Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace GaCloudServer.Resources.Api.Controllers.V2
 {
@@ -16,36 +16,34 @@ namespace GaCloudServer.Resources.Api.Controllers.V2
     [TypeFilter(typeof(ControllerExceptionFilterAttribute))]
     [Produces("application/json", "application/problem+json")]
     [Authorize(Policy = AuthorizationConsts.AdminOrUserAllPolicy)]
-    public class ConsorzioV2Controller : Controller
+    public class ConsorzioController : Controller
     {
         private readonly IConsorzioService _consorzioService;
-        private readonly ILogger<ConsorzioV2Controller> _logger;
+        private readonly ILogger<ConsorzioController> _logger;
 
-        public ConsorzioV2Controller(
+        public ConsorzioController(
             IConsorzioService consorzioService,
-            ILogger<ConsorzioV2Controller> logger)
+            ILogger<ConsorzioController> logger)
         {
             _consorzioService = consorzioService;
             _logger = logger;
         }
 
-        [HttpPost("GetViewConsorzioRegistrazioniQueryableFilterSingleParam/{roles?}")]
-        public ActionResult<ApiResponse> GetViewConsorzioRegistrazioniQueryableFilterSingleParam([FromBody] GridOperationsModel filter, [FromRoute] string? roles = "0")
+        [HttpPost("GetViewConsorzioRegistrazioniAsync")]
+        [ProducesResponseType(code.Status200OK)]
+        [ProducesResponseType(code.Status400BadRequest)]
+        public async Task<ActionResult<ApiResponse>> GetViewConsorzioRegistrazioniAsync(PageRequest request)
         {
             try
             {
-                if (roles != "NaN")
-                {
-                    var entities = _consorzioService.GetViewConsorzioRegistrazioniByRolesQueryable(filter, roles.Split(","));
-                    return new ApiResponse(entities);
-                }
+                var response = await _consorzioService.GetViewConsorzioRegistrazioniAsync(request);
 
-                return new ApiResponse(null);
+                return Ok(new { Code = code.Status200OK, Response = response });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore in GetViewConsorzioRegistrazioniQueryableFilterSingleParam v2");
-                throw new ApiException(ex.Message);
+                _logger.LogError(ex.Message, ex);
+                throw new ApiException(new { Code = code.Status400BadRequest, Response = ex.Message });
             }
         }
     }

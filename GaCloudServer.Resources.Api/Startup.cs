@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using Microsoft.AspNetCore.HttpOverrides; // added to enable UseForwardedHeaders
 
 namespace GaCloudServer.Resources.Api
 {
@@ -196,7 +197,7 @@ namespace GaCloudServer.Resources.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ResourcesApiConfiguration resourcesApiConfiguration, ILoggerFactory loggerFactory, IApiVersionDescriptionProvider provider)
         {
-            app.AddForwardHeaders();
+            app.UseForwardedHeaders();
 
             if (env.IsDevelopment())
             {

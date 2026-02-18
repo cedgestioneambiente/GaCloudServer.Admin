@@ -2117,7 +2117,14 @@ namespace GaCloudServer.Resources.Api.Controllers
                             }
                             else
                             {
-                                item.PESO_KG = Convert.ToDouble(row.ItemArray[i].ToString().Replace(".",","));
+                                try
+                                {
+                                    item.PESO_KG = Convert.ToDouble(row.ItemArray[i].ToString().Replace(".", ","));
+                                }
+                                catch (Exception ex)
+                                {
+                                    errorList.Add("Il campo PESO_KG non è un numero valido");
+                                } 
                             }
                             i++;
 
