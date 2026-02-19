@@ -629,6 +629,12 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Infrastructure
 
             query = odataQuery.Inner as IQueryable<TEntity>;
 
+            if (!string.IsNullOrEmpty(request.Search))
+            {
+                //Apply optional generic fulltext search
+                query = query.ApplySearch(request.Search);
+            }
+
             int? count = request.Take.HasValue || request.Skip.HasValue ? await query.CountAsync(cancellationToken).ConfigureAwait(false) : null;
 
             var page = query.GetPage(request);

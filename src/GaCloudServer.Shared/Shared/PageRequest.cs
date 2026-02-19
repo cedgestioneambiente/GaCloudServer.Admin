@@ -32,5 +32,13 @@
         // Valore:
         //     The select.
         public string Select { get; set; }
+
+        //
+        // Riepilogo:
+        //     Gets or sets the search for fulltext search. (Use Pascal case properties names)
+        //
+        // Valore:
+        //     The searc.
+        public string Search { get; set; }
     }
 }

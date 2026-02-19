@@ -665,6 +665,53 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
             return odataQuery;
         }
 
+        public static IQueryable<T> ApplySearch<T>(this IQueryable<T> query, string search)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return query;
+
+            var parameter = Expression.Parameter(typeof(T), "x");
+
+            var stringProperties = typeof(T)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.PropertyType == typeof(string));
+
+            Expression finalExpression = null;
+
+            foreach (var prop in stringProperties)
+            {
+                var propertyAccess = Expression.Property(parameter, prop);
+
+                var nullCheck = Expression.NotEqual(
+                    propertyAccess,
+                    Expression.Constant(null, typeof(string)));
+
+                var containsMethod = typeof(string).GetMethod(
+                    nameof(string.Contains),
+                    new[] { typeof(string) });
+
+                var searchConstant = Expression.Constant(search);
+
+                var containsCall = Expression.Call(
+                    propertyAccess,
+                    containsMethod,
+                    searchConstant);
+
+                var safeContains = Expression.AndAlso(nullCheck, containsCall);
+
+                finalExpression = finalExpression == null
+                    ? safeContains
+                    : Expression.OrElse(finalExpression, safeContains);
+            }
+
+            if (finalExpression == null)
+                return query;
+
+            var lambda = Expression.Lambda<Func<T, bool>>(finalExpression, parameter);
+
+            return query.Where(lambda);
+        }
+        
         public static IQueryable<T> GetPage<T>(this IQueryable<T> query, PageRequest request) where T : class
         {
             if (request.Skip.HasValue)
