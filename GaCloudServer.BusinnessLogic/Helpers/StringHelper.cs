@@ -162,5 +162,6 @@ namespace GaCloudServer.BusinnessLogic.Helpers
             return d[n, m];
         }
         #endregion
+
     }
 }

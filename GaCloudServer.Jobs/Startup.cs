@@ -94,7 +94,8 @@ namespace GaCloudServer.Jobs
             services.AddScoped<ScadJobs.GaDipendentiNoviScadenziarioJob>();
             services.AddScoped<ScadJobs.GaDipendentiTortonaScadenziarioJob>();
             services.AddScoped<ScadJobs.GaReclamiScadenziarioJob>();
-            services.AddScoped<EmzJobs.EmzWhiteListJob>();
+            services.AddScoped<EmzJobs.EmzWhiteList80Job>();
+            services.AddScoped<EmzJobs.EmzWhiteListACJob>();
             services.AddScoped<GarbageJobs.GarbageUtenzeJob>();
             services.AddScoped<GarbageJobs.GarbagePartiteJob>();
             services.AddScoped<GarbageJobs.GarbageTipologieJob>();
@@ -192,7 +193,8 @@ namespace GaCloudServer.Jobs
                         typeof(ScadJobs.GaDipendentiTortonaScadenziarioJob),
                         typeof(ScadJobs.GaContrattiScadenziarioJob),
                         typeof(ScadJobs.GaReclamiScadenziarioJob),
-                        typeof(EmzJobs.EmzWhiteListJob),
+                        typeof(EmzJobs.EmzWhiteList80Job),
+                        typeof(EmzJobs.EmzWhiteListACJob),
                         typeof(GarbageJobs.GarbageUtenzeJob),
                         typeof(GarbageJobs.GarbagePartiteJob),
                         typeof(GarbageJobs.GarbageTipologieJob),

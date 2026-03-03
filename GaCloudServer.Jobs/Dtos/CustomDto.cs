@@ -8,5 +8,13 @@
             public string Chiave1{get;set;}
             public string Attivo { get; set; }
         }
+
+        public class EmzACDto
+        {
+            public string Identi2 { get; set; }
+            public string Chiave1 { get; set; }
+            public string Attivo { get; set; }
+            public string CharCeck { get; set; }
+        }
     }
 }

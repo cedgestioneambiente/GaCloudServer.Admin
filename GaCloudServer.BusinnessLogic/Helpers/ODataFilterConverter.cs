@@ -29,6 +29,10 @@ namespace GaCloudServer.BusinnessLogic.Helpers
 
             return result;
         }
+
+        
     }
+
+
 
 }

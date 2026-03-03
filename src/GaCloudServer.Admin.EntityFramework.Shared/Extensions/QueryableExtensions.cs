@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using odata = GaCloudServer.Admin.EntityFramework.Shared.Helpers.ODataHelpers;
 
 namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 {
@@ -655,11 +656,11 @@ namespace GaCloudServer.Admin.EntityFramework.Shared.Extensions
 
             if (!string.IsNullOrEmpty(request?.Filter))
             {
-                odataQuery = odataQuery.Filter(request.Filter.Replace(".","/"));
+                odataQuery = odataQuery.Filter(odata.ReplaceDotsOutsideQuotes(request.Filter));
             }
             if (!string.IsNullOrEmpty(request?.OrderBy))
             {
-                odataQuery = odataQuery.OrderBy(request.OrderBy.Replace(".","/"));
+                odataQuery = odataQuery.OrderBy(odata.ReplaceDotsOutsideQuotes(request.OrderBy));
             }
 
             return odataQuery;

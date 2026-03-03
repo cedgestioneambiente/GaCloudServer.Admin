@@ -295,10 +295,22 @@ namespace GaCloudServer.BusinnessLogic.Services
                     return -3;
                 }
 
-                if (dto.richiesta.Id!=0 && entities.Data.FirstOrDefault().PresenzeStatoRichiestaId == 2 && dto.richiesta.PresenzeStatoRichiestaId == 3
-                    && !dto.profiloUtente.ResponsabileSettori.Contains(dto.profiloUtente.SettoreId))
+                try
                 {
-                    return -5;
+                    var firstEntity = entities?.Data?.FirstOrDefault();
+
+                    if (dto.richiesta.Id != 0
+                        && firstEntity != null
+                        && firstEntity.PresenzeStatoRichiestaId == 2
+                        && dto.richiesta.PresenzeStatoRichiestaId == 3
+                        && !dto.profiloUtente.ResponsabileSettori.Contains(dto.profiloUtente.SettoreId))
+                    {
+                        return -5;
+                    }
+                }
+                catch (Exception ex)
+                { 
+                    
                 }
             }
 
