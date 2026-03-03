@@ -1,116 +1,95 @@
-﻿using AuthServer.SSO.Schedule.Configuration;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AuthServer.SSO.Schedule.Configuration;
 using GaCloudServer.Admin.EntityFramework.Shared.Entities.Resources.Mail;
 using GaCloudServer.BusinnessLogic.Services.Interfaces;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using MimeKit;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Graph;
 
 namespace GaCloudServer.Jobs.Services
 {
     public class MailJobService : IMailJobService
     {
         private readonly IWebHostEnvironment _env;
-        private readonly string sender;
-        private readonly string senderPassword;
-        public readonly IMailService _mailService;
-        public IConfiguration _configuration;
+        private readonly IMailService _mailService;
+        private readonly IConfiguration _configuration;
+        private readonly GraphServiceClient _graphClient;
+        private readonly string _senderEmail;
 
-        public MailJobService(IWebHostEnvironment env,IMailService mailService,IConfiguration configuration)
+        public MailJobService(IWebHostEnvironment env, IMailService mailService, IConfiguration configuration, GraphServiceClient graphClient)
         {
-            sender = "helpdesk@gestioneambiente.net";
-            senderPassword = "P/245790196356uh";
             _env = env;
             _mailService = mailService;
             _configuration = configuration;
+            _graphClient = graphClient;
+            _senderEmail = _configuration["Email:Sender"];
         }
-
-
 
         public async Task<bool> SendMail(MailJob mailJob)
         {
             try
             {
-                var email = new MimeMessage();
-
-                if (mailJob.MailingTo != null && mailJob.MailingTo.Length > 0)
+                string templatePath = Path.Combine(_env.ContentRootPath, "Templates/Mail", mailJob.Template);
+                string body;
+                using (var reader = new StreamReader(templatePath, Encoding.UTF8))
                 {
-                    foreach (var mail in mailJob.MailingTo.Split(';'))
+                    body = await reader.ReadToEndAsync();
+                }
+
+                body = body.Replace("{jobTitle}", mailJob.Title)
+                           .Replace("{jobContent}", mailJob.Content)
+                           .Replace("{jobDate}", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+
+                if (mailJob.Link == true)
+                {
+                    body = body.Replace("{jobLinkHref}", mailJob.LinkHref)
+                               .Replace("{jobLinkDescription}", mailJob.LinkDescription);
+                }
+
+                var toRecipients = (mailJob.MailingTo ?? string.Empty)
+                    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Select(a => new Recipient { EmailAddress = new EmailAddress { Address = a } })
+                    .ToList();
+
+                var ccRecipients = (mailJob.MailCc ?? string.Empty)
+                    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Select(a => new Recipient { EmailAddress = new EmailAddress { Address = a } })
+                    .ToList();
+
+                var message = new Message
+                {
+                    Subject = mailJob.Title,
+                    Body = new ItemBody { ContentType = BodyType.Html, Content = body },
+                    ToRecipients = toRecipients,
+                    CcRecipients = ccRecipients
+                };
+
+                if (mailJob.Attachment && !string.IsNullOrWhiteSpace(mailJob.AttachmentPath))
+                {
+                    string attachPathBase = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName;
+                    attachPathBase += Path.DirectorySeparatorChar + _configuration.GetSection("EnvConsts").Get<EnvConstsConfiguration>().alternativeFolder;
+                    string wwwrootPath = Path.Combine(attachPathBase, "wwwroot");
+                    string fullAttachPath = Path.Combine(wwwrootPath, mailJob.AttachmentPath.Replace("/", Path.DirectorySeparatorChar.ToString()));
+
+                    if (System.IO.File.Exists(fullAttachPath))
                     {
-                        email.To.Add(MailboxAddress.Parse(mail));
+                        var bytes = await System.IO.File.ReadAllBytesAsync(fullAttachPath);
+                        var fileAttachment = new FileAttachment
+                        {
+                            ODataType = "#microsoft.graph.fileAttachment",
+                            Name = Path.GetFileName(fullAttachPath),
+                            ContentBytes = bytes
+                        };
+
+                        message.Attachments = new MessageAttachmentsCollectionPage { fileAttachment };
                     }
                 }
 
-                if (mailJob.MailCc != null && mailJob.MailCc.Length > 0)
-                {
-                    foreach (var mail in mailJob.MailCc.Split(';'))
-                    {
-                        email.Cc.Add(MailboxAddress.Parse(mail));
-                    }
-                }
-
-
-
-                email.From.Add(MailboxAddress.Parse(sender));
-                email.Subject = mailJob.Title;
-                string body = string.Empty;
-                string templatePath = Path.Combine(_env.ContentRootPath, "Templates/Mail/" + mailJob.Template);
-
-                using (StreamReader reader = new StreamReader(templatePath))
-                {
-
-                    body = reader.ReadToEnd();
-
-                }
-
-                body = body.Replace("{jobTitle}", mailJob.Title);
-                body = body.Replace("{jobContent}", mailJob.Content);
-                body = body.Replace("{jobDate}", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
-
-                if (mailJob.Link!=null && mailJob.Link==true)
-                {
-                    body = body.Replace("{jobLinkHref}", mailJob.LinkHref);
-                    body = body.Replace("{jobLinkDescription}", mailJob.LinkDescription);
-                }
-
-                if (!mailJob.Attachment)
-                {
-                    email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
-                }
-                else
-                {
-                    string projectDirectory = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-                    string wwwrootPath = "";
-
-                    string attachPath = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-                    attachPath += "\\" + _configuration.GetSection("EnvConsts").Get<EnvConstsConfiguration>().alternativeFolder;
-
-
-                    if (_env.IsDevelopment())
-                    {
-                        wwwrootPath = Path.Combine(attachPath, "wwwroot");
-                    }
-                    else
-                    { 
-                        wwwrootPath= Path.Combine(attachPath, "wwwroot");
-                    }
-                    
-
-
-                    var builder = new BodyBuilder();
-                    builder.HtmlBody = body;
-                    builder.Attachments.Add(Path.Combine(wwwrootPath, mailJob.AttachmentPath).Replace("/","\\"));
-                    email.Body = builder.ToMessageBody();
-                }
-
-
-                using (var client = new SmtpClient())
-                {
-                    await client.ConnectAsync("smtp.office365.com", 587, SecureSocketOptions.StartTls);
-                    await client.AuthenticateAsync(sender, senderPassword);
-                    await client.SendAsync(email);
-                    await client.DisconnectAsync(true);
-                }
-
+                // invia la mail come utente/sender specificato nella configurazione
+                await _graphClient.Users[_senderEmail].SendMail(message, false).Request().PostAsync();
 
                 return true;
             }
@@ -121,7 +100,5 @@ namespace GaCloudServer.Jobs.Services
                 return false;
             }
         }
-
-
     }
 }

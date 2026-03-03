@@ -16,6 +16,9 @@ using Quartz.Spi;
 using Skoruba.AuditLogging.EntityFramework.Entities;
 using System.Collections.Specialized;
 using System.Text;
+using Microsoft.Identity.Client;
+using Microsoft.Graph;
+using System.Net.Http.Headers;
 
 namespace GaCloudServer.Jobs
 {
@@ -50,23 +53,51 @@ namespace GaCloudServer.Jobs
                 options.AllowSynchronousIO = true;
             });
 
-            //var apiConfiguration = Configuration.GetSection(nameof(ApiConfiguration)).Get<ApiConfiguration>();
-            //services.AddSingleton(apiConfiguration);
-
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Add DbContexts
-
             RegisterDbContexts(services);
 
             services.AddJobsResourcesRepository<ResourcesDbContext>();
             services.AddJobsResourcesServices<ResourcesDbContext>();
 
             services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
-            services.AddTransient<IMailJobService, MailJobService>();
 
-            //services.AddAuditEventLogging<AdminAuditLogDbContext, AuditLog>(Configuration);
-            //services.AddTransient<IMailService, MailService>();
+            // --- Graph client registration (Client Credentials) ---
+            var azureSection = Configuration.GetSection("AzureAd");
+            var clientId = azureSection["ClientId"];
+            var tenantId = azureSection["TenantId"];
+            var clientSecret = azureSection["ClientSecret"];
+
+            if (!string.IsNullOrWhiteSpace(clientId) &&
+                !string.IsNullOrWhiteSpace(tenantId) &&
+                !string.IsNullOrWhiteSpace(clientSecret))
+            {
+                var confidentialClient = ConfidentialClientApplicationBuilder
+                    .Create(clientId)
+                    .WithTenantId(tenantId)
+                    .WithClientSecret(clientSecret)
+                    .Build();
+
+                var authProvider = new DelegateAuthenticationProvider(async (requestMessage) =>
+                {
+                    var result = await confidentialClient
+                        .AcquireTokenForClient(new[] { "https://graph.microsoft.com/.default" })
+                        .ExecuteAsync();
+
+                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+                });
+
+                var graphClient = new GraphServiceClient(authProvider);
+                services.AddSingleton(graphClient);
+            }
+            else
+            {
+                // in ambienti di sviluppo, potrebbe mancare la configurazione; loggare o lanciare eccezione se necessario
+            }
+
+            // Mail job service ora usa GraphServiceClient iniettato
+            services.AddTransient<IMailJobService, MailJobService>();
 
             //Quartz DI
             NameValueCollection properties = new NameValueCollection();
@@ -109,9 +140,6 @@ namespace GaCloudServer.Jobs
             services.AddScoped<LettureJobs.PrevisioOdsLettureEMZJob>();
             services.AddScoped<PreventiviJobs.PreventiviImportJob>();
             services.AddScoped<PreventiviJobs.PreventiviPagamentiJob>();
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,7 +148,6 @@ namespace GaCloudServer.Jobs
 
             if (env.IsDevelopment())
             {
-                //app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -139,7 +166,6 @@ namespace GaCloudServer.Jobs
             });
 
             // app is IAppBuilder
-            // Note: this code should come before app.UseCrystalQuartz
             app.Use(async (context, next) =>
             {
                 var request = context.Request;
@@ -184,7 +210,7 @@ namespace GaCloudServer.Jobs
             app.UseCrystalQuartz(
                 () => scheduler,
                 new CrystalQuartzOptions {
-                    AllowedJobTypes = new[]
+                    AllowedJobTypes = new[]            
                     { 
                         typeof(MailJobs),
                         typeof(ScadJobs.GaAutorizzazioniScadenziarioJob),
@@ -211,7 +237,6 @@ namespace GaCloudServer.Jobs
                     }
                 }
                 );
-
 
             app.UseMvc(routes =>
             {
